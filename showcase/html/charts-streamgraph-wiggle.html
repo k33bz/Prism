@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Streamgraph (wiggle) · Prism</title>
+<!-- Prism showcase sample: charts-streamgraph-wiggle (gallery: charts). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.mp-fade { animation: 0.7s ease-out 0s 1 normal backwards running scx-fadeUp; }
+@keyframes scx-fadeUp { 
+  0% { opacity: 0; transform: translateY(6px); }
+  100% { opacity: 1; transform: none; }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><svg width="250" height="130" viewBox="0 0 250 130" id="mpStream" style="overflow:visible"><path d="M0.0,32.8 L19.2,31.4 L38.5,35.6 L57.7,35.2 L76.9,41.5 L96.2,37.2 L115.4,35.3 L134.6,38.7 L153.8,38.1 L173.1,37.5 L192.3,34.2 L211.5,26.9 L230.8,29.8 L250.0,42.2 L250.0,51.6 L230.8,46.5 L211.5,37.3 L192.3,46.0 L173.1,48.4 L153.8,46.6 L134.6,53.8 L115.4,55.0 L96.2,57.8 L76.9,57.7 L57.7,50.2 L38.5,60.7 L19.2,46.1 L0.0,49.4 Z" fill="var(--info)" opacity=".8" class="mp-fade" style="animation-delay: 0s;"></path><path d="M0.0,49.4 L19.2,46.1 L38.5,60.7 L57.7,50.2 L76.9,57.7 L96.2,57.8 L115.4,55.0 L134.6,53.8 L153.8,46.6 L173.1,48.4 L192.3,46.0 L211.5,37.3 L230.8,46.5 L250.0,51.6 L250.0,65.9 L230.8,64.5 L211.5,53.5 L192.3,60.7 L173.1,60.4 L153.8,56.0 L134.6,64.5 L115.4,68.1 L96.2,74.9 L76.9,72.1 L57.7,75.7 L38.5,69.0 L19.2,68.1 L0.0,72.8 Z" fill="var(--accent)" opacity=".8" class="mp-fade" style="animation-delay: 0.12s;"></path><path d="M0.0,72.8 L19.2,68.1 L38.5,69.0 L57.7,75.7 L76.9,72.1 L96.2,74.9 L115.4,68.1 L134.6,64.5 L153.8,56.0 L173.1,60.4 L192.3,60.7 L211.5,53.5 L230.8,64.5 L250.0,65.9 L250.0,79.5 L230.8,83.6 L211.5,76.8 L192.3,69.0 L173.1,69.6 L153.8,66.8 L134.6,78.4 L115.4,80.2 L96.2,83.7 L76.9,80.2 L57.7,85.4 L38.5,83.6 L19.2,90.0 L0.0,85.1 Z" fill="var(--pos)" opacity=".8" class="mp-fade" style="animation-delay: 0.24s;"></path><path d="M0.0,85.1 L19.2,90.0 L38.5,83.6 L57.7,85.4 L76.9,80.2 L96.2,83.7 L115.4,80.2 L134.6,78.4 L153.8,66.8 L173.1,69.6 L192.3,69.0 L211.5,76.8 L230.8,83.6 L250.0,79.5 L250.0,87.8 L230.8,100.2 L211.5,103.1 L192.3,95.8 L173.1,92.5 L153.8,91.9 L134.6,91.3 L115.4,94.7 L96.2,92.8 L76.9,88.5 L57.7,94.8 L38.5,94.4 L19.2,98.6 L0.0,97.2 Z" fill="var(--crit)" opacity=".8" class="mp-fade" style="animation-delay: 0.36s;"></path></svg></div></div>
+<div class="meta"><b>Streamgraph (wiggle)</b> · <code>charts-streamgraph-wiggle</code><br>Charts &amp; Metrics · More Plot Types<p>Stacked bands flowing around a free-floating central baseline rather than a flat axis — the organic &quot;stream&quot; form for many categories shifting over time. Unlike the stacked-area chart, the wiggle baseline minimizes distortion so each layer's own shape stays readable.</p></div>
+
+</body>
+</html>

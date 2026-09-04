@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sliding Thumb Segmented Control · Prism</title>
+<!-- Prism showcase sample: spectrums-sliding-thumb-segmented-control (gallery: spectrums). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.neu-seg { position: relative; display: flex; width: 206px; padding: 5px; border-radius: 16px; background: var(--neu-base); box-shadow: inset 4px 4px 9px var(--neu-dark), inset -4px -4px 9px var(--neu-light); }
+.neu-seg input { position: absolute; opacity: 0; pointer-events: none; }
+.neu-seg label { position: relative; z-index: 2; flex: 1 1 0%; text-align: center; padding: 8px 6px; font-size: 11.5px; font-weight: 700; color: var(--neu-muted); cursor: pointer; border-radius: 11px; transition: color 0.2s; }
+.neu-seg .neu-thumb { position: absolute; top: 5px; left: 5px; width: calc(33.333% - 3.33px); height: calc(100% - 10px); border-radius: 11px; background: var(--neu-base); box-shadow: 4px 4px 9px var(--neu-dark), -4px -4px 9px var(--neu-light); transition: transform 0.28s cubic-bezier(0.5, 0.2, 0.15, 1); }
+.neu-seg input:nth-of-type(1):checked ~ .neu-thumb { transform: translateX(0px); }
+.neu-seg input:nth-of-type(2):checked ~ .neu-thumb { transform: translateX(100%); }
+.neu-seg input:nth-of-type(3):checked ~ .neu-thumb { transform: translateX(200%); }
+.neu-seg input:checked + label { color: var(--neu-ink); }
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="neu-seg">
+      <input type="radio" name="neu-seg-a" id="neu-seg-a1" checked=""><label for="neu-seg-a1">Day</label>
+      <input type="radio" name="neu-seg-a" id="neu-seg-a2"><label for="neu-seg-a2">Week</label>
+      <input type="radio" name="neu-seg-a" id="neu-seg-a3"><label for="neu-seg-a3">Month</label>
+      <div class="neu-thumb"></div>
+    </div></div></div>
+<div class="meta"><b>Sliding Thumb Segmented Control</b> · <code>spectrums-sliding-thumb-segmented-control</code><br>Spectrums · Neumorphism · Neumorphism<p>An inset groove holding an extruded thumb that glides between choices — the base slab never breaks into hard-edged tabs.</p></div>
+
+</body>
+</html>

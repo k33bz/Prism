@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hourglass · Prism</title>
+<!-- Prism showcase sample: objects-hourglass (gallery: objects). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.hour .frame { transform-box: view-box; transform-origin: 59px 59px; animation: 5s ease-in-out 0s infinite normal none running hourFlip; }
+.hour .top { transform-box: fill-box; transform-origin: center top; animation: 5s ease-in-out 0s infinite normal none running hourTop; }
+.hour .bot { transform-box: fill-box; transform-origin: center bottom; animation: 5s ease-in-out 0s infinite normal none running hourBot; }
+.hour .sand { animation: 5s linear 0s infinite normal none running hourSand; }
+.cube .top { animation: 3s ease-in-out 0s infinite normal none running cubeP; }
+@keyframes hourFlip { 
+  0%, 82% { transform: rotate(0deg); }
+  92%, 100% { transform: rotate(180deg); }
+}
+@keyframes hourTop { 
+  0% { transform: scaleY(1); }
+  80% { transform: scaleY(0.05); }
+  82%, 100% { transform: scaleY(0.05); }
+}
+@keyframes hourBot { 
+  0% { transform: scaleY(0.05); }
+  80% { transform: scaleY(1); }
+  82%, 100% { transform: scaleY(1); }
+}
+@keyframes hourSand { 
+  0%, 80% { opacity: 1; }
+  81%, 100% { opacity: 0; }
+}
+@keyframes cubeP { 
+  0%, 100% { opacity: 0.55; }
+  50% { opacity: 1; }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><svg viewBox="0 0 118 118" class="hour" fill="none">
+        <g class="frame">
+          <line x1="34" y1="20" x2="84" y2="20" stroke="#9aa3ef" stroke-width="5" stroke-linecap="round"></line>
+          <line x1="34" y1="98" x2="84" y2="98" stroke="#9aa3ef" stroke-width="5" stroke-linecap="round"></line>
+          <path d="M40 22 L78 22 L62 59 L78 96 L40 96 L56 59 Z" stroke="#5b6c90" stroke-width="3" fill="rgba(154,163,239,.08)"></path>
+          <clipPath id="hgTop"><path d="M40 22 L78 22 L62 59 L56 59 Z"></path></clipPath>
+          <clipPath id="hgBot"><path d="M56 59 L62 59 L78 96 L40 96 Z"></path></clipPath>
+          <g clip-path="url(#hgTop)"><rect class="top" x="40" y="22" width="38" height="37" fill="var(--orange)"></rect></g>
+          <g clip-path="url(#hgBot)"><rect class="bot" x="40" y="59" width="38" height="37" fill="var(--orange)"></rect></g>
+          <line class="sand" x1="59" y1="56" x2="59" y2="80" stroke="var(--orange)" stroke-width="2"></line>
+        </g>
+      </svg></div></div>
+<div class="meta"><b>Hourglass</b> · <code>objects-hourglass</code><br>Animated Objects · Time, launch &amp; life<p>Sand drains from the top bulb to the bottom, then the whole frame flips to restart. Waiting, timers, &quot;in progress&quot;.</p></div>
+
+</body>
+</html>

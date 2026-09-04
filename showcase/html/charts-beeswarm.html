@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Beeswarm · Prism</title>
+<!-- Prism showcase sample: charts-beeswarm (gallery: charts). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.nch-swarm { position: relative; width: 210px; height: 70px; }
+.nch-swarm i { position: absolute; width: 9px; height: 9px; border-radius: 50%; background: var(--info); opacity: 0.7; animation: 3s ease-in-out 0s infinite normal none running nchSwarm; }
+@keyframes nchSwarm { 
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="nch-swarm">
+        <i style="left:10px;top:30px"></i><i style="left:30px;top:20px;animation-delay:.2s"></i><i style="left:44px;top:40px;animation-delay:.4s"></i><i style="left:70px;top:28px;animation-delay:.1s"></i><i style="left:92px;top:34px;animation-delay:.5s"></i><i style="left:110px;top:22px;animation-delay:.3s"></i><i style="left:130px;top:42px;animation-delay:.6s"></i><i style="left:150px;top:30px;animation-delay:.15s"></i><i style="left:170px;top:36px;animation-delay:.45s"></i><i style="left:190px;top:26px;animation-delay:.25s"></i>
+      </div></div></div>
+<div class="meta"><b>Beeswarm</b> · <code>charts-beeswarm</code><br>Charts &amp; Metrics · New<p>Every data point plotted without overlap — distribution shape you can actually see, points and all.</p></div>
+
+</body>
+</html>

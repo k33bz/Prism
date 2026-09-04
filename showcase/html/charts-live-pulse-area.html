@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Live Pulse Area · Prism</title>
+<!-- Prism showcase sample: charts-live-pulse-area (gallery: charts). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.logstream .cursor { display: inline-block; width: 7px; height: 13px; background: var(--pos); animation: 1s steps(2, start) 0s infinite normal none running logBlink; vertical-align: -2px; }
+@keyframes logBlink { 
+  50% { opacity: 0; }
+}
+.ncx2-pulse { position: relative; width: 200px; height: 80px; overflow: hidden; }
+.ncx2-pulse svg { width: 200px; height: 80px; }
+.ncx2-pulse polyline { fill: none; stroke: var(--pos); stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 420; stroke-dashoffset: 420; animation: 3s linear 0s 1 normal forwards running ncx2Draw; }
+.ncx2-pulse .cursor { position: absolute; top: 4px; width: 2px; height: 72px; background: rgba(var(--pos-rgb),.6); box-shadow: 0 0 8px var(--pos); animation: 3s linear 0s infinite normal none running ncx2Cursor; }
+.ncx2-pulse .cursor::after { content: ""; position: absolute; top: 0px; left: -3px; width: 8px; height: 8px; border-radius: 50%; background: var(--pos); box-shadow: 0 0 10px var(--pos); }
+@keyframes ncx2Draw { 
+  100% { stroke-dashoffset: 0; }
+}
+@keyframes ncx2Cursor { 
+  0% { transform: translateX(0px); }
+  100% { transform: translateX(196px); }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="ncx2-pulse">
+      <svg viewBox="0 0 200 80"><defs><linearGradient id="ncx2PulseG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="rgba(63,185,80,.4)"></stop><stop offset="1" stop-color="rgba(63,185,80,0)"></stop></linearGradient></defs>
+        <path d="M2,58 L26,50 L50,56 L74,34 L98,44 L122,22 L146,38 L170,18 L198,30 L198,78 L2,78 Z" fill="url(#ncx2PulseG)"></path>
+        <polyline points="2,58 26,50 50,56 74,34 98,44 122,22 146,38 170,18 198,30"></polyline>
+      </svg>
+      <span class="cursor"></span>
+    </div></div></div>
+<div class="meta"><b>Live Pulse Area</b> · <code>charts-live-pulse-area</code><br>Charts &amp; Metrics · New<p>A self-drawing area trace swept by a glowing scan cursor — the &quot;streaming right now&quot; signal for a live metric.</p></div>
+
+</body>
+</html>

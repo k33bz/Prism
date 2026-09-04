@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Combobox / Dropdown · Prism</title>
+<!-- Prism showcase sample: input-combobox-dropdown (gallery: input). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.nin2-combo { position: relative; width: 100%; }
+.nin2-combo summary { list-style: none; display: flex; align-items: center; gap: 8px; background: var(--panel2); border: 1px solid var(--line); border-radius: 10px; padding: 11px 14px; font-size: 13px; cursor: pointer; color: var(--ink); }
+.nin2-combo summary::-webkit-details-marker { display: none; }
+.nin2-combo summary .nin2-caret { margin-left: auto; color: var(--muted); transition: 0.2s; }
+.nin2-combo[open] summary { border-color: var(--accent); }
+.nin2-combo[open] summary .nin2-caret { transform: rotate(180deg); }
+.nin2-combo .nin2-pop { position: absolute; left: 0px; right: 0px; margin-top: 6px; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; box-shadow: rgba(0, 0, 0, 0.4) 0px 12px 24px; padding: 5px; z-index: 5; }
+.nin2-combo .nin2-opt { display: block; padding: 9px 11px; border-radius: 7px; font-size: 13px; color: var(--muted); cursor: pointer; }
+.nin2-combo .nin2-opt:hover { background: rgba(var(--accent-rgb),.12); color: var(--ink); }
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><details class="nin2-combo"><summary>us-west-2 (Oregon)<span class="nin2-caret">▾</span></summary>
+      <div class="nin2-pop"><span class="nin2-opt">us-east-1 (N. Virginia)</span><span class="nin2-opt">us-west-2 (Oregon)</span><span class="nin2-opt">eu-west-1 (Ireland)</span><span class="nin2-opt">ap-south-1 (Mumbai)</span></div>
+    </details></div></div>
+<div class="meta"><b>Combobox / Dropdown</b> · <code>input-combobox-dropdown</code><br>Input Methods · Fields, Pickers &amp; Actions<p>A native &lt;details&gt; combobox with a rotating caret and a floating option list — zero JS, fully offline.</p></div>
+
+</body>
+</html>

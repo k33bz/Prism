@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sankey / Flow Diagram · Prism</title>
+<!-- Prism showcase sample: charts-sankey-flow-diagram (gallery: charts). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><svg width="260" height="160" viewBox="0 0 260 160">
+        <!-- Sankey / flow diagram -->
+        <g opacity=".2"><path d="M10,20 C80,20 80,15 130,15" stroke="var(--accent)" stroke-width="30" fill="none"></path><path d="M10,60 C80,60 80,55 130,55" stroke="var(--info)" stroke-width="20" fill="none"></path><path d="M10,100 C80,100 80,95 130,95" stroke="var(--pos)" stroke-width="14" fill="none"></path></g>
+        <g opacity=".2"><path d="M130,15 C180,15 180,25 250,25" stroke="var(--accent)" stroke-width="20" fill="none"></path><path d="M130,15 C180,20 180,70 250,70" stroke="var(--accent)" stroke-width="10" fill="none"></path><path d="M130,55 C180,55 180,70 250,70" stroke="var(--info)" stroke-width="14" fill="none"></path><path d="M130,55 C180,60 180,120 250,120" stroke="var(--info)" stroke-width="6" fill="none"></path><path d="M130,95 C180,95 180,120 250,120" stroke="var(--pos)" stroke-width="14" fill="none"></path></g>
+        <!-- Nodes -->
+        <rect x="2" y="8" width="10" height="28" rx="3" fill="var(--accent)"></rect><rect x="2" y="50" width="10" height="18" rx="3" fill="var(--info)"></rect><rect x="2" y="92" width="10" height="14" rx="3" fill="var(--pos)"></rect>
+        <rect x="125" y="4" width="10" height="24" rx="3" fill="var(--accent)"></rect><rect x="125" y="46" width="10" height="16" rx="3" fill="var(--info)"></rect><rect x="125" y="88" width="10" height="12" rx="3" fill="var(--pos)"></rect>
+        <rect x="248" y="14" width="10" height="20" rx="3" fill="var(--accent)"></rect><rect x="248" y="58" width="10" height="22" rx="3" fill="var(--info)"></rect><rect x="248" y="110" width="10" height="18" rx="3" fill="var(--pos)"></rect>
+        <!-- Labels -->
+        <g font-size="9" fill="var(--muted)"><text x="16" y="26">EC2</text><text x="16" y="63">Lambda</text><text x="16" y="103">Fargate</text><text x="140" y="20">us-east</text><text x="140" y="57">eu-west</text><text x="140" y="98">ap-south</text></g>
+      </svg></div></div>
+<div class="meta"><b>Sankey / Flow Diagram</b> · <code>charts-sankey-flow-diagram</code><br>Charts &amp; Metrics · Advanced Visualizations<p>Shows flow of quantities between categories (spend → region, traffic → service). Width = magnitude.</p></div>
+
+</body>
+</html>

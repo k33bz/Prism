@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vortex-Pull · Prism</title>
+<!-- Prism showcase sample: shapes-vortex-pull (gallery: shapes). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.c-info { --c: var(--info); --c-rgb: 68,147,248; }
+.ts-arc-letter { position: absolute; left: 50%; top: 50%; transform-origin: 0px 0px; font-weight: 800; font-size: 20px; white-space: pre; }
+.ts-rainbow .ts-arc-letter, .ts-bow .ts-arc-letter { font-size: 20px; color: var(--c,#fff); text-shadow: rgba(255, 255, 255, 0.2) 0px 0px 8px; }
+.ts-arc-anim .ts-arc-letter { animation: 4s linear 0s infinite normal none running tsHueRun; }
+.ts-ring .ts-arc-letter { font-size: 17px; color: var(--c); }
+.ts-spiral .ts-arc-letter { color: var(--c); }
+.ts-vortex { position: relative; width: 160px; height: 160px; animation: 9s ease-in-out 0s infinite normal none running tsVortexPull; }
+.ts-vortex .ts-arc-letter { color: var(--c); text-shadow: 0 0 6px rgba(var(--c-rgb),.5); }
+@keyframes tsHueRun { 
+  0% { color: rgb(245, 71, 71); }
+  100% { color: rgb(245, 71, 71); }
+}
+@keyframes tsVortexPull { 
+  0% { transform: rotate(0deg) scale(1); }
+  50% { transform: rotate(180deg) scale(0.85); }
+  100% { transform: rotate(360deg) scale(1); }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="ts-vortex c-info" data-spiral="vortex"><span class="ts-arc-letter" style="font-size: 16px; transform: translate(-50%, -50%) translate(8px, 0px) rotate(90deg);">V</span><span class="ts-arc-letter" style="font-size: 15.82px; transform: translate(-50%, -50%) translate(9.36456px, 3.78353px) rotate(112deg);">O</span><span class="ts-arc-letter" style="font-size: 15.64px; transform: translate(-50%, -50%) translate(8.77595px, 8.47483px) rotate(134deg);">R</span><span class="ts-arc-letter" style="font-size: 15.46px; transform: translate(-50%, -50%) translate(5.81633px, 13.0637px) rotate(156deg);">T</span><span class="ts-arc-letter" style="font-size: 15.28px; transform: translate(-50%, -50%) translate(0.572352px, 16.39px) rotate(178deg);">E</span><span class="ts-arc-letter" style="font-size: 15.1px; transform: translate(-50%, -50%) translate(-6.32737px, 17.3843px) rotate(200deg);">X</span><span class="ts-arc-letter" style="font-size: 14.92px; transform: translate(-50%, -50%) translate(-13.7841px, 15.3088px) rotate(222deg);">&nbsp;</span><span class="ts-arc-letter" style="font-size: 14.74px; transform: translate(-50%, -50%) translate(-20.4026px, 9.95103px) rotate(244deg);">P</span><span class="ts-arc-letter" style="font-size: 14.56px; transform: translate(-50%, -50%) translate(-24.7396px, 1.72996px) rotate(266deg);">U</span><span class="ts-arc-letter" style="font-size: 14.38px; transform: translate(-50%, -50%) translate(-25.5834px, -8.31256px) rotate(288deg);">L</span><span class="ts-arc-letter" style="font-size: 14.2px; transform: translate(-50%, -50%) translate(-22.2153px, -18.6408px) rotate(310deg);">L</span><span class="ts-arc-letter" style="font-size: 14.02px; transform: translate(-50%, -50%) translate(-14.6006px, -27.4597px) rotate(332deg);">&nbsp;</span><span class="ts-arc-letter" style="font-size: 13.84px; transform: translate(-50%, -50%) translate(-3.47034px, -33.0181px) rotate(354deg);">I</span><span class="ts-arc-letter" style="font-size: 13.66px; transform: translate(-50%, -50%) translate(9.73px, -33.9325px) rotate(376deg);">N</span><span class="ts-arc-letter" style="font-size: 13.48px; transform: translate(-50%, -50%) translate(23.0257px, -29.4716px) rotate(398deg);">T</span><span class="ts-arc-letter" style="font-size: 13.3px; transform: translate(-50%, -50%) translate(34.208px, -19.75px) rotate(420deg);">O</span><span class="ts-arc-letter" style="font-size: 13.12px; transform: translate(-50%, -50%) translate(41.1952px, -5.7896px) rotate(442deg);">&nbsp;</span><span class="ts-arc-letter" style="font-size: 12.94px; transform: translate(-50%, -50%) translate(42.4019px, 10.572px) rotate(464deg);">T</span><span class="ts-arc-letter" style="font-size: 12.76px; transform: translate(-50%, -50%) translate(37.053px, 26.9206px) rotate(486deg);">H</span><span class="ts-arc-letter" style="font-size: 12.58px; transform: translate(-50%, -50%) translate(25.3831px, 40.6215px) rotate(508deg);">E</span><span class="ts-arc-letter" style="font-size: 12.4px; transform: translate(-50%, -50%) translate(8.68241px, 49.2404px) rotate(530deg);">&nbsp;</span><span class="ts-arc-letter" style="font-size: 12.22px; transform: translate(-50%, -50%) translate(-10.8322px, 50.9615px) rotate(552deg);">C</span><span class="ts-arc-letter" style="font-size: 12.04px; transform: translate(-50%, -50%) translate(-30.3083px, 44.9338px) rotate(574deg);">O</span><span class="ts-arc-letter" style="font-size: 11.86px; transform: translate(-50%, -50%) translate(-46.6748px, 31.4826px) rotate(596deg);">R</span><span class="ts-arc-letter" style="font-size: 11.68px; transform: translate(-50%, -50%) translate(-57.1238px, 12.142px) rotate(618deg);">E</span></div></div></div>
+<div class="meta"><b>Vortex-Pull</b> · <code>shapes-vortex-pull</code><br>Text Shapes · Spiral &amp; Vortex<p>A spiral that also breathes: the figure rotates while scaling in and out, so the letters appear to be sucked toward the core and flung back. Adds a glow per letter for depth. Reads as &quot;processing / being pulled in.&quot;</p></div>
+
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Marquee-Reverse · Prism</title>
+<!-- Prism showcase sample: text-marquee-reverse (gallery: text). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.c-info { --c: var(--info); --c-rgb: 68,147,248; }
+.tx-label { font-size: 13px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; }
+.tx-marquee { display: block; width: 100%; overflow: hidden; white-space: nowrap; mask: linear-gradient(90deg, transparent, rgb(0, 0, 0) 8%, rgb(0, 0, 0) 92%, transparent); }
+.tx-marquee > span { display: inline-block; padding-right: 2em; color: var(--c); font-weight: 700; animation: 9s linear 0s infinite normal none running txMarquee; }
+.tx-marquee.rev > span { animation-name: txMarqueeR; }
+@keyframes txMarquee { 
+  0% { transform: translateX(0px); }
+  100% { transform: translateX(-50%); }
+}
+@keyframes txMarqueeR { 
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0px); }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><span class="tx-marquee rev tx-label c-info"><span>← REVERSE FLOW · TELEMETRY OK · &nbsp;← REVERSE FLOW · TELEMETRY OK · &nbsp;</span></span></div></div>
+<div class="meta"><b>Marquee-Reverse</b> · <code>text-marquee-reverse</code><br>Text Effects · Marquee &amp; Ticker<p>The same seamless marquee running right-to-left via the .rev modifier. Pair a forward and a reverse row for a two-direction news crawl.</p></div>
+
+</body>
+</html>

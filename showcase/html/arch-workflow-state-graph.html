@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Workflow State Graph · Prism</title>
+<!-- Prism showcase sample: arch-workflow-state-graph (gallery: arch). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.arch-svg { display: block; width: 100%; height: 100%; overflow: visible; font: 700 9px ui-sans-serif, system-ui, sans-serif; }
+.arch-svg text { fill: var(--ink); text-anchor: middle; dominant-baseline: middle; }
+.arch-conn .arch-svg .arch-ln { stroke: var(--line); stroke-width: 2; fill: none; }
+.arch-conn .arch-svg .arch-flow { stroke: var(--info); stroke-width: 2; fill: none; stroke-linecap: round; stroke-dasharray: 7, 7; animation: 1.1s linear 0s infinite normal none running archDash; }
+.arch-dedge { stroke: var(--line); stroke-width: 1.6; fill: none; }
+.arch-dflow { stroke: rgba(var(--info-rgb),.9); stroke-width: 1.6; fill: none; stroke-linecap: round; stroke-dasharray: 5, 6; animation: 1.2s linear 0s infinite normal none running archDash; }
+.arch-state { fill: rgba(var(--info-rgb),.13); stroke: var(--info); stroke-width: 1.4; }
+.arch-state.arch-active { fill: rgba(var(--pos-rgb),.2); stroke: var(--pos); animation: 3s ease-in-out 0s infinite normal none running archBreathS; }
+@keyframes archDash { 
+  100% { stroke-dashoffset: -32; }
+}
+@keyframes archBreathS { 
+  0%, 100% { filter: drop-shadow(0 0 0 rgba(var(--pos-rgb),0)); }
+  50% { filter: drop-shadow(0 0 6px rgba(var(--pos-rgb),.7)); }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><svg class="arch-svg" viewBox="0 0 210 128" style="width:210px;height:128px">
+      <rect class="arch-state arch-active" x="16" y="52" width="46" height="24" rx="6"></rect><text x="39" y="64">Pending</text>
+      <rect class="arch-state" x="86" y="14" width="46" height="24" rx="6"></rect><text x="109" y="26">Running</text>
+      <rect class="arch-state" x="86" y="90" width="46" height="24" rx="6"></rect><text x="109" y="102">Failed</text>
+      <rect class="arch-state" x="156" y="52" width="46" height="24" rx="6"></rect><text x="179" y="64">Done</text>
+      <path class="arch-dedge" d="M62 60 L86 30"></path><path class="arch-dflow" d="M62 60 L86 30"></path>
+      <path class="arch-dedge" d="M62 68 L86 100"></path><path class="arch-dflow neg" d="M62 68 L86 100"></path>
+      <path class="arch-dedge" d="M132 26 L156 58"></path><path class="arch-dflow pos" d="M132 26 L156 58"></path>
+    </svg></div></div>
+<div class="meta"><b>Workflow State Graph</b> · <code>arch-workflow-state-graph</code><br>Architecture Diagrams · SEQUENCE &amp; FLOW DIAGRAMS<p>A job progressing Pending → Running → Done with a failure branch — a Step Functions-style execution graph.</p></div>
+
+</body>
+</html>

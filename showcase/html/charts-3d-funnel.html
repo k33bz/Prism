@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3D Funnel · Prism</title>
+<!-- Prism showcase sample: charts-3d-funnel (gallery: charts). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><svg width="220" height="190" viewBox="0 0 220 190" style="overflow:visible">
+        <!-- 3D funnel: stacked tapering ellipse-capped slabs -->
+        <defs>
+          <linearGradient id="fun1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="var(--info)"></stop><stop offset="1" stop-color="var(--info)" stop-opacity=".5"></stop></linearGradient>
+          <linearGradient id="fun2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="var(--accent)"></stop><stop offset="1" stop-color="var(--accent)" stop-opacity=".5"></stop></linearGradient>
+          <linearGradient id="fun3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="var(--pos)"></stop><stop offset="1" stop-color="var(--pos)" stop-opacity=".5"></stop></linearGradient>
+        </defs>
+        <!-- slab 1 -->
+        <path d="M40,30 L180,30 L160,58 L60,58 Z" fill="url(#fun1)"></path><ellipse cx="110" cy="30" rx="70" ry="11" fill="var(--info)"></ellipse><ellipse cx="110" cy="58" rx="50" ry="8" fill="var(--info)" opacity=".4"></ellipse>
+        <text x="110" y="48" text-anchor="middle" font-size="11" font-weight="800" fill="#08131f">Visits 100%</text>
+        <!-- slab 2 -->
+        <path d="M60,72 L160,72 L140,100 L80,100 Z" fill="url(#fun2)"></path><ellipse cx="110" cy="72" rx="50" ry="8" fill="var(--accent)"></ellipse><ellipse cx="110" cy="100" rx="30" ry="6" fill="var(--accent)" opacity=".4"></ellipse>
+        <text x="110" y="90" text-anchor="middle" font-size="10" font-weight="800" fill="#08131f">Trials 47%</text>
+        <!-- slab 3 -->
+        <path d="M80,114 L140,114 L122,140 L98,140 Z" fill="url(#fun3)"></path><ellipse cx="110" cy="114" rx="30" ry="6" fill="var(--pos)"></ellipse><ellipse cx="110" cy="140" rx="13" ry="4" fill="var(--pos)" opacity=".4"></ellipse>
+        <text x="110" y="131" text-anchor="middle" font-size="9" font-weight="800" fill="#08131f">Paid 12%</text>
+      </svg></div></div>
+<div class="meta"><b>3D Funnel</b> · <code>charts-3d-funnel</code><br>Charts &amp; Metrics · 3D Charts &amp; Graphs<p>Conversion stages as tapering 3-D slabs with elliptical caps, narrowing toward the goal. The depth makes the drop-off between stages feel physical — a favourite for growth/marketing decks.</p></div>
+
+</body>
+</html>

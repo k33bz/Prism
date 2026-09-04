@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pyramid Chart · Prism</title>
+<!-- Prism showcase sample: charts-pyramid-chart (gallery: charts). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.mp-rise { animation: 1s cubic-bezier(0.22, 1, 0.36, 1) 0s 1 normal backwards running scx-riseY; transform-box: fill-box; transform-origin: center bottom; }
+@keyframes scx-riseY { 
+  0% { transform: scaleY(0); }
+  100% { transform: scaleY(1); }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><svg width="220" height="160" viewBox="0 0 220 160" style="overflow:visible">
+        <g>
+          <polygon class="mp-rise" style="animation-delay:0s" points="80,40 140,40 130,62 90,62" fill="var(--info)"></polygon>
+          <polygon class="mp-rise" style="animation-delay:.1s" points="68,70 152,70 142,94 78,94" fill="var(--accent)"></polygon>
+          <polygon class="mp-rise" style="animation-delay:.2s" points="54,102 166,102 156,128 64,128" fill="var(--crit)"></polygon>
+          <polygon class="mp-rise" style="animation-delay:.3s" points="40,136 180,136 130,136 90,136" fill="var(--pos)" opacity=".0"></polygon>
+          <polygon class="mp-rise" style="animation-delay:.3s" points="40,136 180,136 168,150 52,150" fill="var(--pos)"></polygon>
+        </g>
+        <g fill="#fff" font-size="11" font-weight="800" text-anchor="middle">
+          <text x="110" y="55">Awareness</text><text x="110" y="86">Interest</text><text x="110" y="118">Desire</text><text x="110" y="146" fill="#052e12">Action</text>
+        </g>
+      </svg></div></div>
+<div class="meta"><b>Pyramid Chart</b> · <code>charts-pyramid-chart</code><br>Charts &amp; Metrics · More Plot Types<p>Stacked trapezoid tiers narrowing toward the apex (or widening to the base) — hierarchy, maturity levels, or a marketing funnel read top-down. Tiers rise into place. Distinct from the funnel: tiers are equal-angle slabs, not volume-scaled.</p></div>
+
+</body>
+</html>

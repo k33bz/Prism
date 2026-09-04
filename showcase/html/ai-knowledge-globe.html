@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Knowledge Globe · Prism</title>
+<!-- Prism showcase sample: ai-knowledge-globe (gallery: ai). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.panel { background-position-x: ; background-position-y: ; background-size: ; background-repeat: ; background-attachment: ; background-origin: ; background-clip: ; background-color: ; background-image: var(--cardgrad); border: 1px solid var(--line); border-radius: 14px; padding: 16px; display: flex; flex-direction: column; min-height: 170px; position: relative; overflow: hidden; }
+.panel.w2 { grid-column: span 2; }
+.ptitle { display: flex; align-items: center; gap: 8px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--dim); margin-bottom: 12px; }
+.ptitle .tdot { width: 7px; height: 7px; border-radius: 50%; background: var(--c,var(--accent)); box-shadow: 0 0 7px var(--c,var(--accent)); animation: 1.4s ease-in-out 0s infinite normal none running tblink; }
+.pbody { flex: 1 1 0%; display: flex; align-items: center; justify-content: center; position: relative; }
+.cap { margin-top: 12px; font-size: 12px; color: var(--muted); text-align: center; min-height: 1.4em; }
+.panel:hover .fx-copy { opacity: 1; }
+.panel.hero { grid-column: 1 / -1; min-height: 0px; }
+@keyframes tblink { 
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+.tile.is-new, .panel.is-new { border-color: rgb(63, 185, 80); box-shadow: rgba(63, 185, 80, 0.55) 0px 0px 0px 0px; animation: 2.4s ease-out 0s infinite normal none running pr-new-pulse; }
+.tile.is-new, .panel.is-new { position: relative; }
+.tile.is-new::after, .panel.is-new::after { content: "NEW"; position: absolute; top: 9px; right: 9px; z-index: 10; background: rgb(63, 185, 80); color: rgb(6, 20, 10); font-size: 9px; font-weight: 900; letter-spacing: 0.08em; padding: 2px 7px; border-radius: 10px; pointer-events: none; box-shadow: rgba(63, 185, 80, 0.5) 0px 0px 10px; }
+.tile.is-fixed, .panel.is-fixed { box-shadow: rgba(68, 147, 248, 0.55) 0px 0px 0px 0px; animation: 2.4s ease-out 0s infinite normal none running pr-fix-pulse; position: relative; border-color: rgb(68, 147, 248) !important; }
+.tile.is-fixed::after, .panel.is-fixed::after { content: "UPDATED"; position: absolute; top: 9px; right: 9px; z-index: 10; background: rgb(68, 147, 248); color: rgb(3, 18, 31); font-size: 9px; font-weight: 900; letter-spacing: 0.06em; padding: 2px 7px; border-radius: 10px; pointer-events: none; box-shadow: rgba(68, 147, 248, 0.5) 0px 0px 10px; }
+@keyframes pr-new-pulse { 
+  0% { box-shadow: rgba(63, 185, 80, 0.55) 0px 0px 0px 0px; }
+  60% { box-shadow: rgba(63, 185, 80, 0) 0px 0px 0px 7px; }
+  100% { box-shadow: rgba(63, 185, 80, 0) 0px 0px 0px 0px; }
+}
+@keyframes pr-fix-pulse { 
+  0% { box-shadow: rgba(68, 147, 248, 0.55) 0px 0px 0px 0px; }
+  60% { box-shadow: rgba(68, 147, 248, 0) 0px 0px 0px 7px; }
+  100% { box-shadow: rgba(68, 147, 248, 0) 0px 0px 0px 0px; }
+}
+.pr-playbtn { position: absolute; top: 9px; left: 9px; z-index: 11; width: 26px; height: 26px; border-radius: 50%; background: rgba(18, 22, 35, 0.72); border: 1px solid rgba(255, 255, 255, 0.18); color: var(--ink,#eaf1f9); display: flex; align-items: center; justify-content: center; font-size: 11px; cursor: pointer; opacity: 0.45; transition: opacity 0.15s, transform 0.15s, background 0.15s, border-color 0.15s; padding: 0px; }
+.panel:has(> .pr-playbtn) > .ptitle { padding-left: 32px; }
+.pr-playbtn:hover, .pr-playbtn:focus-visible { opacity: 1; background: rgba(var(--accent-rgb,83,159,229),.16); border-color: var(--accent,#539fe5); transform: scale(1.08); }
+.pr-playbtn:active { transform: scale(0.94); }
+.pr-playbtn svg { width: 11px; height: 11px; fill: currentcolor; pointer-events: none; }
+.nai-conf .nd { position: absolute; bottom: 2px; left: 50%; width: 3px; height: 48px; background: var(--ink); transform-origin: center bottom; border-radius: 2px; animation: 3.4s ease-in-out 0s infinite normal none running naiNeedle; }
+@keyframes naiNeedle { 
+  0%, 100% { transform: translateX(-50%) rotate(-70deg); }
+  50% { transform: translateX(-50%) rotate(58deg); }
+}
+.nai2-scene { perspective: 640px; width: 150px; height: 130px; display: flex; align-items: center; justify-content: center; }
+.nai2-globe { position: relative; width: 104px; height: 104px; transform-style: preserve-3d; animation: 14s linear 0s infinite normal none running nai2Spin; }
+.nai2-globe .rg { position: absolute; inset: 0px; border-radius: 50%; border: 1px solid rgba(var(--info-rgb),.4); }
+.nai2-globe .g1 { transform: rotateY(0deg); }
+.nai2-globe .g2 { transform: rotateY(60deg); }
+.nai2-globe .g3 { transform: rotateY(120deg); }
+.nai2-globe .g4 { transform: rotateX(70deg); }
+.nai2-globe .g5 { transform: rotateX(70deg) rotateY(60deg); }
+.nai2-globe .nd { position: absolute; left: 50%; top: 50%; width: 9px; height: 9px; margin: -4.5px; border-radius: 50%; background: var(--c,var(--pos)); box-shadow: 0 0 8px var(--c,var(--pos)); animation: 2.4s ease-in-out 0s infinite normal none running nai2Blink; }
+.nai2-beam .nd { position: absolute; width: 12px; height: 12px; border-radius: 50%; background: var(--panel2); border: 1.5px solid var(--line); transform: translate(-50%, -50%); }
+.nai2-beam .nd.best { background: var(--c,var(--pos)); border-color: var(--c,var(--pos)); box-shadow: 0 0 9px var(--c,var(--pos)); animation: 2s ease-in-out 0s infinite normal none running nai2Blink; }
+@keyframes nai2Spin { 
+  100% { transform: rotate(1turn); }
+}
+@keyframes nai2Blink { 
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.25; }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="panel is-new" data-ctype="object-3d" data-interact="auto-play" style="--c:var(--pos)" data-fx-id="ai-knowledge-globe" data-fx-name="Knowledge Globe">
+    <div class="ptitle"><span class="tdot"></span>Knowledge Globe</div>
+    <div class="pbody"><div class="nai2-scene"><div class="nai2-globe">
+      <div class="rg g1"></div><div class="rg g2"></div><div class="rg g3"></div><div class="rg g4"></div><div class="rg g5"></div>
+      <span class="nd" style="transform:translate3d(40px,-30px,20px)"></span>
+      <span class="nd" style="transform:translate3d(-34px,18px,30px);animation-delay:.6s"></span>
+      <span class="nd" style="transform:translate3d(12px,40px,-24px);animation-delay:1.2s"></span>
+      <span class="nd" style="transform:translate3d(-24px,-36px,-18px);animation-delay:.9s"></span>
+    </div></div></div>
+    <div class="cap">A wireframe knowledge graph wrapped onto a slowly spinning globe — entities glinting as facts link across it.</div>
+  <button type="button" class="pr-playbtn" aria-label="Play Animation" title="Play Animation"><svg viewBox="0 0 16 16"><path d="M4 2.5v11l10-5.5-10-5.5z"></path></svg></button></div></div></div>
+<div class="meta"><b>Knowledge Globe</b> · <code>ai-knowledge-globe</code><br>AI Working · 3D &amp; Spatial<p>A wireframe knowledge graph wrapped onto a slowly spinning globe — entities glinting as facts link across it.</p></div>
+
+</body>
+</html>

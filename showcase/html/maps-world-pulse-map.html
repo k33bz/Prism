@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>World Pulse Map · Prism</title>
+<!-- Prism showcase sample: maps-world-pulse-map (gallery: maps). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.gmap-scene { position: relative; width: 250px; height: 158px; border-radius: 12px; overflow: hidden; background: radial-gradient(120% 140% at 50% -20%,rgba(var(--info-rgb),.10),transparent 60%),var(--panel2); border: 1px solid var(--line); }
+.gmap-svg { position: absolute; inset: 0px; width: 100%; height: 100%; display: block; }
+.gmap-land { fill: rgba(var(--info-rgb),.30); stroke: rgba(var(--info-rgb),.6); stroke-width: 1; }
+.gmap-dot { position: absolute; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 8px rgba(var(--accent-rgb),.8); transform: translate(-50%, -50%); }
+.gmap-dot::after { content: ""; position: absolute; inset: -3px; border-radius: 50%; border: 1.5px solid rgba(var(--accent-rgb),.9); animation: 2.6s ease-out 0s infinite normal none running gmapPing; }
+.gmap-dot.i { background: var(--info); box-shadow: 0 0 8px rgba(var(--info-rgb),.8); }
+.gmap-dot.i::after { border-color: rgba(var(--info-rgb),.9); animation-delay: 0.7s; }
+.gmap-dot.p { background: var(--pos); box-shadow: 0 0 8px rgba(var(--pos-rgb),.8); }
+.gmap-dot.p::after { border-color: rgba(var(--pos-rgb),.9); animation-delay: 1.3s; }
+.gmap-us .gmap-land { fill: rgba(var(--accent-rgb),.28); stroke: rgba(var(--accent-rgb),.65); }
+.gmap-eu .gmap-land { fill: rgba(var(--crit-rgb),.26); stroke: rgba(var(--crit-rgb),.6); }
+.gmap-night .gmap-land { fill: rgba(var(--warn-rgb),.30); stroke: rgba(var(--warn-rgb),.55); }
+@keyframes gmapPing { 
+  0% { transform: scale(0.4); opacity: 0.9; }
+  70% { opacity: 0; }
+  100% { transform: scale(2.6); opacity: 0; }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="gmap-scene">
+      <svg class="gmap-svg" viewBox="0 0 250 158" preserveAspectRatio="none">
+        <path class="gmap-land" d="M18,50 Q30,34 55,38 Q72,30 82,46 Q78,64 60,70 Q40,78 28,66 Z"></path>
+        <path class="gmap-land" d="M60,86 Q74,80 80,98 Q88,120 74,138 Q64,150 58,132 Q52,110 60,86 Z"></path>
+        <path class="gmap-land" d="M120,44 Q140,32 158,42 Q150,58 132,60 Q122,54 120,44 Z"></path>
+        <path class="gmap-land" d="M128,66 Q150,64 158,86 Q166,116 148,134 Q134,124 130,100 Q126,82 128,66 Z"></path>
+        <path class="gmap-land" d="M172,40 Q206,32 230,46 Q224,64 196,66 Q176,60 172,40 Z"></path>
+        <path class="gmap-land" d="M198,104 Q216,98 226,112 Q220,126 204,124 Q196,116 198,104 Z"></path>
+      </svg>
+      <div class="gmap-dot" style="left:44px;top:52px"></div>
+      <div class="gmap-dot i" style="left:140px;top:52px"></div>
+      <div class="gmap-dot p" style="left:200px;top:52px"></div>
+      <div class="gmap-dot i" style="left:148px;top:104px"></div>
+    </div></div></div>
+<div class="meta"><b>World Pulse Map</b> · <code>maps-world-pulse-map</code><br>Maps &amp; Geo · WORLD &amp; REGION MAPS<p>Stylized continents with pulsing location dots — a global activity overview.</p></div>
+
+</body>
+</html>

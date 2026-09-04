@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Candle Focus · Prism</title>
+<!-- Prism showcase sample: obsidian-candle-focus (gallery: obsidian). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.obs { --ob: var(--c,var(--crit)); --ob-rgb: var(--c-rgb,var(--crit-rgb)); font-size: 12.5px; color: var(--ink); }
+.obs-ambient { width: 280px; max-width: 100%; height: 108px; border: 1px solid var(--line); border-radius: 10px; background: rgb(9, 12, 22); position: relative; overflow: hidden; }
+.obs-ambient-label { position: absolute; left: 10px; bottom: 7px; z-index: 4; font-size: 8px; font-weight: 800; letter-spacing: 0.12em; color: rgba(255, 255, 255, 0.65); text-shadow: rgb(0, 0, 0) 0px 1px 5px; }
+.obs-candle-focus { background: radial-gradient(circle at 50% 55%,rgba(var(--warn-rgb),.17),#090c16 56%); }
+.obs-candle { position: absolute; left: 132px; bottom: 13px; width: 16px; height: 44px; border-radius: 4px 4px 2px 2px; background: linear-gradient(90deg, rgb(232, 218, 192), rgb(255, 255, 255), rgb(201, 184, 148)); box-shadow: rgb(0, 0, 0) 0px 4px 8px; }
+.obs-candle::before { content: ""; position: absolute; left: 3px; top: -22px; width: 10px; height: 24px; border-radius: 70% 30% 65% 35%; background: radial-gradient(circle at 50% 70%, rgb(255, 255, 255) 0px, rgb(255, 255, 255) 12%, rgb(255, 229, 117) 26%, rgb(255, 130, 58) 65%, transparent 70%); filter: drop-shadow(rgb(255, 177, 61) 0px 0px 8px); animation: 1.3s ease-in-out 0s infinite alternate none running obsFlameFocus; transform-origin: 50% 100%; }
+.obs-candle::after { content: ""; position: absolute; left: 7px; top: -4px; width: 2px; height: 5px; background: rgb(34, 34, 34); }
+@keyframes obsFlameFocus { 
+  0% { transform: rotate(-3deg) scale(0.92, 1); }
+  100% { transform: rotate(4deg) scale(1.08, 0.92); }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="obs obs-ambient obs-candle-focus"><span class="obs-candle"></span><span class="obs-ambient-label">ONE NOTE AT A TIME</span></div></div></div>
+<div class="meta"><b>Candle Focus</b> · <code>obsidian-candle-focus</code><br>Obsidian Facets · VAULT AMBIENT &amp; FOCUS<p>A small realistic flame flickers over a warm halo for distraction-free writing.</p></div>
+
+</body>
+</html>

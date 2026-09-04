@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Heat Matrix · Prism</title>
+<!-- Prism showcase sample: charts-heat-matrix (gallery: charts). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.nch-heatmx { display: grid; grid-template-columns: repeat(8, 15px); grid-auto-rows: 15px; gap: 3px; }
+.nch-heatmx i { border-radius: 3px; background: var(--crit); animation: 0.5s ease-out 0s 1 normal both running nchFade; }
+@keyframes nchFade { 
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="nch-heatmx"><i style="opacity:.15"></i><i style="opacity:.4;animation-delay:.02s"></i><i style="opacity:.7;animation-delay:.04s"></i><i style="opacity:.9;animation-delay:.06s"></i><i style="opacity:.55;animation-delay:.08s"></i><i style="opacity:.25;animation-delay:.1s"></i><i style="opacity:.8;animation-delay:.12s"></i><i style="opacity:1;animation-delay:.14s"></i><i style="opacity:.5;animation-delay:.05s"></i><i style="opacity:.2;animation-delay:.07s"></i><i style="opacity:.85;animation-delay:.09s"></i><i style="opacity:.6;animation-delay:.11s"></i><i style="opacity:.35;animation-delay:.13s"></i><i style="opacity:.95;animation-delay:.15s"></i><i style="opacity:.45;animation-delay:.17s"></i><i style="opacity:.7;animation-delay:.19s"></i><i style="opacity:.3;animation-delay:.1s"></i><i style="opacity:.65;animation-delay:.12s"></i><i style="opacity:.9;animation-delay:.14s"></i><i style="opacity:.25;animation-delay:.16s"></i><i style="opacity:.55;animation-delay:.18s"></i><i style="opacity:.8;animation-delay:.2s"></i><i style="opacity:.4;animation-delay:.22s"></i><i style="opacity:1;animation-delay:.24s"></i><i style="opacity:.6;animation-delay:.15s"></i><i style="opacity:.35;animation-delay:.17s"></i><i style="opacity:.75;animation-delay:.19s"></i><i style="opacity:.5;animation-delay:.21s"></i><i style="opacity:.2;animation-delay:.23s"></i><i style="opacity:.9;animation-delay:.25s"></i><i style="opacity:.45;animation-delay:.27s"></i><i style="opacity:.7;animation-delay:.29s"></i></div></div></div>
+<div class="meta"><b>Heat Matrix</b> · <code>charts-heat-matrix</code><br>Charts &amp; Metrics · New<p>Density over two axes — hour × day, region × service. Cell opacity reads as intensity.</p></div>
+
+</body>
+</html>

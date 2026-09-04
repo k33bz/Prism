@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nested Treemap · Prism</title>
+<!-- Prism showcase sample: charts-nested-treemap (gallery: charts). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.mp-fade { animation: 0.7s ease-out 0s 1 normal backwards running scx-fadeUp; }
+@keyframes scx-fadeUp { 
+  0% { opacity: 0; transform: translateY(6px); }
+  100% { opacity: 1; transform: none; }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><svg width="250" height="150" viewBox="0 0 250 150">
+        <!-- nested treemap: outer groups subdivided into children -->
+        <g>
+          <rect x="4" y="4" width="150" height="142" rx="4" fill="rgba(var(--info-rgb),.12)" stroke="var(--info)"></rect>
+          <rect class="mp-fade" x="10" y="22" width="88" height="80" rx="3" fill="var(--info)" opacity=".85"></rect>
+          <rect class="mp-fade" style="animation-delay:.05s" x="102" y="22" width="46" height="48" rx="3" fill="var(--info)" opacity=".6"></rect>
+          <rect class="mp-fade" style="animation-delay:.1s" x="102" y="74" width="46" height="28" rx="3" fill="var(--info)" opacity=".4"></rect>
+          <rect class="mp-fade" style="animation-delay:.1s" x="10" y="106" width="138" height="34" rx="3" fill="var(--info)" opacity=".3"></rect>
+          <text x="14" y="18" font-size="9" fill="var(--info)" font-weight="800">prod</text>
+          <rect x="160" y="4" width="86" height="142" rx="4" fill="rgba(var(--accent-rgb),.12)" stroke="var(--accent)"></rect>
+          <rect class="mp-fade" style="animation-delay:.15s" x="166" y="22" width="74" height="56" rx="3" fill="var(--accent)" opacity=".85"></rect>
+          <rect class="mp-fade" style="animation-delay:.2s" x="166" y="82" width="36" height="58" rx="3" fill="var(--accent)" opacity=".5"></rect>
+          <rect class="mp-fade" style="animation-delay:.25s" x="206" y="82" width="34" height="58" rx="3" fill="var(--accent)" opacity=".35"></rect>
+          <text x="164" y="18" font-size="9" fill="var(--accent)" font-weight="800">staging</text>
+        </g>
+      </svg></div></div>
+<div class="meta"><b>Nested Treemap</b> · <code>charts-nested-treemap</code><br>Charts &amp; Metrics · More Plot Types<p>Treemap with an extra level — outer rectangles are groups (env, team, account), each subdivided into children sized by resource use. Resource hogs visibly swell and crowd their neighbours, so hundreds of processes stay monitorable in one frame.</p></div>
+
+</body>
+</html>

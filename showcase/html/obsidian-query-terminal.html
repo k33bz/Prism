@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Query Terminal · Prism</title>
+<!-- Prism showcase sample: obsidian-query-terminal (gallery: obsidian). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.obs { --ob: var(--c,var(--crit)); --ob-rgb: var(--c-rgb,var(--crit-rgb)); font-size: 12.5px; color: var(--ink); }
+.obs-data { width: 280px; max-width: 100%; min-height: 90px; border: 1px solid var(--line); border-radius: 10px; background: rgb(13, 17, 29); padding: 10px 12px; position: relative; overflow: hidden; text-align: left; }
+.obs-data h4 { margin: 0px 0px 7px; font-size: 10.5px; color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase; }
+.obs-data .obs-dnum { font: 800 23px ui-monospace, SFMono-Regular, Menlo, monospace; color: var(--ink); }
+.obs-query-terminal { font: 9.5px / 1.55 ui-monospace, monospace; }
+.obs-termhead { display: flex; gap: 4px; margin: -10px -12px 8px; padding: 6px 8px; background: rgb(8, 10, 17); }
+.obs-termhead i { width: 6px; height: 6px; border-radius: 50%; background: var(--neg); }
+.obs-termhead i:nth-child(2) { background: var(--warn); }
+.obs-termhead i:nth-child(3) { background: var(--pos); }
+.obs-query-terminal .prompt { color: var(--pos); }
+.obs-query-terminal .cmd { display: inline-block; color: var(--ink); overflow: hidden; white-space: nowrap; border-right: 1px solid var(--ob); animation: 5s steps(24) 0s infinite normal none running obsTerminalType; }
+.obs-query-terminal .result { color: var(--ob); opacity: 0; animation: 5s ease 0s infinite normal none running obsTermResult; }
+@keyframes obsTerminalType { 
+  0%, 8% { width: 0px; }
+  52%, 100% { width: 190px; }
+}
+@keyframes obsTermResult { 
+  0%, 50% { opacity: 0; transform: translateY(4px); }
+  62%, 90% { opacity: 1; transform: none; }
+  100% { opacity: 0; }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="obs obs-data obs-query-terminal"><div class="obs-termhead"><i></i><i></i><i></i></div><span class="prompt">› </span><span class="cmd">vault stats --orphans</span><div class="result">✓ 4 orphan notes found in 42ms</div></div></div></div>
+<div class="meta"><b>Query Terminal</b> · <code>obsidian-query-terminal</code><br>Obsidian Facets · DATAVIEW &amp; DASHBOARDS<p>A terminal types a vault query and reveals its result on completion.</p></div>
+
+</body>
+</html>

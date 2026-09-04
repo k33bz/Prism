@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Real Toggle Switch · Prism</title>
+<!-- Prism showcase sample: spectrums-real-toggle-switch (gallery: spectrums). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.skeu-switch { display: inline-flex; cursor: pointer; }
+.skeu-switch input { position: absolute; opacity: 0; width: 0px; height: 0px; }
+.skeu-switch-track { position: relative; width: 64px; height: 32px; border-radius: 17px; background: linear-gradient(rgb(17, 17, 17), rgb(0, 0, 0)); border: 1px solid rgb(0, 0, 0); box-shadow: rgba(0, 0, 0, 0.75) 0px 3px 6px inset, rgba(255, 255, 255, 0.05) 0px -1px 0px inset; transition: background 0.2s; }
+.skeu-switch-thumb { position: absolute; top: 3px; left: 3px; width: 26px; height: 26px; border-radius: 50%; background-image: var(--skeu-brushed-metal); border: 1px solid rgb(125, 127, 132); box-shadow: rgba(255, 255, 255, 0.85) 0px 1px 0px inset, rgba(0, 0, 0, 0.35) -1px -1px 2px inset, rgba(0, 0, 0, 0.55) 0px 3px 6px; transition: left 0.18s cubic-bezier(0.3, 1.3, 0.5, 1); }
+.skeu-switch input:checked + .skeu-switch-track { background: linear-gradient(rgb(28, 63, 34), rgb(13, 34, 17)); box-shadow: inset 0 3px 6px rgba(0,0,0,.6), inset 0 0 12px rgba(var(--pos-rgb),.35); }
+.skeu-switch input:checked + .skeu-switch-track .skeu-switch-thumb { left: 35px; }
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><label class="skeu-switch"><input type="checkbox" checked=""><span class="skeu-switch-track"><span class="skeu-switch-thumb"></span></span></label></div></div>
+<div class="meta"><b>Real Toggle Switch</b> · <code>spectrums-real-toggle-switch</code><br>Spectrums · Skeuomorphic Hardware · Skeuo Hardware<p>A recessed track housing a brushed-metal thumb that slides and glows green when engaged — a believable physical on/off switch.</p></div>
+
+</body>
+</html>

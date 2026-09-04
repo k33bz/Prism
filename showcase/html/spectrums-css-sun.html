@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CSS Sun · Prism</title>
+<!-- Prism showcase sample: spectrums-css-sun (gallery: spectrums). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.solp-obj-sun { position: relative; width: 76px; height: 76px; animation: 18s linear 0s infinite normal none running solpSunSpin; }
+.solp-ray { position: absolute; top: 50%; left: 50%; width: 3px; height: 32px; margin: 0px 0px 0px -1.5px; transform-origin: center top; background: linear-gradient(180deg,var(--solp-gold),rgba(255,201,74,0)); border-radius: 2px; }
+.solp-ray:nth-child(1) { transform: rotate(0deg); }
+.solp-ray:nth-child(2) { transform: rotate(45deg); }
+.solp-ray:nth-child(3) { transform: rotate(90deg); }
+.solp-ray:nth-child(4) { transform: rotate(135deg); }
+.solp-ray:nth-child(5) { transform: rotate(180deg); }
+.solp-ray:nth-child(6) { transform: rotate(225deg); }
+.solp-ray:nth-child(7) { transform: rotate(270deg); }
+.solp-ray:nth-child(8) { transform: rotate(315deg); }
+.solp-sun-core { position: absolute; inset: 20px; border-radius: 50%; background: radial-gradient(circle at 35% 30%,#fff9e6,var(--solp-gold) 55%,var(--solp-golddeep)); box-shadow: rgba(255, 201, 74, 0.6) 0px 0px 24px; animation: 3s ease-in-out 0s infinite normal none running solpRayPulse; }
+@keyframes solpRayPulse { 
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.15); }
+}
+@keyframes solpSunSpin { 
+  100% { transform: rotate(360deg); }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="solp-obj-sun">
+      <span class="solp-ray"></span><span class="solp-ray"></span><span class="solp-ray"></span><span class="solp-ray"></span>
+      <span class="solp-ray"></span><span class="solp-ray"></span><span class="solp-ray"></span><span class="solp-ray"></span>
+      <div class="solp-sun-core"></div>
+    </div></div></div>
+<div class="meta"><b>CSS Sun</b> · <code>spectrums-css-sun</code><br>Spectrums · Solarpunk · Solarpunk<p>A pure-CSS sun with slowly rotating rays and a gently pulsing glowing core — the Solarpunk system's decorative anchor icon.</p></div>
+
+</body>
+</html>

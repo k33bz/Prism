@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Data-Center Map · Prism</title>
+<!-- Prism showcase sample: maps-data-center-map (gallery: maps). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.gmap-scene { position: relative; width: 250px; height: 158px; border-radius: 12px; overflow: hidden; background: radial-gradient(120% 140% at 50% -20%,rgba(var(--info-rgb),.10),transparent 60%),var(--panel2); border: 1px solid var(--line); }
+.gmap-svg { position: absolute; inset: 0px; width: 100%; height: 100%; display: block; }
+.gmap-num .n2 { animation-delay: 0.4s; background: var(--info); }
+.gmap-num .n3 { animation-delay: 0.8s; background: var(--pos); }
+.gmap-num .n4 { animation-delay: 1.2s; background: var(--crit); }
+.gmap-compass .hub { position: absolute; left: 50%; top: 50%; width: 10px; height: 10px; border-radius: 50%; background: var(--ink); transform: translate(-50%, -50%); }
+.gmap-flow-parts.r { stroke: var(--neg); animation-duration: 2.6s; }
+.gmap-dc-link { fill: none; stroke: rgba(var(--info-rgb),.55); stroke-width: 1.4; stroke-dasharray: 3, 6; animation: 1.4s linear 0s infinite normal none running gmapLinkFlow; }
+.gmap-dc .node { position: absolute; width: 16px; height: 16px; border-radius: 4px; transform: translate(-50%, -50%); background: var(--info); box-shadow: 0 0 10px rgba(var(--info-rgb),.7); animation: 2.6s ease-out 0s infinite normal none running gmapDcPulse; }
+.gmap-dc .node.hub { width: 22px; height: 22px; background: var(--accent); box-shadow: 0 0 12px rgba(var(--accent-rgb),.8); border-radius: 5px; }
+.gmap-dc .node.n2 { animation-delay: 0.5s; }
+.gmap-dc .node.n3 { animation-delay: 1s; }
+.gmap-dc .node.n4 { animation-delay: 1.5s; }
+.gmap-dc .node .r { position: absolute; inset: 0px; display: flex; align-items: center; justify-content: center; font: 700 8px / 1 system-ui; color: rgb(26, 26, 26); }
+.gmap-pulse .hub { fill: var(--accent); filter: drop-shadow(0 0 6px rgba(var(--accent-rgb),1)); }
+@keyframes gmapLinkFlow { 
+  100% { stroke-dashoffset: -20; }
+}
+@keyframes gmapDcPulse { 
+  0%, 100% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 0 0 0 rgba(var(--info-rgb),.5); }
+  70% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 0 0 10px rgba(var(--info-rgb),0); }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="gmap-scene gmap-dc">
+      <svg class="gmap-svg" viewBox="0 0 250 158">
+        <line class="gmap-dc-link" x1="125" y1="80" x2="56" y2="46"></line>
+        <line class="gmap-dc-link" x1="125" y1="80" x2="196" y2="50"></line>
+        <line class="gmap-dc-link" x1="125" y1="80" x2="70" y2="120"></line>
+        <line class="gmap-dc-link" x1="125" y1="80" x2="192" y2="118"></line>
+      </svg>
+      <div class="node hub" style="left:125px;top:80px"><span class="r">DC</span></div>
+      <div class="node n2" style="left:56px;top:46px"></div>
+      <div class="node n3" style="left:196px;top:50px"></div>
+      <div class="node n4" style="left:70px;top:120px"></div>
+      <div class="node n2" style="left:192px;top:118px"></div>
+    </div></div></div>
+<div class="meta"><b>Data-Center Map</b> · <code>maps-data-center-map</code><br>Maps &amp; Geo · LIVE &amp; TELEMETRY<p>A central hub linked to pulsing edge data centers with flowing connections.</p></div>
+
+</body>
+</html>

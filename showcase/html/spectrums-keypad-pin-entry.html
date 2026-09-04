@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Keypad PIN Entry · Prism</title>
+<!-- Prism showcase sample: spectrums-keypad-pin-entry (gallery: spectrums). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.glm-rating .st.on { color: rgb(255, 224, 138); text-shadow: rgba(255, 224, 138, 0.7) 0px 0px 10px; }
+.skeu-rivet.sm { width: 6px; height: 6px; }
+.skeu-keycap { font-style: inherit; font-variant: inherit; font-stretch: inherit; line-height: inherit; font-family: inherit; font-optical-sizing: inherit; font-size-adjust: inherit; font-kerning: inherit; font-feature-settings: inherit; font-variation-settings: inherit; font-language-override: inherit; border-radius: 6px; border: 1px solid rgb(5, 5, 6); padding: 9px 0px; font-size: 13px; font-weight: 800; cursor: pointer; background-image: var(--skeu-brushed-metal); box-shadow: rgba(255, 255, 255, 0.8) 0px 1px 0px inset, rgb(74, 75, 79) 0px 3px 0px, rgba(0, 0, 0, 0.45) 0px 5px 8px; color: rgb(28, 29, 31); transition: transform 0.08s, box-shadow 0.08s; }
+.skeu-keycap:hover { filter: brightness(1.05); }
+.skeu-keycap:active { transform: translateY(3px); box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px inset, rgb(74, 75, 79) 0px 0px 0px, rgba(0, 0, 0, 0.4) 0px 1px 2px; }
+.skeu-keycap.sm { padding: 8px 0px; font-size: 12px; }
+.skeu-lb-seg.on.g { background: linear-gradient(180deg,#c9ffd0,var(--pos)); box-shadow: 0 0 6px rgba(var(--pos-rgb),.7); }
+.skeu-lb-seg.on.a { background: linear-gradient(180deg,#ffe9b8,var(--skeu-amber)); box-shadow: 0 0 6px rgba(var(--skeu-amber-rgb),.7); }
+.skeu-lb-seg.on.r { background: linear-gradient(180deg,#ffc7c2,var(--neg)); box-shadow: 0 0 6px rgba(var(--neg-rgb),.7); }
+.skeu-lb-seg.on { animation: 2.2s ease-in-out 0s infinite normal none running skeuLbGlow; }
+.skeu-lb-seg.on:nth-child(3n+1) { animation-delay: -0.3s; }
+.skeu-lb-seg.on:nth-child(3n+2) { animation-delay: -0.6s; }
+.skeu-pinpad { width: 168px; display: flex; flex-direction: column; gap: 9px; padding: 10px; border-radius: 11px; background-image: var(--skeu-gunmetal); border: 1px solid rgb(6, 6, 7); box-shadow: rgba(255, 255, 255, 0.1) 0px 1px 0px inset, rgba(0, 0, 0, 0.5) 0px 10px 20px; }
+.skeu-pinpad-display { display: flex; gap: 8px; justify-content: center; padding: 8px; border-radius: 6px; background: rgb(8, 9, 7); box-shadow: rgba(0, 0, 0, 0.7) 0px 2px 5px inset; }
+.skeu-pin-dot { width: 9px; height: 9px; border-radius: 50%; background: rgb(34, 34, 34); }
+.skeu-pin-dot.on { background: var(--skeu-amber); box-shadow: 0 0 6px rgba(var(--skeu-amber-rgb),.85); }
+.skeu-pinpad-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.rterm-toggle.on .rterm-tg-thumb { left: 32px; background: var(--rt-fg); box-shadow: 0 0 10px rgba(var(--rt-fg-rgb),.8); }
+.rterm-toggle.on .rterm-tg-label { color: var(--rt-fg); text-shadow: 0 0 6px rgba(var(--rt-fg-rgb),.6); }
+.rterm-vu-col i.on { background: var(--rt-fg); box-shadow: 0 0 6px rgba(var(--rt-fg-rgb),.8); }
+.rterm-vu-col i.on.red { background: rgb(255, 80, 64); box-shadow: rgba(255, 80, 64, 0.8) 0px 0px 6px; }
+.rterm-checklist .on { color: var(--rt-dimtext); }
+.rterm-checklist .on .rterm-box2 { color: var(--rt-fg); text-shadow: 0 0 4px rgba(var(--rt-fg-rgb),.8); }
+@keyframes skeuLbGlow { 
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.25); }
+}
+.bar button.on { color: rgb(255, 255, 255) !important; }
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="skeu-pinpad"><div class="skeu-pinpad-display"><span class="skeu-pin-dot on"></span><span class="skeu-pin-dot on"></span><span class="skeu-pin-dot on"></span><span class="skeu-pin-dot"></span></div>
+      <div class="skeu-pinpad-grid"><button class="skeu-keycap sm">1</button><button class="skeu-keycap sm">2</button><button class="skeu-keycap sm">3</button></div>
+    </div></div></div>
+<div class="meta"><b>Keypad PIN Entry</b> · <code>spectrums-keypad-pin-entry</code><br>Spectrums · Skeuomorphic Hardware · Skeuo Hardware<p>Chunky pressable keycaps feeding an amber-dot display — a security keypad reimagined as an OTP/PIN input.</p></div>
+
+</body>
+</html>

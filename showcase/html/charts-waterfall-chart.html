@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Waterfall Chart · Prism</title>
+<!-- Prism showcase sample: charts-waterfall-chart (gallery: charts). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.scx-wf rect { animation: 0.6s ease-out 0s 1 normal backwards running scx-fadeUp; }
+@keyframes scx-fadeUp { 
+  0% { opacity: 0; transform: translateY(6px); }
+  100% { opacity: 1; transform: none; }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><svg width="240" height="120" viewBox="0 0 240 120" style="overflow:visible">
+        <line x1="30" y1="100" x2="232" y2="100" stroke="var(--line)"></line>
+        <g class="scx-wf">
+          <rect x="34" y="40" width="26" height="60" rx="2" fill="var(--info)" style="animation-delay:.05s"></rect>
+          <rect x="66" y="28" width="26" height="12" rx="2" fill="var(--pos)" style="animation-delay:.18s"></rect>
+          <rect x="98" y="20" width="26" height="8" rx="2" fill="var(--pos)" style="animation-delay:.31s"></rect>
+          <rect x="130" y="20" width="26" height="22" rx="2" fill="var(--neg)" style="animation-delay:.44s"></rect>
+          <rect x="162" y="42" width="26" height="14" rx="2" fill="var(--neg)" style="animation-delay:.57s"></rect>
+          <rect x="194" y="56" width="26" height="44" rx="2" fill="var(--accent)" style="animation-delay:.7s"></rect>
+        </g>
+        <g stroke="var(--dim)" stroke-dasharray="3 2" stroke-width="1"><line x1="60" y1="40" x2="66" y2="40"></line><line x1="92" y1="28" x2="98" y2="28"></line><line x1="124" y1="20" x2="130" y2="20"></line><line x1="156" y1="42" x2="162" y2="42"></line><line x1="188" y1="56" x2="194" y2="56"></line></g>
+        <g font-size="8" fill="var(--muted)" text-anchor="middle"><text x="47" y="114">Start</text><text x="79" y="114">+New</text><text x="111" y="114">+Up</text><text x="143" y="114">−Churn</text><text x="175" y="114">−Down</text><text x="207" y="114">End</text></g>
+      </svg></div></div>
+<div class="meta"><b>Waterfall Chart</b> · <code>charts-waterfall-chart</code><br>Charts &amp; Metrics · Comparison &amp; Distribution<p>Floating bars connected by step lines that show how an opening value reaches a closing value through sequential additions and subtractions. The standard for MRR bridges, budget variance, and headcount flows. Bars fade up left to right.</p></div>
+
+</body>
+</html>

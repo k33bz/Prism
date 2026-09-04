@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Extruded Word · Prism</title>
+<!-- Prism showcase sample: shapes-extruded-word (gallery: shapes). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.c-accent { --c: var(--accent); --c-rgb: 255,153,0; }
+.nsh2-rotor { position: absolute; inset: 0px; transform-style: preserve-3d; }
+.nsh2-ring3d .nsh2-rotor { animation: 12s linear 0s infinite normal none running nsh2RingSpin; }
+.nsh2-cylinder .nsh2-rotor { animation: 15s linear 0s infinite normal none running nsh2CylSpin; }
+.nsh2-helix .nsh2-rotor { animation: 8s linear 0s infinite normal none running nsh2RingSpin; }
+.nsh2-staircase .nsh2-rotor { animation: 13s linear 0s infinite normal none running nsh2RingSpin; }
+.nsh2-sphere .nsh2-rotor { animation: 17s linear 0s infinite normal none running nsh2SphereSpin; }
+.nsh2-cloud3d .nsh2-rotor { animation: 22s linear 0s infinite normal none running nsh2SphereSpin; }
+.nsh2-extrude { position: relative; width: 200px; height: 110px; perspective: 720px; }
+.nsh2-extrude .nsh2-rotor { animation: 7s ease-in-out 0s infinite normal none running nsh2Rock; }
+.nsh2-extrude .nsh2-lay { position: absolute; left: 50%; top: 50%; font-weight: 900; font-size: 34px; letter-spacing: 0.02em; white-space: nowrap; }
+.nsh2-circle .nsh2-rotor { animation: 15s linear 0s infinite normal none running nsh2Spin2d; }
+@keyframes nsh2RingSpin { 
+  100% { transform: rotateY(360deg); }
+}
+@keyframes nsh2CylSpin { 
+  0% { transform: rotateX(9deg) rotateY(0deg); }
+  100% { transform: rotateX(9deg) rotateY(-360deg); }
+}
+@keyframes nsh2SphereSpin { 
+  0% { transform: rotateX(-14deg) rotateY(0deg); }
+  100% { transform: rotateX(-14deg) rotateY(360deg); }
+}
+@keyframes nsh2Rock { 
+  0%, 100% { transform: rotateX(6deg) rotateY(-34deg); }
+  50% { transform: rotateX(6deg) rotateY(34deg); }
+}
+@keyframes nsh2Spin2d { 
+  100% { transform: rotate(360deg); }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="nsh2-extrude c-accent"><div class="nsh2-rotor" data-word="DEPTH" data-nsh2="1"><span class="nsh2-lay" style="transform: translate(-50%, -50%) translateZ(-30px); color: rgba(var(--c-rgb),0.325);">DEPTH</span><span class="nsh2-lay" style="transform: translate(-50%, -50%) translateZ(-28px); color: rgba(var(--c-rgb),0.370);">DEPTH</span><span class="nsh2-lay" style="transform: translate(-50%, -50%) translateZ(-26px); color: rgba(var(--c-rgb),0.415);">DEPTH</span><span class="nsh2-lay" style="transform: translate(-50%, -50%) translateZ(-24px); color: rgba(var(--c-rgb),0.460);">DEPTH</span><span class="nsh2-lay" style="transform: translate(-50%, -50%) translateZ(-22px); color: rgba(var(--c-rgb),0.505);">DEPTH</span><span class="nsh2-lay" style="transform: translate(-50%, -50%) translateZ(-20px); color: rgba(var(--c-rgb),0.550);">DEPTH</span><span class="nsh2-lay" style="transform: translate(-50%, -50%) translateZ(-18px); color: rgba(var(--c-rgb),0.595);">DEPTH</span><span class="nsh2-lay" style="transform: translate(-50%, -50%) translateZ(-16px); color: rgba(var(--c-rgb),0.640);">DEPTH</span><span class="nsh2-lay" style="transform: translate(-50%, -50%) translateZ(-14px); color: rgba(var(--c-rgb),0.685);">DEPTH</span><span class="nsh2-lay" style="transform: translate(-50%, -50%) translateZ(-12px); color: rgba(var(--c-rgb),0.730);">DEPTH</span><span class="nsh2-lay" style="transform: translate(-50%, -50%) translateZ(-10px); color: rgba(var(--c-rgb),0.775);">DEPTH</span><span class="nsh2-lay" style="transform: translate(-50%, -50%) translateZ(-8px); color: rgba(var(--c-rgb),0.820);">DEPTH</span><span class="nsh2-lay" style="transform: translate(-50%, -50%) translateZ(-6px); color: rgba(var(--c-rgb),0.865);">DEPTH</span><span class="nsh2-lay" style="transform: translate(-50%, -50%) translateZ(-4px); color: rgba(var(--c-rgb),0.910);">DEPTH</span><span class="nsh2-lay" style="transform: translate(-50%, -50%) translateZ(-2px); color: rgba(var(--c-rgb),0.955);">DEPTH</span><span class="nsh2-lay" style="transform: translate(-50%, -50%) translateZ(0px); color: var(--c);">DEPTH</span></div></div></div></div>
+<div class="meta"><b>Extruded Word</b> · <code>shapes-extruded-word</code><br>Text Shapes · 3D Tunnels &amp; Perspective<p>A single word stacked as many translateZ layers to fake real extrusion / thickness, shaded front-to-back, gently rocking left-right so you see the volumetric side. Solid 3D lettering.</p></div>
+
+</body>
+</html>

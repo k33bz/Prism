@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reactor Warning · Prism</title>
+<!-- Prism showcase sample: obsidian-reactor-warning (gallery: obsidian). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.c-neg { --c: var(--neg); --c-rgb: 248,81,73; }
+.obs { --ob: var(--c,var(--crit)); --ob-rgb: var(--c-rgb,var(--crit-rgb)); font-size: 12.5px; color: var(--ink); }
+.obs-co { width: 288px; max-width: 100%; background: linear-gradient(180deg,rgba(var(--ob-rgb),.11),rgba(var(--ob-rgb),.035)); border-top-color: ; border-top-style: ; border-top-width: ; border-right-color: ; border-right-style: ; border-right-width: ; border-bottom-color: ; border-bottom-style: ; border-bottom-width: ; border-image-source: ; border-image-slice: ; border-image-width: ; border-image-outset: ; border-image-repeat: ; border-left: 3px solid var(--ob); border-radius: 10px; padding: 11px 13px; position: relative; overflow: hidden; text-align: left; }
+.obs-cot { display: flex; align-items: center; gap: 7px; font-weight: 800; font-size: 12.5px; color: var(--ob); letter-spacing: 0.02em; }
+.obs-coi { width: 17px; height: 17px; flex: 0 0 17px; display: inline-flex; align-items: center; justify-content: center; font-style: normal; }
+.obs-cob { margin-top: 6px; font-size: 12px; line-height: 1.55; color: var(--muted); }
+.obs-cob b { color: var(--ink); }
+.obs-co-glowrail .obs-coi { animation: 2.6s ease-in-out 0s infinite normal none running obsIcoBreathe; }
+.obs-co-danger::before { content: ""; position: absolute; left: 0px; right: 0px; top: 0px; height: 5px; background: repeating-linear-gradient(-45deg,rgba(var(--ob-rgb),.9) 0 8px,transparent 8px 16px); animation: 1.1s linear 0s infinite normal none running obsHazard; }
+.obs-dangercore { width: 9px; height: 9px; border-radius: 50%; background: var(--ob); position: relative; }
+.obs-dangercore::after { content: ""; position: absolute; inset: -3px; border-radius: 50%; border: 2px solid var(--ob); animation: 1.4s cubic-bezier(0, 0.6, 0.4, 1) 0s infinite normal none running obsPing; }
+.obs-co-inner .obs-cot { color: var(--info); font-size: 11.5px; }
+.obs-co-inner .obs-cob { margin-top: 3px; font-size: 11.5px; }
+@keyframes obsIcoBreathe { 
+  0%, 100% { transform: scale(1); opacity: 0.85; }
+  50% { transform: scale(1.14); opacity: 1; }
+}
+@keyframes obsHazard { 
+  100% { background-position: 22.6px 0px; }
+}
+@keyframes obsPing { 
+  0% { transform: scale(0.6); opacity: 1; }
+  80%, 100% { transform: scale(2.1); opacity: 0; }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="obs obs-co obs-co-danger c-neg"><div class="obs-cot"><span class="obs-coi"><span class="obs-dangercore"></span></span>Plugin conflict</div><div class="obs-cob">Back up the vault before changing this setting across every note.</div></div></div></div>
+<div class="meta"><b>Reactor Warning</b> · <code>obsidian-reactor-warning</code><br>Obsidian Facets · OBSIDIAN CALLOUTS &amp; ADMONITIONS<p>A high-signal warning with a crawling hazard rail and expanding alert core.</p></div>
+
+</body>
+</html>

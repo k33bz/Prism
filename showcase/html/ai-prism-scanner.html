@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prism Scanner · Prism</title>
+<!-- Prism showcase sample: ai-prism-scanner (gallery: ai). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.panel { background-position-x: ; background-position-y: ; background-size: ; background-repeat: ; background-attachment: ; background-origin: ; background-clip: ; background-color: ; background-image: var(--cardgrad); border: 1px solid var(--line); border-radius: 14px; padding: 16px; display: flex; flex-direction: column; min-height: 170px; position: relative; overflow: hidden; }
+.panel.w2 { grid-column: span 2; }
+.ptitle { display: flex; align-items: center; gap: 8px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--dim); margin-bottom: 12px; }
+.ptitle .tdot { width: 7px; height: 7px; border-radius: 50%; background: var(--c,var(--accent)); box-shadow: 0 0 7px var(--c,var(--accent)); animation: 1.4s ease-in-out 0s infinite normal none running tblink; }
+.pbody { flex: 1 1 0%; display: flex; align-items: center; justify-content: center; position: relative; }
+.cap { margin-top: 12px; font-size: 12px; color: var(--muted); text-align: center; min-height: 1.4em; }
+.panel:hover .fx-copy { opacity: 1; }
+.fx-copy button.ok { border-color: var(--pos); color: var(--pos); }
+.scan { width: 100%; height: 64px; border-radius: 11px; background: var(--card); border: 1px solid var(--line); position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; color: var(--muted); font-size: 12.5px; font-weight: 600; }
+.scan::after { content: ""; position: absolute; inset: 0px; background-image: ; background-position-x: ; background-position-y: ; background-repeat: ; background-attachment: ; background-origin: ; background-clip: ; background-color: ; background-size: 250% 100%; animation: 2.4s ease-in-out 0s infinite normal none running sweep; pointer-events: none; }
+.tchip.ok { border-color: rgba(var(--pos-rgb),.5); color: rgb(191, 240, 200); }
+.tchip.ok .tk { background: var(--pos); box-shadow: 0 0 6px var(--pos); }
+.guard .grow.scan .gi { border-color: var(--accent); animation: 0.8s ease-in-out 0s infinite normal none running xToolBlink; }
+.retry .att.ok { color: rgb(191, 240, 200); }
+.retry .att.ok .ai2 { background: var(--pos); color: rgb(6, 33, 12); }
+.panel.hero { grid-column: 1 / -1; min-height: 0px; }
+.p3-stage { position: relative; width: 100%; display: flex; flex-direction: column; align-items: center; gap: 20px; padding: 26px 0px 10px; }
+.p3-scene { position: relative; width: 280px; height: 280px; perspective: 900px; perspective-origin: 50% 42%; }
+.p3-spectrum { position: absolute; top: 50%; left: 50%; width: 230px; height: 230px; margin: -115px 0px 0px -115px; border-radius: 50%; background: conic-gradient(rgb(255, 0, 64), rgb(255, 153, 0), rgb(255, 230, 0), rgb(63, 185, 80), rgb(22, 213, 255), rgb(68, 147, 248), rgb(200, 121, 255), rgb(255, 0, 64)); filter: blur(34px); opacity: 0.16; animation: 9s linear 0s infinite normal none running p3disp; }
+.p3-rotor { position: absolute; inset: 0px; transform-style: preserve-3d; animation: 13s linear 0s infinite normal none running p3spin; }
+.p3-prism { position: absolute; top: 50%; left: 50%; width: 0px; height: 0px; transform-style: preserve-3d; animation: 6s ease-in-out 0s infinite normal none running p3wob; }
+.p3-face { position: absolute; width: 104px; height: 134px; margin: -67px 0px 0px -52px; background: linear-gradient(135deg, rgba(255, 255, 255, 0.16), rgba(120, 180, 255, 0.05) 45%, rgba(200, 121, 255, 0.1)); border: 1px solid rgba(180, 220, 255, 0.55); box-shadow: rgba(120, 180, 255, 0.25) 0px 0px 26px inset, rgba(120, 180, 255, 0.12) 0px 0px 18px; backface-visibility: visible; }
+.p3-f1 { transform: rotateY(0deg) translateZ(30px); }
+.p3-f2 { transform: rotateY(120deg) translateZ(30px); }
+.p3-f3 { transform: rotateY(240deg) translateZ(30px); }
+.p3-cap { position: absolute; width: 120px; height: 104px; margin: -52px 0px 0px -60px; clip-path: polygon(50% 0px, 100% 100%, 0px 100%); background: linear-gradient(rgba(200, 121, 255, 0.22), rgba(120, 180, 255, 0.12)); border: 1px solid rgba(180, 220, 255, 0.4); }
+.p3-cap.top { transform: rotateX(90deg) translateZ(67px) translateY(8px); }
+.p3-cap.bot { transform: rotateX(-90deg) translateZ(67px) translateY(8px) scaleY(-1); }
+.p3-edge { position: absolute; width: 2px; height: 134px; margin: -67px 0px 0px -1px; border-radius: 2px; background: linear-gradient(rgba(255, 255, 255, 0), rgb(191, 224, 255) 18%, rgb(255, 255, 255) 50%, rgb(191, 224, 255) 82%, rgba(255, 255, 255, 0)); box-shadow: rgba(190, 225, 255, 0.9) 0px 0px 8px; }
+.p3-e1 { transform: rotateY(60deg) translateZ(60px); }
+.p3-e2 { transform: rotateY(180deg) translateZ(60px); }
+.p3-e3 { transform: rotateY(300deg) translateZ(60px); }
+.p3-laser { position: absolute; left: 8%; right: 8%; height: 2px; border-radius: 3px; z-index: 5; mix-blend-mode: screen; pointer-events: none; }
+.p3-laser::before { content: ""; position: absolute; left: 0px; right: 0px; top: -9px; height: 20px; border-radius: 50%; filter: blur(5px); opacity: 0.85; }
+.p3-laser.green { background: rgb(65, 255, 138); box-shadow: rgb(65, 255, 138) 0px 0px 12px, rgba(63, 255, 138, 0.6) 0px 0px 26px; animation: 3.4s cubic-bezier(0.5, 0, 0.5, 1) 0s infinite normal none running p3sweepA; }
+.p3-laser.green::before { background: rgb(65, 255, 138); }
+.p3-laser.red { background: rgb(255, 77, 87); box-shadow: rgb(255, 77, 87) 0px 0px 12px, rgba(255, 77, 87, 0.6) 0px 0px 26px; animation: 4.2s cubic-bezier(0.5, 0, 0.5, 1) 0s infinite normal none running p3sweepB; }
+.p3-laser.red::before { background: rgb(255, 77, 87); }
+.p3-reticle { position: absolute; top: 50%; left: 50%; width: 236px; height: 236px; margin: -118px 0px 0px -118px; border-radius: 50%; border: 1px dashed rgba(63, 255, 138, 0.22); z-index: 1; animation: 22s linear 0s infinite normal none running p3disp; }
+.p3-reticle::after { content: ""; position: absolute; inset: 26px; border-radius: 50%; border: 1px dashed rgba(255, 77, 87, 0.18); }
+.p3-spark { position: absolute; width: 6px; height: 6px; border-radius: 50%; z-index: 6; pointer-events: none; transform: translate(-50%, -50%); animation: 0.6s ease-out 0s 1 normal forwards running p3spark; }
+.p3-term { width: 100%; max-width: 540px; font-family: ui-monospace, Menlo, monospace; background: rgb(7, 11, 18); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+.p3-term .p3-bar { display: flex; align-items: center; gap: 7px; padding: 7px 12px; background: rgb(12, 19, 32); border-bottom: 1px solid var(--line); font-size: 10.5px; color: var(--dim); }
+.p3-term .p3-bar .dot { width: 9px; height: 9px; border-radius: 50%; }
+.p3-term .p3-act { padding: 11px 14px; font-size: 12.5px; color: var(--pos); min-height: 1.5em; letter-spacing: 0.02em; }
+.p3-term .p3-act .pcur { display: inline-block; width: 7px; height: 13px; background: var(--pos); vertical-align: text-bottom; margin-left: 2px; animation: 0.7s step-end 0s infinite normal none running blink; }
+.p3-term .p3-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(96px, 1fr)); gap: 1px; background: var(--line); border-top: 1px solid var(--line); }
+.p3-term .p3-stat { background: rgb(7, 11, 18); padding: 8px 11px; }
+.p3-term .p3-stat .k { font-size: 9px; text-transform: uppercase; letter-spacing: 0.09em; color: var(--dim); }
+.p3-term .p3-stat .v { font-size: 14px; font-weight: 700; color: var(--ink); margin-top: 2px; }
+.p3-term .p3-stat .v.ok { color: var(--pos); }
+.p3-term .p3-stat .v.warn { color: var(--warn); }
+.p3-term .p3-stat .v.scan { color: rgb(65, 255, 138); }
+@keyframes tblink { 
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+@keyframes sweep { 
+  0% { background-position: -40% 0px; }
+  100% { background-position: 140% 0px; }
+}
+@keyframes blink { 
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+@keyframes xToolBlink { 
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.25; }
+}
+@keyframes p3disp { 
+  100% { transform: rotate(360deg); }
+}
+@keyframes p3spin { 
+  0% { transform: rotateX(-16deg) rotateY(0deg); }
+  100% { transform: rotateX(-16deg) rotateY(360deg); }
+}
+@keyframes p3wob { 
+  0%, 100% { transform: rotateZ(-5deg); }
+  50% { transform: rotateZ(5deg); }
+}
+@keyframes p3sweepA { 
+  0% { top: 14%; opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { top: 86%; opacity: 0; }
+}
+@keyframes p3sweepB { 
+  0% { top: 86%; opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { top: 14%; opacity: 0; }
+}
+@keyframes p3spark { 
+  0% { opacity: 1; transform: translate(-50%, -50%) scale(0.4); }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(2.4); }
+}
+.tile .copy.ok { border-color: var(--pos) !important; color: var(--pos) !important; }
+.tile.is-new, .panel.is-new { border-color: rgb(63, 185, 80); box-shadow: rgba(63, 185, 80, 0.55) 0px 0px 0px 0px; animation: 2.4s ease-out 0s infinite normal none running pr-new-pulse; }
+.tile.is-new, .panel.is-new { position: relative; }
+.tile.is-new::after, .panel.is-new::after { content: "NEW"; position: absolute; top: 9px; right: 9px; z-index: 10; background: rgb(63, 185, 80); color: rgb(6, 20, 10); font-size: 9px; font-weight: 900; letter-spacing: 0.08em; padding: 2px 7px; border-radius: 10px; pointer-events: none; box-shadow: rgba(63, 185, 80, 0.5) 0px 0px 10px; }
+.tile.is-fixed, .panel.is-fixed { box-shadow: rgba(68, 147, 248, 0.55) 0px 0px 0px 0px; animation: 2.4s ease-out 0s infinite normal none running pr-fix-pulse; position: relative; border-color: rgb(68, 147, 248) !important; }
+.tile.is-fixed::after, .panel.is-fixed::after { content: "UPDATED"; position: absolute; top: 9px; right: 9px; z-index: 10; background: rgb(68, 147, 248); color: rgb(3, 18, 31); font-size: 9px; font-weight: 900; letter-spacing: 0.06em; padding: 2px 7px; border-radius: 10px; pointer-events: none; box-shadow: rgba(68, 147, 248, 0.5) 0px 0px 10px; }
+@keyframes pr-new-pulse { 
+  0% { box-shadow: rgba(63, 185, 80, 0.55) 0px 0px 0px 0px; }
+  60% { box-shadow: rgba(63, 185, 80, 0) 0px 0px 0px 7px; }
+  100% { box-shadow: rgba(63, 185, 80, 0) 0px 0px 0px 0px; }
+}
+@keyframes pr-fix-pulse { 
+  0% { box-shadow: rgba(68, 147, 248, 0.55) 0px 0px 0px 0px; }
+  60% { box-shadow: rgba(68, 147, 248, 0) 0px 0px 0px 7px; }
+  100% { box-shadow: rgba(68, 147, 248, 0) 0px 0px 0px 0px; }
+}
+.pr-playbtn { position: absolute; top: 9px; left: 9px; z-index: 11; width: 26px; height: 26px; border-radius: 50%; background: rgba(18, 22, 35, 0.72); border: 1px solid rgba(255, 255, 255, 0.18); color: var(--ink,#eaf1f9); display: flex; align-items: center; justify-content: center; font-size: 11px; cursor: pointer; opacity: 0.45; transition: opacity 0.15s, transform 0.15s, background 0.15s, border-color 0.15s; padding: 0px; }
+.panel:has(> .pr-playbtn) > .ptitle { padding-left: 32px; }
+.pr-playbtn:hover, .pr-playbtn:focus-visible { opacity: 1; background: rgba(var(--accent-rgb,83,159,229),.16); border-color: var(--accent,#539fe5); transform: scale(1.08); }
+.pr-playbtn:active { transform: scale(0.94); }
+.pr-playbtn svg { width: 11px; height: 11px; fill: currentcolor; pointer-events: none; }
+.nai-temp .v { font-family: ui-monospace, Menlo, monospace; font-size: 18px; font-weight: 800; color: var(--c,var(--accent)); }
+.nai-spec .verify .tk.ok { border-color: rgba(var(--pos-rgb),.55); color: var(--pos); background: rgba(var(--pos-rgb),.1); }
+.nai-attn .k { position: absolute; top: 6px; width: 9px; height: 9px; border-radius: 50%; background: var(--info); }
+.nai-sieve .dot { position: absolute; top: 0px; width: 7px; height: 7px; border-radius: 50%; background: var(--warn); animation: 2.2s ease-in 0s infinite normal none running naiSieve; }
+.nai-sieve .dot:nth-child(2) { left: 40%; animation-delay: 0.5s; background: var(--neg); }
+.nai-sieve .dot:nth-child(3) { left: 64%; animation-delay: 1s; }
+@keyframes naiSieve { 
+  0% { top: 0px; opacity: 1; }
+  70% { top: 30px; opacity: 1; }
+  100% { top: 30px; opacity: 0; }
+}
+.nai2-hallu .ok .tag { background: var(--pos); color: rgb(6, 33, 13); }
+.nai2-reflect .dot { position: absolute; top: -5px; left: 50%; width: 10px; height: 10px; margin-left: -5px; border-radius: 50%; background: var(--c,var(--crit)); box-shadow: 0 0 8px var(--c,var(--crit)); }
+.nai2-grammar .ok { border-color: rgba(var(--pos-rgb),.5); color: var(--pos); background: rgba(var(--pos-rgb),.1); }
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="panel hero" data-ctype="fx-glow" data-interact="auto-play" style="--c:var(--pos)" data-fx-id="ai-prism-scanner" data-fx-name="Prism Scanner">
+      <div class="ptitle"><span class="tdot"></span>Prism Scanner</div>
+      <div class="pbody">
+        <div class="p3-stage">
+          <div class="p3-scene">
+            <div class="p3-spectrum"></div>
+            <div class="p3-reticle"></div>
+            <div class="p3-rotor">
+              <div class="p3-prism">
+                <div class="p3-face p3-f1"></div>
+                <div class="p3-face p3-f2"></div>
+                <div class="p3-face p3-f3"></div>
+                <div class="p3-cap top"></div>
+                <div class="p3-cap bot"></div>
+                <div class="p3-edge p3-e1"></div>
+                <div class="p3-edge p3-e2"></div>
+                <div class="p3-edge p3-e3"></div>
+              </div>
+            </div>
+            <div class="p3-laser green"></div>
+            <div class="p3-laser red"></div>
+          <span class="p3-spark" style="left: 27.2285%; top: 27.3696%; background: rgb(65, 255, 138); box-shadow: rgb(65, 255, 138) 0px 0px 9px;"></span></div>
+
+          <div class="p3-term">
+            <div class="p3-bar"><span class="dot" style="background:#ff5f57"></span><span class="dot" style="background:#febc2e"></span><span class="dot" style="background:#28c840"></span><span>prism-scanner · live</span></div>
+            <div class="p3-act" id="p3Act">&gt; initia<span class="pcur"></span></div>
+            <div class="p3-stats">
+              <div class="p3-stat"><div class="k">Pass</div><div class="v scan" id="p3Pass">1 / 4</div></div>
+              <div class="p3-stat"><div class="k">Facets</div><div class="v" id="p3Facets">0 / 3</div></div>
+              <div class="p3-stat"><div class="k">Integrity</div><div class="v ok" id="p3Integ">100%</div></div>
+              <div class="p3-stat"><div class="k">Anomalies</div><div class="v ok" id="p3Anom">0</div></div>
+              <div class="p3-stat"><div class="k">Throughput</div><div class="v" id="p3Tput">3.7k pts/s</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="cap">A live optical scan of the Prism — counter-rotating glass facets under green &amp; red laser sweeps, with a real-time action log, facet coverage, integrity and anomaly readout.</div>
+    <button type="button" class="pr-playbtn" aria-label="Play Animation" title="Play Animation"><svg viewBox="0 0 16 16"><path d="M4 2.5v11l10-5.5-10-5.5z"></path></svg></button></div></div></div>
+<div class="meta"><b>Prism Scanner</b> · <code>ai-prism-scanner</code><br>AI Working · Futuristic &amp; next<p>A live optical scan of the Prism — counter-rotating glass facets under green &amp; red laser sweeps, with a real-time action log, facet coverage, integrity and anomaly readout.</p></div>
+
+</body>
+</html>

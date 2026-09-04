@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Beam Search Tree · Prism</title>
+<!-- Prism showcase sample: ai-beam-search-tree (gallery: ai). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.panel { background-position-x: ; background-position-y: ; background-size: ; background-repeat: ; background-attachment: ; background-origin: ; background-clip: ; background-color: ; background-image: var(--cardgrad); border: 1px solid var(--line); border-radius: 14px; padding: 16px; display: flex; flex-direction: column; min-height: 170px; position: relative; overflow: hidden; }
+.panel.w2 { grid-column: span 2; }
+.ptitle { display: flex; align-items: center; gap: 8px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--dim); margin-bottom: 12px; }
+.ptitle .tdot { width: 7px; height: 7px; border-radius: 50%; background: var(--c,var(--accent)); box-shadow: 0 0 7px var(--c,var(--accent)); animation: 1.4s ease-in-out 0s infinite normal none running tblink; }
+.pbody { flex: 1 1 0%; display: flex; align-items: center; justify-content: center; position: relative; }
+.cap { margin-top: 12px; font-size: 12px; color: var(--muted); text-align: center; min-height: 1.4em; }
+.panel:hover .fx-copy { opacity: 1; }
+.beamrow.best .bchip { border-color: rgba(var(--accent-rgb),.6); color: var(--ink); }
+.beamrow.best .bscore { color: var(--accent); font-weight: 700; }
+.beamrow.best .bchip:last-child { box-shadow: 0 0 9px rgba(var(--accent-rgb),.4); }
+.expert .ed { width: 8px; height: 8px; border-radius: 50%; background: var(--dim); flex: 0 0 auto; }
+.expert.on .ed { background: var(--accent); box-shadow: 0 0 8px var(--accent); animation: 1s ease-in-out 0s infinite normal none running tblink; }
+.panel.hero { grid-column: 1 / -1; min-height: 0px; }
+@keyframes tblink { 
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+.tile.is-new, .panel.is-new { border-color: rgb(63, 185, 80); box-shadow: rgba(63, 185, 80, 0.55) 0px 0px 0px 0px; animation: 2.4s ease-out 0s infinite normal none running pr-new-pulse; }
+.tile.is-new, .panel.is-new { position: relative; }
+.tile.is-new::after, .panel.is-new::after { content: "NEW"; position: absolute; top: 9px; right: 9px; z-index: 10; background: rgb(63, 185, 80); color: rgb(6, 20, 10); font-size: 9px; font-weight: 900; letter-spacing: 0.08em; padding: 2px 7px; border-radius: 10px; pointer-events: none; box-shadow: rgba(63, 185, 80, 0.5) 0px 0px 10px; }
+.tile.is-fixed, .panel.is-fixed { box-shadow: rgba(68, 147, 248, 0.55) 0px 0px 0px 0px; animation: 2.4s ease-out 0s infinite normal none running pr-fix-pulse; position: relative; border-color: rgb(68, 147, 248) !important; }
+.tile.is-fixed::after, .panel.is-fixed::after { content: "UPDATED"; position: absolute; top: 9px; right: 9px; z-index: 10; background: rgb(68, 147, 248); color: rgb(3, 18, 31); font-size: 9px; font-weight: 900; letter-spacing: 0.06em; padding: 2px 7px; border-radius: 10px; pointer-events: none; box-shadow: rgba(68, 147, 248, 0.5) 0px 0px 10px; }
+@keyframes pr-new-pulse { 
+  0% { box-shadow: rgba(63, 185, 80, 0.55) 0px 0px 0px 0px; }
+  60% { box-shadow: rgba(63, 185, 80, 0) 0px 0px 0px 7px; }
+  100% { box-shadow: rgba(63, 185, 80, 0) 0px 0px 0px 0px; }
+}
+@keyframes pr-fix-pulse { 
+  0% { box-shadow: rgba(68, 147, 248, 0.55) 0px 0px 0px 0px; }
+  60% { box-shadow: rgba(68, 147, 248, 0) 0px 0px 0px 7px; }
+  100% { box-shadow: rgba(68, 147, 248, 0) 0px 0px 0px 0px; }
+}
+.pr-playbtn { position: absolute; top: 9px; left: 9px; z-index: 11; width: 26px; height: 26px; border-radius: 50%; background: rgba(18, 22, 35, 0.72); border: 1px solid rgba(255, 255, 255, 0.18); color: var(--ink,#eaf1f9); display: flex; align-items: center; justify-content: center; font-size: 11px; cursor: pointer; opacity: 0.45; transition: opacity 0.15s, transform 0.15s, background 0.15s, border-color 0.15s; padding: 0px; }
+.panel:has(> .pr-playbtn) > .ptitle { padding-left: 32px; }
+.pr-playbtn:hover, .pr-playbtn:focus-visible { opacity: 1; background: rgba(var(--accent-rgb,83,159,229),.16); border-color: var(--accent,#539fe5); transform: scale(1.08); }
+.pr-playbtn:active { transform: scale(0.94); }
+.pr-playbtn svg { width: 11px; height: 11px; fill: currentcolor; pointer-events: none; }
+.nai-router .w2 { top: 47px; width: 160px; }
+.nai-router .w2::after { animation-delay: 0.4s; }
+.nai-conf .nd { position: absolute; bottom: 2px; left: 50%; width: 3px; height: 48px; background: var(--ink); transform-origin: center bottom; border-radius: 2px; animation: 3.4s ease-in-out 0s infinite normal none running naiNeedle; }
+@keyframes naiNeedle { 
+  0%, 100% { transform: translateX(-50%) rotate(-70deg); }
+  50% { transform: translateX(-50%) rotate(58deg); }
+}
+.nai2-globe .nd { position: absolute; left: 50%; top: 50%; width: 9px; height: 9px; margin: -4.5px; border-radius: 50%; background: var(--c,var(--pos)); box-shadow: 0 0 8px var(--c,var(--pos)); animation: 2.4s ease-in-out 0s infinite normal none running nai2Blink; }
+.nai2-beam { position: relative; width: 210px; height: 100px; }
+.nai2-beam .nd { position: absolute; width: 12px; height: 12px; border-radius: 50%; background: var(--panel2); border: 1.5px solid var(--line); transform: translate(-50%, -50%); }
+.nai2-beam .nd.best { background: var(--c,var(--pos)); border-color: var(--c,var(--pos)); box-shadow: 0 0 9px var(--c,var(--pos)); animation: 2s ease-in-out 0s infinite normal none running nai2Blink; }
+.nai2-beam .ed { position: absolute; height: 1.5px; transform-origin: left center; background: linear-gradient(90deg,var(--line),rgba(var(--line),.2)); }
+.nai2-beam .ed.best { background: linear-gradient(90deg,var(--pos),rgba(var(--pos-rgb),.3)); height: 2px; animation: 2.4s ease-in-out 0s infinite normal none running nai2BeamGlow; }
+@keyframes nai2Blink { 
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.25; }
+}
+@keyframes nai2BeamGlow { 
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="panel is-new w2" data-ctype="input-search" data-interact="auto-play" style="--c:var(--pos)" data-fx-id="ai-beam-search-tree" data-fx-name="Beam Search Tree">
+    <div class="ptitle"><span class="tdot"></span>Beam Search Tree</div>
+    <div class="pbody"><div class="nai2-beam">
+      <span class="nd" style="left:12px;top:50px"></span>
+      <span class="nd" style="left:80px;top:22px"></span>
+      <span class="nd best" style="left:80px;top:74px"></span>
+      <span class="nd" style="left:150px;top:12px"></span>
+      <span class="nd" style="left:150px;top:40px"></span>
+      <span class="nd best" style="left:150px;top:66px"></span>
+      <span class="nd" style="left:150px;top:90px"></span>
+      <span class="ed" style="left:12px;top:50px;width:70px;transform:rotate(-22deg)"></span>
+      <span class="ed best" style="left:12px;top:50px;width:70px;transform:rotate(20deg)"></span>
+      <span class="ed" style="left:80px;top:22px;width:71px;transform:rotate(-8deg)"></span>
+      <span class="ed" style="left:80px;top:22px;width:71px;transform:rotate(15deg)"></span>
+      <span class="ed best" style="left:80px;top:74px;width:71px;transform:rotate(-7deg)"></span>
+      <span class="ed" style="left:80px;top:74px;width:71px;transform:rotate(14deg)"></span>
+    </div></div>
+    <div class="cap">Candidate sequences branch out; the highest-probability beam glows as low-scoring paths are pruned.</div>
+  <button type="button" class="pr-playbtn" aria-label="Play Animation" title="Play Animation"><svg viewBox="0 0 16 16"><path d="M4 2.5v11l10-5.5-10-5.5z"></path></svg></button></div></div></div>
+<div class="meta"><b>Beam Search Tree</b> · <code>ai-beam-search-tree</code><br>AI Working · Model Internals &amp; Agent Runtime<p>Candidate sequences branch out; the highest-probability beam glows as low-scoring paths are pruned.</p></div>
+
+</body>
+</html>

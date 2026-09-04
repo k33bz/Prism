@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Search + Suggestions · Prism</title>
+<!-- Prism showcase sample: input-search-suggestions (gallery: input). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.nin2-search { position: relative; width: 100%; }
+.nin2-search .nin2-box { display: flex; align-items: center; gap: 8px; background: var(--panel2); border: 1px solid var(--line); border-radius: 10px; padding: 10px 14px; }
+.nin2-search .nin2-box:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(var(--accent-rgb),.15); }
+.nin2-search input { background: none; border-width: medium; border-style: none; border-color: currentcolor; border-image: none; color: var(--ink); outline: none; flex: 1 1 0%; }
+.nin2-search input::placeholder { color: var(--dim); }
+.nin2-search .nin2-menu { list-style: none; margin: 6px 0px 0px; padding: 5px; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; box-shadow: rgba(0, 0, 0, 0.4) 0px 12px 24px; max-height: 0px; overflow: hidden; opacity: 0; transition: 0.2s; position: absolute; left: 0px; right: 0px; z-index: 5; }
+.nin2-search:focus-within .nin2-menu { max-height: 220px; opacity: 1; }
+.nin2-search .nin2-menu li { padding: 8px 10px; border-radius: 7px; font-size: 12.5px; color: var(--muted); cursor: pointer; display: flex; gap: 8px; align-items: center; }
+.nin2-search .nin2-menu li:hover, .nin2-search .nin2-menu li.nin2-hi { background: rgba(var(--accent-rgb),.12); color: var(--ink); }
+.nin2-search .nin2-menu li .nin2-k { margin-left: auto; font-size: 10px; color: var(--dim); }
+.nin2-heart .nin2-hi { font-size: 34px; color: var(--dim); transition: 0.2s; display: inline-block; }
+.nin2-heart.nin2-liked .nin2-hi { color: var(--neg); animation: 0.4s ease 0s 1 normal none running nin2Beat; }
+@keyframes nin2Beat { 
+  0%, 100% { transform: scale(1); }
+  30% { transform: scale(1.35); }
+  60% { transform: scale(0.9); }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="nin2-search">
+      <div class="nin2-box"><span>🔍</span><input placeholder="Search resources…" value="ec2"></div>
+      <ul class="nin2-menu"><li class="nin2-hi">🖥️ EC2 Instances<span class="nin2-k">↵</span></li><li>💾 EBS Volumes</li><li>🌐 Elastic IPs</li><li>🔐 ECR Registries</li></ul>
+    </div></div></div>
+<div class="meta"><b>Search + Suggestions</b> · <code>input-search-suggestions</code><br>Input Methods · Fields, Pickers &amp; Actions<p>A search box that reveals a keyboard-navigable suggestion dropdown on focus. The universal type-ahead pattern.</p></div>
+
+</body>
+</html>

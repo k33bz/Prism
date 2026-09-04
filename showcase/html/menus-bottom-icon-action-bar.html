@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bottom Icon Action Bar · Prism</title>
+<!-- Prism showcase sample: menus-bottom-icon-action-bar (gallery: menus). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.mnu-item.is-active { color: var(--accent); }
+.mnu-item.is-active .mnu-check { opacity: 1; }
+.mnu-nav-underline a.is-active { color: var(--ink); }
+.mnu-nav-underline a:nth-child(1).is-active ~ .mnu-nu-bar, .mnu-nav-underline a:nth-child(1):hover ~ .mnu-nu-bar { transform: translateX(0px); }
+.mnu-nav-underline a:nth-child(2).is-active ~ .mnu-nu-bar, .mnu-nav-underline a:nth-child(2):hover ~ .mnu-nu-bar { transform: translateX(100%); }
+.mnu-nav-underline a:nth-child(3).is-active ~ .mnu-nu-bar, .mnu-nav-underline a:nth-child(3):hover ~ .mnu-nu-bar { transform: translateX(200%); }
+.mnu-nav-underline a:nth-child(4).is-active ~ .mnu-nu-bar, .mnu-nav-underline a:nth-child(4):hover ~ .mnu-nu-bar { transform: translateX(300%); }
+.mnu-sidebar a.is-active { background: rgba(var(--accent-rgb),.16); color: var(--accent); box-shadow: 0 0 0 1px rgba(var(--accent-rgb),.3); animation: 2.6s ease-in-out 0s infinite normal none running mnuPulseGlow; }
+.mnu-pillnav a.is-active, .mnu-pillnav a:hover { color: var(--ink); }
+.mnu-pillnav a:nth-child(1).is-active ~ .mnu-pn-pill, .mnu-pillnav a:nth-child(1):hover ~ .mnu-pn-pill { transform: translateX(0px); }
+.mnu-pillnav a:nth-child(2).is-active ~ .mnu-pn-pill, .mnu-pillnav a:nth-child(2):hover ~ .mnu-pn-pill { transform: translateX(68px); }
+.mnu-pillnav a:nth-child(3).is-active ~ .mnu-pn-pill, .mnu-pillnav a:nth-child(3):hover ~ .mnu-pn-pill { transform: translateX(146px); }
+.mnu-actionbar { display: flex; gap: 4px; padding: 7px; border-radius: 14px; background: var(--panel2); border: 1px solid var(--line); box-shadow: rgba(0, 0, 0, 0.4) 0px 12px 30px; }
+.mnu-actionbar button { width: 36px; height: 36px; border-radius: 10px; border-width: medium; border-style: none; border-color: currentcolor; border-image: none; background: transparent; color: var(--muted); font-size: 14px; cursor: pointer; transition: background 0.15s, color 0.15s, transform 0.15s; }
+.mnu-actionbar button:hover { background: rgba(var(--info-rgb),.14); color: var(--info); transform: translateY(-2px); }
+.mnu-actionbar button.is-active { color: var(--accent); background: rgba(var(--accent-rgb),.14); }
+.mnu-ts-track a.is-active { background: rgba(var(--info-rgb),.18); border-color: rgba(var(--info-rgb),.5); color: var(--info); }
+@keyframes mnuPulseGlow { 
+  0%, 100% { box-shadow: 0 0 0 rgba(var(--accent-rgb),0); }
+  50% { box-shadow: 0 0 14px rgba(var(--accent-rgb),.45); }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="mnu-actionbar">
+      <button class="is-active">⌂</button><button>🔍</button><button>♡</button><button>⤴</button><button>⋯</button>
+    </div></div></div>
+<div class="meta"><b>Bottom Icon Action Bar</b> · <code>menus-bottom-icon-action-bar</code><br>Menus &amp; Actions · ACTION BARS, TOOLBARS &amp; FABs<p>A floating row of icon buttons that lift and tint on hover — the mobile-app bottom bar pattern.</p></div>
+
+</body>
+</html>

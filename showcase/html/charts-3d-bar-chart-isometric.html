@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3D Bar Chart (isometric) · Prism</title>
+<!-- Prism showcase sample: charts-3d-bar-chart-isometric (gallery: charts). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.scene-3d { perspective: 800px; width: 100%; display: flex; justify-content: center; align-items: center; min-height: 180px; }
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="scene-3d">
+        <svg width="260" height="200" viewBox="0 0 260 200" style="overflow:visible">
+          <defs><linearGradient id="g3d1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="var(--accent)" stop-opacity=".9"></stop><stop offset="1" stop-color="var(--accent)" stop-opacity=".4"></stop></linearGradient></defs>
+          <!-- Floor grid -->
+          <g stroke="var(--line)" stroke-width=".5" opacity=".4">
+            <line x1="40" y1="170" x2="240" y2="170"></line><line x1="40" y1="150" x2="240" y2="150"></line><line x1="40" y1="130" x2="240" y2="130"></line>
+            <line x1="60" y1="110" x2="60" y2="175"></line><line x1="110" y1="110" x2="110" y2="175"></line><line x1="160" y1="110" x2="160" y2="175"></line><line x1="210" y1="110" x2="210" y2="175"></line>
+          </g>
+          <!-- 3D-style bars with shadows -->
+          <g>
+            <polygon points="55,170 55,120 65,115 75,115 75,165 65,170" fill="url(#g3d1)"></polygon>
+            <polygon points="75,165 75,115 65,115 65,120" fill="rgba(255,255,255,.15)"></polygon>
+            <polygon points="105,170 105,90 115,85 125,85 125,165 115,170" fill="url(#g3d1)"></polygon>
+            <polygon points="125,165 125,85 115,85 115,90" fill="rgba(255,255,255,.15)"></polygon>
+            <polygon points="155,170 155,105 165,100 175,100 175,165 165,170" fill="url(#g3d1)"></polygon>
+            <polygon points="175,165 175,100 165,100 165,105" fill="rgba(255,255,255,.15)"></polygon>
+            <polygon points="205,170 205,55 215,50 225,50 225,165 215,170" fill="url(#g3d1)"></polygon>
+            <polygon points="225,165 225,50 215,50 215,55" fill="rgba(255,255,255,.15)"></polygon>
+          </g>
+          <text x="130" y="195" text-anchor="middle" font-size="10" fill="var(--muted)">Q1 · Q2 · Q3 · Q4</text>
+        </svg>
+      </div></div></div>
+<div class="meta"><b>3D Bar Chart (isometric)</b> · <code>charts-3d-bar-chart-isometric</code><br>Charts &amp; Metrics · 3D Charts &amp; Graphs<p>Isometric-perspective bar chart with floor grid and top highlights. Pure SVG, no WebGL.</p></div>
+
+</body>
+</html>

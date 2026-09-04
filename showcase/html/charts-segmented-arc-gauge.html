@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Segmented Arc Gauge · Prism</title>
+<!-- Prism showcase sample: charts-segmented-arc-gauge (gallery: charts). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.seg { display: flex; gap: 4px; width: 210px; }
+.seg > i { flex: 1 1 0%; height: 12px; border-radius: 3px; background: var(--panel2); border: 1px solid var(--line); }
+.seg > i.on { background: var(--accent); border-color: var(--accent); }
+.lv-ecg .val { position: absolute; top: 7px; right: 9px; font-style: normal; font-variant: tabular-nums; font-size-adjust: none; font-language-override: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-weight: 800; font-stretch: normal; font-size: 13px; line-height: normal; font-family: ui-monospace, Menlo, monospace; color: var(--ink); }
+.lv-gauge .needle { transform-box: fill-box; transform-origin: center bottom; transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); }
+.n3d-stack .seg { position: relative; width: 30px; transform-style: preserve-3d; transform-origin: center bottom; animation: 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0s 1 normal both running n3dRise; }
+.n3d-stack .seg span { position: absolute; left: 0px; top: 0px; }
+.n3d-ribbon .seg { position: absolute; bottom: 30px; width: 14px; height: 6px; transform-style: preserve-3d; animation: 0.7s ease-out 0s 1 normal both running ncx2Fade; }
+.n3d-ribbon .seg .top { position: absolute; inset: 0px; background: linear-gradient(90deg,var(--info),var(--accent)); transform-origin: center bottom; transform: rotateX(-90deg); }
+.ncx2-bullet .val { position: absolute; left: 0px; top: 4px; height: 8px; border-radius: 3px; background: var(--ink); transform-origin: left center; animation: 1.1s ease-out 0s 1 normal both running ncx2GrowX; }
+.ncx2-arcgauge { position: relative; width: 150px; height: 96px; }
+.ncx2-arcgauge svg { width: 150px; height: 96px; }
+.ncx2-arcgauge .seg { fill: none; stroke-width: 12; stroke-linecap: round; stroke-dasharray: var(--dash) 999; stroke-dashoffset: var(--dash); animation: 1.6s ease-out 0s 1 normal forwards running ncx2Draw; }
+.ncx2-arcgauge .needle { transform-origin: 75px 82px; animation: 2.8s ease-in-out 0s infinite normal none running ncx2Needle; }
+.ncx2-arcgauge .val { position: absolute; left: 0px; right: 0px; bottom: 2px; text-align: center; font-size: 16px; font-weight: 800; color: var(--ink); }
+@keyframes n3dRise { 
+  0% { transform: scaleY(0); }
+  100% { transform: scaleY(1); }
+}
+@keyframes ncx2GrowX { 
+  0% { transform: scaleX(0); }
+  100% { transform: scaleX(1); }
+}
+@keyframes ncx2Draw { 
+  100% { stroke-dashoffset: 0; }
+}
+@keyframes ncx2Fade { 
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+@keyframes ncx2Needle { 
+  0%, 100% { transform: rotate(-72deg); }
+  50% { transform: rotate(58deg); }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="ncx2-arcgauge">
+      <svg viewBox="0 0 150 96">
+        <path d="M15,82 A60,60 0 0,1 33,38" class="seg" stroke="var(--pos)" style="--dash:70;animation-delay:0s"></path>
+        <path d="M33,38 A60,60 0 0,1 75,15" class="seg" stroke="var(--warn)" style="--dash:64;animation-delay:.2s"></path>
+        <path d="M75,15 A60,60 0 0,1 117,38" class="seg" stroke="var(--neg)" style="--dash:64;animation-delay:.4s"></path>
+        <path d="M117,38 A60,60 0 0,1 135,82" class="seg" stroke="var(--crit)" style="--dash:70;animation-delay:.6s"></path>
+        <g class="needle"><line x1="75" y1="82" x2="75" y2="30" stroke="var(--ink)" stroke-width="3" stroke-linecap="round"></line></g>
+        <circle cx="75" cy="82" r="5" fill="var(--ink)"></circle>
+      </svg>
+      <div class="val">SLA 82</div>
+    </div></div></div>
+<div class="meta"><b>Segmented Arc Gauge</b> · <code>charts-segmented-arc-gauge</code><br>Charts &amp; Metrics · New<p>A four-band semicircular gauge with a sweeping needle — instrument-panel read for a single bounded metric.</p></div>
+
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Drifting Cloud · Prism</title>
+<!-- Prism showcase sample: objects-drifting-cloud (gallery: objects). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.wx-cloud .puff { transform-box: fill-box; transform-origin: center center; animation: 6s ease-in-out 0s infinite normal none running wxDrift; }
+.wx-cloud .p2 { animation-delay: -2s; }
+.wx-cloud .p3 { animation-delay: -4s; }
+@keyframes wxDrift { 
+  0%, 100% { transform: translateX(-6px); }
+  50% { transform: translateX(6px); }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><svg viewBox="0 0 118 118" class="wx-cloud" fill="none">
+        <g fill="#cfd9ec" stroke="#aab8d6" stroke-width="2">
+          <ellipse class="puff p1" cx="46" cy="64" rx="20" ry="15"></ellipse>
+          <ellipse class="puff p2" cx="66" cy="58" rx="22" ry="17"></ellipse>
+          <ellipse class="puff p3" cx="78" cy="68" rx="16" ry="12"></ellipse>
+        </g>
+      </svg></div></div>
+<div class="meta"><b>Drifting Cloud</b> · <code>objects-drifting-cloud</code><br>Animated Objects · Weather &amp; sky<p>Overlapping puffs drift left and right out of phase, giving a soft billowing motion. Loading idles, &quot;cloudy&quot;, ambient backdrops.</p></div>
+
+</body>
+</html>

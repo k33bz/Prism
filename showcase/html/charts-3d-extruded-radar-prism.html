@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3D Extruded Radar Prism · Prism</title>
+<!-- Prism showcase sample: charts-3d-extruded-radar-prism (gallery: charts). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><svg width="220" height="195" viewBox="0 0 220 195" style="overflow:visible">
+        <!-- 3D prism / extruded radar -->
+        <defs>
+          <linearGradient id="prismFace" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="var(--crit)" stop-opacity=".7"></stop><stop offset="1" stop-color="var(--crit)" stop-opacity=".25"></stop></linearGradient>
+        </defs>
+        <!-- bottom (shadow) polygon -->
+        <polygon points="110,150 165,128 150,82 70,82 55,128" fill="rgba(200,121,255,.12)" stroke="var(--line)" stroke-width=".8"></polygon>
+        <!-- vertical edges (extrusion) -->
+        <g stroke="rgba(200,121,255,.5)" stroke-width="1">
+          <line x1="110" y1="60" x2="110" y2="150"></line><line x1="165" y1="50" x2="165" y2="128"></line><line x1="150" y1="20" x2="150" y2="82"></line><line x1="70" y1="28" x2="70" y2="82"></line><line x1="55" y1="58" x2="55" y2="128"></line>
+        </g>
+        <!-- top polygon (the radar shape) -->
+        <polygon points="110,60 165,50 150,20 70,28 55,58" fill="url(#prismFace)" stroke="var(--crit)" stroke-width="2"></polygon>
+        <g fill="var(--muted)" font-size="9"><text x="110" y="168" text-anchor="middle">Perf</text><text x="178" y="130">Cost</text><text x="158" y="14">Sec</text><text x="48" y="22">Scale</text><text x="30" y="130">Rel</text></g>
+      </svg></div></div>
+<div class="meta"><b>3D Extruded Radar Prism</b> · <code>charts-3d-extruded-radar-prism</code><br>Charts &amp; Metrics · 3D Charts &amp; Graphs<p>A radar/spider polygon extruded into a solid prism. The depth makes a multi-axis score (performance, cost, security, scale, reliability) feel tangible in exec reviews.</p></div>
+
+</body>
+</html>

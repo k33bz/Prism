@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Solid-Arc · Prism</title>
+<!-- Prism showcase sample: shapes-solid-arc (gallery: shapes). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.ts-arc-letter { position: absolute; left: 50%; top: 50%; transform-origin: 0px 0px; font-weight: 800; font-size: 20px; white-space: pre; }
+.ts-rainbow { position: relative; width: 280px; height: 170px; margin: 0px auto; animation: 6s linear 0s infinite normal none running tsRainbowHue; }
+.ts-rainbow .ts-arc-letter, .ts-bow .ts-arc-letter { font-size: 20px; color: var(--c,#fff); text-shadow: rgba(255, 255, 255, 0.2) 0px 0px 8px; }
+.ts-arc-anim .ts-arc-letter { animation: 4s linear 0s infinite normal none running tsHueRun; }
+.ts-ring .ts-arc-letter { font-size: 17px; color: var(--c); }
+.ts-spiral .ts-arc-letter { color: var(--c); }
+.ts-vortex .ts-arc-letter { color: var(--c); text-shadow: 0 0 6px rgba(var(--c-rgb),.5); }
+@keyframes tsRainbowHue { 
+  0% { filter: hue-rotate(0deg); }
+  100% { filter: hue-rotate(360deg); }
+}
+@keyframes tsHueRun { 
+  0% { color: rgb(245, 71, 71); }
+  100% { color: rgb(245, 71, 71); }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="ts-rainbow" data-arc="solid" style="--c:#4493f8;--c-rgb:68,147,248"><span class="ts-arc-letter" style="font-size: 18px; transform: translate(-50%, -50%) translateY(53.8164px) rotate(-66deg) translateY(-76.8805px);">U</span><span class="ts-arc-letter" style="font-size: 18px; transform: translate(-50%, -50%) translateY(53.8164px) rotate(-54deg) translateY(-76.8805px);">P</span><span class="ts-arc-letter" style="font-size: 18px; transform: translate(-50%, -50%) translateY(53.8164px) rotate(-42deg) translateY(-76.8805px);">W</span><span class="ts-arc-letter" style="font-size: 18px; transform: translate(-50%, -50%) translateY(53.8164px) rotate(-30deg) translateY(-76.8805px);">A</span><span class="ts-arc-letter" style="font-size: 18px; transform: translate(-50%, -50%) translateY(53.8164px) rotate(-18deg) translateY(-76.8805px);">R</span><span class="ts-arc-letter" style="font-size: 18px; transform: translate(-50%, -50%) translateY(53.8164px) rotate(-6deg) translateY(-76.8805px);">D</span><span class="ts-arc-letter" style="font-size: 18px; transform: translate(-50%, -50%) translateY(53.8164px) rotate(6deg) translateY(-76.8805px);">&nbsp;</span><span class="ts-arc-letter" style="font-size: 18px; transform: translate(-50%, -50%) translateY(53.8164px) rotate(18deg) translateY(-76.8805px);">C</span><span class="ts-arc-letter" style="font-size: 18px; transform: translate(-50%, -50%) translateY(53.8164px) rotate(30deg) translateY(-76.8805px);">U</span><span class="ts-arc-letter" style="font-size: 18px; transform: translate(-50%, -50%) translateY(53.8164px) rotate(42deg) translateY(-76.8805px);">R</span><span class="ts-arc-letter" style="font-size: 18px; transform: translate(-50%, -50%) translateY(53.8164px) rotate(54deg) translateY(-76.8805px);">V</span><span class="ts-arc-letter" style="font-size: 18px; transform: translate(-50%, -50%) translateY(53.8164px) rotate(66deg) translateY(-76.8805px);">E</span></div></div></div>
+<div class="meta"><b>Solid-Arc</b> · <code>shapes-solid-arc</code><br>Text Shapes · Arcs &amp; Rainbows<p>Same per-letter arc rig, single color. The word smiles upward along a circle; the gentle hue-rotate on the wrapper keeps it subtly alive. Good for banner-style headings that need a curved baseline.</p></div>
+
+</body>
+</html>

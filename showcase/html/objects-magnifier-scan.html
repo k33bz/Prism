@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Magnifier Scan · Prism</title>
+<!-- Prism showcase sample: objects-magnifier-scan (gallery: objects). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.magnify .lens { transform-box: view-box; transform-origin: 59px 59px; animation: 3.4s ease-in-out 0s infinite normal none running magScan; }
+@keyframes magScan { 
+  0% { transform: translate(-14px, -10px); }
+  25% { transform: translate(14px, -6px); }
+  50% { transform: translate(10px, 12px); }
+  75% { transform: translate(-12px, 8px); }
+  100% { transform: translate(-14px, -10px); }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><svg viewBox="0 0 118 118" fill="none">
+        <g stroke="var(--gray)" stroke-width="3"><line x1="20" y1="40" x2="84" y2="40"></line><line x1="20" y1="58" x2="70" y2="58"></line><line x1="20" y1="76" x2="80" y2="76"></line></g>
+        <g class="magnify"><circle cx="59" cy="59" r="20" fill="rgba(46,198,214,.15)" stroke="var(--teal)" stroke-width="5"></circle><line x1="74" y1="74" x2="92" y2="92" stroke="var(--teal)" stroke-width="6" stroke-linecap="round"></line></g>
+      </svg></div></div>
+<div class="meta"><b>Magnifier Scan</b> · <code>objects-magnifier-scan</code><br>Animated Objects · More mechanisms &amp; infra<p>A magnifying glass roaming over lines of content. Search, inspection, audit, discovery.</p></div>
+
+</body>
+</html>

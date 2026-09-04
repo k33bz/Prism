@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Isometric Tower · Prism</title>
+<!-- Prism showcase sample: objects-isometric-tower (gallery: objects). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.nobj2-scene { width: 150px; height: 150px; display: flex; align-items: center; justify-content: center; perspective: 620px; perspective-origin: 50% 42%; }
+.nobj2-face { position: absolute; border: 1.5px solid var(--fc,var(--nobj2-i)); background: color-mix(in srgb,var(--fc,var(--nobj2-i)) 14%,transparent); box-shadow: inset 0 0 16px color-mix(in srgb,var(--fc,var(--nobj2-i)) 24%,transparent); }
+.nobj2-cube .nobj2-face { width: 74px; height: 74px; }
+.nobj2-building { position: relative; width: 60px; height: 104px; transform-style: preserve-3d; animation: 12s linear 0s infinite normal none running nobj2BldgTurn; }
+.nobj2-building .nobj2-bf { width: 60px; height: 104px; transform: translateZ(22px); display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; padding: 8px 6px; align-content: start; }
+.nobj2-building .nobj2-bk2 { width: 60px; height: 104px; transform: translateZ(-22px); }
+.nobj2-building .nobj2-bs2 { width: 44px; height: 104px; left: 8px; transform: rotateY(90deg) translateZ(30px); }
+.nobj2-building .nobj2-btop { width: 60px; height: 44px; top: 30px; transform: rotateX(90deg) translateZ(52px); }
+.nobj2-building .nobj2-win { width: 100%; height: 11px; border-radius: 1px; background: color-mix(in srgb,var(--nobj2-cy) 55%,transparent); box-shadow: 0 0 5px color-mix(in srgb,var(--nobj2-cy) 60%,transparent); animation: 3s ease-in-out 0s infinite normal none running nobj2Win; }
+.nobj2-building .nobj2-win:nth-child(3n) { animation-delay: 0.6s; }
+.nobj2-building .nobj2-win:nth-child(2n) { animation-delay: 1.2s; }
+@keyframes nobj2BldgTurn { 
+  0% { transform: rotateX(-10deg) rotateY(0deg); }
+  100% { transform: rotateX(-10deg) rotateY(360deg); }
+}
+@keyframes nobj2Win { 
+  0%, 100% { opacity: 0.35; }
+  50% { opacity: 1; }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="nobj2-scene"><div class="nobj2-building" style="--fc:var(--nobj2-i)">
+      <span class="nobj2-face nobj2-bk2"></span><span class="nobj2-face nobj2-bs2"></span><span class="nobj2-face nobj2-btop"></span>
+      <span class="nobj2-face nobj2-bf"><i class="nobj2-win"></i><i class="nobj2-win"></i><i class="nobj2-win"></i><i class="nobj2-win"></i><i class="nobj2-win"></i><i class="nobj2-win"></i><i class="nobj2-win"></i><i class="nobj2-win"></i><i class="nobj2-win"></i></span>
+    </div></div></div></div>
+<div class="meta"><b>Isometric Tower</b> · <code>objects-isometric-tower</code><br>Animated Objects · 3D Objects<p>A lit tower rotating to show three faces of depth. Enterprise, org, city/scale storytelling.</p></div>
+
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Calendar Heatmap · Prism</title>
+<!-- Prism showcase sample: charts-calendar-heatmap (gallery: charts). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.scx-cal { display: grid; grid-template-columns: repeat(13, 1fr); grid-auto-rows: 1fr; gap: 3px; width: 250px; }
+.scx-cal i { aspect-ratio: 1 / 1; border-radius: 2px; background: var(--info); }
+.scx-cal-legend { display: flex; align-items: center; gap: 4px; font-size: 9px; color: var(--muted); margin-top: 8px; }
+.scx-cal-legend i { width: 10px; height: 10px; border-radius: 2px; background: var(--info); }
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div style="width:100%">
+        <div style="font-size:12px;font-weight:700;margin-bottom:10px">Commits — last 13 weeks</div>
+        <div class="scx-cal" id="scxCalDemo"><i style="opacity: 0.78;"></i><i style="opacity: 0.94;"></i><i style="opacity: 0.71;"></i><i style="opacity: 0.3;"></i><i style="opacity: 0.16;"></i><i style="opacity: 0.4;"></i><i style="opacity: 0.67;"></i><i style="opacity: 0.67;"></i><i style="opacity: 0.55;"></i><i style="opacity: 0.61;"></i><i style="opacity: 0.82;"></i><i style="opacity: 0.81;"></i><i style="opacity: 0.47;"></i><i style="opacity: 0.15;"></i><i style="opacity: 0.22;"></i><i style="opacity: 0.59;"></i><i style="opacity: 0.81;"></i><i style="opacity: 0.71;"></i><i style="opacity: 0.56;"></i><i style="opacity: 0.63;"></i><i style="opacity: 0.76;"></i><i style="opacity: 0.62;"></i><i style="opacity: 0.28;"></i><i style="opacity: 0.14;"></i><i style="opacity: 0.41;"></i><i style="opacity: 0.8;"></i><i style="opacity: 0.89;"></i><i style="opacity: 0.67;"></i><i style="opacity: 0.51;"></i><i style="opacity: 0.59;"></i><i style="opacity: 0.65;"></i><i style="opacity: 0.46;"></i><i style="opacity: 0.21;"></i><i style="opacity: 0.27;"></i><i style="opacity: 0.66;"></i><i style="opacity: 0.96;"></i><i style="opacity: 0.85;"></i><i style="opacity: 0.54;"></i><i style="opacity: 0.42;"></i><i style="opacity: 0.53;"></i><i style="opacity: 0.57;"></i><i style="opacity: 0.38;"></i><i style="opacity: 0.26;"></i><i style="opacity: 0.48;"></i><i style="opacity: 0.87;"></i><i style="opacity: 0.98;"></i><i style="opacity: 0.69;"></i><i style="opacity: 0.36;"></i><i style="opacity: 0.34;"></i><i style="opacity: 0.52;"></i><i style="opacity: 0.54;"></i><i style="opacity: 0.4;"></i><i style="opacity: 0.4;"></i><i style="opacity: 0.69;"></i><i style="opacity: 0.97;"></i><i style="opacity: 0.86;"></i><i style="opacity: 0.46;"></i><i style="opacity: 0.22;"></i><i style="opacity: 0.35;"></i><i style="opacity: 0.57;"></i><i style="opacity: 0.59;"></i><i style="opacity: 0.47;"></i><i style="opacity: 0.55;"></i><i style="opacity: 0.83;"></i><i style="opacity: 0.93;"></i><i style="opacity: 0.64;"></i><i style="opacity: 0.25;"></i><i style="opacity: 0.18;"></i><i style="opacity: 0.46;"></i><i style="opacity: 0.69;"></i><i style="opacity: 0.65;"></i><i style="opacity: 0.54;"></i><i style="opacity: 0.65;"></i><i style="opacity: 0.84;"></i><i style="opacity: 0.77;"></i><i style="opacity: 0.4;"></i><i style="opacity: 0.13;"></i><i style="opacity: 0.27;"></i><i style="opacity: 0.65;"></i><i style="opacity: 0.81;"></i><i style="opacity: 0.68;"></i><i style="opacity: 0.56;"></i><i style="opacity: 0.66;"></i><i style="opacity: 0.76;"></i><i style="opacity: 0.57;"></i><i style="opacity: 0.23;"></i><i style="opacity: 0.16;"></i><i style="opacity: 0.48;"></i><i style="opacity: 0.85;"></i><i style="opacity: 0.86;"></i><i style="opacity: 0.63;"></i></div>
+        <div class="scx-cal-legend"><span>less</span><i style="opacity:.15"></i><i style="opacity:.4"></i><i style="opacity:.65"></i><i style="opacity:1"></i><span>more</span></div>
+      </div></div></div>
+<div class="meta"><b>Calendar Heatmap</b> · <code>charts-calendar-heatmap</code><br>Charts &amp; Metrics · Density &amp; Calendar Maps<p>The GitHub contribution grid — one cell per day, opacity encoding intensity, weeks running left to right. Reveals weekly rhythms and streaks that a line chart would smooth away. Cells are generated by a small inline loop.</p></div>
+
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vector Retrieval · Prism</title>
+<!-- Prism showcase sample: ai-vector-retrieval (gallery: ai). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.panel { background-position-x: ; background-position-y: ; background-size: ; background-repeat: ; background-attachment: ; background-origin: ; background-clip: ; background-color: ; background-image: var(--cardgrad); border: 1px solid var(--line); border-radius: 14px; padding: 16px; display: flex; flex-direction: column; min-height: 170px; position: relative; overflow: hidden; }
+.panel.w2 { grid-column: span 2; }
+.ptitle { display: flex; align-items: center; gap: 8px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--dim); margin-bottom: 12px; }
+.ptitle .tdot { width: 7px; height: 7px; border-radius: 50%; background: var(--c,var(--accent)); box-shadow: 0 0 7px var(--c,var(--accent)); animation: 1.4s ease-in-out 0s infinite normal none running tblink; }
+.pbody { flex: 1 1 0%; display: flex; align-items: center; justify-content: center; position: relative; }
+.cap { margin-top: 12px; font-size: 12px; color: var(--muted); text-align: center; min-height: 1.4em; }
+.panel:hover .fx-copy { opacity: 1; }
+.vscatter { position: relative; width: 170px; height: 120px; border: 1px solid var(--line); border-radius: 10px; background: radial-gradient(circle at 50% 50%,rgba(var(--info-rgb),.05),transparent 70%); overflow: hidden; }
+.vscatter .vq { position: absolute; left: 50%; top: 50%; width: 12px; height: 12px; margin: -6px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 12px var(--accent); z-index: 3; }
+.vscatter .vpt { position: absolute; width: 6px; height: 6px; border-radius: 50%; background: var(--dim); animation: 2.6s ease-in-out 0s infinite normal none running xVecPulse; }
+.vscatter .vpt.hit { background: var(--info); box-shadow: 0 0 8px var(--info); }
+.vscatter .vlink { position: absolute; left: 50%; top: 50%; height: 1px; transform-origin: left center; background: linear-gradient(90deg,rgba(var(--info-rgb),.7),transparent); animation: 2.6s ease-in-out 0s infinite normal none running xVecLink; }
+.panel.hero { grid-column: 1 / -1; min-height: 0px; }
+@keyframes tblink { 
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+@keyframes xVecPulse { 
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+@keyframes xVecLink { 
+  0%, 100% { opacity: 0; transform-box: fill-box; }
+  40% { opacity: 0.9; }
+  60% { opacity: 0.9; }
+}
+.tile.is-new, .panel.is-new { border-color: rgb(63, 185, 80); box-shadow: rgba(63, 185, 80, 0.55) 0px 0px 0px 0px; animation: 2.4s ease-out 0s infinite normal none running pr-new-pulse; }
+.tile.is-new, .panel.is-new { position: relative; }
+.tile.is-new::after, .panel.is-new::after { content: "NEW"; position: absolute; top: 9px; right: 9px; z-index: 10; background: rgb(63, 185, 80); color: rgb(6, 20, 10); font-size: 9px; font-weight: 900; letter-spacing: 0.08em; padding: 2px 7px; border-radius: 10px; pointer-events: none; box-shadow: rgba(63, 185, 80, 0.5) 0px 0px 10px; }
+.tile.is-fixed, .panel.is-fixed { box-shadow: rgba(68, 147, 248, 0.55) 0px 0px 0px 0px; animation: 2.4s ease-out 0s infinite normal none running pr-fix-pulse; position: relative; border-color: rgb(68, 147, 248) !important; }
+.tile.is-fixed::after, .panel.is-fixed::after { content: "UPDATED"; position: absolute; top: 9px; right: 9px; z-index: 10; background: rgb(68, 147, 248); color: rgb(3, 18, 31); font-size: 9px; font-weight: 900; letter-spacing: 0.06em; padding: 2px 7px; border-radius: 10px; pointer-events: none; box-shadow: rgba(68, 147, 248, 0.5) 0px 0px 10px; }
+@keyframes pr-new-pulse { 
+  0% { box-shadow: rgba(63, 185, 80, 0.55) 0px 0px 0px 0px; }
+  60% { box-shadow: rgba(63, 185, 80, 0) 0px 0px 0px 7px; }
+  100% { box-shadow: rgba(63, 185, 80, 0) 0px 0px 0px 0px; }
+}
+@keyframes pr-fix-pulse { 
+  0% { box-shadow: rgba(68, 147, 248, 0.55) 0px 0px 0px 0px; }
+  60% { box-shadow: rgba(68, 147, 248, 0) 0px 0px 0px 7px; }
+  100% { box-shadow: rgba(68, 147, 248, 0) 0px 0px 0px 0px; }
+}
+.pr-playbtn { position: absolute; top: 9px; left: 9px; z-index: 11; width: 26px; height: 26px; border-radius: 50%; background: rgba(18, 22, 35, 0.72); border: 1px solid rgba(255, 255, 255, 0.18); color: var(--ink,#eaf1f9); display: flex; align-items: center; justify-content: center; font-size: 11px; cursor: pointer; opacity: 0.45; transition: opacity 0.15s, transform 0.15s, background 0.15s, border-color 0.15s; padding: 0px; }
+.panel:has(> .pr-playbtn) > .ptitle { padding-left: 32px; }
+.pr-playbtn:hover, .pr-playbtn:focus-visible { opacity: 1; background: rgba(var(--accent-rgb,83,159,229),.16); border-color: var(--accent,#539fe5); transform: scale(1.08); }
+.pr-playbtn:active { transform: scale(0.94); }
+.pr-playbtn svg { width: 11px; height: 11px; fill: currentcolor; pointer-events: none; }
+.nai2-scache .hit { position: absolute; right: 0px; top: 50%; transform: translateY(-50%); width: 40px; height: 40px; border-radius: 50%; background: var(--panel2); border: 2px solid var(--pos); display: flex; align-items: center; justify-content: center; font-size: 16px; animation: 3s ease-in-out 0s infinite normal none running nai2Pop; }
+@keyframes nai2Pop { 
+  0%, 45% { transform: scale(1); }
+  55% { transform: scale(1.35); }
+  70%, 100% { transform: scale(1); }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="panel" data-ctype="chart-scatter" data-interact="auto-play" style="--c:var(--info)" data-fx-id="ai-vector-retrieval" data-fx-name="Vector Retrieval">
+      <div class="ptitle"><span class="tdot"></span>Vector Retrieval</div>
+      <div class="pbody">
+        <div class="vscatter" id="vscatter"><span class="vlink" style="width: 45.7056px; transform: rotate(-10.0806deg); animation-delay: 1.62s;"></span><span class="vlink" style="width: 61px; transform: rotate(180deg); animation-delay: 1.08s;"></span><span class="vlink" style="width: 57.6281px; transform: rotate(141.34deg); animation-delay: 0.54s;"></span><span class="vlink" style="width: 65.7343px; transform: rotate(-146.793deg); animation-delay: 0s;"></span><span class="vq"></span><span class="vpt hit" style="left: 30px; top: 24px; animation-delay: 0s;"></span><span class="vpt" style="left: 140px; top: 30px; animation-delay: 0.18s;"></span><span class="vpt" style="left: 120px; top: 90px; animation-delay: 0.36s;"></span><span class="vpt hit" style="left: 40px; top: 96px; animation-delay: 0.54s;"></span><span class="vpt" style="left: 88px; top: 40px; animation-delay: 0.72s;"></span><span class="vpt" style="left: 150px; top: 70px; animation-delay: 0.9s;"></span><span class="vpt hit" style="left: 24px; top: 60px; animation-delay: 1.08s;"></span><span class="vpt" style="left: 100px; top: 18px; animation-delay: 1.26s;"></span><span class="vpt" style="left: 70px; top: 100px; animation-delay: 1.44s;"></span><span class="vpt hit" style="left: 130px; top: 52px; animation-delay: 1.62s;"></span></div>
+      </div>
+      <div class="cap">Nearest-neighbor search — the query sits at center, candidate vectors pulse, and the closest matches link back as hits.</div>
+    <button type="button" class="pr-playbtn" aria-label="Play Animation" title="Play Animation"><svg viewBox="0 0 16 16"><path d="M4 2.5v11l10-5.5-10-5.5z"></path></svg></button></div></div></div>
+<div class="meta"><b>Vector Retrieval</b> · <code>ai-vector-retrieval</code><br>AI Working · Tools, retrieval &amp; agents<p>Nearest-neighbor search — the query sits at center, candidate vectors pulse, and the closest matches link back as hits.</p></div>
+
+</body>
+</html>

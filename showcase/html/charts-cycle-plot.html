@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cycle Plot · Prism</title>
+<!-- Prism showcase sample: charts-cycle-plot (gallery: charts). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.mp-draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animation: 1.4s ease-out 0s 1 normal forwards running scx-dash; }
+@keyframes scx-dash { 
+  100% { stroke-dashoffset: 0; }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><svg width="250" height="150" viewBox="0 0 250 150" id="mpCycle" style="overflow:visible"><line x1="10" y1="94.1" x2="56.0" y2="94.1" stroke="var(--line)" stroke-dasharray="2 3"></line><polyline points="10.0,92.1 19.2,101.3 28.4,63.7 37.6,101.7 46.8,92.9 56.0,112.8" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mp-draw" style="--len: 73.60000000000001; animation-delay: 0s;"></polyline><text x="33.0" y="144" text-anchor="middle" font-size="9" fill="var(--muted)">M</text><line x1="60" y1="99.3" x2="106.0" y2="99.3" stroke="var(--line)" stroke-dasharray="2 3"></line><polyline points="60.0,87.7 69.2,90.6 78.4,97.0 87.6,109.6 96.8,110.9 106.0,100.2" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mp-draw" style="--len: 73.60000000000001; animation-delay: 0.12s;"></polyline><text x="83.0" y="144" text-anchor="middle" font-size="9" fill="var(--muted)">T</text><line x1="110" y1="101.5" x2="156.0" y2="101.5" stroke="var(--line)" stroke-dasharray="2 3"></line><polyline points="110.0,78.8 119.2,102.6 128.4,107.6 137.6,98.4 146.8,110.2 156.0,111.8" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mp-draw" style="--len: 73.60000000000001; animation-delay: 0.24s;"></polyline><text x="133.0" y="144" text-anchor="middle" font-size="9" fill="var(--muted)">W</text><line x1="160" y1="100.7" x2="206.0" y2="100.7" stroke="var(--line)" stroke-dasharray="2 3"></line><polyline points="160.0,109.2 169.2,101.7 178.4,106.7 187.6,113.6 196.8,114.5 206.0,58.4" fill="none" stroke="var(--pos)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mp-draw" style="--len: 73.60000000000001; animation-delay: 0.36s;"></polyline><text x="183.0" y="144" text-anchor="middle" font-size="9" fill="var(--muted)">T</text><line x1="210" y1="93.2" x2="256.0" y2="93.2" stroke="var(--line)" stroke-dasharray="2 3"></line><polyline points="210.0,103.1 219.2,96.3 228.4,114.2 237.6,111.7 246.8,62.0 256.0,71.6" fill="none" stroke="var(--pos)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mp-draw" style="--len: 73.60000000000001; animation-delay: 0.48s;"></polyline><text x="233.0" y="144" text-anchor="middle" font-size="9" fill="var(--muted)">F</text></svg></div></div>
+<div class="meta"><b>Cycle Plot</b> · <code>charts-cycle-plot</code><br>Charts &amp; Metrics · More Plot Types<p>Time series split into seasonal sub-series — every Monday's hourly curve grouped, then Tuesday's, etc. — each panel sharing a mean reference line. Strips out day-to-day noise to expose the real within-cycle pattern and whether the trend per slot is rising or falling.</p></div>
+
+</body>
+</html>

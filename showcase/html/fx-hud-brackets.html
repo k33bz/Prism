@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HUD-Brackets · Prism</title>
+<!-- Prism showcase sample: fx-hud-brackets (gallery: fx). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.c-info { --c: var(--info); --c-rgb: 68,147,248; }
+.el-card .n { font-size: 34px; font-weight: 800; color: var(--c); line-height: 1; }
+.el-card .l { color: var(--muted); font-size: 12.5px; margin-top: 4px; }
+.el-kpi { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 14px 20px; text-align: center; }
+.el-kpi .n { font-size: 28px; font-weight: 800; color: var(--c); }
+.el-kpi .l { color: var(--muted); font-size: 11px; margin-top: 3px; }
+.fx-bnf .n, .fx-bnf .l { background-image: ; background-position-x: ; background-position-y: ; background-repeat: ; background-attachment: ; background-origin: ; background-color: ; background-size: 250% 100%; background-clip: text; -webkit-text-fill-color: transparent; animation: 1.8s ease-in-out 0s infinite alternate none running fxBnf; }
+@keyframes fxBnf { 
+  0% { background-position: 0% 0px; }
+  100% { background-position: 100% 0px; }
+}
+.nfx2-hud { position: relative; }
+.nfx2-hud::before, .nfx2-hud::after { content: ""; position: absolute; width: 18px; height: 18px; border: 2px solid var(--c); pointer-events: none; animation: 2s ease-in-out 0s infinite normal none running nfx2Hud; }
+.nfx2-hud::before { top: -5px; left: -5px; border-right-width: medium; border-right-style: none; border-right-color: currentcolor; border-bottom-width: medium; border-bottom-style: none; border-bottom-color: currentcolor; }
+.nfx2-hud::after { bottom: -5px; right: -5px; border-left-width: medium; border-left-style: none; border-left-color: currentcolor; border-top-width: medium; border-top-style: none; border-top-color: currentcolor; }
+@keyframes nfx2Hud { 
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="el-kpi c-info nfx2-hud"><div class="n">90%</div><div class="l">Lock-on</div></div></div></div>
+<div class="meta"><b>HUD-Brackets</b> · <code>fx-hud-brackets</code><br>FX Store · Glass, Glitch, Liquid &amp; Energy FX<p>Targeting brackets on opposite corners breathe like a lock-on reticle. Needs a little padding around it.</p></div>
+
+</body>
+</html>

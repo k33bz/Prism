@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sun · Prism</title>
+<!-- Prism showcase sample: objects-sun (gallery: objects). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.wx-sun .core { transform-box: fill-box; transform-origin: center center; animation: 3s ease-in-out 0s infinite normal none running wxSunPulse; }
+.wx-sun .rays { transform-box: view-box; transform-origin: 59px 59px; animation: 18s linear 0s infinite normal none running spin; }
+.wx-sun .ray { transform-box: fill-box; transform-origin: center center; animation: 3s ease-in-out 0s infinite normal none running wxRay; }
+@keyframes spin { 
+  100% { transform: rotate(1turn); }
+}
+@keyframes wxSunPulse { 
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.08); opacity: 0.92; }
+}
+@keyframes wxRay { 
+  0%, 100% { opacity: 0.45; transform: scale(0.85); }
+  50% { opacity: 1; transform: scale(1); }
+}
+.amb-sunrays .rays { position: absolute; left: 50%; top: 40%; width: 340px; height: 340px; margin: -170px 0px 0px -170px; background: repeating-conic-gradient(rgba(255, 255, 255, 0.55) 0deg, rgba(255, 255, 255, 0.55) 6deg, transparent 6deg, transparent 16deg); border-radius: 50%; animation: 26s linear 0s infinite normal none running ambRayspin; mix-blend-mode: screen; }
+@keyframes ambRayspin { 
+  100% { transform: rotate(360deg); }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><svg viewBox="0 0 118 118" class="wx-sun" fill="none">
+        <g class="rays" stroke="var(--orange)" stroke-width="5" stroke-linecap="round">
+          <line class="ray" x1="59" y1="10" x2="59" y2="24"></line>
+          <line class="ray" x1="59" y1="94" x2="59" y2="108" style="animation-delay:-.4s"></line>
+          <line class="ray" x1="10" y1="59" x2="24" y2="59" style="animation-delay:-.8s"></line>
+          <line class="ray" x1="94" y1="59" x2="108" y2="59" style="animation-delay:-1.2s"></line>
+          <line class="ray" x1="24" y1="24" x2="34" y2="34" style="animation-delay:-.2s"></line>
+          <line class="ray" x1="84" y1="84" x2="94" y2="94" style="animation-delay:-.6s"></line>
+          <line class="ray" x1="94" y1="24" x2="84" y2="34" style="animation-delay:-1s"></line>
+          <line class="ray" x1="34" y1="84" x2="24" y2="94" style="animation-delay:-1.4s"></line>
+        </g>
+        <circle class="core" cx="59" cy="59" r="22" fill="var(--orange)"></circle>
+      </svg></div></div>
+<div class="meta"><b>Sun</b> · <code>objects-sun</code><br>Animated Objects · Weather &amp; sky<p>A pulsing solar core inside a slowly rotating ring of shimmering rays that scale in and out of phase. Forecast headers, &quot;daytime&quot;, clear-sky states.</p></div>
+
+</body>
+</html>

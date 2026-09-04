@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Log Level Summary · Prism</title>
+<!-- Prism showcase sample: charts-log-level-summary (gallery: charts). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div style="width:100%">
+        <div style="display:flex;gap:8px;margin-bottom:10px;font-size:11px">
+          <span style="background:rgba(var(--info-rgb),.15);color:var(--info);padding:3px 10px;border-radius:12px;font-weight:700">INFO: 1,242</span>
+          <span style="background:rgba(var(--warn-rgb),.15);color:var(--warn);padding:3px 10px;border-radius:12px;font-weight:700">WARN: 38</span>
+          <span style="background:rgba(var(--neg-rgb),.15);color:var(--neg);padding:3px 10px;border-radius:12px;font-weight:700">ERROR: 7</span>
+          <span style="background:rgba(var(--crit-rgb),.15);color:var(--crit);padding:3px 10px;border-radius:12px;font-weight:700">CRIT: 1</span>
+        </div>
+        <svg width="260" height="60" viewBox="0 0 260 60">
+          <rect x="0" y="48" width="260" height="12" rx="3" fill="var(--panel2)"></rect>
+          <rect x="0" y="48" width="232" height="12" rx="3" fill="var(--info)" opacity=".6"></rect>
+          <rect x="0" y="48" width="18" height="12" rx="3" fill="var(--warn)"></rect>
+          <rect x="18" y="48" width="4" height="12" fill="var(--neg)"></rect>
+          <text x="0" y="40" font-size="10" fill="var(--muted)">Log level distribution — last 1h</text>
+        </svg>
+      </div></div></div>
+<div class="meta"><b>Log Level Summary</b> · <code>charts-log-level-summary</code><br>Charts &amp; Metrics · Log Viewers &amp; Streams<p>Badge counts per severity plus a proportional bar. At-a-glance error rate.</p></div>
+
+</body>
+</html>

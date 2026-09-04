@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Radial Speed-dial FAB · Prism</title>
+<!-- Prism showcase sample: menus-radial-speed-dial-fab (gallery: menus). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.mnu-fabwrap { position: relative; width: 150px; height: 150px; }
+.mnu-fab-input { position: absolute; opacity: 0; width: 0px; height: 0px; }
+.mnu-fab-main { position: absolute; left: 50%; top: 50%; width: 48px; height: 48px; margin: -24px; border-radius: 50%; background: linear-gradient(150deg,var(--accent),#cc7a00); color: rgb(26, 18, 6); font-size: 22px; font-weight: 800; display: grid; place-items: center; cursor: pointer; box-shadow: 0 8px 22px rgba(var(--accent-rgb),.45); transition: transform 0.3s cubic-bezier(0.3, 1.4, 0.4, 1); z-index: 3; user-select: none; }
+.mnu-fab-input:checked ~ .mnu-fab-main { transform: rotate(45deg); }
+.mnu-fab-item { position: absolute; left: 50%; top: 50%; width: 38px; height: 38px; margin: -19px; border-radius: 50%; background: var(--panel2); border: 1px solid var(--line); color: var(--ink); display: grid; place-items: center; font-size: 14px; opacity: 0; transform: translate(0px, 0px) scale(0.4); transition: transform 0.32s cubic-bezier(0.3, 1.5, 0.4, 1), opacity 0.22s; z-index: 2; box-shadow: rgba(0, 0, 0, 0.35) 0px 6px 16px; }
+.mnu-fab-input:checked ~ .mnu-fab-i1 { opacity: 1; transform: translate(-58px, -18px) scale(1); }
+.mnu-fab-input:checked ~ .mnu-fab-i2 { opacity: 1; transform: translate(-40px, -52px) scale(1); transition-delay: 0.04s; }
+.mnu-fab-input:checked ~ .mnu-fab-i3 { opacity: 1; transform: translate(2px, -64px) scale(1); transition-delay: 0.08s; }
+.mnu-fab-input:checked ~ .mnu-fab-i4 { opacity: 1; transform: translate(44px, -50px) scale(1); transition-delay: 0.12s; }
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="mnu-fabwrap">
+      <input type="checkbox" id="mnu-fab-demo" class="mnu-fab-input">
+      <div class="mnu-fab-item mnu-fab-i1">📷</div>
+      <div class="mnu-fab-item mnu-fab-i2">📝</div>
+      <div class="mnu-fab-item mnu-fab-i3">📎</div>
+      <div class="mnu-fab-item mnu-fab-i4">🎤</div>
+      <label for="mnu-fab-demo" class="mnu-fab-main">+</label>
+    </div></div></div>
+<div class="meta"><b>Radial Speed-dial FAB</b> · <code>menus-radial-speed-dial-fab</code><br>Menus &amp; Actions · ACTION BARS, TOOLBARS &amp; FABs<p>A floating action button that fans four mini-actions out in an arc — click the plus to open it.</p></div>
+
+</body>
+</html>

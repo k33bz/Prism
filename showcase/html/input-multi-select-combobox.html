@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Multi-Select Combobox · Prism</title>
+<!-- Prism showcase sample: input-multi-select-combobox (gallery: input). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.sel { width: 100%; background-size: ; background-attachment: ; background-origin: ; background-clip: ; background-color: ; border: 1px solid var(--line); color: var(--ink); border-radius: 10px; padding: 11px 14px; font-size: 13px; font-family: inherit; outline: none; appearance: none; cursor: pointer; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M3 5l3 3 3-3' fill='none' stroke='%238593a8' stroke-width='1.5'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; }
+.sel:focus { border-color: var(--accent); }
+.msel { width: 100%; }
+.msel .ms-box { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; padding: 8px 10px; background: var(--panel2); border: 1px solid var(--line); border-radius: 10px; min-height: 44px; cursor: pointer; transition: 0.2s; }
+.msel .ms-box.open { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(var(--accent-rgb),.15); }
+.msel .ms-pill { display: flex; align-items: center; gap: 5px; background: rgba(var(--info-rgb),.15); border: 1px solid rgba(var(--info-rgb),.4); color: var(--info); padding: 3px 8px; border-radius: 6px; font-size: 11.5px; font-weight: 700; }
+.msel .ms-pill .x { cursor: pointer; opacity: 0.6; }
+.msel .ms-pill .x:hover { opacity: 1; }
+.msel .ms-ph { color: var(--dim); font-size: 13px; }
+.msel .ms-arrow { margin-left: auto; color: var(--dim); transition: 0.2s; }
+.msel .ms-box.open .ms-arrow { transform: rotate(180deg); color: var(--accent); }
+.msel .ms-list { margin-top: 6px; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+.msel .ms-item { display: flex; align-items: center; gap: 9px; padding: 9px 12px; font-size: 12.5px; color: var(--muted); cursor: pointer; transition: 0.12s; }
+.msel .ms-item:hover { background: rgba(var(--accent-rgb),.08); color: var(--ink); }
+.msel .ms-item .ms-chk { width: 16px; height: 16px; border-radius: 4px; border: 2px solid var(--line); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.msel .ms-item.sel .ms-chk { border-color: var(--accent); background: var(--accent); }
+.msel .ms-item.sel .ms-chk::after { content: "✓"; color: rgb(26, 18, 0); font-size: 10px; font-weight: 800; }
+.msel .ms-item.sel { color: var(--ink); }
+.cal-pick .cal-day.sel { background: var(--accent); color: rgb(26, 18, 0); font-weight: 800; }
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="msel" id="msel1">
+        <div class="ms-box" onclick="ipMselToggle(this)">
+          <span class="ms-pill">EC2 <span class="x" onclick="ipMselPill(event,this)">×</span></span>
+          <span class="ms-pill">Lambda <span class="x" onclick="ipMselPill(event,this)">×</span></span>
+          <span class="ms-arrow">▾</span>
+        </div>
+        <div class="ms-list" style="display:none">
+          <div class="ms-item sel" onclick="ipMselItem(this)"><span class="ms-chk"></span>EC2</div>
+          <div class="ms-item sel" onclick="ipMselItem(this)"><span class="ms-chk"></span>Lambda</div>
+          <div class="ms-item" onclick="ipMselItem(this)"><span class="ms-chk"></span>Fargate</div>
+          <div class="ms-item" onclick="ipMselItem(this)"><span class="ms-chk"></span>Batch</div>
+          <div class="ms-item" onclick="ipMselItem(this)"><span class="ms-chk"></span>Lightsail</div>
+        </div>
+      </div></div></div>
+<div class="meta"><b>Multi-Select Combobox</b> · <code>input-multi-select-combobox</code><br>Input Methods · Selection &amp; Choice<p>A combobox that holds multiple chosen values as removable pills, opens a checklist on click, and toggles items in or out. Remove a pill from the box or uncheck it in the list — both stay in sync.</p></div>
+
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3D Stacked Columns · Prism</title>
+<!-- Prism showcase sample: charts-3d-stacked-columns (gallery: charts). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.seg { display: flex; gap: 4px; width: 210px; }
+.seg > i { flex: 1 1 0%; height: 12px; border-radius: 3px; background: var(--panel2); border: 1px solid var(--line); }
+.seg > i.on { background: var(--accent); border-color: var(--accent); }
+.lv-stackbars .col { width: 20px; display: flex; flex-direction: column-reverse; border-radius: 3px; overflow: hidden; transition: height 0.4s; }
+.lv-stackbars .col > span { display: block; transition: height 0.5s cubic-bezier(0.4, 1, 0.4, 1); }
+.nch-marimekko .col { display: flex; flex-direction: column; gap: 3px; }
+.nch-marimekko .col i { border-radius: 2px; transform-origin: center top; animation: 0.8s ease-out 0s 1 normal both running nchGrow; }
+@keyframes nchGrow { 
+  0% { transform: scaleY(0); }
+  100% { transform: scaleY(1); }
+}
+.n3d-scene { perspective: 640px; perspective-origin: 50% 42%; display: flex; align-items: center; justify-content: center; min-height: 150px; }
+.n3d-bars .fF { width: 24px; height: 100%; background: currentcolor; transform: translateZ(11px); }
+.n3d-bars .fR { width: 22px; height: 100%; right: 0px; left: auto; background: currentcolor; filter: brightness(0.6); transform-origin: right center; transform: rotateY(90deg); }
+.n3d-bars .fT { width: 24px; height: 22px; background: currentcolor; filter: brightness(1.35); transform-origin: center top; transform: rotateX(90deg); }
+.n3d-stack { position: relative; width: 170px; height: 120px; transform-style: preserve-3d; transform: rotateX(13deg) rotateY(-24deg); animation: 9s ease-in-out 0s infinite normal none running n3dSway; }
+.n3d-stack .col { position: absolute; bottom: 0px; width: 30px; transform-style: preserve-3d; }
+.n3d-stack .seg { position: relative; width: 30px; transform-style: preserve-3d; transform-origin: center bottom; animation: 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0s 1 normal both running n3dRise; }
+.n3d-stack .seg span { position: absolute; left: 0px; top: 0px; }
+.n3d-stack .fF { width: 30px; height: 100%; background: currentcolor; transform: translateZ(13px); }
+.n3d-stack .fR { width: 26px; height: 100%; right: 0px; left: auto; background: currentcolor; filter: brightness(0.6); transform-origin: right center; transform: rotateY(90deg); }
+.n3d-stack .fT { width: 30px; height: 26px; background: currentcolor; filter: brightness(1.35); transform-origin: center top; transform: rotateX(90deg); }
+.n3d-voxel .vx .fT { position: absolute; inset: 0px; background: currentcolor; animation: 0.6s ease-out 0s 1 normal both running ncx2Fade; }
+.n3d-voxel .vx .fF { position: absolute; left: 0px; bottom: 0px; width: 26px; background: currentcolor; filter: brightness(0.55); transform-origin: center bottom; transform: rotateX(-90deg); }
+.n3d-voxel .vx .fR { position: absolute; right: 0px; top: 0px; height: 26px; background: currentcolor; filter: brightness(0.72); transform-origin: right center; transform: rotateY(90deg); }
+.n3d-ribbon .seg { position: absolute; bottom: 30px; width: 14px; height: 6px; transform-style: preserve-3d; animation: 0.7s ease-out 0s 1 normal both running ncx2Fade; }
+.n3d-ribbon .seg .top { position: absolute; inset: 0px; background: linear-gradient(90deg,var(--info),var(--accent)); transform-origin: center bottom; transform: rotateX(-90deg); }
+.ncx2-arcgauge .seg { fill: none; stroke-width: 12; stroke-linecap: round; stroke-dasharray: var(--dash) 999; stroke-dashoffset: var(--dash); animation: 1.6s ease-out 0s 1 normal forwards running ncx2Draw; }
+@keyframes n3dRise { 
+  0% { transform: scaleY(0); }
+  100% { transform: scaleY(1); }
+}
+@keyframes n3dSway { 
+  0%, 100% { transform: rotateX(13deg) rotateY(-26deg); }
+  50% { transform: rotateX(15deg) rotateY(-6deg); }
+}
+@keyframes ncx2Draw { 
+  100% { stroke-dashoffset: 0; }
+}
+@keyframes ncx2Fade { 
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="n3d-scene"><div class="n3d-stack">
+      <div class="col" style="left:16px">
+        <div class="seg" style="color:var(--info);height:34px;animation-delay:0s"><span class="fF"></span><span class="fR"></span><span class="fT"></span></div>
+        <div class="seg" style="color:var(--accent);height:30px;animation-delay:.1s"><span class="fF"></span><span class="fR"></span><span class="fT"></span></div>
+        <div class="seg" style="color:var(--pos);height:24px;animation-delay:.2s"><span class="fF"></span><span class="fR"></span><span class="fT"></span></div>
+      </div>
+      <div class="col" style="left:74px">
+        <div class="seg" style="color:var(--info);height:26px;animation-delay:.15s"><span class="fF"></span><span class="fR"></span><span class="fT"></span></div>
+        <div class="seg" style="color:var(--accent);height:40px;animation-delay:.25s"><span class="fF"></span><span class="fR"></span><span class="fT"></span></div>
+        <div class="seg" style="color:var(--pos);height:20px;animation-delay:.35s"><span class="fF"></span><span class="fR"></span><span class="fT"></span></div>
+      </div>
+      <div class="col" style="left:132px">
+        <div class="seg" style="color:var(--info);height:44px;animation-delay:.3s"><span class="fF"></span><span class="fR"></span><span class="fT"></span></div>
+        <div class="seg" style="color:var(--accent);height:22px;animation-delay:.4s"><span class="fF"></span><span class="fR"></span><span class="fT"></span></div>
+        <div class="seg" style="color:var(--pos);height:30px;animation-delay:.5s"><span class="fF"></span><span class="fR"></span><span class="fT"></span></div>
+      </div>
+    </div></div></div></div>
+<div class="meta"><b>3D Stacked Columns</b> · <code>charts-3d-stacked-columns</code><br>Charts &amp; Metrics · 3D &amp; Perspective (2026 drop)<p>Segmented cuboid columns rising in perspective — a stacked bar chart where each part is a solid 3D block.</p></div>
+
+</body>
+</html>

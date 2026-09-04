@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Frosted Dropdown Menu · Prism</title>
+<!-- Prism showcase sample: spectrums-frosted-dropdown-menu (gallery: spectrums). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.neu-menu .neu-mi.is-active { color: var(--neu-accent); background: var(--neu-base); box-shadow: inset 3px 3px 7px var(--neu-dark), inset -3px -3px 7px var(--neu-light); }
+.neu-dock .neu-dot:active, .neu-dock .neu-dot.is-active { box-shadow: inset 3px 3px 6px var(--neu-dark), inset -3px -3px 6px var(--neu-light); color: var(--neu-accent); transform: translateY(0px); }
+.glm-scene { position: relative; width: 100%; min-height: 150px; border-radius: 18px; overflow: hidden; display: flex; align-items: center; justify-content: center; isolation: isolate; padding: 20px; }
+.glm-scene, .glm-scene.glm-v1 { background: radial-gradient(circle at 18% 22%, rgba(var(--glm-accent-rgb),.85) 0%, rgba(var(--glm-accent-rgb),0) 45%),
+    radial-gradient(circle at 82% 28%, rgba(var(--glm-info-rgb),.8) 0%, rgba(var(--glm-info-rgb),0) 48%),
+    radial-gradient(circle at 50% 90%, rgba(var(--glm-crit-rgb),.75) 0%, rgba(var(--glm-crit-rgb),0) 50%),
+    linear-gradient(150deg,#181229,#0b0e17 70%); }
+.glm-scene.glm-v2 { background: radial-gradient(circle at 16% 82%, rgba(var(--glm-pos-rgb),.8) 0%, rgba(var(--glm-pos-rgb),0) 46%),
+    radial-gradient(circle at 85% 18%, rgba(var(--glm-warn-rgb),.78) 0%, rgba(var(--glm-warn-rgb),0) 48%),
+    radial-gradient(circle at 60% 65%, rgba(var(--glm-info-rgb),.7) 0%, rgba(var(--glm-info-rgb),0) 50%),
+    linear-gradient(160deg,#0f1c2c,#0b0e17 70%); }
+.glm-scene.glm-v3 { background: radial-gradient(circle at 28% 25%, rgba(var(--glm-crit-rgb),.82) 0%, rgba(var(--glm-crit-rgb),0) 48%),
+    radial-gradient(circle at 78% 70%, rgba(var(--glm-pos-rgb),.75) 0%, rgba(var(--glm-pos-rgb),0) 48%),
+    radial-gradient(circle at 12% 88%, rgba(var(--glm-info-rgb),.65) 0%, rgba(var(--glm-info-rgb),0) 46%),
+    linear-gradient(145deg,#1c1026,#0b0e17 70%); }
+.glm-scene.glm-v4 { background: radial-gradient(circle at 72% 22%, rgba(var(--glm-accent-rgb),.82) 0%, rgba(var(--glm-accent-rgb),0) 48%),
+    radial-gradient(circle at 20% 68%, rgba(var(--glm-neg-rgb),.7) 0%, rgba(var(--glm-neg-rgb),0) 46%),
+    radial-gradient(circle at 90% 85%, rgba(var(--glm-info-rgb),.72) 0%, rgba(var(--glm-info-rgb),0) 48%),
+    linear-gradient(155deg,#161022,#0b0e17 70%); }
+.glm-scene.glm-v5 { background: radial-gradient(circle at 50% 15%, rgba(var(--glm-warn-rgb),.8) 0%, rgba(var(--glm-warn-rgb),0) 46%),
+    radial-gradient(circle at 15% 75%, rgba(var(--glm-crit-rgb),.72) 0%, rgba(var(--glm-crit-rgb),0) 48%),
+    radial-gradient(circle at 88% 78%, rgba(var(--glm-pos-rgb),.7) 0%, rgba(var(--glm-pos-rgb),0) 48%),
+    linear-gradient(150deg,#1a1420,#0b0e17 70%); }
+.glm-scene::after { content: ""; position: absolute; inset: 0px; pointer-events: none; background: radial-gradient(420px 220px at 50% -10%, rgba(255, 255, 255, 0.1), transparent 65%); }
+.glm-glass { position: relative; overflow: hidden; background: linear-gradient(160deg, var(--glm-glass-1), var(--glm-glass-2)); backdrop-filter: var(--glm-blur); border: 1px solid var(--glm-border); border-radius: 16px; box-shadow: var(--glm-shadow), inset 0 1px 0 rgba(255,255,255,.55), inset 0 0 26px rgba(255,255,255,.05); color: rgb(255, 255, 255); }
+.glm-glass::before { content: ""; position: absolute; top: 0px; left: 8%; right: 8%; height: 1px; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.85), transparent); pointer-events: none; }
+.glm-glass::after { content: ""; position: absolute; inset: 0px; pointer-events: none; border-radius: inherit; background: radial-gradient(140px 60px at 30% -10%, rgba(255, 255, 255, 0.2), transparent 70%); }
+.glm-menu { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.glm-menu-trigger { display: flex; align-items: center; gap: 8px; padding: 9px 16px; border-radius: 12px; font-size: 12.5px; font-weight: 700; color: rgb(255, 255, 255); cursor: pointer; transition: background 0.15s, transform 0.15s; }
+.glm-menu-trigger:hover { background: linear-gradient(160deg, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0.09)); }
+.glm-menu-trigger .glm-car { font-size: 9px; opacity: 0.8; transition: transform 0.2s; }
+.glm-menu.is-open .glm-menu-trigger .glm-car { transform: rotate(180deg); }
+.glm-menu-panel { width: 214px; padding: 8px; border-radius: 14px; display: flex; flex-direction: column; gap: 2px; animation: 0.38s cubic-bezier(0.22, 1, 0.36, 1) 0s 1 normal both running glmDropIn; }
+.glm-menu-item { display: flex; align-items: center; gap: 9px; padding: 8px 10px; border-radius: 9px; font-size: 12px; font-weight: 600; color: rgba(255, 255, 255, 0.92); cursor: pointer; transition: background 0.15s, padding-left 0.15s; }
+.glm-menu-item .ic { width: 16px; text-align: center; opacity: 0.85; font-size: 12px; }
+.glm-menu-item .kb { margin-left: auto; font-size: 10px; color: rgba(255, 255, 255, 0.55); font-family: ui-monospace, Menlo, monospace; }
+.glm-menu-item:hover, .glm-menu-item.is-active { background: rgba(255, 255, 255, 0.18); padding-left: 13px; }
+.glm-menu-sep { height: 1px; margin: 4px 6px; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent); }
+.glm-ctxmenu-item .ic { width: 14px; font-size: 11px; text-align: center; opacity: 0.85; }
+.glm-ctxmenu-item .kb { margin-left: auto; font-size: 9.5px; color: rgba(255, 255, 255, 0.5); font-family: ui-monospace, Menlo, monospace; }
+.glm-field .ic { font-size: 13px; color: rgba(255, 255, 255, 0.65); }
+.glm-search .kb { font-size: 9.5px; color: rgba(255, 255, 255, 0.55); border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 5px; padding: 1px 5px; font-family: ui-monospace, Menlo, monospace; }
+.glm-cardstack .c3 .ic { position: absolute; inset: 0px; display: grid; place-items: center; font-size: 22px; }
+.solp-nav-item.is-active { background: linear-gradient(135deg,var(--solp-gold2),var(--solp-gold)); color: rgb(74, 44, 5); box-shadow: rgba(255, 179, 71, 0.55) 0px 0px 14px, rgba(0, 0, 0, 0.15) 0px 4px 10px; }
+.solp-nav-item:not(.is-active):hover { background: rgba(76, 175, 109, 0.15); color: var(--solp-leafdeep); }
+@keyframes glmDropIn { 
+  0% { opacity: 0; transform: translateY(-8px) scale(0.97); }
+  100% { opacity: 1; transform: none; }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="glm-scene glm-v1"><div class="glm-menu is-open">
+      <div class="glm-menu-trigger glm-glass">Account <span class="glm-car">▾</span></div>
+      <div class="glm-menu-panel glm-glass">
+        <div class="glm-menu-item is-active"><span class="ic">◆</span>Dashboard<span class="kb">⌘1</span></div>
+        <div class="glm-menu-item"><span class="ic">▤</span>Projects<span class="kb">⌘2</span></div>
+        <div class="glm-menu-item"><span class="ic">⚙</span>Settings</div>
+        <div class="glm-menu-sep"></div>
+        <div class="glm-menu-item"><span class="ic">↪</span>Sign out</div>
+      </div>
+    </div></div></div></div>
+<div class="meta"><b>Frosted Dropdown Menu</b> · <code>spectrums-frosted-dropdown-menu</code><br>Spectrums · Glassmorphism · Glassmorphism<p>A blurred, translucent dropdown panel with a soft light border and inner glow — the flagship Glassmorphism menu; use for nav and account menus that float above colorful content without blocking it.</p></div>
+
+</body>
+</html>
