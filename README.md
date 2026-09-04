@@ -275,6 +275,25 @@ Fifteen authored galleries, plus special views. Every element carries a name, it
 
 ---
 
+<!-- showcase:start -->
+## 🎞 GIF showcase
+
+Every one of the **2668 facets** is recorded as a looping GIF from its own standalone HTML sample, so you can browse the whole library without opening Prism.html — see [**showcase/**](showcase/README.md) (57.1 MB of GIFs, rendered by Firefox (WebDriver BiDi) 155.0). Click a gallery below to open its page; click any GIF there to get to the effect's self-contained HTML.
+
+<table>
+<tr><td align="center" valign="top" width="33%"><a href="showcase/galleries/charts.md"><img src="showcase/gif/charts-gauge-cluster.gif" width="300" alt="Charts &amp; Metrics"></a><br><b><a href="showcase/galleries/charts.md">Charts &amp; Metrics</a></b><br><sub>209 effects</sub></td><td align="center" valign="top" width="33%"><a href="showcase/galleries/fx.md"><img src="showcase/gif/fx-pulse-glow-winner.gif" width="300" alt="FX Store"></a><br><b><a href="showcase/galleries/fx.md">FX Store</a></b><br><sub>146 effects</sub></td><td align="center" valign="top" width="33%"><a href="showcase/galleries/lab.md"><img src="showcase/gif/lab-countdown-ring.gif" width="300" alt="Animation Lab"></a><br><b><a href="showcase/galleries/lab.md">Animation Lab</a></b><br><sub>217 effects</sub></td></tr>
+<tr><td align="center" valign="top" width="33%"><a href="showcase/galleries/ai.md"><img src="showcase/gif/ai-thinking-orb.gif" width="300" alt="AI Working"></a><br><b><a href="showcase/galleries/ai.md">AI Working</a></b><br><sub>118 effects</sub></td><td align="center" valign="top" width="33%"><a href="showcase/galleries/objects.md"><img src="showcase/gif/objects-snowfall.gif" width="300" alt="Animated Objects"></a><br><b><a href="showcase/galleries/objects.md">Animated Objects</a></b><br><sub>91 effects</sub></td><td align="center" valign="top" width="33%"><a href="showcase/galleries/input.md"><img src="showcase/gif/input-like-heart-burst.gif" width="300" alt="Input Methods"></a><br><b><a href="showcase/galleries/input.md">Input Methods</a></b><br><sub>101 effects</sub></td></tr>
+<tr><td align="center" valign="top" width="33%"><a href="showcase/galleries/text.md"><img src="showcase/gif/text-neon-sign.gif" width="300" alt="Text Effects"></a><br><b><a href="showcase/galleries/text.md">Text Effects</a></b><br><sub>100 effects</sub></td><td align="center" valign="top" width="33%"><a href="showcase/galleries/shapes.md"><img src="showcase/gif/shapes-ring-spin.gif" width="300" alt="Text Shapes"></a><br><b><a href="showcase/galleries/shapes.md">Text Shapes</a></b><br><sub>53 effects</sub></td><td align="center" valign="top" width="33%"><a href="showcase/galleries/maps.md"><img src="showcase/gif/maps-world-pulse-map.gif" width="300" alt="Maps &amp; Geo"></a><br><b><a href="showcase/galleries/maps.md">Maps &amp; Geo</a></b><br><sub>50 effects</sub></td></tr>
+<tr><td align="center" valign="top" width="33%"><a href="showcase/galleries/notify.md"><img src="showcase/gif/notify-stacking-toast-group.gif" width="300" alt="Notifications &amp; Status"></a><br><b><a href="showcase/galleries/notify.md">Notifications &amp; Status</a></b><br><sub>50 effects</sub></td><td align="center" valign="top" width="33%"><a href="showcase/galleries/arch.md"><img src="showcase/gif/arch-flowing-connector.gif" width="300" alt="Architecture Diagrams"></a><br><b><a href="showcase/galleries/arch.md">Architecture Diagrams</a></b><br><sub>50 effects</sub></td><td align="center" valign="top" width="33%"><a href="showcase/galleries/callouts.md"><img src="showcase/gif/callouts-progress-stepper.gif" width="300" alt="Callouts &amp; Annotations"></a><br><b><a href="showcase/galleries/callouts.md">Callouts &amp; Annotations</a></b><br><sub>50 effects</sub></td></tr>
+<tr><td align="center" valign="top" width="33%"><a href="showcase/galleries/obsidian.md"><img src="showcase/gif/obsidian-knowledge-constellation.gif" width="300" alt="Obsidian Facets"></a><br><b><a href="showcase/galleries/obsidian.md">Obsidian Facets</a></b><br><sub>130 effects</sub></td><td align="center" valign="top" width="33%"><a href="showcase/galleries/menus.md"><img src="showcase/gif/menus-compact-cmd-k-palette.gif" width="300" alt="Menus &amp; Actions"></a><br><b><a href="showcase/galleries/menus.md">Menus &amp; Actions</a></b><br><sub>37 effects</sub></td><td align="center" valign="top" width="33%"><a href="showcase/galleries/spectrums.md"><img src="showcase/gif/spectrums-filled-ripple-button.gif" width="300" alt="Spectrums"></a><br><b><a href="showcase/galleries/spectrums.md">Spectrums</a></b><br><sub>1266 effects</sub></td></tr>
+</table>
+
+Regenerate with `node showcase/build.mjs` (Node 18+, Firefox or Chromium, ffmpeg) — the GIFs are display-only and never part of the catalog or MCP server.
+
+<!-- showcase:end -->
+
+---
+
 ## Themes
 
 Prism is built in the **AWS Cloudscape** design language and ships in two color modes: **Cloudscape Dark** (the default) and **Cloudscape Light**. Toggle between them from the top navigation bar. The mode override reskins the entire tool — shell *and* every gallery — by swapping a shared set of CSS custom properties (`--accent`, `--info`, `--pos`, `--bg`, `--ink` …), so every element re-themes at once. Your choice persists across sessions.
@@ -357,6 +376,12 @@ The MCP server's `compose` / `compose_with_template` tools do all of this for yo
 │   ├── extract-from-prism.mjs re-extract every effect from Prism.html (headless Chrome)
 │   ├── _embed-catalog.mjs     embed the manifest into the #prism-catalog island
 │   └── …                      scaffold / splice / render-check / screenshot helpers
+├── showcase/               ← GIF showcase: one HTML sample + one looping GIF per effect (display only)
+│   ├── build.mjs              records every effect headlessly (Firefox BiDi or Chromium CDP, no deps) + ffmpeg
+│   ├── browsers.mjs           the two raw wire-protocol drivers behind one tiny interface
+│   ├── html/  gif/            <id>.html standalone samples · <id>.gif recordings
+│   ├── galleries/*.md         browsable pages per gallery · index.html offline browser · manifest.json
+│   └── README.md              how it is built, stats, regeneration
 └── fragments/              ← standalone gallery fragments (mobile / desktop / text)
 ```
 
