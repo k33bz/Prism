@@ -1,5 +1,5 @@
 {
-  "count": 2668,
+  "count": 2669,
   "effects": [
     {
       "id": "charts-big-metric-count-up",
@@ -1692,10 +1692,11 @@
         "sl",
         "ts",
         "lv",
-        "err",
+        "ok",
         "m",
         "info",
-        "ok",
+        "warn",
+        "err",
         "cursor"
       ],
       "params": [],
@@ -9193,6 +9194,50 @@
       "isNew": true,
       "isFixed": false,
       "description": "A technical grid overlay pulses its brightness like a charging energy field. Sci-fi \"powering up\" surface."
+    },
+    {
+      "id": "fx-pkmn-mega-brave",
+      "name": "Mega Brave",
+      "gallery": "fx",
+      "category": "Pokémon Battle",
+      "ref": ".fx-pkmb",
+      "classes": [
+        "fx-pkmb",
+        "fx-pkmb-aura",
+        "fx-pkmb-aura-t",
+        "fx-pkmb-aura-b",
+        "fx-pkmb-core",
+        "fx-pkmb-helix",
+        "fx-pkmb-hx",
+        "fx-pkmb-hx1",
+        "fx-pkmb-hx2",
+        "fx-pkmb-hx3",
+        "fx-pkmb-punch",
+        "fx-pkmb-shock",
+        "fx-pkmb-fist",
+        "fx-pkmb-f-arm",
+        "fx-pkmb-f-main",
+        "fx-pkmb-f-dk",
+        "fx-pkmb-f-ln",
+        "fx-pkmb-f-rim",
+        "fx-pkmb-f-hl",
+        "fx-pkmb-ring",
+        "fx-pkmb-flash"
+      ],
+      "params": [],
+      "tags": [
+        "fx",
+        "animated",
+        "new"
+      ],
+      "componentType": "fx-scene",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "description": "A blue-and-white fist jabs slowly through a blue aura corridor while orange energy lines twirl around its white core; an orange crescent shockwave leads the knuckles and blooms into a ring on impact."
     },
     {
       "id": "lab-fade-in",
