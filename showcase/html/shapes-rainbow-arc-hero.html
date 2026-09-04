@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rainbow-Arc ★ hero · Prism</title>
+<!-- Prism showcase sample: shapes-rainbow-arc-hero (gallery: shapes). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.ts-arc-letter { position: absolute; left: 50%; top: 50%; transform-origin: 0px 0px; font-weight: 800; font-size: 20px; white-space: pre; }
+.ts-rainbow { position: relative; width: 280px; height: 170px; margin: 0px auto; animation: 6s linear 0s infinite normal none running tsRainbowHue; }
+.ts-rainbow .ts-arc-letter, .ts-bow .ts-arc-letter { font-size: 20px; color: var(--c,#fff); text-shadow: rgba(255, 255, 255, 0.2) 0px 0px 8px; }
+.ts-arc-anim .ts-arc-letter { animation: 4s linear 0s infinite normal none running tsHueRun; }
+.ts-ring .ts-arc-letter { font-size: 17px; color: var(--c); }
+.ts-spiral .ts-arc-letter { color: var(--c); }
+.ts-vortex .ts-arc-letter { color: var(--c); text-shadow: 0 0 6px rgba(var(--c-rgb),.5); }
+@keyframes tsRainbowHue { 
+  0% { filter: hue-rotate(0deg); }
+  100% { filter: hue-rotate(360deg); }
+}
+@keyframes tsHueRun { 
+  0% { color: rgb(245, 71, 71); }
+  100% { color: rgb(245, 71, 71); }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="ts-rainbow ts-arc-anim" data-arc="rainbow"><span class="ts-arc-letter" style="font-size: 18px; transform: translate(-50%, -50%) translateY(53.8164px) rotate(-71.5deg) translateY(-76.8805px); color: rgb(247, 69, 69); animation-delay: 0s;">P</span><span class="ts-arc-letter" style="font-size: 18px; transform: translate(-50%, -50%) translateY(53.8164px) rotate(-59.5833deg) translateY(-76.8805px); color: rgb(247, 152, 69); animation-delay: 0.1s;">R</span><span class="ts-arc-letter" style="font-size: 18px; transform: translate(-50%, -50%) translateY(53.8164px) rotate(-47.6667deg) translateY(-76.8805px); color: rgb(247, 238, 69); animation-delay: 0.2s;">I</span><span class="ts-arc-letter" style="font-size: 18px; transform: translate(-50%, -50%) translateY(53.8164px) rotate(-35.75deg) translateY(-76.8805px); color: rgb(173, 247, 69); animation-delay: 0.3s;">S</span><span class="ts-arc-letter" style="font-size: 18px; transform: translate(-50%, -50%) translateY(53.8164px) rotate(-23.8333deg) translateY(-76.8805px); color: rgb(90, 247, 69); animation-delay: 0.4s;">M</span><span class="ts-arc-letter" style="font-size: 18px; transform: translate(-50%, -50%) translateY(53.8164px) rotate(-11.9167deg) translateY(-76.8805px); color: rgb(69, 247, 134); animation-delay: 0.5s;">&nbsp;</span><span class="ts-arc-letter" style="font-size: 18px; transform: translate(-50%, -50%) translateY(53.8164px) rotate(0deg) translateY(-76.8805px); color: rgb(69, 247, 218); animation-delay: 0.6s;">R</span><span class="ts-arc-letter" style="font-size: 18px; transform: translate(-50%, -50%) translateY(53.8164px) rotate(11.9167deg) translateY(-76.8805px); color: rgb(69, 194, 247); animation-delay: 0.7s;">A</span><span class="ts-arc-letter" style="font-size: 18px; transform: translate(-50%, -50%) translateY(53.8164px) rotate(23.8333deg) translateY(-76.8805px); color: rgb(69, 108, 247); animation-delay: 0.8s;">I</span><span class="ts-arc-letter" style="font-size: 18px; transform: translate(-50%, -50%) translateY(53.8164px) rotate(35.75deg) translateY(-76.8805px); color: rgb(114, 69, 247); animation-delay: 0.9s;">N</span><span class="ts-arc-letter" style="font-size: 18px; transform: translate(-50%, -50%) translateY(53.8164px) rotate(47.6667deg) translateY(-76.8805px); color: rgb(197, 69, 247); animation-delay: 1s;">B</span><span class="ts-arc-letter" style="font-size: 18px; transform: translate(-50%, -50%) translateY(53.8164px) rotate(59.5833deg) translateY(-76.8805px); color: rgb(247, 69, 212); animation-delay: 1.1s;">O</span><span class="ts-arc-letter" style="font-size: 18px; transform: translate(-50%, -50%) translateY(53.8164px) rotate(71.5deg) translateY(-76.8805px); color: rgb(247, 69, 128); animation-delay: 1.2s;">W</span></div></div></div>
+<div class="meta"><b>Rainbow-Arc ★ hero</b> · <code>shapes-rainbow-arc-hero</code><br>Text Shapes · Arcs &amp; Rainbows<p>The signature piece: each letter is rotated around a hidden center to bow the word into a rainbow arc, every glyph runs its own hue cycle while the whole arc slowly hue-rotates — a true moving spectrum. Pure per-letter CSS, no images. Letter positions are set by a tiny init script.</p></div>
+
+</body>
+</html>

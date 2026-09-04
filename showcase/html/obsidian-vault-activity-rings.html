@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vault Activity Rings · Prism</title>
+<!-- Prism showcase sample: obsidian-vault-activity-rings (gallery: obsidian). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.obs { --ob: var(--c,var(--crit)); --ob-rgb: var(--c-rgb,var(--crit-rgb)); font-size: 12.5px; color: var(--ink); }
+.obs-data { width: 280px; max-width: 100%; min-height: 90px; border: 1px solid var(--line); border-radius: 10px; background: rgb(13, 17, 29); padding: 10px 12px; position: relative; overflow: hidden; text-align: left; }
+.obs-data h4 { margin: 0px 0px 7px; font-size: 10.5px; color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase; }
+.obs-data .obs-dnum { font: 800 23px ui-monospace, SFMono-Regular, Menlo, monospace; color: var(--ink); }
+.obs-activity-rings { display: flex; align-items: center; gap: 14px; }
+.obs-activity-rings svg { width: 76px; height: 76px; transform: rotate(-90deg); }
+.obs-activity-rings circle { fill: none; stroke-width: 5; stroke-linecap: round; }
+.obs-activity-rings .r1 { stroke: var(--ob); stroke-dasharray: 176; animation: 6s ease 0s infinite normal none running obsRingOne; }
+.obs-activity-rings .r2 { stroke: var(--info); stroke-dasharray: 138; animation: 6s ease 0.3s infinite normal none running obsRingTwo; }
+.obs-activity-rings .r3 { stroke: var(--pos); stroke-dasharray: 101; animation: 6s ease 0.6s infinite normal none running obsRingThree; }
+.obs-ringcopy b { display: block; font-size: 15px; }
+.obs-ringcopy small { display: block; }
+@keyframes obsRingOne { 
+  0% { stroke-dashoffset: 176; }
+  60%, 82% { stroke-dashoffset: 30; }
+  100% { stroke-dashoffset: 176; }
+}
+@keyframes obsRingTwo { 
+  0% { stroke-dashoffset: 138; }
+  60%, 82% { stroke-dashoffset: 42; }
+  100% { stroke-dashoffset: 138; }
+}
+@keyframes obsRingThree { 
+  0% { stroke-dashoffset: 101; }
+  60%, 82% { stroke-dashoffset: 18; }
+  100% { stroke-dashoffset: 101; }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="obs obs-data obs-activity-rings"><svg viewBox="0 0 82 82"><circle class="r1" cx="41" cy="41" r="28"></circle><circle class="r2" cx="41" cy="41" r="22"></circle><circle class="r3" cx="41" cy="41" r="16"></circle></svg><div class="obs-ringcopy"><b>Active vault</b><small style="color:var(--ob)">writing 83%</small><small style="color:var(--info)">linking 69%</small><small style="color:var(--pos)">review 82%</small></div></div></div></div>
+<div class="meta"><b>Vault Activity Rings</b> · <code>obsidian-vault-activity-rings</code><br>Obsidian Facets · DATAVIEW &amp; DASHBOARDS<p>Three independent rings fill to represent writing, linking, and reviewing.</p></div>
+
+</body>
+</html>

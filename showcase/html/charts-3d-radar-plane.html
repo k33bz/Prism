@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3D Radar Plane · Prism</title>
+<!-- Prism showcase sample: charts-3d-radar-plane (gallery: charts). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.lv-ecg .grid { stroke: rgba(255, 255, 255, 0.043); stroke-width: 1; }
+.nch-radar .area { fill: rgba(var(--info-rgb),.25); stroke: var(--info); stroke-width: 2; transform-origin: center center; animation: 4s ease-in-out 0s infinite normal none running nchRadar; }
+@keyframes nchRadar { 
+  0%, 100% { transform: scale(0.55); }
+  50% { transform: scale(1); }
+}
+.n3d-scene { perspective: 640px; perspective-origin: 50% 42%; display: flex; align-items: center; justify-content: center; min-height: 150px; }
+.n3d-radar { width: 150px; height: 130px; transform-style: preserve-3d; transform: rotateX(56deg) rotateZ(-8deg); animation: 9s ease-in-out 0s infinite normal none running n3dTilt; }
+.n3d-radar svg { width: 150px; height: 130px; }
+.n3d-radar .grid { fill: none; stroke: var(--line); }
+.n3d-radar .area { fill: rgba(var(--accent-rgb),.3); stroke: var(--accent); stroke-width: 2.5; transform-origin: center center; animation: 1s ease-out 0s 1 normal both running ncx2Pop; }
+@keyframes n3dTilt { 
+  0%, 100% { transform: rotateX(52deg) rotateZ(-4deg); }
+  50% { transform: rotateX(52deg) rotateZ(6deg); }
+}
+@keyframes ncx2Pop { 
+  0% { transform: scale(0); opacity: 0; }
+  70% { transform: scale(1.25); }
+  100% { transform: scale(1); opacity: 1; }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="n3d-scene"><div class="n3d-radar"><svg viewBox="0 0 150 130">
+      <polygon class="grid" points="75,20 128,52 108,116 42,116 22,52"></polygon>
+      <polygon class="grid" points="75,48 104,66 94,98 56,98 46,66"></polygon>
+      <polygon class="area" points="75,26 120,56 96,108 48,100 34,58"></polygon>
+    </svg></div></div></div></div>
+<div class="meta"><b>3D Radar Plane</b> · <code>charts-3d-radar-plane</code><br>Charts &amp; Metrics · 3D &amp; Perspective (2026 drop)<p>A spider chart laid onto a tilted, swaying plane — the profile pops off the surface for a more spatial compare.</p></div>
+
+</body>
+</html>

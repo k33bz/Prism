@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Marimekko / Mekko · Prism</title>
+<!-- Prism showcase sample: charts-marimekko-mekko (gallery: charts). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.mp-grow { animation: 1.1s cubic-bezier(0.22, 1, 0.36, 1) 0s 1 normal backwards running scx-growW; }
+@keyframes scx-growW { 
+  0% { }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><svg width="240" height="150" viewBox="0 0 240 150" style="overflow:visible">
+        <!-- Marimekko: 3 columns of varying width, each split into stacked segments -->
+        <g>
+          <rect class="mp-grow" style="transform-origin:bottom;animation-delay:0s" x="6" y="20" width="86" height="40" fill="var(--info)"></rect>
+          <rect class="mp-grow" style="transform-origin:bottom;animation-delay:.05s" x="6" y="62" width="86" height="44" fill="var(--accent)"></rect>
+          <rect class="mp-grow" style="transform-origin:bottom;animation-delay:.1s" x="6" y="108" width="86" height="22" fill="var(--pos)"></rect>
+          <rect class="mp-grow" style="transform-origin:bottom;animation-delay:.1s" x="96" y="20" width="62" height="58" fill="var(--info)"></rect>
+          <rect class="mp-grow" style="transform-origin:bottom;animation-delay:.15s" x="96" y="80" width="62" height="30" fill="var(--accent)"></rect>
+          <rect class="mp-grow" style="transform-origin:bottom;animation-delay:.2s" x="96" y="112" width="62" height="18" fill="var(--pos)"></rect>
+          <rect class="mp-grow" style="transform-origin:bottom;animation-delay:.2s" x="162" y="20" width="72" height="26" fill="var(--info)"></rect>
+          <rect class="mp-grow" style="transform-origin:bottom;animation-delay:.25s" x="162" y="48" width="72" height="54" fill="var(--accent)"></rect>
+          <rect class="mp-grow" style="transform-origin:bottom;animation-delay:.3s" x="162" y="104" width="72" height="26" fill="var(--pos)"></rect>
+        </g>
+        <g fill="var(--muted)" font-size="9" text-anchor="middle"><text x="49" y="142">SMB 36%</text><text x="127" y="142">Mid 26%</text><text x="198" y="142">Ent 30%</text></g>
+      </svg></div></div>
+<div class="meta"><b>Marimekko / Mekko</b> · <code>charts-marimekko-mekko</code><br>Charts &amp; Metrics · More Plot Types<p>A stacked bar chart where column widths also vary — so both axes carry a proportion (segment share × category size). Two dimensions of share in one block; ideal for market = segment × tier revenue.</p></div>
+
+</body>
+</html>

@@ -1,0 +1,175 @@
+# FX Store
+
+Every effect in Prism's **FX Store** gallery, recorded as a looping GIF.
+
+**146 effects** · 129 animated · 6.4 MB of GIF · click any GIF to open its standalone HTML sample (raw file; open it locally, GitHub shows source).
+
+[← Showcase index](../README.md)
+
+**Sections:** [Glow & Light](#glow-light) · [Border & Edge](#border-edge) · [Text & Inline](#text-inline) · [Motion & Attention](#motion-attention) · [Particles & Sparks](#particles-sparks) · [Glass & Material](#glass-material) · [Shadows & Depth](#shadows-depth) · [Backgrounds & Patterns](#backgrounds-patterns) · [Overlays & Decorators](#overlays-decorators) · [Cyberpunk & Glitch](#cyberpunk-glitch) · [Liquid & Organic](#liquid-organic) · [Electric & Energy](#electric-energy) · [Physics & Motion](#physics-motion) · [Holographic & Iridescent](#holographic-iridescent) · [Neon Sign, Scanline & CRT](#neon-sign-scanline-crt) · [Frost, Magma & Aurora](#frost-magma-aurora) · [Comet](#comet) · [Grain, Parallax & Pointer](#grain-parallax-pointer) · [New](#new) · [3D & Depth FX](#3d-depth-fx) · [Glow, Border & Holographic FX](#glow-border-holographic-fx) · [Glass, Glitch, Liquid & Energy FX](#glass-glitch-liquid-energy-fx)
+
+## Glow & Light
+
+<table>
+<tr><td align="center" valign="top" width="33%"><a href="../html/fx-pulse-glow-winner.html"><img src="../gif/fx-pulse-glow-winner.gif" width="300" alt="Pulse-Glow ★ winner"></a><br><b>Pulse-Glow ★ winner</b><br><sub><code>fx-pulse-glow-winner</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-halo-ping.html"><img src="../gif/fx-halo-ping.gif" width="300" alt="Halo-Ping"></a><br><b>Halo-Ping</b><br><sub><code>fx-halo-ping</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-ember.html"><img src="../gif/fx-ember.gif" width="300" alt="Ember"></a><br><b>Ember</b><br><sub><code>fx-ember</code></sub></td></tr>
+<tr><td align="center" valign="top" width="33%"><a href="../html/fx-breathe.html"><img src="../gif/fx-breathe.gif" width="300" alt="Breathe"></a><br><b>Breathe</b><br><sub><code>fx-breathe</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-alert-strobe.html"><img src="../gif/fx-alert-strobe.gif" width="300" alt="Alert-Strobe"></a><br><b>Alert-Strobe</b><br><sub><code>fx-alert-strobe</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-spotlight-sweep.html"><img src="../gif/fx-spotlight-sweep.gif" width="300" alt="Spotlight-Sweep"></a><br><b>Spotlight-Sweep</b><br><sub><code>fx-spotlight-sweep</code></sub></td></tr>
+<tr><td align="center" valign="top" width="33%"><a href="../html/fx-sonar.html"><img src="../gif/fx-sonar.gif" width="300" alt="Sonar"></a><br><b>Sonar</b><br><sub><code>fx-sonar</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-aurora.html"><img src="../gif/fx-aurora.gif" width="300" alt="Aurora"></a><br><b>Aurora</b><br><sub><code>fx-aurora</code></sub></td></tr>
+</table>
+
+## Border & Edge
+
+<table>
+<tr><td align="center" valign="top" width="33%"><a href="../html/fx-edge-trace.html"><img src="../gif/fx-edge-trace.gif" width="300" alt="Edge-Trace"></a><br><b>Edge-Trace</b><br><sub><code>fx-edge-trace</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-conic-ring.html"><img src="../gif/fx-conic-ring.gif" width="300" alt="Conic-Ring"></a><br><b>Conic-Ring</b><br><sub><code>fx-conic-ring</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-reticle.html"><img src="../gif/fx-reticle.gif" width="300" alt="Reticle"></a><br><b>Reticle</b><br><sub><code>fx-reticle</code></sub></td></tr>
+<tr><td align="center" valign="top" width="33%"><a href="../html/fx-scanline.html"><img src="../gif/fx-scanline.gif" width="300" alt="Scanline"></a><br><b>Scanline</b><br><sub><code>fx-scanline</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-marching-ants.html"><img src="../gif/fx-marching-ants.gif" width="300" alt="Marching-Ants"></a><br><b>Marching-Ants</b><br><sub><code>fx-marching-ants</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-radar-sweep.html"><img src="../gif/fx-radar-sweep.gif" width="300" alt="Radar-Sweep"></a><br><b>Radar-Sweep</b><br><sub><code>fx-radar-sweep</code></sub></td></tr>
+<tr><td align="center" valign="top" width="33%"><a href="../html/fx-corner-lock.html"><img src="../gif/fx-corner-lock.gif" width="300" alt="Corner-Lock"></a><br><b>Corner-Lock</b><br><sub><code>fx-corner-lock</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-comet-border.html"><img src="../gif/fx-comet-border.gif" width="300" alt="Comet-Border"></a><br><b>Comet-Border</b><br><sub><code>fx-comet-border</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-back-n-forth.html"><img src="../gif/fx-back-n-forth.gif" width="300" alt="Back'n'Forth"></a><br><b>Back'n'Forth</b><br><sub><code>fx-back-n-forth</code></sub></td></tr>
+</table>
+
+## Text & Inline
+
+<table>
+<tr><td align="center" valign="top" width="33%"><a href="../html/fx-neon-flicker.html"><img src="../gif/fx-neon-flicker.gif" width="300" alt="Neon-Flicker"></a><br><b>Neon-Flicker</b><br><sub><code>fx-neon-flicker</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-data-blink.html"><img src="../gif/fx-data-blink.gif" width="300" alt="Data-Blink"></a><br><b>Data-Blink</b><br><sub><code>fx-data-blink</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-grow-underline.html"><img src="../gif/fx-grow-underline.gif" width="300" alt="Grow-Underline"></a><br><b>Grow-Underline</b><br><sub><code>fx-grow-underline</code></sub></td></tr>
+<tr><td align="center" valign="top" width="33%"><a href="../html/fx-glitch.html"><img src="../gif/fx-glitch.gif" width="300" alt="Glitch"></a><br><b>Glitch</b><br><sub><code>fx-glitch</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-text-shine.html"><img src="../gif/fx-text-shine.gif" width="300" alt="Text-Shine"></a><br><b>Text-Shine</b><br><sub><code>fx-text-shine</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-color-pulse.html"><img src="../gif/fx-color-pulse.gif" width="300" alt="Color-Pulse"></a><br><b>Color-Pulse</b><br><sub><code>fx-color-pulse</code></sub></td></tr>
+</table>
+
+## Motion & Attention
+
+<table>
+<tr><td align="center" valign="top" width="33%"><a href="../html/fx-float.html"><img src="../gif/fx-float.gif" width="300" alt="Float"></a><br><b>Float</b><br><sub><code>fx-float</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-wobble.html"><img src="../gif/fx-wobble.gif" width="300" alt="Wobble"></a><br><b>Wobble</b><br><sub><code>fx-wobble</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-pop.html"><img src="../gif/fx-pop.gif" width="300" alt="Pop"></a><br><b>Pop</b><br><sub><code>fx-pop</code></sub></td></tr>
+<tr><td align="center" valign="top" width="33%"><a href="../html/fx-flash.html"><img src="../gif/fx-flash.gif" width="300" alt="Flash"></a><br><b>Flash</b><br><sub><code>fx-flash</code></sub></td></tr>
+</table>
+
+## Particles & Sparks
+
+<table>
+<tr><td align="center" valign="top" width="33%"><a href="../html/fx-sparkle.html"><img src="../gif/fx-sparkle.gif" width="300" alt="Sparkle"></a><br><b>Sparkle</b><br><sub><code>fx-sparkle</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-firefly.html"><img src="../gif/fx-firefly.gif" width="300" alt="Firefly"></a><br><b>Firefly</b><br><sub><code>fx-firefly</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-comet.html"><img src="../gif/fx-comet.gif" width="300" alt="Comet"></a><br><b>Comet</b><br><sub><code>fx-comet</code></sub></td></tr>
+</table>
+
+## Glass & Material
+
+<table>
+<tr><td align="center" valign="top" width="33%"><a href="../html/fx-glass.html"><img src="../gif/fx-glass.gif" width="300" alt="Glass"></a><br><b>Glass</b><br><sub><code>fx-glass</code> · static</sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-frost.html"><img src="../gif/fx-frost.gif" width="300" alt="Frost"></a><br><b>Frost</b><br><sub><code>fx-frost</code> · static</sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-hologram.html"><img src="../gif/fx-hologram.gif" width="300" alt="Hologram"></a><br><b>Hologram</b><br><sub><code>fx-hologram</code></sub></td></tr>
+</table>
+
+## Shadows & Depth
+
+<table>
+<tr><td align="center" valign="top" width="33%"><a href="../html/fx-soft-shadow.html"><img src="../gif/fx-soft-shadow.gif" width="300" alt="Soft Shadow"></a><br><b>Soft Shadow</b><br><sub><code>fx-soft-shadow</code> · static</sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-color-shadow.html"><img src="../gif/fx-color-shadow.gif" width="300" alt="Color Shadow"></a><br><b>Color Shadow</b><br><sub><code>fx-color-shadow</code> · static</sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-neon-shadow.html"><img src="../gif/fx-neon-shadow.gif" width="300" alt="Neon Shadow"></a><br><b>Neon Shadow</b><br><sub><code>fx-neon-shadow</code> · static</sub></td></tr>
+<tr><td align="center" valign="top" width="33%"><a href="../html/fx-inner-shadow.html"><img src="../gif/fx-inner-shadow.gif" width="300" alt="Inner Shadow"></a><br><b>Inner Shadow</b><br><sub><code>fx-inner-shadow</code> · static</sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-elevate.html"><img src="../gif/fx-elevate.gif" width="300" alt="Elevate"></a><br><b>Elevate</b><br><sub><code>fx-elevate</code> · static</sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-multi-shadow.html"><img src="../gif/fx-multi-shadow.gif" width="300" alt="Multi Shadow"></a><br><b>Multi Shadow</b><br><sub><code>fx-multi-shadow</code> · static</sub></td></tr>
+</table>
+
+## Backgrounds & Patterns
+
+<table>
+<tr><td align="center" valign="top" width="33%"><a href="../html/fx-dot-grid.html"><img src="../gif/fx-dot-grid.gif" width="300" alt="Dot Grid"></a><br><b>Dot Grid</b><br><sub><code>fx-dot-grid</code> · static</sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-grid-lines.html"><img src="../gif/fx-grid-lines.gif" width="300" alt="Grid Lines"></a><br><b>Grid Lines</b><br><sub><code>fx-grid-lines</code> · static</sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-diagonal.html"><img src="../gif/fx-diagonal.gif" width="300" alt="Diagonal"></a><br><b>Diagonal</b><br><sub><code>fx-diagonal</code> · static</sub></td></tr>
+<tr><td align="center" valign="top" width="33%"><a href="../html/fx-noise.html"><img src="../gif/fx-noise.gif" width="300" alt="Noise"></a><br><b>Noise</b><br><sub><code>fx-noise</code> · static</sub></td></tr>
+</table>
+
+## Overlays & Decorators
+
+<table>
+<tr><td align="center" valign="top" width="33%"><a href="../html/fx-ribbon.html"><img src="../gif/fx-ribbon.gif" width="300" alt="Ribbon"></a><br><b>Ribbon</b><br><sub><code>fx-ribbon</code> · static</sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-corner-badge.html"><img src="../gif/fx-corner-badge.gif" width="300" alt="Corner Badge"></a><br><b>Corner Badge</b><br><sub><code>fx-corner-badge</code> · static</sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-glow-border.html"><img src="../gif/fx-glow-border.gif" width="300" alt="Glow Border"></a><br><b>Glow Border</b><br><sub><code>fx-glow-border</code> · static</sub></td></tr>
+</table>
+
+## Cyberpunk & Glitch
+
+<table>
+<tr><td align="center" valign="top" width="33%"><a href="../html/fx-rgb-glitch.html"><img src="../gif/fx-rgb-glitch.gif" width="300" alt="RGB Glitch"></a><br><b>RGB Glitch</b><br><sub><code>fx-rgb-glitch</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-crt-scanlines.html"><img src="../gif/fx-crt-scanlines.gif" width="300" alt="CRT Scanlines"></a><br><b>CRT Scanlines</b><br><sub><code>fx-crt-scanlines</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-chromatic-aberration.html"><img src="../gif/fx-chromatic-aberration.gif" width="300" alt="Chromatic Aberration"></a><br><b>Chromatic Aberration</b><br><sub><code>fx-chromatic-aberration</code></sub></td></tr>
+<tr><td align="center" valign="top" width="33%"><a href="../html/fx-matrix-background.html"><img src="../gif/fx-matrix-background.gif" width="300" alt="Matrix Background"></a><br><b>Matrix Background</b><br><sub><code>fx-matrix-background</code></sub></td></tr>
+</table>
+
+## Liquid & Organic
+
+<table>
+<tr><td align="center" valign="top" width="33%"><a href="../html/fx-blob-morph.html"><img src="../gif/fx-blob-morph.gif" width="300" alt="Blob Morph"></a><br><b>Blob Morph</b><br><sub><code>fx-blob-morph</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-ripple.html"><img src="../gif/fx-ripple.gif" width="300" alt="Ripple"></a><br><b>Ripple</b><br><sub><code>fx-ripple</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-lava-flow.html"><img src="../gif/fx-lava-flow.gif" width="300" alt="Lava Flow"></a><br><b>Lava Flow</b><br><sub><code>fx-lava-flow</code></sub></td></tr>
+<tr><td align="center" valign="top" width="33%"><a href="../html/fx-liquid-fill.html"><img src="../gif/fx-liquid-fill.gif" width="300" alt="Liquid Fill"></a><br><b>Liquid Fill</b><br><sub><code>fx-liquid-fill</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-squish.html"><img src="../gif/fx-squish.gif" width="300" alt="Squish"></a><br><b>Squish</b><br><sub><code>fx-squish</code></sub></td></tr>
+</table>
+
+## Electric & Energy
+
+<table>
+<tr><td align="center" valign="top" width="33%"><a href="../html/fx-electric-border.html"><img src="../gif/fx-electric-border.gif" width="300" alt="Electric Border"></a><br><b>Electric Border</b><br><sub><code>fx-electric-border</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-plasma.html"><img src="../gif/fx-plasma.gif" width="300" alt="Plasma"></a><br><b>Plasma</b><br><sub><code>fx-plasma</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-lightning-flash.html"><img src="../gif/fx-lightning-flash.gif" width="300" alt="Lightning Flash"></a><br><b>Lightning Flash</b><br><sub><code>fx-lightning-flash</code></sub></td></tr>
+<tr><td align="center" valign="top" width="33%"><a href="../html/fx-confetti.html"><img src="../gif/fx-confetti.gif" width="300" alt="Confetti"></a><br><b>Confetti</b><br><sub><code>fx-confetti</code></sub></td></tr>
+</table>
+
+## Physics & Motion
+
+<table>
+<tr><td align="center" valign="top" width="33%"><a href="../html/fx-spring-bounce.html"><img src="../gif/fx-spring-bounce.gif" width="300" alt="Spring Bounce"></a><br><b>Spring Bounce</b><br><sub><code>fx-spring-bounce</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-gravity-drop.html"><img src="../gif/fx-gravity-drop.gif" width="300" alt="Gravity Drop"></a><br><b>Gravity Drop</b><br><sub><code>fx-gravity-drop</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-3d-tilt-hover.html"><img src="../gif/fx-3d-tilt-hover.gif" width="300" alt="3D Tilt (hover)"></a><br><b>3D Tilt (hover)</b><br><sub><code>fx-3d-tilt-hover</code></sub></td></tr>
+<tr><td align="center" valign="top" width="33%"><a href="../html/fx-spotlight-hover.html"><img src="../gif/fx-spotlight-hover.gif" width="300" alt="Spotlight (hover)"></a><br><b>Spotlight (hover)</b><br><sub><code>fx-spotlight-hover</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-border-draw-hover.html"><img src="../gif/fx-border-draw-hover.gif" width="300" alt="Border Draw (hover)"></a><br><b>Border Draw (hover)</b><br><sub><code>fx-border-draw-hover</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-morph-star.html"><img src="../gif/fx-morph-star.gif" width="300" alt="Morph Star"></a><br><b>Morph Star</b><br><sub><code>fx-morph-star</code></sub></td></tr>
+<tr><td align="center" valign="top" width="33%"><a href="../html/fx-breathe-border.html"><img src="../gif/fx-breathe-border.gif" width="300" alt="Breathe Border"></a><br><b>Breathe Border</b><br><sub><code>fx-breathe-border</code></sub></td></tr>
+</table>
+
+## Holographic & Iridescent
+
+<table>
+<tr><td align="center" valign="top" width="33%"><a href="../html/fx-holo-shift.html"><img src="../gif/fx-holo-shift.gif" width="300" alt="Holo-Shift"></a><br><b>Holo-Shift</b><br><sub><code>fx-holo-shift</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-iridescent.html"><img src="../gif/fx-iridescent.gif" width="300" alt="Iridescent"></a><br><b>Iridescent</b><br><sub><code>fx-iridescent</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-foil-brush.html"><img src="../gif/fx-foil-brush.gif" width="300" alt="Foil-Brush"></a><br><b>Foil-Brush</b><br><sub><code>fx-foil-brush</code></sub></td></tr>
+<tr><td align="center" valign="top" width="33%"><a href="../html/fx-pearl-sheen.html"><img src="../gif/fx-pearl-sheen.gif" width="300" alt="Pearl-Sheen"></a><br><b>Pearl-Sheen</b><br><sub><code>fx-pearl-sheen</code></sub></td></tr>
+</table>
+
+## Neon Sign, Scanline & CRT
+
+<table>
+<tr><td align="center" valign="top" width="33%"><a href="../html/fx-neon-sign.html"><img src="../gif/fx-neon-sign.gif" width="300" alt="Neon-Sign"></a><br><b>Neon-Sign</b><br><sub><code>fx-neon-sign</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-scanline-roll.html"><img src="../gif/fx-scanline-roll.gif" width="300" alt="Scanline-Roll"></a><br><b>Scanline-Roll</b><br><sub><code>fx-scanline-roll</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-scan-beam.html"><img src="../gif/fx-scan-beam.gif" width="300" alt="Scan-Beam"></a><br><b>Scan-Beam</b><br><sub><code>fx-scan-beam</code></sub></td></tr>
+<tr><td align="center" valign="top" width="33%"><a href="../html/fx-crt-power-on.html"><img src="../gif/fx-crt-power-on.gif" width="300" alt="CRT Power-On"></a><br><b>CRT Power-On</b><br><sub><code>fx-crt-power-on</code></sub></td></tr>
+</table>
+
+## Frost, Magma & Aurora
+
+<table>
+<tr><td align="center" valign="top" width="33%"><a href="../html/fx-frost-edge.html"><img src="../gif/fx-frost-edge.gif" width="300" alt="Frost-Edge"></a><br><b>Frost-Edge</b><br><sub><code>fx-frost-edge</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-magma-flow.html"><img src="../gif/fx-magma-flow.gif" width="300" alt="Magma-Flow"></a><br><b>Magma-Flow</b><br><sub><code>fx-magma-flow</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-aurora-border.html"><img src="../gif/fx-aurora-border.gif" width="300" alt="Aurora-Border"></a><br><b>Aurora-Border</b><br><sub><code>fx-aurora-border</code></sub></td></tr>
+</table>
+
+## Comet
+
+<table>
+<tr><td align="center" valign="top" width="33%"><a href="../html/fx-comet-trail.html"><img src="../gif/fx-comet-trail.gif" width="300" alt="Comet-Trail"></a><br><b>Comet-Trail</b><br><sub><code>fx-comet-trail</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-conic-gradient-border.html"><img src="../gif/fx-conic-gradient-border.gif" width="300" alt="Conic-Gradient-Border"></a><br><b>Conic-Gradient-Border</b><br><sub><code>fx-conic-gradient-border</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-sheen-sweep.html"><img src="../gif/fx-sheen-sweep.gif" width="300" alt="Sheen-Sweep"></a><br><b>Sheen-Sweep</b><br><sub><code>fx-sheen-sweep</code></sub></td></tr>
+</table>
+
+## Grain, Parallax & Pointer
+
+<table>
+<tr><td align="center" valign="top" width="33%"><a href="../html/fx-noise-grain.html"><img src="../gif/fx-noise-grain.gif" width="300" alt="Noise-Grain"></a><br><b>Noise-Grain</b><br><sub><code>fx-noise-grain</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-depth-parallax.html"><img src="../gif/fx-depth-parallax.gif" width="300" alt="Depth-Parallax"></a><br><b>Depth-Parallax</b><br><sub><code>fx-depth-parallax</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-ripple-on-hover.html"><img src="../gif/fx-ripple-on-hover.gif" width="300" alt="Ripple-on-Hover"></a><br><b>Ripple-on-Hover</b><br><sub><code>fx-ripple-on-hover</code></sub></td></tr>
+<tr><td align="center" valign="top" width="33%"><a href="../html/fx-spotlight-follow.html"><img src="../gif/fx-spotlight-follow.gif" width="300" alt="Spotlight-Follow"></a><br><b>Spotlight-Follow</b><br><sub><code>fx-spotlight-follow</code></sub></td></tr>
+</table>
+
+## New
+
+<table>
+<tr><td align="center" valign="top" width="33%"><a href="../html/fx-heartbeat.html"><img src="../gif/fx-heartbeat.gif" width="300" alt="Heartbeat"></a><br><b>Heartbeat</b><br><sub><code>fx-heartbeat</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-jelly.html"><img src="../gif/fx-jelly.gif" width="300" alt="Jelly"></a><br><b>Jelly</b><br><sub><code>fx-jelly</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-neon-flicker-2.html"><img src="../gif/fx-neon-flicker-2.gif" width="300" alt="Neon Flicker"></a><br><b>Neon Flicker</b><br><sub><code>fx-neon-flicker-2</code></sub></td></tr>
+<tr><td align="center" valign="top" width="33%"><a href="../html/fx-vertical-scan.html"><img src="../gif/fx-vertical-scan.gif" width="300" alt="Vertical Scan"></a><br><b>Vertical Scan</b><br><sub><code>fx-vertical-scan</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-hologram-2.html"><img src="../gif/fx-hologram-2.gif" width="300" alt="Hologram"></a><br><b>Hologram</b><br><sub><code>fx-hologram-2</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-frost-2.html"><img src="../gif/fx-frost-2.gif" width="300" alt="Frost"></a><br><b>Frost</b><br><sub><code>fx-frost-2</code> · static</sub></td></tr>
+<tr><td align="center" valign="top" width="33%"><a href="../html/fx-ember-rise.html"><img src="../gif/fx-ember-rise.gif" width="300" alt="Ember Rise"></a><br><b>Ember Rise</b><br><sub><code>fx-ember-rise</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-glint.html"><img src="../gif/fx-glint.gif" width="300" alt="Glint"></a><br><b>Glint</b><br><sub><code>fx-glint</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-orbit-dot.html"><img src="../gif/fx-orbit-dot.gif" width="300" alt="Orbit Dot"></a><br><b>Orbit Dot</b><br><sub><code>fx-orbit-dot</code></sub></td></tr>
+<tr><td align="center" valign="top" width="33%"><a href="../html/fx-underline-grow.html"><img src="../gif/fx-underline-grow.gif" width="300" alt="Underline Grow"></a><br><b>Underline Grow</b><br><sub><code>fx-underline-grow</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-rgb-split.html"><img src="../gif/fx-rgb-split.gif" width="300" alt="RGB Split"></a><br><b>RGB Split</b><br><sub><code>fx-rgb-split</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-warp.html"><img src="../gif/fx-warp.gif" width="300" alt="Warp"></a><br><b>Warp</b><br><sub><code>fx-warp</code></sub></td></tr>
+<tr><td align="center" valign="top" width="33%"><a href="../html/fx-dashed-spin.html"><img src="../gif/fx-dashed-spin.gif" width="300" alt="Dashed Spin"></a><br><b>Dashed Spin</b><br><sub><code>fx-dashed-spin</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-corner-cut.html"><img src="../gif/fx-corner-cut.gif" width="300" alt="Corner Cut"></a><br><b>Corner Cut</b><br><sub><code>fx-corner-cut</code> · static</sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-scan-grid.html"><img src="../gif/fx-scan-grid.gif" width="300" alt="Scan Grid"></a><br><b>Scan Grid</b><br><sub><code>fx-scan-grid</code></sub></td></tr>
+<tr><td align="center" valign="top" width="33%"><a href="../html/fx-light-sweep.html"><img src="../gif/fx-light-sweep.gif" width="300" alt="Light Sweep"></a><br><b>Light Sweep</b><br><sub><code>fx-light-sweep</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-float-2.html"><img src="../gif/fx-float-2.gif" width="300" alt="Float"></a><br><b>Float</b><br><sub><code>fx-float-2</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-radar-sweep-2.html"><img src="../gif/fx-radar-sweep-2.gif" width="300" alt="Radar Sweep"></a><br><b>Radar Sweep</b><br><sub><code>fx-radar-sweep-2</code></sub></td></tr>
+<tr><td align="center" valign="top" width="33%"><a href="../html/fx-aurora-drift.html"><img src="../gif/fx-aurora-drift.gif" width="300" alt="Aurora Drift"></a><br><b>Aurora Drift</b><br><sub><code>fx-aurora-drift</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-spark-corners.html"><img src="../gif/fx-spark-corners.gif" width="300" alt="Spark Corners"></a><br><b>Spark Corners</b><br><sub><code>fx-spark-corners</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-depth-stack.html"><img src="../gif/fx-depth-stack.gif" width="300" alt="Depth Stack"></a><br><b>Depth Stack</b><br><sub><code>fx-depth-stack</code></sub></td></tr>
+<tr><td align="center" valign="top" width="33%"><a href="../html/fx-liquid-border.html"><img src="../gif/fx-liquid-border.gif" width="300" alt="Liquid Border"></a><br><b>Liquid Border</b><br><sub><code>fx-liquid-border</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-vhs-tracking.html"><img src="../gif/fx-vhs-tracking.gif" width="300" alt="VHS Tracking"></a><br><b>VHS Tracking</b><br><sub><code>fx-vhs-tracking</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-halo-rotate.html"><img src="../gif/fx-halo-rotate.gif" width="300" alt="Halo Rotate"></a><br><b>Halo Rotate</b><br><sub><code>fx-halo-rotate</code></sub></td></tr>
+<tr><td align="center" valign="top" width="33%"><a href="../html/fx-breathe-glow.html"><img src="../gif/fx-breathe-glow.gif" width="300" alt="Breathe Glow"></a><br><b>Breathe Glow</b><br><sub><code>fx-breathe-glow</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-scan-dot.html"><img src="../gif/fx-scan-dot.gif" width="300" alt="Scan Dot"></a><br><b>Scan Dot</b><br><sub><code>fx-scan-dot</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-gradient-border.html"><img src="../gif/fx-gradient-border.gif" width="300" alt="Gradient Border"></a><br><b>Gradient Border</b><br><sub><code>fx-gradient-border</code></sub></td></tr>
+<tr><td align="center" valign="top" width="33%"><a href="../html/fx-glow-text.html"><img src="../gif/fx-glow-text.gif" width="300" alt="Glow Text"></a><br><b>Glow Text</b><br><sub><code>fx-glow-text</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-shimmer.html"><img src="../gif/fx-shimmer.gif" width="300" alt="Shimmer"></a><br><b>Shimmer</b><br><sub><code>fx-shimmer</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-pop-2.html"><img src="../gif/fx-pop-2.gif" width="300" alt="Pop"></a><br><b>Pop</b><br><sub><code>fx-pop-2</code></sub></td></tr>
+<tr><td align="center" valign="top" width="33%"><a href="../html/fx-wobble-2.html"><img src="../gif/fx-wobble-2.gif" width="300" alt="Wobble"></a><br><b>Wobble</b><br><sub><code>fx-wobble-2</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-tilt-3d-hover.html"><img src="../gif/fx-tilt-3d-hover.gif" width="300" alt="Tilt 3D (hover)"></a><br><b>Tilt 3D (hover)</b><br><sub><code>fx-tilt-3d-hover</code></sub></td></tr>
+</table>
+
+## 3D & Depth FX
+
+<table>
+<tr><td align="center" valign="top" width="33%"><a href="../html/fx-lift.html"><img src="../gif/fx-lift.gif" width="300" alt="Lift"></a><br><b>Lift</b><br><sub><code>fx-lift</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-flip-glow.html"><img src="../gif/fx-flip-glow.gif" width="300" alt="Flip-Glow"></a><br><b>Flip-Glow</b><br><sub><code>fx-flip-glow</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-extrude.html"><img src="../gif/fx-extrude.gif" width="300" alt="Extrude"></a><br><b>Extrude</b><br><sub><code>fx-extrude</code></sub></td></tr>
+<tr><td align="center" valign="top" width="33%"><a href="../html/fx-isometric.html"><img src="../gif/fx-isometric.gif" width="300" alt="Isometric"></a><br><b>Isometric</b><br><sub><code>fx-isometric</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-parallax-layers.html"><img src="../gif/fx-parallax-layers.gif" width="300" alt="Parallax Layers"></a><br><b>Parallax Layers</b><br><sub><code>fx-parallax-layers</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-perspective-shimmer.html"><img src="../gif/fx-perspective-shimmer.gif" width="300" alt="Perspective Shimmer"></a><br><b>Perspective Shimmer</b><br><sub><code>fx-perspective-shimmer</code></sub></td></tr>
+<tr><td align="center" valign="top" width="33%"><a href="../html/fx-swing-3d.html"><img src="../gif/fx-swing-3d.gif" width="300" alt="Swing-3D"></a><br><b>Swing-3D</b><br><sub><code>fx-swing-3d</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-depth-pop.html"><img src="../gif/fx-depth-pop.gif" width="300" alt="Depth-Pop"></a><br><b>Depth-Pop</b><br><sub><code>fx-depth-pop</code></sub></td></tr>
+</table>
+
+## Glow, Border & Holographic FX
+
+<table>
+<tr><td align="center" valign="top" width="33%"><a href="../html/fx-plasma-ring.html"><img src="../gif/fx-plasma-ring.gif" width="300" alt="Plasma-Ring"></a><br><b>Plasma-Ring</b><br><sub><code>fx-plasma-ring</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-laser-border.html"><img src="../gif/fx-laser-border.gif" width="300" alt="Laser-Border"></a><br><b>Laser-Border</b><br><sub><code>fx-laser-border</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-prism-edge.html"><img src="../gif/fx-prism-edge.gif" width="300" alt="Prism-Edge"></a><br><b>Prism-Edge</b><br><sub><code>fx-prism-edge</code></sub></td></tr>
+<tr><td align="center" valign="top" width="33%"><a href="../html/fx-edge-cycle.html"><img src="../gif/fx-edge-cycle.gif" width="300" alt="Edge-Cycle"></a><br><b>Edge-Cycle</b><br><sub><code>fx-edge-cycle</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-holo-grid.html"><img src="../gif/fx-holo-grid.gif" width="300" alt="Holo-Grid"></a><br><b>Holo-Grid</b><br><sub><code>fx-holo-grid</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-oil-slick.html"><img src="../gif/fx-oil-slick.gif" width="300" alt="Oil-Slick"></a><br><b>Oil-Slick</b><br><sub><code>fx-oil-slick</code></sub></td></tr>
+<tr><td align="center" valign="top" width="33%"><a href="../html/fx-nebula.html"><img src="../gif/fx-nebula.gif" width="300" alt="Nebula"></a><br><b>Nebula</b><br><sub><code>fx-nebula</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-vortex.html"><img src="../gif/fx-vortex.gif" width="300" alt="Vortex"></a><br><b>Vortex</b><br><sub><code>fx-vortex</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-magnetic-pulse.html"><img src="../gif/fx-magnetic-pulse.gif" width="300" alt="Magnetic-Pulse"></a><br><b>Magnetic-Pulse</b><br><sub><code>fx-magnetic-pulse</code></sub></td></tr>
+<tr><td align="center" valign="top" width="33%"><a href="../html/fx-spark-burst.html"><img src="../gif/fx-spark-burst.gif" width="300" alt="Spark-Burst"></a><br><b>Spark-Burst</b><br><sub><code>fx-spark-burst</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-star-field.html"><img src="../gif/fx-star-field.gif" width="300" alt="Star-Field"></a><br><b>Star-Field</b><br><sub><code>fx-star-field</code></sub></td></tr>
+</table>
+
+## Glass, Glitch, Liquid & Energy FX
+
+<table>
+<tr><td align="center" valign="top" width="33%"><a href="../html/fx-glass-sheen.html"><img src="../gif/fx-glass-sheen.gif" width="300" alt="Glass-Sheen"></a><br><b>Glass-Sheen</b><br><sub><code>fx-glass-sheen</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-frost-crack.html"><img src="../gif/fx-frost-crack.gif" width="300" alt="Frost-Crack"></a><br><b>Frost-Crack</b><br><sub><code>fx-frost-crack</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-glitch-slice.html"><img src="../gif/fx-glitch-slice.gif" width="300" alt="Glitch-Slice"></a><br><b>Glitch-Slice</b><br><sub><code>fx-glitch-slice</code></sub></td></tr>
+<tr><td align="center" valign="top" width="33%"><a href="../html/fx-shatter.html"><img src="../gif/fx-shatter.gif" width="300" alt="Shatter"></a><br><b>Shatter</b><br><sub><code>fx-shatter</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-liquid-rise.html"><img src="../gif/fx-liquid-rise.gif" width="300" alt="Liquid-Rise"></a><br><b>Liquid-Rise</b><br><sub><code>fx-liquid-rise</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-ripple-out.html"><img src="../gif/fx-ripple-out.gif" width="300" alt="Ripple-Out"></a><br><b>Ripple-Out</b><br><sub><code>fx-ripple-out</code></sub></td></tr>
+<tr><td align="center" valign="top" width="33%"><a href="../html/fx-electric-arc.html"><img src="../gif/fx-electric-arc.gif" width="300" alt="Electric-Arc"></a><br><b>Electric-Arc</b><br><sub><code>fx-electric-arc</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-beam-cross.html"><img src="../gif/fx-beam-cross.gif" width="300" alt="Beam-Cross"></a><br><b>Beam-Cross</b><br><sub><code>fx-beam-cross</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-data-rain.html"><img src="../gif/fx-data-rain.gif" width="300" alt="Data-Rain"></a><br><b>Data-Rain</b><br><sub><code>fx-data-rain</code></sub></td></tr>
+<tr><td align="center" valign="top" width="33%"><a href="../html/fx-hud-brackets.html"><img src="../gif/fx-hud-brackets.gif" width="300" alt="HUD-Brackets"></a><br><b>HUD-Brackets</b><br><sub><code>fx-hud-brackets</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-pulse-grid.html"><img src="../gif/fx-pulse-grid.gif" width="300" alt="Pulse-Grid"></a><br><b>Pulse-Grid</b><br><sub><code>fx-pulse-grid</code></sub></td></tr>
+</table>

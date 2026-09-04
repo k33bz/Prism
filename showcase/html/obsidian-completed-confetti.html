@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Completed Confetti · Prism</title>
+<!-- Prism showcase sample: obsidian-completed-confetti (gallery: obsidian). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.obs { --ob: var(--c,var(--crit)); --ob-rgb: var(--c-rgb,var(--crit-rgb)); font-size: 12.5px; color: var(--ink); }
+.obs-daily { width: 278px; max-width: 100%; min-height: 88px; border: 1px solid var(--line); border-radius: 10px; background: linear-gradient(150deg,var(--panel2),rgba(var(--ob-rgb),.07)); padding: 11px 13px; position: relative; overflow: hidden; text-align: left; }
+.obs-daily h4 { margin: 0px; font-size: 12px; color: var(--ink); }
+.obs-daily small { font-size: 9px; color: var(--dim); }
+.obs-done-confetti { display: flex; align-items: center; justify-content: center; height: 90px; }
+.obs-done-ring { width: 50px; height: 50px; border-radius: 50%; background: rgba(var(--pos-rgb),.12); border: 2px solid var(--pos); display: flex; align-items: center; justify-content: center; color: var(--pos); font-size: 22px; animation: 4s ease 0s infinite normal none running obsDonePop; }
+.obs-confetti i { position: absolute; width: 4px; height: 9px; border-radius: 2px; background: var(--ob); left: 50%; top: 50%; opacity: 0; animation: 4s ease-out 0s infinite normal none running obsConfetti; }
+.obs-confetti i:nth-child(2) { --x: 45px; --y: -30px; background: var(--warn); animation-delay: 0.05s; }
+.obs-confetti i:nth-child(3) { --x: -40px; --y: -36px; background: var(--info); animation-delay: 0.1s; }
+.obs-confetti i:nth-child(4) { --x: 38px; --y: 30px; background: var(--pos); animation-delay: 0.15s; }
+.obs-confetti i:nth-child(5) { --x: -44px; --y: 25px; background: var(--neg); animation-delay: 0.2s; }
+.obs-confetti i:nth-child(6) { --x: 5px; --y: -48px; background: var(--crit); animation-delay: 0.25s; }
+@keyframes obsDonePop { 
+  0%, 15% { transform: scale(0.3); opacity: 0; }
+  25%, 72% { transform: scale(1); opacity: 1; }
+  88%, 100% { transform: scale(0.3); opacity: 0; }
+}
+@keyframes obsConfetti { 
+  0%, 20% { transform: translate(0px, 0px) rotate(0deg); opacity: 0; }
+  27% { opacity: 1; }
+  58% { transform: translate(var(--x,30px),var(--y,-35px)) rotate(240deg); opacity: 0; }
+  100% { opacity: 0; }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="obs obs-daily obs-done-confetti"><span class="obs-done-ring">✓</span><span class="obs-confetti"><i></i><i></i><i></i><i></i><i></i><i></i></span></div></div></div>
+<div class="meta"><b>Completed Confetti</b> · <code>obsidian-completed-confetti</code><br>Obsidian Facets · TASKS &amp; DAILY NOTES<p>A completed task pops into view and releases a restrained burst of confetti.</p></div>
+
+</body>
+</html>

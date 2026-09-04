@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3D Scatter / Bubble Cloud · Prism</title>
+<!-- Prism showcase sample: charts-3d-scatter-bubble-cloud (gallery: charts). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><svg width="250" height="195" viewBox="0 0 250 195" style="overflow:visible">
+        <!-- isometric scatter / bubble cloud over a floor grid -->
+        <g stroke="var(--line)" stroke-width=".6" opacity=".35">
+          <path d="M40,150 L130,180 L220,150 L130,120 Z" fill="rgba(255,255,255,.02)"></path>
+          <line x1="85" y1="135" x2="175" y2="165"></line><line x1="130" y1="120" x2="130" y2="180"></line><line x1="175" y1="135" x2="85" y2="165"></line>
+        </g>
+        <!-- droplines + bubbles (back to front) -->
+        <g>
+          <line x1="95" y1="150" x2="95" y2="92" stroke="var(--info)" stroke-width="1" opacity=".4"></line>
+          <circle cx="95" cy="92" r="13" fill="var(--info)" opacity=".75"></circle><circle cx="91" cy="88" r="4" fill="#fff" opacity=".4"></circle>
+          <line x1="150" y1="158" x2="150" y2="60" stroke="var(--neg)" stroke-width="1" opacity=".4"></line>
+          <circle cx="150" cy="60" r="19" fill="var(--neg)" opacity=".8"></circle><circle cx="145" cy="55" r="6" fill="#fff" opacity=".4"></circle>
+          <line x1="120" y1="146" x2="120" y2="118" stroke="var(--pos)" stroke-width="1" opacity=".4"></line>
+          <circle cx="120" cy="118" r="9" fill="var(--pos)" opacity=".8"></circle>
+          <line x1="185" y1="150" x2="185" y2="108" stroke="var(--accent)" stroke-width="1" opacity=".4"></line>
+          <circle cx="185" cy="108" r="11" fill="var(--accent)" opacity=".8"></circle><circle cx="181" cy="104" r="4" fill="#fff" opacity=".4"></circle>
+        </g>
+        <text x="125" y="190" text-anchor="middle" font-size="10" fill="var(--muted)">cost × latency × traffic</text>
+      </svg></div></div>
+<div class="meta"><b>3D Scatter / Bubble Cloud</b> · <code>charts-3d-scatter-bubble-cloud</code><br>Charts &amp; Metrics · 3D Charts &amp; Graphs<p>Bubbles floating above an isometric floor plane, each tethered by a dropline so you can read its footprint — three encoded dimensions plus size as a fourth. The big red bubble is the outlier you care about.</p></div>
+
+</body>
+</html>

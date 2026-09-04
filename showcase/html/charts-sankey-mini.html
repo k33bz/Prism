@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sankey Mini · Prism</title>
+<!-- Prism showcase sample: charts-sankey-mini (gallery: charts). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.ncx2-sankey svg { width: 220px; height: 120px; }
+.ncx2-sankey path { fill: none; stroke-linecap: round; opacity: 0; animation: 1.2s ease-out 0s 1 normal forwards running ncx2Fade; }
+.ncx2-sankey rect { animation: 0.7s ease-out 0s 1 normal both running ncx2Grow; transform-origin: center center; }
+@keyframes ncx2Grow { 
+  0% { transform: scaleY(0); }
+  100% { transform: scaleY(1); }
+}
+@keyframes ncx2Fade { 
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="ncx2-sankey"><svg viewBox="0 0 220 120">
+      <path d="M24,30 C90,30 130,24 196,24" stroke="rgba(var(--info-rgb),.5)" stroke-width="16" style="animation-delay:0s"></path>
+      <path d="M24,60 C90,60 130,52 196,54" stroke="rgba(var(--accent-rgb),.5)" stroke-width="22" style="animation-delay:.2s"></path>
+      <path d="M24,60 C90,60 130,92 196,92" stroke="rgba(var(--pos-rgb),.45)" stroke-width="12" style="animation-delay:.35s"></path>
+      <path d="M24,92 C90,92 130,92 196,92" stroke="rgba(var(--warn-rgb),.5)" stroke-width="14" style="animation-delay:.5s"></path>
+      <rect x="16" y="18" width="9" height="86" rx="3" fill="var(--info)"></rect>
+      <rect x="196" y="14" width="9" height="24" rx="3" fill="var(--info)" style="animation-delay:.1s"></rect>
+      <rect x="196" y="42" width="9" height="34" rx="3" fill="var(--accent)" style="animation-delay:.2s"></rect>
+      <rect x="196" y="80" width="9" height="30" rx="3" fill="var(--pos)" style="animation-delay:.3s"></rect>
+    </svg></div></div></div>
+<div class="meta"><b>Sankey Mini</b> · <code>charts-sankey-mini</code><br>Charts &amp; Metrics · New<p>Flows split and merge between nodes with width proportional to volume — trace where traffic or spend actually goes.</p></div>
+
+</body>
+</html>

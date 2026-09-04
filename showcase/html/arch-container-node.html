@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Container Node · Prism</title>
+<!-- Prism showcase sample: arch-container-node (gallery: arch). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.arch-lbl { font: 700 10px / 1.1 ui-sans-serif, system-ui, sans-serif; color: var(--muted); letter-spacing: 0.03em; text-align: center; }
+.arch-node { display: inline-flex; flex-direction: column; align-items: center; gap: 6px; padding: 2px; }
+.arch-ico { position: relative; width: 44px; height: 44px; border-radius: 10px; display: grid; place-items: center; font-size: 16px; font-weight: 800; font-family: ui-sans-serif, system-ui, sans-serif; color: var(--ac,var(--info)); background: linear-gradient(160deg,rgba(var(--acr,var(--info-rgb)),.2),rgba(var(--acr,var(--info-rgb)),.08)); border: 1px solid rgba(var(--acr,var(--info-rgb)),.55); animation: 3.4s ease-in-out 0s infinite normal none running archGlow; }
+.arch-node .arch-lbl { max-width: 88px; }
+.arch-lambda .arch-ico { border-radius: 12px; font-size: 20px; }
+.arch-bucket .arch-ico { border-radius: 6px 6px 12px 12px; }
+.arch-bucket .arch-ico::after { content: ""; position: absolute; width: 44px; height: 8px; margin-top: -24px; border-radius: 6px 6px 0px 0px; background: rgba(var(--acr,var(--info-rgb)),.35); }
+.arch-cdn .arch-ico { position: relative; border-radius: 50%; }
+.arch-cdn .arch-ico::before { content: ""; position: absolute; inset: 6px; border-radius: 50%; border: 1px solid rgba(var(--acr,var(--info-rgb)),.5); }
+.arch-cdn .arch-ico::after { content: ""; position: absolute; inset: 6px 16px; border-radius: 50%; border: 1px solid rgba(var(--acr,var(--info-rgb)),.5); }
+.arch-client .arch-ico { border-radius: 50% 50% 12px 12px; }
+.arch-igw .arch-ico { border-radius: 10px; transform: rotate(45deg); border-style: dashed; }
+.arch-igw .arch-ico span { transform: rotate(-45deg); }
+.arch-api .arch-ico { border-radius: 10px; }
+@keyframes archGlow { 
+  0%, 100% { box-shadow: 0 0 0 rgba(var(--acr,var(--info-rgb)),0),0 1px 0 rgba(0,0,0,.22); }
+  50% { box-shadow: 0 0 15px rgba(var(--acr,var(--info-rgb)),.4),0 1px 0 rgba(0,0,0,.22); }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="arch-node" style="--ac:var(--info);--acr:var(--info-rgb)">
+      <div class="arch-ico"><span>ECS</span></div>
+      <div class="arch-lbl">Container Service</div>
+    </div></div></div>
+<div class="meta"><b>Container Node</b> · <code>arch-container-node</code><br>Architecture Diagrams · SERVICE NODES<p>A container/ECS service node — reuse the base node with any service label to extend the icon set.</p></div>
+
+</body>
+</html>

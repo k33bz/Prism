@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Isometric 3D Bars · Prism</title>
+<!-- Prism showcase sample: charts-isometric-3d-bars (gallery: charts). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.bar { position: sticky; top: 0px; z-index: 30; background: rgba(18, 22, 35, 0.92); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); padding: 11px 32px; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.bar b { color: var(--accent); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; margin-right: 4px; }
+.bar button { background: var(--panel2); border: 1px solid var(--line); color: var(--muted); padding: 6px 12px; border-radius: 9px; font-size: 12.5px; cursor: pointer; transition: 0.15s; }
+.bar button:hover { color: var(--ink); }
+.bar button.on { background: var(--accent); border-color: var(--accent); color: rgb(26, 18, 0); font-weight: 800; }
+.bar .sp { flex: 1 1 0%; }
+.bar .mo { font-size: 11.5px; color: var(--dim); }
+.facets .f .bar { width: 46px; height: 5px; border-radius: 3px; background: rgb(10, 15, 26); overflow: hidden; }
+.facets .f .bar > i { display: block; height: 100%; border-radius: 3px; animation: 1s cubic-bezier(0.22, 1, 0.36, 1) 0s 1 normal none running scx-growW; }
+@keyframes scx-growW { 
+  0% { }
+}
+.bar { background: var(--panel) !important; border-bottom: var(--bd,1px) solid var(--line) !important; backdrop-filter: none !important; }
+.bar b { color: var(--muted) !important; }
+.bar button { border-radius: var(--r-sm,8px) !important; transition: background var(--dur,.12s) var(--ease,ease),color var(--dur,.12s) var(--ease,ease),border-color var(--dur,.12s) var(--ease,ease) !important; }
+.bar button.on { color: rgb(255, 255, 255) !important; }
+.n3d-scene { perspective: 640px; perspective-origin: 50% 42%; display: flex; align-items: center; justify-content: center; min-height: 150px; }
+.n3d-bars { position: relative; width: 184px; height: 120px; transform-style: preserve-3d; transform: rotateX(13deg) rotateY(-26deg); animation: 9s ease-in-out 0s infinite normal none running n3dSway; }
+.n3d-bars .floor { position: absolute; left: 0px; bottom: 0px; width: 184px; height: 110px; transform: rotateX(90deg); transform-origin: center bottom; background: linear-gradient(var(--line),transparent); opacity: 0.35; }
+.n3d-bars .bar { position: absolute; bottom: 0px; width: 24px; transform-style: preserve-3d; transform-origin: center bottom; animation: 1s cubic-bezier(0.22, 1, 0.36, 1) 0s 1 normal both running n3dRise; }
+.n3d-bars .bar span { position: absolute; left: 0px; top: 0px; }
+.n3d-bars .fF { width: 24px; height: 100%; background: currentcolor; transform: translateZ(11px); }
+.n3d-bars .fR { width: 22px; height: 100%; right: 0px; left: auto; background: currentcolor; filter: brightness(0.6); transform-origin: right center; transform: rotateY(90deg); }
+.n3d-bars .fT { width: 24px; height: 22px; background: currentcolor; filter: brightness(1.35); transform-origin: center top; transform: rotateX(90deg); }
+.n3d-stack .fF { width: 30px; height: 100%; background: currentcolor; transform: translateZ(13px); }
+.n3d-stack .fR { width: 26px; height: 100%; right: 0px; left: auto; background: currentcolor; filter: brightness(0.6); transform-origin: right center; transform: rotateY(90deg); }
+.n3d-stack .fT { width: 30px; height: 26px; background: currentcolor; filter: brightness(1.35); transform-origin: center top; transform: rotateX(90deg); }
+.n3d-voxel .vx .fT { position: absolute; inset: 0px; background: currentcolor; animation: 0.6s ease-out 0s 1 normal both running ncx2Fade; }
+.n3d-voxel .vx .fF { position: absolute; left: 0px; bottom: 0px; width: 26px; background: currentcolor; filter: brightness(0.55); transform-origin: center bottom; transform: rotateX(-90deg); }
+.n3d-voxel .vx .fR { position: absolute; right: 0px; top: 0px; height: 26px; background: currentcolor; filter: brightness(0.72); transform-origin: right center; transform: rotateY(90deg); }
+@keyframes n3dRise { 
+  0% { transform: scaleY(0); }
+  100% { transform: scaleY(1); }
+}
+@keyframes n3dSway { 
+  0%, 100% { transform: rotateX(13deg) rotateY(-26deg); }
+  50% { transform: rotateX(15deg) rotateY(-6deg); }
+}
+@keyframes ncx2Fade { 
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="n3d-scene"><div class="n3d-bars">
+      <div class="floor"></div>
+      <div class="bar" style="color:var(--info);left:14px;height:56px;animation-delay:0s"><span class="fF"></span><span class="fR"></span><span class="fT"></span></div>
+      <div class="bar" style="color:var(--accent);left:54px;height:92px;animation-delay:.1s"><span class="fF"></span><span class="fR"></span><span class="fT"></span></div>
+      <div class="bar" style="color:var(--pos);left:94px;height:70px;animation-delay:.2s"><span class="fF"></span><span class="fR"></span><span class="fT"></span></div>
+      <div class="bar" style="color:var(--crit);left:134px;height:110px;animation-delay:.3s"><span class="fF"></span><span class="fR"></span><span class="fT"></span></div>
+    </div></div></div></div>
+<div class="meta"><b>Isometric 3D Bars</b> · <code>charts-isometric-3d-bars</code><br>Charts &amp; Metrics · 3D &amp; Perspective (2026 drop)<p>True preserve-3d cuboids with front, side and top faces, rising on load and swaying in perspective — a spatial take on the classic bar chart.</p></div>
+
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mind-Map Branch Grow · Prism</title>
+<!-- Prism showcase sample: obsidian-mind-map-branch-grow (gallery: obsidian). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.obs { --ob: var(--c,var(--crit)); --ob-rgb: var(--c-rgb,var(--crit-rgb)); font-size: 12.5px; color: var(--ink); }
+.obs-canvas { width: 280px; max-width: 100%; height: 108px; border: 1px solid var(--line); border-radius: 10px; background-color: rgb(12, 16, 27); background-image: radial-gradient(rgba(var(--ob-rgb),.22) .8px,transparent .9px); background-size: 12px 12px; position: relative; overflow: hidden; }
+.obs-branch-grow svg { width: 100%; height: 100%; }
+.obs-branch-grow path { fill: none; stroke: var(--ob); stroke-width: 1.5; stroke-linecap: round; stroke-dasharray: 120; stroke-dashoffset: 120; animation: 5s ease-in-out 0s infinite normal none running obsBranch; }
+.obs-branch-grow path:nth-child(2) { animation-delay: 0.25s; }
+.obs-branch-grow path:nth-child(3) { animation-delay: 0.5s; }
+.obs-branch-grow path:nth-child(4) { animation-delay: 0.75s; }
+.obs-branch-grow circle { fill: var(--panel2); stroke: var(--ob); opacity: 0; animation: 5s ease 0s infinite normal none running obsBranchNode; }
+.obs-branch-grow circle:nth-of-type(2) { animation-delay: 0.25s; }
+.obs-branch-grow circle:nth-of-type(3) { animation-delay: 0.5s; }
+.obs-branch-grow circle:nth-of-type(4) { animation-delay: 0.75s; }
+@keyframes obsBranch { 
+  0% { stroke-dashoffset: 120; }
+  35%, 78% { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: -120; }
+}
+@keyframes obsBranchNode { 
+  0%, 12% { opacity: 0; transform: scale(0); transform-box: fill-box; transform-origin: center center; }
+  35%, 78% { opacity: 1; transform: scale(1); }
+  95%, 100% { opacity: 0; }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="obs obs-canvas obs-branch-grow"><svg viewBox="0 0 280 108"><path d="M32 55C70 55 74 22 124 22"></path><path d="M32 55C80 55 96 48 149 51"></path><path d="M32 55C74 55 92 88 135 88"></path><path d="M149 51C184 51 193 25 244 25"></path><circle cx="32" cy="55" r="7"></circle><circle cx="124" cy="22" r="6"></circle><circle cx="149" cy="51" r="7"></circle><circle cx="135" cy="88" r="6"></circle><circle cx="244" cy="25" r="6"></circle></svg></div></div></div>
+<div class="meta"><b>Mind-Map Branch Grow</b> · <code>obsidian-mind-map-branch-grow</code><br>Obsidian Facets · CANVAS &amp; SPATIAL NOTES<p>Mind-map branches draw outward in a staggered organic sequence.</p></div>
+
+</body>
+</html>

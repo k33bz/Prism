@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KPI Tile Pair · Prism</title>
+<!-- Prism showcase sample: spectrums-kpi-tile-pair (gallery: spectrums). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.neu-kpirow { display: flex; gap: 10px; }
+.neu-kpi { width: 96px; padding: 12px 10px; border-radius: 14px; text-align: left; background: var(--neu-base); box-shadow: 6px 6px 12px var(--neu-dark), -6px -6px 12px var(--neu-light); }
+.neu-kpi .neu-klabel { font-size: 9.5px; color: var(--neu-muted); font-weight: 700; letter-spacing: 0.03em; text-transform: uppercase; }
+.neu-kpi .neu-kval { font-size: 16px; font-weight: 800; color: var(--neu-ink); margin-top: 3px; }
+.neu-kpi .neu-kdelta { font-size: 10px; font-weight: 700; color: var(--neu-accent); margin-top: 2px; }
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="neu-kpirow">
+      <div class="neu-kpi"><div class="neu-klabel">MRR</div><div class="neu-kval">$48k</div><div class="neu-kdelta">+6.2%</div></div>
+      <div class="neu-kpi"><div class="neu-klabel">CHURN</div><div class="neu-kval">1.4%</div><div class="neu-kdelta">-0.3%</div></div>
+    </div></div></div>
+<div class="meta"><b>KPI Tile Pair</b> · <code>spectrums-kpi-tile-pair</code><br>Spectrums · Neumorphism · Neumorphism<p>Two extruded metric tiles side by side; both float off the same base with identical light/dark shadow geometry for a cohesive dashboard row.</p></div>
+
+</body>
+</html>

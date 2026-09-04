@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gantt Timeline · Prism</title>
+<!-- Prism showcase sample: charts-gantt-timeline (gallery: charts). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.nch-gantt { width: 230px; display: flex; flex-direction: column; gap: 7px; }
+.nch-gantt .row { height: 12px; background: var(--panel2); border-radius: 6px; position: relative; overflow: hidden; }
+.nch-gantt .row i { position: absolute; top: 0px; height: 100%; border-radius: 6px; background: linear-gradient(90deg,var(--info),rgba(var(--info-rgb),.4)); transform-origin: left center; animation: 1s ease-out 0s 1 normal both running nchGanttW; }
+.nch-dumbbell .row { position: relative; height: 12px; }
+.nch-sparkbar .row { display: flex; align-items: center; gap: 8px; font-size: 11px; color: var(--muted); }
+@keyframes nchGanttW { 
+  0% { transform: scaleX(0); }
+  100% { transform: scaleX(1); }
+}
+.ncx2-bullet .row { position: relative; height: 16px; border-radius: 4px; background: linear-gradient(90deg,rgba(var(--neg-rgb),.22),rgba(var(--warn-rgb),.22) 60%,rgba(var(--pos-rgb),.22)); }
+.ncx2-lollipop .row { display: flex; align-items: center; gap: 8px; font-size: 10px; color: var(--muted); }
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="nch-gantt">
+        <div class="row"><i style="left:0;width:40%;animation-delay:0s"></i></div>
+        <div class="row"><i style="left:22%;width:46%;animation-delay:.15s"></i></div>
+        <div class="row"><i style="left:50%;width:38%;animation-delay:.3s"></i></div>
+        <div class="row"><i style="left:64%;width:34%;animation-delay:.45s"></i></div>
+      </div></div></div>
+<div class="meta"><b>Gantt Timeline</b> · <code>charts-gantt-timeline</code><br>Charts &amp; Metrics · New<p>Overlapping task bars across a shared timeline — project phases, deploy windows, span durations.</p></div>
+
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Floating Tag Web · Prism</title>
+<!-- Prism showcase sample: obsidian-floating-tag-web (gallery: obsidian). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.obs { --ob: var(--c,var(--crit)); --ob-rgb: var(--c-rgb,var(--crit-rgb)); font-size: 12.5px; color: var(--ink); }
+.obs-tagweb { position: relative; width: 250px; height: 104px; }
+.obs-tagweb svg { position: absolute; inset: 0px; }
+.obs-tagweb svg path { fill: none; stroke: rgba(var(--ob-rgb),.45); stroke-width: 1; stroke-dasharray: 6, 5; animation: 2.2s linear 0s infinite normal none running obsEdge; }
+.obs-tagpill { position: absolute; font-size: 10px; font-weight: 700; color: var(--ob); background: rgba(var(--ob-rgb),.13); border: 1px solid rgba(var(--ob-rgb),.45); border-radius: 11px; padding: 2px 9px; animation: 3.4s ease-in-out 0s infinite normal none running obsPillBob; }
+.obs-tagpill.t2 { animation-delay: -0.9s; color: var(--info); border-color: rgba(var(--info-rgb),.45); background: rgba(var(--info-rgb),.12); }
+.obs-tagpill.t3 { animation-delay: -1.7s; color: var(--pos); border-color: rgba(var(--pos-rgb),.45); background: rgba(var(--pos-rgb),.12); }
+.obs-tagpill.t4 { animation-delay: -2.6s; color: var(--warn); border-color: rgba(var(--warn-rgb),.45); background: rgba(var(--warn-rgb),.12); }
+@keyframes obsEdge { 
+  100% { stroke-dashoffset: -9; }
+}
+@keyframes obsPillBob { 
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-5px); }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="obs obs-tagweb"><svg viewBox="0 0 250 104"><path d="M35 27L124 15 204 34 161 83 63 78 35 27M124 15L161 83M204 34L63 78"></path></svg><span class="obs-tagpill" style="left:5px;top:13px">#ideas</span><span class="obs-tagpill t2" style="left:93px;top:1px">#design</span><span class="obs-tagpill t3" style="left:185px;top:20px">#notes</span><span class="obs-tagpill t4" style="left:137px;top:71px">#focus</span><span class="obs-tagpill" style="left:34px;top:66px">#systems</span></div></div></div>
+<div class="meta"><b>Floating Tag Web</b> · <code>obsidian-floating-tag-web</code><br>Obsidian Facets · GRAPH VIEW &amp; LINK VISUALS<p>Color-coded tag pills bob over an animated semantic connection web.</p></div>
+
+</body>
+</html>

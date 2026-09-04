@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Countdown-drain Toast · Prism</title>
+<!-- Prism showcase sample: spectrums-countdown-drain-toast (gallery: spectrums). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.cyb2 { --mag: #ff00a0; --mag-rgb: 255,0,160; --cyan: #00f0ff; --cyan-rgb: 0,240,255; --yellow: #fee600; --yellow-rgb: 254,230,0; --bg0: #0d0221; --bg1: #160a35; --bg2: #1e1046; --bg3: #271454; --ink: #eafcff; --dim: #8fa3c9; font-family: ui-monospace, "SF Mono", "Cascadia Code", "Fira Code", Menlo, Consolas, monospace; color: var(--ink); position: relative; }
+.cyb2 * { box-sizing: border-box; }
+.cyb2-toast { width: 232px; display: flex; gap: 10px; align-items: flex-start; background: var(--bg1); border: 1px solid var(--cyan); padding: 11px 13px; clip-path: polygon(10px 0px, 100% 0px, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0px 100%, 0px 10px); filter: drop-shadow(0 0 10px rgba(var(--cyan-rgb),.35)); animation: 0.5s cubic-bezier(0.2, 0.9, 0.3, 1) 0s 1 normal both running cyb2ToastIn; }
+.cyb2-toast .cyb2-toast-ico { color: var(--cyan); font-weight: 800; }
+.cyb2-toast .cyb2-toast-t { font-weight: 800; font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink); }
+.cyb2-toast .cyb2-toast-s { font-size: 11px; color: var(--dim); margin-top: 3px; }
+.cyb2-toast--err .cyb2-toast-ico { color: var(--mag); }
+.cyb2-toast--cd { flex-direction: column; gap: 0px; }
+.cyb2-toast--cd .cyb2-toast-top { display: flex; gap: 10px; align-items: flex-start; width: 100%; }
+.cyb2-toast--cd .cyb2-toast-track { margin-top: 9px; height: 3px; width: 100%; background: rgba(var(--yellow-rgb),.2); }
+.cyb2-toast--cd .cyb2-toast-fill { height: 100%; background: var(--yellow); filter: drop-shadow(0 0 5px rgba(var(--yellow-rgb),.8)); animation: 4s linear 0s infinite normal none running cyb2Drain; }
+.cyb2-toast--cd { border-color: var(--yellow); filter: drop-shadow(0 0 10px rgba(var(--yellow-rgb),.35)); }
+.cyb2-toast--cd .cyb2-toast-ico { color: var(--yellow); }
+@keyframes cyb2ToastIn { 
+  0% { opacity: 0; transform: translateX(18px); }
+  60% { opacity: 1; transform: translateX(-3px); }
+  100% { opacity: 1; transform: translateX(0px); }
+}
+@keyframes cyb2Drain { 
+  0% { width: 100%; }
+  100% { width: 0%; }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="cyb2 cyb2-toast cyb2-toast--cd">
+      <div class="cyb2-toast-top"><span class="cyb2-toast-ico">◷</span>
+        <div><div class="cyb2-toast-t">Session Expiring</div><div class="cyb2-toast-s">Auto-lock in progress.</div></div>
+      </div>
+      <div class="cyb2-toast-track"><div class="cyb2-toast-fill"></div></div>
+    </div></div></div>
+<div class="meta"><b>Countdown-drain Toast</b> · <code>spectrums-countdown-drain-toast</code><br>Spectrums · Cyberpunk OS · Cyberpunk OS<p>Toast with a yellow draining glow-bar counting down to auto-dismiss; use for time-boxed warnings.</p></div>
+
+</body>
+</html>

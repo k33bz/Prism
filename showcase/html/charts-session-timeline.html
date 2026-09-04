@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Session Timeline · Prism</title>
+<!-- Prism showcase sample: charts-session-timeline (gallery: charts). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.prism-rail a.sr-link.active { background: rgba(255, 153, 0, 0.14); color: rgb(255, 255, 255); border-left-color: rgb(255, 153, 0); }
+.tile .copy.ok { border-color: var(--pos); color: var(--pos); }
+.pill.warn { color: var(--warn); }
+.logblock .lv.warn { color: var(--warn); }
+.logstream .sl .lv.warn { color: var(--warn); }
+.logstream .sl .lv.ok { color: var(--pos); }
+.sess-tl { display: flex; flex-direction: column; gap: 0px; position: relative; padding-left: 20px; width: 100%; }
+.sess-tl::before { content: ""; position: absolute; left: 7px; top: 8px; bottom: 8px; width: 2px; background: var(--line); border-radius: 1px; }
+.sess-tl .ev { position: relative; padding: 6px 0px 6px 14px; font-size: 12px; }
+.sess-tl .ev::before { content: ""; position: absolute; left: -16px; top: 12px; width: 10px; height: 10px; border-radius: 50%; border: 2px solid var(--line); background: var(--panel); }
+.sess-tl .ev.ok::before { border-color: var(--pos); background: var(--pos); }
+.sess-tl .ev.err::before { border-color: var(--neg); background: var(--neg); }
+.sess-tl .ev.warn::before { border-color: var(--warn); background: var(--warn); }
+.sess-tl .ev.active::before { border-color: var(--accent); background: var(--accent); box-shadow: 0 0 8px var(--accent); }
+.sess-tl .ev-time { color: var(--dim); font-size: 10px; font-family: ui-monospace, Menlo, monospace; }
+.sess-tl .ev-msg { color: var(--ink); }
+.sess-tl .ev-meta { color: var(--muted); font-size: 10.5px; margin-top: 2px; }
+.trace-node .tn-sev.warn { background: rgba(var(--warn-rgb),.15); color: var(--warn); }
+.flt-rack .u.warn i { background: var(--warn); box-shadow: 0 0 5px var(--warn); }
+.tile .copy.ok { border-color: var(--pos) !important; color: var(--pos) !important; }
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="sess-tl">
+        <div class="ev ok"><span class="ev-time">09:14:02.001</span><div class="ev-msg">Session started — user jrmha</div><div class="ev-meta">claude-opus-4-6 · claude-code · project: ContextVault</div></div>
+        <div class="ev ok"><span class="ev-time">09:14:03.412</span><div class="ev-msg">API call — 45,231 input tokens, 1,204 output tokens</div><div class="ev-meta">$0.84 · cache hit 72% · 2.1s latency</div></div>
+        <div class="ev ok"><span class="ev-time">09:14:18.990</span><div class="ev-msg">Tool use: Bash — npm run build</div><div class="ev-meta">Exit code 0 · 4.2s duration</div></div>
+        <div class="ev warn"><span class="ev-time">09:14:22.100</span><div class="ev-msg">Rate limit warning — approaching quota</div><div class="ev-meta">82% of hourly limit consumed</div></div>
+        <div class="ev ok"><span class="ev-time">09:15:01.800</span><div class="ev-msg">API call — 62,108 input tokens, 3,891 output tokens</div><div class="ev-meta">$1.22 · cache hit 89% · 3.4s latency</div></div>
+        <div class="ev active"><span class="ev-time">09:15:44.200</span><div class="ev-msg">Session active — awaiting user input</div><div class="ev-meta">Total: $2.06 · 5 turns · 2m elapsed</div></div>
+      </div></div></div>
+<div class="meta"><b>Session Timeline</b> · <code>charts-session-timeline</code><br>Charts &amp; Metrics · Sessions &amp; Timelines<p>Vertical timeline of events within a single AI session. Color-coded dots for OK/warn/error/active states.</p></div>
+
+</body>
+</html>

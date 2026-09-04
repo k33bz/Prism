@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Soft Note Callout · Prism</title>
+<!-- Prism showcase sample: spectrums-soft-note-callout (gallery: spectrums). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.neu-callout { width: 250px; padding: 15px 16px; border-radius: 18px; text-align: left; display: flex; gap: 11px; background: var(--neu-base); box-shadow: 8px 8px 16px var(--neu-dark), -8px -8px 16px var(--neu-light); }
+.neu-callout .neu-cic { flex: 0 0 28px; width: 28px; height: 28px; border-radius: 10px; display: grid; place-items: center; font-size: 13px; font-weight: 800; background: var(--neu-base); color: var(--neu-accent); box-shadow: inset 2px 2px 5px var(--neu-dark), inset -2px -2px 5px var(--neu-light); }
+.neu-callout .neu-ct { font-size: 11px; font-weight: 800; letter-spacing: 0.06em; color: var(--neu-ink); margin-bottom: 3px; text-transform: uppercase; }
+.neu-callout .neu-cd { font-size: 11.5px; line-height: 1.55; color: var(--neu-muted); }
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="neu-callout">
+      <span class="neu-cic">i</span>
+      <div><div class="neu-ct">Note</div><div class="neu-cd">Soft-UI callouts drop the colored border entirely — tone comes only from an inset icon well.</div></div>
+    </div></div></div>
+<div class="meta"><b>Soft Note Callout</b> · <code>spectrums-soft-note-callout</code><br>Spectrums · Neumorphism · Neumorphism<p>An admonition block built purely from an extruded slab plus one inset icon chip — no left-border accent stripe, the Neumorphism way.</p></div>
+
+</body>
+</html>

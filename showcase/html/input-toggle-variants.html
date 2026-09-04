@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Toggle Variants · Prism</title>
+<!-- Prism showcase sample: input-toggle-variants (gallery: input). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.toggle-row { display: flex; align-items: center; gap: 12px; font-size: 13px; }
+.toggle { width: 44px; height: 24px; border-radius: 12px; background: var(--panel2); border: 1px solid var(--line); position: relative; cursor: pointer; transition: 0.2s; }
+.toggle::after { content: ""; position: absolute; top: 3px; left: 3px; width: 16px; height: 16px; border-radius: 50%; background: var(--dim); transition: 0.2s; }
+.toggle.on { background: var(--accent); border-color: var(--accent); }
+.toggle.on::after { left: 23px; background: rgb(26, 18, 0); }
+.segctl button.on { color: rgb(26, 18, 0); }
+.toggle.lg { width: 56px; height: 30px; border-radius: 15px; }
+.toggle.lg::after { width: 22px; height: 22px; top: 3px; left: 3px; }
+.toggle.lg.on::after { left: 30px; }
+.toggle.icn::after { display: flex; align-items: center; justify-content: center; font-size: 9px; line-height: 16px; }
+.toggle.icn::after { content: "✕"; color: var(--dim); }
+.toggle.icn.on::after { content: "✓"; color: var(--accent); }
+.toggle.pos.on { background: var(--pos); border-color: var(--pos); }
+.toggle.pos.on::after { background: rgb(6, 20, 10); }
+.toggle.crit.on { background: var(--crit); border-color: var(--crit); }
+.toggle.crit.on::after { background: rgb(26, 8, 38); }
+.react-rate .rr.up.on { border-color: var(--pos); color: var(--pos); background: rgba(var(--pos-rgb),.1); }
+.react-rate .rr.down.on { border-color: var(--neg); color: var(--neg); background: rgba(var(--neg-rgb),.1); }
+.timefield .ampm button.on { background: var(--accent); color: rgb(26, 18, 0); border-color: var(--accent); }
+.radio-pills .rp.on { border-color: var(--accent); color: var(--accent); background: rgba(var(--accent-rgb),.1); }
+.radio-pills .rp.on .rp-dot { background: var(--accent); box-shadow: 0 0 8px rgba(var(--accent-rgb),.6); }
+.nps button.on { border-color: var(--accent); background: var(--accent); color: rgb(26, 18, 0); }
+.nps button.lo.on { background: var(--neg); border-color: var(--neg); color: rgb(255, 255, 255); }
+.nps button.mid.on { background: var(--warn); border-color: var(--warn); color: rgb(26, 18, 0); }
+.nps button.hi.on { background: var(--pos); border-color: var(--pos); color: rgb(6, 20, 10); }
+.mo-grid button.on { background: var(--accent); border-color: var(--accent); color: rgb(26, 18, 0); }
+.sig-pad .sig-pen.on { border-color: rgb(255, 255, 255); transform: scale(1.12); }
+.region-grid button.on { border-color: var(--accent); background: rgba(var(--accent-rgb),.12); color: var(--accent); }
+.likert .lk.on { border-color: var(--accent); background: var(--accent); box-shadow: 0 0 8px rgba(var(--accent-rgb),.4); }
+.bar button.on { color: rgb(255, 255, 255) !important; }
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div style="display:flex;flex-direction:column;gap:16px;width:100%">
+        <div class="toggle-row"><div class="toggle lg on" onclick="this.classList.toggle('on')"></div><span>Large switch</span></div>
+        <div class="toggle-row"><div class="toggle icn on" onclick="this.classList.toggle('on')"></div><span>With ✓ / ✕ icon</span></div>
+        <div class="toggle-row"><div class="toggle pos on" onclick="this.classList.toggle('on')"></div><span>Success-tinted</span></div>
+        <div class="toggle-row"><div class="toggle crit on" onclick="this.classList.toggle('on')"></div><span>Critical-tinted</span></div>
+      </div></div></div>
+<div class="meta"><b>Toggle Variants</b> · <code>input-toggle-variants</code><br>Input Methods · Selection &amp; Choice<p>Size and semantic variants of the base switch: a larger touch target, an icon-in-knob style that swaps ✕↔✓, and color-coded versions tied to the --pos and --crit tokens for state-meaningful toggles.</p></div>
+
+</body>
+</html>

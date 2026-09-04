@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Perspective Segmented Control · Prism</title>
+<!-- Prism showcase sample: input-perspective-segmented-control (gallery: input). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.nin2-hide { position: absolute; opacity: 0; pointer-events: none; width: 0px; height: 0px; }
+.nin2-pseg { display: flex; gap: 0px; padding: 5px; border-radius: 12px; background: var(--panel2); border: 1px solid var(--line); transform: rotateX(22deg); transform-style: preserve-3d; box-shadow: rgba(0, 0, 0, 0.4) 0px 12px 18px; }
+.nin2-pseg label { flex: 1 1 0%; text-align: center; font-size: 12px; font-weight: 700; color: var(--muted); padding: 9px 12px; border-radius: 8px; cursor: pointer; transition: 0.2s; transform: translateZ(0px); }
+.nin2-pseg input:checked + label { color: rgb(26, 18, 0); background: linear-gradient(180deg,#ffc46b,var(--accent)); transform: translateZ(20px); box-shadow: 0 8px 14px rgba(var(--accent-rgb),.35); }
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="nin2-pseg">
+      <input type="radio" name="nin2pseg" id="nin2ps0" class="nin2-hide" checked=""><label for="nin2ps0">Day</label>
+      <input type="radio" name="nin2pseg" id="nin2ps1" class="nin2-hide"><label for="nin2ps1">Week</label>
+      <input type="radio" name="nin2pseg" id="nin2ps2" class="nin2-hide"><label for="nin2ps2">Month</label>
+    </div></div></div>
+<div class="meta"><b>Perspective Segmented Control</b> · <code>input-perspective-segmented-control</code><br>Input Methods · 3D &amp; Depth Controls<p>A tilted segmented control where the active option lifts toward you on the Z axis. Depth makes the selection unmistakable.</p></div>
+
+</body>
+</html>

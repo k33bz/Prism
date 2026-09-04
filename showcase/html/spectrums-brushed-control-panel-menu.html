@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Brushed Control Panel Menu · Prism</title>
+<!-- Prism showcase sample: spectrums-brushed-control-panel-menu (gallery: spectrums). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.skeu-menu { width: 198px; border-radius: 11px; overflow: hidden; background-image: var(--skeu-gunmetal); border: 1px solid rgb(6, 6, 7); box-shadow: rgba(255, 255, 255, 0.12) 0px 1px 0px inset, rgba(0, 0, 0, 0.6) 0px -1px 0px inset, rgba(0, 0, 0, 0.5) 0px 10px 22px; }
+.skeu-menu-head { display: flex; align-items: center; gap: 8px; padding: 9px 12px; font-size: 10.5px; font-weight: 800; letter-spacing: 0.12em; color: var(--skeu-metal-2); background: linear-gradient(rgb(0, 0, 0), rgb(12, 13, 15)); border-bottom: 1px solid rgb(0, 0, 0); text-shadow: rgba(0, 0, 0, 0.8) 0px 1px 0px; }
+.skeu-menu-led { width: 7px; height: 7px; border-radius: 50%; background: var(--pos); box-shadow: 0 0 6px 2px rgba(var(--pos-rgb),.85); }
+.skeu-menu-item { display: flex; align-items: center; gap: 9px; padding: 9px 12px; font-size: 12px; font-weight: 600; color: var(--skeu-metal-1); border-bottom: 1px solid rgba(0, 0, 0, 0.5); background: linear-gradient(rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0) 60%); transition: background 0.12s, color 0.12s; cursor: pointer; }
+.skeu-menu-item:last-child { border-bottom: 0px; }
+.skeu-menu-item .skeu-mi-ico { width: 16px; text-align: center; color: var(--skeu-amber); }
+.skeu-menu-item .skeu-mi-key { margin-left: auto; font-size: 9.5px; color: var(--skeu-metal-4); border: 1px solid rgb(0, 0, 0); border-radius: 4px; padding: 1px 5px; background: rgb(5, 5, 6); box-shadow: rgba(255, 255, 255, 0.08) 0px 1px 0px inset; }
+.skeu-menu-item:hover, .skeu-menu-item.skeu-active { background: linear-gradient(rgba(255, 176, 32, 0.22), rgba(255, 176, 32, 0.04)); color: rgb(255, 255, 255); }
+.skeu-menu-item.skeu-mi-danger .skeu-mi-ico { color: var(--neg); }
+.skeu-menu-item.skeu-mi-danger:hover { background: linear-gradient(180deg,rgba(var(--neg-rgb),.25),rgba(var(--neg-rgb),.05)); color: rgb(255, 255, 255); }
+.skeu-navkey.skeu-active { color: rgb(26, 18, 6); background: linear-gradient(180deg,#ffce6b,var(--skeu-amber) 55%,#c67f0d); box-shadow: inset 0 1px 0 rgba(255,255,255,.7), inset 0 -2px 3px rgba(0,0,0,.25), 0 1px 0 #7a4c06,
+    0 0 10px rgba(var(--skeu-amber-rgb),.55); transform: translateY(1px); }
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="skeu-menu"><div class="skeu-menu-head"><span class="skeu-menu-led"></span>CONTROL PANEL</div>
+      <div class="skeu-menu-item skeu-active"><span class="skeu-mi-ico">■</span>Dashboard<span class="skeu-mi-key">1</span></div>
+      <div class="skeu-menu-item"><span class="skeu-mi-ico">⚙</span>Settings<span class="skeu-mi-key">2</span></div>
+      <div class="skeu-menu-item"><span class="skeu-mi-ico">🔒</span>Security<span class="skeu-mi-key">3</span></div>
+      <div class="skeu-menu-item skeu-mi-danger"><span class="skeu-mi-ico">⚠</span>Shutdown<span class="skeu-mi-key">0</span></div>
+    </div></div></div>
+<div class="meta"><b>Brushed Control Panel Menu</b> · <code>spectrums-brushed-control-panel-menu</code><br>Spectrums · Skeuomorphic Hardware · Skeuo Hardware<p>A gunmetal nav menu with a status LED and hotkey badges, styled like a rack-mount control panel in the Skeuo Hardware language.</p></div>
+
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bullet Chart (banded) · Prism</title>
+<!-- Prism showcase sample: charts-bullet-chart-banded (gallery: charts). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.scx-bullet { width: 240px; font-size: 11px; }
+.scx-bullet .lab { display: flex; justify-content: space-between; color: var(--muted); margin-bottom: 5px; }
+.scx-bullet .lab b { color: var(--ink); }
+.scx-bullet .track { position: relative; height: 24px; border-radius: 6px; overflow: hidden; display: flex; }
+.scx-bullet .track > span { display: block; height: 100%; }
+.scx-bullet .measure { position: absolute; top: 7px; height: 10px; border-radius: 4px; background: var(--ink); transform-origin: left center; animation: 1.1s cubic-bezier(0.22, 1, 0.36, 1) 0s 1 normal none running scx-growW; }
+.scx-bullet .target { position: absolute; top: -2px; height: 28px; width: 3px; background: var(--accent); border-radius: 2px; }
+.lv-eta .lab { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); margin-bottom: 6px; }
+.lv-eta .lab b { color: var(--ink); font-variant-numeric: tabular-nums; }
+.lv-eta .track { height: 14px; border-radius: 8px; background: var(--panel2); border: 1px solid var(--line); overflow: hidden; position: relative; }
+.lv-eta .track > i { display: block; height: 100%; border-radius: 8px; background: linear-gradient(90deg,var(--info),var(--accent)); position: relative; transition: width 0.4s; }
+.lv-eta .track > i::after { content: ""; position: absolute; inset: 0px; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent) 0% 0% / 40px 100%; animation: 1s linear 0s infinite normal none running lv-stripe; }
+@keyframes scx-growW { 
+  0% { }
+}
+@keyframes lv-stripe { 
+  0% { background-position: -40px 0px; }
+  100% { background-position: 260px 0px; }
+}
+.ncx2-lollipop .track { position: relative; flex: 1 1 0%; height: 12px; }
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="scx-bullet">
+        <div class="lab"><span>Revenue vs goal</span><b>$74K / $90K</b></div>
+        <div class="track"><span style="flex:5;background:rgba(var(--neg-rgb),.20)"></span><span style="flex:3;background:rgba(var(--warn-rgb),.20)"></span><span style="flex:2;background:rgba(var(--pos-rgb),.20)"></span>
+          <div class="measure" style="width:82%;background:var(--accent)"></div>
+          <div class="target" style="left:90%"></div>
+        </div>
+        <div class="lab" style="margin:7px 0 0"><span style="font-size:10px">▮ actual 82%</span><span style="font-size:10px;color:var(--accent)">▏ target 90%</span></div>
+      </div></div></div>
+<div class="meta"><b>Bullet Chart (banded)</b> · <code>charts-bullet-chart-banded</code><br>Charts &amp; Metrics · Progress &amp; Ratio<p>Stephen Few's bullet graph: a thin measure bar over qualitative range bands with a target tick. Replaces a whole gauge in one line — the dense way to show &quot;where are we against goal?&quot;. Measure bar grows from the left.</p></div>
+
+</body>
+</html>

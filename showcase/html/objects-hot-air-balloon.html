@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hot-Air Balloon · Prism</title>
+<!-- Prism showcase sample: objects-hot-air-balloon (gallery: objects). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.nobj2-2d { width: 118px; height: 118px; overflow: visible; }
+.nobj2-bln { transform-box: fill-box; transform-origin: center center; animation: 4s ease-in-out 0s infinite normal none running nobj2BlnFloat; }
+.nobj2-bln-fl { transform-box: fill-box; transform-origin: center top; animation: 0.2s ease-in-out 0s infinite alternate none running nobj2RkFl; }
+@keyframes nobj2RkFl { 
+  0% { transform: scaleY(0.6) scaleX(0.9); opacity: 0.8; }
+  100% { transform: scaleY(1.3) scaleX(1.05); opacity: 1; }
+}
+@keyframes nobj2BlnFloat { 
+  0%, 100% { transform: translateY(4px) rotate(-2deg); }
+  50% { transform: translateY(-6px) rotate(2deg); }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><svg viewBox="0 0 118 118" class="nobj2-2d" fill="none">
+      <g class="nobj2-bln">
+        <path d="M59 16 C82 16 92 36 92 54 C92 72 74 82 59 82 C44 82 26 72 26 54 C26 36 36 16 59 16 Z" fill="var(--nobj2-a)"></path>
+        <path d="M59 16 C50 30 50 68 59 82 M59 16 C68 30 68 68 59 82" stroke="#0c0f18" stroke-width="2" opacity=".35"></path>
+        <path d="M50 80 L46 92 M68 80 L72 92" stroke="var(--nobj2-ln)" stroke-width="2"></path>
+        <rect x="50" y="92" width="18" height="12" rx="2" fill="var(--nobj2-ln)"></rect>
+        <path class="nobj2-bln-fl" d="M55 82 H63 L59 92 Z" fill="var(--nobj2-w)"></path>
+      </g>
+    </svg></div></div>
+<div class="meta"><b>Hot-Air Balloon</b> · <code>objects-hot-air-balloon</code><br>Animated Objects · 2D &amp; SVG Objects<p>A balloon drifting and rocking gently with a burner flame. Journeys, uplift, exploration.</p></div>
+
+</body>
+</html>

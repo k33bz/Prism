@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3D Pillars on Tilted Plane · Prism</title>
+<!-- Prism showcase sample: charts-3d-pillars-on-tilted-plane (gallery: charts). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><svg width="240" height="195" viewBox="0 0 240 195" style="overflow:visible">
+        <!-- 3D floating-bar / pillar chart on a tilted plane -->
+        <defs>
+          <linearGradient id="pil-f" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="var(--pos)"></stop><stop offset="1" stop-color="var(--pos)" stop-opacity=".55"></stop></linearGradient>
+        </defs>
+        <!-- tilted floor plane with grid -->
+        <polygon points="30,150 200,150 225,118 55,118" fill="rgba(255,255,255,.025)" stroke="var(--line)" stroke-width=".8"></polygon>
+        <g stroke="var(--line)" stroke-width=".5" opacity=".4">
+          <line x1="64" y1="142" x2="89" y2="118"></line><line x1="98" y1="142" x2="123" y2="118"></line><line x1="132" y1="142" x2="157" y2="118"></line><line x1="166" y1="142" x2="191" y2="118"></line>
+          <line x1="46" y1="134" x2="216" y2="134"></line>
+        </g>
+        <!-- pillars rising from grid points: front + top + side -->
+        <g>
+          <polygon points="64,142 64,108 80,108 80,142" fill="url(#pil-f)"></polygon><polygon points="80,142 80,108 92,98 92,132" fill="var(--pos)" opacity=".5"></polygon><polygon points="64,108 76,98 92,98 80,108" fill="var(--pos)" opacity=".8"></polygon>
+          <polygon points="98,142 98,78 114,78 114,142" fill="url(#pil-f)"></polygon><polygon points="114,142 114,78 126,68 126,132" fill="var(--pos)" opacity=".5"></polygon><polygon points="98,78 110,68 126,68 114,78" fill="var(--pos)" opacity=".8"></polygon>
+          <polygon points="132,142 132,122 148,122 148,142" fill="url(#pil-f)"></polygon><polygon points="148,142 148,122 160,112 160,132" fill="var(--pos)" opacity=".5"></polygon><polygon points="132,122 144,112 160,112 148,122" fill="var(--pos)" opacity=".8"></polygon>
+          <polygon points="166,142 166,94 182,94 182,142" fill="url(#pil-f)"></polygon><polygon points="182,142 182,94 194,84 194,132" fill="var(--pos)" opacity=".5"></polygon><polygon points="166,94 178,84 194,84 182,94" fill="var(--pos)" opacity=".8"></polygon>
+        </g>
+        <text x="120" y="184" text-anchor="middle" font-size="10" fill="var(--muted)">deploys per week</text>
+      </svg></div></div>
+<div class="meta"><b>3D Pillars on Tilted Plane</b> · <code>charts-3d-pillars-on-tilted-plane</code><br>Charts &amp; Metrics · 3D Charts &amp; Graphs<p>Columns rising from a perspective floor grid, each with front/top/side faces. The receding plane gives a strong sense of depth for ordered series like weekly counts.</p></div>
+
+</body>
+</html>

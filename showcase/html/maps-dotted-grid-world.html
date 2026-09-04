@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dotted-Grid World · Prism</title>
+<!-- Prism showcase sample: maps-dotted-grid-world (gallery: maps). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.gmap-dotworld { position: relative; width: 250px; height: 158px; border-radius: 12px; overflow: hidden; background: var(--panel2); border: 1px solid var(--line); color: rgba(var(--info-rgb),.16); }
+.gmap-dotbg { position: absolute; inset: 0px; background-image: radial-gradient(currentcolor 1px, transparent 1.6px); background-size: 9px 9px; }
+.gmap-dotland { position: absolute; color: var(--info); background-image: radial-gradient(currentcolor 1.4px, transparent 2px); background-size: 9px 9px; opacity: 0.85; filter: drop-shadow(0 0 4px rgba(var(--info-rgb),.4)); }
+.gmap-dotland { animation: 4s ease-in-out 0s infinite normal none running gmapDotShift; }
+@keyframes gmapDotShift { 
+  0%, 100% { opacity: 0.55; }
+  50% { opacity: 0.95; }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="gmap-dotworld">
+      <div class="gmap-dotbg"></div>
+      <div class="gmap-dotland" style="left:20px;top:44px;width:70px;height:44px"></div>
+      <div class="gmap-dotland" style="left:56px;top:86px;width:34px;height:52px;animation-delay:.5s"></div>
+      <div class="gmap-dotland" style="left:118px;top:40px;width:44px;height:30px;animation-delay:1s"></div>
+      <div class="gmap-dotland" style="left:126px;top:70px;width:40px;height:64px;animation-delay:1.5s"></div>
+      <div class="gmap-dotland" style="left:176px;top:38px;width:60px;height:30px;animation-delay:.8s"></div>
+      <div class="gmap-dotland" style="left:196px;top:100px;width:34px;height:26px;animation-delay:1.3s"></div>
+    </div></div></div>
+<div class="meta"><b>Dotted-Grid World</b> · <code>maps-dotted-grid-world</code><br>Maps &amp; Geo · WORLD &amp; REGION MAPS<p>Continents rendered as illuminated dot clusters over a faint grid — a dotted world map.</p></div>
+
+</body>
+</html>

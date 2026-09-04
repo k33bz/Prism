@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Loose Spiral · Prism</title>
+<!-- Prism showcase sample: shapes-loose-spiral (gallery: shapes). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.c-info { --c: var(--info); --c-rgb: 68,147,248; }
+.nsh2-g { position: absolute; left: 50%; top: 50%; font-weight: 800; white-space: pre; transform-style: preserve-3d; }
+.nsh2-ring3d .nsh2-g { font-size: 19px; color: var(--c); text-shadow: 0 0 9px rgba(var(--c-rgb),.55); }
+.nsh2-cylinder .nsh2-g { font-size: 15px; color: var(--c); text-shadow: 0 0 7px rgba(var(--c-rgb),.5); }
+.nsh2-helix .nsh2-g { font-size: 16px; color: var(--c); text-shadow: 0 0 8px rgba(var(--c-rgb),.6); }
+.nsh2-staircase .nsh2-g { font-size: 15px; color: var(--c); text-shadow: 0 0 8px rgba(var(--c-rgb),.55); }
+.nsh2-sphere .nsh2-g { font-size: 16px; color: var(--c); text-shadow: 0 0 8px rgba(var(--c-rgb),.6); }
+.nsh2-circle .nsh2-g { font-size: 16px; color: var(--c); text-shadow: 0 0 7px rgba(var(--c-rgb),.5); }
+.nsh2-spiralt .nsh2-g { color: var(--c); text-shadow: 0 0 5px rgba(var(--c-rgb),.5); }
+.nsh2-spirall { position: relative; width: 170px; height: 170px; animation: 20s linear 0s infinite normal none running nsh2Spin2d; }
+.nsh2-spirall .nsh2-g { color: var(--c); text-shadow: 0 0 5px rgba(var(--c-rgb),.5); }
+@keyframes nsh2Spin2d { 
+  100% { transform: rotate(360deg); }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="nsh2-spirall c-info" data-text="LOOSE OPEN GALACTIC ARM OF TEXT" data-nsh2="1"><span class="nsh2-g" style="font-size: 16px; transform: translate(-50%, -50%) translate(8px, 0px) rotate(90deg);">L</span><span class="nsh2-g" style="font-size: 15.84px; transform: translate(-50%, -50%) translate(9.4px, 5.9px) rotate(122deg);">O</span><span class="nsh2-g" style="font-size: 15.68px; transform: translate(-50%, -50%) translate(6.2px, 12.8px) rotate(154deg);">O</span><span class="nsh2-g" style="font-size: 15.52px; transform: translate(-50%, -50%) translate(-1.8px, 17.2px) rotate(186deg);">S</span><span class="nsh2-g" style="font-size: 15.36px; transform: translate(-50%, -50%) translate(-12.6px, 16.1px) rotate(218deg);">E</span><span class="nsh2-g" style="font-size: 15.2px; transform: translate(-50%, -50%) translate(-22.1px, 8px) rotate(250deg);">&nbsp;</span><span class="nsh2-g" style="font-size: 15.04px; transform: translate(-50%, -50%) translate(-26px, -5.5px) rotate(282deg);">O</span><span class="nsh2-g" style="font-size: 14.88px; transform: translate(-50%, -50%) translate(-21.4px, -20.6px) rotate(314deg);">P</span><span class="nsh2-g" style="font-size: 14.72px; transform: translate(-50%, -50%) translate(-7.9px, -31.8px) rotate(346deg);">E</span><span class="nsh2-g" style="font-size: 14.56px; transform: translate(-50%, -50%) translate(11.1px, -34.1px) rotate(378deg);">N</span><span class="nsh2-g" style="font-size: 14.4px; transform: translate(-50%, -50%) translate(29.9px, -25.1px) rotate(410deg);">&nbsp;</span><span class="nsh2-g" style="font-size: 14.24px; transform: translate(-50%, -50%) translate(41.7px, -5.9px) rotate(442deg);">G</span><span class="nsh2-g" style="font-size: 14.08px; transform: translate(-50%, -50%) translate(41.3px, 18.4px) rotate(474deg);">A</span><span class="nsh2-g" style="font-size: 13.92px; transform: translate(-50%, -50%) translate(27px, 40px) rotate(506deg);">L</span><span class="nsh2-g" style="font-size: 13.76px; transform: translate(-50%, -50%) translate(1.8px, 51.4px) rotate(538deg);">A</span><span class="nsh2-g" style="font-size: 13.6px; transform: translate(-50%, -50%) translate(-27.2px, 47.2px) rotate(570deg);">C</span><span class="nsh2-g" style="font-size: 13.44px; transform: translate(-50%, -50%) translate(-50.9px, 27px) rotate(602deg);">T</span><span class="nsh2-g" style="font-size: 13.28px; transform: translate(-50%, -50%) translate(-60.6px, -4.2px) rotate(634deg);">I</span><span class="nsh2-g" style="font-size: 13.12px; transform: translate(-50%, -50%) translate(-51.6px, -37.5px) rotate(666deg);">C</span><span class="nsh2-g" style="font-size: 12.96px; transform: translate(-50%, -50%) translate(-25.1px, -62px) rotate(698deg);">&nbsp;</span><span class="nsh2-g" style="font-size: 12.8px; transform: translate(-50%, -50%) translate(12.2px, -68.9px) rotate(730deg);">A</span><span class="nsh2-g" style="font-size: 12.64px; transform: translate(-50%, -50%) translate(48.9px, -54.3px) rotate(762deg);">R</span><span class="nsh2-g" style="font-size: 12.48px; transform: translate(-50%, -50%) translate(73.2px, -21px) rotate(794deg);">M</span><span class="nsh2-g" style="font-size: 12.32px; transform: translate(-50%, -50%) translate(76.2px, 21.9px) rotate(826deg);">&nbsp;</span><span class="nsh2-g" style="font-size: 12.16px; transform: translate(-50%, -50%) translate(55.1px, 61.2px) rotate(858deg);">O</span><span class="nsh2-g" style="font-size: 12px; transform: translate(-50%, -50%) translate(14.8px, 84.2px) rotate(890deg);">F</span><span class="nsh2-g" style="font-size: 11.84px; transform: translate(-50%, -50%) translate(-33.2px, 82.1px) rotate(922deg);">&nbsp;</span><span class="nsh2-g" style="font-size: 11.68px; transform: translate(-50%, -50%) translate(-74.2px, 53.9px) rotate(954deg);">T</span><span class="nsh2-g" style="font-size: 11.52px; transform: translate(-50%, -50%) translate(-94.6px, 6.6px) rotate(986deg);">E</span><span class="nsh2-g" style="font-size: 11.36px; transform: translate(-50%, -50%) translate(-86.4px, -46px) rotate(1018deg);">X</span><span class="nsh2-g" style="font-size: 11.2px; transform: translate(-50%, -50%) translate(-50.5px, -87.5px) rotate(1050deg);">T</span></div></div></div>
+<div class="meta"><b>Loose Spiral</b> · <code>shapes-loose-spiral</code><br>Text Shapes · 2D Shaped Text<p>The same spiral math opened up — larger step and growth for an airy, galactic-arm spread that sweeps slowly around. Roomy where the tight spiral is dense.</p></div>
+
+</body>
+</html>

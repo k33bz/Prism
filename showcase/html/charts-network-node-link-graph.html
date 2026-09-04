@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Network / Node-Link Graph · Prism</title>
+<!-- Prism showcase sample: charts-network-node-link-graph (gallery: charts). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.mp-net .lk { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animation: 1.2s ease-out 0s 1 normal forwards running scx-dash; }
+.mp-net .nd { transform-box: fill-box; transform-origin: center center; animation: 0.5s ease-out 0s 1 normal backwards running mp-pop; }
+@keyframes scx-dash { 
+  100% { stroke-dashoffset: 0; }
+}
+@keyframes mp-pop { 
+  0% { transform: scale(0); }
+  100% { transform: scale(1); }
+}
+.nch-net .nd { position: absolute; width: 12px; height: 12px; border-radius: 50%; background: var(--info); box-shadow: 0 0 8px var(--info); animation: 2.4s ease-in-out 0s infinite normal none running nchNet; }
+.nch-gaugetri .nd { position: absolute; bottom: 2px; left: 50%; width: 2px; height: 26px; background: var(--ink); transform-origin: center bottom; animation: 2.6s ease-in-out 0s infinite normal none running nchNeedle3; }
+@keyframes nchNet { 
+  0%, 100% { transform: scale(0.8); opacity: 0.6; }
+  50% { transform: scale(1.2); opacity: 1; }
+}
+@keyframes nchNeedle3 { 
+  0%, 100% { transform: translateX(-50%) rotate(-64deg); }
+  50% { transform: translateX(-50%) rotate(54deg); }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><svg width="230" height="160" viewBox="0 0 230 160" class="mp-net" id="mpNet" style="overflow:visible"><line x1="40" y1="40" x2="120" y2="28" stroke="var(--line)" stroke-width="2" class="lk" style="--len: 80.9; animation-delay: 0s;"></line><line x1="40" y1="40" x2="90" y2="100" stroke="var(--line)" stroke-width="2" class="lk" style="--len: 78.1; animation-delay: 0.05s;"></line><line x1="120" y1="28" x2="200" y2="52" stroke="var(--line)" stroke-width="2" class="lk" style="--len: 83.5; animation-delay: 0.1s;"></line><line x1="120" y1="28" x2="90" y2="100" stroke="var(--line)" stroke-width="2" class="lk" style="--len: 78.0; animation-delay: 0.15s;"></line><line x1="200" y1="52" x2="180" y2="118" stroke="var(--line)" stroke-width="2" class="lk" style="--len: 69.0; animation-delay: 0.2s;"></line><line x1="90" y1="100" x2="180" y2="118" stroke="var(--line)" stroke-width="2" class="lk" style="--len: 91.8; animation-delay: 0.25s;"></line><line x1="90" y1="100" x2="40" y2="120" stroke="var(--line)" stroke-width="2" class="lk" style="--len: 53.9; animation-delay: 0.3s;"></line><line x1="180" y1="118" x2="200" y2="52" stroke="var(--line)" stroke-width="2" class="lk" style="--len: 69.0; animation-delay: 0.35s;"></line><circle cx="40" cy="40" r="14" fill="var(--accent)" class="nd" style="animation-delay: 0.4s;"></circle><circle cx="120" cy="28" r="10" fill="var(--info)" class="nd" style="animation-delay: 0.47s;"></circle><circle cx="200" cy="52" r="11" fill="var(--pos)" class="nd" style="animation-delay: 0.54s;"></circle><circle cx="90" cy="100" r="12" fill="var(--crit)" class="nd" style="animation-delay: 0.61s;"></circle><circle cx="180" cy="118" r="9" fill="var(--info)" class="nd" style="animation-delay: 0.68s;"></circle><circle cx="40" cy="120" r="8" fill="var(--pos)" class="nd" style="animation-delay: 0.75s;"></circle></svg></div></div>
+<div class="meta"><b>Network / Node-Link Graph</b> · <code>charts-network-node-link-graph</code><br>Charts &amp; Metrics · More Plot Types<p>Nodes joined by edges — service dependency maps, call graphs, topology. Node size encodes importance, colour encodes health; edges draw themselves then nodes pop in. The go-to for &quot;what talks to what.&quot;</p></div>
+
+</body>
+</html>

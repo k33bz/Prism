@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Spiral Chart · Prism</title>
+<!-- Prism showcase sample: charts-spiral-chart (gallery: charts). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.mp-draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animation: 1.4s ease-out 0s 1 normal forwards running scx-dash; }
+@keyframes scx-dash { 
+  100% { stroke-dashoffset: 0; }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><svg width="180" height="180" viewBox="0 0 180 180" style="overflow:visible">
+        <path class="mp-draw" style="--len:920" d="M93.0,90.0 L93.5,90.6 L93.9,91.3 L94.1,92.1 L94.2,93.0 L94.0,94.0 L93.7,95.1 L93.1,96.1 L92.3,97.0 L91.2,97.8 L90.0,98.4 L88.6,98.9 L87.1,99.0 L85.4,99.0 L83.8,98.6 L82.1,97.9 L80.5,96.9 L79.1,95.6 L77.9,93.9 L76.8,92.1 L76.1,90.0 L75.8,87.7 L75.8,85.4 L76.2,83.0 L77.0,80.6 L78.3,78.3 L79.9,76.2 L82.0,74.3 L84.4,72.7 L87.1,71.5 L90.0,70.7 L93.1,70.4 L96.3,70.6 L99.5,71.4 L102.6,72.6 L105.6,74.4 L108.2,76.7 L110.6,79.5 L112.5,82.7 L113.9,86.2 L114.7,90.0 L114.9,94.0 L114.5,98.0 L113.5,102.0 L111.8,105.8 L109.4,109.4 L106.4,112.6 L102.9,115.4 L99.0,117.6 L94.6,119.2 L90.0,120.1 L85.2,120.3 L80.3,119.7 L75.6,118.3 L71.0,116.1 L66.8,113.2 L63.0,109.6 L59.8,105.4 L57.2,100.7 L55.4,95.5 L54.4,90.0 L54.3,84.4 L55.1,78.7 L56.9,73.1 L59.5,67.8 L62.9,62.9 L67.2,58.6 L72.1,54.9 L77.7,52.0 L83.7,50.0 L90.0,49.0 L96.5,49.0 L103.0,50.0 L109.4,52.0 L115.4,55.1 L120.9,59.1 L125.8,64.0 L129.9,69.7 L133.1,76.0 L135.3,82.8 L136.4,90.0 L136.4,97.3 L135.2,104.7 L132.8,111.8 L129.3,118.6 L124.7,124.7 L119.2,130.2 L112.8,134.8 L105.7,138.3 L98.0,140.7 L90.0,141.9 L81.8,141.8 L73.6,140.4 L65.7,137.7 L58.2,133.7 L51.4,128.6 L45.4,122.4 L40.4,115.3 L36.6,107.4 L34.0,98.9 L32.7,90.0 L32.9,81.0 L34.5,72.0 L37.5,63.3 L41.9,55.1 L47.6,47.6 L54.4,41.0 L62.3,35.6 L71.0,31.4 L80.3,28.6 L90.0,27.3 L99.9,27.5 L109.7,29.3 L119.2,32.7 L128.1,37.5 L136.3,43.7 L143.4,51.2 L149.3,59.8 L153.8,69.3 L156.8,79.4 L158.1,90.0 L157.8,100.7 L155.8,111.4 L152.2,121.7 L146.9,131.3 L140.1,140.1 L132.0,147.8 L122.7,154.1 L112.4,158.9 L101.4,162.1 L90.0,163.6 L78.4,163.2 L66.9,161.0 L55.9,157.0 L45.5,151.3 L36.1,143.9 L27.8,135.2 L21.1,125.1 L15.9,114.1 L12.5,102.3 L11.0,90.0" fill="none" stroke="var(--accent)" stroke-width="3.5" stroke-linecap="round"></path>
+        <circle cx="11" cy="90" r="4" fill="var(--accent)"></circle>
+      </svg></div></div>
+<div class="meta"><b>Spiral Chart</b> · <code>charts-spiral-chart</code><br>Charts &amp; Metrics · More Plot Types<p>A time series wound into an Archimedean spiral so a long, periodic series (a year of daily values) fits one frame and seasonality lines up radially. The path self-draws from the center outward.</p></div>
+
+</body>
+</html>

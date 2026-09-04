@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Switch Variants · Prism</title>
+<!-- Prism showcase sample: input-switch-variants (gallery: input). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.nin2-sw2 { display: flex; flex-direction: column; gap: 12px; }
+.nin2-sw2 label { display: inline-flex; align-items: center; gap: 10px; cursor: pointer; font-size: 12px; color: var(--muted); }
+.nin2-sw2 .nin2-tk { width: 46px; height: 26px; border-radius: 13px; background: var(--panel2); border: 1px solid var(--line); position: relative; transition: 0.22s; flex-shrink: 0; }
+.nin2-sw2 .nin2-tk::after { content: ""; position: absolute; top: 3px; left: 3px; width: 18px; height: 18px; border-radius: 50%; background: var(--dim); transition: 0.22s; display: flex; align-items: center; justify-content: center; font-size: 11px; }
+.nin2-sw2 input { position: absolute; opacity: 0; }
+.nin2-sw2 input:checked + .nin2-tk::after { left: 23px; background: rgb(255, 255, 255); }
+.nin2-sw2 input:checked + .nin2-acc { background: var(--accent); border-color: var(--accent); }
+.nin2-sw2 input:checked + .nin2-pos { background: var(--pos); border-color: var(--pos); }
+.nin2-sw2 input:checked + .nin2-crit { background: var(--crit); border-color: var(--crit); }
+.nin2-sw2 .nin2-icn::after { content: "✕"; color: var(--dim); }
+.nin2-sw2 input:checked + .nin2-icn::after { content: "✓"; color: var(--pos); }
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="nin2-sw2">
+      <label><input type="checkbox" checked=""><span class="nin2-tk nin2-acc"></span>Notifications</label>
+      <label><input type="checkbox" checked=""><span class="nin2-tk nin2-pos nin2-icn"></span>Auto-save</label>
+      <label><input type="checkbox"><span class="nin2-tk nin2-crit"></span>Danger mode</label>
+    </div></div></div>
+<div class="meta"><b>Switch Variants</b> · <code>input-switch-variants</code><br>Input Methods · Fields, Pickers &amp; Actions<p>Semantic toggles tied to tokens — accent, positive, and critical — plus an icon-in-knob style that swaps ✕↔✓.</p></div>
+
+</body>
+</html>

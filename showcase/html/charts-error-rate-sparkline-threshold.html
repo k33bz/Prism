@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Error Rate Sparkline + Threshold · Prism</title>
+<!-- Prism showcase sample: charts-error-rate-sparkline-threshold (gallery: charts). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animation: 1.6s ease-out 0s 1 normal forwards running draw; }
+@keyframes draw { 
+  100% { stroke-dashoffset: 0; }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div style="width:100%;font-size:11px">
+        <div style="color:var(--muted);margin-bottom:8px;font-weight:700">Error Rate Over Time (5-min buckets)</div>
+        <svg width="260" height="80" viewBox="0 0 260 80" style="overflow:visible">
+          <g stroke="var(--line)" stroke-dasharray="2 4"><line x1="0" y1="20" x2="260" y2="20"></line><line x1="0" y1="40" x2="260" y2="40"></line><line x1="0" y1="60" x2="260" y2="60"></line></g>
+          <line x1="0" y1="30" x2="260" y2="30" stroke="var(--neg)" stroke-dasharray="4 3" opacity=".4"></line>
+          <text x="262" y="33" font-size="8" fill="var(--neg)">threshold</text>
+          <polyline class="draw" style="--len:400" points="0,70 20,68 40,65 60,62 80,58 100,52 120,48 140,38 160,28 180,22 200,35 220,55 240,62 260,65" fill="none" stroke="var(--neg)" stroke-width="2.5" stroke-linecap="round"></polyline>
+          <circle cx="180" cy="22" r="4" fill="var(--neg)"><animate attributeName="opacity" values="1;.3;1" dur="1.5s" repeatCount="indefinite"></animate></circle>
+          <text x="180" y="14" text-anchor="middle" font-size="9" fill="var(--neg)" font-weight="800">spike</text>
+        </svg>
+      </div></div></div>
+<div class="meta"><b>Error Rate Sparkline + Threshold</b> · <code>charts-error-rate-sparkline-threshold</code><br>Charts &amp; Metrics · Log Viewers &amp; Streams<p>Time-series of error rate with a threshold line and spike annotation. For alerting context.</p></div>
+
+</body>
+</html>

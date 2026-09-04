@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bell w/ Count Badge · Prism</title>
+<!-- Prism showcase sample: notify-bell-w-count-badge (gallery: notify). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.ns-bell { position: relative; width: 40px; height: 40px; display: grid; place-items: center; font-size: 24px; color: var(--muted); transform-origin: center top; animation: 3.2s ease-in-out 0s infinite normal none running nsRing2; }
+.ns-bell .ns-cnt { position: absolute; top: -2px; right: -3px; min-width: 18px; height: 18px; padding: 0px 4px; border-radius: 99px; background: var(--neg); color: rgb(255, 255, 255); font-size: 10.5px; font-weight: 800; display: grid; place-items: center; border: 2px solid var(--panel); animation: 3.2s ease-in-out 0s infinite normal none running nsBadgePop; }
+@keyframes nsRing2 { 
+  0%, 84%, 100% { transform: rotate(0deg); }
+  88% { transform: rotate(11deg); }
+  92% { transform: rotate(-9deg); }
+  96% { transform: rotate(5deg); }
+}
+@keyframes nsBadgePop { 
+  0% { transform: scale(1); }
+  84% { transform: scale(1); }
+  90% { transform: scale(1.5); }
+  96% { transform: scale(1); }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="ns-bell">🔔<span class="ns-cnt">5</span></div></div></div>
+<div class="meta"><b>Bell w/ Count Badge</b> · <code>notify-bell-w-count-badge</code><br>Notifications &amp; Status · BADGES &amp; COUNTS<p>A shaking bell whose count badge pops; use for unread notification counts.</p></div>
+
+</body>
+</html>

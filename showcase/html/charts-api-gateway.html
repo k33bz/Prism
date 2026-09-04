@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>api-gateway · Prism</title>
+<!-- Prism showcase sample: charts-api-gateway (gallery: charts). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.tile .nm { font-weight: 700; font-size: 13.5px; }
+.rag-r { --rag: var(--neg); --rag-rgb: var(--neg-rgb); }
+.rag-y { --rag: var(--warn); --rag-rgb: var(--warn-rgb); }
+.rag-g { --rag: var(--pos); --rag-rgb: var(--pos-rgb); }
+.rag-tbl { width: 100%; border-collapse: collapse; font-size: 12px; }
+.rag-tbl td { padding: 7px 10px; border-bottom: 1px solid var(--line); }
+.rag-tbl tr:last-child td { border-bottom: 0px; }
+.rag-tbl .nm { color: var(--ink); font-weight: 600; }
+.rag-tbl .vl { text-align: right; font-variant-numeric: tabular-nums; font-weight: 700; color: var(--rag); }
+.rag-tbl .bd { width: 1px; white-space: nowrap; }
+.rag-tbl .bd span { display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: var(--rag); box-shadow: 0 0 7px var(--rag); }
+.tile .nm { font-weight: var(--head-w,700) !important; color: var(--ink) !important; }
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><table class="rag-tbl">
+        <tbody><tr class="rag-g"><td class="bd"><span></span></td><td class="nm">api-gateway</td><td class="vl">99.98%</td></tr>
+        <tr class="rag-g"><td class="bd"><span></span></td><td class="nm">auth-service</td><td class="vl">99.9%</td></tr>
+        <tr class="rag-y"><td class="bd"><span></span></td><td class="nm">checkout</td><td class="vl">98.2%</td></tr>
+        <tr class="rag-y"><td class="bd"><span></span></td><td class="nm">search</td><td class="vl">97.4%</td></tr>
+        <tr class="rag-r"><td class="bd"><span></span></td><td class="nm">payments</td><td class="vl">91.1%</td></tr>
+      </tbody></table></div></div>
+<div class="meta"><b>api-gateway</b> · <code>charts-api-gateway</code><br>Charts &amp; Metrics · Health Scores &amp; RAG (red · amber · green)<p>A service roster where each row owns its colour via a modifier class — a glowing dot, the value, and (if you like) the name all tint together. The classic &quot;what's red right now&quot; rollup table.</p></div>
+
+</body>
+</html>

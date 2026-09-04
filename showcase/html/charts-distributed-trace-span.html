@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Distributed Trace Span · Prism</title>
+<!-- Prism showcase sample: charts-distributed-trace-span (gallery: charts). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div style="width:100%">
+        <div style="font-size:12px;font-weight:700;margin-bottom:10px">Distributed Trace — 3 services</div>
+        <svg width="280" height="90" viewBox="0 0 280 90">
+          <g font-size="9" fill="var(--muted)"><text x="0" y="20">API Gateway</text><text x="0" y="45">Auth Service</text><text x="0" y="70">Order DB</text></g>
+          <rect x="80" y="12" width="190" height="12" rx="3" fill="var(--info)" opacity=".6"></rect>
+          <rect x="95" y="37" width="60" height="12" rx="3" fill="var(--pos)"></rect>
+          <rect x="160" y="62" width="90" height="12" rx="3" fill="var(--accent)"></rect>
+          <line x1="95" y1="24" x2="95" y2="37" stroke="var(--muted)" stroke-dasharray="2 2"></line>
+          <line x1="160" y1="49" x2="160" y2="62" stroke="var(--muted)" stroke-dasharray="2 2"></line>
+          <text x="272" y="20" font-size="8" fill="var(--info)">247ms</text>
+          <text x="157" y="45" font-size="8" fill="var(--pos)">31ms</text>
+          <text x="252" y="70" font-size="8" fill="var(--accent)">89ms</text>
+        </svg>
+      </div></div></div>
+<div class="meta"><b>Distributed Trace Span</b> · <code>charts-distributed-trace-span</code><br>Charts &amp; Metrics · Traces &amp; Linked Files<p>Multi-service trace waterfall showing parent-child spans. Like Jaeger/X-Ray but as inline SVG.</p></div>
+
+</body>
+</html>

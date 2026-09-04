@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Progress Notification Card · Prism</title>
+<!-- Prism showcase sample: spectrums-progress-notification-card (gallery: spectrums). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.neu-notif { width: 236px; padding: 14px; border-radius: 18px; text-align: left; position: relative; background: var(--neu-base); box-shadow: 8px 8px 16px var(--neu-dark), -8px -8px 16px var(--neu-light); }
+.neu-notif .neu-nclose { position: absolute; top: 10px; right: 10px; width: 20px; height: 20px; border-radius: 50%; display: grid; place-items: center; font-size: 10px; color: var(--neu-muted); background: var(--neu-base); cursor: pointer; box-shadow: 2px 2px 5px var(--neu-dark), -2px -2px 5px var(--neu-light); }
+.neu-notif .neu-ntitle { font-size: 12.5px; font-weight: 700; color: var(--neu-ink); padding-right: 20px; }
+.neu-notif .neu-nbody { font-size: 11px; color: var(--neu-muted); margin-top: 5px; line-height: 1.5; }
+.neu-notif .neu-nbar { margin-top: 10px; height: 6px; border-radius: 6px; background: var(--neu-base); box-shadow: inset 2px 2px 4px var(--neu-dark), inset -2px -2px 4px var(--neu-light); overflow: hidden; }
+.neu-notif .neu-nfill { height: 100%; width: 64%; border-radius: 6px; background: var(--neu-accent); opacity: 0.85; animation: 3.6s ease-in-out 0s infinite alternate none running neuFillGrow; }
+@keyframes neuFillGrow { 
+  0% { width: 38%; }
+  100% { width: 74%; }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="neu-notif">
+      <span class="neu-nclose">×</span>
+      <div class="neu-ntitle">Uploading backup.zip</div>
+      <div class="neu-nbody">Large file — this may take a minute.</div>
+      <div class="neu-nbar"><div class="neu-nfill"></div></div>
+    </div></div></div>
+<div class="meta"><b>Progress Notification Card</b> · <code>spectrums-progress-notification-card</code><br>Spectrums · Neumorphism · Neumorphism<p>A dismissible card whose progress track is carved into the surface while the fill glows on top — inset-and-extrude combined in one widget.</p></div>
+
+</body>
+</html>

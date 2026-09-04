@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Destructive Item Highlighted · Prism</title>
+<!-- Prism showcase sample: menus-destructive-item-highlighted (gallery: menus). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.mnu-panel { background: var(--panel2); border: 1px solid var(--line); border-radius: 11px; box-shadow: rgba(0, 0, 0, 0.4) 0px 16px 38px; padding: 6px; min-width: 196px; font-size: 12.5px; color: var(--ink); font-family: inherit; }
+.mnu-item { display: flex; align-items: center; gap: 9px; padding: 8px 10px; border-radius: 7px; cursor: pointer; transition: background 0.15s, color 0.15s; line-height: 1.2; white-space: nowrap; }
+.mnu-item:hover { background: rgba(var(--info-rgb),.14); color: var(--ink); }
+.mnu-item.is-danger { color: var(--neg); }
+.mnu-item.is-danger:hover { background: rgba(var(--neg-rgb),.14); }
+.mnu-item.is-active { color: var(--accent); }
+.mnu-ico { flex: 0 0 16px; text-align: center; color: var(--muted); font-size: 12px; }
+.mnu-item:hover .mnu-ico { color: inherit; }
+.mnu-lbl { flex: 1 1 auto; min-width: 0px; }
+.mnu-sep { height: 1px; background: var(--line); margin: 5px 4px; }
+.mnu-item.is-active .mnu-check { opacity: 1; }
+.mnu-drop-panel .mnu-item:nth-child(1) { animation: 0.3s ease 0.03s 1 normal both running mnuStagger; }
+.mnu-drop-panel .mnu-item:nth-child(2) { animation: 0.3s ease 0.08s 1 normal both running mnuStagger; }
+.mnu-drop-panel .mnu-item:nth-child(3) { animation: 0.3s ease 0.13s 1 normal both running mnuStagger; }
+.mnu-drop-panel .mnu-item:nth-child(4) { animation: 0.3s ease 0.18s 1 normal both running mnuStagger; }
+.mnu-drop-panel .mnu-item:nth-child(5) { animation: 0.3s ease 0.23s 1 normal both running mnuStagger; }
+.mnu-drop-icons .mnu-item { justify-content: flex-start; }
+.mnu-drop-check .mnu-item { justify-content: flex-start; }
+.mnu-ctx { animation: 0.28s cubic-bezier(0.2, 0.9, 0.3, 1.25) 0s 1 normal both running mnuScaleIn; transform-origin: left top; box-shadow: 0 18px 42px rgba(0,0,0,.48),0 0 0 1px rgba(var(--info-rgb),.08); }
+.mnu-sidebar .mnu-ico { flex: 0 0 15px; }
+.mnu-cmdk-inputrow .mnu-ico { color: var(--dim); }
+.mnu-cmdk-row .mnu-ico { width: 20px; text-align: center; color: var(--muted); }
+.mnu-cmdk-row.is-sel .mnu-ico { color: var(--info); }
+.mnu-tm-track label .mnu-ico { font-size: 15px; color: inherit; }
+.mnu-static-drop .mnu-item { cursor: default; }
+.mnu-static-drop .mnu-item:hover { background: none; }
+.mnu-static-ctx .mnu-item { cursor: default; }
+.mnu-static-ctx .mnu-item:hover { background: none; }
+@keyframes mnuStagger { 
+  0% { opacity: 0; transform: translateY(-6px); }
+  100% { opacity: 1; transform: translateY(0px); }
+}
+@keyframes mnuScaleIn { 
+  0% { opacity: 0; transform: scale(0.86) translateY(-4px); }
+  100% { opacity: 1; transform: scale(1) translateY(0px); }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="mnu-panel mnu-ctx">
+      <div class="mnu-item"><span class="mnu-ico">📄</span><span class="mnu-lbl">Open</span></div>
+      <div class="mnu-item"><span class="mnu-ico">⧉</span><span class="mnu-lbl">Duplicate</span></div>
+      <div class="mnu-sep"></div>
+      <div class="mnu-item is-danger"><span class="mnu-ico">⌫</span><span class="mnu-lbl">Delete permanently</span></div>
+    </div></div></div>
+<div class="meta"><b>Destructive Item Highlighted</b> · <code>menus-destructive-item-highlighted</code><br>Menus &amp; Actions · CONTEXT MENUS<p>Context menu isolating its irreversible action in red below a divider, away from safe actions.</p></div>
+
+</body>
+</html>

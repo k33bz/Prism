@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rocket · Prism</title>
+<!-- Prism showcase sample: objects-rocket (gallery: objects). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.nobj2-2d { width: 118px; height: 118px; overflow: visible; }
+.nobj2-rk { transform-box: fill-box; transform-origin: center center; animation: 2.6s ease-in-out 0s infinite normal none running nobj2RkBob; }
+.nobj2-rk-fl { transform-box: fill-box; transform-origin: center top; animation: 0.16s ease-in-out 0s infinite alternate none running nobj2RkFl; }
+@keyframes nobj2RkBob { 
+  0%, 100% { transform: translateY(3px); }
+  50% { transform: translateY(-7px); }
+}
+@keyframes nobj2RkFl { 
+  0% { transform: scaleY(0.6) scaleX(0.9); opacity: 0.8; }
+  100% { transform: scaleY(1.3) scaleX(1.05); opacity: 1; }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><svg viewBox="0 0 118 118" class="nobj2-2d" fill="none">
+      <g class="nobj2-rk">
+        <path d="M59 18 C74 30 74 58 68 74 H50 C44 58 44 30 59 18 Z" fill="var(--nobj2-i)"></path>
+        <circle cx="59" cy="44" r="7" fill="#0c0f18" stroke="var(--nobj2-cy)" stroke-width="2"></circle>
+        <path d="M50 66 L38 82 L50 78 Z M68 66 L80 82 L68 78 Z" fill="var(--nobj2-n)"></path>
+        <path class="nobj2-rk-fl" d="M52 74 H66 L59 96 Z" fill="var(--nobj2-a)"></path>
+      </g>
+    </svg></div></div>
+<div class="meta"><b>Rocket</b> · <code>objects-rocket</code><br>Animated Objects · 2D &amp; SVG Objects<p>A rocket hovering with a flickering flame. Launches, releases, &quot;shipping&quot; moments.</p></div>
+
+</body>
+</html>

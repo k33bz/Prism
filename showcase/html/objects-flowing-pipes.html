@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Flowing Pipes · Prism</title>
+<!-- Prism showcase sample: objects-flowing-pipes (gallery: objects). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.pipes .flow { stroke-dasharray: 8, 14; animation: 1s linear 0s infinite normal none running pipeFlow; }
+.pipes .valve { transform-box: fill-box; transform-origin: center center; animation: 4s linear 0s infinite normal none running spin; }
+@keyframes spin { 
+  100% { transform: rotate(1turn); }
+}
+@keyframes pipeFlow { 
+  100% { stroke-dashoffset: -22; }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><svg viewBox="0 0 118 118" class="pipes" fill="none">
+        <path d="M14 36 H56 V82 H104" stroke="#2c3651" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"></path>
+        <path class="flow" d="M14 36 H56 V82 H104" stroke="var(--teal)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"></path>
+        <g class="valve">
+          <circle cx="56" cy="36" r="9" fill="#46557a"></circle>
+          <line x1="48" y1="36" x2="64" y2="36" stroke="var(--orange)" stroke-width="3"></line>
+          <line x1="56" y1="28" x2="56" y2="44" stroke="var(--orange)" stroke-width="3"></line>
+        </g>
+        <circle cx="14" cy="36" r="6" fill="var(--mag)"></circle>
+        <circle cx="104" cy="82" r="6" fill="var(--green)"></circle>
+      </svg></div></div>
+<div class="meta"><b>Flowing Pipes</b> · <code>objects-flowing-pipes</code><br>Animated Objects · Mechanisms &amp; orbits<p>A dashed stream travels the conduit while the valve wheel spins. Data flow, plumbing, &quot;pipeline active&quot;.</p></div>
+
+</body>
+</html>

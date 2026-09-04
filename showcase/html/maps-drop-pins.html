@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Drop Pins · Prism</title>
+<!-- Prism showcase sample: maps-drop-pins (gallery: maps). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.gmap-scene { position: relative; width: 250px; height: 158px; border-radius: 12px; overflow: hidden; background: radial-gradient(120% 140% at 50% -20%,rgba(var(--info-rgb),.10),transparent 60%),var(--panel2); border: 1px solid var(--line); }
+.gmap-pinwrap { position: absolute; transform: translate(-50%, -100%); }
+.gmap-pin { position: relative; width: 16px; height: 16px; border-radius: 50% 50% 50% 0px; transform: rotate(-45deg); transform-origin: center bottom; background: var(--neg); box-shadow: rgba(0, 0, 0, 0.4) 0px 3px 6px; border: 1.5px solid rgba(255, 255, 255, 0.5); }
+.gmap-pin::after { content: ""; position: absolute; left: 50%; top: 45%; width: 5px; height: 5px; border-radius: 50%; background: var(--panel); transform: translate(-50%, -50%) rotate(45deg); }
+.gmap-drop .gmap-pin { animation: 2.4s ease-in-out 0s infinite normal none running gmapDrop; }
+.gmap-drop .d2 .gmap-pin { animation-delay: 0.5s; }
+.gmap-drop .d3 .gmap-pin { animation-delay: 1s; }
+.gmap-drop .gmap-pinwrap::before { content: ""; position: absolute; left: 50%; bottom: -6px; width: 12px; height: 4px; border-radius: 50%; background: rgba(0, 0, 0, 0.25); transform: translateX(-50%); }
+.gmap-pop .gmap-pin { background: var(--info); }
+@keyframes gmapDrop { 
+  0% { transform: translateY(-40px) scale(0.6) rotate(-45deg); opacity: 0; }
+  60% { transform: translateY(0px) scale(1) rotate(-45deg); opacity: 1; }
+  75% { transform: translateY(-6px) scale(1) rotate(-45deg); }
+  100% { transform: translateY(0px) scale(1) rotate(-45deg); }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="gmap-scene gmap-drop">
+      <div class="gmap-pinwrap" style="left:70px;top:96px"><div class="gmap-pin"></div></div>
+      <div class="gmap-pinwrap d2" style="left:132px;top:70px"><div class="gmap-pin" style="background:var(--info)"></div></div>
+      <div class="gmap-pinwrap d3" style="left:186px;top:110px"><div class="gmap-pin" style="background:var(--pos)"></div></div>
+    </div></div></div>
+<div class="meta"><b>Drop Pins</b> · <code>maps-drop-pins</code><br>Maps &amp; Geo · MARKERS &amp; PINS<p>Teardrop pins that bounce down onto the map in a staggered sequence.</p></div>
+
+</body>
+</html>
