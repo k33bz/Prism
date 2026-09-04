@@ -1,5 +1,5 @@
 {
-  "count": 2669,
+  "count": 2670,
   "effects": [
     {
       "id": "charts-big-metric-count-up",
@@ -1695,8 +1695,6 @@
         "ok",
         "m",
         "info",
-        "warn",
-        "err",
         "cursor"
       ],
       "params": [],
@@ -9240,6 +9238,53 @@
       "description": "A blue-and-white fist jabs slowly through a blue aura corridor while orange energy lines twirl around its white core; an orange crescent shockwave leads the knuckles and blooms into a ring on impact."
     },
     {
+      "id": "fx-pkmn-aura-jab",
+      "name": "Aura Jab",
+      "gallery": "fx",
+      "category": "Pokémon Battle",
+      "ref": ".fx-pkmb.fx-pkja",
+      "classes": [
+        "fx-pkmb",
+        "fx-pkja",
+        "fx-pkmb-aura",
+        "fx-pkmb-aura-t",
+        "fx-pkja-aura",
+        "fx-pkmb-aura-b",
+        "fx-pkmb-core",
+        "fx-pkja-core",
+        "fx-pkmb-punch",
+        "fx-pkja-punch",
+        "fx-pkmb-shock",
+        "fx-pkja-shock",
+        "fx-pkmb-fist",
+        "fx-pkja-fist",
+        "fx-pkmb-f-arm",
+        "fx-pkmb-f-main",
+        "fx-pkmb-f-dk",
+        "fx-pkmb-f-ln",
+        "fx-pkmb-f-rim",
+        "fx-pkmb-f-hl",
+        "fx-pkmb-ring",
+        "fx-pkja-ring",
+        "fx-pkmb-flash",
+        "fx-pkja-flash"
+      ],
+      "params": [],
+      "tags": [
+        "fx",
+        "animated",
+        "new"
+      ],
+      "componentType": "fx-scene",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "description": "Mega Brave's little sibling: the same blue fist and aura corridor at 60% size snapping a quick jab, the orange crescent popping into a small ring on impact. No helix; it would not read at jab speed."
+    },
+    {
       "id": "lab-fade-in",
       "name": "Fade In",
       "gallery": "lab",
@@ -15034,6 +15079,9 @@
         "chat",
         "cmsg",
         "user",
+        "ai",
+        "typing-msg",
+        "mt",
         "cap",
         "pr-playbtn"
       ],
@@ -16056,9 +16104,9 @@
         "gate",
         "experts",
         "expert",
-        "on",
         "ed",
         "ew",
+        "on",
         "cap",
         "pr-playbtn"
       ],
