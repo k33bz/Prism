@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Powerful Hand · Prism</title>
+<!-- Prism showcase sample: fx-pkmn-powerful-hand (gallery: fx). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.fx-pkph { position: relative; width: 100%; max-width: 330px; height: 150px; border-radius: 12px; overflow: hidden; --c1: var(--crit); --c1-rgb: var(--crit-rgb); background: radial-gradient(130% 100% at 50% 50%,rgba(var(--c1-rgb),.13),rgba(0,0,0,0) 72%),#0b0e15; border: 1px solid rgba(var(--c1-rgb),.35); }
+.fx-pkph-fan { position: absolute; left: 64px; top: 64px; }
+.fx-pkph-fan i { position: absolute; left: 0px; top: 0px; width: 16px; height: 22px; margin: -11px 0px 0px -8px; border-radius: 2.5px; background: linear-gradient(160deg,#f4eefb,rgba(var(--c1-rgb),.55)); border: 1.5px solid var(--c1); opacity: 0; transform-origin: 50% 130%; animation: 2.4s ease-out 0s infinite normal none running fxPkphFan; }
+.fx-pkph-fan i:nth-child(1) { --fr: -34deg; }
+.fx-pkph-fan i:nth-child(2) { --fr: -17deg; animation-delay: 0.05s; }
+.fx-pkph-fan i:nth-child(3) { --fr: 0deg; animation-delay: 0.1s; }
+.fx-pkph-fan i:nth-child(4) { --fr: 17deg; animation-delay: 0.15s; }
+.fx-pkph-fan i:nth-child(5) { --fr: 34deg; animation-delay: 0.2s; }
+.fx-pkph-card { position: absolute; left: 218px; top: 46px; width: 44px; height: 58px; border-radius: 4px; border: 1.5px solid rgba(255, 255, 255, 0.4); background: linear-gradient(160deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.03)); animation: 2.4s ease-in-out 0s infinite normal none running fxPkphSquash; }
+.fx-pkph-hand { position: absolute; left: 196px; top: 8px; width: 88px; height: 96px; opacity: 0; animation: 2.4s cubic-bezier(0.55, 0.06, 0.35, 1) 0s infinite normal none running fxPkphPress; }
+.fx-pkph-hand svg { display: block; width: 100%; height: 100%; filter: drop-shadow(0 0 11px rgba(var(--c1-rgb),.55)); }
+.fx-pkph-h-body { fill: rgba(var(--c1-rgb),.38); stroke: rgba(255, 255, 255, 0.65); stroke-width: 2.5; }
+.fx-pkph-h-core { fill: rgba(var(--c1-rgb),.35); }
+.fx-pkph-r { position: absolute; left: 240px; top: 84px; width: 70px; height: 70px; margin: -35px 0px 0px -35px; border-radius: 50%; border: 3px solid rgba(var(--c1-rgb),.9); opacity: 0; box-shadow: 0 0 12px rgba(var(--c1-rgb),.6); animation: 2.4s cubic-bezier(0.2, 0.75, 0.35, 1) 0s infinite normal none running fxPkphRip; }
+.fx-pkph-r.r2 { animation-delay: 0.12s; }
+.fx-pkwp-rc.r2 { --dx: 16px; --dy: -16px; animation-delay: 0.07s; }
+@keyframes fxPkphFan { 
+  0% { opacity: 0; transform: rotate(0deg) translateY(8px) scale(0.7); }
+  10% { opacity: 0.95; transform: rotate(var(--fr,0deg)) translateY(-4px) scale(1); }
+  26% { opacity: 0.85; transform: rotate(var(--fr,0deg)) translateY(-4px) scale(1); }
+  36%, 100% { opacity: 0; transform: rotate(0deg) translateY(6px) scale(0.8); }
+}
+@keyframes fxPkphSquash { 
+  0%, 54% { transform: scale(1); }
+  60% { transform: scale(1.04, 0.92); }
+  68% { transform: scale(0.99, 1.01); }
+  74%, 100% { transform: scale(1); }
+}
+@keyframes fxPkphPress { 
+  0%, 26% { opacity: 0; transform: translateY(-34px) scale(0.86); }
+  36% { opacity: 0.95; }
+  54% { transform: translateY(0px) scale(1.02); }
+  62% { transform: translateY(3px) scale(1.05, 0.95); }
+  80%, 100% { opacity: 0; transform: translateY(2px) scale(1.03, 0.98); }
+}
+@keyframes fxPkphRip { 
+  0%, 56% { opacity: 0; transform: scale(0.2, 0.12); }
+  62% { opacity: 0.85; transform: scale(0.6, 0.32); }
+  80%, 100% { opacity: 0; transform: scale(1.3, 0.64); }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="fx-pkph" role="img" aria-label="Powerful Hand: a card fan shimmers, then a giant translucent psychic hand presses down onto the defending card with ripple rings">
+    <span class="fx-pkph-fan"><i></i><i></i><i></i><i></i><i></i></span>
+    <i class="fx-pkph-card"></i>
+    <span class="fx-pkph-hand"><svg viewBox="0 0 120 130" aria-hidden="true">
+      <path class="fx-pkph-h-body" d="M28 78 Q24 66 26 46 Q27 38 33 38 Q39 38 40 46 L42 64 Q44 34 45 26 Q46 18 52 18 Q58 18 59 26 L60 60 Q61 22 62 14 Q63 6 69 6 Q75 6 76 14 L77 60 Q79 28 80 22 Q81 14 87 14 Q93 14 94 22 L95 66 Q97 48 99 42 Q101 35 106 37 Q111 39 110 47 Q108 74 104 92 Q98 116 74 122 Q50 128 36 112 Q29 103 28 78 Z"></path>
+      <ellipse class="fx-pkph-h-core" cx="68" cy="92" rx="26" ry="20"></ellipse>
+    </svg></span>
+    <i class="fx-pkph-r"></i><i class="fx-pkph-r r2"></i>
+  </div></div></div>
+<div class="meta"><b>Powerful Hand</b> · <code>fx-pkmn-powerful-hand</code><br>FX Store · Pokémon Battle<p>Alakazam's hand IS the weapon: a little card-fan shimmers up during the wind-up, then a giant translucent psychic hand presses DOWN onto the defending card, pink ripple rings spreading from the press as the card squashes.</p></div>
+
+</body>
+</html>
