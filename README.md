@@ -4,9 +4,9 @@
 
 **One prism. Every facet of your report.**
 
-A single-file gallery of **1,668** offline, self-contained CSS/SVG animations, components, and backdrops — built to be browsed by humans *and* driven by AI agents. Ships with a **zero-dependency MCP server** so Claude (Desktop, Code, or the API) can search the catalog and compose production-ready HTML/CSS on demand.
+A single-file gallery of **1,670** offline, self-contained CSS/SVG animations, components, and backdrops — built to be browsed by humans *and* driven by AI agents. Ships with a **zero-dependency MCP server** so Claude (Desktop, Code, or the API) can search the catalog and compose production-ready HTML/CSS on demand.
 
-![Effects](https://img.shields.io/badge/effects-1668-ff9900) ![Galleries](https://img.shields.io/badge/galleries-15-4493f8) ![Dependencies](https://img.shields.io/badge/dependencies-0-3fb950) ![Offline](https://img.shields.io/badge/offline-100%25-3fb950) ![MCP](https://img.shields.io/badge/MCP-server%20included-c879ff) ![Single file](https://img.shields.io/badge/single%20file-HTML-e0a52b)
+![Effects](https://img.shields.io/badge/effects-1670-ff9900) ![Galleries](https://img.shields.io/badge/galleries-15-4493f8) ![Dependencies](https://img.shields.io/badge/dependencies-0-3fb950) ![Offline](https://img.shields.io/badge/offline-100%25-3fb950) ![MCP](https://img.shields.io/badge/MCP-server%20included-c879ff) ![Single file](https://img.shields.io/badge/single%20file-HTML-e0a52b)
 
 </div>
 
@@ -53,7 +53,7 @@ node cli.js tools
 node cli.js start --catalog ../Prism.html
 ```
 
-`info` should report **1,668 effects across 15 galleries**. If it does, the server is working — the remaining steps just tell a client *how* to launch it.
+`info` should report **2,670 effects across 15 galleries** (the island also carries the 1,000 theme-pack spectrum facets). If it does, the server is working — the remaining steps just tell a client *how* to launch it.
 
 > **Always point `--catalog` at `Prism.html`.** The `#prism-catalog` island inside it is the authoritative catalog and can be fresher than `catalog/manifest.json`. If `--catalog` is omitted, the server defaults to `../Prism.html`, falling back to `../catalog/manifest.json`.
 
@@ -256,7 +256,7 @@ Fifteen authored galleries, plus special views. Every element carries a name, it
 | 🧪 **Animation Lab** | Motion studies — easing, transforms, loaders, physics, keyframes | 217 |
 | ◆ **Spectrums** | Component families across full visual languages (Material, glass, brutalist, solarpunk…) | 266 |
 | 📊 **Charts & Metrics** | KPIs, gauges, progress, trends, comparisons, status, 3D charts | 209 |
-| 🎇 **FX Store** | Drop-in visual effects: glow, pulse, shimmer, glass, particles, glitch | 146 |
+| 🎇 **FX Store** | Drop-in visual effects: glow, pulse, shimmer, glass, particles, glitch | 148 |
 | ◈ **Obsidian Facets** | Callouts, graph links, note chrome, Dataview dashboards, Canvas, focus scenes | 130 |
 | 🤖 **AI Working** | "Thinking" states, token streams, tool calls, model internals | 118 |
 | ✏️ **Input Methods** | Controls, pickers, toggles, interactive input patterns | 101 |
@@ -278,10 +278,10 @@ Fifteen authored galleries, plus special views. Every element carries a name, it
 <!-- showcase:start -->
 ## 🎞 GIF showcase
 
-Every one of the **2668 facets** is recorded as a looping GIF from its own standalone HTML sample, so you can browse the whole library without opening Prism.html — see [**showcase/**](showcase/README.md) (57.1 MB of GIFs, rendered by Firefox (WebDriver BiDi) 155.0). Click a gallery below to open its page; click any GIF there to get to the effect's self-contained HTML.
+Every one of the **2670 facets** is recorded as a looping GIF from its own standalone HTML sample, so you can browse the whole library without opening Prism.html — see [**showcase/**](showcase/README.md) (57.5 MB of GIFs, rendered by Firefox (WebDriver BiDi) 155.0.1). Click a gallery below to open its page; click any GIF there to get to the effect's self-contained HTML.
 
 <table>
-<tr><td align="center" valign="top" width="33%"><a href="showcase/galleries/charts.md"><img src="showcase/gif/charts-gauge-cluster.gif" width="300" alt="Charts &amp; Metrics"></a><br><b><a href="showcase/galleries/charts.md">Charts &amp; Metrics</a></b><br><sub>209 effects</sub></td><td align="center" valign="top" width="33%"><a href="showcase/galleries/fx.md"><img src="showcase/gif/fx-pulse-glow-winner.gif" width="300" alt="FX Store"></a><br><b><a href="showcase/galleries/fx.md">FX Store</a></b><br><sub>146 effects</sub></td><td align="center" valign="top" width="33%"><a href="showcase/galleries/lab.md"><img src="showcase/gif/lab-countdown-ring.gif" width="300" alt="Animation Lab"></a><br><b><a href="showcase/galleries/lab.md">Animation Lab</a></b><br><sub>217 effects</sub></td></tr>
+<tr><td align="center" valign="top" width="33%"><a href="showcase/galleries/charts.md"><img src="showcase/gif/charts-gauge-cluster.gif" width="300" alt="Charts &amp; Metrics"></a><br><b><a href="showcase/galleries/charts.md">Charts &amp; Metrics</a></b><br><sub>209 effects</sub></td><td align="center" valign="top" width="33%"><a href="showcase/galleries/fx.md"><img src="showcase/gif/fx-pulse-glow-winner.gif" width="300" alt="FX Store"></a><br><b><a href="showcase/galleries/fx.md">FX Store</a></b><br><sub>148 effects</sub></td><td align="center" valign="top" width="33%"><a href="showcase/galleries/lab.md"><img src="showcase/gif/lab-countdown-ring.gif" width="300" alt="Animation Lab"></a><br><b><a href="showcase/galleries/lab.md">Animation Lab</a></b><br><sub>217 effects</sub></td></tr>
 <tr><td align="center" valign="top" width="33%"><a href="showcase/galleries/ai.md"><img src="showcase/gif/ai-thinking-orb.gif" width="300" alt="AI Working"></a><br><b><a href="showcase/galleries/ai.md">AI Working</a></b><br><sub>118 effects</sub></td><td align="center" valign="top" width="33%"><a href="showcase/galleries/objects.md"><img src="showcase/gif/objects-snowfall.gif" width="300" alt="Animated Objects"></a><br><b><a href="showcase/galleries/objects.md">Animated Objects</a></b><br><sub>91 effects</sub></td><td align="center" valign="top" width="33%"><a href="showcase/galleries/input.md"><img src="showcase/gif/input-like-heart-burst.gif" width="300" alt="Input Methods"></a><br><b><a href="showcase/galleries/input.md">Input Methods</a></b><br><sub>101 effects</sub></td></tr>
 <tr><td align="center" valign="top" width="33%"><a href="showcase/galleries/text.md"><img src="showcase/gif/text-neon-sign.gif" width="300" alt="Text Effects"></a><br><b><a href="showcase/galleries/text.md">Text Effects</a></b><br><sub>100 effects</sub></td><td align="center" valign="top" width="33%"><a href="showcase/galleries/shapes.md"><img src="showcase/gif/shapes-ring-spin.gif" width="300" alt="Text Shapes"></a><br><b><a href="showcase/galleries/shapes.md">Text Shapes</a></b><br><sub>53 effects</sub></td><td align="center" valign="top" width="33%"><a href="showcase/galleries/maps.md"><img src="showcase/gif/maps-world-pulse-map.gif" width="300" alt="Maps &amp; Geo"></a><br><b><a href="showcase/galleries/maps.md">Maps &amp; Geo</a></b><br><sub>50 effects</sub></td></tr>
 <tr><td align="center" valign="top" width="33%"><a href="showcase/galleries/notify.md"><img src="showcase/gif/notify-stacking-toast-group.gif" width="300" alt="Notifications &amp; Status"></a><br><b><a href="showcase/galleries/notify.md">Notifications &amp; Status</a></b><br><sub>50 effects</sub></td><td align="center" valign="top" width="33%"><a href="showcase/galleries/arch.md"><img src="showcase/gif/arch-flowing-connector.gif" width="300" alt="Architecture Diagrams"></a><br><b><a href="showcase/galleries/arch.md">Architecture Diagrams</a></b><br><sub>50 effects</sub></td><td align="center" valign="top" width="33%"><a href="showcase/galleries/callouts.md"><img src="showcase/gif/callouts-progress-stepper.gif" width="300" alt="Callouts &amp; Annotations"></a><br><b><a href="showcase/galleries/callouts.md">Callouts &amp; Annotations</a></b><br><sub>50 effects</sub></td></tr>
@@ -313,7 +313,7 @@ This is the **JSON island**: a complete, machine-readable catalog of every effec
 ```js
 const catalog = JSON.parse(document.getElementById('prism-catalog').textContent);
 catalog._ai;          // read this first: what/howToUse/fields/count
-catalog.effects;      // 1668 records, each with self-contained html + css
+catalog.effects;      // 2670 records, each with self-contained html + css
 ```
 
 The island is purpose-built to back an MCP server because everything a tool needs is precomputed and self-describing: a **`_ai` header** that orients a fresh agent, **fully composable records** (each effect ships its own `html` + `css`, `classes`, `keyframes`, `params`, `needsJs`, `usableAsBackground`, `selfContained`), **searchable dimensions** (`gallery`, `category`, `tags`, `ref`, `description`), and **encoded composition rules** (top-level `tokens.css`, `usage`, `galleries`).
