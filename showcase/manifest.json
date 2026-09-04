@@ -1,14 +1,14 @@
 {
  "name": "Prism GIF showcase",
- "generated": "2026-09-04T03:45:28.791Z",
+ "generated": "2026-09-04T20:23:40.108Z",
  "source": "Prism.html",
  "browser": {
   "engine": "Firefox (WebDriver BiDi)",
-  "version": "155.0"
+  "version": "155.0.1"
  },
- "count": 2668,
- "animated": 2411,
- "gifBytes": 59904724,
+ "count": 2670,
+ "animated": 2413,
+ "gifBytes": 60301251,
  "settings": {
   "fps": 10,
   "minSeconds": 1.6,
@@ -5341,6 +5341,36 @@
    "width": 344,
    "height": 127,
    "bytes": 45667
+  },
+  {
+   "id": "fx-pkmn-mega-brave",
+   "name": "Mega Brave",
+   "gallery": "fx",
+   "category": "Pokémon Battle",
+   "spectrum": null,
+   "gif": "gif/fx-pkmn-mega-brave.gif",
+   "html": "html/fx-pkmn-mega-brave.html",
+   "animated": true,
+   "duration": 2.4,
+   "frames": 24,
+   "width": 344,
+   "height": 177,
+   "bytes": 269139
+  },
+  {
+   "id": "fx-pkmn-aura-jab",
+   "name": "Aura Jab",
+   "gallery": "fx",
+   "category": "Pokémon Battle",
+   "spectrum": null,
+   "gif": "gif/fx-pkmn-aura-jab.gif",
+   "html": "html/fx-pkmn-aura-jab.html",
+   "animated": true,
+   "duration": 2.4,
+   "frames": 24,
+   "width": 344,
+   "height": 120,
+   "bytes": 127388
   },
   {
    "id": "lab-fade-in",

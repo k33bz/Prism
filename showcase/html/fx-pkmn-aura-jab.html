@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aura Jab · Prism</title>
+<!-- Prism showcase sample: fx-pkmn-aura-jab (gallery: fx). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.fx-pkmb { position: relative; width: 100%; max-width: 330px; height: 150px; border-radius: 12px; overflow: hidden; --pkb: var(--info); --pkb-rgb: var(--info-rgb); --pko: var(--accent); --pko-rgb: var(--accent-rgb); background: radial-gradient(130% 100% at 50% 50%,rgba(var(--pkb-rgb),.13),rgba(0,0,0,0) 72%),#0b0e15; border: 1px solid rgba(var(--pkb-rgb),.35); animation: 2.4s linear 0s infinite normal none running fxPkmbHit; }
+.fx-pkmb-aura { position: absolute; left: 0px; right: 0px; height: 40%; pointer-events: none; animation: 2.4s ease-in-out 0s infinite normal none running fxPkmbAura; }
+.fx-pkmb-aura-t { top: 0px; background: linear-gradient(180deg,rgba(var(--pkb-rgb),.5),rgba(var(--pkb-rgb),0)); }
+.fx-pkmb-aura-b { bottom: 0px; background: linear-gradient(0deg,rgba(var(--pkb-rgb),.5),rgba(var(--pkb-rgb),0)); }
+.fx-pkmb-core { position: absolute; left: 5%; right: 12%; top: 50%; height: 3px; margin-top: -1.5px; border-radius: 2px; background: linear-gradient(90deg, rgba(255, 255, 255, 0), rgb(255, 255, 255) 14%, rgb(255, 255, 255) 86%, rgba(255, 255, 255, 0)); box-shadow: 0 0 8px 1px rgba(255,255,255,.7),0 0 20px 5px rgba(var(--pkb-rgb),.45); transform-origin: 0px 50%; animation: 2.4s ease-in-out 0s infinite normal none running fxPkmbCore; }
+.fx-pkmb-punch { position: absolute; left: 2%; top: 50%; width: 92px; height: 70px; margin-top: -35px; animation: 2.4s cubic-bezier(0.65, 0.03, 0.28, 1) 0s infinite normal none running fxPkmbJab; }
+.fx-pkmb-fist { position: absolute; inset: 0px; width: 100%; height: 100%; filter: drop-shadow(0 0 9px rgba(var(--pkb-rgb),.65)); }
+.fx-pkmb-f-main { fill: var(--pkb); }
+.fx-pkmb-f-arm { fill: rgba(var(--pkb-rgb),.72); }
+.fx-pkmb-f-dk { fill: rgba(0, 0, 0, 0.26); }
+.fx-pkmb-f-hl { fill: rgb(255, 255, 255); }
+.fx-pkmb-f-rim { stroke: rgb(255, 255, 255); stroke-width: 3; stroke-linecap: round; fill: none; opacity: 0.85; }
+.fx-pkmb-f-ln { stroke: rgba(0, 0, 0, 0.3); stroke-width: 2; stroke-linecap: round; fill: none; }
+.fx-pkmb-shock { position: absolute; right: -20px; top: 50%; width: 34px; height: 62px; margin-top: -31px; border-width: 5px; border-style: solid; border-top-color: transparent; border-bottom-color: transparent; border-left-color: transparent; border-image: none; border-right-color: var(--pko); border-radius: 50%; filter: drop-shadow(0 0 6px rgba(var(--pko-rgb),.9)); animation: 2.4s ease-in-out 0s infinite normal none running fxPkmbShock; }
+.fx-pkmb-ring { position: absolute; left: 86%; top: 50%; width: 76px; height: 76px; margin: -38px 0px 0px -38px; border: 4px solid var(--pko); border-radius: 50%; opacity: 0; box-shadow: 0 0 16px rgba(var(--pko-rgb),.8),inset 0 0 10px rgba(var(--pko-rgb),.6); animation: 2.4s cubic-bezier(0.2, 0.8, 0.3, 1) 0s infinite normal none running fxPkmbRing; }
+.fx-pkmb-flash { position: absolute; inset: 0px; pointer-events: none; opacity: 0; background: radial-gradient(60% 80% at 84% 50%,rgba(var(--pko-rgb),.55),rgba(255,255,255,.18) 40%,transparent 70%); animation: 2.4s ease-out 0s infinite normal none running fxPkmbFlash; }
+.fx-pkja { max-width: 200px; height: 92px; border-radius: 10px; animation-duration: 0.8s; }
+.fx-pkja-aura { animation-duration: 0.8s; }
+.fx-pkja-core { left: 6%; right: 14%; height: 2px; margin-top: -1px; animation-duration: 0.8s; }
+.fx-pkja-punch { width: 56px; height: 42px; margin-top: -21px; animation-duration: 0.8s; }
+.fx-pkja-fist { filter: drop-shadow(0 0 6px rgba(var(--pkb-rgb),.65)); }
+.fx-pkja-shock { right: -12px; width: 20px; height: 38px; margin-top: -19px; border-width: 3px; animation-duration: 0.8s; }
+.fx-pkja-ring { width: 46px; height: 46px; margin: -23px 0px 0px -23px; border-width: 3px; animation-duration: 0.8s; }
+.fx-pkja-flash { animation-duration: 0.8s; }
+@keyframes fxPkmbAura { 
+  0% { opacity: 0.45; }
+  12% { opacity: 0.6; }
+  56% { opacity: 0.95; }
+  64% { opacity: 1; }
+  86% { opacity: 0.5; }
+  100% { opacity: 0.45; }
+}
+@keyframes fxPkmbCore { 
+  0%, 8% { transform: scaleX(0.12); opacity: 0.25; }
+  56% { transform: scaleX(1); opacity: 0.95; }
+  78% { transform: scaleX(1); opacity: 0.8; }
+  96%, 100% { transform: scaleX(0.12); opacity: 0.25; }
+}
+@keyframes fxPkmbJab { 
+  0% { left: 2%; transform: scale(0.92); opacity: 0; }
+  4% { opacity: 1; }
+  10% { left: 0%; transform: scale(0.95); }
+  56% { left: 54%; transform: scale(1.04); }
+  62% { left: 58%; transform: scale(1.07); }
+  80% { left: 58%; transform: scale(1); }
+  90% { opacity: 1; }
+  96%, 100% { left: 2%; transform: scale(0.92); opacity: 0; }
+}
+@keyframes fxPkmbShock { 
+  0%, 8% { opacity: 0; transform: scaleY(0.9); }
+  14% { opacity: 0.75; }
+  56% { opacity: 1; transform: scaleY(1.12); }
+  62% { opacity: 1; transform: scaleY(1.2); }
+  72%, 100% { opacity: 0; transform: scaleY(1.2); }
+}
+@keyframes fxPkmbRing { 
+  0%, 57% { opacity: 0; transform: scale(0.15); }
+  63% { opacity: 0.95; transform: scale(0.55); }
+  82%, 100% { opacity: 0; transform: scale(1.5); }
+}
+@keyframes fxPkmbFlash { 
+  0%, 58% { opacity: 0; }
+  62% { opacity: 0.8; }
+  74%, 100% { opacity: 0; }
+}
+@keyframes fxPkmbHit { 
+  0%, 60% { transform: translate(0px, 0px); }
+  63% { transform: translate(-3px, 2px); }
+  66% { transform: translate(3px, -2px); }
+  69% { transform: translate(-2px, 1px); }
+  72% { transform: translate(2px, -1px); }
+  75%, 100% { transform: translate(0px, 0px); }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="fx-pkmb fx-pkja" role="img" aria-label="Aura Jab: a small blue fist snaps a quick jab through a blue aura corridor behind an orange shockwave">
+    <i class="fx-pkmb-aura fx-pkmb-aura-t fx-pkja-aura"></i><i class="fx-pkmb-aura fx-pkmb-aura-b fx-pkja-aura"></i>
+    <i class="fx-pkmb-core fx-pkja-core"></i>
+    <span class="fx-pkmb-punch fx-pkja-punch"><i class="fx-pkmb-shock fx-pkja-shock"></i>
+      <svg class="fx-pkmb-fist fx-pkja-fist" viewBox="0 0 120 90" aria-hidden="true">
+        <rect class="fx-pkmb-f-arm" x="0" y="34" width="32" height="24" rx="10"></rect>
+        <rect class="fx-pkmb-f-arm" x="26" y="30" width="10" height="32" rx="4"></rect>
+        <path class="fx-pkmb-f-main" d="M38 22 H74 Q94 22 99 34 L102 42 Q104 60 96 68 Q90 74 76 74 H42 Q32 74 32 62 V32 Q32 22 38 22 Z"></path>
+        <circle class="fx-pkmb-f-main" cx="101" cy="32" r="7"></circle>
+        <circle class="fx-pkmb-f-main" cx="104" cy="44" r="7.5"></circle>
+        <circle class="fx-pkmb-f-main" cx="103" cy="56" r="7"></circle>
+        <circle class="fx-pkmb-f-main" cx="98" cy="66" r="6.5"></circle>
+        <rect class="fx-pkmb-f-dk" x="34" y="64" width="58" height="8" rx="4"></rect>
+        <rect class="fx-pkmb-f-main" x="46" y="54" width="38" height="16" rx="8"></rect>
+        <path class="fx-pkmb-f-ln" d="M92 36 q6 3 0 8 M94 48 q6 3 0 8 M92 60 q5 3 0 7"></path>
+        <path class="fx-pkmb-f-ln" d="M50 56 h30"></path>
+        <path class="fx-pkmb-f-rim" d="M40 22 H74 Q92 22 98 33"></path>
+        <circle class="fx-pkmb-f-hl" cx="102" cy="29" r="2.4"></circle>
+        <circle class="fx-pkmb-f-hl" cx="105" cy="41" r="2.4"></circle>
+        <circle class="fx-pkmb-f-hl" cx="104" cy="53" r="2.4"></circle>
+        <circle class="fx-pkmb-f-hl" cx="99" cy="63" r="2.2"></circle>
+      </svg></span>
+    <i class="fx-pkmb-ring fx-pkja-ring"></i><i class="fx-pkmb-flash fx-pkja-flash"></i>
+  </div></div></div>
+<div class="meta"><b>Aura Jab</b> · <code>fx-pkmn-aura-jab</code><br>FX Store · Pokémon Battle<p>Mega Brave's little sibling: the same blue fist and aura corridor at 60% size snapping a quick jab, the orange crescent popping into a small ring on impact. No helix; it would not read at jab speed.</p></div>
+
+</body>
+</html>
