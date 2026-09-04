@@ -34,8 +34,8 @@ node catalog/_embed-catalog.mjs       # embeds manifest.json into the #prism-cat
 node catalog/_smoke.mjs               # sanity-checks the island + shell
 ```
 
-A correct run reports **1668 effects across 15 galleries** (parity with the island) and
-`_smoke.mjs` prints `OK island: galleries=15 effects=1668`.
+A correct run reports **2670 effects across 15 galleries** (parity with the island) and
+`_smoke.mjs` prints `OK island: galleries=15 effects=2670`.
 
 > `_smoke.mjs` also prints `FAIL: shell script #1: Unexpected identifier 'the'` / `2/3
 > parsed`. This is a long-standing **false positive** — the script-extraction regex

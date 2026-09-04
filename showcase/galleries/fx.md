@@ -2,11 +2,11 @@
 
 Every effect in Prism's **FX Store** gallery, recorded as a looping GIF.
 
-**146 effects** · 129 animated · 6.4 MB of GIF · click any GIF to open its standalone HTML sample (raw file; open it locally, GitHub shows source).
+**148 effects** · 131 animated · 6.8 MB of GIF · click any GIF to open its standalone HTML sample (raw file; open it locally, GitHub shows source).
 
 [← Showcase index](../README.md)
 
-**Sections:** [Glow & Light](#glow-light) · [Border & Edge](#border-edge) · [Text & Inline](#text-inline) · [Motion & Attention](#motion-attention) · [Particles & Sparks](#particles-sparks) · [Glass & Material](#glass-material) · [Shadows & Depth](#shadows-depth) · [Backgrounds & Patterns](#backgrounds-patterns) · [Overlays & Decorators](#overlays-decorators) · [Cyberpunk & Glitch](#cyberpunk-glitch) · [Liquid & Organic](#liquid-organic) · [Electric & Energy](#electric-energy) · [Physics & Motion](#physics-motion) · [Holographic & Iridescent](#holographic-iridescent) · [Neon Sign, Scanline & CRT](#neon-sign-scanline-crt) · [Frost, Magma & Aurora](#frost-magma-aurora) · [Comet](#comet) · [Grain, Parallax & Pointer](#grain-parallax-pointer) · [New](#new) · [3D & Depth FX](#3d-depth-fx) · [Glow, Border & Holographic FX](#glow-border-holographic-fx) · [Glass, Glitch, Liquid & Energy FX](#glass-glitch-liquid-energy-fx)
+**Sections:** [Glow & Light](#glow-light) · [Border & Edge](#border-edge) · [Text & Inline](#text-inline) · [Motion & Attention](#motion-attention) · [Particles & Sparks](#particles-sparks) · [Glass & Material](#glass-material) · [Shadows & Depth](#shadows-depth) · [Backgrounds & Patterns](#backgrounds-patterns) · [Overlays & Decorators](#overlays-decorators) · [Cyberpunk & Glitch](#cyberpunk-glitch) · [Liquid & Organic](#liquid-organic) · [Electric & Energy](#electric-energy) · [Physics & Motion](#physics-motion) · [Holographic & Iridescent](#holographic-iridescent) · [Neon Sign, Scanline & CRT](#neon-sign-scanline-crt) · [Frost, Magma & Aurora](#frost-magma-aurora) · [Comet](#comet) · [Grain, Parallax & Pointer](#grain-parallax-pointer) · [New](#new) · [3D & Depth FX](#3d-depth-fx) · [Glow, Border & Holographic FX](#glow-border-holographic-fx) · [Glass, Glitch, Liquid & Energy FX](#glass-glitch-liquid-energy-fx) · [Pokémon Battle](#pok-mon-battle)
 
 ## Glow & Light
 
@@ -172,4 +172,10 @@ Every effect in Prism's **FX Store** gallery, recorded as a looping GIF.
 <tr><td align="center" valign="top" width="33%"><a href="../html/fx-shatter.html"><img src="../gif/fx-shatter.gif" width="300" alt="Shatter"></a><br><b>Shatter</b><br><sub><code>fx-shatter</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-liquid-rise.html"><img src="../gif/fx-liquid-rise.gif" width="300" alt="Liquid-Rise"></a><br><b>Liquid-Rise</b><br><sub><code>fx-liquid-rise</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-ripple-out.html"><img src="../gif/fx-ripple-out.gif" width="300" alt="Ripple-Out"></a><br><b>Ripple-Out</b><br><sub><code>fx-ripple-out</code></sub></td></tr>
 <tr><td align="center" valign="top" width="33%"><a href="../html/fx-electric-arc.html"><img src="../gif/fx-electric-arc.gif" width="300" alt="Electric-Arc"></a><br><b>Electric-Arc</b><br><sub><code>fx-electric-arc</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-beam-cross.html"><img src="../gif/fx-beam-cross.gif" width="300" alt="Beam-Cross"></a><br><b>Beam-Cross</b><br><sub><code>fx-beam-cross</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-data-rain.html"><img src="../gif/fx-data-rain.gif" width="300" alt="Data-Rain"></a><br><b>Data-Rain</b><br><sub><code>fx-data-rain</code></sub></td></tr>
 <tr><td align="center" valign="top" width="33%"><a href="../html/fx-hud-brackets.html"><img src="../gif/fx-hud-brackets.gif" width="300" alt="HUD-Brackets"></a><br><b>HUD-Brackets</b><br><sub><code>fx-hud-brackets</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-pulse-grid.html"><img src="../gif/fx-pulse-grid.gif" width="300" alt="Pulse-Grid"></a><br><b>Pulse-Grid</b><br><sub><code>fx-pulse-grid</code></sub></td></tr>
+</table>
+
+## Pokémon Battle
+
+<table>
+<tr><td align="center" valign="top" width="33%"><a href="../html/fx-pkmn-mega-brave.html"><img src="../gif/fx-pkmn-mega-brave.gif" width="300" alt="Mega Brave"></a><br><b>Mega Brave</b><br><sub><code>fx-pkmn-mega-brave</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-pkmn-aura-jab.html"><img src="../gif/fx-pkmn-aura-jab.gif" width="300" alt="Aura Jab"></a><br><b>Aura Jab</b><br><sub><code>fx-pkmn-aura-jab</code></sub></td></tr>
 </table>
