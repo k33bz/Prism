@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Phantom Dive · Prism</title>
+<!-- Prism showcase sample: fx-pkmn-phantom-dive (gallery: fx). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.fx-pkpd { position: relative; width: 100%; max-width: 330px; height: 150px; border-radius: 12px; overflow: hidden; --c1: var(--info); --c1-rgb: var(--info-rgb); --c2: var(--crit); --c2-rgb: var(--crit-rgb); background: radial-gradient(130% 100% at 50% 40%,rgba(var(--c2-rgb),.12),rgba(0,0,0,0) 72%),#0b0e15; border: 1px solid rgba(var(--c1-rgb),.35); }
+.fx-pkpd-card { position: absolute; border-radius: 4px; border: 1.5px solid rgba(255, 255, 255, 0.4); background: linear-gradient(160deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.03)); }
+.fx-pkpd-card.df { left: 190px; top: 40px; width: 36px; height: 48px; }
+.fx-pkpd-card.b1 { left: 158px; top: 112px; width: 22px; height: 28px; }
+.fx-pkpd-card.b2 { left: 208px; top: 112px; width: 22px; height: 28px; }
+.fx-pkpd-card.b3 { left: 258px; top: 112px; width: 22px; height: 28px; }
+.fx-pkpd-card.bp { animation: 2.8s ease-out 0s infinite normal none running fxPkpdBank; }
+.fx-pkpd-card.b2.bp { animation-delay: 0.12s; }
+.fx-pkpd-card.b3.bp { animation-delay: 0.24s; }
+.fx-pkpd-dart { position: absolute; left: 0px; top: 0px; width: 64px; height: 32px; opacity: 0; animation: 2.8s cubic-bezier(0.5, 0.05, 0.5, 1) 0s infinite normal none running fxPkpdDive; }
+.fx-pkpd-dart svg { display: block; width: 100%; height: 100%; filter: drop-shadow(0 0 7px rgba(var(--c1-rgb),.7)); }
+.fx-pkpd-d-body { fill: rgba(var(--c1-rgb),.32); }
+.fx-pkpd-d-head { fill: var(--c1); }
+.fx-pkpd-d-fin { fill: var(--c2); opacity: 0.85; }
+.fx-pkpd-d-eye { fill: rgb(255, 255, 255); }
+.fx-pkpd-trail { position: absolute; left: -6px; top: 34px; width: 216px; height: 3px; border-radius: 2px; transform: rotate(9deg); transform-origin: 0px 50%; opacity: 0; background: linear-gradient(90deg,rgba(var(--c1-rgb),0),rgba(var(--c1-rgb),.7) 40%,rgba(var(--c2-rgb),.85)); animation: 2.8s ease-out 0s infinite normal none running fxPkpdTrail; }
+.fx-pkpd-ring { position: absolute; left: 208px; top: 64px; width: 56px; height: 56px; margin: -28px 0px 0px -28px; border-radius: 50%; border: 3px solid var(--c2); opacity: 0; box-shadow: 0 0 14px rgba(var(--c2-rgb),.8); animation: 2.8s cubic-bezier(0.2, 0.8, 0.3, 1) 0s infinite normal none running fxPkpdRing; }
+.fx-pkpd-flash { position: absolute; inset: 0px; pointer-events: none; opacity: 0; background: radial-gradient(30% 40% at 63% 43%,rgba(var(--c2-rgb),.6),rgba(255,255,255,.16) 45%,transparent 70%); animation: 2.8s ease-out 0s infinite normal none running fxPkpdFlash; }
+.fx-pkpd-w { position: absolute; left: 208px; top: 64px; width: 8px; height: 8px; margin: -4px 0px 0px -4px; border-radius: 50%; opacity: 0; background: radial-gradient(circle at 35% 35%,#e8fffc,var(--c1) 55%,rgba(var(--c2-rgb),.9)); box-shadow: 0 0 7px 2px rgba(var(--c1-rgb),.75),0 0 14px 5px rgba(var(--c2-rgb),.35); animation: 2.8s cubic-bezier(0.45, 0.05, 0.5, 1) 0s infinite normal none running fxPkpdWisp; }
+.fx-pkpd-w.w1 { --wx: -39px; --wy: 58px; }
+.fx-pkpd-w.w2 { --wx: 11px; --wy: 58px; animation-delay: 0.12s; }
+.fx-pkpd-w.w3 { --wx: 61px; --wy: 58px; animation-delay: 0.24s; }
+.fx-pksc-bl.b2 { animation-delay: 0.05s; --ba: -42deg; }
+.fx-pksc-bl.b1 { --ba: 42deg; }
+.fx-pkwp-card.df { left: 206px; top: 52px; width: 44px; height: 58px; }
+@keyframes fxPkpdBank { 
+  0%, 66% { box-shadow: none; border-color: rgba(255, 255, 255, 0.4); }
+  72% { box-shadow: 0 0 12px 3px rgba(var(--c2-rgb),.85); border-color: var(--c2); }
+  86%, 100% { box-shadow: none; border-color: rgba(255, 255, 255, 0.4); }
+}
+@keyframes fxPkpdDive { 
+  0% { opacity: 0; transform: translate(-30px, 14px) rotate(4deg); }
+  6% { opacity: 1; }
+  26% { transform: translate(120px, 20px) rotate(10deg); }
+  38% { opacity: 1; transform: translate(178px, 44px) rotate(28deg) scale(1.05); }
+  43%, 100% { opacity: 0; transform: translate(186px, 52px) rotate(30deg) scale(0.9); }
+}
+@keyframes fxPkpdTrail { 
+  0% { opacity: 0; transform: rotate(9deg) scaleX(0.05); }
+  10% { opacity: 0.8; }
+  38% { opacity: 0.8; transform: rotate(9deg) scaleX(1); }
+  52%, 100% { opacity: 0; transform: rotate(9deg) scaleX(1); }
+}
+@keyframes fxPkpdRing { 
+  0%, 37% { opacity: 0; transform: scale(0.15); }
+  43% { opacity: 0.95; transform: scale(0.6); }
+  58%, 100% { opacity: 0; transform: scale(1.4); }
+}
+@keyframes fxPkpdFlash { 
+  0%, 38% { opacity: 0; }
+  43% { opacity: 0.85; }
+  56%, 100% { opacity: 0; }
+}
+@keyframes fxPkpdWisp { 
+  0%, 44% { opacity: 0; transform: translate(0px, 0px) scale(0.4); }
+  50% { opacity: 1; transform: translate(calc(var(--wx,0px)*.4),calc(var(--wy,50px)*.3 - 16px)) scale(1); }
+  68% { opacity: 0.95; transform: translate(var(--wx,0px),var(--wy,50px)) scale(.75); }
+  74%, 100% { opacity: 0; transform: translate(var(--wx,0px),var(--wy,50px)) scale(.4); }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="fx-pkpd" role="img" aria-label="Phantom Dive: a spectral dart dives onto the defending card, bursts, and three phantom wisps arc down to bank counters on the bench">
+    <i class="fx-pkpd-card df"></i><i class="fx-pkpd-card b1 bp"></i><i class="fx-pkpd-card b2 bp"></i><i class="fx-pkpd-card b3 bp"></i>
+    <i class="fx-pkpd-trail"></i>
+    <span class="fx-pkpd-dart"><svg viewBox="0 0 120 60" aria-hidden="true">
+      <path class="fx-pkpd-d-fin" d="M30 30 L6 12 L40 22 Z"></path>
+      <path class="fx-pkpd-d-fin" d="M30 30 L6 48 L40 38 Z"></path>
+      <path class="fx-pkpd-d-body" d="M18 30 Q52 12 112 27 L112 33 Q52 48 18 30 Z"></path>
+      <path class="fx-pkpd-d-head" d="M84 22 Q112 24 118 30 Q112 36 84 38 Q92 30 84 22 Z"></path>
+      <circle class="fx-pkpd-d-eye" cx="103" cy="30" r="2.6"></circle>
+    </svg></span>
+    <i class="fx-pkpd-ring"></i><i class="fx-pkpd-flash"></i>
+    <i class="fx-pkpd-w w1"></i><i class="fx-pkpd-w w2"></i><i class="fx-pkpd-w w3"></i>
+  </div></div></div>
+<div class="meta"><b>Phantom Dive</b> · <code>fx-pkmn-phantom-dive</code><br>FX Store · Pokémon Battle<p>Dragapult ex's meta-defining dive: a spectral teal dart plunges onto the defending card and bursts purple, then three phantom wisps arc down to the bench and bank their damage counters, each bench card flaring as its counters land.</p></div>
+
+</body>
+</html>

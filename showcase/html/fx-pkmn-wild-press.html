@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wild Press · Prism</title>
+<!-- Prism showcase sample: fx-pkmn-wild-press (gallery: fx). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.fx-pkpd-card.df { left: 190px; top: 40px; width: 36px; height: 48px; }
+.fx-pkph-r.r2 { animation-delay: 0.12s; }
+.fx-pkwp { position: relative; width: 100%; max-width: 330px; height: 150px; border-radius: 12px; overflow: hidden; --c1: var(--warn); --c1-rgb: var(--warn-rgb); --c2: var(--accent); --c2-rgb: var(--accent-rgb); background: radial-gradient(130% 100% at 50% 50%,rgba(var(--c1-rgb),.11),rgba(0,0,0,0) 72%),#0b0e15; border: 1px solid rgba(var(--c1-rgb),.35); animation: 2.6s linear 0s infinite normal none running fxPkwpThud; }
+.fx-pkwp-card { position: absolute; border-radius: 4px; border: 1.5px solid rgba(255, 255, 255, 0.4); background: linear-gradient(160deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.03)); }
+.fx-pkwp-card.at { left: 40px; top: 52px; width: 44px; height: 58px; }
+.fx-pkwp-card.df { left: 206px; top: 52px; width: 44px; height: 58px; }
+.fx-pkwp-sh { position: absolute; left: 228px; top: 96px; width: 64px; height: 22px; margin: -11px 0px 0px -32px; border-radius: 50%; opacity: 0; background: radial-gradient(closest-side, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0)); animation: 2.6s ease-in 0s infinite normal none running fxPkwpSh; }
+.fx-pkwp-palm { position: absolute; left: 192px; top: 14px; width: 72px; height: 78px; opacity: 0; animation: 2.6s cubic-bezier(0.6, 0.02, 0.8, 0.4) 0s infinite normal none running fxPkwpDrop; }
+.fx-pkwp-palm svg { display: block; width: 100%; height: 100%; filter: drop-shadow(rgba(0, 0, 0, 0.6) 0px 3px 9px); }
+.fx-pkwp-p-body { fill: var(--c1); stroke: rgba(0, 0, 0, 0.5); stroke-width: 3; }
+.fx-pkwp-p-pad { fill: rgba(255, 255, 255, 0.35); }
+.fx-pkwp-ring { position: absolute; left: 228px; top: 100px; width: 90px; height: 90px; margin: -45px 0px 0px -45px; border-radius: 50%; border: 3.5px solid var(--c2); opacity: 0; box-shadow: 0 0 12px rgba(var(--c2-rgb),.7); animation: 2.6s cubic-bezier(0.2, 0.8, 0.3, 1) 0s infinite normal none running fxPkwpRing; }
+.fx-pkwp-du { position: absolute; left: 228px; top: 100px; width: 9px; height: 9px; border-radius: 50%; background: rgba(200, 182, 152, 0.85); opacity: 0; animation: 2.6s ease-out 0s infinite normal none running fxPkwpDust; }
+.fx-pkwp-du.d2 { --dx: 30px; --dy: -14px; animation-delay: 0.05s; }
+.fx-pkwp-du.d3 { --dx: -32px; --dy: -10px; animation-delay: 0.08s; }
+.fx-pkwp-du.d1 { --dx: 4px; --dy: -22px; }
+.fx-pkwp-rc { position: absolute; left: 62px; top: 76px; width: 8px; height: 8px; border-radius: 50%; background: rgba(176, 154, 128, 0.85); opacity: 0; animation: 2.6s ease-out 0s infinite normal none running fxPkwpRecoil; }
+.fx-pkwp-rc.r2 { --dx: 16px; --dy: -16px; animation-delay: 0.07s; }
+.fx-pkwp-rc.r3 { --dx: -18px; --dy: -12px; animation-delay: 0.13s; }
+.fx-pkwp-rc.r1 { --dx: 0px; --dy: -22px; }
+@keyframes fxPkwpThud { 
+  0%, 38% { transform: translate(0px, 0px); }
+  41% { transform: translate(0px, 3px); }
+  44% { transform: translate(0px, -2px); }
+  47%, 100% { transform: translate(0px, 0px); }
+}
+@keyframes fxPkwpSh { 
+  0%, 8% { opacity: 0; transform: scale(0.35); }
+  34% { opacity: 0.9; transform: scale(1); }
+  52%, 100% { opacity: 0; transform: scale(1); }
+}
+@keyframes fxPkwpDrop { 
+  0%, 26% { opacity: 0; transform: translateY(-64px) scale(0.82); }
+  32% { opacity: 1; }
+  40% { transform: translateY(0px) scale(1.04); }
+  46% { transform: translateY(2px) scale(1.07, 0.96); }
+  58%, 100% { opacity: 0; transform: translateY(1px) scale(1.05, 0.98); }
+}
+@keyframes fxPkwpRing { 
+  0%, 39% { opacity: 0; transform: scale(0.15, 0.06); }
+  45% { opacity: 0.9; transform: scale(0.6, 0.22); }
+  62%, 100% { opacity: 0; transform: scale(1.35, 0.5); }
+}
+@keyframes fxPkwpDust { 
+  0%, 40% { opacity: 0; transform: translate(0px, 0px) scale(0.5); }
+  47% { opacity: 0.9; }
+  66% { opacity: 0.5; transform: translate(var(--dx,10px),var(--dy,-16px)) scale(1.5); }
+  78%, 100% { opacity: 0; transform: translate(var(--dx,10px),var(--dy,-16px)) scale(1.8); }
+}
+@keyframes fxPkwpRecoil { 
+  0%, 64% { opacity: 0; transform: translate(0px, 0px) scale(0.5); }
+  70% { opacity: 0.9; }
+  84% { opacity: 0.4; transform: translate(var(--dx,0px),var(--dy,-18px)) scale(1.5); }
+  92%, 100% { opacity: 0; transform: translate(var(--dx,0px),var(--dy,-18px)) scale(1.7); }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="fx-pkwp" role="img" aria-label="Wild Press: a shadow grows on the defending card, a massive open palm slams down with a ground shockwave, then recoil dust puffs on the attacker">
+    <i class="fx-pkwp-card at"></i><i class="fx-pkwp-card df"></i>
+    <i class="fx-pkwp-sh"></i>
+    <span class="fx-pkwp-palm"><svg viewBox="0 0 120 130" aria-hidden="true">
+      <path class="fx-pkwp-p-body" d="M25 80 Q20 64 23 44 Q24 35 31 35 Q38 35 39 44 L41 62 Q42 30 44 22 Q45 13 52 13 Q59 13 60 22 L61 58 Q62 18 63 11 Q64 3 71 3 Q78 3 79 11 L80 58 Q82 24 83 18 Q84 10 91 10 Q98 10 98 19 L99 64 Q101 45 103 39 Q105 31 111 33 Q116 36 115 45 Q113 76 108 94 Q101 119 75 125 Q49 130 34 113 Q26 103 25 80 Z"></path>
+      <ellipse class="fx-pkwp-p-pad" cx="67" cy="93" rx="27" ry="21"></ellipse>
+    </svg></span>
+    <i class="fx-pkwp-ring"></i>
+    <i class="fx-pkwp-du d1"></i><i class="fx-pkwp-du d2"></i><i class="fx-pkwp-du d3"></i>
+    <i class="fx-pkwp-rc r1"></i><i class="fx-pkwp-rc r2"></i><i class="fx-pkwp-rc r3"></i>
+  </div></div></div>
+<div class="meta"><b>Wild Press</b> · <code>fx-pkmn-wild-press</code><br>FX Store · Pokémon Battle<p>Hariyama's 210-for-70-back: a shadow grows on the defending card, the massive open palm slams from above with a flattened ground shockwave and dust - then the recoil dust cloud puffs on Hariyama's own card as its own late beat.</p></div>
+
+</body>
+</html>
