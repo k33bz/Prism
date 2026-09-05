@@ -12,9 +12,23 @@ A single-file gallery of **3,110** offline, self-contained CSS/SVG animations, c
 
 ---
 
+## About this fork
+
+This is [k33bz/Prism](https://github.com/k33bz/Prism), a fork of [crazy54/Prism](https://github.com/crazy54/Prism) by Jeremy Hall. Upstream is the design library and the MCP server; the fork keeps both intact and adds, on top:
+
+- **Two galleries:** 📋 Tables & Data Layouts (55 facets, including click-driven sorting demos and a holographic file tree) and 📐 Diagrams & Frameworks (53 facets: every fishbone variant, flow, hierarchy, comparison, timeline, network, strategy frameworks, flywheels).
+- **New facet families inside existing galleries:** the Elemental Base blocks and Pokémon Battle scenes in FX Store, a self-hosted-Forgejo landing kit in Animated Objects and Text Effects, presence status modifiers and a live avatar stack in Notifications.
+- **Three more theme packs** (Cloudflare Orange, Google Cloud Console, Fluent for Azure) through the same profile, scaffolder, generator and 100-facet gate as upstream's packs, plus two skins (Frutiger Aero, Liquid Glass).
+- **A GIF showcase** of every facet, recorded headlessly by Firefox over WebDriver BiDi (Chromium over CDP as the alternative), with per-gallery pages and an offline browser.
+- **Git-derived metadata:** every catalog record carries `addedOn`, `updatedOn` and `author` mined from history, the New Facets page is built from those dates with an adjustable window, and Search filters and sorts by author.
+
+Every facet records who introduced it (`author`: `crazy54` upstream, `k33bz` fork), so attribution travels with the catalog rather than living in this paragraph.
+
+---
+
 ## What Prism is
 
-Prism is **one HTML file** — `Prism.html` — containing a whole design library of animated elements: charts, visual effects, "AI is thinking" states, 3D objects, form inputs, text treatments, shaped text, offline maps, notifications, architecture diagrams, and report callouts. Everything is hand-authored, pure HTML/CSS (plus tiny inline JS only where an effect genuinely needs it). No fonts, scripts, images, or CDNs are fetched, so anything you copy out of Prism runs anywhere, forever, including fully offline.
+Prism is **one HTML file** — `Prism.html` — containing a whole design library of animated elements: charts, visual effects, "AI is thinking" states, 3D objects, form inputs, text treatments, shaped text, offline maps, notifications, architecture diagrams, report callouts, Obsidian facets, menus, tables and data layouts, diagrams and frameworks, and Spectrum families that render the same components in 22 visual languages. Everything is hand-authored, pure HTML/CSS (plus tiny inline JS only where an effect genuinely needs it). No fonts, scripts, images, or CDNs are fetched, so anything you copy out of Prism runs anywhere, forever, including fully offline.
 
 It serves two audiences from the same source of truth:
 
@@ -25,7 +39,7 @@ It serves two audiences from the same source of truth:
 
 ## Install the MCP server
 
-The [Model Context Protocol](https://modelcontextprotocol.io) lets an AI agent call tools over a well-defined resource. The bundled server exposes Prism's catalog as **21 tools** — discovery, composition, facet creation, and saved collections — so an agent can go from *"give me a pulsing KPI card with a wind background"* to **discovered, composed, deduplicated, validated HTML/CSS** in one turn.
+The [Model Context Protocol](https://modelcontextprotocol.io) lets an AI agent call tools over a well-defined resource. The bundled server exposes Prism's catalog as **29 tools** — discovery, composition, facet creation, and saved collections — so an agent can go from *"give me a pulsing KPI card with a wind background"* to **discovered, composed, deduplicated, validated HTML/CSS** in one turn.
 
 It has **zero runtime dependencies** (pure Node.js ≥ 18) and speaks MCP JSON-RPC 2.0 over **stdio** — the transport Claude Desktop, Claude Code, and the Anthropic API use to launch a local MCP server as a subprocess.
 
@@ -46,14 +60,14 @@ There is **nothing to `npm install`** — the server has no dependencies. It run
 # Print catalog stats and exit (no server) — confirms it can read Prism.html
 node cli.js info --catalog ../Prism.html
 
-# List the 21 tools it exposes
+# List the 29 tools it exposes
 node cli.js tools
 
 # Run the server over stdio (Ctrl-C to stop). This is what a client launches.
 node cli.js start --catalog ../Prism.html
 ```
 
-`info` should report **2,670 effects across 15 galleries** (the island also carries the 1,000 theme-pack spectrum facets). If it does, the server is working — the remaining steps just tell a client *how* to launch it.
+`info` should report **3,110 effects across 17 galleries** (1,300 of those are the 13 theme packs' Spectrum facets, 100 per pack). If it does, the server is working — the remaining steps just tell a client *how* to launch it.
 
 > **Always point `--catalog` at `Prism.html`.** The `#prism-catalog` island inside it is the authoritative catalog and can be fresher than `catalog/manifest.json`. If `--catalog` is omitted, the server defaults to `../Prism.html`, falling back to `../catalog/manifest.json`.
 
@@ -75,7 +89,7 @@ Use **absolute paths** everywhere below — clients launch the server from their
 claude mcp add prism -- node /ABS/PATH/prism/prism-mcp-server/cli.js start --catalog /ABS/PATH/prism/Prism.html
 ```
 
-Then `claude mcp list` should show `prism`, and the 21 tools become available in your session. Remove it with `claude mcp remove prism`.
+Then `claude mcp list` should show `prism`, and the 29 tools become available in your session. Remove it with `claude mcp remove prism`.
 </details>
 
 <details>
@@ -113,7 +127,7 @@ The Messages API can launch the local stdio server via the `mcp_servers` paramet
 ```jsonc
 // POST https://api.anthropic.com/v1/messages
 {
-  "model": "claude-opus-4-8",
+  "model": "claude-opus-5",
   "max_tokens": 2048,
   "mcp_servers": [
     {
@@ -154,11 +168,12 @@ Options:
 
 Logs go to **stderr** (stdout is reserved for the JSON-RPC channel), so they never corrupt the MCP protocol stream. Verbosity is also settable via `PRISM_MCP_LOG_LEVEL`. A `--port` flag is accepted but ignored — this build is stdio-only; add an HTTP/SSE transport by implementing one against `PrismMCPServer`.
 
-### The 21 tools
+### The 29 tools
 
 | Group | Tools |
 |---|---|
-| **Discovery (6)** | `list_effects` · `search_effects` · `get_effect` · `get_theme_variants` · `list_galleries` · `get_catalog_stats` |
+| **Discovery (11)** | `list_effects` · `search_effects` · `get_effect` · `list_galleries` · `get_catalog_stats` · `get_available_filters` · `list_filter_values` · `get_theme_variants` · `get_theme_palette` · `get_component_variants` · `get_variants_for_theme` |
+| **Saved searches (3)** | `create_saved_search` · `get_saved_searches` · `execute_saved_search` (in-memory, per server process) |
 | **Composition (3)** | `compose` · `compose_with_template` (`stack`/`row`/`grid`/`card`) · `validate_composition` |
 | **Content creation (3)** | `create_facet` · `update_facet` · `validate_facet` |
 | **Catalog management (3)** | `get_catalog_metadata` · `export_collection` (`bundle`/`document`/`schema`) · `get_token_reference` |
@@ -176,13 +191,13 @@ Every block below is **actual output** from the server against the shipped `Pris
 
 ```json
 [
-  { "id": "charts-mini-kpi-row",       "name": "Mini KPI Row",        "gallery": "charts", "score": 15 },
-  { "id": "charts-kpi-tile-delta",     "name": "KPI Tile + Delta",    "gallery": "charts", "score": 14 },
-  { "id": "charts-kpi-delta-card-grid","name": "KPI Delta Card Grid", "gallery": "charts", "score": 14 }
+  { "id": "charts-mini-kpi-row",       "name": "Mini KPI Row",        "gallery": "charts", "score": 12 },
+  { "id": "charts-kpi-sparkline",      "name": "KPI + Sparkline",     "gallery": "charts", "score": 11 },
+  { "id": "charts-kpi-delta-card-grid","name": "KPI Delta Card Grid", "gallery": "charts", "score": 11 }
 ]
 ```
 
-**2. Fetch the winner** → `get_effect { "id": "charts-kpi-tile-delta" }` returns a self-contained, paste-ready facet. Its `html` (the real artifact — a value tile with a colored change badge):
+**2. Fetch a tile** → `get_effect { "id": "charts-kpi-tile-delta" }` returns a self-contained, paste-ready facet. Its `html` (the real artifact — a value tile with a colored change badge):
 
 ```html
 <div class="kpi">
@@ -249,12 +264,12 @@ The page opens on a loader veil, then routes by device: touch devices land on **
 
 ## The galleries
 
-Fifteen authored galleries, plus special views. Every element carries a name, its canonical CSS selector (`.ref`), a one-line description, and a copy affordance.
+Seventeen authored galleries, plus special views. Every element carries a name, its canonical CSS selector (`.ref`), a one-line description, and a copy affordance.
 
 | Gallery | What's inside | Count |
 |---|---|--:|
 | 🧪 **Animation Lab** | Motion studies — easing, transforms, loaders, physics, keyframes | 217 |
-| ◆ **Spectrums** | Component families across full visual languages (Material, glass, brutalist, solarpunk…) | 266 |
+| ◆ **Spectrums** | 9 hand-authored families across full visual languages (Material, glass, brutalist, solarpunk…) plus the 13 theme packs at 100 generator facets each | 1566 |
 | 📊 **Charts & Metrics** | KPIs, gauges, progress, trends, comparisons, status, 3D charts | 209 |
 | 🎇 **FX Store** | Drop-in visual effects: glow, pulse, shimmer, glass, particles, glitch, Pokémon Battle signature scenes, Elemental Base blocks (spray, bolt, streak, burst, aura, volley) | 173 |
 | ◈ **Obsidian Facets** | Callouts, graph links, note chrome, Dataview dashboards, Canvas, focus scenes | 130 |
@@ -264,14 +279,14 @@ Fifteen authored galleries, plus special views. Every element carries a name, it
 | ⌬ **Animated Objects** | Self-contained animated SVG/CSS objects, icons, 3D objects, forge landing kit | 94 |
 | 🌈 **Text Shapes** | Text arranged into arcs, rings, spirals, 3D tunnels | 53 |
 | 🌍 **Maps & Geo** | Offline SVG maps, pulsing markers, great-circle arcs, choropleth, radar, telemetry | 50 |
-| 🔔 **Notifications & Status** | Toasts, snackbars, banners, live indicators, empty states, skeletons | 50 |
+| 🔔 **Notifications & Status** | Toasts, snackbars, banners, live indicators, presence status set, live avatar stack, empty states, skeletons | 52 |
 | 🗺 **Architecture Diagrams** | Service nodes, animated connectors, VPC containers, sequence & flow diagrams | 50 |
 | ⭐ **Callouts & Annotations** | Admonitions, badges & pills, timelines, dividers, tooltips, key-value meta | 50 |
 | 🧭 **Menus & Actions** | Dropdowns, context menus, command palettes, action bars, radial menus | 37 |
 | 📋 **Tables & Data Layouts** | Data tables, status cells, matrices, key-value blocks, lists & trees, grids & schedules, ledgers, toolbars | 55 |
 | 📐 **Diagrams & Frameworks** | Fishbone variants, flowcharts & loops, trees & funnels, Venn & SWOT, roadmaps & Gantt, networks & Sankey, OKR / RACI / canvas, flywheels | 53 |
 
-**Special views:** ✦ **New Facets** (live-assembled page of everything added or changed in a chosen window, default 30 days, with a day slider and an optional Spectrums toggle; dates come from git history) · 📱 **Mobile** / 🖱️ **Desktop** (the library sliced by input modality) · 🎨 **Idea Gallery** (paste code, tweak variables, preview live).
+**Special views:** ✦ **New Facets** (live-assembled page of everything added or changed in a chosen window, default 30 days, with a day slider and an optional Spectrums toggle; dates come from git history) · 🔎 **Search** (faceted search over the whole catalog: gallery, component, interaction, author, status and tags, sortable by relevance, name, git date, gallery or author, with saved searches and shareable URLs) · 🎛 **Variant Matrix** (any facet rendered across every theme at once) · 📚 **Collections** (named sets of facets, exportable to the MCP server) · 📱 **Mobile** / 🖱️ **Desktop** (the library sliced by input modality) · 🎨 **Idea Gallery** (paste code, tweak variables, preview live).
 
 **Facets & markers.** Prism calls its elements *facets*. New items carry a green **NEW** badge and a subtle pulse; repaired/refreshed ones get a blue **UPDATED** badge. Both are collected automatically on the **New Facets** page. Every tile that runs a CSS animation gets a small **▶** button to replay it on demand, and each gallery has a floating **REPLAY ANIMATIONS** button — theme-aware and kept outside the tile's `.stage`, so it never ends up in a copied snippet.
 
@@ -288,7 +303,7 @@ Every one of the **3110 facets** is recorded as a looping GIF from its own stand
 <tr><td align="center" valign="top" width="33%"><a href="showcase/galleries/text.md"><img src="showcase/gif/text-neon-sign.gif" width="300" alt="Text Effects"></a><br><b><a href="showcase/galleries/text.md">Text Effects</a></b><br><sub>102 effects</sub></td><td align="center" valign="top" width="33%"><a href="showcase/galleries/shapes.md"><img src="showcase/gif/shapes-ring-spin.gif" width="300" alt="Text Shapes"></a><br><b><a href="showcase/galleries/shapes.md">Text Shapes</a></b><br><sub>53 effects</sub></td><td align="center" valign="top" width="33%"><a href="showcase/galleries/maps.md"><img src="showcase/gif/maps-world-pulse-map.gif" width="300" alt="Maps &amp; Geo"></a><br><b><a href="showcase/galleries/maps.md">Maps &amp; Geo</a></b><br><sub>50 effects</sub></td></tr>
 <tr><td align="center" valign="top" width="33%"><a href="showcase/galleries/notify.md"><img src="showcase/gif/notify-stacking-toast-group.gif" width="300" alt="Notifications &amp; Status"></a><br><b><a href="showcase/galleries/notify.md">Notifications &amp; Status</a></b><br><sub>52 effects</sub></td><td align="center" valign="top" width="33%"><a href="showcase/galleries/arch.md"><img src="showcase/gif/arch-flowing-connector.gif" width="300" alt="Architecture Diagrams"></a><br><b><a href="showcase/galleries/arch.md">Architecture Diagrams</a></b><br><sub>50 effects</sub></td><td align="center" valign="top" width="33%"><a href="showcase/galleries/callouts.md"><img src="showcase/gif/callouts-progress-stepper.gif" width="300" alt="Callouts &amp; Annotations"></a><br><b><a href="showcase/galleries/callouts.md">Callouts &amp; Annotations</a></b><br><sub>50 effects</sub></td></tr>
 <tr><td align="center" valign="top" width="33%"><a href="showcase/galleries/obsidian.md"><img src="showcase/gif/obsidian-knowledge-constellation.gif" width="300" alt="Obsidian Facets"></a><br><b><a href="showcase/galleries/obsidian.md">Obsidian Facets</a></b><br><sub>130 effects</sub></td><td align="center" valign="top" width="33%"><a href="showcase/galleries/menus.md"><img src="showcase/gif/menus-compact-cmd-k-palette.gif" width="300" alt="Menus &amp; Actions"></a><br><b><a href="showcase/galleries/menus.md">Menus &amp; Actions</a></b><br><sub>37 effects</sub></td><td align="center" valign="top" width="33%"><a href="showcase/galleries/tables.md"><img src="showcase/gif/tables-zebra-table-scan.gif" width="300" alt="Tables &amp; Data Layouts"></a><br><b><a href="showcase/galleries/tables.md">Tables &amp; Data Layouts</a></b><br><sub>55 effects</sub></td></tr>
-<tr><td align="center" valign="top" width="33%"><a href="showcase/galleries/diagrams.md"><img src="showcase/gif/diagrams-simple-fishbone.gif" width="300" alt="Diagrams &amp; Frameworks"></a><br><b><a href="showcase/galleries/diagrams.md">Diagrams &amp; Frameworks</a></b><br><sub>53 effects</sub></td><td align="center" valign="top" width="33%"><a href="showcase/galleries/spectrums.md"><img src="showcase/gif/spectrums-filled-ripple-button.gif" width="300" alt="Spectrums"></a><br><b><a href="showcase/galleries/spectrums.md">Spectrums</a></b><br><sub>1566 effects</sub></td></tr>
+<tr><td align="center" valign="top" width="33%"><a href="showcase/galleries/diagrams.md"><img src="showcase/gif/diagrams-simple-fishbone.gif" width="300" alt="Diagrams &amp; Frameworks"></a><br><b><a href="showcase/galleries/diagrams.md">Diagrams &amp; Frameworks</a></b><br><sub>53 effects</sub></td><td align="center" valign="top" width="33%"><a href="showcase/galleries/spectrums.md"><img src="showcase/gif/spectrums-filled-ripple-button.gif" width="300" alt="Spectrums"></a><br><b><a href="showcase/galleries/spectrums.md">Spectrums</a></b><br><sub>1,566 effects</sub></td></tr>
 </table>
 
 Regenerate with `node showcase/build.mjs` (Node 18+, Firefox or Chromium, ffmpeg) — the GIFs are display-only and never part of the catalog or MCP server.
@@ -299,7 +314,7 @@ Regenerate with `node showcase/build.mjs` (Node 18+, Firefox or Chromium, ffmpeg
 
 ## Themes
 
-Prism is built in the **AWS Cloudscape** design language and ships in two color modes: **Cloudscape Dark** (the default) and **Cloudscape Light**. Toggle between them from the top navigation bar. The theme picker also carries the design-system packs (Duolingo, Mailchimp, Stack Overflow, Monzo, Heroku, Polaris, Primer, Ant Design, Acorn, Material 3, **Cloudflare Orange**, **Google Cloud Console**, **Fluent (Azure)**), each with a gated 100-facet family in the Spectrums gallery, and two skin-only themes with no facet family of their own: **Frutiger Aero** and **Liquid Glass**. Every theme ships in dark and light. The mode override reskins the entire tool — shell *and* every gallery — by swapping a shared set of CSS custom properties (`--accent`, `--info`, `--pos`, `--bg`, `--ink` …), so every element re-themes at once. Your choice persists across sessions.
+Prism ships **16 themes, each in dark and light** (32 entries in the theme registry, mirrored into the MCP server). It is built in the **AWS Cloudscape** design language and defaults to two color modes: **Cloudscape Dark** (the default) and **Cloudscape Light**. Toggle between them from the top navigation bar. The theme picker also carries the design-system packs (Duolingo, Mailchimp, Stack Overflow, Monzo, Heroku, Polaris, Primer, Ant Design, Acorn, Material 3, **Cloudflare Orange**, **Google Cloud Console**, **Fluent (Azure)**), each with a gated 100-facet family in the Spectrums gallery, and two skin-only themes with no facet family of their own: **Frutiger Aero** and **Liquid Glass**. Every theme ships in dark and light. The mode override reskins the entire tool — shell *and* every gallery — by swapping a shared set of CSS custom properties (`--accent`, `--info`, `--pos`, `--bg`, `--ink` …), so every element re-themes at once. Your choice persists across sessions.
 
 ---
 
@@ -316,7 +331,7 @@ This is the **JSON island**: a complete, machine-readable catalog of every effec
 ```js
 const catalog = JSON.parse(document.getElementById('prism-catalog').textContent);
 catalog._ai;          // read this first: what/howToUse/fields/count
-catalog.effects;      // 2670 records, each with self-contained html + css
+catalog.effects;      // 3110 records, each with self-contained html + css (catalog._ai.count is the live number)
 ```
 
 The island is purpose-built to back an MCP server because everything a tool needs is precomputed and self-describing: a **`_ai` header** that orients a fresh agent, **fully composable records** (each effect ships its own `html` + `css`, `classes`, `keyframes`, `params`, `needsJs`, `usableAsBackground`, `selfContained`), **searchable dimensions** (`gallery`, `category`, `tags`, `ref`, `description`), and **encoded composition rules** (top-level `tokens.css`, `usage`, `galleries`).
@@ -327,7 +342,7 @@ The island is purpose-built to back an MCP server because everything a tool need
 {
   "id": "charts-gauge-cluster",     // stable, unique — what an agent references
   "name": "Gauge Cluster",
-  "gallery": "charts",              // charts|fx|lab|ai|objects|input|text|shapes|maps|notify|arch|callouts|obsidian|menus|spectrums
+  "gallery": "charts",              // charts|fx|lab|ai|objects|input|text|shapes|maps|notify|arch|callouts|obsidian|menus|tables|diagrams|spectrums
   "category": "Gauges & Dials",
   "ref": ".nch-gaugetri",           // canonical selector
   "description": "Three half-gauges with sweeping needles…",
@@ -368,27 +383,36 @@ The MCP server's `compose` / `compose_with_template` tools do all of this for yo
 .
 ├── Prism.html              ← the whole tool: UI + all galleries + the JSON island
 ├── README.md               ← you are here
-├── prism-mcp-server/       ← the MCP server (zero-dependency Node, 21 tools)
+├── prism-mcp-server/       ← the MCP server (zero-dependency Node, 29 tools)
 │   ├── cli.js                 prism-mcp CLI (start / info / tools / help)
 │   ├── index.js               PrismMCPServer (JSON-RPC dispatch) + StdioTransport
-│   ├── tools/index.js         the 21 tool definitions
-│   ├── utils/                 catalog store, collections, css/compose/validate, logger
+│   ├── tools/index.js         the 29 tool definitions
+│   ├── utils/                 catalog store, collections, themes mirror, css/compose/validate, logger
 │   ├── examples/              per-tool example calls + Claude Desktop / Anthropic API configs
 │   ├── test/                  Node-native test suite (129 tests)
 │   └── README.md              server internals & architecture
 ├── catalog/                ← the catalog + the maintenance pipeline
 │   ├── manifest.json          full catalog (mirror of the island)
 │   ├── index.json             slim discovery index (no html/css)
-│   ├── extract-from-prism.mjs re-extract every effect from Prism.html (headless Chrome)
+│   ├── facet-dates.json       git-derived addedOn / updatedOn / author per facet
+│   ├── systems.json           the registered theme packs (what the gate holds to 100 facets)
+│   ├── _facet_dates.mjs       mine git history, embed the #prism-facet-dates island
+│   ├── extract-from-prism.mjs re-extract every effect from Prism.html (headless Chrome or Edge)
 │   ├── _embed-catalog.mjs     embed the manifest into the #prism-catalog island
-│   └── …                      scaffold / splice / render-check / screenshot helpers
-├── showcase/               ← GIF showcase: one HTML sample + one looping GIF per effect (display only)
-│   ├── build.mjs              records every effect headlessly (Firefox BiDi or Chromium CDP, no deps) + ffmpeg
-│   ├── browsers.mjs           the two raw wire-protocol drivers behind one tiny interface
-│   ├── html/  gif/            <id>.html standalone samples · <id>.gif recordings
-│   ├── galleries/*.md         browsable pages per gallery · index.html offline browser · manifest.json
-│   └── README.md              how it is built, stats, regeneration
-└── fragments/              ← standalone gallery fragments (mobile / desktop / text)
+│   ├── _smoke.mjs             island + shell parse check
+│   ├── _check_ds.mjs          theme-pack gate: 100 facets, token-only, offline, reduced-motion
+│   ├── _sync_counts.mjs       keep this README's badges and counts honest
+│   ├── _scaffold.mjs / _rescaffold.mjs / _splice.mjs / _splice_page.mjs   build and splice gallery templates from drafts/
+│   ├── _scaffold_ds.mjs / _gen_system.mjs / _merge_spectrum.mjs           theme packs: profile → registry + MCP mirror → 100 facets → Spectrums
+│   ├── drafts/                gallery sources (body + css) for the drafts-built galleries
+│   ├── profiles/              one profile per theme (palette, type, radius)
+│   └── additions/             generated facet batches merged into the galleries
+└── showcase/               ← GIF showcase: one HTML sample + one looping GIF per effect (display only)
+    ├── build.mjs              records every effect headlessly (Firefox BiDi or Chromium CDP, no deps) + ffmpeg
+    ├── browsers.mjs           the two raw wire-protocol drivers behind one tiny interface
+    ├── html/  gif/            <id>.html standalone samples · <id>.gif recordings
+    ├── galleries/*.md         browsable pages per gallery · index.html offline browser · manifest.json
+    └── README.md              how it is built, stats, regeneration
 ```
 
 ### Regenerating the catalog
@@ -396,12 +420,16 @@ The MCP server's `compose` / `compose_with_template` tools do all of this for yo
 The JSON island is **derived**, not hand-maintained. After editing any gallery, refresh it so the agent-facing catalog (and MCP server) stay in sync with what's on the page:
 
 ```bash
-node catalog/_facet_dates.mjs         # derives addedOn / updatedOn per facet from git history, embeds the #prism-facet-dates island
-node catalog/extract-from-prism.mjs   # loads Prism.html in headless Chrome, re-extracts every effect (merges the dates)
+node catalog/_facet_dates.mjs         # derives addedOn / updatedOn / author per facet from git history, embeds the #prism-facet-dates island
+node catalog/extract-from-prism.mjs   # loads Prism.html headlessly, re-extracts every effect (merges the dates)
 node catalog/_embed-catalog.mjs       # embeds the fresh manifest into the #prism-catalog island
+node catalog/_smoke.mjs               # island + shell scripts still parse
+node catalog/_check_ds.mjs            # theme-pack gate (add --only <pack> for one)
+node catalog/_sync_counts.mjs         # README badges and counts
+node showcase/build.mjs capture --only <ids>   # re-record the facets you touched, then: node showcase/build.mjs docs
 ```
 
-> Requires Node and Google Chrome (used headlessly via the DevTools Protocol — no extra packages). With MCP hot reload on, a running server re-reads `Prism.html` automatically.
+> Requires Node 18+ and Google Chrome or Edge for the extractor (headless, over the DevTools Protocol, no packages), plus Firefox or Chromium and ffmpeg for the showcase. With MCP hot reload on, a running server re-reads `Prism.html` automatically.
 
 ---
 
