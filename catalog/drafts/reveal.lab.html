@@ -1,0 +1,460 @@
+<h3 class="sec">REVEAL &amp; SCROLL CHOREOGRAPHY</h3>
+<style id="lab-rv-styles">
+/* ===== Reveal and scroll choreography (classes lab-rv-*, keyframes labRv*).
+   Auto-play stand-ins for scroll-triggered reveals: every tile is a small page mock
+   (rows, cards, a hero, a heading with lines) that plays its reveal, holds, resets and
+   replays inside 4 seconds. Colour contract: primary colour is var(--c) with the theme
+   accent as fallback; semantic tiles set --c/--c-rgb on their root from the role tokens;
+   surfaces and text come from --bg/--panel/--panel2/--card/--line and --ink/--muted/--dim.
+   Base styles are the revealed pose, keyframes start from the hidden pose, so reduced
+   motion only has to stop the animations. ===== */
+.lab-rv-mock{position:relative;width:100%;max-width:300px;height:130px;overflow:hidden;box-sizing:border-box;border-radius:10px;background:var(--panel2);border:1px solid var(--line);font:11px/1.35 ui-sans-serif,system-ui,sans-serif;color:var(--ink)}
+.lab-rv-mock *{box-sizing:border-box}
+.lab-rv-stg{animation-duration:4s;animation-timing-function:cubic-bezier(.2,.7,.2,1);animation-iteration-count:infinite;animation-fill-mode:both;animation-delay:calc(var(--i,0)*var(--lab-rv-step,.16s))}
+.lab-rv-row{display:flex;align-items:center;gap:8px;height:30px;padding:0 10px;margin:0 10px 6px;border-radius:7px;background:var(--card);border:1px solid var(--line)}
+.lab-rv-ico{flex:none;width:16px;height:16px;border-radius:5px;background:rgba(var(--c-rgb,var(--accent-rgb)),.25);border:1px solid var(--c,var(--accent))}
+.lab-rv-txt{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lab-rv-txt em{font-style:normal;color:var(--muted)}
+.lab-rv-val{color:var(--c,var(--accent));font-weight:700;font-variant-numeric:tabular-nums}
+.lab-rv-ln{height:6px;border-radius:3px;background:var(--line);width:var(--w,80%)}
+.lab-rv-card{border-radius:8px;background:var(--card);border:1px solid var(--line);padding:9px;display:flex;flex-direction:column;gap:6px}
+.lab-rv-ct{font-weight:700;font-size:11px}
+
+/* 1 alternating slide list */
+.lab-rv-alt{--c:var(--info);--c-rgb:var(--info-rgb);padding-top:12px}
+.lab-rv-alt .lab-rv-row:nth-child(odd){animation-name:labRvFromL}
+.lab-rv-alt .lab-rv-row:nth-child(even){animation-name:labRvFromR}
+@keyframes labRvFromL{0%{opacity:0;transform:translateX(-46px)}16%,78%{opacity:1;transform:none}86%,100%{opacity:0;transform:translateX(-46px)}}
+@keyframes labRvFromR{0%{opacity:0;transform:translateX(46px)}16%,78%{opacity:1;transform:none}86%,100%{opacity:0;transform:translateX(46px)}}
+
+/* 2 scale-in cards */
+.lab-rv-scale{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:14px 10px;align-content:center}
+.lab-rv-scale .lab-rv-card{height:100px;animation-name:labRvScale}
+@keyframes labRvScale{0%{opacity:0;transform:scale(.55)}16%{opacity:1;transform:scale(1.05)}24%,78%{opacity:1;transform:none}86%,100%{opacity:0;transform:scale(.8)}}
+
+/* 3 clip rise hero */
+.lab-rv-clip{--c:var(--pos);--c-rgb:var(--pos-rgb);padding:10px}
+.lab-rv-hero{position:relative;height:108px;border-radius:8px;overflow:hidden;background:linear-gradient(135deg,rgba(var(--c-rgb),.6),var(--card) 72%);animation-name:labRvClip}
+.lab-rv-hc{position:absolute;left:14px;bottom:12px;animation-name:labRvClipIn}
+.lab-rv-ht{font-size:16px;font-weight:800;line-height:1.1}
+.lab-rv-hs{color:var(--muted);margin-top:3px}
+.lab-rv-hero,.lab-rv-hc{animation-duration:4s;animation-timing-function:cubic-bezier(.2,.7,.2,1);animation-iteration-count:infinite}
+@keyframes labRvClip{0%{clip-path:inset(100% 0 0 0)}24%,80%{clip-path:inset(0 0 0 0)}90%,100%{clip-path:inset(0 0 100% 0)}}
+@keyframes labRvClipIn{0%,8%{opacity:0;transform:translateY(26px)}34%,80%{opacity:1;transform:none}90%,100%{opacity:0;transform:translateY(-10px)}}
+
+/* 4 line by line text */
+.lab-rv-lines{--c:var(--warn);--c-rgb:var(--warn-rgb);--lab-rv-step:.18s;padding:18px 18px}
+.lab-rv-lnw{overflow:hidden;line-height:1.5}
+.lab-rv-lni{display:block;animation-name:labRvLine}
+.lab-rv-lnh{font-size:14px;font-weight:800;color:var(--c);margin-bottom:4px}
+.lab-rv-lines .lab-rv-lnw:not(:first-child) .lab-rv-lni{color:var(--muted)}
+@keyframes labRvLine{0%{transform:translateY(110%)}14%,78%{transform:none}86%,100%{transform:translateY(-110%)}}
+
+/* 5 stat roll-up */
+.lab-rv-stat{--c:var(--crit);--c-rgb:var(--crit-rgb);--lab-rv-step:.14s;display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:14px 10px;align-content:center}
+.lab-rv-st{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:9px 9px 10px}
+.lab-rv-num{height:22px;overflow:hidden;font:700 17px/22px ui-monospace,Menlo,monospace;color:var(--c)}
+.lab-rv-strip{display:block;transform:translateY(-80%);animation-name:labRvRoll}
+.lab-rv-strip span{display:block;height:22px}
+.lab-rv-sl{color:var(--muted);font-size:10px;margin-top:3px}
+.lab-rv-sb{height:4px;border-radius:2px;background:var(--line);margin-top:7px;overflow:hidden}
+.lab-rv-sb i{display:block;height:100%;background:var(--c);transform-origin:left;transform:scaleX(var(--w,.6));animation-name:labRvFill}
+@keyframes labRvRoll{0%{opacity:0;transform:translateY(0)}8%{opacity:1}44%,80%{opacity:1;transform:translateY(-80%)}90%{opacity:0;transform:translateY(-80%)}100%{opacity:0;transform:translateY(0)}}
+@keyframes labRvFill{0%{transform:scaleX(0)}44%,80%{transform:scaleX(var(--w,.6))}90%,100%{transform:scaleX(0)}}
+
+/* 6 parallax scroll scene */
+.lab-rv-plx{--c:var(--info);--c-rgb:var(--info-rgb);background:var(--bg)}
+.lab-rv-plx-bg{position:absolute;left:-20px;right:-20px;top:-30px;height:220px;background:radial-gradient(circle at 22% 40%,rgba(var(--c-rgb),.45),rgba(var(--c-rgb),0) 34%),radial-gradient(circle at 78% 70%,rgba(var(--c-rgb),.3),rgba(var(--c-rgb),0) 30%);animation-name:labRvPlxBg}
+.lab-rv-plx-mid{position:absolute;left:16px;right:16px;top:70px;animation-name:labRvPlxMid}
+.lab-rv-plx-mid .lab-rv-row{margin:0 0 6px}
+.lab-rv-plx-fg{position:absolute;left:16px;top:22px;animation-name:labRvPlxFg}
+.lab-rv-plx-chip{position:absolute;right:16px;top:26px;padding:3px 8px;border-radius:10px;font-size:10px;font-weight:700;color:var(--c);background:rgba(var(--c-rgb),.18);border:1px solid var(--c);animation-name:labRvPlxChip}
+.lab-rv-plx-bg,.lab-rv-plx-mid,.lab-rv-plx-fg,.lab-rv-plx-chip,.lab-rv-thumb{animation-duration:4s;animation-timing-function:cubic-bezier(.45,0,.2,1);animation-iteration-count:infinite}
+.lab-rv-thumb{position:absolute;right:3px;top:6px;width:3px;height:34px;border-radius:2px;background:var(--dim);animation-name:labRvThumb}
+@keyframes labRvPlxBg{0%,8%{transform:translateY(0)}48%,58%{transform:translateY(-14px)}92%,100%{transform:translateY(0)}}
+@keyframes labRvPlxMid{0%,8%{transform:translateY(0)}48%,58%{transform:translateY(-64px)}92%,100%{transform:translateY(0)}}
+@keyframes labRvPlxFg{0%,8%{transform:translateY(0)}48%,58%{transform:translateY(-70px)}92%,100%{transform:translateY(0)}}
+@keyframes labRvPlxChip{0%,8%{transform:translateY(0)}48%,58%{transform:translateY(-118px)}92%,100%{transform:translateY(0)}}
+@keyframes labRvThumb{0%,8%{transform:translateY(0)}48%,58%{transform:translateY(84px)}92%,100%{transform:translateY(0)}}
+
+/* 7 sticky header shrink */
+.lab-rv-sticky{background:var(--panel)}
+.lab-rv-sh{position:absolute;left:0;right:0;top:0;z-index:2;height:48px;padding:0 12px;display:flex;align-items:center;justify-content:space-between;background:var(--panel2);border-bottom:1px solid var(--line);animation-name:labRvShrink}
+.lab-rv-sht{font-weight:800;font-size:16px;animation-name:labRvShrinkT}
+.lab-rv-shb{font-size:10px;font-weight:700;padding:3px 8px;border-radius:10px;color:var(--bg);background:var(--c,var(--accent))}
+.lab-rv-sc{position:absolute;left:0;right:0;top:48px;padding-top:8px;animation-name:labRvScrollPP}
+.lab-rv-sh,.lab-rv-sht,.lab-rv-sc,.lab-rv-sticky .lab-rv-thumb{animation-duration:4s;animation-timing-function:cubic-bezier(.45,0,.2,1);animation-iteration-count:infinite}
+@keyframes labRvShrink{0%,14%{height:48px;box-shadow:0 0 0 rgba(0,0,0,0)}44%,60%{height:26px;box-shadow:0 6px 14px rgba(0,0,0,.4)}90%,100%{height:48px;box-shadow:0 0 0 rgba(0,0,0,0)}}
+@keyframes labRvShrinkT{0%,14%{font-size:16px}44%,60%{font-size:11px}90%,100%{font-size:16px}}
+@keyframes labRvScrollPP{0%,14%{transform:translateY(0)}44%,60%{transform:translateY(-74px)}90%,100%{transform:translateY(0)}}
+
+/* 8 block sweep reveal */
+.lab-rv-sweep{--c:var(--neg);--c-rgb:var(--neg-rgb);padding:26px 22px}
+.lab-rv-swc{animation-name:labRvAfter}
+.lab-rv-swt{font-size:17px;font-weight:800;line-height:1.1}
+.lab-rv-sws{color:var(--muted);margin-top:6px;max-width:220px}
+.lab-rv-blk{position:absolute;left:16px;right:16px;top:20px;height:76px;border-radius:4px;background:var(--c);transform:scaleX(0);transform-origin:left;animation-name:labRvBlk}
+.lab-rv-swc,.lab-rv-blk{animation-duration:4s;animation-timing-function:cubic-bezier(.7,0,.2,1);animation-iteration-count:infinite}
+@keyframes labRvBlk{0%{transform:scaleX(0);transform-origin:left}30%{transform:scaleX(1);transform-origin:left}31%{transform:scaleX(1);transform-origin:right}56%,100%{transform:scaleX(0);transform-origin:right}}
+@keyframes labRvAfter{0%,30%{opacity:0}31%,84%{opacity:1}92%,100%{opacity:0}}
+
+/* 9 keyhole pan */
+.lab-rv-keyhole{--c:var(--warn);--c-rgb:var(--warn-rgb)}
+.lab-rv-khb,.lab-rv-khl{position:absolute;inset:10px;border-radius:8px;padding:14px 16px;display:flex;flex-direction:column;justify-content:flex-end}
+.lab-rv-khb{background:var(--panel);border:1px dashed var(--line);color:var(--dim)}
+.lab-rv-khl{background:linear-gradient(120deg,rgba(var(--c-rgb),.65),var(--card) 75%);animation-name:labRvKey;animation-duration:4s;animation-timing-function:cubic-bezier(.4,0,.2,1);animation-iteration-count:infinite}
+@keyframes labRvKey{0%{clip-path:circle(0px at 18% 50%)}8%{clip-path:circle(22px at 18% 50%)}42%{clip-path:circle(22px at 82% 50%)}62%,82%{clip-path:circle(260px at 50% 50%)}92%,100%{clip-path:circle(0px at 50% 50%)}}
+
+/* 10 timeline draw */
+.lab-rv-tl{--c:var(--pos);--c-rgb:var(--pos-rgb);padding:12px 14px}
+.lab-rv-tll{position:absolute;left:25px;top:22px;bottom:22px;width:2px;background:var(--c);transform-origin:top;animation-name:labRvTlLine}
+.lab-rv-tli{position:relative;display:flex;align-items:center;gap:12px;height:35px}
+.lab-rv-tln{flex:none;width:10px;height:10px;border-radius:50%;background:var(--panel2);border:2px solid var(--c);box-shadow:0 0 0 3px rgba(var(--c-rgb),.25);margin-left:1px}
+.lab-rv-tlb{color:var(--muted)}
+.lab-rv-tlb b{color:var(--ink);margin-right:6px}
+.lab-rv-tll,.lab-rv-tln,.lab-rv-tlb{animation-duration:4s;animation-timing-function:cubic-bezier(.2,.7,.2,1);animation-iteration-count:infinite}
+.lab-rv-tli:nth-child(2) .lab-rv-tln,.lab-rv-tli:nth-child(2) .lab-rv-tlb{animation-name:labRvTl1}
+.lab-rv-tli:nth-child(3) .lab-rv-tln,.lab-rv-tli:nth-child(3) .lab-rv-tlb{animation-name:labRvTl2}
+.lab-rv-tli:nth-child(4) .lab-rv-tln,.lab-rv-tli:nth-child(4) .lab-rv-tlb{animation-name:labRvTl3}
+@keyframes labRvTlLine{0%{transform:scaleY(0)}58%,84%{transform:scaleY(1)}92%,100%{transform:scaleY(0)}}
+@keyframes labRvTl1{0%,12%{opacity:0;scale:.4;translate:-8px 0}22%,84%{opacity:1;scale:1;translate:0 0}92%,100%{opacity:0;scale:.4;translate:-8px 0}}
+@keyframes labRvTl2{0%,30%{opacity:0;scale:.4;translate:-8px 0}40%,84%{opacity:1;scale:1;translate:0 0}92%,100%{opacity:0;scale:.4;translate:-8px 0}}
+@keyframes labRvTl3{0%,48%{opacity:0;scale:.4;translate:-8px 0}58%,84%{opacity:1;scale:1;translate:0 0}92%,100%{opacity:0;scale:.4;translate:-8px 0}}
+
+/* 11 scroll progress bar */
+@property --lab-rv-p{syntax:"<integer>";inherits:false;initial-value:100}
+.lab-rv-prog{--c:var(--info);--c-rgb:var(--info-rgb);background:var(--panel)}
+.lab-rv-pbar{position:absolute;left:0;right:0;top:0;height:3px;z-index:2;background:var(--c);transform-origin:left;animation-name:labRvPbar}
+.lab-rv-pct{position:absolute;right:10px;top:9px;z-index:2;font:700 10px/1 ui-monospace,Menlo,monospace;color:var(--c);background:var(--card);border:1px solid var(--line);border-radius:10px;padding:4px 7px;counter-reset:labRvPct var(--lab-rv-p);animation-name:labRvPct}
+.lab-rv-pct::after{content:counter(labRvPct) "% read"}
+.lab-rv-pg{position:absolute;left:14px;right:14px;top:14px;animation-name:labRvScrollLong}
+.lab-rv-pgh{font-size:14px;font-weight:800;margin-bottom:8px}
+.lab-rv-pg .lab-rv-ln{margin-bottom:8px}
+.lab-rv-pbar,.lab-rv-pct,.lab-rv-pg,.lab-rv-prog .lab-rv-thumb{animation-duration:4s;animation-timing-function:cubic-bezier(.4,0,.2,1);animation-iteration-count:infinite}
+.lab-rv-prog .lab-rv-thumb{animation-name:labRvThumbLong}
+@keyframes labRvPbar{0%,6%{transform:scaleX(0)}70%,86%{transform:scaleX(1)}96%,100%{transform:scaleX(0)}}
+@keyframes labRvPct{0%,6%{--lab-rv-p:0}70%,86%{--lab-rv-p:100}96%,100%{--lab-rv-p:0}}
+@keyframes labRvScrollLong{0%,6%{transform:translateY(0)}70%,86%{transform:translateY(-118px)}96%,100%{transform:translateY(0)}}
+@keyframes labRvThumbLong{0%,6%{transform:translateY(0)}70%,86%{transform:translateY(84px)}96%,100%{transform:translateY(0)}}
+
+/* 12 pin then release */
+.lab-rv-pinrel{--c:var(--crit);--c-rgb:var(--crit-rgb)}
+.lab-rv-prf{position:absolute;left:10px;right:10px;top:10px;padding-top:56px;animation-name:labRvPrFlow}
+.lab-rv-prf .lab-rv-row{margin:0 0 6px}
+.lab-rv-prc{position:absolute;left:10px;right:10px;top:10px;z-index:2;height:48px;padding:8px 10px;border-radius:8px;background:var(--card);border:1px solid var(--c);box-shadow:0 8px 18px rgba(0,0,0,.4);animation-name:labRvPrCard}
+.lab-rv-prt{font-weight:700;font-size:12px}
+.lab-rv-prs{color:var(--muted);font-size:10px;margin-top:2px}
+.lab-rv-prg{position:absolute;right:10px;top:9px;font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--c);animation-name:labRvPrTag}
+.lab-rv-prf,.lab-rv-prc,.lab-rv-prg{animation-duration:4s;animation-timing-function:linear;animation-iteration-count:infinite}
+@keyframes labRvPrFlow{0%{transform:translateY(0)}50%{transform:translateY(-120px)}100%{transform:translateY(0)}}
+@keyframes labRvPrCard{0%,25%{transform:translateY(0)}50%{transform:translateY(-60px)}75%,100%{transform:translateY(0)}}
+@keyframes labRvPrTag{0%,22%{opacity:1}28%,72%{opacity:0}78%,100%{opacity:1}}
+
+/* 13 word cascade */
+.lab-rv-words{--lab-rv-step:.1s;padding:28px 18px 0}
+.lab-rv-wh{font-size:19px;font-weight:800;line-height:1.15;letter-spacing:-.01em}
+.lab-rv-w{display:inline-block;margin-right:.24em;animation-name:labRvWord}
+.lab-rv-w:last-child{margin-right:0}
+.lab-rv-wa{color:var(--c,var(--accent))}
+.lab-rv-ws{color:var(--muted);margin-top:8px;animation-name:labRvFade;animation-duration:4s;animation-iteration-count:infinite}
+@keyframes labRvWord{0%{opacity:0;transform:translateY(14px);filter:blur(6px)}14%,78%{opacity:1;transform:none;filter:blur(0)}86%,100%{opacity:0;transform:translateY(-10px);filter:blur(6px)}}
+@keyframes labRvFade{0%,20%{opacity:0}32%,78%{opacity:1}86%,100%{opacity:0}}
+
+/* 14 focus pull grid */
+.lab-rv-focus{--c:var(--pos);--c-rgb:var(--pos-rgb);--lab-rv-step:.1s;display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:10px}
+.lab-rv-fg{height:47px;border-radius:7px;background:var(--card);border:1px solid var(--line);padding:8px;display:flex;flex-direction:column;justify-content:space-between;animation-name:labRvFocus}
+.lab-rv-fg .lab-rv-ico{width:14px;height:14px}
+.lab-rv-fg .lab-rv-ln{width:var(--w,70%)}
+@keyframes labRvFocus{0%{opacity:0;filter:blur(8px);transform:scale(.86)}18%,78%{opacity:1;filter:blur(0);transform:none}86%,100%{opacity:0;filter:blur(8px);transform:scale(.86)}}
+
+/* 15 stand-up cards */
+.lab-rv-stand{--c:var(--warn);--c-rgb:var(--warn-rgb);--lab-rv-step:.15s;display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:14px 10px;perspective:480px;align-content:end}
+.lab-rv-stand .lab-rv-card{height:100px;transform-origin:bottom;animation-name:labRvStand}
+@keyframes labRvStand{0%{opacity:0;transform:rotateX(-92deg)}16%{opacity:1;transform:rotateX(9deg)}24%,78%{opacity:1;transform:rotateX(0)}86%,100%{opacity:0;transform:rotateX(-92deg)}}
+
+/* 16 route draw with pins */
+.lab-rv-route{--c:var(--neg);--c-rgb:var(--neg-rgb)}
+.lab-rv-route svg{display:block;width:100%;height:100%;font:700 10px ui-sans-serif,system-ui,sans-serif}
+.lab-rv-rtg{fill:none;stroke:var(--line);stroke-width:1}
+.lab-rv-rtp{fill:none;stroke:var(--c);stroke-width:2.5;stroke-linecap:round;stroke-dasharray:100;stroke-dashoffset:0;animation-name:labRvRoute}
+.lab-rv-rtd{fill:none;stroke:rgba(var(--c-rgb),.35);stroke-width:1;stroke-dasharray:3 3}
+.lab-rv-rp{transform-box:fill-box;transform-origin:50% 100%}
+.lab-rv-rp circle{fill:var(--c)}
+.lab-rv-rp .lab-rv-rpc{fill:var(--panel2)}
+.lab-rv-rp text{fill:var(--ink)}
+.lab-rv-rtp,.lab-rv-rp{animation-duration:4s;animation-timing-function:cubic-bezier(.3,0,.2,1);animation-iteration-count:infinite}
+.lab-rv-rp:nth-of-type(1){animation-name:labRvRp1}
+.lab-rv-rp:nth-of-type(2){animation-name:labRvRp2}
+.lab-rv-rp:nth-of-type(3){animation-name:labRvRp3}
+@keyframes labRvRoute{0%{stroke-dashoffset:100;opacity:1}62%,84%{stroke-dashoffset:0;opacity:1}94%{stroke-dashoffset:0;opacity:0}100%{stroke-dashoffset:100;opacity:0}}
+@keyframes labRvRp1{0%,4%{opacity:0;transform:scale(0)}12%,84%{opacity:1;transform:scale(1)}94%,100%{opacity:0;transform:scale(0)}}
+@keyframes labRvRp2{0%,30%{opacity:0;transform:scale(0)}38%,84%{opacity:1;transform:scale(1)}94%,100%{opacity:0;transform:scale(0)}}
+@keyframes labRvRp3{0%,58%{opacity:0;transform:scale(0)}66%,84%{opacity:1;transform:scale(1)}94%,100%{opacity:0;transform:scale(0)}}
+
+/* 17 split screen */
+.lab-rv-split{--c:var(--info);--c-rgb:var(--info-rgb)}
+.lab-rv-spl,.lab-rv-spr{position:absolute;top:0;bottom:0;width:50%;padding:22px 16px;display:flex;flex-direction:column;justify-content:center}
+.lab-rv-spl{left:0;background:linear-gradient(160deg,rgba(var(--c-rgb),.55),var(--card));animation-name:labRvSplitL}
+.lab-rv-spr{right:0;background:var(--card);animation-name:labRvSplitR}
+.lab-rv-spd{position:absolute;left:50%;top:14px;bottom:14px;width:2px;margin-left:-1px;background:var(--c);transform-origin:top;animation-name:labRvSplitD}
+.lab-rv-spt{animation-name:labRvFadeLate}
+.lab-rv-spt b{display:block;font-size:15px;line-height:1.1;margin-bottom:5px}
+.lab-rv-spt span{color:var(--muted)}
+.lab-rv-spl,.lab-rv-spr,.lab-rv-spd,.lab-rv-spt{animation-duration:4s;animation-timing-function:cubic-bezier(.3,0,.2,1);animation-iteration-count:infinite}
+@keyframes labRvSplitL{0%{transform:translateX(-100%)}22%,82%{transform:none}92%,100%{transform:translateX(-100%)}}
+@keyframes labRvSplitR{0%{transform:translateX(100%)}22%,82%{transform:none}92%,100%{transform:translateX(100%)}}
+@keyframes labRvSplitD{0%,22%{transform:scaleY(0)}36%,82%{transform:scaleY(1)}90%,100%{transform:scaleY(0)}}
+@keyframes labRvFadeLate{0%,34%{opacity:0}46%,80%{opacity:1}88%,100%{opacity:0}}
+
+/* 18 snap deck */
+.lab-rv-snap{background:var(--bg)}
+.lab-rv-snt{position:absolute;left:0;right:0;top:0;animation-name:labRvSnap;animation-duration:4s;animation-timing-function:cubic-bezier(.6,0,.2,1);animation-iteration-count:infinite}
+.lab-rv-sns{height:128px;padding:24px 22px;display:flex;flex-direction:column;justify-content:center;gap:5px}
+.lab-rv-sns:nth-child(2){background:var(--card)}
+.lab-rv-sns:nth-child(3){background:linear-gradient(140deg,rgba(var(--c-rgb,var(--accent-rgb)),.5),var(--card))}
+.lab-rv-sns b{font-size:16px;line-height:1.1}
+.lab-rv-sns span{color:var(--muted)}
+.lab-rv-snd{position:absolute;right:12px;width:6px;height:6px;border-radius:50%;background:var(--dim);animation-duration:4s;animation-timing-function:cubic-bezier(.6,0,.2,1);animation-iteration-count:infinite}
+.lab-rv-snd:nth-of-type(1){top:52px;animation-name:labRvSnd1}
+.lab-rv-snd:nth-of-type(2){top:64px;animation-name:labRvSnd2}
+.lab-rv-snd:nth-of-type(3){top:76px;animation-name:labRvSnd3}
+@keyframes labRvSnap{0%,18%{transform:translateY(0)}30%,48%{transform:translateY(-128px)}60%,80%{transform:translateY(-256px)}92%,100%{transform:translateY(0)}}
+@keyframes labRvSnd1{0%,24%{background:var(--c,var(--accent));transform:scale(1.5)}30%,86%{background:var(--dim);transform:scale(1)}92%,100%{background:var(--c,var(--accent));transform:scale(1.5)}}
+@keyframes labRvSnd2{0%,24%{background:var(--dim);transform:scale(1)}30%,54%{background:var(--c,var(--accent));transform:scale(1.5)}60%,100%{background:var(--dim);transform:scale(1)}}
+@keyframes labRvSnd3{0%,54%{background:var(--dim);transform:scale(1)}60%,86%{background:var(--c,var(--accent));transform:scale(1.5)}92%,100%{background:var(--dim);transform:scale(1)}}
+
+/* 19 zoom-out hero */
+.lab-rv-zoom{--c:var(--crit);--c-rgb:var(--crit-rgb);background:var(--bg)}
+.lab-rv-zh{position:absolute;inset:0;background:radial-gradient(circle at 28% 40%,rgba(var(--c-rgb),.7),rgba(var(--c-rgb),0) 46%),radial-gradient(circle at 76% 72%,rgba(var(--c-rgb),.4),rgba(var(--c-rgb),0) 40%),var(--bg);animation-name:labRvZoom}
+.lab-rv-zt{position:absolute;left:0;right:0;top:44px;text-align:center;font-size:20px;font-weight:800;letter-spacing:.02em;animation-name:labRvZt}
+.lab-rv-zs{position:absolute;left:0;right:0;top:76px;text-align:center;color:var(--muted);animation-name:labRvFadeLate}
+.lab-rv-zh,.lab-rv-zt,.lab-rv-zs{animation-duration:4s;animation-timing-function:cubic-bezier(.2,.6,.2,1);animation-iteration-count:infinite}
+@keyframes labRvZoom{0%{transform:scale(1.5);opacity:0}12%{opacity:1}56%,84%{transform:scale(1);opacity:1}94%,100%{transform:scale(1);opacity:0}}
+@keyframes labRvZt{0%,10%{opacity:0;letter-spacing:.4em}50%,84%{opacity:1;letter-spacing:.02em}94%,100%{opacity:0;letter-spacing:.02em}}
+
+/* 20 velocity skew scroll */
+.lab-rv-skew{--c:var(--neg);--c-rgb:var(--neg-rgb)}
+.lab-rv-skt{position:absolute;left:10px;right:10px;top:10px;animation-name:labRvSkew;animation-duration:4s;animation-timing-function:cubic-bezier(.4,0,.2,1);animation-iteration-count:infinite}
+.lab-rv-skt .lab-rv-row{margin:0 0 6px}
+@keyframes labRvSkew{0%,6%{transform:translateY(0) skewY(0)}16%{transform:translateY(-22px) skewY(-6deg)}30%{transform:translateY(-70px) skewY(-6deg)}40%,52%{transform:translateY(-90px) skewY(0)}62%{transform:translateY(-68px) skewY(6deg)}76%{transform:translateY(-20px) skewY(6deg)}86%,100%{transform:translateY(0) skewY(0)}}
+
+/* 21 marker sweep */
+.lab-rv-mark{--c:var(--warn);--c-rgb:var(--warn-rgb);--lab-rv-step:.35s;padding:20px 18px}
+.lab-rv-mh{font-size:14px;font-weight:800;margin-bottom:6px}
+.lab-rv-ml{color:var(--muted);margin-top:5px;line-height:1.5}
+.lab-rv-mk{color:var(--ink);padding:0 3px;border-radius:2px;background-image:linear-gradient(rgba(var(--c-rgb),.45),rgba(var(--c-rgb),.45));background-repeat:no-repeat;background-position:0 0;background-size:100% 100%;animation-name:labRvMark;animation-timing-function:cubic-bezier(.4,0,.2,1)}
+@keyframes labRvMark{0%{background-size:0% 100%}12%,76%{background-size:100% 100%}84%,100%{background-size:0% 100%}}
+
+@media (prefers-reduced-motion:reduce){
+  .lab-rv-mock,.lab-rv-mock *{animation-name:none!important}
+  .lab-rv-blk{transform:scaleX(0)}
+  .lab-rv-prg{opacity:1}
+}
+</style>
+<div class="gallery">
+
+  <div class="tile is-new" data-ctype="motion-reveal" data-interact="auto-play" data-c="info"><div class="stage">
+    <div class="lab-rv-mock lab-rv-alt">
+      <div class="lab-rv-row lab-rv-stg" style="--i:0"><span class="lab-rv-ico"></span><span class="lab-rv-txt">Atlas <em>deploy finished</em></span><span class="lab-rv-val">99.98%</span></div>
+      <div class="lab-rv-row lab-rv-stg" style="--i:1"><span class="lab-rv-ico"></span><span class="lab-rv-txt">Comet <em>rows synced</em></span><span class="lab-rv-val">1,284</span></div>
+      <div class="lab-rv-row lab-rv-stg" style="--i:2"><span class="lab-rv-ico"></span><span class="lab-rv-txt">Ember <em>cache hit rate</em></span><span class="lab-rv-val">12.4%</span></div>
+    </div>
+  </div><div class="meta"><div class="nm">Alternate Slide List</div><span class="ref">.lab-rv-alt</span><div class="desc">Rows enter from alternating sides on a stagger, hold, then leave the way they came. Use for activity feeds that build as the page scrolls.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="motion-reveal" data-interact="auto-play" data-c="accent"><div class="stage">
+    <div class="lab-rv-mock lab-rv-scale">
+      <div class="lab-rv-card lab-rv-stg" style="--i:0"><span class="lab-rv-ico"></span><span class="lab-rv-ct">Atlas</span><span class="lab-rv-ln" style="--w:90%"></span><span class="lab-rv-ln" style="--w:60%"></span></div>
+      <div class="lab-rv-card lab-rv-stg" style="--i:1"><span class="lab-rv-ico"></span><span class="lab-rv-ct">Comet</span><span class="lab-rv-ln" style="--w:75%"></span><span class="lab-rv-ln" style="--w:50%"></span></div>
+      <div class="lab-rv-card lab-rv-stg" style="--i:2"><span class="lab-rv-ico"></span><span class="lab-rv-ct">Ember</span><span class="lab-rv-ln" style="--w:85%"></span><span class="lab-rv-ln" style="--w:40%"></span></div>
+    </div>
+  </div><div class="meta"><div class="nm">Scale-In Card Row</div><span class="ref">.lab-rv-scale</span><div class="desc">Three cards grow from half size with a small overshoot, one after another. Use for feature or pricing rows that pop in as they reach the viewport.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="motion-reveal" data-interact="auto-play" data-c="pos"><div class="stage">
+    <div class="lab-rv-mock lab-rv-clip">
+      <div class="lab-rv-hero"><div class="lab-rv-hc"><div class="lab-rv-ht">Nova is live</div><div class="lab-rv-hs">Rollout complete in 14 regions</div></div></div>
+    </div>
+  </div><div class="meta"><div class="nm">Clip Rise Hero</div><span class="ref">.lab-rv-clip</span><div class="desc">A hero panel unmasks from the bottom edge while its copy drifts up into place, then wipes away upward. Use for banner sections entering on scroll.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="motion-reveal" data-interact="auto-play" data-c="warn"><div class="stage">
+    <div class="lab-rv-mock lab-rv-lines">
+      <div class="lab-rv-lnw"><span class="lab-rv-lni lab-rv-stg lab-rv-lnh" style="--i:0">Release notes 4.2</span></div>
+      <div class="lab-rv-lnw"><span class="lab-rv-lni lab-rv-stg" style="--i:1">Atlas ships faster cold starts.</span></div>
+      <div class="lab-rv-lnw"><span class="lab-rv-lni lab-rv-stg" style="--i:2">Comet adds row level audit trails.</span></div>
+      <div class="lab-rv-lnw"><span class="lab-rv-lni lab-rv-stg" style="--i:3">Ember gains a dark theme.</span></div>
+    </div>
+  </div><div class="meta"><div class="nm">Line by Line Text</div><span class="ref">.lab-rv-lines</span><div class="desc">Each line rises out of its own clipping box in sequence and exits upward. Use for paragraphs or changelogs that should read in order as they appear.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="motion-reveal" data-interact="auto-play" data-c="crit"><div class="stage">
+    <div class="lab-rv-mock lab-rv-stat">
+      <div class="lab-rv-st"><div class="lab-rv-num"><span class="lab-rv-strip lab-rv-stg" style="--i:0"><span>0</span><span>3</span><span>7</span><span>9</span><span>12.4%</span></span></div><div class="lab-rv-sl">Growth</div><div class="lab-rv-sb"><i class="lab-rv-stg" style="--i:0;--w:.45"></i></div></div>
+      <div class="lab-rv-st"><div class="lab-rv-num"><span class="lab-rv-strip lab-rv-stg" style="--i:1"><span>0</span><span>210</span><span>640</span><span>980</span><span>1,284</span></span></div><div class="lab-rv-sl">Signups</div><div class="lab-rv-sb"><i class="lab-rv-stg" style="--i:1;--w:.8"></i></div></div>
+      <div class="lab-rv-st"><div class="lab-rv-num"><span class="lab-rv-strip lab-rv-stg" style="--i:2"><span>0</span><span>42</span><span>87</span><span>96</span><span>99.9%</span></span></div><div class="lab-rv-sl">Uptime</div><div class="lab-rv-sb"><i class="lab-rv-stg" style="--i:2;--w:1"></i></div></div>
+    </div>
+  </div><div class="meta"><div class="nm">Stat Roll-Up</div><span class="ref">.lab-rv-stat</span><div class="desc">Three KPI values roll upward through intermediate numbers to their final figure while a bar fills beneath. Use for metric strips that count in on scroll.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="motion-reveal" data-interact="auto-play" data-c="info"><div class="stage">
+    <div class="lab-rv-mock lab-rv-plx">
+      <div class="lab-rv-plx-bg"></div>
+      <div class="lab-rv-plx-fg"><div class="lab-rv-ht">Atlas Cloud</div><div class="lab-rv-hs">Scroll through the layers</div></div>
+      <div class="lab-rv-plx-chip">NEW</div>
+      <div class="lab-rv-plx-mid">
+        <div class="lab-rv-row"><span class="lab-rv-ico"></span><span class="lab-rv-txt">Regions <em>online</em></span><span class="lab-rv-val">14</span></div>
+        <div class="lab-rv-row"><span class="lab-rv-ico"></span><span class="lab-rv-txt">Latency <em>p95</em></span><span class="lab-rv-val">42 ms</span></div>
+        <div class="lab-rv-row"><span class="lab-rv-ico"></span><span class="lab-rv-txt">Uptime</span><span class="lab-rv-val">99.98%</span></div>
+      </div>
+      <div class="lab-rv-thumb"></div>
+    </div>
+  </div><div class="meta"><div class="nm">Parallax Scroll Scene</div><span class="ref">.lab-rv-plx</span><div class="desc">A simulated scroll moves the glow backdrop, the heading, the card list and a badge at four different speeds, then scrolls back. Use for hero depth.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="motion-reveal" data-interact="auto-play" data-c="accent"><div class="stage">
+    <div class="lab-rv-mock lab-rv-sticky">
+      <div class="lab-rv-sh"><span class="lab-rv-sht">Atlas Docs</span><span class="lab-rv-shb">Sign in</span></div>
+      <div class="lab-rv-sc">
+        <div class="lab-rv-row"><span class="lab-rv-ico"></span><span class="lab-rv-txt">Getting started</span></div>
+        <div class="lab-rv-row"><span class="lab-rv-ico"></span><span class="lab-rv-txt">Authentication</span></div>
+        <div class="lab-rv-row"><span class="lab-rv-ico"></span><span class="lab-rv-txt">Rate limits</span></div>
+        <div class="lab-rv-row"><span class="lab-rv-ico"></span><span class="lab-rv-txt">Webhooks</span></div>
+        <div class="lab-rv-row"><span class="lab-rv-ico"></span><span class="lab-rv-txt">Changelog</span></div>
+      </div>
+      <div class="lab-rv-thumb"></div>
+    </div>
+  </div><div class="meta"><div class="nm">Sticky Header Shrink</div><span class="ref">.lab-rv-sticky</span><div class="desc">As the list scrolls up beneath it, the header compresses to a slim bar with a drop shadow, then grows back. Use for app bars that condense on scroll.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="motion-reveal" data-interact="auto-play" data-c="neg"><div class="stage">
+    <div class="lab-rv-mock lab-rv-sweep">
+      <div class="lab-rv-swc"><div class="lab-rv-swt">Nova platform</div><div class="lab-rv-sws">Incident tooling that reads the room before the pager does.</div></div>
+      <div class="lab-rv-blk"></div>
+    </div>
+  </div><div class="meta"><div class="nm">Block Sweep Reveal</div><span class="ref">.lab-rv-sweep</span><div class="desc">A solid block sweeps across the heading area and the copy is left behind as it passes out the far side. Use for section titles that need a bold entrance.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="motion-reveal" data-interact="auto-play" data-c="warn"><div class="stage">
+    <div class="lab-rv-mock lab-rv-keyhole">
+      <div class="lab-rv-khb"><div class="lab-rv-ht">Ember Studio</div><div class="lab-rv-hs">Hidden until the light passes</div></div>
+      <div class="lab-rv-khl"><div class="lab-rv-ht">Ember Studio</div><div class="lab-rv-hs">Hidden until the light passes</div></div>
+    </div>
+  </div><div class="meta"><div class="nm">Keyhole Pan Reveal</div><span class="ref">.lab-rv-keyhole</span><div class="desc">A small circular mask opens, pans across the dimmed panel like a torch, then expands to uncover everything. Use for a playful hero or image reveal.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="motion-reveal" data-interact="auto-play" data-c="pos"><div class="stage">
+    <div class="lab-rv-mock lab-rv-tl">
+      <div class="lab-rv-tll"></div>
+      <div class="lab-rv-tli"><span class="lab-rv-tln"></span><span class="lab-rv-tlb"><b>09:00</b>Build queued</span></div>
+      <div class="lab-rv-tli"><span class="lab-rv-tln"></span><span class="lab-rv-tlb"><b>09:04</b>Tests passed, 1,284 cases</span></div>
+      <div class="lab-rv-tli"><span class="lab-rv-tln"></span><span class="lab-rv-tlb"><b>09:12</b>Deployed to production</span></div>
+    </div>
+  </div><div class="meta"><div class="nm">Timeline Draw</div><span class="ref">.lab-rv-tl</span><div class="desc">A vertical spine draws downward and each milestone pops in with its label as the line reaches it. Use for histories or process steps that unfold on scroll.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="motion-reveal" data-interact="auto-play" data-c="info"><div class="stage">
+    <div class="lab-rv-mock lab-rv-prog">
+      <div class="lab-rv-pbar"></div>
+      <div class="lab-rv-pct"></div>
+      <div class="lab-rv-pg">
+        <div class="lab-rv-pgh">Why Comet moved to edge caches</div>
+        <span class="lab-rv-ln" style="--w:92%"></span><span class="lab-rv-ln" style="--w:78%"></span><span class="lab-rv-ln" style="--w:88%"></span><span class="lab-rv-ln" style="--w:60%"></span>
+        <span class="lab-rv-ln" style="--w:90%"></span><span class="lab-rv-ln" style="--w:84%"></span><span class="lab-rv-ln" style="--w:70%"></span><span class="lab-rv-ln" style="--w:95%"></span><span class="lab-rv-ln" style="--w:66%"></span><span class="lab-rv-ln" style="--w:40%"></span>
+      </div>
+      <div class="lab-rv-thumb"></div>
+    </div>
+  </div><div class="meta"><div class="nm">Scroll Progress Bar</div><span class="ref">.lab-rv-prog</span><div class="desc">A top bar fills and a percent badge counts up as the article scrolls, then everything snaps back to the top. Use for reading progress on long posts.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="motion-reveal" data-interact="auto-play" data-c="crit"><div class="stage">
+    <div class="lab-rv-mock lab-rv-pinrel">
+      <div class="lab-rv-prc"><div class="lab-rv-prt">Pixel summary</div><div class="lab-rv-prs">3 alerts, 2 acknowledged</div><span class="lab-rv-prg">pinned</span></div>
+      <div class="lab-rv-prf">
+        <div class="lab-rv-row"><span class="lab-rv-ico"></span><span class="lab-rv-txt">Disk pressure <em>node 4</em></span></div>
+        <div class="lab-rv-row"><span class="lab-rv-ico"></span><span class="lab-rv-txt">Cert expiring <em>12 days</em></span></div>
+        <div class="lab-rv-row"><span class="lab-rv-ico"></span><span class="lab-rv-txt">Queue depth <em>1,284</em></span></div>
+        <div class="lab-rv-row"><span class="lab-rv-ico"></span><span class="lab-rv-txt">Backup verified</span></div>
+        <div class="lab-rv-row"><span class="lab-rv-ico"></span><span class="lab-rv-txt">Latency normal</span></div>
+      </div>
+    </div>
+  </div><div class="meta"><div class="nm">Pin Then Release</div><span class="ref">.lab-rv-pinrel</span><div class="desc">A summary card stays pinned while rows scroll beneath it, then releases and rides away with the content before the page scrolls back. Use for sticky summaries.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="motion-reveal" data-interact="auto-play" data-c="accent"><div class="stage">
+    <div class="lab-rv-mock lab-rv-words">
+      <div class="lab-rv-wh"><span class="lab-rv-w lab-rv-stg" style="--i:0">Build</span><span class="lab-rv-w lab-rv-stg" style="--i:1">faster</span><span class="lab-rv-w lab-rv-stg" style="--i:2">with</span><span class="lab-rv-w lab-rv-stg lab-rv-wa" style="--i:3">Atlas</span><span class="lab-rv-w lab-rv-stg lab-rv-wa" style="--i:4">Cloud</span></div>
+      <div class="lab-rv-ws">Deploy in seconds. Scale without a ticket.</div>
+    </div>
+  </div><div class="meta"><div class="nm">Word Cascade</div><span class="ref">.lab-rv-words</span><div class="desc">Heading words rise out of a blur one at a time and the tagline fades in after them. Use for hero titles where per letter motion is too busy.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="motion-reveal" data-interact="auto-play" data-c="pos"><div class="stage">
+    <div class="lab-rv-mock lab-rv-focus">
+      <div class="lab-rv-fg lab-rv-stg" style="--i:0"><span class="lab-rv-ico"></span><span class="lab-rv-ln" style="--w:70%"></span></div>
+      <div class="lab-rv-fg lab-rv-stg" style="--i:1"><span class="lab-rv-ico"></span><span class="lab-rv-ln" style="--w:55%"></span></div>
+      <div class="lab-rv-fg lab-rv-stg" style="--i:2"><span class="lab-rv-ico"></span><span class="lab-rv-ln" style="--w:80%"></span></div>
+      <div class="lab-rv-fg lab-rv-stg" style="--i:3"><span class="lab-rv-ico"></span><span class="lab-rv-ln" style="--w:60%"></span></div>
+      <div class="lab-rv-fg lab-rv-stg" style="--i:4"><span class="lab-rv-ico"></span><span class="lab-rv-ln" style="--w:75%"></span></div>
+      <div class="lab-rv-fg lab-rv-stg" style="--i:5"><span class="lab-rv-ico"></span><span class="lab-rv-ln" style="--w:50%"></span></div>
+    </div>
+  </div><div class="meta"><div class="nm">Focus Pull Grid</div><span class="ref">.lab-rv-focus</span><div class="desc">A grid of tiles resolves from a soft blur and slight shrink in reading order, then defocuses again. Use for galleries or integrations grids.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="motion-reveal" data-interact="auto-play" data-c="warn"><div class="stage">
+    <div class="lab-rv-mock lab-rv-stand">
+      <div class="lab-rv-card lab-rv-stg" style="--i:0"><span class="lab-rv-ico"></span><span class="lab-rv-ct">Starter</span><span class="lab-rv-ln" style="--w:80%"></span><span class="lab-rv-ln" style="--w:55%"></span></div>
+      <div class="lab-rv-card lab-rv-stg" style="--i:1"><span class="lab-rv-ico"></span><span class="lab-rv-ct">Team</span><span class="lab-rv-ln" style="--w:70%"></span><span class="lab-rv-ln" style="--w:45%"></span></div>
+      <div class="lab-rv-card lab-rv-stg" style="--i:2"><span class="lab-rv-ico"></span><span class="lab-rv-ct">Scale</span><span class="lab-rv-ln" style="--w:85%"></span><span class="lab-rv-ln" style="--w:60%"></span></div>
+    </div>
+  </div><div class="meta"><div class="nm">Stand-Up Cards</div><span class="ref">.lab-rv-stand</span><div class="desc">Cards hinge up from their bottom edge in perspective, overshoot slightly and settle upright in sequence. Use for plan or feature rows with some drama.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="motion-reveal" data-interact="auto-play" data-c="neg"><div class="stage">
+    <div class="lab-rv-mock lab-rv-route">
+      <svg viewBox="0 0 300 130" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path class="lab-rv-rtg" d="M0,32H300M0,64H300M0,96H300M60,0V130M120,0V130M180,0V130M240,0V130"/>
+        <path class="lab-rv-rtd" d="M28,98C80,24 120,118 168,62S238,26 272,78"/>
+        <path class="lab-rv-rtp" pathLength="100" d="M28,98C80,24 120,118 168,62S238,26 272,78"/>
+        <g class="lab-rv-rp"><circle cx="28" cy="98" r="7"/><circle class="lab-rv-rpc" cx="28" cy="98" r="3"/><text x="40" y="112">Depot</text></g>
+        <g class="lab-rv-rp"><circle cx="168" cy="62" r="7"/><circle class="lab-rv-rpc" cx="168" cy="62" r="3"/><text x="150" y="49">Hub 12</text></g>
+        <g class="lab-rv-rp"><circle cx="272" cy="78" r="7"/><circle class="lab-rv-rpc" cx="272" cy="78" r="3"/><text x="243" y="100">Drop</text></g>
+      </svg>
+    </div>
+  </div><div class="meta"><div class="nm">Route Draw</div><span class="ref">.lab-rv-route</span><div class="desc">A route strokes itself along a dotted guide and pin markers pop up as the line reaches each stop. Use for journey maps or delivery tracking sections.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="motion-reveal" data-interact="auto-play" data-c="info"><div class="stage">
+    <div class="lab-rv-mock lab-rv-split">
+      <div class="lab-rv-spl"><div class="lab-rv-spt"><b>Before</b><span>Manual runbooks, 40 min to recover.</span></div></div>
+      <div class="lab-rv-spr"><div class="lab-rv-spt"><b>After</b><span>Nova auto heals in 90 seconds.</span></div></div>
+      <div class="lab-rv-spd"></div>
+    </div>
+  </div><div class="meta"><div class="nm">Split Screen Reveal</div><span class="ref">.lab-rv-split</span><div class="desc">Two half panels slide in from opposite edges, a divider draws down between them and the copy fades in last. Use for before and after comparisons.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="motion-reveal" data-interact="auto-play" data-c="accent"><div class="stage">
+    <div class="lab-rv-mock lab-rv-snap">
+      <div class="lab-rv-snt">
+        <div class="lab-rv-sns"><b>01 Discover</b><span>Atlas maps every dependency.</span></div>
+        <div class="lab-rv-sns"><b>02 Deploy</b><span>Comet ships the change set.</span></div>
+        <div class="lab-rv-sns"><b>03 Observe</b><span>Ember watches the rollout.</span></div>
+      </div>
+      <span class="lab-rv-snd"></span><span class="lab-rv-snd"></span><span class="lab-rv-snd"></span>
+    </div>
+  </div><div class="meta"><div class="nm">Snap Deck</div><span class="ref">.lab-rv-snap</span><div class="desc">Full height sections snap into view one at a time while side dots track the active slide, then the deck scrolls home. Use for scroll snapping story pages.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="motion-reveal" data-interact="auto-play" data-c="crit"><div class="stage">
+    <div class="lab-rv-mock lab-rv-zoom">
+      <div class="lab-rv-zh"></div>
+      <div class="lab-rv-zt">PIXEL</div>
+      <div class="lab-rv-zs">Design tools for the next launch</div>
+    </div>
+  </div><div class="meta"><div class="nm">Zoom-Out Hero</div><span class="ref">.lab-rv-zoom</span><div class="desc">The backdrop starts oversized and settles to scale while the title tightens its letter spacing into place. Use for cinematic hero openings on page load.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="motion-reveal" data-interact="auto-play" data-c="neg"><div class="stage">
+    <div class="lab-rv-mock lab-rv-skew">
+      <div class="lab-rv-skt">
+        <div class="lab-rv-row"><span class="lab-rv-ico"></span><span class="lab-rv-txt">Order 1041 <em>J. Doe</em></span><span class="lab-rv-val">$84</span></div>
+        <div class="lab-rv-row"><span class="lab-rv-ico"></span><span class="lab-rv-txt">Order 1042 <em>R. Patel</em></span><span class="lab-rv-val">$129</span></div>
+        <div class="lab-rv-row"><span class="lab-rv-ico"></span><span class="lab-rv-txt">Order 1043 <em>A. Lee</em></span><span class="lab-rv-val">$56</span></div>
+        <div class="lab-rv-row"><span class="lab-rv-ico"></span><span class="lab-rv-txt">Order 1044 <em>J. Doe</em></span><span class="lab-rv-val">$212</span></div>
+        <div class="lab-rv-row"><span class="lab-rv-ico"></span><span class="lab-rv-txt">Order 1045 <em>R. Patel</em></span><span class="lab-rv-val">$18</span></div>
+        <div class="lab-rv-row"><span class="lab-rv-ico"></span><span class="lab-rv-txt">Order 1046 <em>A. Lee</em></span><span class="lab-rv-val">$97</span></div>
+      </div>
+    </div>
+  </div><div class="meta"><div class="nm">Velocity Skew Scroll</div><span class="ref">.lab-rv-skew</span><div class="desc">The list shears in the direction of travel while it scrolls fast and straightens as it stops, in both directions. Use for smooth scroll feeds with momentum.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="motion-reveal" data-interact="auto-play" data-c="warn"><div class="stage">
+    <div class="lab-rv-mock lab-rv-mark">
+      <div class="lab-rv-mh">Quarterly summary</div>
+      <div class="lab-rv-ml">Atlas grew <span class="lab-rv-mk lab-rv-stg" style="--i:0">12.4% quarter over quarter</span> on enterprise seats.</div>
+      <div class="lab-rv-ml">Comet closed <span class="lab-rv-mk lab-rv-stg" style="--i:1">1,284 tickets</span> with a median of 3 hours.</div>
+      <div class="lab-rv-ml">Ember held <span class="lab-rv-mk lab-rv-stg" style="--i:2">99.98% uptime</span> across all regions.</div>
+    </div>
+  </div><div class="meta"><div class="nm">Marker Sweep</div><span class="ref">.lab-rv-mark</span><div class="desc">A highlighter band sweeps across the key phrase of each line in turn, as if marked while reading. Use to spotlight figures inside body copy on scroll.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+</div>

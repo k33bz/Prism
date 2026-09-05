@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Circuit Traces · Prism</title>
+<!-- Prism showcase sample: objects-circuit-traces (gallery: objects). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.amb-bg-root { position: relative; width: 100%; max-width: 300px; height: 150px; border-radius: 10px; overflow: hidden; background: var(--panel2); isolation: isolate; }
+.amb-bg-tag { position: absolute; left: 12px; bottom: 10px; z-index: 6; font: 500 10px / 1 ui-monospace, Menlo, monospace; letter-spacing: 0.06em; color: var(--muted); opacity: 0.9; pointer-events: none; text-shadow: rgba(0, 0, 0, 0.5) 0px 1px 4px; }
+.amb-bg-circuit { background: var(--panel); }
+.amb-bg-circuit-svg { position: absolute; inset: 0px; width: 100%; height: 100%; display: block; fill: none; }
+.amb-bg-circuit-t { stroke: var(--line); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.amb-bg-circuit-p { stroke: var(--c,var(--accent)); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 26, 460; stroke-dashoffset: 0; filter: drop-shadow(0 0 3px rgba(var(--c-rgb,var(--accent-rgb)),.8)); animation-name: ambBgCircuit; animation-duration: 4s; animation-timing-function: linear; animation-iteration-count: infinite; animation-delay: var(--d,0s); }
+.amb-bg-circuit-pad { fill: var(--panel2); stroke: rgba(var(--c-rgb,var(--accent-rgb)),.6); stroke-width: 1.5; animation-name: ambBgPad; animation-duration: 4s; animation-timing-function: ease-in-out; animation-iteration-count: infinite; animation-delay: var(--d,0s); }
+@keyframes ambBgCircuit { 
+  100% { stroke-dashoffset: -486; }
+}
+@keyframes ambBgPad { 
+  0%, 70%, 100% { fill: var(--panel2); }
+  80% { fill: var(--c,var(--accent)); }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage bg" id="stage"><div class="amb-bg-root amb-bg-circuit"><svg class="amb-bg-circuit-svg" viewBox="0 0 300 150" preserveAspectRatio="none" aria-hidden="true"><g><path class="amb-bg-circuit-t" d="M-4 24H60V70H118"></path><path class="amb-bg-circuit-t" d="M-4 118H40V96H96V130H150"></path><path class="amb-bg-circuit-t" d="M300 40H236V16H184V58H150V96"></path><path class="amb-bg-circuit-t" d="M304 110H250V78H206V126H168"></path><path class="amb-bg-circuit-t" d="M78 -4V38H140V-4"></path><path class="amb-bg-circuit-t" d="M232 154V126H262V88H304"></path><path class="amb-bg-circuit-t" d="M120 154V110H92"></path><path class="amb-bg-circuit-t" d="M170 24V64H206"></path></g><g><path class="amb-bg-circuit-p" d="M-4 24H60V70H118" style="--d:0s"></path><path class="amb-bg-circuit-p" d="M-4 118H40V96H96V130H150" style="--d:-0.53s"></path><path class="amb-bg-circuit-p" d="M300 40H236V16H184V58H150V96" style="--d:-1.06s"></path><path class="amb-bg-circuit-p" d="M304 110H250V78H206V126H168" style="--d:-1.59s"></path><path class="amb-bg-circuit-p" d="M78 -4V38H140V-4" style="--d:-2.12s"></path><path class="amb-bg-circuit-p" d="M232 154V126H262V88H304" style="--d:-2.65s"></path><path class="amb-bg-circuit-p" d="M120 154V110H92" style="--d:-3.18s"></path><path class="amb-bg-circuit-p" d="M170 24V64H206" style="--d:-3.71s"></path></g><g><circle class="amb-bg-circuit-pad" cx="60" cy="70" r="3.5" style="--d:0s"></circle><circle class="amb-bg-circuit-pad" cx="118" cy="70" r="3.5" style="--d:-0.37s"></circle><circle class="amb-bg-circuit-pad" cx="96" cy="96" r="3.5" style="--d:-0.74s"></circle><circle class="amb-bg-circuit-pad" cx="150" cy="130" r="3.5" style="--d:-1.11s"></circle><circle class="amb-bg-circuit-pad" cx="184" cy="58" r="3.5" style="--d:-1.48s"></circle><circle class="amb-bg-circuit-pad" cx="150" cy="96" r="3.5" style="--d:-1.85s"></circle><circle class="amb-bg-circuit-pad" cx="206" cy="126" r="3.5" style="--d:-2.22s"></circle><circle class="amb-bg-circuit-pad" cx="168" cy="126" r="3.5" style="--d:-2.59s"></circle><circle class="amb-bg-circuit-pad" cx="140" cy="18" r="3.5" style="--d:-2.96s"></circle><circle class="amb-bg-circuit-pad" cx="92" cy="110" r="3.5" style="--d:-3.33s"></circle><circle class="amb-bg-circuit-pad" cx="206" cy="64" r="3.5" style="--d:-3.7s"></circle><circle class="amb-bg-circuit-pad" cx="262" cy="88" r="3.5" style="--d:-4.07s"></circle></g></svg><span class="amb-bg-tag">Atlas · compute</span></div></div></div>
+<div class="meta"><b>Circuit Traces</b> · <code>objects-circuit-traces</code><br>Animated Objects · AMBIENT BACKGROUNDS<p>Light pulses travel along printed circuit traces and flash the pads they reach. Hardware, compute and data pipeline surfaces.</p></div>
+
+</body>
+</html>
