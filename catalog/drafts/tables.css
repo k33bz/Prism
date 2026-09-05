@@ -441,6 +441,52 @@
 .dtb-empty small{display:block;margin-top:2px;font-weight:500}
 .dtb-empty-btn{display:inline-block;margin-top:8px;padding:3px 10px;border-radius:6px;border:1px solid var(--accent);color:var(--accent);animation:dtbTagGlow 2.4s ease-in-out infinite}
 
+/* dual-tone contribution calendar (commits ◤ / activity ◢) — from the forge landing page */
+.dtb-forge{display:grid;grid-template-columns:repeat(14,11px);grid-auto-rows:11px;gap:3px;--kf-hot-rgb:var(--accent-rgb);--kf-cool-rgb:var(--pos-rgb)}
+.dtb-forge i{display:block;border-radius:2px;background:linear-gradient(135deg,rgba(var(--kf-hot-rgb),var(--c,0)) 50%,rgba(var(--kf-cool-rgb),var(--a,0)) 50%),var(--panel2);animation:dtbLight 7s ease-in-out infinite;animation-delay:calc(var(--d,0)*.07s)}
+.dtb-forge-lg{display:flex;gap:3px;align-items:center;justify-content:flex-end;margin-top:6px;font:600 8.5px ui-sans-serif,system-ui,sans-serif;color:var(--dim)}
+.dtb-forge-lg i{width:9px;height:9px;border-radius:2px;background:linear-gradient(135deg,rgba(var(--accent-rgb),var(--c,0)) 50%,rgba(var(--pos-rgb),var(--a,0)) 50%),var(--panel2)}
+.dtb-forge-lg b{font-weight:700;margin-right:5px}
+.dtb-forge-lg b.c{color:var(--accent)}.dtb-forge-lg b.a{color:var(--pos)}
+.dtb-forge-cap{font:600 8.5px ui-sans-serif,system-ui,sans-serif;color:var(--muted);margin-bottom:6px;text-align:center}
+.dtb-forge-cap b{color:var(--ink)}
+
+/* row reorder controls: ▲▼ column on the left; a press moves the row one slot up.
+   Every resort facet below moves cells by whole rows via --to (row-height units). */
+.dtb-rowmove td.dtb-arrows{width:22px;padding:2px 4px 2px 8px;color:var(--dim);font-size:8px;line-height:1.1;text-align:center}
+.dtb-rowmove .dtb-arr{display:block;cursor:pointer;color:var(--dim)}
+.dtb-rowmove .dtb-arr.press{animation:dtbArrPress 4s ease-in-out infinite;border-radius:3px}
+@keyframes dtbArrPress{0%,36%{color:var(--dim);background:transparent;box-shadow:0 0 0 0 rgba(var(--accent-rgb),0)}40%,46%{color:var(--accent);background:rgba(var(--accent-rgb),.22);box-shadow:0 0 8px rgba(var(--accent-rgb),.5)}52%,100%{color:var(--dim);background:transparent}}
+.dtb-rowmove tbody tr.mv td{animation:dtbRowMove 4s cubic-bezier(.4,0,.2,1) infinite;position:relative}
+.dtb-rowmove tbody tr.mv.lift td{z-index:2;animation-name:dtbRowMoveLift}
+@keyframes dtbRowMove{0%,46%{transform:translateY(0)}56%,92%{transform:translateY(calc(var(--to,1)*100%))}100%{transform:translateY(0)}}
+@keyframes dtbRowMoveLift{0%,46%{transform:translateY(0);box-shadow:none}48%{box-shadow:0 6px 16px rgba(0,0,0,.45),inset 0 0 0 999px rgba(var(--accent-rgb),.14)}56%,88%{transform:translateY(calc(var(--to,-1)*100%));box-shadow:0 6px 16px rgba(0,0,0,.45),inset 0 0 0 999px rgba(var(--accent-rgb),.14)}92%{transform:translateY(calc(var(--to,-1)*100%));box-shadow:none}100%{transform:translateY(0);box-shadow:none}}
+
+/* flash a clicked column header, then the rows fade and re-settle in the new order */
+.dtb-resort th.dtb-sortcol{animation:dtbColFlash 4s ease-out infinite;color:var(--accent)}
+.dtb-resort td.dtb-sortcol{animation:dtbColFlashCell 4s ease-out infinite}
+@keyframes dtbColFlash{0%,30%{box-shadow:inset 0 0 0 999px rgba(var(--accent-rgb),0)}34%{box-shadow:inset 0 0 0 999px rgba(var(--accent-rgb),.45)}44%,100%{box-shadow:inset 0 0 0 999px rgba(var(--accent-rgb),0)}}
+@keyframes dtbColFlashCell{0%,30%{box-shadow:inset 0 0 0 999px rgba(var(--accent-rgb),0)}35%{box-shadow:inset 0 0 0 999px rgba(var(--accent-rgb),.28)}46%,100%{box-shadow:inset 0 0 0 999px rgba(var(--accent-rgb),0)}}
+.dtb-resort tbody tr td{animation:dtbResort 4s cubic-bezier(.4,0,.2,1) infinite}
+@keyframes dtbResort{0%,36%{transform:translateY(0);opacity:1}44%{opacity:.1}48%{transform:translateY(calc(var(--to,0)*100%));opacity:.1}58%,90%{transform:translateY(calc(var(--to,0)*100%));opacity:1}94%{opacity:.1;transform:translateY(calc(var(--to,0)*100%))}97%{opacity:.1;transform:translateY(0)}100%{opacity:1;transform:translateY(0)}}
+.dtb-resort .dtb-sort-arrow{animation:dtbSortFlip 4s ease-in-out infinite}
+
+/* rows drop out on slight angles, then fall back in from above already resorted */
+.dtb-fall tbody tr td{animation:dtbFall 4s cubic-bezier(.3,0,.6,1) infinite;animation-delay:calc(var(--i,0)*.1s);transform-origin:20% 50%}
+@keyframes dtbFall{
+  0%,24%{transform:translateY(0) rotate(0);opacity:1}
+  26%{transform:translateY(-4%) rotate(0)}
+  42%{transform:translateY(190%) rotate(var(--rot,-5deg));opacity:0}
+  50%{transform:translateY(calc(var(--to,0)*100% - 300%)) rotate(0);opacity:0}
+  52%{opacity:1}
+  62%{transform:translateY(calc(var(--to,0)*100% + 4%)) rotate(0);opacity:1}
+  67%{transform:translateY(calc(var(--to,0)*100% - 2%))}
+  71%,90%{transform:translateY(calc(var(--to,0)*100%));opacity:1}
+  94%{transform:translateY(calc(var(--to,0)*100%));opacity:0}
+  96%{transform:translateY(0);opacity:0}
+  100%{transform:translateY(0);opacity:1}}
+.dtb-fall th .dtb-sort-arrow{animation:dtbSortFlip 4s ease-in-out infinite}
+
 /* ---- reduced motion: freeze every dtb animation on a legible frame ---- */
 @media (prefers-reduced-motion:reduce){
   [class*="dtb-"],[class*="dtb-"]::before,[class*="dtb-"]::after,.dtb-tbl *{animation:none!important}

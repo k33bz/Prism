@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Forge Flame Mark · Prism</title>
+<!-- Prism showcase sample: objects-forge-flame-mark (gallery: objects). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.kf-mark { display: block; width: 72px; height: 72px; filter: drop-shadow(0 0 14px rgba(var(--kf-hot-rgb,var(--accent-rgb)),.35)); --kf-hot: var(--accent); --kf-hot-rgb: var(--accent-rgb); --kf-cool: var(--pos); --kf-cool-rgb: var(--pos-rgb); }
+.kf-mark .kf-flame { animation: 3.2s ease-in-out 0s infinite normal none running kfFlicker; transform-origin: 32px 34px; }
+.kf-mark .kf-flame-body { fill: var(--kf-hot); }
+.kf-mark .kf-flame-tip { fill: rgba(255, 255, 255, 0.55); }
+.kf-mark .kf-flame-core { fill: var(--panel); }
+.kf-mark .kf-anvil { fill: var(--kf-cool); }
+.kf-mark .kf-anvil-hl { fill: rgba(255, 255, 255, 0.35); }
+.kf-hero .kf-mark { width: 44px; height: 44px; margin: 0px auto; }
+@keyframes kfFlicker { 
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.04) translateY(-1px); }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><svg class="kf-mark" viewBox="0 0 64 64" aria-hidden="true">
+      <g class="kf-flame">
+        <path class="kf-flame-body" d="M32 6 C36 16 44 20 44 30 a12 12 0 1 1 -24 0 C20 20 28 16 32 6 z"></path>
+        <path class="kf-flame-tip" d="M32 6 C34 14 40 18 42 26 a10 10 0 0 1 -6 -8 C34 15 33 11 32 6 z"></path>
+        <path class="kf-flame-core" d="M32 24 c2 5 6 7 6 11 a6 6 0 1 1 -12 0 c0 -4 4 -6 6 -11 z"></path>
+      </g>
+      <rect class="kf-anvil" x="14" y="50" width="36" height="7" rx="3.5"></rect>
+      <rect class="kf-anvil-hl" x="16" y="51" width="16" height="2" rx="1"></rect>
+    </svg></div></div>
+<div class="meta"><b>Forge Flame Mark</b> · <code>objects-forge-flame-mark</code><br>Animated Objects · FORGE LANDING KIT<p>The forge logomark: a flame with a hollow core that flickers over a green anvil bar, wrapped in a warm drop-shadow glow. Pure SVG, token colours, no gradient ids to collide.</p></div>
+
+</body>
+</html>
