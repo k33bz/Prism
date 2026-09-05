@@ -299,7 +299,7 @@ Regenerate with `node showcase/build.mjs` (Node 18+, Firefox or Chromium, ffmpeg
 
 ## Themes
 
-Prism is built in the **AWS Cloudscape** design language and ships in two color modes: **Cloudscape Dark** (the default) and **Cloudscape Light**. Toggle between them from the top navigation bar. The mode override reskins the entire tool — shell *and* every gallery — by swapping a shared set of CSS custom properties (`--accent`, `--info`, `--pos`, `--bg`, `--ink` …), so every element re-themes at once. Your choice persists across sessions.
+Prism is built in the **AWS Cloudscape** design language and ships in two color modes: **Cloudscape Dark** (the default) and **Cloudscape Light**. Toggle between them from the top navigation bar. The theme picker also carries the design-system packs (Duolingo, Mailchimp, Stack Overflow, Monzo, Heroku, Polaris, Primer, Ant Design, Acorn, Material 3) and three skin-only themes with no facet family of their own: **Cloudflare Orange**, **Frutiger Aero** and **Liquid Glass**, each in dark and light. The mode override reskins the entire tool — shell *and* every gallery — by swapping a shared set of CSS custom properties (`--accent`, `--info`, `--pos`, `--bg`, `--ink` …), so every element re-themes at once. Your choice persists across sessions.
 
 ---
 
