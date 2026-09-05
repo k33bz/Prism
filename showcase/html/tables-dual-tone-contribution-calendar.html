@@ -23,15 +23,21 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
 <style id="effect-css">
 .dtb-count.a { animation: 4s ease-out 0s infinite normal none running dtbCountA; }
 .dtb-count.c { animation: 4s ease-out 0s infinite normal none running dtbCountC; }
-.dtb-forge { display: grid; grid-template-columns: repeat(14, 11px); grid-auto-rows: 11px; gap: 3px; --kf-hot-rgb: var(--accent-rgb); --kf-cool-rgb: var(--pos-rgb); }
-.dtb-forge i { display: block; border-radius: 2px; background: linear-gradient(135deg,rgba(var(--kf-hot-rgb),var(--c,0)) 50%,rgba(var(--kf-cool-rgb),var(--a,0)) 50%),var(--panel2); animation-duration: 7s; animation-timing-function: ease-in-out; animation-iteration-count: infinite; animation-direction: normal; animation-fill-mode: none; animation-play-state: running; animation-name: dtbLight; animation-timeline: auto; animation-range: normal; animation-delay: calc(var(--d,0)*.07s); }
-.dtb-forge-lg { display: flex; gap: 3px; align-items: center; justify-content: flex-end; margin-top: 6px; font: 600 8.5px ui-sans-serif, system-ui, sans-serif; color: var(--dim); }
-.dtb-forge-lg i { width: 9px; height: 9px; border-radius: 2px; background: linear-gradient(135deg,rgba(var(--accent-rgb),var(--c,0)) 50%,rgba(var(--pos-rgb),var(--a,0)) 50%),var(--panel2); }
+.dtb-insp-r .v.s { color: var(--pos); }
+.dtb-rank-r.s .rk { background: var(--muted); color: rgb(11, 14, 23); }
+.dtb-forge { display: grid; grid-template-columns: repeat(14, 11px); grid-auto-rows: 11px; gap: 3px; --dtb-a-rgb: var(--info-rgb); --dtb-b-rgb: var(--crit-rgb); }
+.dtb-forge i { display: block; border-radius: 2px; background: linear-gradient(135deg,rgba(var(--dtb-a-rgb),var(--c,0)) 50%,rgba(var(--dtb-b-rgb),var(--a,0)) 50%),var(--panel2); animation-duration: 7s; animation-timing-function: ease-in-out; animation-iteration-count: infinite; animation-direction: normal; animation-fill-mode: none; animation-play-state: running; animation-name: dtbLight; animation-timeline: auto; animation-range: normal; animation-delay: calc(var(--d,0)*.07s); }
+.dtb-forge-lg { display: flex; gap: 3px; align-items: center; justify-content: flex-end; margin-top: 6px; font: 600 8.5px ui-sans-serif, system-ui, sans-serif; color: var(--dim); --dtb-a-rgb: var(--info-rgb); --dtb-b-rgb: var(--crit-rgb); }
+.dtb-forge-lg i { width: 9px; height: 9px; border-radius: 2px; background: linear-gradient(135deg,rgba(var(--dtb-a-rgb),var(--c,0)) 50%,rgba(var(--dtb-b-rgb),var(--a,0)) 50%),var(--panel2); }
 .dtb-forge-lg b { font-weight: 700; margin-right: 5px; }
-.dtb-forge-lg b.c { color: var(--accent); }
-.dtb-forge-lg b.a { color: var(--pos); }
+.dtb-forge-lg b.c { color: rgb(var(--dtb-a-rgb)); }
+.dtb-forge-lg b.a { color: rgb(var(--dtb-b-rgb)); }
 .dtb-forge-cap { font: 600 8.5px ui-sans-serif, system-ui, sans-serif; color: var(--muted); margin-bottom: 6px; text-align: center; }
 .dtb-forge-cap b { color: var(--ink); }
+.dtb-cal-wrap { position: relative; display: inline-block; }
+.dtb-sparks { position: absolute; inset: 0px; pointer-events: none; overflow: visible; --dtb-a-rgb: var(--info-rgb); --dtb-b-rgb: var(--crit-rgb); }
+.dtb-sparks i { position: absolute; bottom: 2px; left: var(--x,50%); width: 4px; height: 4px; border-radius: 50%; background: rgb(var(--sc,var(--pos-rgb))); box-shadow: 0 0 7px 2px rgba(var(--sc,var(--pos-rgb)),.7); opacity: 0; animation-name: dtbSpark; animation-duration: var(--dur,5s); animation-timing-function: linear; animation-iteration-count: infinite; animation-delay: var(--delay,0s); }
+.dtb-sparks i.s { width: 3px; height: 3px; }
 @keyframes dtbCountA { 
   0% { --dtb-n: 0; }
   55%, 100% { --dtb-n: 1284; }
@@ -45,15 +51,24 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
   14%, 60% { filter: brightness(1.15); transform: scale(1); }
   70%, 100% { filter: brightness(1); transform: scale(1); }
 }
+@keyframes dtbSpark { 
+  0% { transform: translate(0px, 0px); opacity: 0; }
+  10% { opacity: 1; }
+  60% { transform: translate(5px, -42px); opacity: 0.7; }
+  100% { transform: translate(-4px, -78px); opacity: 0; }
+}
 </style>
 </head>
 <body>
 <div class="tile"><div class="stage" id="stage"><div>
-      <div class="dtb-forge-cap"><b>1,284</b> commits · <b>3,902</b> activities in the last year</div>
+      <div class="dtb-forge-cap"><b>1,284</b> commits · <b>3,902</b> reviews in the last year</div>
+      <div class="dtb-cal-wrap">
       <div class="dtb-forge"><i style="--c:0.28;--a:0.28;--d:0"></i><i style="--c:0;--a:0;--d:1"></i><i style="--c:0;--a:0.28;--d:2"></i><i style="--c:0;--a:0;--d:3"></i><i style="--c:0;--a:0;--d:4"></i><i style="--c:0;--a:0.76;--d:5"></i><i style="--c:0;--a:0;--d:6"></i><i style="--c:0;--a:0.76;--d:7"></i><i style="--c:0;--a:0.76;--d:8"></i><i style="--c:0;--a:0;--d:9"></i><i style="--c:1;--a:0.28;--d:10"></i><i style="--c:0;--a:0;--d:11"></i><i style="--c:0.28;--a:0.76;--d:12"></i><i style="--c:0;--a:0;--d:13"></i><i style="--c:0.76;--a:0.28;--d:1"></i><i style="--c:0;--a:0;--d:2"></i><i style="--c:0;--a:0.76;--d:3"></i><i style="--c:0.76;--a:0.76;--d:4"></i><i style="--c:0.28;--a:0.52;--d:5"></i><i style="--c:0.52;--a:0.28;--d:6"></i><i style="--c:1;--a:0.28;--d:7"></i><i style="--c:0;--a:0;--d:8"></i><i style="--c:0.52;--a:0.52;--d:9"></i><i style="--c:0.76;--a:0.52;--d:10"></i><i style="--c:0;--a:0;--d:11"></i><i style="--c:0;--a:1;--d:12"></i><i style="--c:0;--a:0;--d:13"></i><i style="--c:0.76;--a:0;--d:14"></i><i style="--c:0.52;--a:1;--d:2"></i><i style="--c:0.28;--a:0.28;--d:3"></i><i style="--c:0.52;--a:0.52;--d:4"></i><i style="--c:0.52;--a:0;--d:5"></i><i style="--c:0.28;--a:0.52;--d:6"></i><i style="--c:0;--a:0;--d:7"></i><i style="--c:0.28;--a:0.76;--d:8"></i><i style="--c:0.76;--a:1;--d:9"></i><i style="--c:0.76;--a:0.52;--d:10"></i><i style="--c:0.28;--a:0;--d:11"></i><i style="--c:0.28;--a:0.28;--d:12"></i><i style="--c:0.52;--a:0;--d:13"></i><i style="--c:0.28;--a:0.28;--d:14"></i><i style="--c:0.52;--a:0.52;--d:15"></i><i style="--c:0;--a:0;--d:3"></i><i style="--c:0.52;--a:0.76;--d:4"></i><i style="--c:0;--a:1;--d:5"></i><i style="--c:0.52;--a:0.28;--d:6"></i><i style="--c:0.28;--a:0.76;--d:7"></i><i style="--c:0;--a:0;--d:8"></i><i style="--c:0;--a:0.28;--d:9"></i><i style="--c:0;--a:0.52;--d:10"></i><i style="--c:0;--a:0.28;--d:11"></i><i style="--c:0;--a:0.52;--d:12"></i><i style="--c:0.52;--a:0.76;--d:13"></i><i style="--c:0;--a:0.76;--d:14"></i><i style="--c:0.52;--a:0.76;--d:15"></i><i style="--c:0;--a:0.52;--d:16"></i><i style="--c:1;--a:1;--d:4"></i><i style="--c:0.52;--a:0.52;--d:5"></i><i style="--c:0.52;--a:0;--d:6"></i><i style="--c:0.52;--a:0;--d:7"></i><i style="--c:0;--a:0;--d:8"></i><i style="--c:0;--a:0;--d:9"></i><i style="--c:0;--a:0;--d:10"></i><i style="--c:0;--a:0.28;--d:11"></i><i style="--c:0;--a:1;--d:12"></i><i style="--c:0.52;--a:0.28;--d:13"></i><i style="--c:0.28;--a:0.76;--d:14"></i><i style="--c:0;--a:0;--d:15"></i><i style="--c:0.52;--a:0.52;--d:16"></i><i style="--c:0;--a:0;--d:17"></i></div>
-      <div class="dtb-forge-lg"><b class="c">◤ commits</b><b class="a">◢ activity</b>less <i></i><i style="--c:.28;--a:.28"></i><i style="--c:.52;--a:.52"></i><i style="--c:.76;--a:.76"></i><i style="--c:1;--a:1"></i> more</div>
+      <div class="dtb-sparks"><i style="--x:15%;--sc:var(--dtb-a-rgb);--dur:5s;--delay:-1.4s"></i><i class="s" style="--x:29%;--sc:var(--dtb-b-rgb);--dur:6s;--delay:-3.6s"></i><i class="s" style="--x:44%;--sc:var(--dtb-a-rgb);--dur:4.5s;--delay:-0.6s"></i><i style="--x:58%;--sc:var(--dtb-b-rgb);--dur:5.5s;--delay:-2.5s"></i><i style="--x:73%;--sc:var(--dtb-a-rgb);--dur:6.5s;--delay:-4.1s"></i><i class="s" style="--x:87%;--sc:var(--dtb-b-rgb);--dur:5s;--delay:-1.9s"></i></div>
+      </div>
+      <div class="dtb-forge-lg"><b class="c">◤ commits</b><b class="a">◢ reviews</b>less <i></i><i style="--c:.28;--a:.28"></i><i style="--c:.52;--a:.52"></i><i style="--c:.76;--a:.76"></i><i style="--c:1;--a:1"></i> more</div>
     </div></div></div>
-<div class="meta"><b>Dual-Tone Contribution Calendar</b> · <code>tables-dual-tone-contribution-calendar</code><br>Tables &amp; Data Layouts · MATRICES &amp; COMPARISON<p>Each day split diagonally: commits shade the upper-left triangle in the accent, other activity shades the lower-right in green, so two series share one calendar — the &quot;year at the forge&quot; heatmap from the kastroso forge landing page. Set --c and --a per cell (0 to 1).</p></div>
+<div class="meta"><b>Dual-Tone Contribution Calendar</b> · <code>tables-dual-tone-contribution-calendar</code><br>Tables &amp; Data Layouts · MATRICES &amp; COMPARISON<p>Each day split diagonally: one series shades the upper-left triangle (blue), a second shades the lower-right (violet), so two series share one calendar, with sparks in both colours rising from the busiest weeks — the &quot;year at the forge&quot; heatmap from a Forgejo landing page. Set --c and --a per cell (0 to 1); recolour with --dtb-a-rgb / --dtb-b-rgb.</p></div>
 
 </body>
 </html>

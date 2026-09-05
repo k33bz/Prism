@@ -22,6 +22,7 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
 </style>
 <style id="effect-css">
 .tile .copy.ok { border-color: var(--pos); color: var(--pos); }
+.pill.warn { color: var(--warn); }
 .pill.info { color: var(--info); }
 .logblock .ts { color: var(--dim); min-width: 72px; }
 .logblock .lv { min-width: 44px; font-weight: 700; font-size: 10px; text-transform: uppercase; }
@@ -43,9 +44,12 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
 .logstream::after { content: ""; position: absolute; left: 0px; right: 0px; bottom: 0px; height: 30px; background: linear-gradient(0deg, rgb(8, 11, 18), transparent); pointer-events: none; }
 .sess-tl .ev.ok::before { border-color: var(--pos); background: var(--pos); }
 .sess-tl .ev.err::before { border-color: var(--neg); background: var(--neg); }
+.sess-tl .ev.warn::before { border-color: var(--warn); background: var(--warn); }
 .trace-node .tn-sev.err { background: rgba(var(--neg-rgb),.15); color: var(--neg); }
+.trace-node .tn-sev.warn { background: rgba(var(--warn-rgb),.15); color: var(--warn); }
 .trace-node .tn-sev.info { background: rgba(var(--info-rgb),.15); color: var(--info); }
 .rag-score .sl { font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); }
+.flt-rack .u.warn i { background: var(--warn); box-shadow: 0 0 5px var(--warn); }
 @keyframes logIn { 
   0% { opacity: 0; transform: translateY(6px); }
   100% { opacity: 1; transform: none; }
@@ -63,7 +67,7 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
 </style>
 </head>
 <body>
-<div class="tile"><div class="stage" id="stage"><div class="logstream" id="logStream"><div class="sl"><span class="ts">09:14:00</span><span class="lv err">ERR</span><span class="m">timeout calling payments-svc</span></div><div class="sl"><span class="ts">09:14:03</span><span class="lv info">INFO</span><span class="m">autoscale: +2 tasks</span></div><div class="sl"><span class="ts">09:14:06</span><span class="lv ok">OK</span><span class="m">health check passed</span></div><div class="sl"><span class="ts">09:14:09</span><span class="lv info">INFO</span><span class="m">autoscale: +2 tasks</span></div><div class="sl"><span class="ts">09:14:12</span><span class="lv info">INFO</span><span class="m">autoscale: +2 tasks</span></div><div class="sl"><span class="ts">09:14:15</span><span class="lv ok">OK</span><span class="m">200 POST /v1/cart 19ms</span></div><div class="sl"><span class="ts">09:14:18</span><span class="lv ok">OK</span><span class="m">200 POST /v1/cart 19ms</span></div><div class="sl"><span class="ts">09:14:21</span><span class="lv err">ERR</span><span class="m">timeout calling payments-svc</span></div><div class="sl"><span class="ts">09:14:24</span><span class="lv info">INFO</span><span class="m">retry 1/3 in 200ms</span></div><div class="sl"><span class="ts">09:14:27</span><span class="lv info">INFO</span><span class="m">svc started handling request</span></div><div class="sl"><span class="ts">09:14:30</span><span class="lv ok">OK</span><span class="m">health check passed<span class="cursor"></span></span></div></div></div></div>
+<div class="tile"><div class="stage" id="stage"><div class="logstream" id="logStream"><div class="sl"><span class="ts">09:14:03</span><span class="lv err">ERR</span><span class="m">timeout calling payments-svc</span></div><div class="sl"><span class="ts">09:14:06</span><span class="lv warn">WARN</span><span class="m">pool 47/50 — backpressure</span></div><div class="sl"><span class="ts">09:14:09</span><span class="lv warn">WARN</span><span class="m">pool 47/50 — backpressure</span></div><div class="sl"><span class="ts">09:14:12</span><span class="lv info">INFO</span><span class="m">cache hit user:42 (0.4ms)</span></div><div class="sl"><span class="ts">09:14:15</span><span class="lv ok">OK</span><span class="m">health check passed</span></div><div class="sl"><span class="ts">09:14:18</span><span class="lv warn">WARN</span><span class="m">p99 latency 940ms</span></div><div class="sl"><span class="ts">09:14:21</span><span class="lv ok">OK</span><span class="m">200 GET /v1/orders 11ms</span></div><div class="sl"><span class="ts">09:14:24</span><span class="lv info">INFO</span><span class="m">flushing batch (128 records)</span></div><div class="sl"><span class="ts">09:14:27</span><span class="lv ok">OK</span><span class="m">200 POST /v1/cart 19ms</span></div><div class="sl"><span class="ts">09:14:30</span><span class="lv err">ERR</span><span class="m">timeout calling payments-svc</span></div><div class="sl"><span class="ts">09:14:33</span><span class="lv info">INFO</span><span class="m">autoscale: +2 tasks<span class="cursor"></span></span></div></div></div></div>
 <div class="meta"><b>Live Streaming Log (tail -f)</b> · <code>charts-live-streaming-log-tail-f</code><br>Charts &amp; Metrics · Log Viewers &amp; Streams<p>A console that appends a fresh line every tick and scrolls the old ones up under a fade — the live tail -f feel. Levels are colour-coded and a blinking cursor sits on the newest line. Continuously animated.</p></div>
 
 </body>
