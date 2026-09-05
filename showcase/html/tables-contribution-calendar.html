@@ -25,15 +25,28 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
 .dtb-contrib i { display: block; border-radius: 2px; background: rgba(var(--pos-rgb),var(--a,.12)); animation-duration: 7s; animation-timing-function: ease-in-out; animation-iteration-count: infinite; animation-direction: normal; animation-fill-mode: none; animation-play-state: running; animation-name: dtbLight; animation-timeline: auto; animation-range: normal; animation-delay: calc(var(--d,0)*.07s); }
 .dtb-contrib-lg { display: flex; gap: 3px; align-items: center; justify-content: flex-end; margin-top: 6px; font: 600 8.5px ui-sans-serif, system-ui, sans-serif; color: var(--dim); }
 .dtb-contrib-lg i { width: 9px; height: 9px; border-radius: 2px; background: rgba(var(--pos-rgb),var(--a,.12)); }
+.dtb-insp-r .v.s { color: var(--pos); }
+.dtb-rank-r.s .rk { background: var(--muted); color: rgb(11, 14, 23); }
+.dtb-cal-wrap { position: relative; display: inline-block; }
+.dtb-sparks { position: absolute; inset: 0px; pointer-events: none; overflow: visible; --dtb-a-rgb: var(--info-rgb); --dtb-b-rgb: var(--crit-rgb); }
+.dtb-sparks i { position: absolute; bottom: 2px; left: var(--x,50%); width: 4px; height: 4px; border-radius: 50%; background: rgb(var(--sc,var(--pos-rgb))); box-shadow: 0 0 7px 2px rgba(var(--sc,var(--pos-rgb)),.7); opacity: 0; animation-name: dtbSpark; animation-duration: var(--dur,5s); animation-timing-function: linear; animation-iteration-count: infinite; animation-delay: var(--delay,0s); }
+.dtb-sparks i.s { width: 3px; height: 3px; }
 @keyframes dtbLight { 
   0%, 8% { filter: brightness(0.6); transform: scale(0.85); }
   14%, 60% { filter: brightness(1.15); transform: scale(1); }
   70%, 100% { filter: brightness(1); transform: scale(1); }
 }
+@keyframes dtbSpark { 
+  0% { transform: translate(0px, 0px); opacity: 0; }
+  10% { opacity: 1; }
+  60% { transform: translate(5px, -42px); opacity: 0.7; }
+  100% { transform: translate(-4px, -78px); opacity: 0; }
+}
 </style>
 </head>
 <body>
 <div class="tile"><div class="stage" id="stage"><div>
+      <div class="dtb-cal-wrap">
       <div class="dtb-contrib">
         <i style="--a:.12;--d:0"></i><i style="--a:.35;--d:1"></i><i style="--a:.12;--d:2"></i><i style="--a:.6;--d:3"></i><i style="--a:.9;--d:4"></i><i style="--a:.12;--d:5"></i><i style="--a:.35;--d:6"></i><i style="--a:.12;--d:7"></i><i style="--a:.6;--d:8"></i><i style="--a:.35;--d:9"></i><i style="--a:.12;--d:10"></i><i style="--a:.9;--d:11"></i><i style="--a:.6;--d:12"></i><i style="--a:.35;--d:13"></i>
         <i style="--a:.35;--d:1"></i><i style="--a:.6;--d:2"></i><i style="--a:.35;--d:3"></i><i style="--a:.12;--d:4"></i><i style="--a:.6;--d:5"></i><i style="--a:.9;--d:6"></i><i style="--a:.12;--d:7"></i><i style="--a:.35;--d:8"></i><i style="--a:.12;--d:9"></i><i style="--a:.6;--d:10"></i><i style="--a:.35;--d:11"></i><i style="--a:.12;--d:12"></i><i style="--a:.35;--d:13"></i><i style="--a:.6;--d:14"></i>
@@ -41,9 +54,11 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
         <i style="--a:.6;--d:3"></i><i style="--a:.35;--d:4"></i><i style="--a:.12;--d:5"></i><i style="--a:.35;--d:6"></i><i style="--a:.12;--d:7"></i><i style="--a:.6;--d:8"></i><i style="--a:.35;--d:9"></i><i style="--a:.12;--d:10"></i><i style="--a:.9;--d:11"></i><i style="--a:.6;--d:12"></i><i style="--a:.12;--d:13"></i><i style="--a:.35;--d:14"></i><i style="--a:.12;--d:15"></i><i style="--a:.6;--d:16"></i>
         <i style="--a:.9;--d:4"></i><i style="--a:.12;--d:5"></i><i style="--a:.35;--d:6"></i><i style="--a:.6;--d:7"></i><i style="--a:.12;--d:8"></i><i style="--a:.35;--d:9"></i><i style="--a:.12;--d:10"></i><i style="--a:.6;--d:11"></i><i style="--a:.35;--d:12"></i><i style="--a:.12;--d:13"></i><i style="--a:.9;--d:14"></i><i style="--a:.6;--d:15"></i><i style="--a:.35;--d:16"></i><i style="--a:.12;--d:17"></i>
       </div>
+      <div class="dtb-sparks"><i style="--x:22%;--sc:var(--pos-rgb);--dur:5s;--delay:-1s"></i><i class="s" style="--x:36%;--sc:var(--pos-rgb);--dur:6s;--delay:-3.2s"></i><i style="--x:51%;--sc:var(--pos-rgb);--dur:4.5s;--delay:-2.1s"></i><i class="s" style="--x:66%;--sc:var(--pos-rgb);--dur:5.5s;--delay:-0.4s"></i><i style="--x:80%;--sc:var(--pos-rgb);--dur:6.5s;--delay:-4.6s"></i><i class="s" style="--x:93%;--sc:var(--pos-rgb);--dur:5s;--delay:-2.8s"></i></div>
+      </div>
       <div class="dtb-contrib-lg">Less <i style="--a:.12"></i><i style="--a:.35"></i><i style="--a:.6"></i><i style="--a:.9"></i> More</div>
     </div></div></div>
-<div class="meta"><b>Contribution Calendar</b> · <code>tables-contribution-calendar</code><br>Tables &amp; Data Layouts · MATRICES &amp; COMPARISON<p>The activity-square calendar: fourteen weeks of cells shaded by volume, lighting up in a diagonal sweep, with a less-to-more legend.</p></div>
+<div class="meta"><b>Contribution Calendar</b> · <code>tables-contribution-calendar</code><br>Tables &amp; Data Layouts · MATRICES &amp; COMPARISON<p>The activity-square calendar: fourteen weeks of cells shaded by volume, lighting up in a diagonal sweep, with ember sparks rising from the busiest weeks and a less-to-more legend.</p></div>
 
 </body>
 </html>

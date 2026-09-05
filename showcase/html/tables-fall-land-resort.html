@@ -29,35 +29,19 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
 .dtb-num { font-family: ui-monospace, Menlo, monospace; font-variant-numeric: tabular-nums; text-align: right !important; }
 .dtb-sort-arrow { display: inline-block; margin-left: 4px; font-size: 8px; transform-origin: 50% 55%; animation: 4s ease-in-out 0s infinite normal none running dtbSortFlip; }
 .dtb-row .dtb-num { text-align: right; }
-.dtb-resort .dtb-sort-arrow { animation: 4s ease-in-out 0s infinite normal none running dtbSortFlip; }
-.dtb-fall tbody tr td { animation-duration: 4s; animation-timing-function: cubic-bezier(0.3, 0, 0.6, 1); animation-iteration-count: infinite; animation-direction: normal; animation-fill-mode: none; animation-play-state: running; animation-name: dtbFall; animation-timeline: auto; animation-range: normal; animation-delay: calc(var(--i,0)*.1s); transform-origin: 20% 50%; }
-.dtb-fall th .dtb-sort-arrow { animation: 4s ease-in-out 0s infinite normal none running dtbSortFlip; }
 @keyframes dtbSortFlip { 
   0%, 42% { transform: rotate(0deg); }
   50%, 92% { transform: rotate(180deg); }
   100% { transform: rotate(360deg); }
 }
-@keyframes dtbFall { 
-  0%, 24% { transform: translateY(0px) rotate(0deg); opacity: 1; }
-  26% { transform: translateY(-4%) rotate(0deg); }
-  42% { transform: translateY(190%) rotate(var(--rot,-5deg)); opacity: 0; }
-  50% { transform: translateY(calc(var(--to,0)*100% - 300%)) rotate(0); opacity: 0; }
-  52% { opacity: 1; }
-  62% { transform: translateY(calc(var(--to,0)*100% + 4%)) rotate(0); opacity: 1; }
-  67% { transform: translateY(calc(var(--to,0)*100% - 2%)); }
-  71%, 90% { transform: translateY(calc(var(--to,0)*100%)); opacity: 1; }
-  94% { transform: translateY(calc(var(--to,0)*100%)); opacity: 0; }
-  96% { transform: translateY(0px); opacity: 0; }
-  100% { transform: translateY(0px); opacity: 1; }
-}
 </style>
 </head>
 <body>
 <div class="tile"><div class="stage" id="stage"><table class="dtb-tbl dtb-fall"><thead><tr><th>Player</th><th class="dtb-num">Score<span class="dtb-sort-arrow">▼</span></th><th class="dtb-num">Wins</th></tr></thead><tbody>
-      <tr style="--to:1;--i:0;--rot:-5deg"><td>Nova</td><td class="dtb-num">7,940</td><td class="dtb-num">31</td></tr>
-      <tr style="--to:-1;--i:1;--rot:4deg"><td>Kastro</td><td class="dtb-num">9,812</td><td class="dtb-num">44</td></tr>
+      <tr style="--to:1;--i:0;--rot:-5deg"><td>Comet</td><td class="dtb-num">7,940</td><td class="dtb-num">31</td></tr>
+      <tr style="--to:-1;--i:1;--rot:4deg"><td>Atlas</td><td class="dtb-num">9,812</td><td class="dtb-num">44</td></tr>
       <tr style="--to:1;--i:2;--rot:-3deg"><td>Pixel</td><td class="dtb-num">5,220</td><td class="dtb-num">18</td></tr>
-      <tr style="--to:-1;--i:3;--rot:6deg"><td>Fayte</td><td class="dtb-num">8,105</td><td class="dtb-num">36</td></tr>
+      <tr style="--to:-1;--i:3;--rot:6deg"><td>Ember</td><td class="dtb-num">8,105</td><td class="dtb-num">36</td></tr>
     </tbody></table></div></div>
 <div class="meta"><b>Fall + Land Resort</b> · <code>tables-fall-land-resort</code><br>Tables &amp; Data Layouts · DATA TABLES<p>The rows tumble out of the table on slight angles, one after another, then drop back in from above already in the new order, landing with a small bounce — the theatrical resort. Offsets in --to, tilt in --rot.</p></div>
 

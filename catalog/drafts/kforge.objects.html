@@ -1,6 +1,6 @@
 <style>
 /* ==== Forge landing kit (objects) — namespaced kf-* / kf* ====
-   Ported from the kastroso forge landing page. Colour rides two knobs so the whole
+   Ported from a self-hosted Forgejo landing page. Colour rides two knobs so the whole
    kit re-tints with the theme: --kf-hot (embers, flame; default --accent) and
    --kf-cool (anvil bar, green embers; default --pos). Pure CSS/SVG, no JS. */
 .kf-embers{position:relative;width:100%;max-width:330px;height:150px;border-radius:12px;overflow:hidden;
@@ -44,7 +44,7 @@
 .kf-hero .kf-embers{position:absolute;inset:0;max-width:none;height:auto;border-radius:0;background:none}
 .kf-hero-in{position:relative;z-index:2;padding:22px 12px 0}
 .kf-hero .kf-mark{width:44px;height:44px;margin:0 auto}
-.kf-hero-title{margin:8px 0 2px;font:800 26px/1.05 ui-sans-serif,system-ui,sans-serif;letter-spacing:-.02em;color:var(--ink)}
+.kf-hero-title{margin:8px 0 2px;font:800 22px/1.05 ui-sans-serif,system-ui,sans-serif;letter-spacing:-.02em;color:var(--ink)}
 .kf-hero-title span{display:inline-block;background-image:linear-gradient(100deg,var(--kf-hot),rgba(255,255,255,.75));-webkit-background-clip:text;background-clip:text;color:transparent}
 .kf-hero-title span::after{content:"";display:block;height:4px;border-radius:2px;margin-top:.06em;background:linear-gradient(90deg,rgba(var(--kf-cool-rgb),.55),var(--kf-cool))}
 .kf-hero-tag{position:relative;height:1.4em;margin:6px 0 0;font:500 11.5px/1.4 ui-sans-serif,system-ui,sans-serif;color:var(--muted)}
@@ -66,7 +66,7 @@
 
   <div class="tile is-new" data-ctype="object-backdrop" data-interact="auto-play"><div class="stage">
     <div class="kf-embers"><i></i><i class="g"></i><i></i><i></i><i class="g"></i><i></i><i></i><i class="g"></i><i></i><i></i><i class="g"></i><i></i><i></i><i class="g"></i><div class="kf-embers-content">Rising embers 🔥</div></div>
-  </div><div class="meta"><div class="nm">Rising Embers</div><span class="ref">.kf-embers</span><div class="desc">Hot sparks drift up from the bottom edge on staggered arcs, orange with a few green ones mixed in — the ambient backdrop from the kastroso forge landing page. Tint with <code>--kf-hot</code> / <code>--kf-cool</code>; add or remove <code>&lt;i&gt;</code> elements to change density.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+  </div><div class="meta"><div class="nm">Rising Embers</div><span class="ref">.kf-embers</span><div class="desc">Hot sparks drift up from the bottom edge on staggered arcs, orange with a few green ones mixed in — the ambient backdrop from a Forgejo landing page. Tint with <code>--kf-hot</code> / <code>--kf-cool</code>; add or remove <code>&lt;i&gt;</code> elements to change density.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
   <div class="tile is-new" data-ctype="object-icon" data-interact="auto-play"><div class="stage">
     <svg class="kf-mark" viewBox="0 0 64 64" aria-hidden="true">
@@ -85,7 +85,7 @@
       <div class="kf-embers"><i></i><i class="g"></i><i></i><i></i><i class="g"></i><i></i><i></i><i class="g"></i><i></i><i></i><i class="g"></i><i></i><i></i><i class="g"></i></div>
       <div class="kf-hero-in">
         <svg class="kf-mark" viewBox="0 0 64 64" aria-hidden="true"><g class="kf-flame"><path class="kf-flame-body" d="M32 6 C36 16 44 20 44 30 a12 12 0 1 1 -24 0 C20 20 28 16 32 6 z"/><path class="kf-flame-core" d="M32 24 c2 5 6 7 6 11 a6 6 0 1 1 -12 0 c0 -4 4 -6 6 -11 z"/></g><rect class="kf-anvil" x="14" y="50" width="36" height="7" rx="3.5"/></svg>
-        <h1 class="kf-hero-title">kastroso <span>forge</span></h1>
+        <h1 class="kf-hero-title">self-hosted <span>forgejo</span></h1>
         <p class="kf-hero-tag"><span>strike while the iron is hot.</span><span>hot metal, cold storage.</span><span>every commit, hammered home.</span><span>quench your code.</span></p>
         <div class="kf-hero-btns"><span class="p">Sign in</span><span>Explore</span></div>
       </div>

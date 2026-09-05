@@ -2,7 +2,7 @@
 
 Every effect in Prism's **FX Store** gallery, recorded as a looping GIF.
 
-**148 effects** · 131 animated · 6.8 MB of GIF · click any GIF to open its standalone HTML sample (raw file; open it locally, GitHub shows source).
+**154 effects** · 137 animated · 7.2 MB of GIF · click any GIF to open its standalone HTML sample (raw file; open it locally, GitHub shows source).
 
 [← Showcase index](../README.md)
 
@@ -177,5 +177,7 @@ Every effect in Prism's **FX Store** gallery, recorded as a looping GIF.
 ## Pokémon Battle
 
 <table>
-<tr><td align="center" valign="top" width="33%"><a href="../html/fx-pkmn-mega-brave.html"><img src="../gif/fx-pkmn-mega-brave.gif" width="300" alt="Mega Brave"></a><br><b>Mega Brave</b><br><sub><code>fx-pkmn-mega-brave</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-pkmn-aura-jab.html"><img src="../gif/fx-pkmn-aura-jab.gif" width="300" alt="Aura Jab"></a><br><b>Aura Jab</b><br><sub><code>fx-pkmn-aura-jab</code></sub></td></tr>
+<tr><td align="center" valign="top" width="33%"><a href="../html/fx-pkmn-mega-brave.html"><img src="../gif/fx-pkmn-mega-brave.gif" width="300" alt="Mega Brave"></a><br><b>Mega Brave</b><br><sub><code>fx-pkmn-mega-brave</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-pkmn-aura-jab.html"><img src="../gif/fx-pkmn-aura-jab.gif" width="300" alt="Aura Jab"></a><br><b>Aura Jab</b><br><sub><code>fx-pkmn-aura-jab</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-pkmn-phantom-dive.html"><img src="../gif/fx-pkmn-phantom-dive.gif" width="300" alt="Phantom Dive"></a><br><b>Phantom Dive</b><br><sub><code>fx-pkmn-phantom-dive</code></sub></td></tr>
+<tr><td align="center" valign="top" width="33%"><a href="../html/fx-pkmn-powerful-hand.html"><img src="../gif/fx-pkmn-powerful-hand.gif" width="300" alt="Powerful Hand"></a><br><b>Powerful Hand</b><br><sub><code>fx-pkmn-powerful-hand</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-pkmn-superb-scissors.html"><img src="../gif/fx-pkmn-superb-scissors.gif" width="300" alt="Superb Scissors"></a><br><b>Superb Scissors</b><br><sub><code>fx-pkmn-superb-scissors</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-pkmn-wild-press.html"><img src="../gif/fx-pkmn-wild-press.gif" width="300" alt="Wild Press"></a><br><b>Wild Press</b><br><sub><code>fx-pkmn-wild-press</code></sub></td></tr>
+<tr><td align="center" valign="top" width="33%"><a href="../html/fx-pkmn-shooting-moons.html"><img src="../gif/fx-pkmn-shooting-moons.gif" width="300" alt="Shooting Moons"></a><br><b>Shooting Moons</b><br><sub><code>fx-pkmn-shooting-moons</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/fx-pkmn-night-joker.html"><img src="../gif/fx-pkmn-night-joker.gif" width="300" alt="Night Joker"></a><br><b>Night Joker</b><br><sub><code>fx-pkmn-night-joker</code></sub></td></tr>
 </table>

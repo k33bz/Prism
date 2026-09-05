@@ -1,5 +1,5 @@
 {
-  "count": 2729,
+  "count": 2735,
   "effects": [
     {
       "id": "charts-big-metric-count-up",
@@ -1828,10 +1828,10 @@
         "sl",
         "ts",
         "lv",
-        "info",
-        "m",
-        "ok",
         "err",
+        "m",
+        "info",
+        "ok",
         "warn",
         "cursor"
       ],
@@ -10001,6 +10001,242 @@
       "description": "Mega Brave's little sibling: the same blue fist and aura corridor at 60% size snapping a quick jab, the orange crescent popping into a small ring on impact. No helix; it would not read at jab speed."
     },
     {
+      "id": "fx-pkmn-phantom-dive",
+      "name": "Phantom Dive",
+      "gallery": "fx",
+      "category": "Pokémon Battle",
+      "ref": ".fx-pkpd",
+      "classes": [
+        "fx-pkpd",
+        "fx-pkpd-card",
+        "df",
+        "b1",
+        "bp",
+        "b2",
+        "b3",
+        "fx-pkpd-trail",
+        "fx-pkpd-dart",
+        "fx-pkpd-d-fin",
+        "fx-pkpd-d-body",
+        "fx-pkpd-d-head",
+        "fx-pkpd-d-eye",
+        "fx-pkpd-ring",
+        "fx-pkpd-flash",
+        "fx-pkpd-w",
+        "w1",
+        "w2",
+        "w3"
+      ],
+      "params": [],
+      "tags": [
+        "fx",
+        "animated",
+        "new"
+      ],
+      "componentType": "fx-scene",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "Dragapult ex's meta-defining dive: a spectral teal dart plunges onto the defending card and bursts purple, then three phantom wisps arc down to the bench and bank their damage counters, each bench card flaring as its counters land."
+    },
+    {
+      "id": "fx-pkmn-powerful-hand",
+      "name": "Powerful Hand",
+      "gallery": "fx",
+      "category": "Pokémon Battle",
+      "ref": ".fx-pkph",
+      "classes": [
+        "fx-pkph",
+        "fx-pkph-fan",
+        "fx-pkph-card",
+        "fx-pkph-hand",
+        "fx-pkph-h-body",
+        "fx-pkph-h-core",
+        "fx-pkph-r",
+        "r2"
+      ],
+      "params": [],
+      "tags": [
+        "fx",
+        "animated",
+        "new"
+      ],
+      "componentType": "fx-scene",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "Alakazam's hand IS the weapon: a little card-fan shimmers up during the wind-up, then a giant translucent psychic hand presses DOWN onto the defending card, pink ripple rings spreading from the press as the card squashes."
+    },
+    {
+      "id": "fx-pkmn-superb-scissors",
+      "name": "Superb Scissors",
+      "gallery": "fx",
+      "category": "Pokémon Battle",
+      "ref": ".fx-pksc",
+      "classes": [
+        "fx-pksc",
+        "fx-pksc-card",
+        "fx-pksc-bl",
+        "b1",
+        "b2",
+        "fx-pksc-sl",
+        "s1",
+        "s2",
+        "fx-pksc-ch",
+        "c1",
+        "c2",
+        "c3"
+      ],
+      "params": [],
+      "tags": [
+        "fx",
+        "animated",
+        "new"
+      ],
+      "componentType": "fx-scene",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "Crustle's bite, seen from the receiving end: two huge chitinous blades X-snap across the defending card in under a beat - white slash flash at the crossing, shell chips flying, the whole stage jolting."
+    },
+    {
+      "id": "fx-pkmn-wild-press",
+      "name": "Wild Press",
+      "gallery": "fx",
+      "category": "Pokémon Battle",
+      "ref": ".fx-pkwp",
+      "classes": [
+        "fx-pkwp",
+        "fx-pkwp-card",
+        "at",
+        "df",
+        "fx-pkwp-sh",
+        "fx-pkwp-palm",
+        "fx-pkwp-p-body",
+        "fx-pkwp-p-pad",
+        "fx-pkwp-ring",
+        "fx-pkwp-du",
+        "d1",
+        "d2",
+        "d3",
+        "fx-pkwp-rc",
+        "r1",
+        "r2",
+        "r3"
+      ],
+      "params": [],
+      "tags": [
+        "fx",
+        "animated",
+        "new"
+      ],
+      "componentType": "fx-scene",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "Hariyama's 210-for-70-back: a shadow grows on the defending card, the massive open palm slams from above with a flattened ground shockwave and dust - then the recoil dust cloud puffs on Hariyama's own card as its own late beat."
+    },
+    {
+      "id": "fx-pkmn-shooting-moons",
+      "name": "Shooting Moons",
+      "gallery": "fx",
+      "category": "Pokémon Battle",
+      "ref": ".fx-pksm",
+      "classes": [
+        "fx-pksm",
+        "fx-pksm-card",
+        "fx-pksm-m",
+        "m1",
+        "fx-pksm-moon",
+        "m2",
+        "m3",
+        "fx-pksm-sp",
+        "p1",
+        "p2",
+        "p3",
+        "p4",
+        "fx-pksm-burst",
+        "fx-pksm-st",
+        "t1",
+        "t2",
+        "t3",
+        "t4"
+      ],
+      "params": [],
+      "tags": [
+        "fx",
+        "animated",
+        "new"
+      ],
+      "componentType": "fx-scene",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "Mega Clefable ex throws crescent moons like blades: three pink-and-gold crescents spin and bob across the corridor, shedding gold sparkles, and burst into stars on the defending card."
+    },
+    {
+      "id": "fx-pkmn-night-joker",
+      "name": "Night Joker",
+      "gallery": "fx",
+      "category": "Pokémon Battle",
+      "ref": ".fx-pknj",
+      "classes": [
+        "fx-pknj",
+        "fx-pknj-card",
+        "fx-pknj-dim",
+        "fx-pknj-t",
+        "t1",
+        "t2",
+        "t3",
+        "fx-pknj-c",
+        "f1",
+        "f2",
+        "f3",
+        "f4"
+      ],
+      "params": [],
+      "tags": [
+        "fx",
+        "animated",
+        "new"
+      ],
+      "componentType": "fx-scene",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "N's Zoroark ex's dark illusion: the zone dims - subtly, never a full flash - then a three-line magenta claw-swipe with a white-hot core tears across the defending card and illusory card-shapes flutter away from the tear."
+    },
+    {
       "id": "lab-fade-in",
       "name": "Fade In",
       "gallery": "lab",
@@ -17364,9 +17600,9 @@
         "gate",
         "experts",
         "expert",
-        "on",
         "ed",
         "ew",
+        "on",
         "cap",
         "pr-playbtn"
       ],
@@ -22481,7 +22717,7 @@
       "isFixed": false,
       "addedOn": "2026-09-04",
       "updatedOn": null,
-      "description": "Hot sparks drift up from the bottom edge on staggered arcs, orange with a few green ones mixed in — the ambient backdrop from the kastroso forge landing page. Tint with --kf-hot / --kf-cool; add or remove <i> elements to change density."
+      "description": "Hot sparks drift up from the bottom edge on staggered arcs, orange with a few green ones mixed in — the ambient backdrop from a Forgejo landing page. Tint with --kf-hot / --kf-cool; add or remove <i> elements to change density."
     },
     {
       "id": "objects-forge-flame-mark",
@@ -41279,7 +41515,6 @@
       "params": [],
       "tags": [
         "tables",
-        "animated",
         "new"
       ],
       "componentType": null,
@@ -42015,7 +42250,10 @@
       "category": "MATRICES & COMPARISON",
       "ref": ".dtb-contrib",
       "classes": [
+        "dtb-cal-wrap",
         "dtb-contrib",
+        "dtb-sparks",
+        "s",
         "dtb-contrib-lg"
       ],
       "params": [],
@@ -42033,7 +42271,7 @@
       "isFixed": false,
       "addedOn": "2026-09-04",
       "updatedOn": null,
-      "description": "The activity-square calendar: fourteen weeks of cells shaded by volume, lighting up in a diagonal sweep, with a less-to-more legend."
+      "description": "The activity-square calendar: fourteen weeks of cells shaded by volume, lighting up in a diagonal sweep, with ember sparks rising from the busiest weeks and a less-to-more legend."
     },
     {
       "id": "tables-dual-tone-contribution-calendar",
@@ -42043,7 +42281,10 @@
       "ref": ".dtb-forge",
       "classes": [
         "dtb-forge-cap",
+        "dtb-cal-wrap",
         "dtb-forge",
+        "dtb-sparks",
+        "s",
         "dtb-forge-lg",
         "c",
         "a"
@@ -42065,7 +42306,7 @@
       "isFixed": false,
       "addedOn": "2026-09-04",
       "updatedOn": null,
-      "description": "Each day split diagonally: commits shade the upper-left triangle in the accent, other activity shades the lower-right in green, so two series share one calendar — the \"year at the forge\" heatmap from the kastroso forge landing page. Set --c and --a per cell (0 to 1)."
+      "description": "Each day split diagonally: one series shades the upper-left triangle (blue), a second shades the lower-right (violet), so two series share one calendar, with sparks in both colours rising from the busiest weeks — the \"year at the forge\" heatmap from a Forgejo landing page. Set --c and --a per cell (0 to 1); recolour with --dtb-a-rgb / --dtb-b-rgb."
     },
     {
       "id": "tables-key-value-with-leaders",

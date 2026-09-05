@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Night Joker · Prism</title>
+<!-- Prism showcase sample: fx-pkmn-night-joker (gallery: fx). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.fx-pksm-st.t2 { --dx: 22px; --dy: -24px; animation-delay: 0.04s; background: var(--c1); }
+.fx-pksm-st.t3 { --dx: -24px; --dy: -20px; animation-delay: 0.08s; }
+.fx-pksm-st.t1 { --dx: -6px; --dy: -30px; }
+.fx-pknj { position: relative; width: 100%; max-width: 330px; height: 150px; border-radius: 12px; overflow: hidden; --c1: var(--crit); --c1-rgb: var(--crit-rgb); background: radial-gradient(130% 100% at 50% 50%,rgba(var(--c1-rgb),.11),rgba(0,0,0,0) 72%),#0b0e15; border: 1px solid rgba(var(--c1-rgb),.35); }
+.fx-pknj-card { position: absolute; left: 141px; top: 41px; width: 48px; height: 64px; border-radius: 4px; border: 1.5px solid rgba(255, 255, 255, 0.4); background: linear-gradient(160deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.03)); }
+.fx-pknj-dim { position: absolute; inset: 0px; background: rgb(5, 2, 8); opacity: 0; animation: 2.8s ease-in-out 0s infinite normal none running fxPknjDim; }
+.fx-pknj-t { position: absolute; left: 165px; top: 0px; width: 120px; height: 6px; margin-left: -60px; border-radius: 3px; opacity: 0; transform: rotate(-24deg); background: linear-gradient(90deg,rgba(var(--c1-rgb),0),var(--c1) 16%,#fff 50%,var(--c1) 84%,rgba(var(--c1-rgb),0)); box-shadow: 0 0 10px rgba(var(--c1-rgb),.9),0 3px 0 rgba(0,0,0,.6); animation: 2.8s cubic-bezier(0.7, 0.02, 0.3, 1) 0s infinite normal none running fxPknjTear; }
+.fx-pknj-t.t1 { top: 56px; }
+.fx-pknj-t.t2 { top: 72px; animation-delay: 0.06s; }
+.fx-pknj-t.t3 { top: 88px; animation-delay: 0.12s; }
+.fx-pknj-c { position: absolute; left: 163px; top: 70px; width: 14px; height: 19px; border-radius: 2px; opacity: 0; background: linear-gradient(155deg,#f6ecf8,rgba(var(--c1-rgb),.5)); border: 1.5px solid var(--c1); box-shadow: 0 0 7px rgba(var(--c1-rgb),.5); animation: 2.8s ease-out 0s infinite normal none running fxPknjFlut; }
+.fx-pknj-c.f2 { --dx: 44px; --dy: -40px; animation-delay: 0.07s; }
+.fx-pknj-c.f3 { --dx: -40px; --dy: -34px; animation-delay: 0.14s; }
+.fx-pknj-c.f4 { --dx: 14px; --dy: -52px; animation-delay: 0.2s; }
+.fx-pknj-c.f1 { --dx: -14px; --dy: -46px; }
+@keyframes fxPknjDim { 
+  0%, 6% { opacity: 0; }
+  22% { opacity: 0.34; }
+  46% { opacity: 0.26; }
+  60%, 100% { opacity: 0; }
+}
+@keyframes fxPknjTear { 
+  0%, 30% { opacity: 0; transform: rotate(-24deg) scaleX(0.05); }
+  36% { opacity: 1; transform: rotate(-24deg) scaleX(1.04); }
+  52% { opacity: 1; transform: rotate(-24deg) scaleX(1.04); }
+  60%, 100% { opacity: 0; transform: rotate(-24deg) scaleX(1.04); }
+}
+@keyframes fxPknjFlut { 
+  0%, 46% { opacity: 0; transform: translate(0px, 0px) rotate(0deg) scaleX(1); }
+  52% { opacity: 0.95; }
+  64% { transform: translate(calc(var(--dx,20px)*.4),calc(var(--dy,-40px)*.45)) rotate(60deg) scaleX(.35); }
+  76% { opacity: 0.7; transform: translate(calc(var(--dx,20px)*.75),calc(var(--dy,-40px)*.8)) rotate(140deg) scaleX(1); }
+  88%, 100% { opacity: 0; transform: translate(var(--dx,20px),var(--dy,-40px)) rotate(220deg) scaleX(.4); }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="fx-pknj" role="img" aria-label="Night Joker: the stage dims, a magenta claw-swipe with a white-hot core tears the defending card, and illusory card-shapes flutter away">
+    <i class="fx-pknj-card"></i>
+    <i class="fx-pknj-dim"></i>
+    <i class="fx-pknj-t t1"></i><i class="fx-pknj-t t2"></i><i class="fx-pknj-t t3"></i>
+    <i class="fx-pknj-c f1"></i><i class="fx-pknj-c f2"></i><i class="fx-pknj-c f3"></i><i class="fx-pknj-c f4"></i>
+  </div></div></div>
+<div class="meta"><b>Night Joker</b> · <code>fx-pkmn-night-joker</code><br>FX Store · Pokémon Battle<p>N's Zoroark ex's dark illusion: the zone dims - subtly, never a full flash - then a three-line magenta claw-swipe with a white-hot core tears across the defending card and illusory card-shapes flutter away from the tear.</p></div>
+
+</body>
+</html>
