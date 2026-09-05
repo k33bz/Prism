@@ -2,7 +2,7 @@
 
 Every effect in Prism's **Notifications & Status** gallery, recorded as a looping GIF.
 
-**52 effects** · 52 animated · 621 KB of GIF · click any GIF to open its standalone HTML sample (raw file; open it locally, GitHub shows source).
+**55 effects** · 55 animated · 742 KB of GIF · click any GIF to open its standalone HTML sample (raw file; open it locally, GitHub shows source).
 
 [← Showcase index](../README.md)
 
@@ -59,5 +59,6 @@ Every effect in Prism's **Notifications & Status** gallery, recorded as a loopin
 ## PRESENCE & STATUS
 
 <table>
-<tr><td align="center" valign="top" width="33%"><a href="../html/notify-presence-status-set.html"><img src="../gif/notify-presence-status-set.gif" width="300" alt="Presence Status Set"></a><br><b>Presence Status Set</b><br><sub><code>notify-presence-status-set</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/notify-live-avatar-stack-status-rings.html"><img src="../gif/notify-live-avatar-stack-status-rings.gif" width="300" alt="Live Avatar Stack (Status Rings)"></a><br><b>Live Avatar Stack (Status Rings)</b><br><sub><code>notify-live-avatar-stack-status-rings</code></sub></td></tr>
+<tr><td align="center" valign="top" width="33%"><a href="../html/notify-presence-status-set.html"><img src="../gif/notify-presence-status-set.gif" width="300" alt="Presence Status Set"></a><br><b>Presence Status Set</b><br><sub><code>notify-presence-status-set</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/notify-live-avatar-stack-status-rings.html"><img src="../gif/notify-live-avatar-stack-status-rings.gif" width="300" alt="Live Avatar Stack (Status Rings)"></a><br><b>Live Avatar Stack (Status Rings)</b><br><sub><code>notify-live-avatar-stack-status-rings</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/notify-avatar-shapes-2d.html"><img src="../gif/notify-avatar-shapes-2d.gif" width="300" alt="Avatar Shapes 2D"></a><br><b>Avatar Shapes 2D</b><br><sub><code>notify-avatar-shapes-2d</code></sub></td></tr>
+<tr><td align="center" valign="top" width="33%"><a href="../html/notify-avatar-shapes-3d.html"><img src="../gif/notify-avatar-shapes-3d.gif" width="300" alt="Avatar Shapes 3D"></a><br><b>Avatar Shapes 3D</b><br><sub><code>notify-avatar-shapes-3d</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/notify-shaped-avatar-stack.html"><img src="../gif/notify-shaped-avatar-stack.gif" width="300" alt="Shaped Avatar Stack"></a><br><b>Shaped Avatar Stack</b><br><sub><code>notify-shaped-avatar-stack</code></sub></td></tr>
 </table>

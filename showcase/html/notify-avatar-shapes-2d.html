@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Avatar Shapes 2D · Prism</title>
+<!-- Prism showcase sample: notify-avatar-shapes-2d (gallery: notify). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.ns-presence.ns-st-away { --ns-st: var(--warn); --ns-st-rgb: var(--warn-rgb); }
+.ns-presence.ns-st-busy, .ns-presence.ns-st-dnd { --ns-st: var(--neg); --ns-st-rgb: var(--neg-rgb); }
+.ns-presence.ns-st-ooo { --ns-st: var(--crit); --ns-st-rgb: var(--crit-rgb); }
+.ns-presence.ns-st-offline { --ns-st: var(--dim); --ns-st-rgb: var(--dim-rgb,128,128,128); }
+.ns-presence[class*="ns-st-"]:not(.ns-st-available) .ns-on::after { display: none; }
+.ns-presence.ns-st-away .ns-on::before { inset: 2px; background: radial-gradient(circle at 62% 38%,var(--panel) 0 2.2px,transparent 2.6px),linear-gradient(90deg,transparent 45%,var(--panel) 45% 55%,transparent 55%); opacity: 0.9; }
+.ns-presence.ns-st-ooo .ns-on { background: var(--panel); box-shadow: inset 0 0 0 2.5px var(--ns-st); }
+.ns-presence.ns-st-ooo .ns-on::before { inset: 0px; background: linear-gradient(45deg,transparent 42%,var(--ns-st) 42% 58%,transparent 58%); clip-path: polygon(28% 72%, 72% 28%, 72% 72%); }
+.ns-presence.ns-st-offline .ns-on { background: var(--panel); box-shadow: inset 0 0 0 2px var(--ns-st); }
+.ns-avstack-live .ns-a.ns-st-available { --ns-st: var(--pos); --ns-st-rgb: var(--pos-rgb); animation: 2.4s ease-in-out 0s infinite normal none running nsRingGlow; }
+.ns-avstack-live .ns-a.ns-st-away { --ns-st: var(--warn); --ns-st-rgb: var(--warn-rgb); }
+.ns-avstack-live .ns-a.ns-st-busy, .ns-avstack-live .ns-a.ns-st-dnd { --ns-st: var(--neg); --ns-st-rgb: var(--neg-rgb); }
+.ns-avstack-live .ns-a.ns-st-ooo { --ns-st: var(--crit); --ns-st-rgb: var(--crit-rgb); }
+.ns-avstack-live .ns-a.ns-st-offline { --ns-st: var(--dim); --ns-st-rgb: var(--dim-rgb,128,128,128); filter: saturate(0.4); }
+.ns-shp { position: relative; width: 40px; height: 40px; --ns-st: var(--pos); --ns-st-rgb: var(--pos-rgb); filter: drop-shadow(0 0 5px rgba(var(--ns-st-rgb),.6)); }
+.ns-shp .ns-shp-ring { position: absolute; inset: 0px; background: var(--ns-st); }
+.ns-shp .ns-shp-face { position: absolute; inset: 3px; display: grid; place-items: center; background: linear-gradient(135deg,var(--info),var(--crit)); color: rgb(255, 255, 255); font: 800 12px ui-sans-serif, system-ui, sans-serif; }
+.ns-shp.ns-st-away { --ns-st: var(--warn); --ns-st-rgb: var(--warn-rgb); }
+.ns-shp.ns-st-busy, .ns-shp.ns-st-dnd { --ns-st: var(--neg); --ns-st-rgb: var(--neg-rgb); }
+.ns-shp.ns-st-ooo { --ns-st: var(--crit); --ns-st-rgb: var(--crit-rgb); }
+.ns-shp.ns-st-offline { --ns-st: var(--dim); --ns-st-rgb: var(--dim-rgb,128,128,128); }
+.ns-shp-squircle > * { border-radius: 38%; }
+.ns-shp-hex > * { clip-path: polygon(50% 0px, 100% 25%, 100% 75%, 50% 100%, 0px 75%, 0px 25%); }
+.ns-shp-diamond > * { clip-path: polygon(50% 0px, 100% 50%, 50% 100%, 0px 50%); }
+.ns-shp-shield > * { clip-path: polygon(0px 0px, 100% 0px, 100% 62%, 50% 100%, 0px 62%); }
+.ns-shp-octagon > * { clip-path: polygon(30% 0px, 70% 0px, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0px 70%, 0px 30%); }
+.ns-shp-tri > * { clip-path: polygon(50% 0px, 100% 100%, 0px 100%); }
+.ns-shp-pent > * { clip-path: polygon(50% 0px, 100% 38%, 82% 100%, 18% 100%, 0px 38%); }
+.ns-shp-star > * { clip-path: polygon(50% 0px, 63% 34%, 100% 38%, 72% 62%, 80% 100%, 50% 80%, 20% 100%, 28% 62%, 0px 38%, 37% 34%); }
+.ns-shp-tri .ns-shp-face { inset: 6px 4px 3px; }
+.ns-shp-star .ns-shp-face { font-size: 10px; }
+.ns-shp-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px 12px; width: 260px; max-width: 100%; }
+.ns-shp-row .ns-shp-item { display: flex; flex-direction: column; align-items: center; gap: 5px; font: 600 9px ui-sans-serif, system-ui, sans-serif; color: var(--muted); letter-spacing: 0.03em; }
+.ns-shp-sphere .ns-shp-face { inset: 2px; border-radius: 50%; background: radial-gradient(circle at 32% 28%,rgba(255,255,255,.75) 0,rgba(255,255,255,.15) 22%,rgba(0,0,0,0) 45%),radial-gradient(circle at 70% 75%,rgba(0,0,0,.35),rgba(0,0,0,0) 50%),var(--ns-st); box-shadow: rgba(0, 0, 0, 0.35) 0px 6px 10px; }
+.ns-shp-gem .ns-shp-face { inset: 3px; clip-path: polygon(50% 0px, 100% 30%, 82% 100%, 18% 100%, 0px 30%); background: conic-gradient(from 210deg at 50% 38%,rgba(255,255,255,.55),rgba(var(--ns-st-rgb),1) 30%,rgba(0,0,0,.35) 55%,rgba(var(--ns-st-rgb),.9) 75%,rgba(255,255,255,.4) 100%); animation: 2.6s ease-in-out 0s infinite normal none running nsShpSparkle; }
+.ns-shp-gem .ns-shp-ring { clip-path: polygon(50% 0px, 100% 30%, 82% 100%, 18% 100%, 0px 30%); }
+.ns-avstack-live.ns-avstack-shapes .ns-shp { width: 34px; height: 34px; margin-left: -8px; }
+.ns-avstack-live.ns-avstack-shapes .ns-shp:first-child { margin-left: 0px; }
+.ns-avstack-live.ns-avstack-shapes .ns-shp .ns-shp-face { font-size: 10px; }
+.ns-avstack-live.ns-avstack-shapes .ns-shp.ns-st-available { animation: 2.4s ease-in-out 0s infinite normal none running nsShpBreathe; }
+@keyframes nsRingGlow { 
+  0%, 100% { box-shadow: 0 0 0 2px var(--panel),0 0 0 4px var(--ns-st),0 0 8px rgba(var(--ns-st-rgb),.4); }
+  50% { box-shadow: 0 0 0 2px var(--panel),0 0 0 4px var(--ns-st),0 0 16px rgba(var(--ns-st-rgb),.8); }
+}
+@keyframes nsShpSparkle { 
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.35); }
+}
+@keyframes nsShpBreathe { 
+  0%, 100% { filter: drop-shadow(0 0 3px rgba(var(--ns-st-rgb),.45)); }
+  50% { filter: drop-shadow(0 0 9px rgba(var(--ns-st-rgb),.9)); }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="ns-shp-row" role="img" aria-label="Avatar shapes: squircle, hexagon, diamond, shield, octagon, pentagon, triangle and star, each with a status ring">
+      <div class="ns-shp-item"><div class="ns-shp ns-shp-squircle ns-st-available"><i class="ns-shp-ring"></i><b class="ns-shp-face">JD</b></div>squircle</div><div class="ns-shp-item"><div class="ns-shp ns-shp-hex ns-st-away"><i class="ns-shp-ring"></i><b class="ns-shp-face">RP</b></div>hex</div><div class="ns-shp-item"><div class="ns-shp ns-shp-diamond ns-st-busy"><i class="ns-shp-ring"></i><b class="ns-shp-face">AL</b></div>diamond</div><div class="ns-shp-item"><div class="ns-shp ns-shp-shield ns-st-available"><i class="ns-shp-ring"></i><b class="ns-shp-face">MK</b></div>shield</div>
+      <div class="ns-shp-item"><div class="ns-shp ns-shp-octagon ns-st-ooo"><i class="ns-shp-ring"></i><b class="ns-shp-face">SO</b></div>octagon</div><div class="ns-shp-item"><div class="ns-shp ns-shp-pent ns-st-available"><i class="ns-shp-ring"></i><b class="ns-shp-face">TN</b></div>pent</div><div class="ns-shp-item"><div class="ns-shp ns-shp-tri ns-st-offline"><i class="ns-shp-ring"></i><b class="ns-shp-face">EV</b></div>tri</div><div class="ns-shp-item"><div class="ns-shp ns-shp-star ns-st-available"><i class="ns-shp-ring"></i><b class="ns-shp-face">NK</b></div>star</div>
+    </div></div></div>
+<div class="meta"><b>Avatar Shapes 2D</b> · <code>notify-avatar-shapes-2d</code><br>Notifications &amp; Status · PRESENCE &amp; STATUS<p>Eight geometric avatar shapes cut with clip-path: squircle, hexagon, diamond, shield, octagon, pentagon, triangle and star. The status ring and glow follow the shape, so every presence state still reads.</p></div>
+
+</body>
+</html>

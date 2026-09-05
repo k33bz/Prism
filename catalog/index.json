@@ -1,5 +1,5 @@
 {
-  "count": 3115,
+  "count": 3118,
   "effects": [
     {
       "id": "charts-big-metric-count-up",
@@ -1900,6 +1900,7 @@
         "m",
         "info",
         "warn",
+        "err",
         "cursor"
       ],
       "params": [],
@@ -18070,6 +18071,9 @@
         "chat",
         "cmsg",
         "user",
+        "ai",
+        "typing-msg",
+        "mt",
         "cap",
         "pr-playbtn"
       ],
@@ -19173,9 +19177,9 @@
         "gate",
         "experts",
         "expert",
+        "on",
         "ed",
         "ew",
-        "on",
         "cap",
         "pr-playbtn"
       ],
@@ -35340,6 +35344,134 @@
       "description": "Stacked avatars with glowing status rings and an overflow chip whose ring splits by the hidden members' statuses. Visible slots = clamp(online, --max, ceil(--max × (1 + --expand))): six members, five online shows 5 / +1; two go away and offline, the stack folds back to 3 / +3 and the chip ring turns one third away, two thirds offline."
     },
     {
+      "id": "notify-avatar-shapes-2d",
+      "name": "Avatar Shapes 2D",
+      "gallery": "notify",
+      "category": "PRESENCE & STATUS",
+      "ref": ".ns-shp.ns-shp-*",
+      "classes": [
+        "ns-shp-row",
+        "ns-shp-item",
+        "ns-shp",
+        "ns-shp-squircle",
+        "ns-st-available",
+        "ns-shp-ring",
+        "ns-shp-face",
+        "ns-shp-hex",
+        "ns-st-away",
+        "ns-shp-diamond",
+        "ns-st-busy",
+        "ns-shp-shield",
+        "ns-shp-octagon",
+        "ns-st-ooo",
+        "ns-shp-pent",
+        "ns-shp-tri",
+        "ns-st-offline",
+        "ns-shp-star"
+      ],
+      "params": [],
+      "tags": [
+        "notify",
+        "animated",
+        "new"
+      ],
+      "componentType": "avatar",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Eight geometric avatar shapes cut with clip-path: squircle, hexagon, diamond, shield, octagon, pentagon, triangle and star. The status ring and glow follow the shape, so every presence state still reads."
+    },
+    {
+      "id": "notify-avatar-shapes-3d",
+      "name": "Avatar Shapes 3D",
+      "gallery": "notify",
+      "category": "PRESENCE & STATUS",
+      "ref": ".ns-shp.ns-shp-3d",
+      "classes": [
+        "ns-shp-row",
+        "ns-shp-item",
+        "ns-shp",
+        "ns-shp-3d",
+        "ns-shp-cube",
+        "ns-shp-solid",
+        "ns-shp-fc",
+        "ns-shp-coin",
+        "ns-shp-edge",
+        "ns-shp-sphere",
+        "ns-shp-face",
+        "ns-shp-hl",
+        "ns-shp-gem",
+        "ns-shp-ring",
+        "ns-shp-cyl"
+      ],
+      "params": [],
+      "tags": [
+        "notify",
+        "animated",
+        "new"
+      ],
+      "componentType": "avatar",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Five solid avatar forms built from transforms and gradients: a rotating cube with initials on its faces, a flipping coin, a lit sphere with a drifting glint, a faceted gem and a spinning cylinder. Colour is the status role."
+    },
+    {
+      "id": "notify-shaped-avatar-stack",
+      "name": "Shaped Avatar Stack",
+      "gallery": "notify",
+      "category": "PRESENCE & STATUS",
+      "ref": ".ns-avstack.ns-avstack-shapes",
+      "classes": [
+        "ns-avstack",
+        "ns-avstack-live",
+        "ns-avstack-shapes",
+        "ns-shp",
+        "ns-shp-hex",
+        "ns-st-available",
+        "ns-shp-ring",
+        "ns-shp-face",
+        "ns-shp-squircle",
+        "ns-shp-diamond",
+        "ns-st-away",
+        "ns-shp-shield",
+        "ns-st-busy",
+        "ns-shp-octagon",
+        "ns-st-offline",
+        "ns-a",
+        "ns-more"
+      ],
+      "params": [],
+      "tags": [
+        "notify",
+        "animated",
+        "new"
+      ],
+      "componentType": "avatar",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "The live stack with mixed geometric avatars instead of circles: each shape keeps its own status ring, the available ones breathe, and the overflow chip stays round so it reads as a count."
+    },
+    {
       "id": "arch-service-node",
       "name": "Service Node",
       "gallery": "arch",
@@ -47400,9 +47532,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "The ribbons carry a stream of small squares from source to target along the flow path, two tones per flow, so volume reads as traffic, not area. Cohorts, populations, where people end up."
     },
     {
@@ -47437,9 +47569,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Each ribbon shades from its source colour to its target colour and a highlight sweeps along it in sequence, so the eye follows the flow left to right. The charting-library look."
     },
     {
@@ -47475,9 +47607,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Hover any flow: the others grey out and their particles stop dead while the chosen one keeps running. The ambient loop previews it by focusing each flow in turn. Hover a ribbon."
     },
     {
@@ -47513,9 +47645,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Hover any flow: the rest dim and the chosen one lights up with a layered glow and quicker particles. The ambient loop previews it by lighting each flow in turn. Hover a ribbon."
     },
     {
@@ -47551,9 +47683,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "The flows as neon tubes: a thin bright core over layered glow in the flow colour, a pulse racing down each tube and one tube flickering like a tired sign. Dark stage by design."
     },
     {

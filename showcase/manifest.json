@@ -1,14 +1,14 @@
 {
  "name": "Prism GIF showcase",
- "generated": "2026-09-05T21:24:14.594Z",
+ "generated": "2026-09-05T22:54:36.240Z",
  "source": "Prism.html",
  "browser": {
   "engine": "Firefox (WebDriver BiDi)",
   "version": "155.0.1"
  },
- "count": 3115,
- "animated": 2858,
- "gifBytes": 70419654,
+ "count": 3118,
+ "animated": 2861,
+ "gifBytes": 70543102,
  "settings": {
   "fps": 10,
   "minSeconds": 1.6,
@@ -17551,6 +17551,51 @@
    "width": 344,
    "height": 90,
    "bytes": 69982
+  },
+  {
+   "id": "notify-avatar-shapes-2d",
+   "name": "Avatar Shapes 2D",
+   "gallery": "notify",
+   "category": "PRESENCE & STATUS",
+   "spectrum": null,
+   "gif": "gif/notify-avatar-shapes-2d.gif",
+   "html": "html/notify-avatar-shapes-2d.html",
+   "animated": true,
+   "duration": 2.6,
+   "frames": 26,
+   "width": 344,
+   "height": 149,
+   "bytes": 10797
+  },
+  {
+   "id": "notify-avatar-shapes-3d",
+   "name": "Avatar Shapes 3D",
+   "gallery": "notify",
+   "category": "PRESENCE & STATUS",
+   "spectrum": null,
+   "gif": "gif/notify-avatar-shapes-3d.gif",
+   "html": "html/notify-avatar-shapes-3d.html",
+   "animated": true,
+   "duration": 4,
+   "frames": 40,
+   "width": 344,
+   "height": 90,
+   "bytes": 73087
+  },
+  {
+   "id": "notify-shaped-avatar-stack",
+   "name": "Shaped Avatar Stack",
+   "gallery": "notify",
+   "category": "PRESENCE & STATUS",
+   "spectrum": null,
+   "gif": "gif/notify-shaped-avatar-stack.gif",
+   "html": "html/notify-shaped-avatar-stack.html",
+   "animated": true,
+   "duration": 4,
+   "frames": 40,
+   "width": 344,
+   "height": 90,
+   "bytes": 39564
   },
   {
    "id": "arch-service-node",
