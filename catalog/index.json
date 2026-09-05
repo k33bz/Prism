@@ -1896,11 +1896,11 @@
         "sl",
         "ts",
         "lv",
-        "info",
-        "m",
-        "warn",
-        "err",
         "ok",
+        "m",
+        "info",
+        "err",
+        "warn",
         "cursor"
       ],
       "params": [],
@@ -17517,8 +17517,7 @@
         "pbody",
         "token-stream",
         "tok",
-        "cap",
-        "pr-playbtn"
+        "cap"
       ],
       "params": [
         "color",
@@ -19178,9 +19177,9 @@
         "gate",
         "experts",
         "expert",
-        "on",
         "ed",
         "ew",
+        "on",
         "cap",
         "pr-playbtn"
       ],
@@ -45031,15 +45030,17 @@
         "dtb-tree-holo",
         "dtb-holo-pool",
         "dtb-holo-beam",
-        "dtb-holo-wires",
-        "dtb-holo-w",
-        "dtb-holo-p",
         "dtb-holo-n",
         "dtb-holo-f",
-        "dtb-holo-d",
-        "dtb-holo-l",
+        "dtb-holo-lvl",
+        "dtb-holo-lvl1",
+        "dtb-holo-w",
+        "dtb-holo-p",
         "dtb-holo-sel",
         "dtb-holo-c",
+        "dtb-holo-lvl2",
+        "dtb-holo-d",
+        "dtb-holo-l",
         "dtb-holo-dust"
       ],
       "params": [
@@ -45057,10 +45058,10 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
-      "description": "The file tree as a hologram: glowing folders and documents hover over a light projection, each bobbing on its own beat while pulses run down the connectors and a selection frame locks onto one node. Dark stage by design; colour rides --c."
+      "author": "k33bz",
+      "description": "The file tree as a hologram: folders unfold from the root, then their documents, over a light projection; every node bobs on its own beat while pulses run down the connectors and a selection frame locks on, then the levels fold back up. Same six-second open and close as the plain tree. Dark stage by design; colour rides --c."
     },
     {
       "id": "tables-org-chart",
