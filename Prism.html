@@ -148881,6 +148881,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
   background:repeating-linear-gradient(135deg,rgba(255,255,255,.012) 0 10px,transparent 10px 20px);position:relative;overflow:hidden}
 .srch-card .srch-meta{padding:12px 14px;border-top:1px solid var(--line)}
 .srch-card .srch-nm{font-weight:700;font-size:13px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.srch-card .srch-au-badge{font-size:9.5px;font-weight:700;letter-spacing:.02em;color:var(--dim);background:var(--panel2);border:1px solid var(--line);border-radius:9px;padding:1px 7px}
 .srch-card .srch-gal-badge{font-size:9.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;
   background:rgba(var(--info-rgb),.15);color:var(--info);border:1px solid rgba(var(--info-rgb),.35);
   border-radius:9px;padding:1px 7px}
@@ -149032,6 +149033,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
         <option value="name">Name (A–Z)</option>
         <option value="newest">Newest first</option>
         <option value="gallery">Gallery</option>
+        <option value="author">Author</option>
       </select>
     </div>
     <div class="srch-viewtoggle" id="srchViewToggle" role="group" aria-label="Result layout">
@@ -149057,6 +149059,10 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
     <div class="srch-facetgroup" data-dim="interaction">
       <div class="srch-facetlabel">Interaction</div>
       <div class="srch-chiprow" id="srchInteractChips"></div>
+    </div>
+    <div class="srch-facetgroup" data-dim="author">
+      <div class="srch-facetlabel">Author</div>
+      <div class="srch-chiprow" id="srchAuthorChips"></div>
     </div>
     <div class="srch-facetgroup" data-dim="status">
       <div class="srch-facetlabel">Status &amp; type</div>
@@ -149087,7 +149093,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
   var GALLERY_LABELS={charts:'Charts & Metrics',fx:'FX Store',lab:'Animation Lab',ai:'AI Working',
     objects:'Animated Objects',input:'Input Methods',text:'Text Effects',shapes:'Text Shapes',
     maps:'Maps & Geo',notify:'Notifications & Status',arch:'Architecture Diagrams',callouts:'Callouts & Annotations',
-    obsidian:'Obsidian Facets',menus:'Menus & Actions',spectrums:'Spectrums'};
+    obsidian:'Obsidian Facets',menus:'Menus & Actions',tables:'Tables & Data Layouts',diagrams:'Diagrams & Frameworks',spectrums:'Spectrums'};
   var SPECTRUM_LABELS={'material-ui':'Material UI','cyberpunk-os':'Cyberpunk OS','neumorphism':'Neumorphism',
     'glassmorphism':'Glassmorphism','brutalist-web':'Brutalist Web','skeuo-hardware':'Skeuo Hardware',
     'retro-terminal':'Retro Terminal','art-deco':'Art Deco','solarpunk':'Solarpunk'};
@@ -149103,8 +149109,8 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
   // 'spectrum' is intentionally omitted: the ~1000 design-language facets are the source
   // library for the design systems (still served by the MCP catalog island), not browsable
   // user content — so Search neither lists them nor offers a Spectrum filter.
-  var LIST_DIMS=['gallery','componentType','interaction'];
-  var DIM_LABEL={gallery:'Gallery',componentType:'Component',interaction:'Interaction'};
+  var LIST_DIMS=['gallery','componentType','interaction','author'];
+  var DIM_LABEL={gallery:'Gallery',componentType:'Component',interaction:'Interaction',author:'Author'};
 
   var PAGE_SIZE=48;
   var HISTORY_KEY='prism_search_history', SAVED_KEY='prism_saved_searches';
@@ -149128,7 +149134,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
   }
 
   // state.filters holds arrays per list-dim (multi-select OR) + tags[] (AND) + bool flags.
-  function emptyFilters(){ return {gallery:[],componentType:[],interaction:[],spectrum:[],tags:[]}; }
+  function emptyFilters(){ return {gallery:[],componentType:[],interaction:[],spectrum:[],author:[],tags:[]}; }
   var state={ q:'', filters:emptyFilters(), flags:{}, sort:'relevance', view:'grid', shown:PAGE_SIZE };
   var ALL=[];
   var suppressUrl=false; // set while applying state FROM the url to avoid a write-back loop
@@ -149155,7 +149161,8 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
         tags:(e.tags||[]).join(' ').toLowerCase(),
         gallery:(e.gallery||'').toLowerCase(),
         ctype:(e.componentType||'').toLowerCase(),
-        spectrum:(e.spectrum||'').toLowerCase()
+        spectrum:(e.spectrum||'').toLowerCase(),
+        author:(e.author||'').toLowerCase()
       };
     });
   }
@@ -149166,6 +149173,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
     if(dim==='gallery') return GALLERY_LABELS[v]||v;
     if(dim==='spectrum') return SPECTRUM_LABELS[v]||v;
     if(dim==='interaction') return interactionLabel(v);
+    if(dim==='author') return '@'+v;
     return v;
   }
 
@@ -149183,6 +149191,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
       if(h.ctype.indexOf(t)!==-1){ score+=1.5; hit=true; }
       if(h.spectrum.indexOf(t)!==-1){ score+=1.5; hit=true; }
       if(h.gallery.indexOf(t)!==-1){ score+=1; hit=true; }
+      if(h.author && h.author.indexOf(t)!==-1){ score+=1.5; hit=true; }
       if(h.desc.indexOf(t)!==-1){ score+=1; hit=true; }
       if(!hit) matchedAll=false;
     });
@@ -149247,7 +149256,8 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
     var s=state.sort;
     if(s==='relevance' && !hasQuery) s='name'; // nothing to rank by → fall back
     if(s==='name') list.sort(byName);
-    else if(s==='newest') list.sort(function(a,b){return (Number(!!b.isNew)-Number(!!a.isNew))||byName(a,b);});
+    else if(s==='newest') list.sort(function(a,b){return String(b.addedOn||'').localeCompare(String(a.addedOn||''))||(Number(!!b.isNew)-Number(!!a.isNew))||byName(a,b);});
+    else if(s==='author') list.sort(function(a,b){return String(a.author||'~').localeCompare(String(b.author||'~'))||byName(a,b);});
     else if(s==='gallery') list.sort(function(a,b){return String(a.gallery).localeCompare(String(b.gallery))||byName(a,b);});
     else list.sort(function(a,b){return (b._score-a._score)||byName(a,b);}); // relevance
   }
@@ -149314,6 +149324,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
     renderChips('srchGalleryChips','gallery');
     renderChips('srchCtypeChips','componentType',16);
     renderChips('srchInteractChips','interaction');
+    renderChips('srchAuthorChips','author');
     renderStatusChips();
   }
 
@@ -149373,7 +149384,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
     card.innerHTML=
       '<div class="srch-stage">'+eff.html+'</div>'+
       '<div class="srch-meta">'+
-        '<div class="srch-nm">'+esc(eff.name)+'<span class="srch-gal-badge">'+esc(galLabel)+'</span>'+
+        '<div class="srch-nm">'+esc(eff.name)+'<span class="srch-gal-badge">'+esc(galLabel)+'</span>'+(eff.author?'<span class="srch-au-badge" title="introduced by">@'+esc(eff.author)+'</span>':'')+
           (showScore?'<span class="srch-score" title="relevance score">'+(Math.round(eff._score*10)/10)+'</span>':'')+'</div>'+
         '<div class="srch-desc">'+esc(eff.description)+'</div>'+
         (tags.length?'<div class="srch-tagrow">'+tags.map(function(t){return '<span class="srch-tag">'+esc(t)+'</span>';}).join('')+'</div>':'')+
@@ -149521,6 +149532,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
       if(state.filters.componentType.length) p.push('ctype='+state.filters.componentType.map(encodeURIComponent).join(','));
       if(state.filters.interaction.length) p.push('int='+state.filters.interaction.map(encodeURIComponent).join(','));
       if(state.filters.spectrum.length) p.push('spec='+state.filters.spectrum.map(encodeURIComponent).join(','));
+      if(state.filters.author.length) p.push('author='+state.filters.author.map(encodeURIComponent).join(','));
       if(state.filters.tags.length) p.push('tag='+state.filters.tags.map(encodeURIComponent).join(','));
       var fl=Object.keys(state.flags).filter(function(k){return state.flags[k];});
       if(fl.length) p.push('flags='+fl.join(','));
@@ -149543,9 +149555,10 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
         else if(k==='ctype'){ state.filters.componentType=list(); got=true; }
         else if(k==='int'){ state.filters.interaction=list(); got=true; }
         else if(k==='spec'){ state.filters.spectrum=list(); got=true; }
+        else if(k==='author'){ state.filters.author=list(); got=true; }
         else if(k==='tag'){ state.filters.tags=list(); got=true; }
         else if(k==='flags'){ list().forEach(function(f){ state.flags[f]=true; }); got=true; }
-        else if(k==='sort'){ if(['relevance','name','newest','gallery'].indexOf(v)!==-1){ state.sort=v; got=true; } }
+        else if(k==='sort'){ if(['relevance','name','newest','gallery','author'].indexOf(v)!==-1){ state.sort=v; got=true; } }
       });
       return got;
     }catch(e){ return false; }
@@ -149564,7 +149577,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
   function snapshot(){
     return { q:state.q.trim(),
       filters:{ gallery:state.filters.gallery.slice(), componentType:state.filters.componentType.slice(),
-        interaction:state.filters.interaction.slice(), spectrum:state.filters.spectrum.slice(), tags:state.filters.tags.slice() },
+        interaction:state.filters.interaction.slice(), spectrum:state.filters.spectrum.slice(), author:state.filters.author.slice(), tags:state.filters.tags.slice() },
       flags:Object.keys(state.flags).filter(function(k){return state.flags[k];}),
       sort:state.sort };
   }
@@ -151081,10 +151094,10 @@ a{color:var(--info)}
 var GALLERY_LABELS={charts:'Charts & Metrics',fx:'FX Store',lab:'Animation Lab',ai:'AI Working',
   objects:'Animated Objects',input:'Input Methods',text:'Text Effects',shapes:'Text Shapes',
   maps:'Maps & Geo',notify:'Notifications & Status',arch:'Architecture Diagrams',callouts:'Callouts & Annotations',
-  obsidian:'Obsidian Facets',menus:'Menus & Actions',spectrums:'Spectrums',idea:'Idea Gallery',
+  obsidian:'Obsidian Facets',menus:'Menus & Actions',tables:'Tables & Data Layouts',diagrams:'Diagrams & Frameworks',spectrums:'Spectrums',idea:'Idea Gallery',
   mobile:'Mobile Gallery',desktop:'Desktop Gallery',facets:'New Facets'};
 var GALLERY_EMOJI={charts:'📊',fx:'🎇',lab:'🧪',ai:'🤖',objects:'⌬',input:'✏️',text:'🔤',shapes:'🌈',
-  maps:'🌍',notify:'🔔',arch:'🗺',callouts:'⭐',obsidian:'◈',menus:'🧭',spectrums:'◆',idea:'🎨',
+  maps:'🌍',notify:'🔔',arch:'🗺',callouts:'⭐',obsidian:'◈',menus:'🧭',tables:'📋',diagrams:'📐',spectrums:'◆',idea:'🎨',
   mobile:'📱',desktop:'🖱️',facets:'✦'};
 var PAGE=24;                 // grid batch size (lazy — previews mount as they scroll in)
 
