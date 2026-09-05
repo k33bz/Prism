@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dravite Corridor (Jolteon ex) · Prism</title>
+<!-- Prism showcase sample: fx-pkmn-corridor-dravite (gallery: fx). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.fx-pkcor { position: relative; width: 100%; max-width: 330px; height: 150px; border-radius: 12px; overflow: hidden; --pkt-grass: #3f9e3f; --pkt-grass-rgb: 63,158,63; --pkt-fire: #d9422b; --pkt-fire-rgb: 217,66,43; --pkt-water: #2f8bd9; --pkt-water-rgb: 47,139,217; --pkt-lightning: #e7c020; --pkt-lightning-rgb: 231,192,32; --pkt-psychic: #9a5bd0; --pkt-psychic-rgb: 154,91,208; --pkt-fighting: #b0603a; --pkt-fighting-rgb: 176,96,58; --pkt-darkness: #3d4b42; --pkt-darkness-rgb: 61,75,66; --pkt-metal: #8a94a3; --pkt-metal-rgb: 138,148,163; --pkt-dragon: #b39135; --pkt-dragon-rgb: 179,145,53; --pkt-fairy: #d66bb0; --pkt-fairy-rgb: 214,107,176; --pkt-colorless: #c8c0aa; --pkt-colorless-rgb: 200,192,170; --pkt-darkness-hi: #6f7f78; --pkt-darkness-hi-rgb: 111,127,120; --pkt-aqua: #4fc4b8; --pkt-aqua-rgb: 79,196,184; --sc: var(--pkt-colorless); --sc-rgb: var(--pkt-colorless-rgb); --pc: var(--sc); --pc-rgb: var(--sc-rgb); --c1: var(--pc); --c1-rgb: var(--pc-rgb); --c2: var(--pc); --c2-rgb: var(--pc-rgb); --c3: var(--pc); --c3-rgb: var(--pc-rgb); background: radial-gradient(130% 100% at 50% 50%,rgba(var(--pc-rgb),.13),rgba(0,0,0,0) 72%),#0b0e15; border: 1px solid rgba(var(--pc-rgb),.35); animation: 2.4s linear 0s infinite normal none running fxPkcorHit; }
+.fx-pkcor .t-grass, .fx-pkcor.t-grass { --sc: var(--pkt-grass); --sc-rgb: var(--pkt-grass-rgb); }
+.fx-pkcor .t-fire, .fx-pkcor.t-fire { --sc: var(--pkt-fire); --sc-rgb: var(--pkt-fire-rgb); }
+.fx-pkcor .t-water, .fx-pkcor.t-water { --sc: var(--pkt-water); --sc-rgb: var(--pkt-water-rgb); }
+.fx-pkcor .t-lightning, .fx-pkcor.t-lightning { --sc: var(--pkt-lightning); --sc-rgb: var(--pkt-lightning-rgb); }
+.fx-pkcor .t-psychic, .fx-pkcor.t-psychic { --sc: var(--pkt-psychic); --sc-rgb: var(--pkt-psychic-rgb); }
+.fx-pkcor .t-fighting, .fx-pkcor.t-fighting { --sc: var(--pkt-fighting); --sc-rgb: var(--pkt-fighting-rgb); }
+.fx-pkcor .t-darkness, .fx-pkcor.t-darkness { --sc: var(--pkt-darkness); --sc-rgb: var(--pkt-darkness-rgb); }
+.fx-pkcor .t-metal, .fx-pkcor.t-metal { --sc: var(--pkt-metal); --sc-rgb: var(--pkt-metal-rgb); }
+.fx-pkcor .t-dragon, .fx-pkcor.t-dragon { --sc: var(--pkt-dragon); --sc-rgb: var(--pkt-dragon-rgb); }
+.fx-pkcor .t-fairy, .fx-pkcor.t-fairy { --sc: var(--pkt-fairy); --sc-rgb: var(--pkt-fairy-rgb); }
+.fx-pkcor .t-colorless, .fx-pkcor.t-colorless { --sc: var(--pkt-colorless); --sc-rgb: var(--pkt-colorless-rgb); }
+.fx-pkcor .fx-pkcor-hx.t-darkness, .fx-pkcor .fx-pkcor-hg.t-darkness, .fx-pkcor .fx-pkcor-lane.t-darkness { --sc: var(--pkt-darkness-hi); --sc-rgb: var(--pkt-darkness-hi-rgb); }
+.fx-pkcor-aura { position: absolute; left: 0px; right: 0px; height: 40%; pointer-events: none; animation: 2.4s ease-in-out 0s infinite normal none running fxPkcorAura; }
+.fx-pkcor-aura-t { top: 0px; background: linear-gradient(180deg,rgba(var(--sc-rgb),.5),rgba(var(--sc-rgb),0)); }
+.fx-pkcor-aura-b { bottom: 0px; background: linear-gradient(0deg,rgba(var(--sc-rgb),.5),rgba(var(--sc-rgb),0)); }
+.fx-pkcor-aura-t.t-colorless { background: linear-gradient(180deg,rgba(var(--sc-rgb),.26),rgba(var(--sc-rgb),0)); }
+.fx-pkcor-aura-b.t-colorless { background: linear-gradient(0deg,rgba(var(--sc-rgb),.26),rgba(var(--sc-rgb),0)); }
+.fx-pkcor--multi .fx-pkcor-aura { animation-name: fxPkcorAuraCyc; }
+.fx-pkcor--multi .fx-pkcor-aura.fx-pkcor-l2 { animation-delay: -0.8s; }
+.fx-pkcor--multi .fx-pkcor-aura.fx-pkcor-l3 { animation-delay: -1.6s; }
+.fx-pkcor-core { position: absolute; left: 16px; right: 26px; top: 50%; height: 3px; margin-top: -1.5px; border-radius: 2px; background: linear-gradient(90deg, rgba(255, 255, 255, 0), rgb(255, 255, 255) 14%, rgb(255, 255, 255) 86%, rgba(255, 255, 255, 0)); box-shadow: 0 0 8px 1px rgba(255,255,255,.7),0 0 20px 5px rgba(var(--pc-rgb),.45); transform-origin: 0px 50%; animation: 2.4s ease-in-out 0s infinite normal none running fxPkcorCore; }
+.fx-pkcor-helix { position: absolute; left: 0px; top: 0px; width: 330px; height: 150px; pointer-events: none; overflow: visible; }
+.fx-pkcor-hg { fill: none; stroke: rgba(var(--sc-rgb),.22); stroke-width: 7; stroke-linecap: round; animation: 2.4s ease-in-out 0s infinite normal none running fxPkcorWeave; }
+.fx-pkcor-hx { fill: none; stroke: var(--sc); stroke-width: 2; stroke-linecap: round; stroke-dasharray: 30, 26; --fx-pkcor-off: -112px; animation: 2.4s linear 0s infinite normal none running fxPkcorFlow, 2.4s ease-in-out 0s infinite normal none running fxPkcorWeave; }
+.fx-pkcor-hx.fx-pkcor-l2 { animation-delay: 0s, -0.8s; }
+.fx-pkcor-hx.fx-pkcor-l3 { animation-delay: 0s, -1.6s; }
+.fx-pkcor-hg.fx-pkcor-l2, .fx-pkcor-lane.fx-pkcor-l2 { animation-delay: -0.8s; }
+.fx-pkcor-hg.fx-pkcor-l3, .fx-pkcor-lane.fx-pkcor-l3 { animation-delay: -1.6s; }
+.fx-pkcor-hx.t-water { stroke-dasharray: none; stroke-width: 3; }
+.fx-pkcor-hx.t-lightning { stroke-dasharray: 12, 10; --fx-pkcor-off: -110px; }
+.fx-pkcor-hx.t-fighting { stroke-dasharray: none; stroke-width: 3; }
+.fx-pkcor-hx.t-metal { stroke-dasharray: none; stroke-width: 2.4; }
+.fx-pkcor-hx.t-colorless { stroke-dasharray: none; stroke-width: 2; animation-name: fxPkcorFlow, fxPkcorWeaveFaint; }
+.fx-pkcor-hg.t-colorless { animation-name: fxPkcorWeaveFaint; }
+.fx-pkcor-gl, .fx-pkcor-lane { position: absolute; inset: 0px; pointer-events: none; }
+.fx-pkcor-lane { animation: 2.4s ease-in-out 0s infinite normal none running fxPkcorWeave; }
+.fx-pkcor-lane.t-colorless { animation-name: fxPkcorWeaveFaint; }
+.fx-pkcor-g { position: absolute; left: 0px; top: 0px; width: 18px; height: 18px; opacity: 0; offset-path: path(var(--sp)); offset-rotate: auto; animation: fxPkcorRide 2.4s linear var(--del,0s) infinite; }
+.fx-pkcor-lane.t-psychic .fx-pkcor-g, .fx-pkcor-lane.t-fairy .fx-pkcor-g { offset-rotate: 0deg; }
+.fx-pkcor-g svg { display: block; width: 100%; height: 100%; overflow: visible; }
+.fx-pkcor-g path, .fx-pkcor-g circle, .fx-pkcor-g rect { fill: var(--sc); stroke: rgba(255, 255, 255, 0.35); stroke-width: 1; }
+.fx-pkcor-g .fx-pkcor-v { fill: none; stroke: rgba(255, 255, 255, 0.6); }
+.fx-pkcor-g .fx-pkcor-i { fill: rgba(255, 255, 255, 0.6); stroke: none; }
+.fx-pkcor-g .fx-pkcor-k { fill: rgb(255, 255, 255); stroke: none; opacity: 0.8; }
+.fx-pkcor-g .fx-pkcor-s { fill: none; stroke: var(--sc); stroke-width: 4; stroke-linecap: round; }
+.fx-pkcor-g .fx-pkcor-h { fill: none; stroke: rgba(255, 255, 255, 0.5); stroke-width: 1.5; stroke-linecap: round; }
+.fx-pkcor-g .fx-pkcor-cl { fill: none; stroke: var(--sc); stroke-width: 1.6; stroke-linecap: round; }
+.fx-pkcor-proj { position: absolute; left: 6px; top: 50%; width: 92px; height: 70px; margin-top: -35px; opacity: 0; animation: fxPkcorJab 2.4s cubic-bezier(.65,.03,.28,1) var(--del,0s) infinite; }
+.fx-pkcor-ps { position: absolute; inset: 0px; width: 100%; height: 100%; display: block; overflow: visible; filter: drop-shadow(0 0 9px rgba(var(--pc-rgb),.65)); }
+.fx-pkcor-proj-x .fx-pkcor-ps { filter: none; }
+.fx-pkcor-pm { fill: var(--pc); }
+.fx-pkcor-pa { fill: rgba(var(--pc-rgb),.72); }
+.fx-pkcor-ph { fill: rgb(255, 255, 255); }
+.fx-pkcor-shock { position: absolute; right: -20px; top: 50%; width: 34px; height: 62px; margin-top: -31px; border-width: 5px; border-style: solid; border-top-color: transparent; border-bottom-color: transparent; border-left-color: transparent; border-image: none; border-right-color: var(--sc); border-radius: 50%; animation: 2.4s ease-in-out 0s infinite normal none running fxPkcorShock; }
+.a-blade .fx-pkcor-ps { animation: 2.4s cubic-bezier(0.65, 0.03, 0.28, 1) 0s infinite normal none running fxPkcorSlashSpin; }
+.a-blade .fx-pkcor-shock { right: -10px; width: 3px; height: 74px; margin-top: -37px; border-width: medium; border-style: none; border-color: currentcolor; border-image: none; border-radius: 2px; background: rgb(255, 255, 255); box-shadow: rgba(255, 255, 255, 0.8) 0px 0px 8px 1px; animation-name: fxPkcorSlashLine; }
+.a-orb .fx-pkcor-ps { animation: 2.4s ease-in-out 0s infinite normal none running fxPkcorBob; }
+.a-orb .fx-pkcor-shock { right: auto; left: 50%; top: 50%; width: 64px; height: 64px; margin: -32px 0px 0px -32px; border: 3px solid rgba(var(--sc-rgb),.75); animation-name: fxPkcorPulse; }
+.a-beam .fx-pkcor-ps { border-radius: 14px; background: linear-gradient(180deg,rgba(var(--pc-rgb),0) 0,rgba(var(--pc-rgb),.75) 22%,#fff 38%,#fff 62%,rgba(var(--pc-rgb),.75) 78%,rgba(var(--pc-rgb),0) 100%); mask: linear-gradient(90deg, transparent, rgb(0, 0, 0) 40%, rgb(0, 0, 0)); filter: drop-shadow(0 0 10px rgba(var(--pc-rgb),.7)); }
+.a-beam .fx-pkcor-shock { right: -6px; top: -8px; bottom: -8px; height: auto; width: 10px; margin: 0px; border-width: medium; border-style: none; border-color: currentcolor; border-image: none; border-radius: 4px; background: linear-gradient(90deg, rgba(255, 255, 255, 0), rgb(255, 255, 255), rgba(255, 255, 255, 0)); animation-name: fxPkcorSheen; }
+.a-prism .fx-pkcor-ps { filter: none; clip-path: polygon(11.7% 50%, 36.7% 13.3%, 73.3% 13.3%, 91.7% 50%, 73.3% 86.7%, 36.7% 86.7%); animation: 2.4s cubic-bezier(0.65, 0.03, 0.28, 1) 0s infinite normal none running fxPkcorGemTurn; }
+.a-palm .fx-pkcor-ps { animation: 2.4s cubic-bezier(0.6, 0.02, 0.8, 0.4) 0s infinite normal none running fxPkcorPalmDrop; }
+.a-crescent .fx-pkcor-ps { animation: 2.4s cubic-bezier(0.65, 0.03, 0.28, 1) 0s infinite normal none running fxPkcorMoon; }
+.a-dive .fx-pkcor-ps { animation: 2.4s cubic-bezier(0.5, 0.05, 0.5, 1) 0s infinite normal none running fxPkcorDive; }
+.a-whale .fx-pkcor-ps { transform-origin: 22% 50%; animation: 2.4s cubic-bezier(0.6, 0.02, 0.8, 0.4) 0s infinite normal none running fxPkcorTail; }
+.a-paw-electric { --pc: var(--pkt-lightning); --pc-rgb: var(--pkt-lightning-rgb); }
+.fx-pkcor-arc { fill: none; stroke: rgb(255, 255, 255); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; animation: 0.18s steps(1) 0s infinite normal none running fxPkcorFlick; }
+.fx-pkcor-pop { position: absolute; left: 282px; top: 75px; width: 26px; height: 26px; margin: -13px 0px 0px -13px; border: 2px solid rgb(255, 255, 255); border-radius: 50%; opacity: 0; animation: 2.4s ease-out 0s infinite normal none running fxPkcorPop; }
+.fx-pkcor-ring { position: absolute; left: 282px; top: 75px; width: 76px; height: 76px; margin: -38px 0px 0px -38px; border: 4px solid var(--sc); border-radius: 50%; opacity: 0; box-shadow: 0 0 16px rgba(var(--sc-rgb),.8),inset 0 0 10px rgba(var(--sc-rgb),.6); animation: fxPkcorRing 2.4s cubic-bezier(.2,.8,.3,1) var(--del,0s) infinite; }
+.fx-pkcor--big .fx-pkcor-ring { width: 88px; height: 88px; margin: -44px 0px 0px -44px; }
+.fx-pkcor--flat .fx-pkcor-ring { top: 92px; animation-name: fxPkcorRingFlat; }
+.fx-pkcor--multi .fx-pkcor-ring { border-color: transparent; box-shadow: none; background: conic-gradient(var(--c1),var(--c2),var(--c3),var(--c1)); mask: radial-gradient(farthest-side, transparent calc(100% - 6px), rgb(0, 0, 0) calc(100% - 5px)); animation-name: fxPkcorRingM; }
+.fx-pkcor--multi.fx-pkcor--flat .fx-pkcor-ring { animation-name: fxPkcorRingFlat; }
+.fx-pkcor-flash { position: absolute; inset: 0px; pointer-events: none; opacity: 0; background: radial-gradient(60% 80% at 282px 50%,rgba(var(--sc-rgb),.55),rgba(255,255,255,.18) 40%,transparent 70%); animation: 2.4s ease-out 0s infinite normal none running fxPkcorFlash; }
+.fx-pkcor-crack { position: absolute; left: 282px; top: 75px; width: 80px; height: 80px; margin: -40px 0px 0px -40px; opacity: 0; overflow: visible; animation: 2.4s ease-out 0s infinite normal none running fxPkcorCrack; }
+.fx-pkcor-crk { fill: none; stroke: rgb(255, 255, 255); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 64; stroke-dashoffset: 64; animation: 2.4s ease-out 0s infinite normal none running fxPkcorCrackDraw; }
+.fx-pkcor-crk-u { stroke: rgba(var(--sc-rgb),.9); stroke-width: 5; }
+@keyframes fxPkcorHit { 
+  0%, 60% { transform: translate(0px, 0px); }
+  63% { transform: translate(-3px, 2px); }
+  66% { transform: translate(3px, -2px); }
+  69% { transform: translate(-2px, 1px); }
+  72% { transform: translate(2px, -1px); }
+  75%, 100% { transform: translate(0px, 0px); }
+}
+@keyframes fxPkcorAura { 
+  0% { opacity: 0.45; }
+  12% { opacity: 0.6; }
+  56% { opacity: 0.95; }
+  64% { opacity: 1; }
+  86% { opacity: 0.5; }
+  100% { opacity: 0.45; }
+}
+@keyframes fxPkcorAuraCyc { 
+  0%, 22% { opacity: 0.95; }
+  44%, 78% { opacity: 0.08; }
+  100% { opacity: 0.95; }
+}
+@keyframes fxPkcorCore { 
+  0%, 8% { transform: scaleX(0.12); opacity: 0.25; }
+  56% { transform: scaleX(1); opacity: 0.95; }
+  78% { transform: scaleX(1); opacity: 0.8; }
+  96%, 100% { transform: scaleX(0.12); opacity: 0.25; }
+}
+@keyframes fxPkcorFlow { 
+  100% { stroke-dashoffset: var(--fx-pkcor-off,-112px); }
+}
+@keyframes fxPkcorWeave { 
+  0%, 100% { opacity: 0.35; }
+  50% { opacity: 0.95; }
+}
+@keyframes fxPkcorWeaveFaint { 
+  0%, 100% { opacity: 0.18; }
+  50% { opacity: 0.6; }
+}
+@keyframes fxPkcorRide { 
+  0% { offset-distance: 0%; opacity: 0; }
+  8% { opacity: 1; }
+  88% { opacity: 1; }
+  100% { offset-distance: 100%; opacity: 0; }
+}
+@keyframes fxPkcorJab { 
+  0% { left: 6px; transform: scale(0.92); opacity: 0; }
+  4% { opacity: 1; }
+  10% { left: 0px; transform: scale(0.95); }
+  56% { left: 176px; transform: scale(1.04); }
+  62% { left: 184px; transform: scale(1.07); }
+  80% { left: 184px; transform: scale(1); }
+  90% { opacity: 1; }
+  96%, 100% { left: 6px; transform: scale(0.92); opacity: 0; }
+}
+@keyframes fxPkcorShock { 
+  0%, 8% { opacity: 0; transform: scaleY(0.9); }
+  14% { opacity: 0.75; }
+  56% { opacity: 1; transform: scaleY(1.12); }
+  62% { opacity: 1; transform: scaleY(1.2); }
+  72%, 100% { opacity: 0; transform: scaleY(1.2); }
+}
+@keyframes fxPkcorSlashSpin { 
+  0%, 18% { transform: rotate(-18deg); }
+  56%, 100% { transform: rotate(6deg); }
+}
+@keyframes fxPkcorSlashLine { 
+  0%, 18% { opacity: 0; transform: rotate(-18deg) scaleY(0.4); }
+  30% { opacity: 0.9; }
+  56% { opacity: 1; transform: rotate(6deg) scaleY(1.1); }
+  64%, 100% { opacity: 0; transform: rotate(6deg) scaleY(1.1); }
+}
+@keyframes fxPkcorBob { 
+  0%, 10% { transform: translateY(0px); }
+  22% { transform: translateY(-4px); }
+  34% { transform: translateY(4px); }
+  46% { transform: translateY(-3px); }
+  56%, 100% { transform: translateY(0px); }
+}
+@keyframes fxPkcorPulse { 
+  0%, 8% { opacity: 0; transform: scale(0.6); }
+  14% { opacity: 0.7; transform: scale(0.8); }
+  35% { opacity: 0.4; transform: scale(1.1); }
+  56% { opacity: 0.8; transform: scale(0.9); }
+  62% { opacity: 1; transform: scale(1.3); }
+  72%, 100% { opacity: 0; transform: scale(1.45); }
+}
+@keyframes fxPkcorSheen { 
+  0%, 38% { opacity: 0; transform: translateX(-30px); }
+  44% { opacity: 1; }
+  56% { opacity: 0.9; transform: translateX(0px); }
+  70%, 100% { opacity: 0; transform: translateX(6px); }
+}
+@keyframes fxPkcorGemTurn { 
+  0%, 10% { transform: rotate(0deg); }
+  56% { transform: rotate(90deg); }
+  100% { transform: rotate(90deg); }
+}
+@keyframes fxPkcorPalmDrop { 
+  0%, 10% { transform: translateY(-38px) scale(0.9); }
+  40% { transform: translateY(-38px) scale(1); }
+  56% { transform: translateY(0px) scale(1.04); }
+  61% { transform: translateY(3px) scale(1.08, 0.92); }
+  70%, 100% { transform: translateY(1px) scale(1.04, 0.98); }
+}
+@keyframes fxPkcorMoon { 
+  0%, 10% { transform: translateY(0px) rotate(0deg); }
+  22% { transform: translateY(-8px) rotate(190deg); }
+  34% { transform: translateY(8px) rotate(370deg); }
+  46% { transform: translateY(-6px) rotate(560deg); }
+  56%, 100% { transform: translateY(0px) rotate(720deg); }
+}
+@keyframes fxPkcorDive { 
+  0%, 10% { transform: translateY(0px) rotate(0deg); }
+  33% { transform: translateY(-50px) rotate(-12deg); }
+  56% { transform: translateY(0px) rotate(26deg) scale(1.05); }
+  62% { transform: translateY(4px) rotate(30deg) scale(0.95); }
+  100% { transform: translateY(4px) rotate(30deg) scale(0.95); }
+}
+@keyframes fxPkcorTail { 
+  0%, 10% { transform: translateY(-20px) rotate(-24deg); }
+  40% { transform: translateY(-24px) rotate(-30deg); }
+  56% { transform: translateY(0px) rotate(0deg) scale(1.04); }
+  61% { transform: translateY(3px) rotate(4deg) scale(1.08, 0.9); }
+  70%, 100% { transform: translateY(1px) rotate(2deg) scale(1.03, 0.98); }
+}
+@keyframes fxPkcorFlick { 
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.15; }
+}
+@keyframes fxPkcorPop { 
+  0%, 55% { opacity: 0; transform: scale(0.3); }
+  58% { opacity: 0.9; transform: scale(0.8); }
+  66%, 100% { opacity: 0; transform: scale(1.4); }
+}
+@keyframes fxPkcorRing { 
+  0%, 57% { opacity: 0; transform: scale(0.15); }
+  63% { opacity: 0.95; transform: scale(0.55); }
+  82%, 100% { opacity: 0; transform: scale(1.5); }
+}
+@keyframes fxPkcorRingFlat { 
+  0%, 57% { opacity: 0; transform: scale(0.15, 0.06); }
+  63% { opacity: 0.95; transform: scale(0.6, 0.25); }
+  82%, 100% { opacity: 0; transform: scale(1.5, 0.63); }
+}
+@keyframes fxPkcorRingM { 
+  0%, 57% { opacity: 0; transform: scale(0.15) rotate(0deg); }
+  63% { opacity: 0.95; transform: scale(0.55) rotate(90deg); }
+  82%, 100% { opacity: 0; transform: scale(1.5) rotate(300deg); }
+}
+@keyframes fxPkcorFlash { 
+  0%, 58% { opacity: 0; }
+  62% { opacity: 0.8; }
+  74%, 100% { opacity: 0; }
+}
+@keyframes fxPkcorCrack { 
+  0%, 58% { opacity: 0; }
+  61% { opacity: 1; }
+  74% { opacity: 0.9; }
+  86%, 100% { opacity: 0; }
+}
+@keyframes fxPkcorCrackDraw { 
+  0%, 58% { stroke-dashoffset: 64; }
+  66%, 100% { stroke-dashoffset: 0; }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="fx-pkcor fx-pkcor--multi t-lightning" role="img" aria-label="Dravite Corridor: bolt, flame and stream strands twirl while a golden paw crackling with white arcs jabs down the corridor and cracks the target" style="--c1:var(--pkt-fire);--c1-rgb:var(--pkt-fire-rgb);--c2:var(--pkt-water);--c2-rgb:var(--pkt-water-rgb);--c3:var(--pkt-lightning);--c3-rgb:var(--pkt-lightning-rgb)">
+    <i class="fx-pkcor-aura fx-pkcor-aura-t fx-pkcor-l1 t-fire"></i><i class="fx-pkcor-aura fx-pkcor-aura-b fx-pkcor-l1 t-fire"></i><i class="fx-pkcor-aura fx-pkcor-aura-t fx-pkcor-l2 t-water"></i><i class="fx-pkcor-aura fx-pkcor-aura-b fx-pkcor-l2 t-water"></i><i class="fx-pkcor-aura fx-pkcor-aura-t fx-pkcor-l3 t-lightning"></i><i class="fx-pkcor-aura fx-pkcor-aura-b fx-pkcor-l3 t-lightning"></i>
+    <i class="fx-pkcor-core"></i>
+    <svg class="fx-pkcor-helix" viewBox="0 0 330 150" aria-hidden="true"><path class="fx-pkcor-hg fx-pkcor-l1 t-fire" d="M-8 61.8 C-2.7 68.7 2.7 81.3 8 88.2 C13.3 95.1 18.7 95.1 24 88.2 C29.3 81.3 34.7 68.7 40 61.8 C45.3 54.9 50.7 54.9 56 61.8 C61.3 68.7 66.7 81.3 72 88.2 C77.3 95.1 82.7 95.1 88 88.2 C93.3 81.3 98.7 68.7 104 61.8 C109.3 54.9 114.7 54.9 120 61.8 C125.3 68.7 130.7 81.3 136 88.2 C141.3 95.1 146.7 95.1 152 88.2 C157.3 81.3 162.7 68.7 168 61.8 C173.3 54.9 178.7 54.9 184 61.8 C189.3 68.7 194.7 81.3 200 88.2 C205.3 95.1 210.7 95.1 216 88.2 C221.3 81.3 226.7 68.7 232 61.8 C237.3 54.9 242.7 54.9 248 61.8 C253.3 68.7 258.7 81.3 264 88.2 C269.3 95.1 274.7 95.1 280 88.2 C285.3 81.3 290.7 68.7 296 61.8 C301.3 54.9 306.7 54.9 312 61.8"></path><path class="fx-pkcor-hg fx-pkcor-l2 t-water" d="M-8 93.1 C-2.7 95.6 2.7 89.3 8 79.8 C13.3 70.4 18.7 59.5 24 56.9 C29.3 54.4 34.7 60.7 40 70.2 C45.3 79.6 50.7 90.5 56 93.1 C61.3 95.6 66.7 89.3 72 79.8 C77.3 70.4 82.7 59.5 88 56.9 C93.3 54.4 98.7 60.7 104 70.2 C109.3 79.6 114.7 90.5 120 93.1 C125.3 95.6 130.7 89.3 136 79.8 C141.3 70.4 146.7 59.5 152 56.9 C157.3 54.4 162.7 60.7 168 70.2 C173.3 79.6 178.7 90.5 184 93.1 C189.3 95.6 194.7 89.3 200 79.8 C205.3 70.4 210.7 59.5 216 56.9 C221.3 54.4 226.7 60.7 232 70.2 C237.3 79.6 242.7 90.5 248 93.1 C253.3 95.6 258.7 89.3 264 79.8 C269.3 70.4 274.7 59.5 280 56.9 C285.3 54.4 290.7 60.7 296 70.2 C301.3 79.6 306.7 90.5 312 93.1"></path><path class="fx-pkcor-hg fx-pkcor-l3 t-lightning" d="M-8 70.2 C-2.7 60.7 2.7 54.4 8 56.9 C13.3 59.5 18.7 70.4 24 79.8 C29.3 89.3 34.7 95.6 40 93.1 C45.3 90.5 50.7 79.6 56 70.2 C61.3 60.7 66.7 54.4 72 56.9 C77.3 59.5 82.7 70.4 88 79.8 C93.3 89.3 98.7 95.6 104 93.1 C109.3 90.5 114.7 79.6 120 70.2 C125.3 60.7 130.7 54.4 136 56.9 C141.3 59.5 146.7 70.4 152 79.8 C157.3 89.3 162.7 95.6 168 93.1 C173.3 90.5 178.7 79.6 184 70.2 C189.3 60.7 194.7 54.4 200 56.9 C205.3 59.5 210.7 70.4 216 79.8 C221.3 89.3 226.7 95.6 232 93.1 C237.3 90.5 242.7 79.6 248 70.2 C253.3 60.7 258.7 54.4 264 56.9 C269.3 59.5 274.7 70.4 280 79.8 C285.3 89.3 290.7 95.6 296 93.1 C301.3 90.5 306.7 79.6 312 70.2"></path><path class="fx-pkcor-hx fx-pkcor-l1 t-fire" d="M-8 61.8 C-2.7 68.7 2.7 81.3 8 88.2 C13.3 95.1 18.7 95.1 24 88.2 C29.3 81.3 34.7 68.7 40 61.8 C45.3 54.9 50.7 54.9 56 61.8 C61.3 68.7 66.7 81.3 72 88.2 C77.3 95.1 82.7 95.1 88 88.2 C93.3 81.3 98.7 68.7 104 61.8 C109.3 54.9 114.7 54.9 120 61.8 C125.3 68.7 130.7 81.3 136 88.2 C141.3 95.1 146.7 95.1 152 88.2 C157.3 81.3 162.7 68.7 168 61.8 C173.3 54.9 178.7 54.9 184 61.8 C189.3 68.7 194.7 81.3 200 88.2 C205.3 95.1 210.7 95.1 216 88.2 C221.3 81.3 226.7 68.7 232 61.8 C237.3 54.9 242.7 54.9 248 61.8 C253.3 68.7 258.7 81.3 264 88.2 C269.3 95.1 274.7 95.1 280 88.2 C285.3 81.3 290.7 68.7 296 61.8 C301.3 54.9 306.7 54.9 312 61.8"></path><path class="fx-pkcor-hx fx-pkcor-l2 t-water" d="M-8 93.1 C-2.7 95.6 2.7 89.3 8 79.8 C13.3 70.4 18.7 59.5 24 56.9 C29.3 54.4 34.7 60.7 40 70.2 C45.3 79.6 50.7 90.5 56 93.1 C61.3 95.6 66.7 89.3 72 79.8 C77.3 70.4 82.7 59.5 88 56.9 C93.3 54.4 98.7 60.7 104 70.2 C109.3 79.6 114.7 90.5 120 93.1 C125.3 95.6 130.7 89.3 136 79.8 C141.3 70.4 146.7 59.5 152 56.9 C157.3 54.4 162.7 60.7 168 70.2 C173.3 79.6 178.7 90.5 184 93.1 C189.3 95.6 194.7 89.3 200 79.8 C205.3 70.4 210.7 59.5 216 56.9 C221.3 54.4 226.7 60.7 232 70.2 C237.3 79.6 242.7 90.5 248 93.1 C253.3 95.6 258.7 89.3 264 79.8 C269.3 70.4 274.7 59.5 280 56.9 C285.3 54.4 290.7 60.7 296 70.2 C301.3 79.6 306.7 90.5 312 93.1"></path><path class="fx-pkcor-hx fx-pkcor-l3 t-lightning" d="M-8 70.2 C-2.7 60.7 2.7 54.4 8 56.9 C13.3 59.5 18.7 70.4 24 79.8 C29.3 89.3 34.7 95.6 40 93.1 C45.3 90.5 50.7 79.6 56 70.2 C61.3 60.7 66.7 54.4 72 56.9 C77.3 59.5 82.7 70.4 88 79.8 C93.3 89.3 98.7 95.6 104 93.1 C109.3 90.5 114.7 79.6 120 70.2 C125.3 60.7 130.7 54.4 136 56.9 C141.3 59.5 146.7 70.4 152 79.8 C157.3 89.3 162.7 95.6 168 93.1 C173.3 90.5 178.7 79.6 184 70.2 C189.3 60.7 194.7 54.4 200 56.9 C205.3 59.5 210.7 70.4 216 79.8 C221.3 89.3 226.7 95.6 232 93.1 C237.3 90.5 242.7 79.6 248 70.2 C253.3 60.7 258.7 54.4 264 56.9 C269.3 59.5 274.7 70.4 280 79.8 C285.3 89.3 290.7 95.6 296 93.1 C301.3 90.5 306.7 79.6 312 70.2"></path></svg>
+    <span class="fx-pkcor-gl"><span class="fx-pkcor-lane fx-pkcor-l1 t-fire" style="--sp:'M-8 61.8 C-2.7 68.7 2.7 81.3 8 88.2 C13.3 95.1 18.7 95.1 24 88.2 C29.3 81.3 34.7 68.7 40 61.8 C45.3 54.9 50.7 54.9 56 61.8 C61.3 68.7 66.7 81.3 72 88.2 C77.3 95.1 82.7 95.1 88 88.2 C93.3 81.3 98.7 68.7 104 61.8 C109.3 54.9 114.7 54.9 120 61.8 C125.3 68.7 130.7 81.3 136 88.2 C141.3 95.1 146.7 95.1 152 88.2 C157.3 81.3 162.7 68.7 168 61.8 C173.3 54.9 178.7 54.9 184 61.8 C189.3 68.7 194.7 81.3 200 88.2 C205.3 95.1 210.7 95.1 216 88.2 C221.3 81.3 226.7 68.7 232 61.8 C237.3 54.9 242.7 54.9 248 61.8 C253.3 68.7 258.7 81.3 264 88.2 C269.3 95.1 274.7 95.1 280 88.2 C285.3 81.3 290.7 68.7 296 61.8 C301.3 54.9 306.7 54.9 312 61.8'"><i class="fx-pkcor-g"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 12 Q14 4 6 8 Q10 12 6 16 Q14 20 22 12 Z"></path><path class="fx-pkcor-i" d="M18 12 Q13 8 10 10 Q12 12 10 14 Q13 16 18 12 Z"></path></svg></i><i class="fx-pkcor-g" style="--del:-0.6s"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 12 Q14 4 6 8 Q10 12 6 16 Q14 20 22 12 Z"></path><path class="fx-pkcor-i" d="M18 12 Q13 8 10 10 Q12 12 10 14 Q13 16 18 12 Z"></path></svg></i><i class="fx-pkcor-g" style="--del:-1.2s"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 12 Q14 4 6 8 Q10 12 6 16 Q14 20 22 12 Z"></path><path class="fx-pkcor-i" d="M18 12 Q13 8 10 10 Q12 12 10 14 Q13 16 18 12 Z"></path></svg></i><i class="fx-pkcor-g" style="--del:-1.8s"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 12 Q14 4 6 8 Q10 12 6 16 Q14 20 22 12 Z"></path><path class="fx-pkcor-i" d="M18 12 Q13 8 10 10 Q12 12 10 14 Q13 16 18 12 Z"></path></svg></i></span><span class="fx-pkcor-lane fx-pkcor-l2 t-water" style="--sp:'M-8 93.1 C-2.7 95.6 2.7 89.3 8 79.8 C13.3 70.4 18.7 59.5 24 56.9 C29.3 54.4 34.7 60.7 40 70.2 C45.3 79.6 50.7 90.5 56 93.1 C61.3 95.6 66.7 89.3 72 79.8 C77.3 70.4 82.7 59.5 88 56.9 C93.3 54.4 98.7 60.7 104 70.2 C109.3 79.6 114.7 90.5 120 93.1 C125.3 95.6 130.7 89.3 136 79.8 C141.3 70.4 146.7 59.5 152 56.9 C157.3 54.4 162.7 60.7 168 70.2 C173.3 79.6 178.7 90.5 184 93.1 C189.3 95.6 194.7 89.3 200 79.8 C205.3 70.4 210.7 59.5 216 56.9 C221.3 54.4 226.7 60.7 232 70.2 C237.3 79.6 242.7 90.5 248 93.1 C253.3 95.6 258.7 89.3 264 79.8 C269.3 70.4 274.7 59.5 280 56.9 C285.3 54.4 290.7 60.7 296 70.2 C301.3 79.6 306.7 90.5 312 93.1'"><i class="fx-pkcor-g"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="fx-pkcor-s" d="M2 14 C8 6 12 18 22 10"></path><path class="fx-pkcor-h" d="M2 14 C8 6 12 18 22 10"></path></svg></i><i class="fx-pkcor-g" style="--del:-0.6s"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="fx-pkcor-s" d="M2 14 C8 6 12 18 22 10"></path><path class="fx-pkcor-h" d="M2 14 C8 6 12 18 22 10"></path></svg></i><i class="fx-pkcor-g" style="--del:-1.2s"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="fx-pkcor-s" d="M2 14 C8 6 12 18 22 10"></path><path class="fx-pkcor-h" d="M2 14 C8 6 12 18 22 10"></path></svg></i><i class="fx-pkcor-g" style="--del:-1.8s"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="fx-pkcor-s" d="M2 14 C8 6 12 18 22 10"></path><path class="fx-pkcor-h" d="M2 14 C8 6 12 18 22 10"></path></svg></i></span><span class="fx-pkcor-lane fx-pkcor-l3 t-lightning" style="--sp:'M-8 70.2 C-2.7 60.7 2.7 54.4 8 56.9 C13.3 59.5 18.7 70.4 24 79.8 C29.3 89.3 34.7 95.6 40 93.1 C45.3 90.5 50.7 79.6 56 70.2 C61.3 60.7 66.7 54.4 72 56.9 C77.3 59.5 82.7 70.4 88 79.8 C93.3 89.3 98.7 95.6 104 93.1 C109.3 90.5 114.7 79.6 120 70.2 C125.3 60.7 130.7 54.4 136 56.9 C141.3 59.5 146.7 70.4 152 79.8 C157.3 89.3 162.7 95.6 168 93.1 C173.3 90.5 178.7 79.6 184 70.2 C189.3 60.7 194.7 54.4 200 56.9 C205.3 59.5 210.7 70.4 216 79.8 C221.3 89.3 226.7 95.6 232 93.1 C237.3 90.5 242.7 79.6 248 70.2 C253.3 60.7 258.7 54.4 264 56.9 C269.3 59.5 274.7 70.4 280 79.8 C285.3 89.3 290.7 95.6 296 93.1 C301.3 90.5 306.7 79.6 312 70.2'"><i class="fx-pkcor-g"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 14 L11 10 L9 14 L22 8 L13 12 L15 8 Z"></path></svg></i><i class="fx-pkcor-g" style="--del:-0.6s"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 14 L11 10 L9 14 L22 8 L13 12 L15 8 Z"></path></svg></i><i class="fx-pkcor-g" style="--del:-1.2s"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 14 L11 10 L9 14 L22 8 L13 12 L15 8 Z"></path></svg></i><i class="fx-pkcor-g" style="--del:-1.8s"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 14 L11 10 L9 14 L22 8 L13 12 L15 8 Z"></path></svg></i></span></span>
+    <span class="fx-pkcor-proj a-paw-electric a-paw t-lightning"><i class="fx-pkcor-shock"></i><svg class="fx-pkcor-ps" viewBox="0 0 120 90" aria-hidden="true"><rect class="fx-pkcor-pa" x="0" y="34" width="34" height="28" rx="12"></rect><ellipse class="fx-pkcor-pm" cx="84" cy="20" rx="9" ry="12" transform="rotate(-28 84 20)"></ellipse><ellipse class="fx-pkcor-pm" cx="100" cy="38" rx="9" ry="12" transform="rotate(-72 100 38)"></ellipse><ellipse class="fx-pkcor-pm" cx="100" cy="56" rx="9" ry="12" transform="rotate(-108 100 56)"></ellipse><ellipse class="fx-pkcor-pm" cx="84" cy="74" rx="9" ry="12" transform="rotate(-152 84 74)"></ellipse><ellipse class="fx-pkcor-pm" cx="54" cy="48" rx="28" ry="23"></ellipse><ellipse class="fx-pkcor-ph" cx="46" cy="40" rx="9" ry="6" opacity=".45"></ellipse><path class="fx-pkcor-ph" d="M89 8 L94 0 L97 9 Z M108 30 L116 26 L113 36 Z M109 60 L117 64 L110 69 Z M90 84 L95 92 L86 88 Z"></path><path class="fx-pkcor-arc" d="M18 22 l9 -7 l-3 8 l10 -5 M28 74 l8 6 l-2 -8 l9 4 M64 6 l6 -9 l1 8 l8 -5 M110 46 l8 -3 l-5 6 l9 2"></path></svg></span>
+    <i class="fx-pkcor-pop"></i><i class="fx-pkcor-ring t-lightning"></i><i class="fx-pkcor-flash t-lightning"></i><svg class="fx-pkcor-crack" viewBox="0 0 80 80" aria-hidden="true"><path class="fx-pkcor-crk fx-pkcor-crk-u" d="M40 40 L22 14 L14 4 M40 40 L64 20 L74 12 M40 40 L60 62 M40 40 L20 58 M40 40 L44 8"></path><path class="fx-pkcor-crk" d="M40 40 L22 14 L14 4 M40 40 L64 20 L74 12 M40 40 L60 62 M40 40 L20 58 M40 40 L44 8"></path></svg>
+  </div></div></div>
+<div class="meta"><b>Dravite Corridor (Jolteon ex)</b> · <code>fx-pkmn-corridor-dravite</code><br>FX Store · Pokémon Battle<p>Jolteon ex’s Dravite, same tri-type cost, different card: a golden electric paw with flickering white arcs takes the Mega Brave jab curve behind a yellow crescent shock, and the impact cracks under a spinning three-colour ring.</p></div>
+
+</body>
+</html>
