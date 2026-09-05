@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nested Outline · Prism</title>
+<!-- Prism showcase sample: tables-nested-outline (gallery: tables). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.dtb-outline { width: 100%; max-width: 260px; margin: 0px; padding: 0px; list-style: none; font: 11px / 1.5 ui-sans-serif, system-ui, sans-serif; color: var(--ink); }
+.dtb-outline li { position: relative; padding-left: 16px; }
+.dtb-outline li::before { content: ""; position: absolute; left: 3px; top: 0.55em; width: 6px; height: 6px; border-radius: 50%; background: var(--dim); animation-duration: 5s; animation-timing-function: ease-in-out; animation-iteration-count: infinite; animation-direction: normal; animation-fill-mode: none; animation-play-state: running; animation-name: dtbBullet; animation-timeline: auto; animation-range: normal; animation-delay: calc(var(--i,0)*.45s); }
+.dtb-outline ul { list-style: none; margin: 0px 0px 0px 6px; padding: 0px 0px 0px 6px; border-left: 1px dashed var(--line); }
+.dtb-outline ul li::before { width: 5px; height: 5px; border-radius: 1px; transform: rotate(45deg); }
+.dtb-outline li.mut { color: var(--muted); }
+@keyframes dtbBullet { 
+  0%, 10% { background: var(--dim); box-shadow: 0 0 0 rgba(var(--info-rgb),0); }
+  16%, 26% { background: var(--info); box-shadow: 0 0 8px rgba(var(--info-rgb),.8); }
+  36%, 100% { background: var(--dim); box-shadow: 0 0 0 rgba(var(--info-rgb),0); }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><ul class="dtb-outline">
+      <li style="--i:0">Migration plan
+        <ul>
+          <li style="--i:1">Inventory workloads</li>
+          <li style="--i:2" class="mut">Tag by criticality</li>
+        </ul>
+      </li>
+      <li style="--i:3">Cutover window
+        <ul>
+          <li style="--i:4">DNS TTL to 60s</li>
+          <li style="--i:5" class="mut">Freeze deploys</li>
+        </ul>
+      </li>
+      <li style="--i:6">Validation</li>
+    </ul></div></div>
+<div class="meta"><b>Nested Outline</b> · <code>tables-nested-outline</code><br>Tables &amp; Data Layouts · LISTS &amp; TREES<p>A two-level outline with round and diamond bullets that light up in reading order along a dashed rail — plans, agendas, hierarchies.</p></div>
+
+</body>
+</html>

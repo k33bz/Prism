@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ledger + Running Balance · Prism</title>
+<!-- Prism showcase sample: tables-ledger-running-balance (gallery: tables). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.dtb-tbl { width: 100%; max-width: 300px; border-collapse: separate; border-spacing: 0px; font: 11px / 1.35 ui-sans-serif, system-ui, sans-serif; color: var(--ink); background: var(--card); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+.dtb-tbl th { font: 700 9px / 1.2 ui-sans-serif, system-ui, sans-serif; letter-spacing: 0.07em; text-transform: uppercase; color: var(--dim); text-align: left; padding: 7px 9px; background: var(--panel2); border-bottom: 1px solid var(--line); white-space: nowrap; }
+.dtb-tbl td { padding: 6px 9px; border-bottom: 1px solid var(--line); white-space: nowrap; vertical-align: middle; }
+.dtb-tbl tbody tr:last-child td { border-bottom: 0px; }
+.dtb-tbl tfoot td { border-top: 2px solid var(--line); border-bottom: 0px; font-weight: 800; background: var(--panel2); }
+.dtb-num { font-family: ui-monospace, Menlo, monospace; font-variant-numeric: tabular-nums; text-align: right !important; }
+.dtb-mono { font-family: ui-monospace, Menlo, monospace; font-variant-numeric: tabular-nums; }
+.dtb-dim { color: var(--dim); }
+.dtb-row .dtb-num { text-align: right; }
+.dtb-ledger td.cr { color: var(--pos); }
+.dtb-ledger td.dr { color: var(--neg); }
+.dtb-ledger td.bal { color: var(--ink); font-weight: 700; }
+.dtb-ledger tbody tr:first-child td { animation: 5s cubic-bezier(0.2, 0.8, 0.3, 1) 0s infinite normal none running dtbInsert; }
+.dtb-ledger tfoot td { font-size: 10px; }
+@keyframes dtbInsert { 
+  0% { opacity: 0; transform: translateY(-100%); }
+  10% { opacity: 1; transform: translateY(0px); box-shadow: inset 0 0 0 999px rgba(var(--accent-rgb),.22); }
+  45%, 100% { opacity: 1; transform: translateY(0px); box-shadow: inset 0 0 0 999px rgba(var(--accent-rgb),0); }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><table class="dtb-tbl dtb-ledger"><thead><tr><th>Date</th><th>Memo</th><th class="dtb-num">Amount</th><th class="dtb-num">Balance</th></tr></thead><tbody>
+      <tr><td class="dtb-mono dtb-dim">09-04</td><td>Refund · #10471</td><td class="dtb-num cr">+120.00</td><td class="dtb-num bal">4,382.10</td></tr>
+      <tr><td class="dtb-mono dtb-dim">09-03</td><td>AWS · Aug</td><td class="dtb-num dr">-1,812.44</td><td class="dtb-num bal">4,262.10</td></tr>
+      <tr><td class="dtb-mono dtb-dim">09-02</td><td>Payout</td><td class="dtb-num cr">+5,000.00</td><td class="dtb-num bal">6,074.54</td></tr>
+      <tr><td class="dtb-mono dtb-dim">09-01</td><td>Domains</td><td class="dtb-num dr">-96.20</td><td class="dtb-num bal">1,074.54</td></tr>
+    </tbody><tfoot><tr><td colspan="3">Closing balance</td><td class="dtb-num">4,382.10</td></tr></tfoot></table></div></div>
+<div class="meta"><b>Ledger + Running Balance</b> · <code>tables-ledger-running-balance</code><br>Tables &amp; Data Layouts · LEDGERS, LOGS &amp; TOOLBARS<p>Credits in green, debits in red, a running balance column and a closing total, with the newest entry sliding in at the top.</p></div>
+
+</body>
+</html>

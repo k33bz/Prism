@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Org Chart · Prism</title>
+<!-- Prism showcase sample: tables-org-chart (gallery: tables). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.dtb-org { display: flex; flex-direction: column; align-items: center; width: 100%; max-width: 280px; font: 700 9.5px / 1.2 ui-sans-serif, system-ui, sans-serif; }
+.dtb-org-n { padding: 5px 10px; border: 1px solid var(--line); border-radius: 7px; background: var(--panel2); color: var(--ink); text-align: center; min-width: 64px; position: relative; }
+.dtb-org-n small { display: block; font-weight: 600; font-size: 8px; color: var(--muted); letter-spacing: 0.04em; text-transform: uppercase; margin-top: 1px; }
+.dtb-org-n.root { border-color: var(--accent); color: var(--accent); box-shadow: 0 0 12px rgba(var(--accent-rgb),.2); }
+.dtb-org-v { width: 2px; height: 16px; background: linear-gradient(180deg,var(--accent),var(--line)); }
+.dtb-org-row { display: flex; gap: 10px; position: relative; padding-top: 12px; }
+.dtb-org-row::before { content: ""; position: absolute; left: 13%; right: 13%; top: 0px; height: 2px; background: var(--line); }
+.dtb-org-row .dtb-org-n::before { content: ""; position: absolute; left: 50%; top: -12px; width: 2px; height: 12px; background: var(--line); }
+.dtb-org-pulse { position: absolute; left: 50%; top: -12px; width: 6px; height: 6px; margin-left: -2px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 6px var(--accent); animation: 3s ease-in-out 0s infinite normal none running dtbOrgPulse; }
+.dtb-org-row .dtb-org-n:nth-child(2) .dtb-org-pulse { animation-delay: 1s; }
+.dtb-org-row .dtb-org-n:nth-child(3) .dtb-org-pulse { animation-delay: 2s; }
+@keyframes dtbOrgPulse { 
+  0%, 60% { opacity: 0; transform: translateY(0px); }
+  65% { opacity: 1; }
+  90% { opacity: 1; transform: translateY(12px); }
+  100% { opacity: 0; transform: translateY(12px); }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="dtb-org">
+      <div class="dtb-org-n root">Platform<small>VP Eng</small></div>
+      <div class="dtb-org-v"></div>
+      <div class="dtb-org-row">
+        <div class="dtb-org-n"><span class="dtb-org-pulse"></span>Infra<small>12</small></div>
+        <div class="dtb-org-n"><span class="dtb-org-pulse"></span>Data<small>8</small></div>
+        <div class="dtb-org-n"><span class="dtb-org-pulse"></span>SRE<small>6</small></div>
+      </div>
+    </div></div></div>
+<div class="meta"><b>Org Chart</b> · <code>tables-org-chart</code><br>Tables &amp; Data Layouts · LISTS &amp; TREES<p>A root node over three children joined by elbow connectors, with pulses travelling down to each branch — org charts and ownership trees.</p></div>
+
+</body>
+</html>

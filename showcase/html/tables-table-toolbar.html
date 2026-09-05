@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Table Toolbar · Prism</title>
+<!-- Prism showcase sample: tables-table-toolbar (gallery: tables). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.dtb-cb.on { background: var(--info); border-color: var(--info); }
+.dtb-cb.on::after { transform: rotate(45deg) scale(1); opacity: 1; }
+.dtb-typed { display: inline-block; overflow: hidden; white-space: nowrap; vertical-align: bottom; max-width: 0px; animation: 4.5s steps(9) 0s infinite normal none running dtbType; }
+.dtb-caret { display: inline-block; width: 1px; height: 11px; background: var(--ink); vertical-align: -2px; margin-left: 1px; animation: 1s steps(1) 0s infinite normal none running dtbCaret; }
+.dtb-def dd .dtb-typed { max-width: 0px; animation: 6s steps(26) 0s infinite normal none running dtbTypeLong; color: var(--ink); }
+.dtb-ck-item .dtb-cb.on { animation: auto ease 0s 1 normal none running none; }
+.dtb-ck-item .dtb-cb.on::after { animation: auto ease 0s 1 normal none running none; }
+.dtb-toolbar { width: 100%; max-width: 290px; font: 600 9.5px ui-sans-serif, system-ui, sans-serif; background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 8px; display: flex; flex-direction: column; gap: 7px; }
+.dtb-tb-row { display: flex; align-items: center; gap: 6px; }
+.dtb-search { flex: 1 1 0%; display: flex; align-items: center; gap: 6px; padding: 4px 8px; border: 1px solid var(--line); border-radius: 6px; background: var(--panel); color: var(--ink); font-family: ui-monospace, Menlo, monospace; font-size: 10px; }
+.dtb-search::before { content: ""; width: 8px; height: 8px; border: 1.5px solid var(--dim); border-radius: 50%; box-shadow: 3px 3px 0 -1px var(--dim); flex: 0 0 auto; }
+.dtb-search .dtb-typed { animation: 5s steps(7) 0s infinite normal none running dtbType; }
+.dtb-chip { padding: 2px 8px; border-radius: 12px; border: 1px solid var(--line); background: var(--panel); color: var(--muted); font-size: 9px; white-space: nowrap; }
+.dtb-chip.on { border-color: var(--info); color: var(--info); background: rgba(var(--info-rgb),.12); }
+.dtb-chip.tog { animation: 5s steps(1) 0s infinite normal none running dtbChip; }
+.dtb-tb-btn { display: grid; place-items: center; width: 24px; height: 24px; border-radius: 6px; border: 1px solid var(--line); background: var(--panel); color: var(--muted); font-size: 11px; }
+.dtb-tb-count { margin-left: auto; font-family: ui-monospace, Menlo, monospace; color: var(--dim); font-size: 9px; font-weight: 600; }
+.dtb-tb-count b { color: var(--ink); animation: 5s steps(1) 0s infinite normal none running dtbCountFlip; }
+@keyframes dtbCaret { 
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+@keyframes dtbType { 
+  0%, 12% { max-width: 0px; }
+  55%, 90% { max-width: 5.4em; }
+  100% { max-width: 0px; }
+}
+@keyframes dtbTypeLong { 
+  0%, 8% { max-width: 0px; }
+  55%, 92% { max-width: 15em; }
+  100% { max-width: 0px; }
+}
+@keyframes dtbChip { 
+  0%, 35% { border-color: var(--line); color: var(--muted); background: var(--panel); }
+  36%, 85% { border-color: var(--info); color: var(--info); background: rgba(var(--info-rgb),.12); }
+  86%, 100% { border-color: var(--line); color: var(--muted); background: var(--panel); }
+}
+@keyframes dtbCountFlip { 
+  0%, 35% { color: var(--ink); }
+  36%, 50% { color: var(--info); }
+  51%, 85% { color: var(--ink); }
+}
+.bar button.on { color: rgb(255, 255, 255) !important; }
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="dtb-toolbar">
+      <div class="dtb-tb-row"><div class="dtb-search"><span class="dtb-typed">region:</span><span class="dtb-caret"></span></div><span class="dtb-tb-btn">⚙</span><span class="dtb-tb-btn">↓</span></div>
+      <div class="dtb-tb-row"><span class="dtb-chip on">Prod</span><span class="dtb-chip tog">Errors only</span><span class="dtb-chip">Last 24h</span><span class="dtb-tb-count"><b>318</b> / 2,668</span></div>
+    </div></div></div>
+<div class="meta"><b>Table Toolbar</b> · <code>tables-table-toolbar</code><br>Tables &amp; Data Layouts · LEDGERS, LOGS &amp; TOOLBARS<p>Search box with a typing query, filter chips (one toggling on), column and export buttons, and a live match count — the control strip above a data table.</p></div>
+
+</body>
+</html>
