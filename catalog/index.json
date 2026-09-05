@@ -1,5 +1,5 @@
 {
-  "count": 2735,
+  "count": 2785,
   "effects": [
     {
       "id": "charts-big-metric-count-up",
@@ -1828,10 +1828,11 @@
         "sl",
         "ts",
         "lv",
-        "ok",
-        "m",
         "warn",
+        "m",
+        "ok",
         "info",
+        "err",
         "cursor"
       ],
       "params": [],
@@ -1861,7 +1862,8 @@
         "field",
         "q",
         "car",
-        "results"
+        "results",
+        "r"
       ],
       "params": [],
       "tags": [
@@ -16437,9 +16439,7 @@
         "pbody",
         "jsonstream",
         "jl",
-        "jk",
-        "jv",
-        "jn",
+        "jcur",
         "cap",
         "pr-playbtn"
       ],
@@ -16559,10 +16559,6 @@
         "tdot",
         "pbody",
         "diffgen",
-        "dl",
-        "ctx",
-        "del",
-        "add",
         "cap",
         "pr-playbtn"
       ],
@@ -16759,6 +16755,7 @@
         "fail",
         "ai2",
         "meta2",
+        "run",
         "cap"
       ],
       "params": [
@@ -17514,6 +17511,7 @@
         "qreg",
         "qrow",
         "qubit",
+        "collapsed",
         "qcloud",
         "qval",
         "qlabel",
@@ -17599,9 +17597,9 @@
         "gate",
         "experts",
         "expert",
-        "on",
         "ed",
         "ew",
+        "on",
         "cap",
         "pr-playbtn"
       ],
@@ -41419,7 +41417,9 @@
         "dtb-num",
         "dtb-mut"
       ],
-      "params": [],
+      "params": [
+        "color"
+      ],
       "tags": [
         "tables",
         "animated",
@@ -41482,7 +41482,9 @@
         "dtb-mut",
         "dtb-mono"
       ],
-      "params": [],
+      "params": [
+        "color"
+      ],
       "tags": [
         "tables",
         "animated",
@@ -41514,7 +41516,9 @@
         "dtb-down",
         "dtb-flat"
       ],
-      "params": [],
+      "params": [
+        "color"
+      ],
       "tags": [
         "tables",
         "animated",
@@ -41652,7 +41656,9 @@
         "dtb-mut",
         "c"
       ],
-      "params": [],
+      "params": [
+        "color"
+      ],
       "tags": [
         "tables",
         "animated",
@@ -41684,7 +41690,9 @@
         "w3",
         "w1"
       ],
-      "params": [],
+      "params": [
+        "color"
+      ],
       "tags": [
         "tables",
         "animated",
@@ -41714,7 +41722,9 @@
         "dtb-sorted",
         "dtb-sort-arrow"
       ],
-      "params": [],
+      "params": [
+        "color"
+      ],
       "tags": [
         "tables",
         "animated",
@@ -41747,13 +41757,16 @@
         "lift",
         "press"
       ],
-      "params": [],
+      "params": [
+        "color"
+      ],
       "tags": [
         "tables",
+        "animated",
         "new"
       ],
       "componentType": null,
-      "interaction": null,
+      "interaction": "click",
       "spectrum": null,
       "usableAsBackground": false,
       "needsJs": null,
@@ -41761,7 +41774,7 @@
       "isFixed": false,
       "addedOn": "2026-09-04",
       "updatedOn": null,
-      "description": "A leading column of ▲▼ controls; the pressed arrow lights up and its row lifts over the one above and settles into the slot — manual ordering for rules, priorities and playlists."
+      "description": "A leading column of ▲▼ controls; the pressed arrow lights up and its row lifts over the one above and settles into the slot — manual ordering for rules, priorities and playlists. Click the arrows to try it."
     },
     {
       "id": "tables-flash-resort",
@@ -41776,14 +41789,16 @@
         "dtb-sortcol",
         "dtb-sort-arrow"
       ],
-      "params": [],
+      "params": [
+        "color"
+      ],
       "tags": [
         "tables",
         "animated",
         "new"
       ],
       "componentType": null,
-      "interaction": null,
+      "interaction": "click",
       "spectrum": null,
       "usableAsBackground": false,
       "needsJs": null,
@@ -41791,7 +41806,7 @@
       "isFixed": false,
       "addedOn": "2026-09-04",
       "updatedOn": null,
-      "description": "Clicking a header: the column flashes, the sort arrow flips, the rows dim and glide to their new positions, then settle — the reorder cue of a sortable data grid. Give each row its offset in --to."
+      "description": "Clicking a header: the column flashes, the sort arrow flips, the rows dim and glide to their new positions, then settle — the reorder cue of a sortable data grid. Give each row its offset in --to. Click the Cost header to sort it yourself."
     },
     {
       "id": "tables-fall-land-resort",
@@ -41805,14 +41820,16 @@
         "dtb-num",
         "dtb-sort-arrow"
       ],
-      "params": [],
+      "params": [
+        "color"
+      ],
       "tags": [
         "tables",
         "animated",
         "new"
       ],
       "componentType": null,
-      "interaction": null,
+      "interaction": "click",
       "spectrum": null,
       "usableAsBackground": false,
       "needsJs": null,
@@ -41820,7 +41837,7 @@
       "isFixed": false,
       "addedOn": "2026-09-04",
       "updatedOn": "2026-09-05",
-      "description": "The rows tumble out of the table on slight angles, one after another, then drop back in from above already in the new order, landing with a small bounce — the theatrical resort. Offsets in --to, tilt in --rot."
+      "description": "The rows tumble out of the table on slight angles, one after another, then drop back in from above already in the new order, landing with a small bounce — the theatrical resort. Offsets in --to, tilt in --rot. Click the Score header to drop and resort."
     },
     {
       "id": "tables-status-pill-column",
@@ -41838,7 +41855,9 @@
         "info",
         "off"
       ],
-      "params": [],
+      "params": [
+        "color"
+      ],
       "tags": [
         "tables",
         "animated",
@@ -41932,7 +41951,9 @@
         "dtb-down",
         "dtb-flat"
       ],
-      "params": [],
+      "params": [
+        "color"
+      ],
       "tags": [
         "tables",
         "animated",
@@ -41994,7 +42015,9 @@
         "hot",
         "new"
       ],
-      "params": [],
+      "params": [
+        "color"
+      ],
       "tags": [
         "tables",
         "animated",
@@ -42023,7 +42046,9 @@
         "dtb-num",
         "dtb-hc"
       ],
-      "params": [],
+      "params": [
+        "color"
+      ],
       "tags": [
         "tables",
         "animated",
@@ -42056,7 +42081,9 @@
         "dtb-tk",
         "dtb-down"
       ],
-      "params": [],
+      "params": [
+        "color"
+      ],
       "tags": [
         "tables",
         "animated",
@@ -42086,7 +42113,9 @@
         "dtb-yes",
         "dtb-part"
       ],
-      "params": [],
+      "params": [
+        "color"
+      ],
       "tags": [
         "tables",
         "animated",
@@ -42143,7 +42172,9 @@
         "dtb-num",
         "dtb-rh"
       ],
-      "params": [],
+      "params": [
+        "color"
+      ],
       "tags": [
         "tables",
         "animated",
@@ -42937,7 +42968,9 @@
         "bal",
         "dr"
       ],
-      "params": [],
+      "params": [
+        "color"
+      ],
       "tags": [
         "tables",
         "animated",
@@ -42967,7 +43000,9 @@
         "del",
         "add"
       ],
-      "params": [],
+      "params": [
+        "color"
+      ],
       "tags": [
         "tables",
         "animated",
@@ -43111,6 +43146,1830 @@
       "addedOn": "2026-09-04",
       "updatedOn": null,
       "description": "A dashed frame with ghost rows, a table glyph, a plain-language message and a glowing recovery action — what a table shows when a query returns nothing."
+    },
+    {
+      "id": "diagrams-simple-fishbone",
+      "name": "Simple Fishbone",
+      "gallery": "diagrams",
+      "category": "FISHBONE (ISHIKAWA)",
+      "ref": ".dgm-fish",
+      "classes": [
+        "dgm",
+        "dgm-fish",
+        "tail",
+        "dr",
+        "spine",
+        "bone",
+        "sub",
+        "cat",
+        "fi",
+        "sc",
+        "head",
+        "pulse",
+        "hd"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "diagrams",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "The basic Ishikawa skeleton: the problem in the head, a spine that draws in, four flexible cause bones with sub-causes that fade in along them. The early-stage brainstorming form."
+    },
+    {
+      "id": "diagrams-6m-fishbone",
+      "name": "6M Fishbone",
+      "gallery": "diagrams",
+      "category": "FISHBONE (ISHIKAWA)",
+      "ref": ".dgm-fish (6M)",
+      "classes": [
+        "dgm",
+        "dgm-fish",
+        "tail",
+        "dr",
+        "spine",
+        "bone",
+        "env",
+        "sub",
+        "cat",
+        "fi",
+        "head",
+        "pulse",
+        "hd"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "diagrams",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "The manufacturing standard: Manpower, Method, Machine, Material, Measurement and Mother Nature, three bones above and three below the spine, environment picked out in green. Lean and Six Sigma defect analysis."
+    },
+    {
+      "id": "diagrams-4s-fishbone",
+      "name": "4S Fishbone",
+      "gallery": "diagrams",
+      "category": "FISHBONE (ISHIKAWA)",
+      "ref": ".dgm-fish (4S)",
+      "classes": [
+        "dgm",
+        "dgm-fish",
+        "tail",
+        "dr",
+        "spine",
+        "bone",
+        "sub",
+        "cat",
+        "fi",
+        "sc",
+        "head",
+        "pulse",
+        "hd"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "diagrams",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "Four service-delivery bones, Surroundings, Suppliers, Systems and Skills, each with sub-causes. The healthcare, hospitality and support-desk form."
+    },
+    {
+      "id": "diagrams-8p-fishbone",
+      "name": "8P Fishbone",
+      "gallery": "diagrams",
+      "category": "FISHBONE (ISHIKAWA)",
+      "ref": ".dgm-fish (8P)",
+      "classes": [
+        "dgm",
+        "dgm-fish",
+        "tail",
+        "dr",
+        "spine",
+        "bone",
+        "cat",
+        "fi",
+        "head",
+        "pulse",
+        "hd"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "diagrams",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "The marketing fishbone: Product, Price, Place, Promotion, People, Process, Physical Evidence and Performance, four bones a side, drawing in left to right. Customer-experience and service-quality reviews."
+    },
+    {
+      "id": "diagrams-5m-e-fishbone",
+      "name": "5M + E Fishbone",
+      "gallery": "diagrams",
+      "category": "FISHBONE (ISHIKAWA)",
+      "ref": ".dgm-fish (5M+E)",
+      "classes": [
+        "dgm",
+        "dgm-fish",
+        "tail",
+        "dr",
+        "spine",
+        "bone",
+        "env",
+        "sub",
+        "fi",
+        "cat",
+        "sc",
+        "head",
+        "pulse",
+        "hd"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "diagrams",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "Five operational bones with Environment split out and boxed in green so external conditions are weighed separately from the process. Compliance reviews and quality audits."
+    },
+    {
+      "id": "diagrams-process-fishbone",
+      "name": "Process Fishbone",
+      "gallery": "diagrams",
+      "category": "FISHBONE (ISHIKAWA)",
+      "ref": ".dgm-fish (process)",
+      "classes": [
+        "dgm",
+        "dgm-fish",
+        "tail",
+        "dr",
+        "spine",
+        "bone",
+        "stage",
+        "cat",
+        "fi",
+        "sc",
+        "pkt",
+        "head",
+        "pulse",
+        "hd"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "diagrams",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "Bones are the workflow stages in order rather than cause types, and a packet rides the spine stage by stage toward the effect. Handoff failures and bottlenecks."
+    },
+    {
+      "id": "diagrams-service-fishbone",
+      "name": "Service Fishbone",
+      "gallery": "diagrams",
+      "category": "FISHBONE (ISHIKAWA)",
+      "ref": ".dgm-fish (service)",
+      "classes": [
+        "dgm",
+        "dgm-fish",
+        "tail",
+        "dr",
+        "spine",
+        "bone",
+        "cat",
+        "fi",
+        "sc",
+        "head",
+        "pulse",
+        "hd"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "diagrams",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "Staff, Systems, Policies, Communication, Customer Expectations and Service Environment: the customer-interaction bones for low satisfaction scores."
+    },
+    {
+      "id": "diagrams-healthcare-fishbone",
+      "name": "Healthcare Fishbone",
+      "gallery": "diagrams",
+      "category": "FISHBONE (ISHIKAWA)",
+      "ref": ".dgm-fish (clinical)",
+      "classes": [
+        "dgm",
+        "dgm-fish",
+        "tail",
+        "dr",
+        "spine",
+        "bone",
+        "cat",
+        "fi",
+        "sc",
+        "head",
+        "pulse",
+        "cross",
+        "hd"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "diagrams",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "People, Procedures, Equipment, Policy, Environment and Communication under a cross-marked head: the clinical safety and patient-care form."
+    },
+    {
+      "id": "diagrams-root-cause-trace",
+      "name": "Root Cause Trace",
+      "gallery": "diagrams",
+      "category": "FISHBONE (ISHIKAWA)",
+      "ref": ".dgm-fish .trace",
+      "classes": [
+        "dgm",
+        "dgm-fish",
+        "tail",
+        "spine",
+        "bone",
+        "sub",
+        "cat",
+        "why",
+        "sc",
+        "trace",
+        "head",
+        "hd"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "diagrams",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "One sub-cause is flagged and a pulse travels from it along the bone, down the spine and into the head, showing the causal path a 5-Whys session would follow."
+    },
+    {
+      "id": "diagrams-flowchart",
+      "name": "Flowchart",
+      "gallery": "diagrams",
+      "category": "FLOW & LOGIC",
+      "ref": ".dgm-flow",
+      "classes": [
+        "dgm",
+        "dgm-flow",
+        "bx",
+        "c",
+        "ln",
+        "dr",
+        "warn",
+        "pos",
+        "dim",
+        "mut",
+        "tok"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "diagrams",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "Terminator, process box, diamond decision and the yes/no branches, with the connectors drawing in and a token riding the happy path. The workflow primitive."
+    },
+    {
+      "id": "diagrams-feedback-loop",
+      "name": "Feedback Loop",
+      "gallery": "diagrams",
+      "category": "FLOW & LOGIC",
+      "ref": ".dgm-loop",
+      "classes": [
+        "dgm",
+        "dgm-loop",
+        "ring",
+        "arc",
+        "orb",
+        "mut"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "diagrams",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "Four steps around a ring, starting at 12 o'clock, with an arc and an orbiting marker circling Plan, Do, Check, Act forever. Any cyclical process."
+    },
+    {
+      "id": "diagrams-decision-tree",
+      "name": "Decision Tree",
+      "gallery": "diagrams",
+      "category": "FLOW & LOGIC",
+      "ref": ".dgm-tree",
+      "classes": [
+        "dgm",
+        "dgm-tree",
+        "bx",
+        "warn",
+        "ln",
+        "path",
+        "on",
+        "dr",
+        "dim",
+        "leaf",
+        "pop"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "diagrams",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "Diamond decisions branching into outcomes, the chosen path highlighted as it draws and the winning leaf popping in green. Option analysis and playbooks."
+    },
+    {
+      "id": "diagrams-swimlane-flow",
+      "name": "Swimlane Flow",
+      "gallery": "diagrams",
+      "category": "FLOW & LOGIC",
+      "ref": ".dgm-lane",
+      "classes": [
+        "dgm",
+        "dgm-lane",
+        "dgm-flow",
+        "lane",
+        "lbl",
+        "bx",
+        "c",
+        "pos",
+        "ln",
+        "dr",
+        "tok"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "diagrams",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "Three role lanes with a process that crosses them and a token following the handoffs, so ownership at each step reads at a glance."
+    },
+    {
+      "id": "diagrams-cycle-diagram",
+      "name": "Cycle Diagram",
+      "gallery": "diagrams",
+      "category": "FLOW & LOGIC",
+      "ref": ".dgm-parts (cycle)",
+      "classes": [
+        "dgm",
+        "dgm-parts",
+        "seg",
+        "seqfill",
+        "mut",
+        "ln",
+        "c"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "diagrams",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "Four wedge segments around a hub, each lighting in turn clockwise with small direction ticks between them. Iterative and lifecycle processes."
+    },
+    {
+      "id": "diagrams-state-machine",
+      "name": "State Machine",
+      "gallery": "diagrams",
+      "category": "FLOW & LOGIC",
+      "ref": ".dgm-state",
+      "classes": [
+        "dgm",
+        "dgm-state",
+        "st",
+        "seqst",
+        "ln",
+        "c",
+        "dim"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "diagrams",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "Rounded states with labelled transitions; the active state lights in sequence Idle, Running, Paused, Done as if the machine were stepping. Lifecycle and protocol docs."
+    },
+    {
+      "id": "diagrams-chevron-process",
+      "name": "Chevron Process",
+      "gallery": "diagrams",
+      "category": "FLOW & LOGIC",
+      "ref": ".dgm-chev",
+      "classes": [
+        "dgm",
+        "dgm-chev",
+        "step",
+        "fillseq",
+        "dim"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "diagrams",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "Five interlocking chevrons that fill progressively left to right, the classic phased-process strip with a timing row underneath."
+    },
+    {
+      "id": "diagrams-sipoc",
+      "name": "SIPOC",
+      "gallery": "diagrams",
+      "category": "FLOW & LOGIC",
+      "ref": ".dgm-sipoc",
+      "classes": [
+        "dgm",
+        "dgm-sipoc",
+        "col",
+        "p",
+        "hd",
+        "dim",
+        "mut",
+        "fi",
+        "bx",
+        "c",
+        "flow"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "diagrams",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "Suppliers, Inputs, Process, Outputs, Customers as five columns with the process column emphasised and a flow running left to right beneath them. The Six Sigma scoping view."
+    },
+    {
+      "id": "diagrams-mind-map",
+      "name": "Mind Map",
+      "gallery": "diagrams",
+      "category": "HIERARCHY & STRUCTURE",
+      "ref": ".dgm-mind",
+      "classes": [
+        "dgm",
+        "dgm-mind",
+        "br",
+        "b1",
+        "dr",
+        "b2",
+        "b3",
+        "b4",
+        "nd",
+        "pop",
+        "fi",
+        "mut",
+        "core",
+        "pulse",
+        "hd"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "diagrams",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A central idea with four coloured branches growing outward into nodes and second-level twigs, each level drawing in after the last. Brainstorms and topic maps."
+    },
+    {
+      "id": "diagrams-tree-dendrogram",
+      "name": "Tree / Dendrogram",
+      "gallery": "diagrams",
+      "category": "HIERARCHY & STRUCTURE",
+      "ref": ".dgm (tree)",
+      "classes": [
+        "dgm",
+        "bx",
+        "c",
+        "pop",
+        "fi",
+        "ln",
+        "dr",
+        "mut",
+        "pos"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "diagrams",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A ranked hierarchy built top-down: each level's connectors draw and its nodes pop in after the parent level, ending on a highlighted leaf. Taxonomies and org-like structures."
+    },
+    {
+      "id": "diagrams-org-chart-horizontal",
+      "name": "Org Chart (horizontal)",
+      "gallery": "diagrams",
+      "category": "HIERARCHY & STRUCTURE",
+      "ref": ".dgm (org)",
+      "classes": [
+        "dgm",
+        "bx",
+        "c",
+        "pop",
+        "fi",
+        "dim",
+        "ln",
+        "dr",
+        "mut"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "diagrams",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "Reporting lines left to right: a director, three managers and their teams with headcounts, the elbow connectors drawing before each column pops in."
+    },
+    {
+      "id": "diagrams-pyramid-chart",
+      "name": "Pyramid Chart",
+      "gallery": "diagrams",
+      "category": "HIERARCHY & STRUCTURE",
+      "ref": ".dgm-pyr",
+      "classes": [
+        "dgm",
+        "dgm-pyr",
+        "tier",
+        "t4",
+        "fi",
+        "t3",
+        "t2",
+        "t1",
+        "dim"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "diagrams",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "Four tiers stack up from the base, each rising into place with the colour intensifying toward the peak. Ranked building blocks and hierarchies of need."
+    },
+    {
+      "id": "diagrams-funnel-chart",
+      "name": "Funnel Chart",
+      "gallery": "diagrams",
+      "category": "HIERARCHY & STRUCTURE",
+      "ref": ".dgm-funnel",
+      "classes": [
+        "dgm",
+        "dgm-funnel",
+        "stage",
+        "s1",
+        "fi",
+        "s2",
+        "s3",
+        "s4",
+        "drip",
+        "dim"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "diagrams",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "Four narrowing stages with counts and conversion rates on the side, revealed top to bottom with a drip falling out of the spout. Sales and marketing funnels."
+    },
+    {
+      "id": "diagrams-concentric-circles",
+      "name": "Concentric Circles",
+      "gallery": "diagrams",
+      "category": "HIERARCHY & STRUCTURE",
+      "ref": ".dgm-conc",
+      "classes": [
+        "dgm",
+        "dgm-conc",
+        "rg",
+        "r4",
+        "r3",
+        "r2",
+        "r1",
+        "ripple",
+        "hd",
+        "mut",
+        "dim"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "diagrams",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "Nested rings from core outward with a ripple expanding through them, the layered-hierarchy form of a circle diagram."
+    },
+    {
+      "id": "diagrams-circle-of-parts",
+      "name": "Circle of Parts",
+      "gallery": "diagrams",
+      "category": "HIERARCHY & STRUCTURE",
+      "ref": ".dgm-parts",
+      "classes": [
+        "dgm",
+        "dgm-parts",
+        "seg",
+        "spinin",
+        "mut"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "diagrams",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "Six equal wedges around a hub, spinning into place one after another so no part outranks another. Values, pillars, and other equal-weight sets."
+    },
+    {
+      "id": "diagrams-nested-containers",
+      "name": "Nested Containers",
+      "gallery": "diagrams",
+      "category": "HIERARCHY & STRUCTURE",
+      "ref": ".dgm-nest",
+      "classes": [
+        "dgm",
+        "dgm-nest",
+        "lvl",
+        "seqin",
+        "mut",
+        "hd"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "diagrams",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "System, subsystem, component, module as boxes inside boxes, the highlight stepping inward level by level. Scope and containment diagrams."
+    },
+    {
+      "id": "diagrams-venn-2-sets",
+      "name": "Venn (2 sets)",
+      "gallery": "diagrams",
+      "category": "COMPARISON & MATRIX",
+      "ref": ".dgm-venn",
+      "classes": [
+        "dgm",
+        "dgm-venn",
+        "ca",
+        "cb",
+        "mid",
+        "dim"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "diagrams",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "Two translucent circles breathing against each other with the overlap labelled and blinking, where similarities and differences carry no rank."
+    },
+    {
+      "id": "diagrams-venn-3-sets",
+      "name": "Venn (3 sets)",
+      "gallery": "diagrams",
+      "category": "COMPARISON & MATRIX",
+      "ref": ".dgm-venn (3)",
+      "classes": [
+        "dgm",
+        "dgm-venn",
+        "ca",
+        "cb",
+        "cc",
+        "mid",
+        "dim",
+        "ln"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "diagrams",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "Three overlapping sets with the triple intersection marked and called out, the desirable, feasible, viable framing."
+    },
+    {
+      "id": "diagrams-swot-grid",
+      "name": "SWOT Grid",
+      "gallery": "diagrams",
+      "category": "COMPARISON & MATRIX",
+      "ref": ".dgm-swot",
+      "classes": [
+        "dgm",
+        "dgm-swot",
+        "q",
+        "qs",
+        "fi",
+        "big",
+        "mut",
+        "qw",
+        "qo",
+        "qt"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "diagrams",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "Four equal quadrants, green, red, blue and amber, filling in order with their big letters and bullet points. Strategic positioning at a glance."
+    },
+    {
+      "id": "diagrams-priority-quadrant",
+      "name": "Priority Quadrant",
+      "gallery": "diagrams",
+      "category": "COMPARISON & MATRIX",
+      "ref": ".dgm-quad",
+      "classes": [
+        "dgm",
+        "dgm-quad",
+        "hot",
+        "axis",
+        "ln",
+        "dim",
+        "mut",
+        "pt",
+        "pop"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "diagrams",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "Two labelled axes making four zones, items plotting in one by one and the upper-right zone pulsing as the priority corner. Eisenhower and impact/effort matrices."
+    },
+    {
+      "id": "diagrams-pest-columns",
+      "name": "PEST Columns",
+      "gallery": "diagrams",
+      "category": "COMPARISON & MATRIX",
+      "ref": ".dgm (pest)",
+      "classes": [
+        "dgm",
+        "bx",
+        "c",
+        "pop",
+        "hd",
+        "fi",
+        "mut",
+        "info",
+        "pos",
+        "crit"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "diagrams",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "Political, Economic, Social and Technological as four colour-coded columns popping in with their factors. The macro-environment scan."
+    },
+    {
+      "id": "diagrams-balance-scale",
+      "name": "Balance Scale",
+      "gallery": "diagrams",
+      "category": "COMPARISON & MATRIX",
+      "ref": ".dgm-scale",
+      "classes": [
+        "dgm",
+        "dgm-scale",
+        "ln",
+        "beam",
+        "c",
+        "pan",
+        "b",
+        "mut"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "diagrams",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A beam scale that tips toward the heavier pan and settles back, the pros-versus-cons metaphor for two-sided comparisons."
+    },
+    {
+      "id": "diagrams-continuum-slider",
+      "name": "Continuum Slider",
+      "gallery": "diagrams",
+      "category": "COMPARISON & MATRIX",
+      "ref": ".dgm-cont",
+      "classes": [
+        "dgm",
+        "dgm-cont",
+        "track",
+        "grad",
+        "mut",
+        "mk",
+        "dim"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "diagrams",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "Two markers on a gradient continuum sliding toward each other and back, for positioning items between two poles rather than in boxes."
+    },
+    {
+      "id": "diagrams-journey-map",
+      "name": "Journey Map",
+      "gallery": "diagrams",
+      "category": "TIMELINE & PLANNING",
+      "ref": ".dgm-journey",
+      "classes": [
+        "dgm",
+        "dgm-journey",
+        "stage",
+        "ln",
+        "dim",
+        "emo",
+        "dr",
+        "face",
+        "pop",
+        "fi"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "diagrams",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "Stages across the top and an emotion curve drawing beneath them, with a touchpoint and mood at each stage. The customer or user experience over time."
+    },
+    {
+      "id": "diagrams-roadmap",
+      "name": "Roadmap",
+      "gallery": "diagrams",
+      "category": "TIMELINE & PLANNING",
+      "ref": ".dgm-road",
+      "classes": [
+        "dgm",
+        "dgm-road",
+        "rail",
+        "done",
+        "dim",
+        "ms",
+        "lit",
+        "mut",
+        "ln"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "diagrams",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A quarter-by-quarter rail with dated milestones that light up as the progress bar reaches them. Product and strategic planning with benchmarks."
+    },
+    {
+      "id": "diagrams-vertical-timeline",
+      "name": "Vertical Timeline",
+      "gallery": "diagrams",
+      "category": "TIMELINE & PLANNING",
+      "ref": ".dgm-tl",
+      "classes": [
+        "dgm",
+        "dgm-tl",
+        "ln",
+        "c",
+        "dot",
+        "pop",
+        "card",
+        "fi",
+        "dim"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "diagrams",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "Events alternate left and right of a central spine, each dot and card appearing in date order. Histories, changelogs and project retrospectives."
+    },
+    {
+      "id": "diagrams-gantt-dependencies",
+      "name": "Gantt + Dependencies",
+      "gallery": "diagrams",
+      "category": "TIMELINE & PLANNING",
+      "ref": ".dgm-gd",
+      "classes": [
+        "dgm",
+        "dgm-gd",
+        "mut",
+        "ln",
+        "dim",
+        "bar",
+        "pop",
+        "fi",
+        "dep",
+        "dr"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "diagrams",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "Owner-labelled task bars on a week grid with dashed dependency links drawing between them and a milestone diamond at the end. Delivery planning with accountability."
+    },
+    {
+      "id": "diagrams-milestone-track",
+      "name": "Milestone Track",
+      "gallery": "diagrams",
+      "category": "TIMELINE & PLANNING",
+      "ref": ".dgm-run",
+      "classes": [
+        "dgm",
+        "dgm-run",
+        "ln",
+        "flag",
+        "seqf",
+        "dim",
+        "runner",
+        "mut"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "diagrams",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A runner moves along the track pausing at each flag, and every flag it passes turns green. Progress toward staged goals."
+    },
+    {
+      "id": "diagrams-pert-critical-path",
+      "name": "PERT / Critical Path",
+      "gallery": "diagrams",
+      "category": "TIMELINE & PLANNING",
+      "ref": ".dgm-pert",
+      "classes": [
+        "dgm",
+        "dgm-pert",
+        "ln",
+        "cp",
+        "dr",
+        "bx",
+        "cpn",
+        "pop",
+        "fi",
+        "dim",
+        "mut"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "diagrams",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "Activity nodes and duration edges drawing in, with the critical path picked out in red and totalled beneath. Schedule risk at a glance."
+    },
+    {
+      "id": "diagrams-value-stream-map",
+      "name": "Value Stream Map",
+      "gallery": "diagrams",
+      "category": "TIMELINE & PLANNING",
+      "ref": ".dgm-vsm",
+      "classes": [
+        "dgm",
+        "dgm-vsm",
+        "bx",
+        "c",
+        "fi",
+        "dim",
+        "pos",
+        "flow",
+        "lt",
+        "nva",
+        "dr",
+        "va",
+        "mut"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "diagrams",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "Process boxes with cycle times, flowing arrows and wait times between them, and the lead-time ladder underneath separating value-add from waiting. Lean flow analysis."
+    },
+    {
+      "id": "diagrams-network-graph",
+      "name": "Network Graph",
+      "gallery": "diagrams",
+      "category": "NETWORK & RELATIONSHIPS",
+      "ref": ".dgm-net",
+      "classes": [
+        "dgm",
+        "dgm-net",
+        "edge",
+        "hot",
+        "node",
+        "dim"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "diagrams",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "Nodes drifting gently on their springs with edges between them, the busy edges carrying a flowing dash. Service maps and relationship webs."
+    },
+    {
+      "id": "diagrams-hub-spoke",
+      "name": "Hub & Spoke",
+      "gallery": "diagrams",
+      "category": "NETWORK & RELATIONSHIPS",
+      "ref": ".dgm-hub",
+      "classes": [
+        "dgm",
+        "dgm-hub",
+        "spoke",
+        "pulse-out",
+        "bx",
+        "c",
+        "pulse",
+        "hd"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "diagrams",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A central hub with six spokes and pulses streaming outward along each one in turn. Distribution, integration and broadcast topologies."
+    },
+    {
+      "id": "diagrams-sankey-flow",
+      "name": "Sankey Flow",
+      "gallery": "diagrams",
+      "category": "NETWORK & RELATIONSHIPS",
+      "ref": ".dgm-sankey",
+      "classes": [
+        "dgm",
+        "dgm-sankey",
+        "band",
+        "b",
+        "c",
+        "nd",
+        "stream",
+        "mut"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "diagrams",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "Three sources feeding two targets through bands whose width carries the volume, with dashed streams flowing through them. Traffic, budget and energy flows."
+    },
+    {
+      "id": "diagrams-er-diagram",
+      "name": "ER Diagram",
+      "gallery": "diagrams",
+      "category": "NETWORK & RELATIONSHIPS",
+      "ref": ".dgm-er",
+      "classes": [
+        "dgm",
+        "dgm-er",
+        "ent",
+        "hdr",
+        "dim",
+        "rel",
+        "pulse-ln",
+        "mut"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "diagrams",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "Two entities with header bands and attribute rows joined by a crow's-foot one-to-many relation that carries a flowing pulse. Data modelling."
+    },
+    {
+      "id": "diagrams-chord-diagram",
+      "name": "Chord Diagram",
+      "gallery": "diagrams",
+      "category": "NETWORK & RELATIONSHIPS",
+      "ref": ".dgm-chord",
+      "classes": [
+        "dgm",
+        "dgm-chord",
+        "wheel",
+        "arcseg",
+        "chord",
+        "mut",
+        "dim"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "diagrams",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "Four groups on a slowly turning ring with chords between them showing who works with whom. Inter-team and inter-region relationships."
+    },
+    {
+      "id": "diagrams-stakeholder-map",
+      "name": "Stakeholder Map",
+      "gallery": "diagrams",
+      "category": "NETWORK & RELATIONSHIPS",
+      "ref": ".dgm-stake",
+      "classes": [
+        "dgm",
+        "dgm-stake",
+        "ln",
+        "dim",
+        "mut",
+        "bub",
+        "fi"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "diagrams",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A power/interest grid with the four engagement zones, stakeholder bubbles growing into place sized by influence. Communication planning."
+    },
+    {
+      "id": "diagrams-business-model-canvas",
+      "name": "Business Model Canvas",
+      "gallery": "diagrams",
+      "category": "FRAMEWORKS",
+      "ref": ".dgm-bmc",
+      "classes": [
+        "dgm",
+        "dgm-bmc",
+        "cell",
+        "seqc",
+        "dim"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "diagrams",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "The nine-block canvas with each block lighting in the order a workshop fills it, partners through revenue. Strategy on one page."
+    },
+    {
+      "id": "diagrams-okr-tree",
+      "name": "OKR Tree",
+      "gallery": "diagrams",
+      "category": "FRAMEWORKS",
+      "ref": ".dgm-okr",
+      "classes": [
+        "dgm",
+        "dgm-okr",
+        "obj",
+        "pop",
+        "hd",
+        "fi",
+        "ln",
+        "dr",
+        "kr",
+        "prog",
+        "ini",
+        "mut",
+        "dim"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "diagrams",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "One objective cascading into three key results with progress bars that fill to their current score, and the initiatives beneath each. Goal alignment."
+    },
+    {
+      "id": "diagrams-5-whys-chain",
+      "name": "5 Whys Chain",
+      "gallery": "diagrams",
+      "category": "FRAMEWORKS",
+      "ref": ".dgm-whys",
+      "classes": [
+        "dgm",
+        "dgm-whys",
+        "card",
+        "fi",
+        "arrow",
+        "dr",
+        "dim",
+        "root"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "diagrams",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "Each answer zig-zags down to the next \"why?\" until the root cause card lands in red. The companion to a fishbone session."
+    },
+    {
+      "id": "diagrams-raci-matrix",
+      "name": "RACI Matrix",
+      "gallery": "diagrams",
+      "category": "FRAMEWORKS",
+      "ref": ".dgm-raci",
+      "classes": [
+        "dgm",
+        "dgm-raci",
+        "dim",
+        "mut",
+        "cellr",
+        "ln",
+        "R",
+        "pop",
+        "C",
+        "I",
+        "A"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "diagrams",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "Tasks against roles with the R, A, C and I letters popping into their cells in colour. Responsibility assignment."
+    },
+    {
+      "id": "diagrams-five-forces",
+      "name": "Five Forces",
+      "gallery": "diagrams",
+      "category": "FRAMEWORKS",
+      "ref": ".dgm-p5",
+      "classes": [
+        "dgm",
+        "dgm-p5",
+        "core",
+        "hd",
+        "dim",
+        "force",
+        "push"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "diagrams",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "Rivalry at the centre with entrants, substitutes, suppliers and buyers around it, each arrow pressing inward in turn. The industry-analysis framework."
     },
     {
       "id": "spectrums-tonal-dropdown-menu",

@@ -48,6 +48,7 @@ const GALLERIES = [
   { gallery: 'obsidian', title: 'Obsidian Facets' },
   { gallery: 'menus', title: 'Menus & Actions' },
   { gallery: 'tables', title: 'Tables & Data Layouts' },
+  { gallery: 'diagrams', title: 'Diagrams & Frameworks' },
   { gallery: 'spectrums', title: 'Spectrums' },
 ];
 

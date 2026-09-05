@@ -107,32 +107,32 @@
     </tbody></table>
   </div><div class="meta"><div class="nm">Sortable Header</div><span class="ref">.dtb-tbl.dtb-sort</span><div class="desc">A sorted column with a flipping direction arrow while two rows trade places — the visual grammar of a click-to-sort header.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-interact="click"><div class="stage">
     <table class="dtb-tbl dtb-rowmove"><thead><tr><th></th><th>Priority</th><th>Rule</th></tr></thead><tbody>
       <tr><td class="dtb-arrows"><span class="dtb-arr">▲</span><span class="dtb-arr">▼</span></td><td class="dtb-mono">1</td><td>Allow VPN → LAN</td></tr>
       <tr class="mv" style="--to:1"><td class="dtb-arrows"><span class="dtb-arr">▲</span><span class="dtb-arr">▼</span></td><td class="dtb-mono">2</td><td>Block guest → IoT</td></tr>
       <tr class="mv lift" style="--to:-1"><td class="dtb-arrows"><span class="dtb-arr press">▲</span><span class="dtb-arr">▼</span></td><td class="dtb-mono">3</td><td>Allow DNS to Pi-hole</td></tr>
       <tr><td class="dtb-arrows"><span class="dtb-arr">▲</span><span class="dtb-arr">▼</span></td><td class="dtb-mono">4</td><td>Drop all</td></tr>
     </tbody></table>
-  </div><div class="meta"><div class="nm">Row Move Arrows</div><span class="ref">.dtb-tbl.dtb-rowmove</span><div class="desc">A leading column of ▲▼ controls; the pressed arrow lights up and its row lifts over the one above and settles into the slot — manual ordering for rules, priorities and playlists.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+  </div><div class="meta"><div class="nm">Row Move Arrows</div><span class="ref">.dtb-tbl.dtb-rowmove</span><div class="desc">A leading column of ▲▼ controls; the pressed arrow lights up and its row lifts over the one above and settles into the slot — manual ordering for rules, priorities and playlists. <b>Click the arrows to try it.</b></div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-interact="click"><div class="stage">
     <table class="dtb-tbl dtb-resort"><thead><tr><th>Region</th><th class="dtb-num dtb-sortcol">Cost<span class="dtb-sort-arrow">▲</span></th><th class="dtb-num">Hosts</th></tr></thead><tbody>
       <tr style="--to:2"><td>us-east-1</td><td class="dtb-num dtb-sortcol">$41.2K</td><td class="dtb-num">142</td></tr>
       <tr style="--to:-1"><td>eu-west-1</td><td class="dtb-num dtb-sortcol">$18.7K</td><td class="dtb-num">61</td></tr>
       <tr style="--to:1"><td>ap-south-1</td><td class="dtb-num dtb-sortcol">$27.4K</td><td class="dtb-num">88</td></tr>
       <tr style="--to:-2"><td>sa-east-1</td><td class="dtb-num dtb-sortcol">$2.9K</td><td class="dtb-num">12</td></tr>
     </tbody></table>
-  </div><div class="meta"><div class="nm">Flash + Resort</div><span class="ref">.dtb-tbl.dtb-resort</span><div class="desc">Clicking a header: the column flashes, the sort arrow flips, the rows dim and glide to their new positions, then settle — the reorder cue of a sortable data grid. Give each row its offset in <code>--to</code>.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+  </div><div class="meta"><div class="nm">Flash + Resort</div><span class="ref">.dtb-tbl.dtb-resort</span><div class="desc">Clicking a header: the column flashes, the sort arrow flips, the rows dim and glide to their new positions, then settle — the reorder cue of a sortable data grid. Give each row its offset in <code>--to</code>. <b>Click the Cost header to sort it yourself.</b></div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-interact="click"><div class="stage">
     <table class="dtb-tbl dtb-fall"><thead><tr><th>Player</th><th class="dtb-num">Score<span class="dtb-sort-arrow">▼</span></th><th class="dtb-num">Wins</th></tr></thead><tbody>
       <tr style="--to:1;--i:0;--rot:-5deg"><td>Comet</td><td class="dtb-num">7,940</td><td class="dtb-num">31</td></tr>
       <tr style="--to:-1;--i:1;--rot:4deg"><td>Atlas</td><td class="dtb-num">9,812</td><td class="dtb-num">44</td></tr>
       <tr style="--to:1;--i:2;--rot:-3deg"><td>Pixel</td><td class="dtb-num">5,220</td><td class="dtb-num">18</td></tr>
       <tr style="--to:-1;--i:3;--rot:6deg"><td>Ember</td><td class="dtb-num">8,105</td><td class="dtb-num">36</td></tr>
     </tbody></table>
-  </div><div class="meta"><div class="nm">Fall + Land Resort</div><span class="ref">.dtb-tbl.dtb-fall</span><div class="desc">The rows tumble out of the table on slight angles, one after another, then drop back in from above already in the new order, landing with a small bounce — the theatrical resort. Offsets in <code>--to</code>, tilt in <code>--rot</code>.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+  </div><div class="meta"><div class="nm">Fall + Land Resort</div><span class="ref">.dtb-tbl.dtb-fall</span><div class="desc">The rows tumble out of the table on slight angles, one after another, then drop back in from above already in the new order, landing with a small bounce — the theatrical resort. Offsets in <code>--to</code>, tilt in <code>--rot</code>. <b>Click the Score header to drop and resort.</b></div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
 </div>
 
@@ -584,3 +584,68 @@
   </div><div class="meta"><div class="nm">Empty Table State</div><span class="ref">.dtb-empty</span><div class="desc">A dashed frame with ghost rows, a table glyph, a plain-language message and a glowing recovery action — what a table shows when a query returns nothing.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
 </div>
+
+<script>
+/* Tables gallery: interactive sorting demos. The tiles loop an ambient CSS demo until the
+   first click; after that the table is in manual mode and every click does a real reorder.
+   Self-contained, idempotent, no globals. */
+(function(){
+  if(window.dtbSortDemos) return; window.dtbSortDemos=true;
+  var num=function(t){return parseFloat(String(t).replace(/[^0-9.\-]/g,''))||0;};
+  function manual(tbl){ if(!tbl.classList.contains('manual')){ tbl.classList.add('manual'); tbl.querySelectorAll('tr').forEach(function(r){ r.removeAttribute('style'); }); } }
+  // FLIP: snapshot row tops, mutate DOM, then animate each moved row from its old position.
+  function flip(tbl, mutate, lifted){
+    var rows=[].slice.call(tbl.querySelectorAll('tbody tr'));
+    var before={}; rows.forEach(function(r,i){ r._k=r._k||('r'+i+Math.random()); before[r._k]=r.getBoundingClientRect().top; });
+    mutate();
+    rows.forEach(function(r){
+      var d=before[r._k]-r.getBoundingClientRect().top; if(!d) return;
+      [].forEach.call(r.children,function(td){ td.classList.remove('flip'); td.style.transform='translateY('+d+'px)'; });
+      if(lifted===r) r.classList.add('lifted');
+      requestAnimationFrame(function(){ requestAnimationFrame(function(){
+        [].forEach.call(r.children,function(td){ td.classList.add('flip'); td.style.transform=''; });
+        setTimeout(function(){ r.classList.remove('lifted'); [].forEach.call(r.children,function(td){ td.classList.remove('flip'); }); },500);
+      }); });
+    });
+  }
+  // (1) row move arrows
+  document.addEventListener('click',function(e){
+    var arr=e.target.closest('.dtb-rowmove .dtb-arr'); if(!arr) return;
+    var tbl=arr.closest('table'), row=arr.closest('tr'); manual(tbl);
+    var up=/▲/.test(arr.textContent), sib=up?row.previousElementSibling:row.nextElementSibling; if(!sib) return;
+    arr.classList.add('pressed'); setTimeout(function(){ arr.classList.remove('pressed'); },420);
+    flip(tbl,function(){ if(up) sib.parentNode.insertBefore(row,sib); else sib.parentNode.insertBefore(sib,row); },row);
+  });
+  // (2) flash + resort: click a numeric header
+  document.addEventListener('click',function(e){
+    var th=e.target.closest('.dtb-resort th.dtb-num'); if(!th) return;
+    var tbl=th.closest('table'); manual(tbl);
+    var idx=[].indexOf.call(th.parentNode.children,th), desc=th.getAttribute('data-dir')!=='desc';
+    th.setAttribute('data-dir',desc?'desc':'asc');
+    var arrow=th.querySelector('.dtb-sort-arrow'); if(arrow) arrow.textContent=desc?'▼':'▲';
+    [].forEach.call(tbl.querySelectorAll('th.dtb-sortcol, td.dtb-sortcol'),function(c){ c.classList.remove('dtb-sortcol'); });
+    th.classList.add('dtb-sortcol'); tbl.querySelectorAll('tbody tr').forEach(function(r){ r.children[idx].classList.add('dtb-sortcol'); });
+    var cells=[th].concat([].map.call(tbl.querySelectorAll('tbody tr'),function(r){return r.children[idx];}));
+    cells.forEach(function(c){ c.classList.remove('flashed'); void c.offsetWidth; c.classList.add('flashed'); });
+    var tb=tbl.tBodies[0];
+    setTimeout(function(){ flip(tbl,function(){
+      var rows=[].slice.call(tb.rows).sort(function(a,b){ var d=num(a.children[idx].textContent)-num(b.children[idx].textContent); return desc?-d:d; });
+      rows.forEach(function(r){ tb.appendChild(r); });
+    }); },260);
+  });
+  // (3) fall + land: rows tumble out, DOM resorts, rows drop back in
+  document.addEventListener('click',function(e){
+    var th=e.target.closest('.dtb-fall th.dtb-num'); if(!th) return;
+    var tbl=th.closest('table'); if(tbl.getAttribute('data-busy')) return; manual(tbl); tbl.setAttribute('data-busy','1');
+    var idx=[].indexOf.call(th.parentNode.children,th), desc=th.getAttribute('data-dir')!=='desc';
+    th.setAttribute('data-dir',desc?'desc':'asc'); var arrow=th.querySelector('.dtb-sort-arrow'); if(arrow) arrow.textContent=desc?'▼':'▲';
+    var tb=tbl.tBodies[0], rows=[].slice.call(tb.rows);
+    rows.forEach(function(r,i){ r.classList.remove('land-in'); r.style.setProperty('--rot',((i%2?1:-1)*(3+i*1.2))+'deg'); [].forEach.call(r.children,function(td){ td.style.animationDelay=(i*90)+'ms'; }); r.classList.add('fall-out'); });
+    setTimeout(function(){
+      rows.sort(function(a,b){ var d=num(a.children[idx].textContent)-num(b.children[idx].textContent); return desc?-d:d; });
+      rows.forEach(function(r,i){ tb.appendChild(r); r.classList.remove('fall-out'); [].forEach.call(r.children,function(td){ td.style.animationDelay=(i*110)+'ms'; }); r.classList.add('land-in'); });
+      setTimeout(function(){ rows.forEach(function(r){ r.classList.remove('land-in'); [].forEach.call(r.children,function(td){ td.style.animationDelay=''; }); }); tbl.removeAttribute('data-busy'); }, 700+rows.length*110);
+    }, 600+rows.length*90);
+  });
+})();
+<\/script>
