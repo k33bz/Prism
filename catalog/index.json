@@ -1,5 +1,5 @@
 {
-  "count": 3109,
+  "count": 3110,
   "effects": [
     {
       "id": "charts-big-metric-count-up",
@@ -1896,11 +1896,11 @@
         "sl",
         "ts",
         "lv",
-        "ok",
-        "m",
-        "err",
         "info",
+        "m",
         "warn",
+        "err",
+        "ok",
         "cursor"
       ],
       "params": [],
@@ -45022,6 +45022,47 @@
       "description": "A folder whose chevron turns as its children slide open, with a selected file row — explorers, repo browsers, sitemap outlines."
     },
     {
+      "id": "tables-floating-holo-tree",
+      "name": "Floating Holo Tree",
+      "gallery": "tables",
+      "category": "LISTS & TREES",
+      "ref": ".dtb-tree-holo",
+      "classes": [
+        "dtb-tree-holo",
+        "dtb-holo-pool",
+        "dtb-holo-beam",
+        "dtb-holo-wires",
+        "dtb-holo-w",
+        "dtb-holo-p",
+        "dtb-holo-n",
+        "dtb-holo-f",
+        "dtb-holo-d",
+        "dtb-holo-l",
+        "dtb-holo-sel",
+        "dtb-holo-c",
+        "dtb-holo-dust"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "tables",
+        "animated",
+        "new"
+      ],
+      "componentType": "list-tree",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "The file tree as a hologram: glowing folders and documents hover over a light projection, each bobbing on its own beat while pulses run down the connectors and a selection frame locks onto one node. Dark stage by design; colour rides --c."
+    },
+    {
       "id": "tables-org-chart",
       "name": "Org Chart",
       "gallery": "tables",
@@ -47552,9 +47593,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "The napkin loop: customer experience drives traffic, traffic draws sellers, sellers widen selection, selection improves the experience, while growth funds a lower cost structure and lower prices that feed the same loop. The wheel turns, the ring carries momentum and each node lights in turn."
     },
     {
@@ -47592,9 +47633,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "The cloud data flywheel in five stages: move data, run it on managed data services, build data-driven apps, analyze everything, then turbocharge with ML. The wheel and its momentum ring accelerate through each loop, the \"spin-up\" that no single stage powers on its own."
     },
     {
@@ -47633,9 +47674,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "The three-segment marketing flywheel with customers at the hub: attract, engage, delight, each wedge lighting in turn as the momentum ring circles. Swap the labels for any three-stage loop."
     },
     {

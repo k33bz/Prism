@@ -1,14 +1,14 @@
 {
  "name": "Prism GIF showcase",
- "generated": "2026-09-05T19:19:17.500Z",
+ "generated": "2026-09-05T19:23:00.619Z",
  "source": "Prism.html",
  "browser": {
   "engine": "Firefox (WebDriver BiDi)",
   "version": "155.0.1"
  },
- "count": 3109,
- "animated": 2852,
- "gifBytes": 69898240,
+ "count": 3110,
+ "animated": 2853,
+ "gifBytes": 70144492,
  "settings": {
   "fps": 10,
   "minSeconds": 1.6,
@@ -22081,6 +22081,21 @@
    "width": 344,
    "height": 103,
    "bytes": 6778
+  },
+  {
+   "id": "tables-floating-holo-tree",
+   "name": "Floating Holo Tree",
+   "gallery": "tables",
+   "category": "LISTS & TREES",
+   "spectrum": null,
+   "gif": "gif/tables-floating-holo-tree.gif",
+   "html": "html/tables-floating-holo-tree.html",
+   "animated": true,
+   "duration": 4,
+   "frames": 40,
+   "width": 344,
+   "height": 177,
+   "bytes": 246252
   },
   {
    "id": "tables-org-chart",

@@ -2,7 +2,7 @@
 
 Every effect in Prism's **Tables & Data Layouts** gallery, recorded as a looping GIF.
 
-**54 effects** · 54 animated · 1.2 MB of GIF · click any GIF to open its standalone HTML sample (raw file; open it locally, GitHub shows source).
+**55 effects** · 55 animated · 1.4 MB of GIF · click any GIF to open its standalone HTML sample (raw file; open it locally, GitHub shows source).
 
 [← Showcase index](../README.md)
 
@@ -49,9 +49,9 @@ Every effect in Prism's **Tables & Data Layouts** gallery, recorded as a looping
 ## LISTS & TREES
 
 <table>
-<tr><td align="center" valign="top" width="33%"><a href="../html/tables-file-tree.html"><img src="../gif/tables-file-tree.gif" width="300" alt="File Tree"></a><br><b>File Tree</b><br><sub><code>tables-file-tree</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/tables-org-chart.html"><img src="../gif/tables-org-chart.gif" width="300" alt="Org Chart"></a><br><b>Org Chart</b><br><sub><code>tables-org-chart</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/tables-nested-outline.html"><img src="../gif/tables-nested-outline.gif" width="300" alt="Nested Outline"></a><br><b>Nested Outline</b><br><sub><code>tables-nested-outline</code></sub></td></tr>
-<tr><td align="center" valign="top" width="33%"><a href="../html/tables-numbered-steps.html"><img src="../gif/tables-numbered-steps.gif" width="300" alt="Numbered Steps"></a><br><b>Numbered Steps</b><br><sub><code>tables-numbered-steps</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/tables-checklist.html"><img src="../gif/tables-checklist.gif" width="300" alt="Checklist"></a><br><b>Checklist</b><br><sub><code>tables-checklist</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/tables-leaderboard-swap.html"><img src="../gif/tables-leaderboard-swap.gif" width="300" alt="Leaderboard Swap"></a><br><b>Leaderboard Swap</b><br><sub><code>tables-leaderboard-swap</code></sub></td></tr>
-<tr><td align="center" valign="top" width="33%"><a href="../html/tables-timeline-list-now.html"><img src="../gif/tables-timeline-list-now.gif" width="300" alt="Timeline List + Now"></a><br><b>Timeline List + Now</b><br><sub><code>tables-timeline-list-now</code></sub></td></tr>
+<tr><td align="center" valign="top" width="33%"><a href="../html/tables-file-tree.html"><img src="../gif/tables-file-tree.gif" width="300" alt="File Tree"></a><br><b>File Tree</b><br><sub><code>tables-file-tree</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/tables-floating-holo-tree.html"><img src="../gif/tables-floating-holo-tree.gif" width="300" alt="Floating Holo Tree"></a><br><b>Floating Holo Tree</b><br><sub><code>tables-floating-holo-tree</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/tables-org-chart.html"><img src="../gif/tables-org-chart.gif" width="300" alt="Org Chart"></a><br><b>Org Chart</b><br><sub><code>tables-org-chart</code></sub></td></tr>
+<tr><td align="center" valign="top" width="33%"><a href="../html/tables-nested-outline.html"><img src="../gif/tables-nested-outline.gif" width="300" alt="Nested Outline"></a><br><b>Nested Outline</b><br><sub><code>tables-nested-outline</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/tables-numbered-steps.html"><img src="../gif/tables-numbered-steps.gif" width="300" alt="Numbered Steps"></a><br><b>Numbered Steps</b><br><sub><code>tables-numbered-steps</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/tables-checklist.html"><img src="../gif/tables-checklist.gif" width="300" alt="Checklist"></a><br><b>Checklist</b><br><sub><code>tables-checklist</code></sub></td></tr>
+<tr><td align="center" valign="top" width="33%"><a href="../html/tables-leaderboard-swap.html"><img src="../gif/tables-leaderboard-swap.gif" width="300" alt="Leaderboard Swap"></a><br><b>Leaderboard Swap</b><br><sub><code>tables-leaderboard-swap</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/tables-timeline-list-now.html"><img src="../gif/tables-timeline-list-now.gif" width="300" alt="Timeline List + Now"></a><br><b>Timeline List + Now</b><br><sub><code>tables-timeline-list-now</code></sub></td></tr>
 </table>
 
 ## GRIDS & SCHEDULES
