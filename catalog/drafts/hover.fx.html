@@ -64,7 +64,7 @@
 
 /* (8) Fan Lift: the card rises and two ghost cards fan out from behind it */
 .fx-hv-fan{padding-top:8px}
-.fx-hv-fan::before,.fx-hv-fan::after{content:"";position:absolute;left:0;right:0;top:8px;height:96px;box-sizing:border-box;border-radius:12px;background:var(--panel);border:1px solid var(--line);transform-origin:50% 130%}
+.fx-hv-fan::before,.fx-hv-fan::after{content:"";position:absolute;left:0;right:0;top:8px;height:96px;box-sizing:border-box;border-radius:12px;background:var(--panel);border:1px solid rgba(var(--fx-hv-rgb),.35);transform-origin:50% 130%}
 .fx-hv-fan::before{transform:rotate(calc(-7deg*var(--fx-hv-h))) translateY(calc(5px*var(--fx-hv-h)))}
 .fx-hv-fan::after{transform:rotate(calc(7deg*var(--fx-hv-h))) translateY(calc(5px*var(--fx-hv-h)))}
 .fx-hv-fan .fx-hv-card{z-index:1;transform:translateY(calc(-8px*var(--fx-hv-h)));box-shadow:0 calc(12px*var(--fx-hv-h)) calc(20px*var(--fx-hv-h)) rgba(0,0,0,.45)}
