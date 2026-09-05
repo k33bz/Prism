@@ -1,5 +1,5 @@
 {
-  "count": 2898,
+  "count": 2904,
   "effects": [
     {
       "id": "charts-big-metric-count-up",
@@ -1898,8 +1898,9 @@
         "lv",
         "ok",
         "m",
-        "info",
         "warn",
+        "info",
+        "err",
         "cursor"
       ],
       "params": [],
@@ -1930,8 +1931,7 @@
         "field",
         "q",
         "car",
-        "results",
-        "r"
+        "results"
       ],
       "params": [],
       "tags": [
@@ -11335,6 +11335,213 @@
       "description": "Mega Kangaskhan ex’s Rapid-Fire Combo (200+, one hit per heads): a Colorless-only cost gives faint white streaks on thin lanes under the Pokemon’s own pale aura; three fists jab 0.2s apart (one span per hit, --del staggers) and each lands its own ring."
     },
     {
+      "id": "fx-elem-spray",
+      "name": "Elemental Spray",
+      "gallery": "fx",
+      "category": "Elemental Base",
+      "ref": ".fx-elem.fx-elem-spray",
+      "classes": [
+        "fx-elem",
+        "fx-elem-spray",
+        "c-info",
+        "fx-elem-spray-plume",
+        "fx-elem-spray-core",
+        "fx-elem-p"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "fx",
+        "animated",
+        "new"
+      ],
+      "componentType": "fx-scene",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A jet fans out from the left: a turbulence-displaced plume, a dash-flow core and a stream of fading particles. Water shown; swap the colour role for mist, steam, poison or ice."
+    },
+    {
+      "id": "fx-elem-bolt",
+      "name": "Elemental Bolt",
+      "gallery": "fx",
+      "category": "Elemental Base",
+      "ref": ".fx-elem.fx-elem-bolt",
+      "classes": [
+        "fx-elem",
+        "fx-elem-bolt",
+        "c-warn",
+        "fx-elem-bolt-flash",
+        "fx-elem-bolt-glow",
+        "fx-elem-bolt-mid",
+        "fx-elem-bolt-core",
+        "fx-elem-bolt-br"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "fx",
+        "animated",
+        "new"
+      ],
+      "componentType": "fx-scene",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Three stacked strokes (blurred glow, mid, white-hot core) draw left to right with pathLength, then flicker and fade while branches fork off. Electric shown."
+    },
+    {
+      "id": "fx-elem-streak",
+      "name": "Elemental Streak",
+      "gallery": "fx",
+      "category": "Elemental Base",
+      "ref": ".fx-elem.fx-elem-streak",
+      "classes": [
+        "fx-elem",
+        "fx-elem-streak",
+        "c-neg",
+        "fx-elem-streak-proj",
+        "fx-elem-streak-tail",
+        "fx-elem-streak-head",
+        "fx-elem-p"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "fx",
+        "animated",
+        "new"
+      ],
+      "componentType": "fx-scene",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A projectile with a white-hot head and a turbulence-distorted tail crosses the stage on a slight climb while embers lag behind. Fire shown; use c-info for a water jet or c-crit for plasma."
+    },
+    {
+      "id": "fx-elem-burst",
+      "name": "Elemental Burst",
+      "gallery": "fx",
+      "category": "Elemental Base",
+      "ref": ".fx-elem.fx-elem-burst",
+      "classes": [
+        "fx-elem",
+        "fx-elem-burst",
+        "fx-elem-burst-flash",
+        "fx-elem-burst-ring",
+        "fx-elem-burst-shard",
+        "fx-elem-p"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "fx",
+        "animated",
+        "new"
+      ],
+      "componentType": "fx-scene",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "The hit point: a flash disc, two expanding rings, eight shards on --a angles and a spread of sparks on a 1.6s loop. Theme accent shown; pair it with a Streak or Bolt at the landing spot."
+    },
+    {
+      "id": "fx-elem-aura",
+      "name": "Elemental Aura",
+      "gallery": "fx",
+      "category": "Elemental Base",
+      "ref": ".fx-elem.fx-elem-aura",
+      "classes": [
+        "fx-elem",
+        "fx-elem-aura",
+        "c-pos",
+        "fx-elem-aura-halo",
+        "fx-elem-aura-card",
+        "fx-elem-p"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "fx",
+        "animated",
+        "new"
+      ],
+      "componentType": "fx-scene",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "The played-card state: the card lifts, its rim glow breathes and motes drift up out of it over a soft halo. Grass shown; the card face is plain tokens so any art can sit inside."
+    },
+    {
+      "id": "fx-elem-volley",
+      "name": "Elemental Volley",
+      "gallery": "fx",
+      "category": "Elemental Base",
+      "ref": ".fx-elem.fx-elem-volley",
+      "classes": [
+        "fx-elem",
+        "fx-elem-volley",
+        "c-crit",
+        "fx-elem-streak-proj",
+        "fx-elem-streak-tail",
+        "fx-elem-streak-head"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "fx",
+        "animated",
+        "new"
+      ],
+      "componentType": "fx-scene",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Composition example: three Streak projectiles on --lane offsets with staggered --d delays. Gradients resolve their colour where they are defined, so the volley carries its own defs. Psychic shown."
+    },
+    {
       "id": "lab-fade-in",
       "name": "Fade In",
       "gallery": "lab",
@@ -17902,10 +18109,6 @@
         "tdot",
         "pbody",
         "diffgen",
-        "dl",
-        "ctx",
-        "del",
-        "add",
         "cap",
         "pr-playbtn"
       ],
@@ -18107,6 +18310,7 @@
         "fail",
         "ai2",
         "meta2",
+        "run",
         "cap"
       ],
       "params": [
@@ -18844,6 +19048,7 @@
         "best",
         "bscore",
         "bchip",
+        "dead",
         "cap",
         "pr-playbtn"
       ],
@@ -18881,6 +19086,7 @@
         "qreg",
         "qrow",
         "qubit",
+        "collapsed",
         "qcloud",
         "qval",
         "qlabel",
@@ -43584,7 +43790,7 @@
       "isNew": true,
       "isFixed": false,
       "addedOn": "2026-09-04",
-      "updatedOn": null,
+      "updatedOn": "2026-09-05",
       "author": "k33bz",
       "description": "The baseline data table: uppercase header, zebra rows, right-aligned numerics, and a soft highlight that scans down the rows. Start every tabular report here."
     },
@@ -43616,7 +43822,7 @@
       "isNew": true,
       "isFixed": false,
       "addedOn": "2026-09-04",
-      "updatedOn": null,
+      "updatedOn": "2026-09-05",
       "author": "k33bz",
       "description": "Rows light up one after another with a tinted fill and a left accent bar — the hover treatment, demonstrated on a loop so it reads in a static export."
     },
@@ -43651,7 +43857,7 @@
       "isNew": true,
       "isFixed": false,
       "addedOn": "2026-09-04",
-      "updatedOn": null,
+      "updatedOn": "2026-09-05",
       "author": "k33bz",
       "description": "Rows scroll beneath a header that stays put and casts a shadow — a grid-based table for long lists inside a fixed-height panel."
     },
@@ -43686,7 +43892,7 @@
       "isNew": true,
       "isFixed": false,
       "addedOn": "2026-09-04",
-      "updatedOn": null,
+      "updatedOn": "2026-09-05",
       "author": "k33bz",
       "description": "Compact rows, tabular-figure monospace numbers and a live-feed dot per row — the terminal-style layout for tickers, telemetry and anything with many columns."
     },
@@ -43723,7 +43929,7 @@
       "isNew": true,
       "isFixed": false,
       "addedOn": "2026-09-04",
-      "updatedOn": null,
+      "updatedOn": "2026-09-05",
       "author": "k33bz",
       "description": "A checkbox column where rows tick themselves on and off, tinting the whole row while selected — bulk-action tables and pickers."
     },
@@ -43759,7 +43965,7 @@
       "isNew": true,
       "isFixed": false,
       "addedOn": "2026-09-04",
-      "updatedOn": null,
+      "updatedOn": "2026-09-05",
       "author": "k33bz",
       "description": "A chevron rotates and a detail panel slides open beneath its row, then folds away — master/detail without leaving the table."
     },
@@ -43794,7 +44000,7 @@
       "isNew": true,
       "isFixed": false,
       "addedOn": "2026-09-04",
-      "updatedOn": null,
+      "updatedOn": "2026-09-05",
       "author": "k33bz",
       "description": "One cell becomes a focused input with a blinking caret and a value being typed — the editing state of an inline-editable grid."
     },
@@ -43830,7 +44036,7 @@
       "isNew": true,
       "isFixed": false,
       "addedOn": "2026-09-04",
-      "updatedOn": null,
+      "updatedOn": "2026-09-05",
       "author": "k33bz",
       "description": "A footer row that counts its totals up from zero every few seconds — pure CSS via a registered custom property driving a counter."
     },
@@ -43865,7 +44071,7 @@
       "isNew": true,
       "isFixed": false,
       "addedOn": "2026-09-04",
-      "updatedOn": null,
+      "updatedOn": "2026-09-05",
       "author": "k33bz",
       "description": "Shimmering placeholder bars in the exact shape of the table that is loading — keeps layout stable while data arrives."
     },
@@ -43898,7 +44104,7 @@
       "isNew": true,
       "isFixed": false,
       "addedOn": "2026-09-04",
-      "updatedOn": null,
+      "updatedOn": "2026-09-05",
       "author": "k33bz",
       "description": "A sorted column with a flipping direction arrow while two rows trade places — the visual grammar of a click-to-sort header."
     },
@@ -44035,7 +44241,7 @@
       "isNew": true,
       "isFixed": false,
       "addedOn": "2026-09-04",
-      "updatedOn": null,
+      "updatedOn": "2026-09-05",
       "author": "k33bz",
       "description": "Tinted status pills in a column — pass, warn, fail, running, skipped — with the failing state pulsing so it cannot be missed."
     },
@@ -44066,7 +44272,7 @@
       "isNew": true,
       "isFixed": false,
       "addedOn": "2026-09-04",
-      "updatedOn": null,
+      "updatedOn": "2026-09-05",
       "author": "k33bz",
       "description": "Inline progress bars that fill to their value inside each cell — set --w per row and recolour with --c."
     },
@@ -44099,7 +44305,7 @@
       "isNew": true,
       "isFixed": false,
       "addedOn": "2026-09-04",
-      "updatedOn": null,
+      "updatedOn": "2026-09-05",
       "author": "k33bz",
       "description": "A mini trend line drawn into each row with a blinking endpoint — the at-a-glance history column for metric tables."
     },
@@ -44134,7 +44340,7 @@
       "isNew": true,
       "isFixed": false,
       "addedOn": "2026-09-04",
-      "updatedOn": null,
+      "updatedOn": "2026-09-05",
       "author": "k33bz",
       "description": "Change-versus-baseline cells with directional arrows in success/danger colours, each flashing when its value updates."
     },
@@ -44200,7 +44406,7 @@
       "isNew": true,
       "isFixed": false,
       "addedOn": "2026-09-04",
-      "updatedOn": null,
+      "updatedOn": "2026-09-05",
       "author": "k33bz",
       "description": "Small label chips packed into a cell, with .hot glowing in the accent and .new in success green — labels, categories, environments."
     },
@@ -44232,7 +44438,7 @@
       "isNew": true,
       "isFixed": false,
       "addedOn": "2026-09-04",
-      "updatedOn": null,
+      "updatedOn": "2026-09-05",
       "author": "k33bz",
       "description": "Numeric cells shaded by magnitude with a slow brightness breathe — set --h from 0 to 1 per cell to make a table read like a heatmap."
     },
@@ -44268,7 +44474,7 @@
       "isNew": true,
       "isFixed": false,
       "addedOn": "2026-09-04",
-      "updatedOn": null,
+      "updatedOn": "2026-09-05",
       "author": "k33bz",
       "description": "A new row slides in at the top and flashes while existing cells blink as their values refresh — the live feed pattern for ops dashboards."
     },
@@ -44301,7 +44507,7 @@
       "isNew": true,
       "isFixed": false,
       "addedOn": "2026-09-04",
-      "updatedOn": null,
+      "updatedOn": "2026-09-05",
       "author": "k33bz",
       "description": "Plans across the top, capabilities down the side, checks popping in one by one — with a half-disc for partial support."
     },
@@ -44330,7 +44536,7 @@
       "isNew": true,
       "isFixed": false,
       "addedOn": "2026-09-04",
-      "updatedOn": null,
+      "updatedOn": "2026-09-05",
       "author": "k33bz",
       "description": "A labelled cell grid where opacity carries the value (--a) and a diagonal wave (--d) breathes across it — traffic by hour and weekday."
     },
@@ -44362,7 +44568,7 @@
       "isNew": true,
       "isFixed": false,
       "addedOn": "2026-09-04",
-      "updatedOn": null,
+      "updatedOn": "2026-09-05",
       "author": "k33bz",
       "description": "Row headers and column headers with a highlighted row, column and their intersection — the pivot-table reading aid."
     },
@@ -44392,7 +44598,7 @@
       "isNew": true,
       "isFixed": false,
       "addedOn": "2026-09-04",
-      "updatedOn": null,
+      "updatedOn": "2026-09-05",
       "author": "k33bz",
       "description": "Likelihood against impact in green, amber and red zones with a pulsing marker on the assessed cell — risk registers and incident reviews."
     },
@@ -44425,7 +44631,7 @@
       "isNew": true,
       "isFixed": false,
       "addedOn": "2026-09-04",
-      "updatedOn": null,
+      "updatedOn": "2026-09-05",
       "author": "k33bz",
       "description": "Side-by-side options with one column framed and glowing as the recommendation — pricing tables and vendor comparisons."
     },
@@ -44459,7 +44665,7 @@
       "isNew": true,
       "isFixed": false,
       "addedOn": "2026-09-04",
-      "updatedOn": null,
+      "updatedOn": "2026-09-05",
       "author": "k33bz",
       "description": "A symmetric matrix with diverging shading (blue positive, red negative, --v strength) and a softly blinking identity diagonal."
     },
@@ -44558,7 +44764,7 @@
       "isNew": true,
       "isFixed": false,
       "addedOn": "2026-09-04",
-      "updatedOn": null,
+      "updatedOn": "2026-09-05",
       "author": "k33bz",
       "description": "Label on the left, value on the right, joined by dotted leaders — the classic fact sheet layout, values fading in as they populate."
     },
@@ -44589,7 +44795,7 @@
       "isNew": true,
       "isFixed": false,
       "addedOn": "2026-09-04",
-      "updatedOn": null,
+      "updatedOn": "2026-09-05",
       "author": "k33bz",
       "description": "A titled card of label/value rows with a highlight that walks down the rows — product specs, instance types, device sheets."
     },
@@ -44620,7 +44826,7 @@
       "isNew": true,
       "isFixed": false,
       "addedOn": "2026-09-04",
-      "updatedOn": null,
+      "updatedOn": "2026-09-05",
       "author": "k33bz",
       "description": "Term-and-definition pairs with a rail under each definition; the last entry types itself out — glossaries and acronym keys."
     },
@@ -44657,7 +44863,7 @@
       "isNew": true,
       "isFixed": false,
       "addedOn": "2026-09-04",
-      "updatedOn": null,
+      "updatedOn": "2026-09-05",
       "author": "k33bz",
       "description": "Grouped property rows under collapsible headers, one group folding and unfolding — the side-panel inspector of design and dev tools."
     },
@@ -44692,7 +44898,7 @@
       "isNew": true,
       "isFixed": false,
       "addedOn": "2026-09-04",
-      "updatedOn": null,
+      "updatedOn": "2026-09-05",
       "author": "k33bz",
       "description": "Syntax-coloured JSON with a node that collapses into an item count and expands again — API payloads, config dumps, catalog records."
     },
@@ -44728,7 +44934,7 @@
       "isNew": true,
       "isFixed": false,
       "addedOn": "2026-09-04",
-      "updatedOn": null,
+      "updatedOn": "2026-09-05",
       "author": "k33bz",
       "description": "A folder whose chevron turns as its children slide open, with a selected file row — explorers, repo browsers, sitemap outlines."
     },
@@ -44760,7 +44966,7 @@
       "isNew": true,
       "isFixed": false,
       "addedOn": "2026-09-04",
-      "updatedOn": null,
+      "updatedOn": "2026-09-05",
       "author": "k33bz",
       "description": "A root node over three children joined by elbow connectors, with pulses travelling down to each branch — org charts and ownership trees."
     },
@@ -44790,7 +44996,7 @@
       "isNew": true,
       "isFixed": false,
       "addedOn": "2026-09-04",
-      "updatedOn": null,
+      "updatedOn": "2026-09-05",
       "author": "k33bz",
       "description": "A two-level outline with round and diamond bullets that light up in reading order along a dashed rail — plans, agendas, hierarchies."
     },
@@ -44818,7 +45024,7 @@
       "isNew": true,
       "isFixed": false,
       "addedOn": "2026-09-04",
-      "updatedOn": null,
+      "updatedOn": "2026-09-05",
       "author": "k33bz",
       "description": "Numbered circles on a vertical track that fills green as each step completes — runbooks, onboarding, release procedures."
     },
@@ -44851,7 +45057,7 @@
       "isNew": true,
       "isFixed": false,
       "addedOn": "2026-09-04",
-      "updatedOn": null,
+      "updatedOn": "2026-09-05",
       "author": "k33bz",
       "description": "Items check themselves off in sequence, striking through as they complete — audit checklists and task lists in progress."
     },
@@ -44923,7 +45129,7 @@
       "isNew": true,
       "isFixed": false,
       "addedOn": "2026-09-04",
-      "updatedOn": null,
+      "updatedOn": "2026-09-05",
       "author": "k33bz",
       "description": "Timestamped events on a vertical rail with a NOW marker that drifts down through the schedule — change logs and incident timelines."
     },
@@ -44953,7 +45159,7 @@
       "isNew": true,
       "isFixed": false,
       "addedOn": "2026-09-04",
-      "updatedOn": null,
+      "updatedOn": "2026-09-05",
       "author": "k33bz",
       "description": "Records as a grid of small cards with a coloured figure each, revealed in a stagger — the card-view alternative to a table."
     },
@@ -44986,7 +45192,7 @@
       "isNew": true,
       "isFixed": false,
       "addedOn": "2026-09-04",
-      "updatedOn": null,
+      "updatedOn": "2026-09-05",
       "author": "k33bz",
       "description": "Phase bars on gridded tracks (--s start, --w width), a diamond milestone, and a today line sliding across — project plans."
     },
@@ -45017,7 +45223,7 @@
       "isNew": true,
       "isFixed": false,
       "addedOn": "2026-09-04",
-      "updatedOn": null,
+      "updatedOn": "2026-09-05",
       "author": "k33bz",
       "description": "Hours down, weekdays across, colour-blocked slots and the current slot pulsing in the accent — rotas, room bookings, on-call."
     },
@@ -45051,7 +45257,7 @@
       "isNew": true,
       "isFixed": false,
       "addedOn": "2026-09-04",
-      "updatedOn": null,
+      "updatedOn": "2026-09-05",
       "author": "k33bz",
       "description": "A compact month grid with weekday headers, event dots in token colours, and today ringed by a pulsing halo — date pickers and planning views."
     },
@@ -45084,7 +45290,7 @@
       "isNew": true,
       "isFixed": false,
       "addedOn": "2026-09-04",
-      "updatedOn": null,
+      "updatedOn": "2026-09-05",
       "author": "k33bz",
       "description": "Three status columns of cards; one card leaves To-do and lands in Doing with a green confirmation ring — boards and workflow states."
     },
@@ -45119,7 +45325,7 @@
       "isNew": true,
       "isFixed": false,
       "addedOn": "2026-09-04",
-      "updatedOn": null,
+      "updatedOn": "2026-09-05",
       "author": "k33bz",
       "description": "Mixed-span tiles (.w2, .h2) holding one figure, sparkline or bar each, with the hero tile glowing — dashboard summaries."
     },
@@ -45147,7 +45353,7 @@
       "isNew": true,
       "isFixed": false,
       "addedOn": "2026-09-04",
-      "updatedOn": null,
+      "updatedOn": "2026-09-05",
       "author": "k33bz",
       "description": "Three columns of variable-height cards with a shimmer travelling across them — the loading state of a masonry or gallery layout."
     },
@@ -45183,7 +45389,7 @@
       "isNew": true,
       "isFixed": false,
       "addedOn": "2026-09-04",
-      "updatedOn": null,
+      "updatedOn": "2026-09-05",
       "author": "k33bz",
       "description": "Credits in green, debits in red, a running balance column and a closing total, with the newest entry sliding in at the top."
     },
@@ -45216,7 +45422,7 @@
       "isNew": true,
       "isFixed": false,
       "addedOn": "2026-09-04",
-      "updatedOn": null,
+      "updatedOn": "2026-09-05",
       "author": "k33bz",
       "description": "Before/after rows with a plus-minus gutter: removed rows struck through in red, added rows in green, each pulsing in turn — config and plan diffs."
     },
@@ -45278,7 +45484,7 @@
       "isNew": true,
       "isFixed": false,
       "addedOn": "2026-09-04",
-      "updatedOn": null,
+      "updatedOn": "2026-09-05",
       "author": "k33bz",
       "description": "A pager whose active page steps forward on its own, plus the rows-shown caption — the footer of any paged table."
     },
@@ -45316,7 +45522,7 @@
       "isNew": true,
       "isFixed": false,
       "addedOn": "2026-09-04",
-      "updatedOn": null,
+      "updatedOn": "2026-09-05",
       "author": "k33bz",
       "description": "Search box with a typing query, filter chips (one toggling on), column and export buttons, and a live match count — the control strip above a data table."
     },
@@ -45348,7 +45554,7 @@
       "isNew": true,
       "isFixed": false,
       "addedOn": "2026-09-04",
-      "updatedOn": null,
+      "updatedOn": "2026-09-05",
       "author": "k33bz",
       "description": "A dashed frame with ghost rows, a table glyph, a plain-language message and a glowing recovery action — what a table shows when a query returns nothing."
     },
