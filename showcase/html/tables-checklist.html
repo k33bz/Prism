@@ -23,8 +23,8 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
 <style id="effect-css">
 .dtb-cb { display: inline-block; width: 12px; height: 12px; border: 1px solid var(--dim); border-radius: 3px; position: relative; vertical-align: -2px; background: var(--panel); }
 .dtb-cb::after { content: ""; position: absolute; left: 3px; top: 0px; width: 4px; height: 7px; border-top-color: ; border-top-style: ; border-right-color: ; border-right-style: ; border-bottom-color: ; border-bottom-style: ; border-left-color: ; border-left-style: ; border-image-source: ; border-image-slice: ; border-image-width: ; border-image-outset: ; border-image-repeat: ; border-width: 0px 2px 2px 0px; transform: rotate(45deg) scale(0); opacity: 0; }
-.dtb-cb.on { background: var(--c,var(--accent)); border-color: var(--c,var(--accent)); }
-.dtb-cb.on::after { transform: rotate(45deg) scale(1); opacity: 1; }
+.dtb-cb.dtb-on { background: var(--c,var(--accent)); border-color: var(--c,var(--accent)); }
+.dtb-cb.dtb-on::after { transform: rotate(45deg) scale(1); opacity: 1; }
 .dtb-select tbody tr:nth-child(2) .dtb-cb { animation: 5s steps(1) 0s infinite normal none running dtbCbOn; }
 .dtb-select tbody tr:nth-child(2) .dtb-cb::after { animation: 5s ease-out 0s infinite normal none running dtbCbMark; }
 .dtb-select tbody tr:nth-child(4) .dtb-cb { animation: 5s steps(1) 1.2s infinite normal none running dtbCbOn; }
@@ -33,10 +33,10 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
 .dtb-ck-item { display: flex; align-items: center; gap: 8px; padding: 4px 0px; color: var(--ink); animation-duration: 7s; animation-timing-function: steps(1); animation-iteration-count: infinite; animation-direction: normal; animation-fill-mode: none; animation-play-state: running; animation-name: dtbDone; animation-timeline: auto; animation-range: normal; animation-delay: calc(var(--i,0)*1.2s); }
 .dtb-ck-item .dtb-cb { animation-duration: 7s; animation-timing-function: steps(1); animation-iteration-count: infinite; animation-direction: normal; animation-fill-mode: none; animation-play-state: running; animation-name: dtbCbOn; animation-timeline: auto; animation-range: normal; animation-delay: calc(var(--i,0)*1.2s); }
 .dtb-ck-item .dtb-cb::after { animation-duration: 7s; animation-timing-function: ease-out; animation-iteration-count: infinite; animation-direction: normal; animation-fill-mode: none; animation-play-state: running; animation-name: dtbCbMark; animation-timeline: auto; animation-range: normal; animation-delay: calc(var(--i,0)*1.2s); }
-.dtb-ck-item .dtb-cb.on { animation: auto ease 0s 1 normal none running none; }
-.dtb-ck-item .dtb-cb.on::after { animation: auto ease 0s 1 normal none running none; }
+.dtb-ck-item .dtb-cb.dtb-on { animation: auto ease 0s 1 normal none running none; }
+.dtb-ck-item .dtb-cb.dtb-on::after { animation: auto ease 0s 1 normal none running none; }
 .dtb-ck-item.done { color: var(--dim); text-decoration: line-through; animation: auto ease 0s 1 normal none running none; }
-.dtb-chip.on { border-color: var(--c,var(--accent)); color: var(--c,var(--accent)); background: rgba(var(--c-rgb,var(--accent-rgb)),.12); }
+.dtb-chip.dtb-on { border-color: var(--c,var(--accent)); color: var(--c,var(--accent)); background: rgba(var(--c-rgb,var(--accent-rgb)),.12); }
 @keyframes dtbCbOn { 
   0%, 19% { background: var(--panel); border-color: var(--dim); }
   20%, 75% { background: var(--c,var(--accent)); border-color: var(--c,var(--accent)); }
@@ -52,12 +52,11 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
   20%, 75% { color: var(--dim); text-decoration: line-through; }
   76%, 100% { color: var(--ink); text-decoration: none; }
 }
-.bar button.on { color: rgb(255, 255, 255) !important; }
 </style>
 </head>
 <body>
 <div class="tile"><div class="stage" id="stage"><ul class="dtb-check">
-      <li class="dtb-ck-item done"><span class="dtb-cb on"></span>Rotate access keys</li>
+      <li class="dtb-ck-item done"><span class="dtb-cb dtb-on"></span>Rotate access keys</li>
       <li class="dtb-ck-item" style="--i:0"><span class="dtb-cb"></span>Enable MFA on root</li>
       <li class="dtb-ck-item" style="--i:1"><span class="dtb-cb"></span>Close port 22 to 0.0.0.0/0</li>
       <li class="dtb-ck-item" style="--i:2"><span class="dtb-cb"></span>Turn on GuardDuty</li>

@@ -21,7 +21,6 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
 .meta p{margin:6px 0 0}
 </style>
 <style id="effect-css">
-.tile .copy.ok { border-color: var(--pos); color: var(--pos); }
 .dtb-tbl { width: 100%; max-width: 300px; border-collapse: separate; border-spacing: 0px; font: 11px / 1.35 ui-sans-serif, system-ui, sans-serif; color: var(--ink); background: var(--card); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
 .dtb-tbl th { font: 700 9px / 1.2 ui-sans-serif, system-ui, sans-serif; letter-spacing: 0.07em; text-transform: uppercase; color: var(--dim); text-align: left; padding: 7px 9px; background: var(--panel2); border-bottom: 1px solid var(--line); white-space: nowrap; }
 .dtb-tbl td { padding: 6px 9px; border-bottom: 1px solid var(--line); white-space: nowrap; vertical-align: middle; }
@@ -29,23 +28,24 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
 .dtb-tbl tfoot td { border-top: 2px solid var(--line); border-bottom: 0px; font-weight: 800; background: var(--panel2); }
 .dtb-mut { color: var(--muted); }
 .dtb-pill { display: inline-block; padding: 1px 7px; border-radius: 10px; font-size: 9px; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase; line-height: 1.5; }
-.dtb-pill.ok { color: var(--pos); background: rgba(var(--pos-rgb),.14); }
+.dtb-pill.dtb-ok { color: var(--pos); background: rgba(var(--pos-rgb),.14); }
 .dtb-pill.warn { color: var(--warn); background: rgba(var(--warn-rgb),.14); }
 .dtb-pill.crit { color: var(--neg); background: rgba(var(--neg-rgb),.16); animation: 1.3s ease-in-out 0s infinite normal none running dtbPillPulse; }
 .dtb-pill.info { color: var(--info); background: rgba(var(--info-rgb),.14); }
 .dtb-pill.off { color: var(--dim); background: rgba(255, 255, 255, 0.05); }
-.dtb-tl-r .d.ok { border-color: var(--pos); background: var(--pos); }
+.dtb-tl-r .d.dtb-ok { border-color: var(--pos); background: var(--pos); }
 .dtb-tl-r .d.warn { border-color: var(--warn); background: var(--warn); }
+.dtb-tbl.manual td.flip { transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1); }
+.dtb-tbl.manual tr.lifted td { position: relative; z-index: 2; box-shadow: 0 6px 16px rgba(0,0,0,.45),inset 0 0 0 999px rgba(var(--c-rgb,var(--accent-rgb)),.14); }
 @keyframes dtbPillPulse { 
   0%, 100% { box-shadow: 0 0 0 0 rgba(var(--neg-rgb),.5); }
   60% { box-shadow: 0 0 0 5px rgba(var(--neg-rgb),0); }
 }
-.tile .copy.ok { border-color: var(--pos) !important; color: var(--pos) !important; }
 </style>
 </head>
 <body>
 <div class="tile"><div class="stage" id="stage"><table class="dtb-tbl"><thead><tr><th>Check</th><th>Last run</th><th>State</th></tr></thead><tbody>
-      <tr><td>TLS expiry</td><td class="dtb-mut">2m ago</td><td><span class="dtb-pill ok">Pass</span></td></tr>
+      <tr><td>TLS expiry</td><td class="dtb-mut">2m ago</td><td><span class="dtb-pill dtb-ok">Pass</span></td></tr>
       <tr><td>Disk 80%</td><td class="dtb-mut">2m ago</td><td><span class="dtb-pill warn">Warn</span></td></tr>
       <tr><td>DB replica lag</td><td class="dtb-mut">1m ago</td><td><span class="dtb-pill crit">Fail</span></td></tr>
       <tr><td>Backups</td><td class="dtb-mut">1h ago</td><td><span class="dtb-pill info">Running</span></td></tr>

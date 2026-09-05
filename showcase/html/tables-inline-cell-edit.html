@@ -34,6 +34,8 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
 .dtb-edit-hint { font-size: 8.5px; color: var(--c,var(--accent)); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 800; margin-left: 6px; }
 .dtb-def dd .dtb-typed { max-width: 0px; animation: 6s steps(26) 0s infinite normal none running dtbTypeLong; color: var(--ink); }
 .dtb-search .dtb-typed { animation: 5s steps(7) 0s infinite normal none running dtbType; }
+.dtb-tbl.manual td.flip { transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1); }
+.dtb-tbl.manual tr.lifted td { position: relative; z-index: 2; box-shadow: 0 6px 16px rgba(0,0,0,.45),inset 0 0 0 999px rgba(var(--c-rgb,var(--accent-rgb)),.14); }
 @keyframes dtbCaret { 
   0%, 49% { opacity: 1; }
   50%, 100% { opacity: 0; }

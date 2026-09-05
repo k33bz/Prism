@@ -36,6 +36,8 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
 .dtb-rec b { display: block; font-size: 10.5px; color: var(--ink); font-weight: 700; }
 .dtb-rec small { display: block; color: var(--muted); font-size: 9px; margin-top: 2px; }
 .dtb-rec em { display: block; font-style: normal; font-family: ui-monospace, Menlo, monospace; color: var(--c,var(--accent)); font-size: 11px; margin-top: 4px; font-weight: 700; }
+.dtb-tbl.manual td.flip { transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1); }
+.dtb-tbl.manual tr.lifted td { position: relative; z-index: 2; box-shadow: 0 6px 16px rgba(0,0,0,.45),inset 0 0 0 999px rgba(var(--c-rgb,var(--accent-rgb)),.14); }
 @keyframes dtbFadeUp { 
   0% { opacity: 0; transform: translateY(6px); }
   12%, 80% { opacity: 1; transform: translateY(0px); }

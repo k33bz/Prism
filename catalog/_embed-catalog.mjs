@@ -20,7 +20,7 @@ const withHeader = {
   _ai: {
     what: 'Full-fat, offline catalog of every Prism effect (id, name, gallery, tags, params, and self-contained html+css).',
     howToUse: 'JSON.parse the text of <script id="prism-catalog">. Filter effects[] by gallery/tags/description. Each effect ships its own html+css; include tokens.css once globally; if effect.needsJs, run initializers[effect.needsJs].js after inserting the markup.',
-    fields: 'effects[]: {id,name,gallery,category,ref,description,classes,keyframes,params,tags,usableAsBackground,needsJs,selfContained,addedOn,updatedOn,html,css,dataSnip}',
+    fields: 'effects[]: {id,name,gallery,category,ref,description,classes,keyframes,params,tags,usableAsBackground,needsJs,selfContained,addedOn,updatedOn,author,html,css,dataSnip}',
     count: manifest.count,
   },
   ...manifest,

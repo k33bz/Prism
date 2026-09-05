@@ -29,6 +29,10 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
 .dtb-num { font-family: ui-monospace, Menlo, monospace; font-variant-numeric: tabular-nums; text-align: right !important; }
 .dtb-row .dtb-num { text-align: right; }
 .dtb-heat td.dtb-hc { text-align: right; font-family: ui-monospace, Menlo, monospace; background: rgba(var(--accent-rgb),calc(var(--h,.5)*.62)); color: var(--ink); animation-duration: 3.6s; animation-timing-function: ease-in-out; animation-iteration-count: infinite; animation-direction: normal; animation-fill-mode: none; animation-play-state: running; animation-name: dtbHeatPulse; animation-timeline: auto; animation-range: normal; animation-delay: calc(var(--h,.5)*-1.6s); }
+.dtb-rowmove .dtb-arr, .dtb-resort th.dtb-num, .dtb-fall th.dtb-num { cursor: pointer; user-select: none; }
+.dtb-rowmove .dtb-arr:hover, .dtb-resort th.dtb-num:hover, .dtb-fall th.dtb-num:hover { color: var(--c,var(--accent)); }
+.dtb-tbl.manual td.flip { transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1); }
+.dtb-tbl.manual tr.lifted td { position: relative; z-index: 2; box-shadow: 0 6px 16px rgba(0,0,0,.45),inset 0 0 0 999px rgba(var(--c-rgb,var(--accent-rgb)),.14); }
 @keyframes dtbHeatPulse { 
   0%, 100% { filter: brightness(1); }
   50% { filter: brightness(1.28); }

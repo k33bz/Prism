@@ -21,7 +21,6 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
 .meta p{margin:6px 0 0}
 </style>
 <style id="effect-css">
-.tile .copy.ok { border-color: var(--pos); color: var(--pos); }
 .dtb-tbl { width: 100%; max-width: 300px; border-collapse: separate; border-spacing: 0px; font: 11px / 1.35 ui-sans-serif, system-ui, sans-serif; color: var(--ink); background: var(--card); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
 .dtb-tbl th { font: 700 9px / 1.2 ui-sans-serif, system-ui, sans-serif; letter-spacing: 0.07em; text-transform: uppercase; color: var(--dim); text-align: left; padding: 7px 9px; background: var(--panel2); border-bottom: 1px solid var(--line); white-space: nowrap; }
 .dtb-tbl td { padding: 6px 9px; border-bottom: 1px solid var(--line); white-space: nowrap; vertical-align: middle; }
@@ -29,8 +28,8 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
 .dtb-tbl tfoot td { border-top: 2px solid var(--line); border-bottom: 0px; font-weight: 800; background: var(--panel2); }
 .dtb-cb { display: inline-block; width: 12px; height: 12px; border: 1px solid var(--dim); border-radius: 3px; position: relative; vertical-align: -2px; background: var(--panel); }
 .dtb-cb::after { content: ""; position: absolute; left: 3px; top: 0px; width: 4px; height: 7px; border-top-color: ; border-top-style: ; border-right-color: ; border-right-style: ; border-bottom-color: ; border-bottom-style: ; border-left-color: ; border-left-style: ; border-image-source: ; border-image-slice: ; border-image-width: ; border-image-outset: ; border-image-repeat: ; border-width: 0px 2px 2px 0px; transform: rotate(45deg) scale(0); opacity: 0; }
-.dtb-cb.on { background: var(--c,var(--accent)); border-color: var(--c,var(--accent)); }
-.dtb-cb.on::after { transform: rotate(45deg) scale(1); opacity: 1; }
+.dtb-cb.dtb-on { background: var(--c,var(--accent)); border-color: var(--c,var(--accent)); }
+.dtb-cb.dtb-on::after { transform: rotate(45deg) scale(1); opacity: 1; }
 .dtb-select tbody tr:nth-child(2) .dtb-cb { animation: 5s steps(1) 0s infinite normal none running dtbCbOn; }
 .dtb-select tbody tr:nth-child(2) .dtb-cb::after { animation: 5s ease-out 0s infinite normal none running dtbCbMark; }
 .dtb-select tbody tr:nth-child(2) td { animation: 5s steps(1) 0s infinite normal none running dtbSelRow; }
@@ -38,18 +37,20 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
 .dtb-select tbody tr:nth-child(4) .dtb-cb::after { animation: 5s ease-out 1.2s infinite normal none running dtbCbMark; }
 .dtb-select tbody tr:nth-child(4) td { animation: 5s steps(1) 1.2s infinite normal none running dtbSelRow; }
 .dtb-pill { display: inline-block; padding: 1px 7px; border-radius: 10px; font-size: 9px; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase; line-height: 1.5; }
-.dtb-pill.ok { color: var(--pos); background: rgba(var(--pos-rgb),.14); }
+.dtb-pill.dtb-ok { color: var(--pos); background: rgba(var(--pos-rgb),.14); }
 .dtb-pill.warn { color: var(--warn); background: rgba(var(--warn-rgb),.14); }
 .dtb-pill.crit { color: var(--neg); background: rgba(var(--neg-rgb),.16); animation: 1.3s ease-in-out 0s infinite normal none running dtbPillPulse; }
 .dtb-pill.info { color: var(--info); background: rgba(var(--info-rgb),.14); }
 .dtb-pill.off { color: var(--dim); background: rgba(255, 255, 255, 0.05); }
 .dtb-ck-item .dtb-cb { animation-duration: 7s; animation-timing-function: steps(1); animation-iteration-count: infinite; animation-direction: normal; animation-fill-mode: none; animation-play-state: running; animation-name: dtbCbOn; animation-timeline: auto; animation-range: normal; animation-delay: calc(var(--i,0)*1.2s); }
 .dtb-ck-item .dtb-cb::after { animation-duration: 7s; animation-timing-function: ease-out; animation-iteration-count: infinite; animation-direction: normal; animation-fill-mode: none; animation-play-state: running; animation-name: dtbCbMark; animation-timeline: auto; animation-range: normal; animation-delay: calc(var(--i,0)*1.2s); }
-.dtb-ck-item .dtb-cb.on { animation: auto ease 0s 1 normal none running none; }
-.dtb-ck-item .dtb-cb.on::after { animation: auto ease 0s 1 normal none running none; }
-.dtb-tl-r .d.ok { border-color: var(--pos); background: var(--pos); }
+.dtb-ck-item .dtb-cb.dtb-on { animation: auto ease 0s 1 normal none running none; }
+.dtb-ck-item .dtb-cb.dtb-on::after { animation: auto ease 0s 1 normal none running none; }
+.dtb-tl-r .d.dtb-ok { border-color: var(--pos); background: var(--pos); }
 .dtb-tl-r .d.warn { border-color: var(--warn); background: var(--warn); }
-.dtb-chip.on { border-color: var(--c,var(--accent)); color: var(--c,var(--accent)); background: rgba(var(--c-rgb,var(--accent-rgb)),.12); }
+.dtb-chip.dtb-on { border-color: var(--c,var(--accent)); color: var(--c,var(--accent)); background: rgba(var(--c-rgb,var(--accent-rgb)),.12); }
+.dtb-tbl.manual td.flip { transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1); }
+.dtb-tbl.manual tr.lifted td { position: relative; z-index: 2; box-shadow: 0 6px 16px rgba(0,0,0,.45),inset 0 0 0 999px rgba(var(--c-rgb,var(--accent-rgb)),.14); }
 @keyframes dtbCbOn { 
   0%, 19% { background: var(--panel); border-color: var(--dim); }
   20%, 75% { background: var(--c,var(--accent)); border-color: var(--c,var(--accent)); }
@@ -69,15 +70,13 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
   0%, 100% { box-shadow: 0 0 0 0 rgba(var(--neg-rgb),.5); }
   60% { box-shadow: 0 0 0 5px rgba(var(--neg-rgb),0); }
 }
-.bar button.on { color: rgb(255, 255, 255) !important; }
-.tile .copy.ok { border-color: var(--pos) !important; color: var(--pos) !important; }
 </style>
 </head>
 <body>
 <div class="tile"><div class="stage" id="stage"><table class="dtb-tbl dtb-select"><thead><tr><th><span class="dtb-cb"></span></th><th>Ticket</th><th>Status</th></tr></thead><tbody>
-      <tr><td><span class="dtb-cb"></span></td><td>INC-4021</td><td><span class="dtb-pill ok">Resolved</span></td></tr>
+      <tr><td><span class="dtb-cb"></span></td><td>INC-4021</td><td><span class="dtb-pill dtb-ok">Resolved</span></td></tr>
       <tr><td><span class="dtb-cb"></span></td><td>INC-4022</td><td><span class="dtb-pill warn">Pending</span></td></tr>
-      <tr><td><span class="dtb-cb on"></span></td><td>INC-4023</td><td><span class="dtb-pill info">In review</span></td></tr>
+      <tr><td><span class="dtb-cb dtb-on"></span></td><td>INC-4023</td><td><span class="dtb-pill info">In review</span></td></tr>
       <tr><td><span class="dtb-cb"></span></td><td>INC-4024</td><td><span class="dtb-pill off">Closed</span></td></tr>
     </tbody></table></div></div>
 <div class="meta"><b>Row Selection</b> · <code>tables-row-selection</code><br>Tables &amp; Data Layouts · DATA TABLES<p>A checkbox column where rows tick themselves on and off, tinting the whole row while selected — bulk-action tables and pickers.</p></div>

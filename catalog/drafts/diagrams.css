@@ -50,15 +50,15 @@
 .dgm-fish .spine{fill:none;stroke:var(--ink);stroke-width:2.2;stroke-linecap:round}
 .dgm-fish .bone{fill:none;stroke:var(--c);stroke-width:1.6;stroke-linecap:round}
 .dgm-fish .sub{fill:none;stroke:var(--muted);stroke-width:1;stroke-linecap:round;opacity:.8}
-.dgm-fish .head{fill:rgba(var(--c-rgb),.16);stroke:var(--c);stroke-width:1.5}
-.dgm-fish .head.pulse{animation:dgmPulse 2.4s ease-in-out infinite}
+.dgm-fish .dgm-head{fill:rgba(var(--c-rgb),.16);stroke:var(--c);stroke-width:1.5}
+.dgm-fish .dgm-head.pulse{animation:dgmPulse 2.4s ease-in-out infinite}
 .dgm-fish .tail{fill:none;stroke:var(--ink);stroke-width:2;stroke-linecap:round}
 .dgm-fish text.cat{font-weight:800;font-size:8.5px;fill:var(--c)}
 .dgm-fish text.sc{font-size:7px;fill:var(--muted);font-weight:500}
 .dgm-fish .bone.env{stroke:var(--pos)}
 .dgm-fish text.cat.env{fill:var(--pos)}
-.dgm-fish .bone.stage{stroke:var(--info)}
-.dgm-fish text.cat.stage{fill:var(--info)}
+.dgm-fish .bone.dgm-stage{stroke:var(--info)}
+.dgm-fish text.cat.dgm-stage{fill:var(--info)}
 /* root-cause trace: a pulse rides sub -> bone -> spine -> head */
 .dgm-fish .trace{fill:none;stroke:var(--neg);stroke-width:2.4;stroke-linecap:round;stroke-dasharray:18 300;animation:dgmTrace 4s ease-in-out infinite}
 @keyframes dgmTrace{0%{stroke-dashoffset:318;opacity:0}8%{opacity:1}80%{stroke-dashoffset:0;opacity:1}100%{stroke-dashoffset:0;opacity:0}}
@@ -77,11 +77,11 @@
 @keyframes dgmLoopArc{to{stroke-dashoffset:-360}}
 .dgm-loop .orb{fill:var(--ink);animation:dgmOrbit 6s linear infinite;transform-box:view-box;transform-origin:160px 80px}
 @keyframes dgmOrbit{to{transform:rotate(360deg)}}
-.dgm-tree .path.on{stroke:var(--c);stroke-width:2.2}
-.dgm-tree .leaf.on{fill:rgba(var(--pos-rgb),.2);stroke:var(--pos)}
+.dgm-tree .path.dgm-on{stroke:var(--c);stroke-width:2.2}
+.dgm-tree .leaf.dgm-on{fill:rgba(var(--pos-rgb),.2);stroke:var(--pos)}
 .dgm-lane .lane{fill:rgba(255,255,255,.025);stroke:var(--line)}
 .dgm-lane .lane:nth-of-type(2){fill:rgba(255,255,255,.05)}
-.dgm-lane text.lbl{fill:var(--dim);font-size:7.5px;letter-spacing:.06em}
+.dgm-lane text.dgm-lbl{fill:var(--dim);font-size:7.5px;letter-spacing:.06em}
 .dgm-chev .step{fill:var(--panel2);stroke:var(--line);stroke-width:1}
 .dgm-chev .step.done{fill:rgba(var(--c-rgb),.22);stroke:var(--c)}
 .dgm-chev .step.fillseq{animation-name:dgmChev;animation-duration:6s;animation-timing-function:steps(1);animation-iteration-count:infinite;animation-delay:calc(var(--i,0)*1s)}
@@ -101,7 +101,7 @@
 @keyframes dgmRise{0%,4%{transform:translateY(12px) scaleY(.2);opacity:0}16%,88%{transform:none;opacity:1}96%,100%{transform:translateY(12px) scaleY(.2);opacity:0}}
 .dgm-pyr .t1{fill:rgba(var(--c-rgb),.9)}.dgm-pyr .t2{fill:rgba(var(--c-rgb),.65)}.dgm-pyr .t3{fill:rgba(var(--c-rgb),.42)}.dgm-pyr .t4{fill:rgba(var(--c-rgb),.24)}
 .dgm-pyr text{fill:var(--ink)}
-.dgm-funnel .stage{stroke:var(--panel);stroke-width:1.5}
+.dgm-funnel .dgm-stage{stroke:var(--panel);stroke-width:1.5}
 .dgm-funnel .s1{fill:rgba(var(--c-rgb),.85)}.dgm-funnel .s2{fill:rgba(var(--c-rgb),.6)}.dgm-funnel .s3{fill:rgba(var(--c-rgb),.4)}.dgm-funnel .s4{fill:rgba(var(--pos-rgb),.7)}
 .dgm-funnel .drip{fill:var(--pos);animation:dgmDrip 2.2s ease-in infinite}
 @keyframes dgmDrip{0%{transform:translateY(0);opacity:0}15%{opacity:1}100%{transform:translateY(22px);opacity:0}}
@@ -142,15 +142,15 @@
 /* ===================== E. TIMELINE & PLANNING ===================== */
 .dgm-journey .emo{fill:none;stroke:var(--c);stroke-width:2;stroke-linecap:round}
 .dgm-journey .face{fill:var(--panel);stroke:var(--c);stroke-width:1.5}
-.dgm-journey .stage{fill:rgba(255,255,255,.03);stroke:var(--line)}
+.dgm-journey .dgm-stage{fill:rgba(255,255,255,.03);stroke:var(--line)}
 .dgm-road .rail{stroke:var(--line);stroke-width:6;stroke-linecap:round}
 .dgm-road .done{stroke:var(--c);stroke-width:6;stroke-linecap:round;stroke-dasharray:400;stroke-dashoffset:400;animation:dgmDraw 7s ease-in-out infinite}
 .dgm-road .ms{fill:var(--panel);stroke:var(--line);stroke-width:2}
 .dgm-road .ms.lit{animation-name:dgmMsLit;animation-duration:7s;animation-timing-function:steps(1);animation-iteration-count:infinite;animation-delay:calc(var(--i,0)*.75s)}
 @keyframes dgmMsLit{0%,8%{fill:var(--panel);stroke:var(--line)}9%,88%{fill:var(--c);stroke:var(--c)}100%{fill:var(--panel);stroke:var(--line)}}
-.dgm-tl .card{fill:var(--panel2);stroke:var(--line)}
-.dgm-tl .card.fi{animation-name:dgmFade}
-.dgm-gd .bar{stroke:var(--panel);stroke-width:1}
+.dgm-tl .dgm-card{fill:var(--panel2);stroke:var(--line)}
+.dgm-tl .dgm-card.fi{animation-name:dgmFade}
+.dgm-gd .dgm-bar{stroke:var(--panel);stroke-width:1}
 .dgm-gd .dep{fill:none;stroke:var(--warn);stroke-width:1.4;stroke-dasharray:3 3}
 .dgm-gd .dep.dr{stroke-dasharray:200;stroke-dashoffset:200}
 .dgm-run .runner{fill:var(--c);filter:drop-shadow(0 0 4px rgba(var(--c-rgb),.8));animation:dgmRun 6s cubic-bezier(.4,0,.2,1) infinite}
@@ -197,8 +197,8 @@
 .dgm-okr .ini{fill:var(--panel2);stroke:var(--line);stroke-width:1}
 .dgm-okr .prog{stroke:var(--pos);stroke-width:3;stroke-linecap:round;stroke-dasharray:60;stroke-dashoffset:60;animation-name:dgmKr;animation-duration:6s;animation-timing-function:ease-out;animation-iteration-count:infinite;animation-delay:calc(var(--i,0)*.4s)}
 @keyframes dgmKr{0%,10%{stroke-dashoffset:60}55%,90%{stroke-dashoffset:var(--left,20)}100%{stroke-dashoffset:60}}
-.dgm-whys .card{fill:var(--panel2);stroke:var(--line);stroke-width:1}
-.dgm-whys .card.root{fill:rgba(var(--neg-rgb),.18);stroke:var(--neg)}
+.dgm-whys .dgm-card{fill:var(--panel2);stroke:var(--line);stroke-width:1}
+.dgm-whys .dgm-card.root{fill:rgba(var(--neg-rgb),.18);stroke:var(--neg)}
 .dgm-whys .arrow{stroke:var(--c);stroke-width:1.6;fill:none}
 .dgm-raci .cellr{fill:rgba(255,255,255,.03);stroke:var(--line)}
 .dgm-raci text.R{fill:var(--c);font-weight:900}.dgm-raci text.A{fill:var(--neg);font-weight:900}.dgm-raci text.C{fill:var(--info);font-weight:900}.dgm-raci text.I{fill:var(--dim);font-weight:900}

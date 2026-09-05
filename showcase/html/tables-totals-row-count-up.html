@@ -36,9 +36,13 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
 .dtb-count.c { animation: 4s ease-out 0s infinite normal none running dtbCountC; }
 .dtb-totals tfoot td { color: var(--accent); }
 .dtb-insp-r .v.b { color: var(--crit); }
-.dtb-rank-r.b .rk { background: rgba(var(--warn-rgb),.7); color: rgb(26, 16, 0); }
+.dtb-rank-r.b .rk { background: rgba(var(--warn-rgb),.7); color: var(--bg); }
 .dtb-forge-lg b.c { color: rgb(var(--dtb-a-rgb)); }
 .dtb-forge-lg b.a { color: rgb(var(--dtb-b-rgb)); }
+.dtb-rowmove .dtb-arr, .dtb-resort th.dtb-num, .dtb-fall th.dtb-num { cursor: pointer; user-select: none; }
+.dtb-rowmove .dtb-arr:hover, .dtb-resort th.dtb-num:hover, .dtb-fall th.dtb-num:hover { color: var(--c,var(--accent)); }
+.dtb-tbl.manual td.flip { transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1); }
+.dtb-tbl.manual tr.lifted td { position: relative; z-index: 2; box-shadow: 0 6px 16px rgba(0,0,0,.45),inset 0 0 0 999px rgba(var(--c-rgb,var(--accent-rgb)),.14); }
 @keyframes dtbCountA { 
   0% { --dtb-n: 0; }
   55%, 100% { --dtb-n: 1284; }

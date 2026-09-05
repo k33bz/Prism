@@ -21,20 +21,20 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
 .meta p{margin:6px 0 0}
 </style>
 <style id="effect-css">
-.dtb-cb.on { background: var(--c,var(--accent)); border-color: var(--c,var(--accent)); }
-.dtb-cb.on::after { transform: rotate(45deg) scale(1); opacity: 1; }
+.dtb-cb.dtb-on { background: var(--c,var(--accent)); border-color: var(--c,var(--accent)); }
+.dtb-cb.dtb-on::after { transform: rotate(45deg) scale(1); opacity: 1; }
 .dtb-typed { display: inline-block; overflow: hidden; white-space: nowrap; vertical-align: bottom; max-width: 0px; animation: 4.5s steps(9) 0s infinite normal none running dtbType; }
 .dtb-caret { display: inline-block; width: 1px; height: 11px; background: var(--ink); vertical-align: -2px; margin-left: 1px; animation: 1s steps(1) 0s infinite normal none running dtbCaret; }
 .dtb-def dd .dtb-typed { max-width: 0px; animation: 6s steps(26) 0s infinite normal none running dtbTypeLong; color: var(--ink); }
-.dtb-ck-item .dtb-cb.on { animation: auto ease 0s 1 normal none running none; }
-.dtb-ck-item .dtb-cb.on::after { animation: auto ease 0s 1 normal none running none; }
+.dtb-ck-item .dtb-cb.dtb-on { animation: auto ease 0s 1 normal none running none; }
+.dtb-ck-item .dtb-cb.dtb-on::after { animation: auto ease 0s 1 normal none running none; }
 .dtb-toolbar { width: 100%; max-width: 290px; font: 600 9.5px ui-sans-serif, system-ui, sans-serif; background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 8px; display: flex; flex-direction: column; gap: 7px; }
 .dtb-tb-row { display: flex; align-items: center; gap: 6px; }
 .dtb-search { flex: 1 1 0%; display: flex; align-items: center; gap: 6px; padding: 4px 8px; border: 1px solid var(--line); border-radius: 6px; background: var(--panel); color: var(--ink); font-family: ui-monospace, Menlo, monospace; font-size: 10px; }
 .dtb-search::before { content: ""; width: 8px; height: 8px; border: 1.5px solid var(--dim); border-radius: 50%; box-shadow: 3px 3px 0 -1px var(--dim); flex: 0 0 auto; }
 .dtb-search .dtb-typed { animation: 5s steps(7) 0s infinite normal none running dtbType; }
 .dtb-chip { padding: 2px 8px; border-radius: 12px; border: 1px solid var(--line); background: var(--panel); color: var(--muted); font-size: 9px; white-space: nowrap; }
-.dtb-chip.on { border-color: var(--c,var(--accent)); color: var(--c,var(--accent)); background: rgba(var(--c-rgb,var(--accent-rgb)),.12); }
+.dtb-chip.dtb-on { border-color: var(--c,var(--accent)); color: var(--c,var(--accent)); background: rgba(var(--c-rgb,var(--accent-rgb)),.12); }
 .dtb-chip.tog { animation: 5s steps(1) 0s infinite normal none running dtbChip; }
 .dtb-tb-btn { display: grid; place-items: center; width: 24px; height: 24px; border-radius: 6px; border: 1px solid var(--line); background: var(--panel); color: var(--muted); font-size: 11px; }
 .dtb-tb-count { margin-left: auto; font-family: ui-monospace, Menlo, monospace; color: var(--dim); font-size: 9px; font-weight: 600; }
@@ -63,13 +63,12 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
   36%, 50% { color: var(--c,var(--accent)); }
   51%, 85% { color: var(--ink); }
 }
-.bar button.on { color: rgb(255, 255, 255) !important; }
 </style>
 </head>
 <body>
 <div class="tile"><div class="stage" id="stage"><div class="dtb-toolbar">
       <div class="dtb-tb-row"><div class="dtb-search"><span class="dtb-typed">region:</span><span class="dtb-caret"></span></div><span class="dtb-tb-btn">⚙</span><span class="dtb-tb-btn">↓</span></div>
-      <div class="dtb-tb-row"><span class="dtb-chip on">Prod</span><span class="dtb-chip tog">Errors only</span><span class="dtb-chip">Last 24h</span><span class="dtb-tb-count"><b>318</b> / 2,668</span></div>
+      <div class="dtb-tb-row"><span class="dtb-chip dtb-on">Prod</span><span class="dtb-chip tog">Errors only</span><span class="dtb-chip">Last 24h</span><span class="dtb-tb-count"><b>318</b> / 2,668</span></div>
     </div></div></div>
 <div class="meta"><b>Table Toolbar</b> · <code>tables-table-toolbar</code><br>Tables &amp; Data Layouts · LEDGERS, LOGS &amp; TOOLBARS<p>Search box with a typing query, filter chips (one toggling on), column and export buttons, and a live match count — the control strip above a data table.</p></div>
 

@@ -34,6 +34,8 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
 .dtb-skel th .dtb-sk { background-image: ; background-position-x: ; background-position-y: ; background-repeat: ; background-attachment: ; background-origin: ; background-clip: ; background-color: ; background-size: 200% 100%; }
 .dtb-bento div.w2 { grid-column: span 2; }
 .dtb-empty .dtb-sk { opacity: 0.35; margin: 0px auto 8px; animation-duration: 3s; }
+.dtb-tbl.manual td.flip { transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1); }
+.dtb-tbl.manual tr.lifted td { position: relative; z-index: 2; box-shadow: 0 6px 16px rgba(0,0,0,.45),inset 0 0 0 999px rgba(var(--c-rgb,var(--accent-rgb)),.14); }
 @keyframes dtbShimmer { 
   0% { background-position: 200% 0px; }
   100% { background-position: -200% 0px; }

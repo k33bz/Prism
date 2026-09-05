@@ -29,6 +29,8 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
 .dtb-row .dtb-num { text-align: right; }
 .dtb-sticky-head { position: absolute; top: 0px; left: 0px; right: 0px; z-index: 3; background: var(--panel2); font: 700 9px / 1.2 ui-sans-serif, system-ui, sans-serif; letter-spacing: 0.07em; text-transform: uppercase; color: var(--dim); box-shadow: rgba(0, 0, 0, 0.35) 0px 4px 10px; padding: 7px 10px; }
 .dtb-sticky-body { padding-top: 26px; animation: 9s linear 0s infinite normal none running dtbScrollUp; }
+.dtb-rowmove .dtb-arr, .dtb-resort th.dtb-num, .dtb-fall th.dtb-num { cursor: pointer; user-select: none; }
+.dtb-rowmove .dtb-arr:hover, .dtb-resort th.dtb-num:hover, .dtb-fall th.dtb-num:hover { color: var(--c,var(--accent)); }
 @keyframes dtbScrollUp { 
   0% { transform: translateY(0px); }
   100% { transform: translateY(-50%); }

@@ -7,6 +7,9 @@
      added    the date of the first commit the tile appears in
      updated  the date of the most recent commit that changed the tile's markup
               after it was added (null if never changed)
+     author   handle of whoever authored the commit that introduced the facet
+              (git author name mapped through AUTHOR_HANDLES; unknown names pass
+              through as-is), so attribution needs no per-tile markup
 
    Ids are derived exactly like catalog/extract-from-prism.mjs does at runtime
    (data-fx-id, else <page>-<slug(name)>, with -2/-3 suffixes for duplicates in
@@ -31,6 +34,9 @@ const ROOT = resolve(HERE, '..');
 const HTML = process.env.PRISM_HTML ? resolve(process.env.PRISM_HTML) : resolve(ROOT, 'Prism.html');
 const OUT = resolve(HERE, 'facet-dates.json');
 const git = (...args) => execFileSync('git', args, { cwd: ROOT, encoding: 'utf8', maxBuffer: 256 * 1024 * 1024 });
+// git author name -> public handle. Upstream is crazy54 (Jeremy Hall); the fork is k33bz.
+const AUTHOR_HANDLES = { 'Jeremy Hall': 'crazy54', 'k33bz': 'k33bz' };
+const handleOf = name => AUTHOR_HANDLES[name] || name;
 
 const slug = s => (s || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 60);
 const text = html => html.replace(/<[^>]+>/g, ' ').replace(/&quot;/g, '"').replace(/&#39;|&apos;/g, "'").replace(/&nbsp;/g, ' ')
@@ -105,8 +111,8 @@ function snapshot(src) {
   return map;
 }
 
-const log = git('log', '--reverse', '--format=%H|%cI', '--', 'Prism.html').trim().split('\n').filter(Boolean)
-  .map(l => { const [sha, iso] = l.split('|'); return { sha, date: iso.slice(0, 10) }; });
+const log = git('log', '--reverse', '--format=%H|%cI|%an', '--', 'Prism.html').trim().split('\n').filter(Boolean)
+  .map(l => { const [sha, iso, an] = l.split('|'); return { sha, date: iso.slice(0, 10), author: handleOf(an) }; });
 if (!log.length) { console.error('no history for Prism.html'); process.exit(1); }
 
 const facets = {};   // id -> { added, updated, hash }
@@ -116,7 +122,7 @@ for (const c of log) {
   const snap = snapshot(src);
   for (const [id, hash] of Object.entries(snap)) {
     const f = facets[id];
-    if (!f) facets[id] = { added: c.date, updated: null, hash };
+    if (!f) facets[id] = { added: c.date, updated: null, author: c.author, hash };
     else if (f.hash !== hash) { f.hash = hash; if (c.date !== f.added) f.updated = c.date; }
   }
   n++;
@@ -126,12 +132,14 @@ process.stdout.write('\n');
 
 const out = {
   generated: new Date().toISOString(), commits: log.length, first: log[0].date, last: log[log.length - 1].date,
-  facets: Object.fromEntries(Object.entries(facets).map(([id, f]) => [id, { added: f.added, updated: f.updated }])),
+  facets: Object.fromEntries(Object.entries(facets).map(([id, f]) => [id, { added: f.added, updated: f.updated, author: f.author }])),
 };
 writeFileSync(OUT, JSON.stringify(out));
 const addedByDate = {}; for (const f of Object.values(facets)) addedByDate[f.added] = (addedByDate[f.added] || 0) + 1;
 console.log('added per commit date:', Object.entries(addedByDate).sort().map(([d, k]) => `${d}:${k}`).join('  '));
 console.log('updated (ever):', Object.values(facets).filter(f => f.updated).length);
+const byAuthor = {}; for (const f of Object.values(facets)) byAuthor[f.author] = (byAuthor[f.author] || 0) + 1;
+console.log('by author:', Object.entries(byAuthor).map(([a, n]) => `${a}:${n}`).join('  '));
 
 // Embed / refresh the dates island right after the catalog island.
 if (existsSync(HTML)) {

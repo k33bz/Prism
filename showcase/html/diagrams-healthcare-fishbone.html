@@ -21,9 +21,6 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
 .meta p{margin:6px 0 0}
 </style>
 <style id="effect-css">
-.head { padding: 28px 32px; border-bottom: 1px solid var(--line); background: linear-gradient(180deg,#232f3e,var(--panel)); position: relative; }
-.head h1 { margin: 0px; font-size: 25px; font-weight: 800; letter-spacing: -0.01em; }
-.head p { margin: 7px 0px 0px; color: var(--muted); font-size: 13px; max-width: 820px; }
 .dgm { display: block; width: 100%; max-width: 320px; height: auto; overflow: visible; font: 600 9px ui-sans-serif, system-ui, sans-serif; --c: var(--accent); --c-rgb: var(--accent-rgb); }
 .dgm text { fill: var(--ink); text-anchor: middle; dominant-baseline: middle; font-size: 9px; font-weight: 600; }
 .dgm text.mut { fill: var(--muted); font-weight: 500; font-size: 8px; }
@@ -50,20 +47,20 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
 .dgm-fish .spine { fill: none; stroke: var(--ink); stroke-width: 2.2; stroke-linecap: round; }
 .dgm-fish .bone { fill: none; stroke: var(--c); stroke-width: 1.6; stroke-linecap: round; }
 .dgm-fish .sub { fill: none; stroke: var(--muted); stroke-width: 1; stroke-linecap: round; opacity: 0.8; }
-.dgm-fish .head { fill: rgba(var(--c-rgb),.16); stroke: var(--c); stroke-width: 1.5; }
-.dgm-fish .head.pulse { animation: 2.4s ease-in-out 0s infinite normal none running dgmPulse; }
+.dgm-fish .dgm-head { fill: rgba(var(--c-rgb),.16); stroke: var(--c); stroke-width: 1.5; }
+.dgm-fish .dgm-head.pulse { animation: 2.4s ease-in-out 0s infinite normal none running dgmPulse; }
 .dgm-fish .tail { fill: none; stroke: var(--ink); stroke-width: 2; stroke-linecap: round; }
 .dgm-fish text.cat { font-weight: 800; font-size: 8.5px; fill: var(--c); }
 .dgm-fish text.sc { font-size: 7px; fill: var(--muted); font-weight: 500; }
 .dgm-fish .bone.env { stroke: var(--pos); }
 .dgm-fish text.cat.env { fill: var(--pos); }
-.dgm-fish .bone.stage { stroke: var(--info); }
-.dgm-fish text.cat.stage { fill: var(--info); }
+.dgm-fish .bone.dgm-stage { stroke: var(--info); }
+.dgm-fish text.cat.dgm-stage { fill: var(--info); }
 .dgm-fish .trace { fill: none; stroke: var(--neg); stroke-width: 2.4; stroke-linecap: round; stroke-dasharray: 18, 300; animation: 4s ease-in-out 0s infinite normal none running dgmTrace; }
 .dgm-fish .why { fill: rgba(var(--neg-rgb),.18); stroke: var(--neg); stroke-width: 1.2; animation: 4s ease-in-out 0s infinite normal none running dgmWhy; }
 .dgm-fish .pkt { fill: var(--info); animation: 5s linear 0s infinite normal none running dgmPkt; }
 .dgm-fish .cross { stroke: var(--neg); stroke-width: 2.5; stroke-linecap: round; }
-.dgm-tl .card.fi { animation-name: dgmFade; }
+.dgm-tl .dgm-card.fi { animation-name: dgmFade; }
 .dgm-gd .dep.dr { stroke-dasharray: 200; stroke-dashoffset: 200; }
 @keyframes dgmDraw { 
   0% { stroke-dashoffset: 400; }
@@ -117,10 +114,6 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
   92% { opacity: 1; }
   100% { transform: translateX(236px); opacity: 0; }
 }
-.head { background: var(--panel) !important; border-bottom: var(--bd,1px) solid var(--line) !important; }
-.head h1 { font-weight: var(--head-w,700) !important; letter-spacing: -0.01em !important; color: var(--ink) !important; }
-.head h1 span, .facets-hero h1 span { color: var(--accent) !important; }
-.head { position: relative; }
 </style>
 </head>
 <body>
@@ -132,7 +125,7 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
       <text class="cat fi" style="--i:5" x="54" y="134">Policy</text><text class="cat fi" style="--i:6" x="124" y="134">Environment</text><text class="cat fi" style="--i:7" x="194" y="134">Communication</text>
       <text class="sc fi" style="--i:7" x="80" y="58">fatigue</text><text class="sc fi" style="--i:8" x="150" y="58">checklist</text><text class="sc fi" style="--i:8" x="220" y="58">alarms</text>
       <text class="sc fi" style="--i:9" x="80" y="102">escalation</text><text class="sc fi" style="--i:9" x="150" y="102">lighting</text><text class="sc fi" style="--i:9" x="220" y="102">handover</text>
-      <rect class="head pulse" x="252" y="64" width="62" height="32" rx="6"></rect>
+      <rect class="dgm-head pulse" x="252" y="64" width="62" height="32" rx="6"></rect>
       <path class="cross" d="M262 80 h10 M267 75 v10"></path><text class="hd fi" style="--i:1" x="292" y="80">Med error</text>
     </svg></div></div>
 <div class="meta"><b>Healthcare Fishbone</b> · <code>diagrams-healthcare-fishbone</code><br>Diagrams &amp; Frameworks · FISHBONE (ISHIKAWA)<p>People, Procedures, Equipment, Policy, Environment and Communication under a cross-marked head: the clinical safety and patient-care form.</p></div>

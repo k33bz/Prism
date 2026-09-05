@@ -21,7 +21,6 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
 .meta p{margin:6px 0 0}
 </style>
 <style id="effect-css">
-.tile .stage { padding: 26px 18px; min-height: 130px; display: flex; align-items: center; justify-content: center; background: repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.01) 0px, rgba(255, 255, 255, 0.01) 10px, transparent 10px, transparent 20px); position: relative; }
 .dgm { display: block; width: 100%; max-width: 320px; height: auto; overflow: visible; font: 600 9px ui-sans-serif, system-ui, sans-serif; --c: var(--accent); --c-rgb: var(--accent-rgb); }
 .dgm text { fill: var(--ink); text-anchor: middle; dominant-baseline: middle; font-size: 9px; font-weight: 600; }
 .dgm text.mut { fill: var(--muted); font-weight: 500; font-size: 8px; }
@@ -45,16 +44,16 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
 .dgm .seq { animation-name: dgmSeq; animation-duration: calc(var(--n,4)*1.1s); animation-timing-function: ease-in-out; animation-iteration-count: infinite; animation-delay: calc(var(--i,0)*1.1s); }
 .dgm .seqfill { animation-name: dgmSeqFill; animation-duration: calc(var(--n,4)*1.1s); animation-timing-function: ease-in-out; animation-iteration-count: infinite; animation-delay: calc(var(--i,0)*1.1s); }
 .dgm .spin { transform-box: fill-box; transform-origin: center center; animation: 12s linear 0s infinite normal none running dgmSpin; }
-.dgm-fish .bone.stage { stroke: var(--info); }
-.dgm-fish text.cat.stage { fill: var(--info); }
-.dgm-funnel .stage { stroke: var(--panel); stroke-width: 1.5; }
+.dgm-fish .bone.dgm-stage { stroke: var(--info); }
+.dgm-fish text.cat.dgm-stage { fill: var(--info); }
+.dgm-funnel .dgm-stage { stroke: var(--panel); stroke-width: 1.5; }
 .dgm-funnel .s1 { fill: rgba(var(--c-rgb),.85); }
 .dgm-funnel .s2 { fill: rgba(var(--c-rgb),.6); }
 .dgm-funnel .s3 { fill: rgba(var(--c-rgb),.4); }
 .dgm-funnel .s4 { fill: rgba(var(--pos-rgb),.7); }
 .dgm-funnel .drip { fill: var(--pos); animation: 2.2s ease-in 0s infinite normal none running dgmDrip; }
-.dgm-journey .stage { fill: rgba(255, 255, 255, 0.03); stroke: var(--line); }
-.dgm-tl .card.fi { animation-name: dgmFade; }
+.dgm-journey .dgm-stage { fill: rgba(255, 255, 255, 0.03); stroke: var(--line); }
+.dgm-tl .dgm-card.fi { animation-name: dgmFade; }
 @keyframes dgmDraw { 
   0% { stroke-dashoffset: 400; }
   30%, 88% { stroke-dashoffset: 0; }
@@ -95,15 +94,14 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
   15% { opacity: 1; }
   100% { transform: translateY(22px); opacity: 0; }
 }
-.tile > .stage { background: var(--bg) !important; }
 </style>
 </head>
 <body>
 <div class="tile"><div class="stage" id="stage"><svg class="dgm dgm-funnel" viewBox="0 0 320 160" aria-label="Funnel chart">
-      <path class="stage s1 fi" style="--i:0" d="M40 12 H280 L252 44 H68 Z"></path><text class="fi" style="--i:0" x="160" y="28">Visitors · 48,200</text>
-      <path class="stage s2 fi" style="--i:1" d="M70 46 H250 L226 76 H94 Z"></path><text class="fi" style="--i:1" x="160" y="61">Sign-ups · 6,410</text>
-      <path class="stage s3 fi" style="--i:2" d="M96 78 H224 L204 106 H116 Z"></path><text class="fi" style="--i:2" x="160" y="92">Trials · 1,284</text>
-      <path class="stage s4 fi" style="--i:3" d="M118 108 H202 L188 132 H132 Z"></path><text class="fi" style="--i:3" x="160" y="120">Paid · 312</text>
+      <path class="dgm-stage s1 fi" style="--i:0" d="M40 12 H280 L252 44 H68 Z"></path><text class="fi" style="--i:0" x="160" y="28">Visitors · 48,200</text>
+      <path class="dgm-stage s2 fi" style="--i:1" d="M70 46 H250 L226 76 H94 Z"></path><text class="fi" style="--i:1" x="160" y="61">Sign-ups · 6,410</text>
+      <path class="dgm-stage s3 fi" style="--i:2" d="M96 78 H224 L204 106 H116 Z"></path><text class="fi" style="--i:2" x="160" y="92">Trials · 1,284</text>
+      <path class="dgm-stage s4 fi" style="--i:3" d="M118 108 H202 L188 132 H132 Z"></path><text class="fi" style="--i:3" x="160" y="120">Paid · 312</text>
       <circle class="drip" cx="160" cy="134" r="3"></circle>
       <text class="dim" x="300" y="28">13%</text><text class="dim" x="272" y="61">20%</text><text class="dim" x="248" y="92">24%</text>
     </svg></div></div>

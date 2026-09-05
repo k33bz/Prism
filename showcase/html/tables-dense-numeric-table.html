@@ -35,6 +35,10 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
 .dtb-up { color: var(--pos); font-weight: 800; }
 .dtb-down { color: var(--neg); font-weight: 800; }
 .dtb-flat { color: var(--dim); font-weight: 800; }
+.dtb-rowmove .dtb-arr, .dtb-resort th.dtb-num, .dtb-fall th.dtb-num { cursor: pointer; user-select: none; }
+.dtb-rowmove .dtb-arr:hover, .dtb-resort th.dtb-num:hover, .dtb-fall th.dtb-num:hover { color: var(--c,var(--accent)); }
+.dtb-tbl.manual td.flip { transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1); }
+.dtb-tbl.manual tr.lifted td { position: relative; z-index: 2; box-shadow: 0 6px 16px rgba(0,0,0,.45),inset 0 0 0 999px rgba(var(--c-rgb,var(--accent-rgb)),.14); }
 @keyframes dtbBlink { 
   0%, 100% { opacity: 1; }
   50% { opacity: 0.25; }

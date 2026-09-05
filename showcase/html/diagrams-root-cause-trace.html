@@ -21,9 +21,6 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
 .meta p{margin:6px 0 0}
 </style>
 <style id="effect-css">
-.head { padding: 28px 32px; border-bottom: 1px solid var(--line); background: linear-gradient(180deg,#232f3e,var(--panel)); position: relative; }
-.head h1 { margin: 0px; font-size: 25px; font-weight: 800; letter-spacing: -0.01em; }
-.head p { margin: 7px 0px 0px; color: var(--muted); font-size: 13px; max-width: 820px; }
 .dgm { display: block; width: 100%; max-width: 320px; height: auto; overflow: visible; font: 600 9px ui-sans-serif, system-ui, sans-serif; --c: var(--accent); --c-rgb: var(--accent-rgb); }
 .dgm text { fill: var(--ink); text-anchor: middle; dominant-baseline: middle; font-size: 9px; font-weight: 600; }
 .dgm text.mut { fill: var(--muted); font-weight: 500; font-size: 8px; }
@@ -50,15 +47,15 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
 .dgm-fish .spine { fill: none; stroke: var(--ink); stroke-width: 2.2; stroke-linecap: round; }
 .dgm-fish .bone { fill: none; stroke: var(--c); stroke-width: 1.6; stroke-linecap: round; }
 .dgm-fish .sub { fill: none; stroke: var(--muted); stroke-width: 1; stroke-linecap: round; opacity: 0.8; }
-.dgm-fish .head { fill: rgba(var(--c-rgb),.16); stroke: var(--c); stroke-width: 1.5; }
-.dgm-fish .head.pulse { animation: 2.4s ease-in-out 0s infinite normal none running dgmPulse; }
+.dgm-fish .dgm-head { fill: rgba(var(--c-rgb),.16); stroke: var(--c); stroke-width: 1.5; }
+.dgm-fish .dgm-head.pulse { animation: 2.4s ease-in-out 0s infinite normal none running dgmPulse; }
 .dgm-fish .tail { fill: none; stroke: var(--ink); stroke-width: 2; stroke-linecap: round; }
 .dgm-fish text.cat { font-weight: 800; font-size: 8.5px; fill: var(--c); }
 .dgm-fish text.sc { font-size: 7px; fill: var(--muted); font-weight: 500; }
 .dgm-fish .bone.env { stroke: var(--pos); }
 .dgm-fish text.cat.env { fill: var(--pos); }
-.dgm-fish .bone.stage { stroke: var(--info); }
-.dgm-fish text.cat.stage { fill: var(--info); }
+.dgm-fish .bone.dgm-stage { stroke: var(--info); }
+.dgm-fish text.cat.dgm-stage { fill: var(--info); }
 .dgm-fish .trace { fill: none; stroke: var(--neg); stroke-width: 2.4; stroke-linecap: round; stroke-dasharray: 18, 300; animation: 4s ease-in-out 0s infinite normal none running dgmTrace; }
 .dgm-fish .why { fill: rgba(var(--neg-rgb),.18); stroke: var(--neg); stroke-width: 1.2; animation: 4s ease-in-out 0s infinite normal none running dgmWhy; }
 .dgm-fish .pkt { fill: var(--info); animation: 5s linear 0s infinite normal none running dgmPkt; }
@@ -115,10 +112,6 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
   92% { opacity: 1; }
   100% { transform: translateX(236px); opacity: 0; }
 }
-.head { background: var(--panel) !important; border-bottom: var(--bd,1px) solid var(--line) !important; }
-.head h1 { font-weight: var(--head-w,700) !important; letter-spacing: -0.01em !important; color: var(--ink) !important; }
-.head h1 span, .facets-hero h1 span { color: var(--accent) !important; }
-.head { position: relative; }
 </style>
 </head>
 <body>
@@ -132,7 +125,7 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
       <rect class="why" x="88" y="44" width="30" height="12" rx="3"></rect><text class="sc" x="103" y="50" style="fill:var(--neg);font-weight:800">no spec</text>
       <text class="sc" x="112" y="62" text-anchor="end">manual step</text>
       <path class="trace" d="M118 50 H137 L146 62 L160 80 H250"></path>
-      <rect class="head" x="252" y="64" width="62" height="32" rx="6"></rect><text class="hd" x="283" y="80">Rework</text>
+      <rect class="dgm-head" x="252" y="64" width="62" height="32" rx="6"></rect><text class="hd" x="283" y="80">Rework</text>
     </svg></div></div>
 <div class="meta"><b>Root Cause Trace</b> · <code>diagrams-root-cause-trace</code><br>Diagrams &amp; Frameworks · FISHBONE (ISHIKAWA)<p>One sub-cause is flagged and a pulse travels from it along the bone, down the spine and into the head, showing the causal path a 5-Whys session would follow.</p></div>
 

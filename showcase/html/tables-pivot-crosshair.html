@@ -33,6 +33,10 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
 .dtb-pivot tbody tr:nth-child(3) td { animation: 5s ease-in-out 0s infinite normal none running dtbRowLite; }
 .dtb-pivot tbody tr td:nth-child(3) { animation: 5s ease-in-out 0s infinite normal none running dtbRowLite; }
 .dtb-pivot tbody tr:nth-child(3) td:nth-child(3) { animation: 5s ease-in-out 0s infinite normal none running dtbHit; color: var(--accent); font-weight: 800; }
+.dtb-rowmove .dtb-arr, .dtb-resort th.dtb-num, .dtb-fall th.dtb-num { cursor: pointer; user-select: none; }
+.dtb-rowmove .dtb-arr:hover, .dtb-resort th.dtb-num:hover, .dtb-fall th.dtb-num:hover { color: var(--c,var(--accent)); }
+.dtb-tbl.manual td.flip { transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1); }
+.dtb-tbl.manual tr.lifted td { position: relative; z-index: 2; box-shadow: 0 6px 16px rgba(0,0,0,.45),inset 0 0 0 999px rgba(var(--c-rgb,var(--accent-rgb)),.14); }
 @keyframes dtbRowLite { 
   0%, 15% { box-shadow: inset 0 0 0 999px rgba(var(--accent-rgb),0); }
   30%, 70% { box-shadow: inset 0 0 0 999px rgba(var(--accent-rgb),.09); }

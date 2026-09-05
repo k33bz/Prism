@@ -47,7 +47,7 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
 .dgm-flow .tok { fill: var(--c); filter: drop-shadow(0 0 4px rgba(var(--c-rgb),.8)); offset-rotate: 0deg; animation: 5s cubic-bezier(0.4, 0, 0.2, 1) 0s infinite normal none running dgmTok; }
 .dgm-lane .lane { fill: rgba(255, 255, 255, 0.024); stroke: var(--line); }
 .dgm-lane .lane:nth-of-type(2) { fill: rgba(255, 255, 255, 0.05); }
-.dgm-lane text.lbl { fill: var(--dim); font-size: 7.5px; letter-spacing: 0.06em; }
+.dgm-lane text.dgm-lbl { fill: var(--dim); font-size: 7.5px; letter-spacing: 0.06em; }
 .dgm-gd .dep.dr { stroke-dasharray: 200; stroke-dashoffset: 200; }
 .dgm-sankey .band.c { fill: rgba(var(--pos-rgb),.35); }
 @keyframes dgmDraw { 
@@ -91,13 +91,12 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
   95% { opacity: 1; }
   100% { offset-distance: 100%; opacity: 0; }
 }
-.pr-collpill .lbl { position: relative; z-index: 1; }
 </style>
 </head>
 <body>
 <div class="tile"><div class="stage" id="stage"><svg class="dgm dgm-lane dgm-flow" viewBox="0 0 320 160" aria-label="Swimlane diagram">
       <rect class="lane" x="40" y="6" width="276" height="48"></rect><rect class="lane" x="40" y="54" width="276" height="48"></rect><rect class="lane" x="40" y="102" width="276" height="48"></rect>
-      <text class="lbl" x="20" y="30" transform="rotate(-90 20 30)">CUSTOMER</text><text class="lbl" x="20" y="78" transform="rotate(-90 20 78)">SUPPORT</text><text class="lbl" x="20" y="126" transform="rotate(-90 20 126)">ENGINEERING</text>
+      <text class="dgm-lbl" x="20" y="30" transform="rotate(-90 20 30)">CUSTOMER</text><text class="dgm-lbl" x="20" y="78" transform="rotate(-90 20 78)">SUPPORT</text><text class="dgm-lbl" x="20" y="126" transform="rotate(-90 20 126)">ENGINEERING</text>
       <rect class="bx c" x="54" y="18" width="52" height="24" rx="4"></rect><text x="80" y="30">Report</text>
       <rect class="bx" x="128" y="66" width="52" height="24" rx="4"></rect><text x="154" y="78">Triage</text>
       <rect class="bx" x="202" y="114" width="52" height="24" rx="4"></rect><text x="228" y="126">Fix</text>

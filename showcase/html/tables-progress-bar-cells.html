@@ -30,6 +30,8 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
 .dtb-bar i { display: block; height: 100%; width: var(--w,60%); border-radius: 3px; background: var(--c,var(--accent)); transform-origin: 0px 50%; animation: 3.4s ease-out 0s infinite normal none running dtbFill; }
 .dtb-bar-v { font-size: 9.5px; color: var(--muted); font-family: ui-monospace, Menlo, monospace; }
 .dtb-bento .dtb-bar { width: 100%; margin: 0px; }
+.dtb-tbl.manual td.flip { transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1); }
+.dtb-tbl.manual tr.lifted td { position: relative; z-index: 2; box-shadow: 0 6px 16px rgba(0,0,0,.45),inset 0 0 0 999px rgba(var(--c-rgb,var(--accent-rgb)),.14); }
 @keyframes dtbFill { 
   0% { transform: scaleX(0); }
   60%, 90% { transform: scaleX(1); }

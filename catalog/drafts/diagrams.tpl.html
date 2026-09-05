@@ -95,15 +95,15 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
 .dgm-fish .spine{fill:none;stroke:var(--ink);stroke-width:2.2;stroke-linecap:round}
 .dgm-fish .bone{fill:none;stroke:var(--c);stroke-width:1.6;stroke-linecap:round}
 .dgm-fish .sub{fill:none;stroke:var(--muted);stroke-width:1;stroke-linecap:round;opacity:.8}
-.dgm-fish .head{fill:rgba(var(--c-rgb),.16);stroke:var(--c);stroke-width:1.5}
-.dgm-fish .head.pulse{animation:dgmPulse 2.4s ease-in-out infinite}
+.dgm-fish .dgm-head{fill:rgba(var(--c-rgb),.16);stroke:var(--c);stroke-width:1.5}
+.dgm-fish .dgm-head.pulse{animation:dgmPulse 2.4s ease-in-out infinite}
 .dgm-fish .tail{fill:none;stroke:var(--ink);stroke-width:2;stroke-linecap:round}
 .dgm-fish text.cat{font-weight:800;font-size:8.5px;fill:var(--c)}
 .dgm-fish text.sc{font-size:7px;fill:var(--muted);font-weight:500}
 .dgm-fish .bone.env{stroke:var(--pos)}
 .dgm-fish text.cat.env{fill:var(--pos)}
-.dgm-fish .bone.stage{stroke:var(--info)}
-.dgm-fish text.cat.stage{fill:var(--info)}
+.dgm-fish .bone.dgm-stage{stroke:var(--info)}
+.dgm-fish text.cat.dgm-stage{fill:var(--info)}
 /* root-cause trace: a pulse rides sub -> bone -> spine -> head */
 .dgm-fish .trace{fill:none;stroke:var(--neg);stroke-width:2.4;stroke-linecap:round;stroke-dasharray:18 300;animation:dgmTrace 4s ease-in-out infinite}
 @keyframes dgmTrace{0%{stroke-dashoffset:318;opacity:0}8%{opacity:1}80%{stroke-dashoffset:0;opacity:1}100%{stroke-dashoffset:0;opacity:0}}
@@ -122,11 +122,11 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
 @keyframes dgmLoopArc{to{stroke-dashoffset:-360}}
 .dgm-loop .orb{fill:var(--ink);animation:dgmOrbit 6s linear infinite;transform-box:view-box;transform-origin:160px 80px}
 @keyframes dgmOrbit{to{transform:rotate(360deg)}}
-.dgm-tree .path.on{stroke:var(--c);stroke-width:2.2}
-.dgm-tree .leaf.on{fill:rgba(var(--pos-rgb),.2);stroke:var(--pos)}
+.dgm-tree .path.dgm-on{stroke:var(--c);stroke-width:2.2}
+.dgm-tree .leaf.dgm-on{fill:rgba(var(--pos-rgb),.2);stroke:var(--pos)}
 .dgm-lane .lane{fill:rgba(255,255,255,.025);stroke:var(--line)}
 .dgm-lane .lane:nth-of-type(2){fill:rgba(255,255,255,.05)}
-.dgm-lane text.lbl{fill:var(--dim);font-size:7.5px;letter-spacing:.06em}
+.dgm-lane text.dgm-lbl{fill:var(--dim);font-size:7.5px;letter-spacing:.06em}
 .dgm-chev .step{fill:var(--panel2);stroke:var(--line);stroke-width:1}
 .dgm-chev .step.done{fill:rgba(var(--c-rgb),.22);stroke:var(--c)}
 .dgm-chev .step.fillseq{animation-name:dgmChev;animation-duration:6s;animation-timing-function:steps(1);animation-iteration-count:infinite;animation-delay:calc(var(--i,0)*1s)}
@@ -146,7 +146,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
 @keyframes dgmRise{0%,4%{transform:translateY(12px) scaleY(.2);opacity:0}16%,88%{transform:none;opacity:1}96%,100%{transform:translateY(12px) scaleY(.2);opacity:0}}
 .dgm-pyr .t1{fill:rgba(var(--c-rgb),.9)}.dgm-pyr .t2{fill:rgba(var(--c-rgb),.65)}.dgm-pyr .t3{fill:rgba(var(--c-rgb),.42)}.dgm-pyr .t4{fill:rgba(var(--c-rgb),.24)}
 .dgm-pyr text{fill:var(--ink)}
-.dgm-funnel .stage{stroke:var(--panel);stroke-width:1.5}
+.dgm-funnel .dgm-stage{stroke:var(--panel);stroke-width:1.5}
 .dgm-funnel .s1{fill:rgba(var(--c-rgb),.85)}.dgm-funnel .s2{fill:rgba(var(--c-rgb),.6)}.dgm-funnel .s3{fill:rgba(var(--c-rgb),.4)}.dgm-funnel .s4{fill:rgba(var(--pos-rgb),.7)}
 .dgm-funnel .drip{fill:var(--pos);animation:dgmDrip 2.2s ease-in infinite}
 @keyframes dgmDrip{0%{transform:translateY(0);opacity:0}15%{opacity:1}100%{transform:translateY(22px);opacity:0}}
@@ -187,15 +187,15 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
 /* ===================== E. TIMELINE & PLANNING ===================== */
 .dgm-journey .emo{fill:none;stroke:var(--c);stroke-width:2;stroke-linecap:round}
 .dgm-journey .face{fill:var(--panel);stroke:var(--c);stroke-width:1.5}
-.dgm-journey .stage{fill:rgba(255,255,255,.03);stroke:var(--line)}
+.dgm-journey .dgm-stage{fill:rgba(255,255,255,.03);stroke:var(--line)}
 .dgm-road .rail{stroke:var(--line);stroke-width:6;stroke-linecap:round}
 .dgm-road .done{stroke:var(--c);stroke-width:6;stroke-linecap:round;stroke-dasharray:400;stroke-dashoffset:400;animation:dgmDraw 7s ease-in-out infinite}
 .dgm-road .ms{fill:var(--panel);stroke:var(--line);stroke-width:2}
 .dgm-road .ms.lit{animation-name:dgmMsLit;animation-duration:7s;animation-timing-function:steps(1);animation-iteration-count:infinite;animation-delay:calc(var(--i,0)*.75s)}
 @keyframes dgmMsLit{0%,8%{fill:var(--panel);stroke:var(--line)}9%,88%{fill:var(--c);stroke:var(--c)}100%{fill:var(--panel);stroke:var(--line)}}
-.dgm-tl .card{fill:var(--panel2);stroke:var(--line)}
-.dgm-tl .card.fi{animation-name:dgmFade}
-.dgm-gd .bar{stroke:var(--panel);stroke-width:1}
+.dgm-tl .dgm-card{fill:var(--panel2);stroke:var(--line)}
+.dgm-tl .dgm-card.fi{animation-name:dgmFade}
+.dgm-gd .dgm-bar{stroke:var(--panel);stroke-width:1}
 .dgm-gd .dep{fill:none;stroke:var(--warn);stroke-width:1.4;stroke-dasharray:3 3}
 .dgm-gd .dep.dr{stroke-dasharray:200;stroke-dashoffset:200}
 .dgm-run .runner{fill:var(--c);filter:drop-shadow(0 0 4px rgba(var(--c-rgb),.8));animation:dgmRun 6s cubic-bezier(.4,0,.2,1) infinite}
@@ -242,8 +242,8 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
 .dgm-okr .ini{fill:var(--panel2);stroke:var(--line);stroke-width:1}
 .dgm-okr .prog{stroke:var(--pos);stroke-width:3;stroke-linecap:round;stroke-dasharray:60;stroke-dashoffset:60;animation-name:dgmKr;animation-duration:6s;animation-timing-function:ease-out;animation-iteration-count:infinite;animation-delay:calc(var(--i,0)*.4s)}
 @keyframes dgmKr{0%,10%{stroke-dashoffset:60}55%,90%{stroke-dashoffset:var(--left,20)}100%{stroke-dashoffset:60}}
-.dgm-whys .card{fill:var(--panel2);stroke:var(--line);stroke-width:1}
-.dgm-whys .card.root{fill:rgba(var(--neg-rgb),.18);stroke:var(--neg)}
+.dgm-whys .dgm-card{fill:var(--panel2);stroke:var(--line);stroke-width:1}
+.dgm-whys .dgm-card.root{fill:rgba(var(--neg-rgb),.18);stroke:var(--neg)}
 .dgm-whys .arrow{stroke:var(--c);stroke-width:1.6;fill:none}
 .dgm-raci .cellr{fill:rgba(255,255,255,.03);stroke:var(--line)}
 .dgm-raci text.R{fill:var(--c);font-weight:900}.dgm-raci text.A{fill:var(--neg);font-weight:900}.dgm-raci text.C{fill:var(--info);font-weight:900}.dgm-raci text.I{fill:var(--dim);font-weight:900}
@@ -271,7 +271,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
 <h3 class="sec">FISHBONE (ISHIKAWA)</h3>
 <div class="gallery">
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="diagram-fishbone" data-interact="auto-play"><div class="stage">
     <svg class="dgm dgm-fish" viewBox="0 0 320 160" aria-label="Simple fishbone diagram">
       <path class="tail dr" style="--i:0" d="M8 66 L22 80 L8 94"/>
       <path class="spine dr" style="--i:0" d="M22 80 H250"/>
@@ -287,11 +287,11 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
       <text class="sc fi" style="--i:7" x="142" y="62" text-anchor="end">handoffs</text><text class="sc fi" style="--i:7" x="134" y="50" text-anchor="end">approvals</text>
       <text class="sc fi" style="--i:8" x="62" y="98" text-anchor="end">supplier</text><text class="sc fi" style="--i:8" x="54" y="110" text-anchor="end">quality</text>
       <text class="sc fi" style="--i:9" x="142" y="98" text-anchor="end">calibration</text><text class="sc fi" style="--i:9" x="134" y="110" text-anchor="end">downtime</text>
-      <rect class="head pulse" x="252" y="64" width="62" height="32" rx="6"/><text class="hd fi" style="--i:1" x="283" y="80">Late orders</text>
+      <rect class="dgm-head pulse" x="252" y="64" width="62" height="32" rx="6"/><text class="hd fi" style="--i:1" x="283" y="80">Late orders</text>
     </svg>
   </div><div class="meta"><div class="nm">Simple Fishbone</div><span class="ref">.dgm-fish</span><div class="desc">The basic Ishikawa skeleton: the problem in the head, a spine that draws in, four flexible cause bones with sub-causes that fade in along them. The early-stage brainstorming form.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="diagram-fishbone" data-interact="auto-play"><div class="stage">
     <svg class="dgm dgm-fish" viewBox="0 0 320 160" aria-label="6M fishbone diagram">
       <path class="tail dr" style="--i:0" d="M8 66 L22 80 L8 94"/><path class="spine dr" style="--i:0" d="M22 80 H250"/>
       <path class="bone dr" style="--i:1" d="M90 80 L56 36"/><path class="bone dr" style="--i:2" d="M160 80 L126 36"/><path class="bone dr" style="--i:3" d="M230 80 L196 36"/>
@@ -300,11 +300,11 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
       <path class="sub dr" style="--i:8" d="M76 98 H56"/><path class="sub dr" style="--i:8" d="M146 98 H126"/><path class="sub dr" style="--i:8" d="M216 98 H196"/>
       <text class="cat fi" style="--i:2" x="52" y="27">Manpower</text><text class="cat fi" style="--i:3" x="124" y="27">Method</text><text class="cat fi" style="--i:4" x="194" y="27">Machine</text>
       <text class="cat fi" style="--i:5" x="52" y="134">Material</text><text class="cat fi" style="--i:6" x="122" y="134">Measurement</text><text class="cat env fi" style="--i:7" x="196" y="134">Mother Nature</text>
-      <rect class="head pulse" x="252" y="64" width="62" height="32" rx="6"/><text class="hd fi" style="--i:1" x="283" y="80">Defects ↑</text>
+      <rect class="dgm-head pulse" x="252" y="64" width="62" height="32" rx="6"/><text class="hd fi" style="--i:1" x="283" y="80">Defects ↑</text>
     </svg>
   </div><div class="meta"><div class="nm">6M Fishbone</div><span class="ref">.dgm-fish (6M)</span><div class="desc">The manufacturing standard: Manpower, Method, Machine, Material, Measurement and Mother Nature, three bones above and three below the spine, environment picked out in green. Lean and Six Sigma defect analysis.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="diagram-fishbone" data-interact="auto-play"><div class="stage">
     <svg class="dgm dgm-fish" viewBox="0 0 320 160" aria-label="4S fishbone diagram">
       <path class="tail dr" style="--i:0" d="M8 66 L22 80 L8 94"/><path class="spine dr" style="--i:0" d="M22 80 H250"/>
       <path class="bone dr" style="--i:1" d="M110 80 L76 36"/><path class="bone dr" style="--i:2" d="M200 80 L166 36"/>
@@ -317,22 +317,22 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
       <text class="sc fi" style="--i:7" x="152" y="62" text-anchor="end">lead time</text><text class="sc fi" style="--i:7" x="144" y="50" text-anchor="end">contracts</text>
       <text class="sc fi" style="--i:8" x="62" y="98" text-anchor="end">booking</text><text class="sc fi" style="--i:8" x="54" y="110" text-anchor="end">billing</text>
       <text class="sc fi" style="--i:9" x="152" y="98" text-anchor="end">onboarding</text><text class="sc fi" style="--i:9" x="144" y="110" text-anchor="end">coverage</text>
-      <rect class="head pulse" x="252" y="64" width="62" height="32" rx="6"/><text class="hd fi" style="--i:1" x="283" y="80">Wait times</text>
+      <rect class="dgm-head pulse" x="252" y="64" width="62" height="32" rx="6"/><text class="hd fi" style="--i:1" x="283" y="80">Wait times</text>
     </svg>
   </div><div class="meta"><div class="nm">4S Fishbone</div><span class="ref">.dgm-fish (4S)</span><div class="desc">Four service-delivery bones, Surroundings, Suppliers, Systems and Skills, each with sub-causes. The healthcare, hospitality and support-desk form.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="diagram-fishbone" data-interact="auto-play"><div class="stage">
     <svg class="dgm dgm-fish" viewBox="0 0 320 160" aria-label="8P fishbone diagram">
       <path class="tail dr" style="--i:0" d="M8 66 L22 80 L8 94"/><path class="spine dr" style="--i:0" d="M22 80 H250"/>
       <path class="bone dr" style="--i:1" d="M70 80 L42 40"/><path class="bone dr" style="--i:2" d="M126 80 L98 40"/><path class="bone dr" style="--i:3" d="M182 80 L154 40"/><path class="bone dr" style="--i:4" d="M238 80 L210 40"/>
       <path class="bone dr" style="--i:5" d="M70 80 L42 120"/><path class="bone dr" style="--i:6" d="M126 80 L98 120"/><path class="bone dr" style="--i:7" d="M182 80 L154 120"/><path class="bone dr" style="--i:8" d="M238 80 L210 120"/>
       <text class="cat fi" style="--i:2" x="40" y="31">Product</text><text class="cat fi" style="--i:3" x="96" y="31">Price</text><text class="cat fi" style="--i:4" x="152" y="31">Place</text><text class="cat fi" style="--i:5" x="208" y="31">Promotion</text>
       <text class="cat fi" style="--i:6" x="40" y="130">People</text><text class="cat fi" style="--i:7" x="96" y="130">Process</text><text class="cat fi" style="--i:8" x="152" y="130">Evidence</text><text class="cat fi" style="--i:9" x="212" y="130">Performance</text>
-      <rect class="head pulse" x="252" y="64" width="62" height="32" rx="6"/><text class="hd fi" style="--i:1" x="283" y="80">Churn ↑</text>
+      <rect class="dgm-head pulse" x="252" y="64" width="62" height="32" rx="6"/><text class="hd fi" style="--i:1" x="283" y="80">Churn ↑</text>
     </svg>
   </div><div class="meta"><div class="nm">8P Fishbone</div><span class="ref">.dgm-fish (8P)</span><div class="desc">The marketing fishbone: Product, Price, Place, Promotion, People, Process, Physical Evidence and Performance, four bones a side, drawing in left to right. Customer-experience and service-quality reviews.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="diagram-fishbone" data-interact="auto-play"><div class="stage">
     <svg class="dgm dgm-fish" viewBox="0 0 320 160" aria-label="5M+E fishbone diagram">
       <path class="tail dr" style="--i:0" d="M8 66 L22 80 L8 94"/><path class="spine dr" style="--i:0" d="M22 80 H250"/>
       <path class="bone dr" style="--i:1" d="M84 80 L52 36"/><path class="bone dr" style="--i:2" d="M148 80 L116 36"/><path class="bone dr" style="--i:3" d="M212 80 L180 36"/>
@@ -342,22 +342,22 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
       <text class="cat fi" style="--i:2" x="50" y="27">Manpower</text><text class="cat fi" style="--i:3" x="114" y="27">Method</text><text class="cat fi" style="--i:4" x="178" y="27">Machine</text>
       <text class="cat fi" style="--i:5" x="50" y="134">Material</text><text class="cat fi" style="--i:6" x="112" y="134">Measurement</text><text class="cat env fi" style="--i:7" x="190" y="136">Environment</text>
       <text class="sc fi" style="--i:8" x="164" y="98" text-anchor="end">humidity</text><text class="sc fi" style="--i:8" x="156" y="110" text-anchor="end">temp</text>
-      <rect class="head pulse" x="252" y="64" width="62" height="32" rx="6"/><text class="hd fi" style="--i:1" x="283" y="80">Audit fail</text>
+      <rect class="dgm-head pulse" x="252" y="64" width="62" height="32" rx="6"/><text class="hd fi" style="--i:1" x="283" y="80">Audit fail</text>
     </svg>
   </div><div class="meta"><div class="nm">5M + E Fishbone</div><span class="ref">.dgm-fish (5M+E)</span><div class="desc">Five operational bones with Environment split out and boxed in green so external conditions are weighed separately from the process. Compliance reviews and quality audits.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="diagram-fishbone" data-interact="auto-play"><div class="stage">
     <svg class="dgm dgm-fish" viewBox="0 0 320 160" aria-label="Process fishbone diagram">
       <path class="tail dr" style="--i:0" d="M8 66 L22 80 L8 94"/><path class="spine dr" style="--i:0" d="M22 80 H250"/>
-      <path class="bone stage dr" style="--i:1" d="M60 80 L34 40"/><path class="bone stage dr" style="--i:2" d="M108 80 L82 120"/><path class="bone stage dr" style="--i:3" d="M156 80 L130 40"/><path class="bone stage dr" style="--i:4" d="M204 80 L178 120"/><path class="bone stage dr" style="--i:5" d="M246 80 L220 40"/>
-      <text class="cat stage fi" style="--i:2" x="34" y="31">1 Order</text><text class="cat stage fi" style="--i:3" x="82" y="130">2 Inventory</text><text class="cat stage fi" style="--i:4" x="130" y="31">3 Pack</text><text class="cat stage fi" style="--i:5" x="178" y="130">4 Ship</text><text class="cat stage fi" style="--i:6" x="220" y="31">5 Deliver</text>
+      <path class="bone dgm-stage dr" style="--i:1" d="M60 80 L34 40"/><path class="bone dgm-stage dr" style="--i:2" d="M108 80 L82 120"/><path class="bone dgm-stage dr" style="--i:3" d="M156 80 L130 40"/><path class="bone dgm-stage dr" style="--i:4" d="M204 80 L178 120"/><path class="bone dgm-stage dr" style="--i:5" d="M246 80 L220 40"/>
+      <text class="cat dgm-stage fi" style="--i:2" x="34" y="31">1 Order</text><text class="cat dgm-stage fi" style="--i:3" x="82" y="130">2 Inventory</text><text class="cat dgm-stage fi" style="--i:4" x="130" y="31">3 Pack</text><text class="cat dgm-stage fi" style="--i:5" x="178" y="130">4 Ship</text><text class="cat dgm-stage fi" style="--i:6" x="220" y="31">5 Deliver</text>
       <text class="sc fi" style="--i:6" x="52" y="54">stockout</text><text class="sc fi" style="--i:7" x="100" y="104">recount</text><text class="sc fi" style="--i:8" x="148" y="54">mislabel</text><text class="sc fi" style="--i:9" x="196" y="104">carrier</text>
       <circle class="pkt" cx="26" cy="80" r="4"/>
-      <rect class="head pulse" x="252" y="64" width="62" height="32" rx="6"/><text class="hd fi" style="--i:1" x="283" y="80">Delays</text>
+      <rect class="dgm-head pulse" x="252" y="64" width="62" height="32" rx="6"/><text class="hd fi" style="--i:1" x="283" y="80">Delays</text>
     </svg>
   </div><div class="meta"><div class="nm">Process Fishbone</div><span class="ref">.dgm-fish (process)</span><div class="desc">Bones are the workflow stages in order rather than cause types, and a packet rides the spine stage by stage toward the effect. Handoff failures and bottlenecks.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="diagram-fishbone" data-interact="auto-play"><div class="stage">
     <svg class="dgm dgm-fish" viewBox="0 0 320 160" aria-label="Service industry fishbone diagram">
       <path class="tail dr" style="--i:0" d="M8 66 L22 80 L8 94"/><path class="spine dr" style="--i:0" d="M22 80 H250"/>
       <path class="bone dr" style="--i:1" d="M90 80 L56 36"/><path class="bone dr" style="--i:2" d="M160 80 L126 36"/><path class="bone dr" style="--i:3" d="M230 80 L196 36"/>
@@ -366,11 +366,11 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
       <text class="cat fi" style="--i:5" x="50" y="134">Communication</text><text class="cat fi" style="--i:6" x="124" y="134">Expectations</text><text class="cat fi" style="--i:7" x="194" y="134">Environment</text>
       <text class="sc fi" style="--i:7" x="80" y="58">turnover</text><text class="sc fi" style="--i:8" x="150" y="58">outages</text><text class="sc fi" style="--i:8" x="220" y="58">refunds</text>
       <text class="sc fi" style="--i:9" x="80" y="102">scripts</text><text class="sc fi" style="--i:9" x="150" y="102">promises</text><text class="sc fi" style="--i:9" x="220" y="102">queueing</text>
-      <rect class="head pulse" x="252" y="64" width="62" height="32" rx="6"/><text class="hd fi" style="--i:1" x="283" y="80">CSAT 62</text>
+      <rect class="dgm-head pulse" x="252" y="64" width="62" height="32" rx="6"/><text class="hd fi" style="--i:1" x="283" y="80">CSAT 62</text>
     </svg>
   </div><div class="meta"><div class="nm">Service Fishbone</div><span class="ref">.dgm-fish (service)</span><div class="desc">Staff, Systems, Policies, Communication, Customer Expectations and Service Environment: the customer-interaction bones for low satisfaction scores.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="diagram-fishbone" data-interact="auto-play"><div class="stage">
     <svg class="dgm dgm-fish" viewBox="0 0 320 160" aria-label="Healthcare fishbone diagram">
       <path class="tail dr" style="--i:0" d="M8 66 L22 80 L8 94"/><path class="spine dr" style="--i:0" d="M22 80 H250"/>
       <path class="bone dr" style="--i:1" d="M90 80 L56 36"/><path class="bone dr" style="--i:2" d="M160 80 L126 36"/><path class="bone dr" style="--i:3" d="M230 80 L196 36"/>
@@ -379,12 +379,12 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
       <text class="cat fi" style="--i:5" x="54" y="134">Policy</text><text class="cat fi" style="--i:6" x="124" y="134">Environment</text><text class="cat fi" style="--i:7" x="194" y="134">Communication</text>
       <text class="sc fi" style="--i:7" x="80" y="58">fatigue</text><text class="sc fi" style="--i:8" x="150" y="58">checklist</text><text class="sc fi" style="--i:8" x="220" y="58">alarms</text>
       <text class="sc fi" style="--i:9" x="80" y="102">escalation</text><text class="sc fi" style="--i:9" x="150" y="102">lighting</text><text class="sc fi" style="--i:9" x="220" y="102">handover</text>
-      <rect class="head pulse" x="252" y="64" width="62" height="32" rx="6"/>
+      <rect class="dgm-head pulse" x="252" y="64" width="62" height="32" rx="6"/>
       <path class="cross" d="M262 80 h10 M267 75 v10"/><text class="hd fi" style="--i:1" x="292" y="80">Med error</text>
     </svg>
   </div><div class="meta"><div class="nm">Healthcare Fishbone</div><span class="ref">.dgm-fish (clinical)</span><div class="desc">People, Procedures, Equipment, Policy, Environment and Communication under a cross-marked head: the clinical safety and patient-care form.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="diagram-fishbone" data-interact="auto-play"><div class="stage">
     <svg class="dgm dgm-fish" viewBox="0 0 320 160" aria-label="Root cause trace on a fishbone">
       <path class="tail" d="M8 66 L22 80 L8 94"/><path class="spine" d="M22 80 H250"/>
       <path class="bone" d="M90 80 L56 36"/><path class="bone" d="M160 80 L126 36"/><path class="bone" d="M230 80 L196 36"/>
@@ -395,7 +395,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
       <rect class="why" x="88" y="44" width="30" height="12" rx="3"/><text class="sc" x="103" y="50" style="fill:var(--neg);font-weight:800">no spec</text>
       <text class="sc" x="112" y="62" text-anchor="end">manual step</text>
       <path class="trace" d="M118 50 H137 L146 62 L160 80 H250"/>
-      <rect class="head" x="252" y="64" width="62" height="32" rx="6"/><text class="hd" x="283" y="80">Rework</text>
+      <rect class="dgm-head" x="252" y="64" width="62" height="32" rx="6"/><text class="hd" x="283" y="80">Rework</text>
     </svg>
   </div><div class="meta"><div class="nm">Root Cause Trace</div><span class="ref">.dgm-fish .trace</span><div class="desc">One sub-cause is flagged and a pulse travels from it along the bone, down the spine and into the head, showing the causal path a 5-Whys session would follow.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
@@ -404,7 +404,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
 <h3 class="sec">FLOW &amp; LOGIC</h3>
 <div class="gallery">
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="diagram-flow" data-interact="auto-play"><div class="stage">
     <svg class="dgm dgm-flow" viewBox="0 0 320 160" aria-label="Flowchart">
       <rect class="bx c" x="14" y="66" width="56" height="28" rx="14"/><text x="42" y="80">Start</text>
       <path class="ln c dr" style="--i:1" d="M70 80 H100"/>
@@ -419,7 +419,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
     </svg>
   </div><div class="meta"><div class="nm">Flowchart</div><span class="ref">.dgm-flow</span><div class="desc">Terminator, process box, diamond decision and the yes/no branches, with the connectors drawing in and a token riding the happy path. The workflow primitive.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="diagram-flow" data-interact="auto-play"><div class="stage">
     <svg class="dgm dgm-loop" viewBox="0 0 320 160" aria-label="Feedback loop">
       <circle class="ring" cx="160" cy="80" r="52"/>
       <circle class="arc" cx="160" cy="80" r="52" pathLength="360" transform="rotate(-90 160 80)"/>
@@ -429,24 +429,24 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
     </svg>
   </div><div class="meta"><div class="nm">Feedback Loop</div><span class="ref">.dgm-loop</span><div class="desc">Four steps around a ring, starting at 12 o'clock, with an arc and an orbiting marker circling Plan, Do, Check, Act forever. Any cyclical process.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="diagram-flow" data-interact="auto-play"><div class="stage">
     <svg class="dgm dgm-tree" viewBox="0 0 320 160" aria-label="Decision tree">
       <path class="bx warn" d="M160 10 L196 30 L160 50 L124 30 Z"/><text x="160" y="30">Budget?</text>
-      <path class="ln path on dr" style="--i:1" d="M140 42 L84 74"/><path class="ln dr" style="--i:1" d="M180 42 L236 74"/>
+      <path class="ln path dgm-on dr" style="--i:1" d="M140 42 L84 74"/><path class="ln dr" style="--i:1" d="M180 42 L236 74"/>
       <text class="dim" x="102" y="52">&gt; $10k</text><text class="dim" x="218" y="52">≤ $10k</text>
       <path class="bx warn" d="M84 62 L112 80 L84 98 L56 80 Z"/><text x="84" y="80">Cloud?</text>
       <rect class="bx" x="206" y="68" width="60" height="24" rx="4"/><text x="236" y="80">Defer</text>
-      <path class="ln path on dr" style="--i:2" d="M70 92 L40 122"/><path class="ln dr" style="--i:2" d="M98 92 L128 122"/>
+      <path class="ln path dgm-on dr" style="--i:2" d="M70 92 L40 122"/><path class="ln dr" style="--i:2" d="M98 92 L128 122"/>
       <text class="dim" x="44" y="102">yes</text><text class="dim" x="124" y="102">no</text>
-      <rect class="bx leaf on pop" style="--i:3" x="10" y="122" width="60" height="24" rx="4"/><text x="40" y="134">Managed</text>
+      <rect class="bx leaf dgm-on pop" style="--i:3" x="10" y="122" width="60" height="24" rx="4"/><text x="40" y="134">Managed</text>
       <rect class="bx pop" style="--i:3" x="98" y="122" width="60" height="24" rx="4"/><text x="128" y="134">On-prem</text>
     </svg>
   </div><div class="meta"><div class="nm">Decision Tree</div><span class="ref">.dgm-tree</span><div class="desc">Diamond decisions branching into outcomes, the chosen path highlighted as it draws and the winning leaf popping in green. Option analysis and playbooks.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="diagram-flow" data-interact="auto-play"><div class="stage">
     <svg class="dgm dgm-lane dgm-flow" viewBox="0 0 320 160" aria-label="Swimlane diagram">
       <rect class="lane" x="40" y="6" width="276" height="48"/><rect class="lane" x="40" y="54" width="276" height="48"/><rect class="lane" x="40" y="102" width="276" height="48"/>
-      <text class="lbl" x="20" y="30" transform="rotate(-90 20 30)">CUSTOMER</text><text class="lbl" x="20" y="78" transform="rotate(-90 20 78)">SUPPORT</text><text class="lbl" x="20" y="126" transform="rotate(-90 20 126)">ENGINEERING</text>
+      <text class="dgm-lbl" x="20" y="30" transform="rotate(-90 20 30)">CUSTOMER</text><text class="dgm-lbl" x="20" y="78" transform="rotate(-90 20 78)">SUPPORT</text><text class="dgm-lbl" x="20" y="126" transform="rotate(-90 20 126)">ENGINEERING</text>
       <rect class="bx c" x="54" y="18" width="52" height="24" rx="4"/><text x="80" y="30">Report</text>
       <rect class="bx" x="128" y="66" width="52" height="24" rx="4"/><text x="154" y="78">Triage</text>
       <rect class="bx" x="202" y="114" width="52" height="24" rx="4"/><text x="228" y="126">Fix</text>
@@ -456,7 +456,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
     </svg>
   </div><div class="meta"><div class="nm">Swimlane Flow</div><span class="ref">.dgm-lane</span><div class="desc">Three role lanes with a process that crosses them and a token following the handoffs, so ownership at each step reads at a glance.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="diagram-flow" data-interact="auto-play"><div class="stage">
     <svg class="dgm dgm-parts" viewBox="0 0 320 160" aria-label="Cycle diagram">
       <path class="seg seqfill" style="--i:0;--n:4;fill:var(--c);fill-opacity:.12;stroke:var(--panel)" d="M160 80 L160 24 A56 56 0 0 1 216 80 Z"/>
       <path class="seg seqfill" style="--i:1;--n:4;fill:var(--info);fill-opacity:.12;stroke:var(--panel)" d="M160 80 L216 80 A56 56 0 0 1 160 136 Z"/>
@@ -468,7 +468,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
     </svg>
   </div><div class="meta"><div class="nm">Cycle Diagram</div><span class="ref">.dgm-parts (cycle)</span><div class="desc">Four wedge segments around a hub, each lighting in turn clockwise with small direction ticks between them. Iterative and lifecycle processes.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="diagram-flow" data-interact="auto-play"><div class="stage">
     <svg class="dgm dgm-state" viewBox="0 0 320 160" aria-label="State machine">
       <rect class="st seqst" style="--i:0;--n:4" x="14" y="64" width="62" height="32" rx="16"/><text x="45" y="80">Idle</text>
       <rect class="st seqst" style="--i:1;--n:4" x="108" y="64" width="62" height="32" rx="16"/><text x="139" y="80">Running</text>
@@ -483,7 +483,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
     </svg>
   </div><div class="meta"><div class="nm">State Machine</div><span class="ref">.dgm-state</span><div class="desc">Rounded states with labelled transitions; the active state lights in sequence Idle, Running, Paused, Done as if the machine were stepping. Lifecycle and protocol docs.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="diagram-flow" data-interact="auto-play"><div class="stage">
     <svg class="dgm dgm-chev" viewBox="0 0 320 160" aria-label="Chevron process strip">
       <path class="step fillseq" style="--i:0" d="M10 56 H66 L78 80 L66 104 H10 L22 80 Z"/><text x="42" y="80">Discover</text>
       <path class="step fillseq" style="--i:1" d="M70 56 H126 L138 80 L126 104 H70 L82 80 Z"/><text x="102" y="80">Define</text>
@@ -494,7 +494,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
     </svg>
   </div><div class="meta"><div class="nm">Chevron Process</div><span class="ref">.dgm-chev</span><div class="desc">Five interlocking chevrons that fill progressively left to right, the classic phased-process strip with a timing row underneath.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="diagram-flow" data-interact="auto-play"><div class="stage">
     <svg class="dgm dgm-sipoc" viewBox="0 0 320 160" aria-label="SIPOC diagram">
       <rect class="col" x="6" y="18" width="56" height="124" rx="4"/><rect class="col" x="68" y="18" width="56" height="124" rx="4"/><rect class="col p" x="130" y="18" width="60" height="124" rx="4"/><rect class="col" x="196" y="18" width="56" height="124" rx="4"/><rect class="col" x="258" y="18" width="56" height="124" rx="4"/>
       <text class="hd" x="34" y="30">S</text><text class="hd" x="96" y="30">I</text><text class="hd" x="160" y="30" style="fill:var(--c)">P</text><text class="hd" x="224" y="30">O</text><text class="hd" x="286" y="30">C</text>
@@ -515,7 +515,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
 <h3 class="sec">HIERARCHY &amp; STRUCTURE</h3>
 <div class="gallery">
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="diagram-hierarchy" data-interact="auto-play"><div class="stage">
     <svg class="dgm dgm-mind" viewBox="0 0 320 160" aria-label="Mind map">
       <path class="br b1 dr" style="--i:1" d="M160 80 C130 60 110 50 70 44"/><path class="br b2 dr" style="--i:2" d="M160 80 C190 60 210 50 250 44"/>
       <path class="br b3 dr" style="--i:3" d="M160 80 C130 100 110 110 70 116"/><path class="br b4 dr" style="--i:4" d="M160 80 C190 100 210 110 250 116"/>
@@ -533,7 +533,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
     </svg>
   </div><div class="meta"><div class="nm">Mind Map</div><span class="ref">.dgm-mind</span><div class="desc">A central idea with four coloured branches growing outward into nodes and second-level twigs, each level drawing in after the last. Brainstorms and topic maps.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="diagram-hierarchy" data-interact="auto-play"><div class="stage">
     <svg class="dgm" viewBox="0 0 320 160" aria-label="Tree diagram">
       <rect class="bx c pop" style="--i:0" x="128" y="8" width="64" height="22" rx="4"/><text class="fi" style="--i:0" x="160" y="19">Root</text>
       <path class="ln dr" style="--i:1" d="M160 30 V44 H80 V56"/><path class="ln dr" style="--i:1" d="M160 44 H240 V56"/><path class="ln dr" style="--i:1" d="M160 44 V56"/>
@@ -552,7 +552,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
     </svg>
   </div><div class="meta"><div class="nm">Tree / Dendrogram</div><span class="ref">.dgm (tree)</span><div class="desc">A ranked hierarchy built top-down: each level's connectors draw and its nodes pop in after the parent level, ending on a highlighted leaf. Taxonomies and org-like structures.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="diagram-hierarchy" data-interact="auto-play"><div class="stage">
     <svg class="dgm" viewBox="0 0 320 160" aria-label="Horizontal org chart">
       <rect class="bx c pop" style="--i:0" x="8" y="66" width="62" height="28" rx="5"/><text class="fi" style="--i:0" x="39" y="76">Director</text><text class="dim fi" style="--i:0" x="39" y="87">Platform</text>
       <path class="ln dr" style="--i:1" d="M70 80 H96 V30 H120"/><path class="ln dr" style="--i:1" d="M96 80 H120"/><path class="ln dr" style="--i:1" d="M96 80 V130 H120"/>
@@ -570,7 +570,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
     </svg>
   </div><div class="meta"><div class="nm">Org Chart (horizontal)</div><span class="ref">.dgm (org)</span><div class="desc">Reporting lines left to right: a director, three managers and their teams with headcounts, the elbow connectors drawing before each column pops in.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="diagram-hierarchy" data-interact="auto-play"><div class="stage">
     <svg class="dgm dgm-pyr" viewBox="0 0 320 160" aria-label="Pyramid chart">
       <path class="tier t4" style="--i:0" d="M60 148 H260 L236 116 H84 Z"/><text style="--i:0" class="fi" x="160" y="132">Physiological</text>
       <path class="tier t3" style="--i:1" d="M84 114 H236 L212 82 H108 Z"/><text style="--i:1" class="fi" x="160" y="98">Safety</text>
@@ -580,18 +580,18 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
     </svg>
   </div><div class="meta"><div class="nm">Pyramid Chart</div><span class="ref">.dgm-pyr</span><div class="desc">Four tiers stack up from the base, each rising into place with the colour intensifying toward the peak. Ranked building blocks and hierarchies of need.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="diagram-hierarchy" data-interact="auto-play"><div class="stage">
     <svg class="dgm dgm-funnel" viewBox="0 0 320 160" aria-label="Funnel chart">
-      <path class="stage s1 fi" style="--i:0" d="M40 12 H280 L252 44 H68 Z"/><text class="fi" style="--i:0" x="160" y="28">Visitors · 48,200</text>
-      <path class="stage s2 fi" style="--i:1" d="M70 46 H250 L226 76 H94 Z"/><text class="fi" style="--i:1" x="160" y="61">Sign-ups · 6,410</text>
-      <path class="stage s3 fi" style="--i:2" d="M96 78 H224 L204 106 H116 Z"/><text class="fi" style="--i:2" x="160" y="92">Trials · 1,284</text>
-      <path class="stage s4 fi" style="--i:3" d="M118 108 H202 L188 132 H132 Z"/><text class="fi" style="--i:3" x="160" y="120">Paid · 312</text>
+      <path class="dgm-stage s1 fi" style="--i:0" d="M40 12 H280 L252 44 H68 Z"/><text class="fi" style="--i:0" x="160" y="28">Visitors · 48,200</text>
+      <path class="dgm-stage s2 fi" style="--i:1" d="M70 46 H250 L226 76 H94 Z"/><text class="fi" style="--i:1" x="160" y="61">Sign-ups · 6,410</text>
+      <path class="dgm-stage s3 fi" style="--i:2" d="M96 78 H224 L204 106 H116 Z"/><text class="fi" style="--i:2" x="160" y="92">Trials · 1,284</text>
+      <path class="dgm-stage s4 fi" style="--i:3" d="M118 108 H202 L188 132 H132 Z"/><text class="fi" style="--i:3" x="160" y="120">Paid · 312</text>
       <circle class="drip" cx="160" cy="134" r="3"/>
       <text class="dim" x="300" y="28">13%</text><text class="dim" x="272" y="61">20%</text><text class="dim" x="248" y="92">24%</text>
     </svg>
   </div><div class="meta"><div class="nm">Funnel Chart</div><span class="ref">.dgm-funnel</span><div class="desc">Four narrowing stages with counts and conversion rates on the side, revealed top to bottom with a drip falling out of the spout. Sales and marketing funnels.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="diagram-hierarchy" data-interact="auto-play"><div class="stage">
     <svg class="dgm dgm-conc" viewBox="0 0 320 160" aria-label="Concentric circle diagram">
       <circle class="rg r4" cx="160" cy="80" r="72"/><circle class="rg r3" cx="160" cy="80" r="54"/><circle class="rg r2" cx="160" cy="80" r="36"/><circle class="rg r1" cx="160" cy="80" r="18"/>
       <circle class="ripple" cx="160" cy="80" r="72"/>
@@ -601,7 +601,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
     </svg>
   </div><div class="meta"><div class="nm">Concentric Circles</div><span class="ref">.dgm-conc</span><div class="desc">Nested rings from core outward with a ripple expanding through them, the layered-hierarchy form of a circle diagram.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="diagram-hierarchy" data-interact="auto-play"><div class="stage">
     <svg class="dgm dgm-parts" viewBox="0 0 320 160" aria-label="Circle of equal parts">
       <path class="seg spinin" style="--i:0;fill:rgba(var(--c-rgb),.55)" d="M160 80 L160 22 A58 58 0 0 1 210 51 Z"/>
       <path class="seg spinin" style="--i:1;fill:rgba(var(--info-rgb),.55)" d="M160 80 L210 51 A58 58 0 0 1 210 109 Z"/>
@@ -614,7 +614,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
     </svg>
   </div><div class="meta"><div class="nm">Circle of Parts</div><span class="ref">.dgm-parts</span><div class="desc">Six equal wedges around a hub, spinning into place one after another so no part outranks another. Values, pillars, and other equal-weight sets.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="diagram-hierarchy" data-interact="auto-play"><div class="stage">
     <svg class="dgm dgm-nest" viewBox="0 0 320 160" aria-label="Nested containers">
       <rect class="lvl seqin" style="--i:0" x="10" y="10" width="300" height="140" rx="8"/><text class="mut" x="44" y="22">System</text>
       <rect class="lvl seqin" style="--i:1" x="34" y="32" width="252" height="106" rx="7"/><text class="mut" x="72" y="44">Subsystem</text>
@@ -628,7 +628,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
 <h3 class="sec">COMPARISON &amp; MATRIX</h3>
 <div class="gallery">
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="diagram-matrix" data-interact="auto-play"><div class="stage">
     <svg class="dgm dgm-venn" viewBox="0 0 320 160" aria-label="Two-set Venn diagram">
       <circle class="ca" style="--i:0" cx="128" cy="80" r="54"/><circle class="cb" style="--i:1" cx="192" cy="80" r="54"/>
       <text x="100" y="80">Design</text><text x="220" y="80">Engineering</text><text class="mid" x="160" y="80">Ship</text>
@@ -636,7 +636,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
     </svg>
   </div><div class="meta"><div class="nm">Venn (2 sets)</div><span class="ref">.dgm-venn</span><div class="desc">Two translucent circles breathing against each other with the overlap labelled and blinking, where similarities and differences carry no rank.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="diagram-matrix" data-interact="auto-play"><div class="stage">
     <svg class="dgm dgm-venn" viewBox="0 0 320 160" aria-label="Three-set Venn diagram">
       <circle class="ca" style="--i:0" cx="140" cy="62" r="46"/><circle class="cb" style="--i:1" cx="180" cy="62" r="46"/><circle class="cc" style="--i:2" cx="160" cy="98" r="46"/>
       <text x="112" y="46">Desirable</text><text x="208" y="46">Feasible</text><text x="160" y="128">Viable</text><text class="mid" x="160" y="74">✦</text>
@@ -644,7 +644,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
     </svg>
   </div><div class="meta"><div class="nm">Venn (3 sets)</div><span class="ref">.dgm-venn (3)</span><div class="desc">Three overlapping sets with the triple intersection marked and called out, the desirable, feasible, viable framing.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="diagram-matrix" data-interact="auto-play"><div class="stage">
     <svg class="dgm dgm-swot" viewBox="0 0 320 160" aria-label="SWOT analysis">
       <rect class="q qs fi" style="--i:0" x="10" y="10" width="148" height="68" rx="6"/><text class="big fi" style="--i:0" x="30" y="30">S</text><text class="fi" style="--i:0" x="98" y="36">Strengths</text><text class="mut fi" style="--i:0" x="98" y="54">brand · margins</text>
       <rect class="q qw fi" style="--i:1" x="162" y="10" width="148" height="68" rx="6"/><text class="big fi" style="--i:1" x="182" y="30">W</text><text class="fi" style="--i:1" x="250" y="36">Weaknesses</text><text class="mut fi" style="--i:1" x="250" y="54">churn · legacy</text>
@@ -653,7 +653,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
     </svg>
   </div><div class="meta"><div class="nm">SWOT Grid</div><span class="ref">.dgm-swot</span><div class="desc">Four equal quadrants, green, red, blue and amber, filling in order with their big letters and bullet points. Strategic positioning at a glance.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="diagram-matrix" data-interact="auto-play"><div class="stage">
     <svg class="dgm dgm-quad" viewBox="0 0 320 160" aria-label="Priority quadrant">
       <rect class="hot" x="160" y="12" width="140" height="68" rx="4"/>
       <path class="axis" d="M20 80 H300"/><path class="axis" d="M160 12 V148"/>
@@ -665,7 +665,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
     </svg>
   </div><div class="meta"><div class="nm">Priority Quadrant</div><span class="ref">.dgm-quad</span><div class="desc">Two labelled axes making four zones, items plotting in one by one and the upper-right zone pulsing as the priority corner. Eisenhower and impact/effort matrices.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="diagram-matrix" data-interact="auto-play"><div class="stage">
     <svg class="dgm" viewBox="0 0 320 160" aria-label="PEST analysis">
       <rect class="bx c pop" style="--i:0" x="8" y="14" width="70" height="132" rx="6"/><text class="hd fi" style="--i:0" x="43" y="30">P</text><text class="fi" style="--i:0" x="43" y="46">Political</text><text class="mut fi" style="--i:0" x="43" y="70">tariffs</text><text class="mut fi" style="--i:0" x="43" y="84">subsidies</text>
       <rect class="bx info pop" style="--i:1" x="86" y="14" width="70" height="132" rx="6"/><text class="hd fi" style="--i:1" x="121" y="30">E</text><text class="fi" style="--i:1" x="121" y="46">Economic</text><text class="mut fi" style="--i:1" x="121" y="70">rates</text><text class="mut fi" style="--i:1" x="121" y="84">FX</text>
@@ -674,7 +674,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
     </svg>
   </div><div class="meta"><div class="nm">PEST Columns</div><span class="ref">.dgm (pest)</span><div class="desc">Political, Economic, Social and Technological as four colour-coded columns popping in with their factors. The macro-environment scan.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="diagram-matrix" data-interact="auto-play"><div class="stage">
     <svg class="dgm dgm-scale" viewBox="0 0 320 160" aria-label="Balance scale comparison">
       <path class="ln" d="M160 60 V140"/><path class="ln" d="M120 140 H200"/>
       <g class="beam"><path class="ln c" d="M70 60 H250"/><circle cx="160" cy="60" r="5" fill="var(--c)"/>
@@ -685,7 +685,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
     </svg>
   </div><div class="meta"><div class="nm">Balance Scale</div><span class="ref">.dgm-scale</span><div class="desc">A beam scale that tips toward the heavier pan and settles back, the pros-versus-cons metaphor for two-sided comparisons.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="diagram-matrix" data-interact="auto-play"><div class="stage">
     <svg class="dgm dgm-cont" viewBox="0 0 320 160" aria-label="Continuum slider">
       <defs><linearGradient id="dgmContGrad" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="var(--info)"/><stop offset="1" stop-color="var(--c)"/></linearGradient></defs>
       <path class="track grad" d="M30 70 H290"/>
@@ -701,9 +701,9 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
 <h3 class="sec">TIMELINE &amp; PLANNING</h3>
 <div class="gallery">
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="diagram-timeline" data-interact="auto-play"><div class="stage">
     <svg class="dgm dgm-journey" viewBox="0 0 320 160" aria-label="Customer journey map">
-      <rect class="stage" x="8" y="14" width="72" height="24" rx="4"/><rect class="stage" x="84" y="14" width="72" height="24" rx="4"/><rect class="stage" x="160" y="14" width="72" height="24" rx="4"/><rect class="stage" x="236" y="14" width="76" height="24" rx="4"/>
+      <rect class="dgm-stage" x="8" y="14" width="72" height="24" rx="4"/><rect class="dgm-stage" x="84" y="14" width="72" height="24" rx="4"/><rect class="dgm-stage" x="160" y="14" width="72" height="24" rx="4"/><rect class="dgm-stage" x="236" y="14" width="76" height="24" rx="4"/>
       <text x="44" y="26">Discover</text><text x="120" y="26">Sign up</text><text x="196" y="26">First use</text><text x="274" y="26">Renew</text>
       <path class="ln" d="M8 100 H312" stroke-dasharray="2 4"/><text class="dim" x="300" y="112">neutral</text>
       <path class="emo dr" style="--i:1" d="M20 96 C50 60 70 60 100 84 S150 130 180 110 S250 64 300 70"/>
@@ -712,7 +712,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
     </svg>
   </div><div class="meta"><div class="nm">Journey Map</div><span class="ref">.dgm-journey</span><div class="desc">Stages across the top and an emotion curve drawing beneath them, with a touchpoint and mood at each stage. The customer or user experience over time.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="diagram-timeline" data-interact="auto-play"><div class="stage">
     <svg class="dgm dgm-road" viewBox="0 0 320 160" aria-label="Roadmap">
       <path class="rail" d="M24 80 H296"/><path class="done" d="M24 80 H296"/>
       <text class="dim" x="56" y="120">Q1</text><text class="dim" x="120" y="120">Q2</text><text class="dim" x="184" y="120">Q3</text><text class="dim" x="248" y="120">Q4</text>
@@ -723,30 +723,30 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
     </svg>
   </div><div class="meta"><div class="nm">Roadmap</div><span class="ref">.dgm-road</span><div class="desc">A quarter-by-quarter rail with dated milestones that light up as the progress bar reaches them. Product and strategic planning with benchmarks.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="diagram-timeline" data-interact="auto-play"><div class="stage">
     <svg class="dgm dgm-tl" viewBox="0 0 320 160" aria-label="Vertical timeline">
       <path class="ln c" d="M160 6 V154"/>
-      <circle class="dot pop" style="--i:0" cx="160" cy="24" r="5"/><rect class="card fi" style="--i:0" x="18" y="12" width="124" height="24" rx="4"/><text class="fi" style="--i:0" x="80" y="20">Kickoff</text><text class="dim fi" style="--i:0" x="80" y="30">Jan · charter signed</text>
-      <circle class="dot pop" style="--i:1" cx="160" cy="58" r="5"/><rect class="card fi" style="--i:1" x="178" y="46" width="124" height="24" rx="4"/><text class="fi" style="--i:1" x="240" y="54">Design freeze</text><text class="dim fi" style="--i:1" x="240" y="64">Mar · specs locked</text>
-      <circle class="dot pop" style="--i:2" cx="160" cy="92" r="5"/><rect class="card fi" style="--i:2" x="18" y="80" width="124" height="24" rx="4"/><text class="fi" style="--i:2" x="80" y="88">Pilot</text><text class="dim fi" style="--i:2" x="80" y="98">Jun · 3 customers</text>
-      <circle class="dot pop" style="--i:3" cx="160" cy="126" r="5"/><rect class="card fi" style="--i:3" x="178" y="114" width="124" height="24" rx="4"/><text class="fi" style="--i:3" x="240" y="122">Launch</text><text class="dim fi" style="--i:3" x="240" y="132">Sep · general availability</text>
+      <circle class="dot pop" style="--i:0" cx="160" cy="24" r="5"/><rect class="dgm-card fi" style="--i:0" x="18" y="12" width="124" height="24" rx="4"/><text class="fi" style="--i:0" x="80" y="20">Kickoff</text><text class="dim fi" style="--i:0" x="80" y="30">Jan · charter signed</text>
+      <circle class="dot pop" style="--i:1" cx="160" cy="58" r="5"/><rect class="dgm-card fi" style="--i:1" x="178" y="46" width="124" height="24" rx="4"/><text class="fi" style="--i:1" x="240" y="54">Design freeze</text><text class="dim fi" style="--i:1" x="240" y="64">Mar · specs locked</text>
+      <circle class="dot pop" style="--i:2" cx="160" cy="92" r="5"/><rect class="dgm-card fi" style="--i:2" x="18" y="80" width="124" height="24" rx="4"/><text class="fi" style="--i:2" x="80" y="88">Pilot</text><text class="dim fi" style="--i:2" x="80" y="98">Jun · 3 customers</text>
+      <circle class="dot pop" style="--i:3" cx="160" cy="126" r="5"/><rect class="dgm-card fi" style="--i:3" x="178" y="114" width="124" height="24" rx="4"/><text class="fi" style="--i:3" x="240" y="122">Launch</text><text class="dim fi" style="--i:3" x="240" y="132">Sep · general availability</text>
     </svg>
   </div><div class="meta"><div class="nm">Vertical Timeline</div><span class="ref">.dgm-tl</span><div class="desc">Events alternate left and right of a central spine, each dot and card appearing in date order. Histories, changelogs and project retrospectives.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="diagram-timeline" data-interact="auto-play"><div class="stage">
     <svg class="dgm dgm-gd" viewBox="0 0 320 160" aria-label="Gantt chart with dependencies">
       <text class="mut" x="34" y="30" text-anchor="end">Design</text><text class="mut" x="34" y="60" text-anchor="end">Build</text><text class="mut" x="34" y="90" text-anchor="end">QA</text><text class="mut" x="34" y="120" text-anchor="end">Launch</text>
       <path class="ln" d="M44 12 V130" stroke-dasharray="2 3"/><path class="ln" d="M130 12 V130" stroke-dasharray="2 3"/><path class="ln" d="M216 12 V130" stroke-dasharray="2 3"/><path class="ln" d="M302 12 V130" stroke-dasharray="2 3"/>
       <text class="dim" x="44" y="144">wk1</text><text class="dim" x="130" y="144">wk4</text><text class="dim" x="216" y="144">wk7</text><text class="dim" x="302" y="144">wk10</text>
-      <rect class="bar pop" style="--i:0;fill:var(--c)" x="44" y="22" width="80" height="14" rx="3"/><text class="dim fi" style="--i:0" x="84" y="29" style="fill:#fff">Ana</text>
-      <rect class="bar pop" style="--i:1;fill:var(--info)" x="118" y="52" width="110" height="14" rx="3"/><text class="dim fi" style="--i:1" x="173" y="59">Ben · Cho</text>
-      <rect class="bar pop" style="--i:2;fill:var(--warn)" x="222" y="82" width="50" height="14" rx="3"/><text class="dim fi" style="--i:2" x="247" y="89">Dev</text>
-      <path class="bar pop" style="--i:3;fill:var(--pos)" d="M286 112 l8 8 l-8 8 l-8 -8 Z"/>
+      <rect class="dgm-bar pop" style="--i:0;fill:var(--c)" x="44" y="22" width="80" height="14" rx="3"/><text class="dim fi" style="--i:0" x="84" y="29" style="fill:#fff">Ana</text>
+      <rect class="dgm-bar pop" style="--i:1;fill:var(--info)" x="118" y="52" width="110" height="14" rx="3"/><text class="dim fi" style="--i:1" x="173" y="59">Ben · Cho</text>
+      <rect class="dgm-bar pop" style="--i:2;fill:var(--warn)" x="222" y="82" width="50" height="14" rx="3"/><text class="dim fi" style="--i:2" x="247" y="89">Dev</text>
+      <path class="dgm-bar pop" style="--i:3;fill:var(--pos)" d="M286 112 l8 8 l-8 8 l-8 -8 Z"/>
       <path class="dep dr" style="--i:2" d="M124 29 H132 V52"/><path class="dep dr" style="--i:3" d="M228 59 H236 V82"/><path class="dep dr" style="--i:4" d="M272 89 H286 V110"/>
     </svg>
   </div><div class="meta"><div class="nm">Gantt + Dependencies</div><span class="ref">.dgm-gd</span><div class="desc">Owner-labelled task bars on a week grid with dashed dependency links drawing between them and a milestone diamond at the end. Delivery planning with accountability.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="diagram-timeline" data-interact="auto-play"><div class="stage">
     <svg class="dgm dgm-run" viewBox="0 0 320 160" aria-label="Milestone track">
       <path class="ln" d="M20 96 H300" style="stroke-width:3"/>
       <path class="flag seqf" style="--i:0" d="M108 96 V62 H132 L124 70 L132 78 H108"/><text class="dim" x="120" y="112">M1</text>
@@ -757,7 +757,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
     </svg>
   </div><div class="meta"><div class="nm">Milestone Track</div><span class="ref">.dgm-run</span><div class="desc">A runner moves along the track pausing at each flag, and every flag it passes turns green. Progress toward staged goals.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="diagram-timeline" data-interact="auto-play"><div class="stage">
     <svg class="dgm dgm-pert" viewBox="0 0 320 160" aria-label="PERT network with critical path">
       <path class="ln cp dr" style="--i:1" d="M56 80 L120 44"/><path class="ln dr" style="--i:1" d="M56 80 L120 116"/>
       <path class="ln cp dr" style="--i:2" d="M148 44 L200 44"/><path class="ln dr" style="--i:2" d="M148 116 L200 116"/>
@@ -773,7 +773,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
     </svg>
   </div><div class="meta"><div class="nm">PERT / Critical Path</div><span class="ref">.dgm-pert</span><div class="desc">Activity nodes and duration edges drawing in, with the critical path picked out in red and totalled beneath. Schedule risk at a glance.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="diagram-timeline" data-interact="auto-play"><div class="stage">
     <svg class="dgm dgm-vsm" viewBox="0 0 320 160" aria-label="Value stream map">
       <rect class="bx c fi" style="--i:0" x="14" y="30" width="60" height="30" rx="4"/><text class="fi" style="--i:0" x="44" y="40">Intake</text><text class="dim fi" style="--i:0" x="44" y="52">C/T 2h</text>
       <rect class="bx c fi" style="--i:1" x="100" y="30" width="60" height="30" rx="4"/><text class="fi" style="--i:1" x="130" y="40">Review</text><text class="dim fi" style="--i:1" x="130" y="52">C/T 4h</text>
@@ -791,7 +791,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
 <h3 class="sec">NETWORK &amp; RELATIONSHIPS</h3>
 <div class="gallery">
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="diagram-network" data-interact="auto-play"><div class="stage">
     <svg class="dgm dgm-net" viewBox="0 0 320 160" aria-label="Network graph">
       <path class="edge hot" d="M80 50 L160 80"/><path class="edge" d="M160 80 L240 40"/><path class="edge hot" d="M160 80 L220 122"/><path class="edge" d="M80 50 L60 120"/><path class="edge" d="M60 120 L160 80"/><path class="edge" d="M240 40 L280 96"/><path class="edge hot" d="M280 96 L220 122"/><path class="edge" d="M60 120 L130 140"/><path class="edge" d="M130 140 L220 122"/>
       <circle class="node" style="--i:0" cx="160" cy="80" r="11"/><circle class="node" style="--i:1" cx="80" cy="50" r="8"/><circle class="node" style="--i:2" cx="240" cy="40" r="8"/><circle class="node" style="--i:3" cx="220" cy="122" r="9"/><circle class="node" style="--i:4" cx="60" cy="120" r="7"/><circle class="node" style="--i:5" cx="280" cy="96" r="7"/><circle class="node" style="--i:6" cx="130" cy="140" r="6"/>
@@ -799,7 +799,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
     </svg>
   </div><div class="meta"><div class="nm">Network Graph</div><span class="ref">.dgm-net</span><div class="desc">Nodes drifting gently on their springs with edges between them, the busy edges carrying a flowing dash. Service maps and relationship webs.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="diagram-network" data-interact="auto-play"><div class="stage">
     <svg class="dgm dgm-hub" viewBox="0 0 320 160" aria-label="Hub and spoke">
       <path class="spoke" d="M160 80 L60 30"/><path class="spoke" d="M160 80 L260 30"/><path class="spoke" d="M160 80 L60 130"/><path class="spoke" d="M160 80 L260 130"/><path class="spoke" d="M160 80 L160 16"/><path class="spoke" d="M160 80 L160 144"/>
       <circle class="pulse-out" style="--i:0;offset-path:path('M160 80 L60 30')" r="3.5"/><circle class="pulse-out" style="--i:1;offset-path:path('M160 80 L260 30')" r="3.5"/><circle class="pulse-out" style="--i:2;offset-path:path('M160 80 L60 130')" r="3.5"/><circle class="pulse-out" style="--i:3;offset-path:path('M160 80 L260 130')" r="3.5"/><circle class="pulse-out" style="--i:4;offset-path:path('M160 80 L160 16')" r="3.5"/><circle class="pulse-out" style="--i:5;offset-path:path('M160 80 L160 144')" r="3.5"/>
@@ -810,7 +810,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
     </svg>
   </div><div class="meta"><div class="nm">Hub &amp; Spoke</div><span class="ref">.dgm-hub</span><div class="desc">A central hub with six spokes and pulses streaming outward along each one in turn. Distribution, integration and broadcast topologies.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="diagram-network" data-interact="auto-play"><div class="stage">
     <svg class="dgm dgm-sankey" viewBox="0 0 320 160" aria-label="Sankey flow">
       <path class="band" d="M40 20 H120 C170 20 170 40 220 40 V70 C170 70 170 60 120 60 H40 Z"/>
       <path class="band b" d="M40 66 H120 C170 66 170 76 220 76 V96 C170 96 170 86 120 86 H40 Z"/>
@@ -823,7 +823,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
     </svg>
   </div><div class="meta"><div class="nm">Sankey Flow</div><span class="ref">.dgm-sankey</span><div class="desc">Three sources feeding two targets through bands whose width carries the volume, with dashed streams flowing through them. Traffic, budget and energy flows.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="diagram-network" data-interact="auto-play"><div class="stage">
     <svg class="dgm dgm-er" viewBox="0 0 320 160" aria-label="Entity relationship diagram">
       <rect class="ent" x="14" y="36" width="90" height="70" rx="4"/><rect class="hdr" x="14" y="36" width="90" height="18" rx="4"/><text x="59" y="45">Customer</text>
       <text class="dim" x="59" y="66">id · pk</text><text class="dim" x="59" y="80">email</text><text class="dim" x="59" y="94">created</text>
@@ -836,7 +836,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
     </svg>
   </div><div class="meta"><div class="nm">ER Diagram</div><span class="ref">.dgm-er</span><div class="desc">Two entities with header bands and attribute rows joined by a crow's-foot one-to-many relation that carries a flowing pulse. Data modelling.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="diagram-network" data-interact="auto-play"><div class="stage">
     <svg class="dgm dgm-chord" viewBox="0 0 320 160" aria-label="Chord relationship diagram">
       <g class="wheel">
         <path class="arcseg" style="stroke:var(--c)" d="M160 22 A58 58 0 0 1 216 68"/><path class="arcseg" style="stroke:var(--info)" d="M218 84 A58 58 0 0 1 176 136"/><path class="arcseg" style="stroke:var(--pos)" d="M160 138 A58 58 0 0 1 104 92"/><path class="arcseg" style="stroke:var(--warn)" d="M104 76 A58 58 0 0 1 144 26"/>
@@ -847,7 +847,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
     </svg>
   </div><div class="meta"><div class="nm">Chord Diagram</div><span class="ref">.dgm-chord</span><div class="desc">Four groups on a slowly turning ring with chords between them showing who works with whom. Inter-team and inter-region relationships.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="diagram-network" data-interact="auto-play"><div class="stage">
     <svg class="dgm dgm-stake" viewBox="0 0 320 160" aria-label="Stakeholder map">
       <path class="ln" d="M40 20 V140 H300"/><path class="ln" d="M40 80 H300" stroke-dasharray="3 3"/><path class="ln" d="M170 20 V140" stroke-dasharray="3 3"/>
       <text class="dim" x="24" y="80" transform="rotate(-90 24 80)">power ↑</text><text class="dim" x="170" y="152">interest →</text>
@@ -865,7 +865,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
 <h3 class="sec">FRAMEWORKS</h3>
 <div class="gallery">
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="diagram-framework" data-interact="auto-play"><div class="stage">
     <svg class="dgm dgm-bmc" viewBox="0 0 320 160" aria-label="Business model canvas">
       <rect class="cell seqc" style="--i:0" x="6" y="6" width="58" height="92"/><text x="35" y="18">Partners</text>
       <rect class="cell seqc" style="--i:1" x="68" y="6" width="58" height="44"/><text x="97" y="18">Activities</text>
@@ -879,7 +879,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
     </svg>
   </div><div class="meta"><div class="nm">Business Model Canvas</div><span class="ref">.dgm-bmc</span><div class="desc">The nine-block canvas with each block lighting in the order a workshop fills it, partners through revenue. Strategy on one page.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="diagram-framework" data-interact="auto-play"><div class="stage">
     <svg class="dgm dgm-okr" viewBox="0 0 320 160" aria-label="OKR tree">
       <rect class="obj pop" style="--i:0" x="90" y="8" width="140" height="26" rx="5"/><text class="hd fi" style="--i:0" x="160" y="21">O · Delight customers</text>
       <path class="ln dr" style="--i:1" d="M160 34 V46 H60 V56"/><path class="ln dr" style="--i:1" d="M160 46 V56"/><path class="ln dr" style="--i:1" d="M160 46 H260 V56"/>
@@ -894,23 +894,23 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
     </svg>
   </div><div class="meta"><div class="nm">OKR Tree</div><span class="ref">.dgm-okr</span><div class="desc">One objective cascading into three key results with progress bars that fill to their current score, and the initiatives beneath each. Goal alignment.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="diagram-framework" data-interact="auto-play"><div class="stage">
     <svg class="dgm dgm-whys" viewBox="0 0 320 160" aria-label="Five whys chain">
-      <rect class="card fi" style="--i:0" x="8" y="14" width="140" height="22" rx="4"/><text class="fi" style="--i:0" x="78" y="25">Site went down</text>
+      <rect class="dgm-card fi" style="--i:0" x="8" y="14" width="140" height="22" rx="4"/><text class="fi" style="--i:0" x="78" y="25">Site went down</text>
       <path class="arrow dr" style="--i:1" d="M148 25 H166 V47 H172"/><text class="dim fi" style="--i:1" x="160" y="16">why?</text>
-      <rect class="card fi" style="--i:1" x="172" y="36" width="140" height="22" rx="4"/><text class="fi" style="--i:1" x="242" y="47">Database locked up</text>
+      <rect class="dgm-card fi" style="--i:1" x="172" y="36" width="140" height="22" rx="4"/><text class="fi" style="--i:1" x="242" y="47">Database locked up</text>
       <path class="arrow dr" style="--i:2" d="M172 47 H154 V69 H148"/><text class="dim fi" style="--i:2" x="160" y="82">why?</text>
-      <rect class="card fi" style="--i:2" x="8" y="58" width="140" height="22" rx="4"/><text class="fi" style="--i:2" x="78" y="69">Runaway query</text>
+      <rect class="dgm-card fi" style="--i:2" x="8" y="58" width="140" height="22" rx="4"/><text class="fi" style="--i:2" x="78" y="69">Runaway query</text>
       <path class="arrow dr" style="--i:3" d="M148 69 H166 V91 H172"/>
-      <rect class="card fi" style="--i:3" x="172" y="80" width="140" height="22" rx="4"/><text class="fi" style="--i:3" x="242" y="91">No query timeout</text>
+      <rect class="dgm-card fi" style="--i:3" x="172" y="80" width="140" height="22" rx="4"/><text class="fi" style="--i:3" x="242" y="91">No query timeout</text>
       <path class="arrow dr" style="--i:4" d="M172 91 H154 V113 H148"/><text class="dim fi" style="--i:4" x="160" y="126">why?</text>
-      <rect class="card fi" style="--i:4" x="8" y="102" width="140" height="22" rx="4"/><text class="fi" style="--i:4" x="78" y="113">Defaults never set</text>
+      <rect class="dgm-card fi" style="--i:4" x="8" y="102" width="140" height="22" rx="4"/><text class="fi" style="--i:4" x="78" y="113">Defaults never set</text>
       <path class="arrow dr" style="--i:5" d="M148 113 H166 V135 H172"/>
-      <rect class="card root fi" style="--i:5" x="172" y="124" width="140" height="22" rx="4"/><text class="fi" style="--i:5" x="242" y="135">No config review · ROOT</text>
+      <rect class="dgm-card root fi" style="--i:5" x="172" y="124" width="140" height="22" rx="4"/><text class="fi" style="--i:5" x="242" y="135">No config review · ROOT</text>
     </svg>
   </div><div class="meta"><div class="nm">5 Whys Chain</div><span class="ref">.dgm-whys</span><div class="desc">Each answer zig-zags down to the next "why?" until the root cause card lands in red. The companion to a fishbone session.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="diagram-framework" data-interact="auto-play"><div class="stage">
     <svg class="dgm dgm-raci" viewBox="0 0 320 160" aria-label="RACI matrix">
       <text class="dim" x="120" y="22">PM</text><text class="dim" x="170" y="22">Eng</text><text class="dim" x="220" y="22">QA</text><text class="dim" x="270" y="22">Sec</text>
       <text class="mut" x="60" y="48" text-anchor="end">Design spec</text><text class="mut" x="60" y="76" text-anchor="end">Build</text><text class="mut" x="60" y="104" text-anchor="end">Test</text><text class="mut" x="60" y="132" text-anchor="end">Release</text>
@@ -923,7 +923,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
     </svg>
   </div><div class="meta"><div class="nm">RACI Matrix</div><span class="ref">.dgm-raci</span><div class="desc">Tasks against roles with the R, A, C and I letters popping into their cells in colour. Responsibility assignment.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="diagram-framework" data-interact="auto-play"><div class="stage">
     <svg class="dgm dgm-p5" viewBox="0 0 320 160" aria-label="Porter's five forces">
       <rect class="core" x="110" y="58" width="100" height="44" rx="6"/><text class="hd" x="160" y="74">Rivalry</text><text class="dim" x="160" y="88">among competitors</text>
       <rect class="force" x="110" y="6" width="100" height="26" rx="5"/><text x="160" y="19">New entrants</text>

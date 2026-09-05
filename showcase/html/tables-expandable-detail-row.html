@@ -37,6 +37,10 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
 .dtb-insp-h .dtb-chev { animation: auto ease 0s 1 normal none running none; transform: rotate(90deg); }
 .dtb-insp-h.fold .dtb-chev { animation: 6s ease-in-out -1.4s infinite normal none running dtbChev; }
 .dtb-tree .dtb-chev { animation: 6s ease-in-out 0s infinite normal none running dtbChev; }
+.dtb-rowmove .dtb-arr, .dtb-resort th.dtb-num, .dtb-fall th.dtb-num { cursor: pointer; user-select: none; }
+.dtb-rowmove .dtb-arr:hover, .dtb-resort th.dtb-num:hover, .dtb-fall th.dtb-num:hover { color: var(--c,var(--accent)); }
+.dtb-tbl.manual td.flip { transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1); }
+.dtb-tbl.manual tr.lifted td { position: relative; z-index: 2; box-shadow: 0 6px 16px rgba(0,0,0,.45),inset 0 0 0 999px rgba(var(--c-rgb,var(--accent-rgb)),.14); }
 @keyframes dtbChev { 
   0%, 18% { transform: rotate(0deg); }
   25%, 80% { transform: rotate(90deg); }

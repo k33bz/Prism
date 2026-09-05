@@ -35,8 +35,10 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
 .dtb-corr td.d { background: rgba(var(--accent-rgb),.3); color: var(--accent); font-weight: 800; animation: 2.6s ease-in-out 0s infinite normal none running dtbBlink; }
 .dtb-insp-r .v.n { color: var(--accent); }
 .dtb-tl-r .d { width: 8px; height: 8px; border-radius: 50%; background: var(--panel2); border: 2px solid var(--line); justify-self: center; }
-.dtb-tl-r .d.ok { border-color: var(--pos); background: var(--pos); }
+.dtb-tl-r .d.dtb-ok { border-color: var(--pos); background: var(--pos); }
 .dtb-tl-r .d.warn { border-color: var(--warn); background: var(--warn); }
+.dtb-tbl.manual td.flip { transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1); }
+.dtb-tbl.manual tr.lifted td { position: relative; z-index: 2; box-shadow: 0 6px 16px rgba(0,0,0,.45),inset 0 0 0 999px rgba(var(--c-rgb,var(--accent-rgb)),.14); }
 @keyframes dtbBlink { 
   0%, 100% { opacity: 1; }
   50% { opacity: 0.25; }

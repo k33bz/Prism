@@ -29,6 +29,8 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
 .dtb-tag { display: inline-block; padding: 1px 6px; border-radius: 5px; background: var(--panel2); border: 1px solid var(--line); font-size: 9px; color: var(--muted); margin-right: 3px; font-weight: 700; }
 .dtb-tag.hot { border-color: var(--accent); color: var(--accent); animation: 2.2s ease-in-out 0s infinite normal none running dtbTagGlow; }
 .dtb-tag.new { border-color: var(--pos); color: var(--pos); }
+.dtb-tbl.manual td.flip { transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1); }
+.dtb-tbl.manual tr.lifted td { position: relative; z-index: 2; box-shadow: 0 6px 16px rgba(0,0,0,.45),inset 0 0 0 999px rgba(var(--c-rgb,var(--accent-rgb)),.14); }
 @keyframes dtbTagGlow { 
   0%, 100% { box-shadow: 0 0 0 rgba(var(--accent-rgb),0); }
   50% { box-shadow: 0 0 8px rgba(var(--accent-rgb),.6); }
