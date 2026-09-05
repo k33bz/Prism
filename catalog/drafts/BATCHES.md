@@ -14,7 +14,7 @@ catalog and showcase). Per-batch idea lists are the remaining work; strike ideas
 | 3 | Loaders beyond spinners | Animation Lab | `lab-ld-` / `labLd` | `loaders.lab.html` | landed (20) |
 | 4 | Glow as a system | FX Store | `fx-gl-` / `fxGl` | `glow.fx.html` | landed (20) |
 | 5 | Scroll and reveal choreography | Animation Lab | `lab-rv-` / `labRv` | `reveal.lab.html` | landed (21) |
-| 6 | 3D CSS | Animated Objects | `ob3d-` / `ob3d` | `threed.objects.html` | todo |
+| 6 | 3D CSS | Animated Objects | `ob3d-` / `ob3d` | `threed.objects.html` | landed (20) |
 
 ## Batch 1: hover effects
 Landed (20): tilt gloss, perimeter draw, bracket snap, zoom caption, diagonal wipe, split reveal, icon
@@ -58,7 +58,13 @@ overshoot reveal, blur-in, per-letter cascade.
 Remaining: none.
 
 ## Batch 6: 3D CSS
-Ideas: rotating cube, flip card, carousel ring, folding panel, perspective deck of cards, 3D bar
-stack, cube grid wave, book open, isometric tiles, rotating prism, 3D text extrude, tilted phone
-mock, cylinder ring of tiles, coin flip, cube unfold, layered parallax card, orbiting rings, 3D
-gauge, staircase steps, floating island tiles.
+Landed (20): flip card, coin toss, cylinder ring, tri fold panel, deck of cards, crate stack, opening
+book, isometric tile floor, hex prism, extruded text, tilted phone mock, cube unfold, exploded layers,
+gyroscope rings, 3D gauge dial, staircase steps, floating islands, split flap counter, hinged door,
+picker drum.
+Skipped (already in objects): rotating cube, cube grid wave, carousel ring, triangular prism, orbiting
+planets, plain Y-axis coin. Remaining: none.
+
+All six batches landed. Next candidates from the same source, if wanted: buttons beyond what Input
+Methods has (ripple, morph, split), tooltips and popovers, modals and drawers, checkbox and radio
+sets, image galleries and sliders, 404 and empty-state art, cursors and pointer effects.

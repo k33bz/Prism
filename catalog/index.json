@@ -1,5 +1,5 @@
 {
-  "count": 3220,
+  "count": 3240,
   "effects": [
     {
       "id": "charts-big-metric-count-up",
@@ -1896,11 +1896,10 @@
         "sl",
         "ts",
         "lv",
-        "err",
-        "m",
-        "ok",
         "info",
+        "m",
         "warn",
+        "err",
         "cursor"
       ],
       "params": [],
@@ -11567,9 +11566,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A hollow ring with inset and outer bloom that breathes while a thin wave ring expands and fades. Use for a single headline value."
     },
     {
@@ -11598,9 +11597,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A primary button cycles idle, raised hover glow and a pressed inset glow so the three states read at a glance. Use for the one main action."
     },
     {
@@ -11630,9 +11629,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "One lit edge bleeds light into the card and walks around all four sides in turn. Use to mark the featured card in a grid."
     },
     {
@@ -11662,9 +11661,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A bright head crosses the track while smaller, dimmer followers lag behind it and form a comet tail. Use for transfer or sync progress."
     },
     {
@@ -11693,9 +11692,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A rule that fades to both ends with a hot centre bead; it widens and brightens, then settles. Use between sections that need a soft break."
     },
     {
@@ -11725,9 +11724,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A glowing pill beside plain text; a thin ring pings outward from it every two seconds. Use for a release or unread marker."
     },
     {
@@ -11758,9 +11757,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "The field gains a soft focus ring, text types in behind a glowing caret, then the field blurs again. Use on form fields that need a clear focus state."
     },
     {
@@ -11791,9 +11790,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "The switch flips on, the track fills with tinted light and the knob turns into a lamp, then it flips back. Use for settings that deserve a strong on state."
     },
     {
@@ -11825,9 +11824,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A tinted fill grows along the track and a white hot tip leads it with the strongest glow. Use for uploads, syncs and long running jobs."
     },
     {
@@ -11856,9 +11855,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A selection glow hops across three filter chips, lighting one at a time with a tinted fill and halo. Use for single choice filters."
     },
     {
@@ -11888,9 +11887,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A glowing bubble with a matching arrow pops in above its anchor, holds, then leaves while the anchor lights up. Use for hover help on dense controls."
     },
     {
@@ -11921,9 +11920,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "The card rises on hover and a glow pools beneath it; the ambient loop previews the lift without a pointer. Use on clickable KPI cards."
     },
     {
@@ -11952,9 +11951,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A glowing rule draws in from the left under the word, holds while the text blooms, then retracts to the right. Use on nav items and headings."
     },
     {
@@ -11986,9 +11985,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A three quarter conic ring orbits the avatar and a drop-shadow keeps the glow hugging the arc. Use for presence or speaking indicators."
     },
     {
@@ -12020,9 +12019,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A lit marker with a flag slides along a ticked timeline and back, its halo fixed to the point. Use for playheads and current time cursors."
     },
     {
@@ -12056,9 +12055,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Each row's lamp pulses a halo in its own role colour; the dot re-reads the family token so one rule tints all three. Use for service rosters."
     },
     {
@@ -12088,9 +12087,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Three keycaps press in sequence; the pressed cap sinks, its base shortens and it lights up. Use to teach a shortcut in onboarding."
     },
     {
@@ -12122,9 +12121,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "The thumb travels the track with a halo that swells while it moves and relaxes at rest. Use for volume, brightness or range controls."
     },
     {
@@ -12159,9 +12158,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Four glowing brackets contract onto the target and relax again, like a viewfinder locking on. Use to point out the element a tour step is about."
     },
     {
@@ -12192,9 +12191,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "The box fills with light, a check mark springs in and a ring bursts outward, one row after the other. Use where a confirmed choice should feel rewarding."
     },
     {
@@ -12225,9 +12224,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "The card tilts in perspective toward one corner while a specular highlight slides across its face. Use on feature cards and nav tiles."
     },
     {
@@ -12259,9 +12258,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A coloured stroke draws itself around the whole border from the top edge and unwinds on leave. Use to mark a focused or selectable card."
     },
     {
@@ -12297,9 +12296,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Four corner brackets fly in from outside the card and snap onto its corners. A lock on cue for selectable targets and tiles."
     },
     {
@@ -12330,9 +12329,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "The image scales up inside its frame while a caption rises from the bottom edge. The classic gallery and media card hover."
     },
     {
@@ -12363,9 +12362,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A slanted cover panel with a coloured leading edge wipes off to the right and uncovers the image beneath. Use for before and after or teaser media."
     },
     {
@@ -12398,9 +12397,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "The image parts into top and bottom halves and a label scales up in the gap between them. Use for album covers and project thumbnails."
     },
     {
@@ -12432,9 +12431,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "The arrow inside a pill button nudges to the right, trailing a short line, while the fill deepens. Use on primary calls to action and links."
     },
     {
@@ -12465,9 +12464,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "The card lifts on a soft shadow and two ghost cards fan out from behind it. Use for stacks, decks and anything with more items behind."
     },
     {
@@ -12498,9 +12497,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "The card steps up and to the left while three hard offset shadows stack out behind it in the card colour. A bold, poster style hover."
     },
     {
@@ -12531,9 +12530,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A disc of colour grows from the bottom left corner until it floods the whole card and the body text brightens. Use on primary tiles and menu cards."
     },
     {
@@ -12564,9 +12563,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A blurred, desaturated image snaps into sharp colour and its caption fades in. Use for locked or preview media that resolves on hover."
     },
     {
@@ -12600,9 +12599,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "The card turns over on its vertical axis to show a stat on a tinted back face. Use for KPI tiles with a detail side."
     },
     {
@@ -12633,9 +12632,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A chip is pulled across the card toward a glowing corner as if magnetised, growing slightly as it arrives. Playful hover for tags and badges."
     },
     {
@@ -12666,9 +12665,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A single wave expands from a fixed press point while the card fill tints. A CSS only stand in for cursor ripples on buttons and list rows."
     },
     {
@@ -12702,9 +12701,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A jittering garbled title resolves into clear text behind a moving caret. Use for hacker style headings and reveal on hover labels."
     },
     {
@@ -12735,9 +12734,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Two pleated curtains squeeze to the sides to reveal the image and its caption. Theatrical reveal for launches and featured media."
     },
     {
@@ -12768,9 +12767,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A tight crop pulls back to show the full image inside a thin inset frame with a caption. The opposite of the usual zoom in, good for maps and art."
     },
     {
@@ -12800,9 +12799,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Two outline rings pulse outward from the button edge and the border stays lit. A focus ring style hover for destructive or important actions."
     },
     {
@@ -12834,9 +12833,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Six horizontal slats close one after another from the top to uncover the image like blinds. Use for staggered media reveals."
     },
     {
@@ -12867,9 +12866,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "The bottom right corner curls up to show a coloured underside and the surface beneath it. A sticker or page turn cue for notes and cards."
     },
     {
@@ -18371,9 +18370,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A card placeholder with an image block and three text lines under a diagonal sheen sweep. Use in place of a card while its data loads."
     },
     {
@@ -18406,9 +18405,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Three avatar rows shimmer, then each resolves into real name and role in order as its data arrives. Use for member and contact lists that stream in."
     },
     {
@@ -18435,9 +18434,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A header row and four body rows of cell bars that pulse in a diagonal wave, set by the per-cell delay index. Use while a data grid fetches its first page."
     },
     {
@@ -18467,9 +18466,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A profile header placeholder: ringed avatar, name bar and three stat blocks with a soft light band scanning top to bottom. Use for account and user pages."
     },
     {
@@ -18497,9 +18496,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "The word Loading with dots that step from none to three and wrap, driven by an animated content string. Use for inline text-only waiting states."
     },
     {
@@ -18527,9 +18526,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Twelve ticks light up clockwise while the center counts n of 12, both driven by one registered property on the parent. Use for stepwise jobs with a known count."
     },
     {
@@ -18558,9 +18557,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Three hopping dots converge and merge, then a green check pops out of the merge point inside a ring. Use where a wait ends in a visible success."
     },
     {
@@ -18588,9 +18587,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Four squares of fading opacity hop clockwise around a two by two grid, each one step behind the last. Use as a compact indeterminate loader for panels."
     },
     {
@@ -18618,9 +18617,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A determinate bar fills to full while a barber pole stripe keeps moving across the fill. Use for installs and copies where progress is known but slow."
     },
     {
@@ -18648,9 +18647,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "The front card slides out to the right and tucks in at the back of the stack while the rest step forward. Use while a deck, feed or queue is being prepared."
     },
     {
@@ -18681,9 +18680,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A progress bar with a live percent and a stage label that steps from Uploading through Processing to Done, turning green at the end. Use for multi step jobs."
     },
     {
@@ -18711,9 +18710,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A square rolls along a rail, a quarter turn per hop, reaches the end and rolls back. Use for playful waits on a wide, short strip such as a footer."
     },
     {
@@ -18743,9 +18742,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A terminal panel where log lines arrive one after another and end on a green ok line with a blinking cursor. Use for CLI style installs and deploy consoles."
     },
     {
@@ -18772,9 +18771,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "An outlined word fills with colour from the bottom up through a background clipped to the glyphs. Use as a hero loader where text is the only element on screen."
     },
     {
@@ -18802,9 +18801,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Five tiles flip on their horizontal axis in sequence to a coloured back face, then flip on to the plain front. Use for board or grid views that are refreshing."
     },
     {
@@ -18832,9 +18831,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Rotated square outlines expand from a solid centre gem and fade as they grow, three in flight at once. Use for search or scan states that radiate from a point."
     },
     {
@@ -18864,9 +18863,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A round mouth opens and closes while a train of dots glides in from the right and vanishes at the jaws. Use for queue draining or batch consumption states."
     },
     {
@@ -18895,9 +18894,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "An arrow rises out of the base and fades into a gently bobbing cloud, again and again. Use for uploads and sync in progress toward remote storage."
     },
     {
@@ -18927,9 +18926,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A large number counts from 0 to 100 through an integer property and a CSS counter while a hairline bar fills in step. Use when the number is the whole message."
     },
     {
@@ -18957,9 +18956,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Four pills stretch wide and shrink back in sequence so the row crawls like a caterpillar. Use as a friendly inline loader inside buttons and chips."
     },
     {
@@ -18992,9 +18991,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Rows enter from alternating sides on a stagger, hold, then leave the way they came. Use for activity feeds that build as the page scrolls."
     },
     {
@@ -19027,9 +19026,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Three cards grow from half size with a small overshoot, one after another. Use for feature or pricing rows that pop in as they reach the viewport."
     },
     {
@@ -19061,9 +19060,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A hero panel unmasks from the bottom edge while its copy drifts up into place, then wipes away upward. Use for banner sections entering on scroll."
     },
     {
@@ -19095,9 +19094,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Each line rises out of its own clipping box in sequence and exits upward. Use for paragraphs or changelogs that should read in order as they appear."
     },
     {
@@ -19131,9 +19130,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Three KPI values roll upward through intermediate numbers to their final figure while a bar fills beneath. Use for metric strips that count in on scroll."
     },
     {
@@ -19172,9 +19171,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A simulated scroll moves the glow backdrop, the heading, the card list and a badge at four different speeds, then scrolls back. Use for hero depth."
     },
     {
@@ -19210,9 +19209,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "As the list scrolls up beneath it, the header compresses to a slim bar with a drop shadow, then grows back. Use for app bars that condense on scroll."
     },
     {
@@ -19244,9 +19243,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A solid block sweeps across the heading area and the copy is left behind as it passes out the far side. Use for section titles that need a bold entrance."
     },
     {
@@ -19278,9 +19277,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A small circular mask opens, pans across the dimmed panel like a torch, then expands to uncover everything. Use for a playful hero or image reveal."
     },
     {
@@ -19312,9 +19311,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A vertical spine draws downward and each milestone pops in with its label as the line reaches it. Use for histories or process steps that unfold on scroll."
     },
     {
@@ -19348,9 +19347,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A top bar fills and a percent badge counts up as the article scrolls, then everything snaps back to the top. Use for reading progress on long posts."
     },
     {
@@ -19386,9 +19385,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A summary card stays pinned while rows scroll beneath it, then releases and rides away with the content before the page scrolls back. Use for sticky summaries."
     },
     {
@@ -19421,9 +19420,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Heading words rise out of a blur one at a time and the tagline fades in after them. Use for hero titles where per letter motion is too busy."
     },
     {
@@ -19455,9 +19454,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A grid of tiles resolves from a soft blur and slight shrink in reading order, then defocuses again. Use for galleries or integrations grids."
     },
     {
@@ -19490,9 +19489,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Cards hinge up from their bottom edge in perspective, overshoot slightly and settle upright in sequence. Use for plan or feature rows with some drama."
     },
     {
@@ -19525,9 +19524,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A route strokes itself along a dotted guide and pin markers pop up as the line reaches each stop. Use for journey maps or delivery tracking sections."
     },
     {
@@ -19559,9 +19558,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Two half panels slide in from opposite edges, a divider draws down between them and the copy fades in last. Use for before and after comparisons."
     },
     {
@@ -19592,9 +19591,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Full height sections snap into view one at a time while side dots track the active slide, then the deck scrolls home. Use for scroll snapping story pages."
     },
     {
@@ -19625,9 +19624,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "The backdrop starts oversized and settles to scale while the title tightens its letter spacing into place. Use for cinematic hero openings on page load."
     },
     {
@@ -19660,9 +19659,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "The list shears in the direction of travel while it scrolls fast and straightens as it stops, in both directions. Use for smooth scroll feeds with momentum."
     },
     {
@@ -19694,9 +19693,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A highlighter band sweeps across the key phrase of each line in turn, as if marked while reading. Use to spotlight figures inside body copy on scroll."
     },
     {
@@ -20757,9 +20756,6 @@
         "chat",
         "cmsg",
         "user",
-        "ai",
-        "typing-msg",
-        "mt",
         "cap",
         "pr-playbtn"
       ],
@@ -21863,9 +21859,9 @@
         "gate",
         "experts",
         "expert",
-        "on",
         "ed",
         "ew",
+        "on",
         "cap",
         "pr-playbtn"
       ],
@@ -27941,6 +27937,706 @@
       "updatedOn": null,
       "author": "k33bz",
       "description": "A perspective floor grid streams toward the viewer under a bobbing sun and violet horizon. Retro, gaming and synth themed surfaces."
+    },
+    {
+      "id": "objects-flip-card",
+      "name": "Flip Card",
+      "gallery": "objects",
+      "category": "3D CSS OBJECTS",
+      "ref": ".ob3d-flip",
+      "classes": [
+        "ob3d-scene",
+        "ob3d-flip",
+        "ob3d-flip-in",
+        "ob3d-flip-face",
+        "ob3d-flip-front",
+        "ob3d-flip-back"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "objects",
+        "animated",
+        "new"
+      ],
+      "componentType": "object-3d",
+      "interaction": "hover",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A two faced card turns on its Y axis to show the value on its back. Hover holds the flip. Use for KPI reveals and spec sheets."
+    },
+    {
+      "id": "objects-coin-toss",
+      "name": "Coin Toss",
+      "gallery": "objects",
+      "category": "3D CSS OBJECTS",
+      "ref": ".ob3d-coin",
+      "classes": [
+        "ob3d-scene",
+        "ob3d-coin",
+        "ob3d-coin-air",
+        "ob3d-coin-body",
+        "ob3d-coin-face",
+        "ob3d-coin-tail",
+        "ob3d-coin-shadow"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "objects",
+        "animated",
+        "new"
+      ],
+      "componentType": "object-3d",
+      "interaction": "hover",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A coin springs up, tumbles end over end and lands as its shadow shrinks and grows. Hover keeps it spinning. Payments, rewards, decisions."
+    },
+    {
+      "id": "objects-cylinder-ring",
+      "name": "Cylinder Ring",
+      "gallery": "objects",
+      "category": "3D CSS OBJECTS",
+      "ref": ".ob3d-cyl",
+      "classes": [
+        "ob3d-scene",
+        "ob3d-cyl",
+        "ob3d-cyl-rig",
+        "ob3d-cyl-ring",
+        "ob3d-cyl-tile"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "objects",
+        "animated",
+        "new"
+      ],
+      "componentType": "object-3d",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Eight translucent tiles stand around a tilted axis and rotate as one drum. Use for step pickers, galleries or a rotating list of options."
+    },
+    {
+      "id": "objects-tri-fold-panel",
+      "name": "Tri Fold Panel",
+      "gallery": "objects",
+      "category": "3D CSS OBJECTS",
+      "ref": ".ob3d-fold",
+      "classes": [
+        "ob3d-scene",
+        "ob3d-fold",
+        "ob3d-fold-rig",
+        "ob3d-fold-p",
+        "ob3d-fold-l",
+        "ob3d-fold-c",
+        "ob3d-fold-r"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "objects",
+        "animated",
+        "new"
+      ],
+      "componentType": "object-3d",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Two side leaves hinge over a centre panel like a brochure closing, then open again. Use for onboarding steps, spec sheets or collapsible side panels."
+    },
+    {
+      "id": "objects-deck-of-cards",
+      "name": "Deck of Cards",
+      "gallery": "objects",
+      "category": "3D CSS OBJECTS",
+      "ref": ".ob3d-deck",
+      "classes": [
+        "ob3d-scene",
+        "ob3d-deck",
+        "ob3d-deck-rig",
+        "ob3d-deck-card",
+        "ob3d-deck-top"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "objects",
+        "animated",
+        "new"
+      ],
+      "componentType": "object-3d",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A stack of cards lies on a tilted table and the top card lifts, slides aside and is dealt. Use for queues, review piles and one at a time flows."
+    },
+    {
+      "id": "objects-crate-stack",
+      "name": "Crate Stack",
+      "gallery": "objects",
+      "category": "3D CSS OBJECTS",
+      "ref": ".ob3d-stack",
+      "classes": [
+        "ob3d-scene",
+        "ob3d-stack",
+        "ob3d-stack-rig",
+        "ob3d-stack-cube",
+        "ob3d-stack-c0",
+        "ob3d-stack-f",
+        "ob3d-stack-front",
+        "ob3d-stack-side",
+        "ob3d-stack-top",
+        "ob3d-stack-c1",
+        "ob3d-stack-c2"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "objects",
+        "animated",
+        "new"
+      ],
+      "componentType": "object-3d",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Three isometric crates drop from above and land on each other in turn, then lift away to repeat. Use for builds, layered stacks and storage."
+    },
+    {
+      "id": "objects-opening-book",
+      "name": "Opening Book",
+      "gallery": "objects",
+      "category": "3D CSS OBJECTS",
+      "ref": ".ob3d-book",
+      "classes": [
+        "ob3d-scene",
+        "ob3d-book",
+        "ob3d-book-rig",
+        "ob3d-book-back",
+        "ob3d-book-page",
+        "ob3d-book-p2",
+        "ob3d-book-cover"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "objects",
+        "animated",
+        "new"
+      ],
+      "componentType": "object-3d",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A hard cover swings open on its spine and a page turns behind it before both close. Use for docs, guides, changelogs and reading states."
+    },
+    {
+      "id": "objects-isometric-tile-floor",
+      "name": "Isometric Tile Floor",
+      "gallery": "objects",
+      "category": "3D CSS OBJECTS",
+      "ref": ".ob3d-iso",
+      "classes": [
+        "ob3d-scene",
+        "ob3d-iso",
+        "ob3d-iso-rig",
+        "ob3d-iso-t"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "objects",
+        "animated",
+        "new"
+      ],
+      "componentType": "object-3d",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A four by four floor of tiles flips over in a diagonal wave, showing the coloured backs. Use for loading floors, map reveals and grid refreshes."
+    },
+    {
+      "id": "objects-hex-prism",
+      "name": "Hex Prism",
+      "gallery": "objects",
+      "category": "3D CSS OBJECTS",
+      "ref": ".ob3d-hex",
+      "classes": [
+        "ob3d-scene",
+        "ob3d-hex",
+        "ob3d-hex-rig",
+        "ob3d-hex-body",
+        "ob3d-hex-f",
+        "ob3d-hex-cap",
+        "ob3d-hex-cap-b"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "objects",
+        "animated",
+        "new"
+      ],
+      "componentType": "object-3d",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Six translucent walls and a hexagon cap turn as one prism, tilted so the top face shows. Use for crystals, tokens, modules and abstract compute."
+    },
+    {
+      "id": "objects-extruded-text",
+      "name": "Extruded Text",
+      "gallery": "objects",
+      "category": "3D CSS OBJECTS",
+      "ref": ".ob3d-text",
+      "classes": [
+        "ob3d-scene",
+        "ob3d-text",
+        "ob3d-text-rig",
+        "ob3d-text-l",
+        "ob3d-text-front"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "objects",
+        "animated",
+        "new"
+      ],
+      "componentType": "object-3d",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Stacked copies of a word sit behind the front face along Z to build a solid extrusion that swings left and right. Use for logos and hero titles."
+    },
+    {
+      "id": "objects-tilted-phone-mock",
+      "name": "Tilted Phone Mock",
+      "gallery": "objects",
+      "category": "3D CSS OBJECTS",
+      "ref": ".ob3d-phone",
+      "classes": [
+        "ob3d-scene",
+        "ob3d-phone",
+        "ob3d-phone-rig",
+        "ob3d-phone-body",
+        "ob3d-phone-back",
+        "ob3d-phone-screen",
+        "ob3d-phone-feed",
+        "ob3d-phone-notch"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "objects",
+        "animated",
+        "new"
+      ],
+      "componentType": "object-3d",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A phone with stacked back plates rocks in perspective while a feed scrolls up its screen. Use for app previews, mobile mockups and store cards."
+    },
+    {
+      "id": "objects-cube-unfold",
+      "name": "Cube Unfold",
+      "gallery": "objects",
+      "category": "3D CSS OBJECTS",
+      "ref": ".ob3d-net",
+      "classes": [
+        "ob3d-scene",
+        "ob3d-net",
+        "ob3d-net-rig",
+        "ob3d-net-f",
+        "ob3d-net-base",
+        "ob3d-net-l",
+        "ob3d-net-r",
+        "ob3d-net-b",
+        "ob3d-net-t",
+        "ob3d-net-lid"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "objects",
+        "animated",
+        "new"
+      ],
+      "componentType": "object-3d",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A cross shaped net lies flat, then its four walls and lid hinge up into a closed cube and unfold again. Use for packaging, assembly and deploy steps."
+    },
+    {
+      "id": "objects-exploded-layers",
+      "name": "Exploded Layers",
+      "gallery": "objects",
+      "category": "3D CSS OBJECTS",
+      "ref": ".ob3d-layers",
+      "classes": [
+        "ob3d-scene",
+        "ob3d-layers",
+        "ob3d-layers-rig",
+        "ob3d-layers-p"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "objects",
+        "animated",
+        "new"
+      ],
+      "componentType": "object-3d",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Three plates of a card separate along Z into an exploded view and settle back. Use for architecture layers, stack diagrams and component anatomy."
+    },
+    {
+      "id": "objects-gyroscope-rings",
+      "name": "Gyroscope Rings",
+      "gallery": "objects",
+      "category": "3D CSS OBJECTS",
+      "ref": ".ob3d-gyro",
+      "classes": [
+        "ob3d-scene",
+        "ob3d-gyro",
+        "ob3d-gyro-rig",
+        "ob3d-gyro-r",
+        "ob3d-gyro-a",
+        "ob3d-gyro-b",
+        "ob3d-gyro-c",
+        "ob3d-gyro-core"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "objects",
+        "animated",
+        "new"
+      ],
+      "componentType": "object-3d",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Three nested rings spin on different axes around a glowing core, like a gimbal. Use for sync, calibration, orbit and thinking states."
+    },
+    {
+      "id": "objects-3d-gauge-dial",
+      "name": "3D Gauge Dial",
+      "gallery": "objects",
+      "category": "3D CSS OBJECTS",
+      "ref": ".ob3d-gauge",
+      "classes": [
+        "ob3d-scene",
+        "ob3d-gauge",
+        "ob3d-gauge-rig",
+        "ob3d-gauge-rim",
+        "ob3d-gauge-face",
+        "ob3d-gauge-needle",
+        "ob3d-gauge-hub"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "objects",
+        "animated",
+        "new"
+      ],
+      "componentType": "object-3d",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A banded dial lies in perspective with a thick rim and a raised needle that sweeps from green through amber to red and back. Use for load or health."
+    },
+    {
+      "id": "objects-staircase-steps",
+      "name": "Staircase Steps",
+      "gallery": "objects",
+      "category": "3D CSS OBJECTS",
+      "ref": ".ob3d-stairs",
+      "classes": [
+        "ob3d-scene",
+        "ob3d-stairs",
+        "ob3d-stairs-rig",
+        "ob3d-stairs-s",
+        "ob3d-stairs-f",
+        "ob3d-stairs-front",
+        "ob3d-stairs-side",
+        "ob3d-stairs-top"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "objects",
+        "animated",
+        "new"
+      ],
+      "componentType": "object-3d",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Five isometric steps grow up from the floor one after another, then sink away and rebuild. Use for growth, level ups, milestones and progress ladders."
+    },
+    {
+      "id": "objects-floating-islands",
+      "name": "Floating Islands",
+      "gallery": "objects",
+      "category": "3D CSS OBJECTS",
+      "ref": ".ob3d-islands",
+      "classes": [
+        "ob3d-scene",
+        "ob3d-islands",
+        "ob3d-isl-rig",
+        "ob3d-isl-floor",
+        "ob3d-isl-shadow",
+        "ob3d-isl",
+        "ob3d-isl-front",
+        "ob3d-isl-side",
+        "ob3d-isl-top"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "objects",
+        "animated",
+        "new"
+      ],
+      "componentType": "object-3d",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Three slab tiles hover above an isometric plane, bobbing out of phase while their shadows shrink and grow. Use for regions, zones and microservices."
+    },
+    {
+      "id": "objects-split-flap-counter",
+      "name": "Split Flap Counter",
+      "gallery": "objects",
+      "category": "3D CSS OBJECTS",
+      "ref": ".ob3d-flap",
+      "classes": [
+        "ob3d-scene",
+        "ob3d-flap",
+        "ob3d-flap-rig",
+        "ob3d-flap-h",
+        "ob3d-flap-top",
+        "ob3d-flap-bot",
+        "ob3d-flap-a",
+        "ob3d-flap-b",
+        "ob3d-flap-hinge"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "objects",
+        "animated",
+        "new"
+      ],
+      "componentType": "object-3d",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A departures board digit: the top half hinges down and the next bottom half swings in to tick the count over. Use for counters, clocks and totals."
+    },
+    {
+      "id": "objects-hinged-door",
+      "name": "Hinged Door",
+      "gallery": "objects",
+      "category": "3D CSS OBJECTS",
+      "ref": ".ob3d-door",
+      "classes": [
+        "ob3d-scene",
+        "ob3d-door",
+        "ob3d-door-rig",
+        "ob3d-door-frame",
+        "ob3d-door-sill",
+        "ob3d-door-leaf",
+        "ob3d-door-knob"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "objects",
+        "animated",
+        "new"
+      ],
+      "componentType": "object-3d",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A panelled door swings open on its hinge to reveal a lit doorway, pauses, then closes. Use for logins, onboarding entry points and access granted states."
+    },
+    {
+      "id": "objects-picker-drum",
+      "name": "Picker Drum",
+      "gallery": "objects",
+      "category": "3D CSS OBJECTS",
+      "ref": ".ob3d-drum",
+      "classes": [
+        "ob3d-scene",
+        "ob3d-drum",
+        "ob3d-drum-rig",
+        "ob3d-drum-body",
+        "ob3d-drum-s",
+        "ob3d-drum-win"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "objects",
+        "animated",
+        "new"
+      ],
+      "componentType": "object-3d",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Eight labelled slats form a horizontal drum that ticks one notch at a time past a highlight window. Use for option pickers, tickers and cycling names."
     },
     {
       "id": "input-basic-text-input",
