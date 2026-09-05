@@ -276,7 +276,7 @@ try {
     if (existsSync(datesPath)) {
       const dates = JSON.parse(readFileSync(datesPath, 'utf8')).facets || {};
       let hit = 0;
-      for (const r of all) { const d = dates[r.id]; if (d) { r.addedOn = d.added; r.updatedOn = d.updated; hit++; } else { r.addedOn = null; r.updatedOn = null; } }
+      for (const r of all) { const d = dates[r.id]; if (d) { r.addedOn = d.added; r.updatedOn = d.updated; r.author = d.author || null; hit++; } else { r.addedOn = null; r.updatedOn = null; r.author = null; } }
       console.log(`dates merged for ${hit}/${all.length} facets (facet-dates.json)`);
     }
   } catch (e) { console.warn('facet-dates merge skipped:', e.message); }
@@ -320,7 +320,7 @@ try {
 
   mkdirSync(OUT, { recursive: true });
   writeFileSync(OUT + '/manifest.json', JSON.stringify(manifest, null, 2));
-  const index = all.map(r => ({ id: r.id, name: r.name, gallery: r.gallery, category: r.category, ref: r.ref, classes: r.classes, params: Object.keys(r.params), tags: r.tags, componentType: r.componentType, interaction: r.interaction, spectrum: r.spectrum, usableAsBackground: r.usableAsBackground, needsJs: r.needsJs, isNew: r.isNew, isFixed: r.isFixed, addedOn: r.addedOn || null, updatedOn: r.updatedOn || null, description: r.description }));
+  const index = all.map(r => ({ id: r.id, name: r.name, gallery: r.gallery, category: r.category, ref: r.ref, classes: r.classes, params: Object.keys(r.params), tags: r.tags, componentType: r.componentType, interaction: r.interaction, spectrum: r.spectrum, usableAsBackground: r.usableAsBackground, needsJs: r.needsJs, isNew: r.isNew, isFixed: r.isFixed, addedOn: r.addedOn || null, updatedOn: r.updatedOn || null, author: r.author || null, description: r.description }));
   writeFileSync(OUT + '/index.json', JSON.stringify({ count: index.length, effects: index }, null, 2));
   console.log(`\nTOTAL ${all.length} effects → manifest.json (+ index.json)`);
 } catch (e) {

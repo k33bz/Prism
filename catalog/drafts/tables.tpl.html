@@ -122,8 +122,8 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
 /* row selection with checkboxes */
 .dtb-cb{display:inline-block;width:12px;height:12px;border:1px solid var(--dim);border-radius:3px;position:relative;vertical-align:-2px;background:var(--panel)}
 .dtb-cb::after{content:"";position:absolute;left:3px;top:0;width:4px;height:7px;border:solid var(--panel);border-width:0 2px 2px 0;transform:rotate(45deg) scale(0);opacity:0}
-.dtb-cb.on{background:var(--c,var(--accent));border-color:var(--c,var(--accent))}
-.dtb-cb.on::after{transform:rotate(45deg) scale(1);opacity:1}
+.dtb-cb.dtb-on{background:var(--c,var(--accent));border-color:var(--c,var(--accent))}
+.dtb-cb.dtb-on::after{transform:rotate(45deg) scale(1);opacity:1}
 .dtb-select tbody tr:nth-child(2) .dtb-cb{animation:dtbCbOn 5s steps(1) infinite}
 .dtb-select tbody tr:nth-child(2) .dtb-cb::after{animation:dtbCbMark 5s ease-out infinite}
 .dtb-select tbody tr:nth-child(2) td{animation:dtbSelRow 5s steps(1) infinite}
@@ -168,7 +168,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
 
 /* ===================== B. STATUS & DATA CELLS ===================== */
 .dtb-pill{display:inline-block;padding:1px 7px;border-radius:10px;font-size:9px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;line-height:1.5}
-.dtb-pill.ok{color:var(--pos);background:rgba(var(--pos-rgb),.14)}
+.dtb-pill.dtb-ok{color:var(--pos);background:rgba(var(--pos-rgb),.14)}
 .dtb-pill.warn{color:var(--warn);background:rgba(var(--warn-rgb),.14)}
 .dtb-pill.crit{color:var(--neg);background:rgba(var(--neg-rgb),.16);animation:dtbPillPulse 1.3s ease-in-out infinite}
 .dtb-pill.info{color:var(--info);background:rgba(var(--info-rgb),.14)}
@@ -343,22 +343,22 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
 .dtb-step:last-child{padding-bottom:0}
 .dtb-step b{display:block;color:var(--ink);font-weight:700}
 .dtb-step i{position:absolute;left:-30px;top:2px;width:22px;height:22px;border-radius:50%;background:var(--panel2);border:2px solid var(--line);display:grid;place-items:center;font:800 9px ui-sans-serif,system-ui,sans-serif;color:var(--muted);font-style:normal;animation:dtbStepOn 6s steps(1) infinite;animation-delay:calc(var(--i,0)*1.15s)}
-@keyframes dtbStepOn{0%,12%{background:var(--panel2);border-color:var(--line);color:var(--muted)}13%,88%{background:var(--pos);border-color:var(--pos);color:#06140a}100%{background:var(--panel2);border-color:var(--line);color:var(--muted)}}
+@keyframes dtbStepOn{0%,12%{background:var(--panel2);border-color:var(--line);color:var(--muted)}13%,88%{background:var(--pos);border-color:var(--pos);color:var(--bg)}100%{background:var(--panel2);border-color:var(--line);color:var(--muted)}}
 
 .dtb-check{width:100%;max-width:260px;margin:0;padding:0;list-style:none;font:11px/1.4 ui-sans-serif,system-ui,sans-serif}
 .dtb-ck-item{display:flex;align-items:center;gap:8px;padding:4px 0;color:var(--ink);animation:dtbDone 7s steps(1) infinite;animation-delay:calc(var(--i,0)*1.2s)}
 .dtb-ck-item .dtb-cb{animation:dtbCbOn 7s steps(1) infinite;animation-delay:calc(var(--i,0)*1.2s)}
 .dtb-ck-item .dtb-cb::after{animation:dtbCbMark 7s ease-out infinite;animation-delay:calc(var(--i,0)*1.2s)}
-.dtb-ck-item .dtb-cb.on{animation:none}.dtb-ck-item .dtb-cb.on::after{animation:none}
+.dtb-ck-item .dtb-cb.dtb-on{animation:none}.dtb-ck-item .dtb-cb.dtb-on::after{animation:none}
 .dtb-ck-item.done{color:var(--dim);text-decoration:line-through;animation:none}
 @keyframes dtbDone{0%,19%{color:var(--ink);text-decoration:none}20%,75%{color:var(--dim);text-decoration:line-through}76%,100%{color:var(--ink);text-decoration:none}}
 
 .dtb-rank{width:100%;max-width:280px;font:11px/1.3 ui-sans-serif,system-ui,sans-serif;display:flex;flex-direction:column;gap:4px}
 .dtb-rank-r{display:grid;grid-template-columns:22px 1fr 70px 34px;align-items:center;gap:8px;padding:5px 8px;border:1px solid var(--line);border-radius:7px;background:var(--card);color:var(--ink)}
 .dtb-rank-r .rk{width:18px;height:18px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:9.5px;background:var(--panel2);color:var(--muted)}
-.dtb-rank-r.g .rk{background:var(--accent);color:#1a1000}.dtb-rank-r.s .rk{background:var(--muted);color:#0b0e17}.dtb-rank-r.b .rk{background:rgba(var(--warn-rgb),.7);color:#1a1000}
-.dtb-rank-r .bar{height:5px;border-radius:3px;background:var(--panel2);overflow:hidden}
-.dtb-rank-r .bar i{display:block;height:100%;width:var(--w,50%);background:var(--c,var(--accent));border-radius:3px}
+.dtb-rank-r.g .rk{background:var(--accent);color:var(--bg)}.dtb-rank-r.s .rk{background:var(--muted);color:var(--bg)}.dtb-rank-r.b .rk{background:rgba(var(--warn-rgb),.7);color:var(--bg)}
+.dtb-rank-r .dtb-rbar{height:5px;border-radius:3px;background:var(--panel2);overflow:hidden}
+.dtb-rank-r .dtb-rbar i{display:block;height:100%;width:var(--w,50%);background:var(--c,var(--accent));border-radius:3px}
 .dtb-rank-r .sc{text-align:right;font-family:ui-monospace,Menlo,monospace;color:var(--muted)}
 .dtb-rank-r.dn{animation:dtbSwapDownR 5s ease-in-out infinite;position:relative;z-index:1}
 .dtb-rank-r.up{animation:dtbSwapUpR 5s ease-in-out infinite;position:relative;z-index:2}
@@ -370,12 +370,12 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
 .dtb-tl-r{display:grid;grid-template-columns:44px 14px 1fr;align-items:center;gap:6px;padding:5px 0;position:relative}
 .dtb-tl-r .t{font-family:ui-monospace,Menlo,monospace;font-size:9.5px;color:var(--dim);text-align:right}
 .dtb-tl-r .d{width:8px;height:8px;border-radius:50%;background:var(--panel2);border:2px solid var(--line);justify-self:center}
-.dtb-tl-r .d.ok{border-color:var(--pos);background:var(--pos)}.dtb-tl-r .d.warn{border-color:var(--warn);background:var(--warn)}
+.dtb-tl-r .d.dtb-ok{border-color:var(--pos);background:var(--pos)}.dtb-tl-r .d.warn{border-color:var(--warn);background:var(--warn)}
 .dtb-tl-r .e{color:var(--ink)}
 .dtb-tl-r .e small{color:var(--muted);margin-left:5px;font-size:9.5px}
 .dtb-tl::before{content:"";position:absolute;left:54px;top:8px;bottom:8px;width:2px;background:var(--line);margin-left:-1px}
 .dtb-now{position:absolute;left:44px;right:0;top:0;height:2px;background:var(--accent);box-shadow:0 0 8px var(--accent);animation:dtbNow 6s ease-in-out infinite;pointer-events:none}
-.dtb-now::before{content:"NOW";position:absolute;right:0;top:-5px;font:800 7px ui-sans-serif,system-ui,sans-serif;color:#1a1000;background:var(--accent);padding:1px 4px;border-radius:3px;letter-spacing:.08em}
+.dtb-now::before{content:"NOW";position:absolute;right:0;top:-5px;font:800 7px ui-sans-serif,system-ui,sans-serif;color:var(--bg);background:var(--accent);padding:1px 4px;border-radius:3px;letter-spacing:.08em}
 @keyframes dtbNow{0%,10%{top:14%}45%,55%{top:60%}90%,100%{top:14%}}
 
 /* ===================== F. GRIDS & SCHEDULES ===================== */
@@ -409,7 +409,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
 .dtb-cal-g i{display:grid;place-items:center;height:22px;border-radius:5px;font-style:normal;color:var(--muted);position:relative;background:rgba(255,255,255,.025)}
 .dtb-cal-g i.o{color:var(--dim);opacity:.45}
 .dtb-cal-g i.ev::after{content:"";position:absolute;bottom:2px;left:50%;width:4px;height:4px;margin-left:-2px;border-radius:50%;background:var(--c,var(--accent))}
-.dtb-cal-g i.today{background:var(--accent);color:#1a1000;font-weight:800;animation:dtbTodayRing 2s ease-out infinite}
+.dtb-cal-g i.today{background:var(--accent);color:var(--bg);font-weight:800;animation:dtbTodayRing 2s ease-out infinite}
 @keyframes dtbTodayRing{0%{box-shadow:0 0 0 0 rgba(var(--accent-rgb),.6)}100%{box-shadow:0 0 0 8px rgba(var(--accent-rgb),0)}}
 
 .dtb-kanban{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;width:100%;max-width:290px;font:600 9px/1.25 ui-sans-serif,system-ui,sans-serif}
@@ -463,7 +463,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
 .dtb-pg i{display:grid;place-items:center;min-width:24px;height:24px;padding:0 6px;border-radius:6px;border:1px solid var(--line);background:var(--card);color:var(--muted);font-style:normal;animation:dtbPage 6s steps(1) infinite;animation-delay:calc(var(--i,0)*-1.2s)}
 .dtb-pg i.nav{animation:none;color:var(--dim)}
 .dtb-pg i.dots{animation:none;border-color:transparent;background:transparent}
-@keyframes dtbPage{0%,19%{background:var(--accent);border-color:var(--accent);color:#1a1000}20%,100%{background:var(--card);border-color:var(--line);color:var(--muted)}}
+@keyframes dtbPage{0%,19%{background:var(--accent);border-color:var(--accent);color:var(--bg)}20%,100%{background:var(--card);border-color:var(--line);color:var(--muted)}}
 .dtb-pg-info{font:600 9.5px ui-sans-serif,system-ui,sans-serif;color:var(--dim);margin-top:8px;text-align:center}
 
 .dtb-toolbar{width:100%;max-width:290px;font:600 9.5px ui-sans-serif,system-ui,sans-serif;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:8px;display:flex;flex-direction:column;gap:7px}
@@ -472,7 +472,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
 .dtb-search::before{content:"";width:8px;height:8px;border:1.5px solid var(--dim);border-radius:50%;box-shadow:3px 3px 0 -1px var(--dim);flex:0 0 auto}
 .dtb-search .dtb-typed{animation:dtbType 5s steps(7,end) infinite}
 .dtb-chip{padding:2px 8px;border-radius:12px;border:1px solid var(--line);background:var(--panel);color:var(--muted);font-size:9px;white-space:nowrap}
-.dtb-chip.on{border-color:var(--c,var(--accent));color:var(--c,var(--accent));background:rgba(var(--c-rgb,var(--accent-rgb)),.12)}
+.dtb-chip.dtb-on{border-color:var(--c,var(--accent));color:var(--c,var(--accent));background:rgba(var(--c-rgb,var(--accent-rgb)),.12)}
 .dtb-chip.tog{animation:dtbChip 5s steps(1) infinite}
 @keyframes dtbChip{0%,35%{border-color:var(--line);color:var(--muted);background:var(--panel)}36%,85%{border-color:var(--c,var(--accent));color:var(--c,var(--accent));background:rgba(var(--c-rgb,var(--accent-rgb)),.12)}86%,100%{border-color:var(--line);color:var(--muted);background:var(--panel)}}
 .dtb-tb-btn{display:grid;place-items:center;width:24px;height:24px;border-radius:6px;border:1px solid var(--line);background:var(--panel);color:var(--muted);font-size:11px}
@@ -546,7 +546,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
 <h3 class="sec">DATA TABLES</h3>
 <div class="gallery">
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="table-data" data-interact="auto-play"><div class="stage">
     <table class="dtb-tbl dtb-zebra"><thead><tr><th>Service</th><th>Region</th><th class="dtb-num">p95 ms</th></tr></thead><tbody>
       <tr><td>api-gateway</td><td class="dtb-mut">us-east-1</td><td class="dtb-num">142</td></tr>
       <tr><td>auth</td><td class="dtb-mut">us-east-1</td><td class="dtb-num">88</td></tr>
@@ -556,7 +556,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
     </tbody></table>
   </div><div class="meta"><div class="nm">Zebra Table + Scan</div><span class="ref">.dtb-tbl.dtb-zebra</span><div class="desc">The baseline data table: uppercase header, zebra rows, right-aligned numerics, and a soft highlight that scans down the rows. Start every tabular report here.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="table-data" data-interact="auto-play"><div class="stage">
     <table class="dtb-tbl dtb-hoverglow"><thead><tr><th>Account</th><th>Owner</th><th class="dtb-num">Spend</th></tr></thead><tbody>
       <tr><td>prod-core</td><td class="dtb-mut">platform</td><td class="dtb-num">$41.2K</td></tr>
       <tr><td>data-lake</td><td class="dtb-mut">analytics</td><td class="dtb-num">$18.7K</td></tr>
@@ -565,7 +565,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
     </tbody></table>
   </div><div class="meta"><div class="nm">Hover-Glow Rows</div><span class="ref">.dtb-tbl.dtb-hoverglow</span><div class="desc">Rows light up one after another with a tinted fill and a left accent bar — the hover treatment, demonstrated on a loop so it reads in a static export.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="table-data" data-interact="auto-play"><div class="stage">
     <div class="dtb-sticky">
       <div class="dtb-sticky-head dtb-row"><span>Package</span><span>Version</span><span class="dtb-num">Size</span></div>
       <div class="dtb-sticky-body">
@@ -583,7 +583,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
     </div>
   </div><div class="meta"><div class="nm">Sticky Header Scroll</div><span class="ref">.dtb-sticky</span><div class="desc">Rows scroll beneath a header that stays put and casts a shadow — a grid-based table for long lists inside a fixed-height panel.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="table-data" data-interact="auto-play"><div class="stage">
     <table class="dtb-tbl dtb-dense"><thead><tr><th>Sym</th><th class="dtb-num">Bid</th><th class="dtb-num">Ask</th><th class="dtb-num">Vol</th><th class="dtb-num">Chg</th></tr></thead><tbody>
       <tr><td><span class="dtb-live-dot"></span>AMZN</td><td class="dtb-num">188.42</td><td class="dtb-num">188.45</td><td class="dtb-num">41.2M</td><td class="dtb-num dtb-up">+1.8%</td></tr>
       <tr><td><span class="dtb-live-dot"></span>MSFT</td><td class="dtb-num">412.10</td><td class="dtb-num">412.16</td><td class="dtb-num">18.9M</td><td class="dtb-num dtb-down">-0.4%</td></tr>
@@ -594,16 +594,16 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
     </tbody></table>
   </div><div class="meta"><div class="nm">Dense Numeric Table</div><span class="ref">.dtb-tbl.dtb-dense</span><div class="desc">Compact rows, tabular-figure monospace numbers and a live-feed dot per row — the terminal-style layout for tickers, telemetry and anything with many columns.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="table-data" data-interact="auto-play"><div class="stage">
     <table class="dtb-tbl dtb-select"><thead><tr><th><span class="dtb-cb"></span></th><th>Ticket</th><th>Status</th></tr></thead><tbody>
-      <tr><td><span class="dtb-cb"></span></td><td>INC-4021</td><td><span class="dtb-pill ok">Resolved</span></td></tr>
+      <tr><td><span class="dtb-cb"></span></td><td>INC-4021</td><td><span class="dtb-pill dtb-ok">Resolved</span></td></tr>
       <tr><td><span class="dtb-cb"></span></td><td>INC-4022</td><td><span class="dtb-pill warn">Pending</span></td></tr>
-      <tr><td><span class="dtb-cb on"></span></td><td>INC-4023</td><td><span class="dtb-pill info">In review</span></td></tr>
+      <tr><td><span class="dtb-cb dtb-on"></span></td><td>INC-4023</td><td><span class="dtb-pill info">In review</span></td></tr>
       <tr><td><span class="dtb-cb"></span></td><td>INC-4024</td><td><span class="dtb-pill off">Closed</span></td></tr>
     </tbody></table>
   </div><div class="meta"><div class="nm">Row Selection</div><span class="ref">.dtb-tbl.dtb-select</span><div class="desc">A checkbox column where rows tick themselves on and off, tinting the whole row while selected — bulk-action tables and pickers.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="table-data" data-interact="auto-play"><div class="stage">
     <table class="dtb-tbl dtb-expand"><thead><tr><th>Order</th><th>Customer</th><th class="dtb-num">Total</th></tr></thead><tbody>
       <tr><td>#10482</td><td class="dtb-mut">Acme Corp</td><td class="dtb-num">$1,240</td></tr>
       <tr><td><span class="dtb-chev"></span>#10483</td><td class="dtb-mut">Globex</td><td class="dtb-num">$862</td></tr>
@@ -612,7 +612,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
     </tbody></table>
   </div><div class="meta"><div class="nm">Expandable Detail Row</div><span class="ref">.dtb-tbl.dtb-expand</span><div class="desc">A chevron rotates and a detail panel slides open beneath its row, then folds away — master/detail without leaving the table.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="table-data" data-interact="auto-play"><div class="stage">
     <table class="dtb-tbl"><thead><tr><th>Key</th><th>Value</th></tr></thead><tbody>
       <tr><td class="dtb-mut">region</td><td class="dtb-mono">us-east-1</td></tr>
       <tr><td class="dtb-mut">instance</td><td><span class="dtb-edit-cell"><span class="dtb-typed">m7g.large</span><span class="dtb-caret"></span></span><span class="dtb-edit-hint">editing</span></td></tr>
@@ -621,7 +621,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
     </tbody></table>
   </div><div class="meta"><div class="nm">Inline Cell Edit</div><span class="ref">.dtb-edit-cell</span><div class="desc">One cell becomes a focused input with a blinking caret and a value being typed — the editing state of an inline-editable grid.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="table-data" data-interact="auto-play"><div class="stage">
     <table class="dtb-tbl dtb-totals"><thead><tr><th>Line</th><th class="dtb-num">Qty</th><th class="dtb-num">Amount</th></tr></thead><tbody>
       <tr><td>Compute</td><td class="dtb-num">412</td><td class="dtb-num">$812</td></tr>
       <tr><td>Storage</td><td class="dtb-num">180</td><td class="dtb-num">$296</td></tr>
@@ -629,7 +629,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
     </tbody><tfoot><tr><td>Total</td><td class="dtb-num"><span class="dtb-count b"></span></td><td class="dtb-num">$<span class="dtb-count a"></span></td></tr><tr><td class="dtb-mut">Coverage</td><td class="dtb-num" colspan="2"><span class="dtb-count c"></span>%</td></tr></tfoot></table>
   </div><div class="meta"><div class="nm">Totals Row + Count-Up</div><span class="ref">.dtb-tbl.dtb-totals</span><div class="desc">A footer row that counts its totals up from zero every few seconds — pure CSS via a registered custom property driving a counter.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="table-data" data-interact="auto-play"><div class="stage">
     <table class="dtb-tbl dtb-skel"><thead><tr><th><span class="dtb-sk w2"></span></th><th><span class="dtb-sk w4"></span></th><th><span class="dtb-sk w2"></span></th></tr></thead><tbody>
       <tr><td><span class="dtb-sk w3"></span></td><td><span class="dtb-sk w1"></span></td><td><span class="dtb-sk w2"></span></td></tr>
       <tr><td><span class="dtb-sk w1"></span></td><td><span class="dtb-sk w3"></span></td><td><span class="dtb-sk w4"></span></td></tr>
@@ -643,7 +643,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
 <h3 class="sec">SORTING &amp; REORDER</h3>
 <div class="gallery">
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="table-data" data-interact="auto-play"><div class="stage">
     <table class="dtb-tbl dtb-sort"><thead><tr><th>Host</th><th class="dtb-num dtb-sorted">CPU %<span class="dtb-sort-arrow">▲</span></th><th class="dtb-num">Mem %</th></tr></thead><tbody>
       <tr><td>web-01</td><td class="dtb-num">12</td><td class="dtb-num">41</td></tr>
       <tr><td>web-02</td><td class="dtb-num">37</td><td class="dtb-num">58</td></tr>
@@ -652,7 +652,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
     </tbody></table>
   </div><div class="meta"><div class="nm">Sortable Header</div><span class="ref">.dtb-tbl.dtb-sort</span><div class="desc">A sorted column with a flipping direction arrow while two rows trade places — the visual grammar of a click-to-sort header.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new" data-interact="click"><div class="stage">
+  <div class="tile is-new" data-ctype="table-data" data-interact="click"><div class="stage">
     <table class="dtb-tbl dtb-rowmove"><thead><tr><th></th><th>Priority</th><th>Rule</th></tr></thead><tbody>
       <tr><td class="dtb-arrows"><span class="dtb-arr">▲</span><span class="dtb-arr">▼</span></td><td class="dtb-mono">1</td><td>Allow VPN → LAN</td></tr>
       <tr class="mv" style="--to:1"><td class="dtb-arrows"><span class="dtb-arr">▲</span><span class="dtb-arr">▼</span></td><td class="dtb-mono">2</td><td>Block guest → IoT</td></tr>
@@ -661,7 +661,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
     </tbody></table>
   </div><div class="meta"><div class="nm">Row Move Arrows</div><span class="ref">.dtb-tbl.dtb-rowmove</span><div class="desc">A leading column of ▲▼ controls; the pressed arrow lights up and its row lifts over the one above and settles into the slot — manual ordering for rules, priorities and playlists. <b>Click the arrows to try it.</b></div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new" data-interact="click"><div class="stage">
+  <div class="tile is-new" data-ctype="table-data" data-interact="click"><div class="stage">
     <table class="dtb-tbl dtb-resort"><thead><tr><th>Region</th><th class="dtb-num dtb-sortcol">Cost<span class="dtb-sort-arrow">▲</span></th><th class="dtb-num">Hosts</th></tr></thead><tbody>
       <tr style="--to:2"><td>us-east-1</td><td class="dtb-num dtb-sortcol">$41.2K</td><td class="dtb-num">142</td></tr>
       <tr style="--to:-1"><td>eu-west-1</td><td class="dtb-num dtb-sortcol">$18.7K</td><td class="dtb-num">61</td></tr>
@@ -670,7 +670,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
     </tbody></table>
   </div><div class="meta"><div class="nm">Flash + Resort</div><span class="ref">.dtb-tbl.dtb-resort</span><div class="desc">Clicking a header: the column flashes, the sort arrow flips, the rows dim and glide to their new positions, then settle — the reorder cue of a sortable data grid. Give each row its offset in <code>--to</code>. <b>Click the Cost header to sort it yourself.</b></div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new" data-interact="click"><div class="stage">
+  <div class="tile is-new" data-ctype="table-data" data-interact="click"><div class="stage">
     <table class="dtb-tbl dtb-fall"><thead><tr><th>Player</th><th class="dtb-num">Score<span class="dtb-sort-arrow">▼</span></th><th class="dtb-num">Wins</th></tr></thead><tbody>
       <tr style="--to:1;--i:0;--rot:-5deg"><td>Comet</td><td class="dtb-num">7,940</td><td class="dtb-num">31</td></tr>
       <tr style="--to:-1;--i:1;--rot:4deg"><td>Atlas</td><td class="dtb-num">9,812</td><td class="dtb-num">44</td></tr>
@@ -684,9 +684,9 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
 <h3 class="sec">STATUS &amp; DATA CELLS</h3>
 <div class="gallery">
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="table-cell" data-interact="auto-play"><div class="stage">
     <table class="dtb-tbl"><thead><tr><th>Check</th><th>Last run</th><th>State</th></tr></thead><tbody>
-      <tr><td>TLS expiry</td><td class="dtb-mut">2m ago</td><td><span class="dtb-pill ok">Pass</span></td></tr>
+      <tr><td>TLS expiry</td><td class="dtb-mut">2m ago</td><td><span class="dtb-pill dtb-ok">Pass</span></td></tr>
       <tr><td>Disk 80%</td><td class="dtb-mut">2m ago</td><td><span class="dtb-pill warn">Warn</span></td></tr>
       <tr><td>DB replica lag</td><td class="dtb-mut">1m ago</td><td><span class="dtb-pill crit">Fail</span></td></tr>
       <tr><td>Backups</td><td class="dtb-mut">1h ago</td><td><span class="dtb-pill info">Running</span></td></tr>
@@ -694,7 +694,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
     </tbody></table>
   </div><div class="meta"><div class="nm">Status Pill Column</div><span class="ref">.dtb-pill</span><div class="desc">Tinted status pills in a column — pass, warn, fail, running, skipped — with the failing state pulsing so it cannot be missed.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="table-cell" data-interact="auto-play"><div class="stage">
     <table class="dtb-tbl"><thead><tr><th>Migration</th><th>Progress</th></tr></thead><tbody>
       <tr><td>users</td><td><span class="dtb-bar" style="--w:100%;--c:var(--pos)"><i></i></span><span class="dtb-bar-v">100%</span></td></tr>
       <tr><td>orders</td><td><span class="dtb-bar" style="--w:72%"><i></i></span><span class="dtb-bar-v">72%</span></td></tr>
@@ -703,7 +703,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
     </tbody></table>
   </div><div class="meta"><div class="nm">Progress Bar Cells</div><span class="ref">.dtb-bar</span><div class="desc">Inline progress bars that fill to their value inside each cell — set <code>--w</code> per row and recolour with <code>--c</code>.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="table-cell" data-interact="auto-play"><div class="stage">
     <table class="dtb-tbl"><thead><tr><th>Metric</th><th>7d</th><th class="dtb-num">Now</th></tr></thead><tbody>
       <tr><td>Requests</td><td><svg class="dtb-spark" viewBox="0 0 64 18"><polyline class="dtb-spark-line" points="1,14 10,11 19,13 28,8 37,10 46,5 55,7 63,3"/><circle class="dtb-spark-dot" cx="63" cy="3" r="2"/></svg></td><td class="dtb-num">48.2K</td></tr>
       <tr><td>Errors</td><td><svg class="dtb-spark" viewBox="0 0 64 18" style="--c:var(--neg)"><polyline class="dtb-spark-line" points="1,6 10,9 19,7 28,11 37,9 46,14 55,12 63,15"/><circle class="dtb-spark-dot" cx="63" cy="15" r="2"/></svg></td><td class="dtb-num">0.3%</td></tr>
@@ -712,7 +712,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
     </tbody></table>
   </div><div class="meta"><div class="nm">Sparkline Column</div><span class="ref">.dtb-spark</span><div class="desc">A mini trend line drawn into each row with a blinking endpoint — the at-a-glance history column for metric tables.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="table-cell" data-interact="auto-play"><div class="stage">
     <table class="dtb-tbl dtb-delta"><thead><tr><th>KPI</th><th class="dtb-num">Value</th><th class="dtb-num">Δ vs LW</th></tr></thead><tbody>
       <tr><td>Signups</td><td class="dtb-num">1,284</td><td class="dtb-num dtb-up dtb-flash">▲ 12.4%</td></tr>
       <tr><td>Churn</td><td class="dtb-num">2.1%</td><td class="dtb-num dtb-up">▼ 0.3 pt</td></tr>
@@ -722,7 +722,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
     </tbody></table>
   </div><div class="meta"><div class="nm">Delta Cells</div><span class="ref">.dtb-delta</span><div class="desc">Change-versus-baseline cells with directional arrows in success/danger colours, each flashing when its value updates.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="table-cell" data-interact="auto-play"><div class="stage">
     <table class="dtb-tbl"><thead><tr><th>Member</th><th>Role</th><th class="dtb-num">Load</th></tr></thead><tbody>
       <tr><td><span class="dtb-av">JD<i></i></span>J. Doe</td><td class="dtb-mut">On-call</td><td class="dtb-num">7</td></tr>
       <tr><td><span class="dtb-av" style="--c:var(--pos);--c-rgb:var(--pos-rgb)">RP<i></i></span>R. Patel</td><td class="dtb-mut">TAM</td><td class="dtb-num">12</td></tr>
@@ -731,7 +731,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
     </tbody></table>
   </div><div class="meta"><div class="nm">Avatar + Presence Column</div><span class="ref">.dtb-av</span><div class="desc">Initial avatars with a presence dot (online pulsing, away, offline) beside each name — people tables, assignees, reviewers.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="table-cell" data-interact="auto-play"><div class="stage">
     <table class="dtb-tbl"><thead><tr><th>Repo</th><th>Labels</th></tr></thead><tbody>
       <tr><td>prism</td><td><span class="dtb-tag hot">hot</span><span class="dtb-tag">html</span><span class="dtb-tag">mcp</span></td></tr>
       <tr><td>mcweb</td><td><span class="dtb-tag">python</span><span class="dtb-tag new">new</span></td></tr>
@@ -740,7 +740,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
     </tbody></table>
   </div><div class="meta"><div class="nm">Tag Chip Cells</div><span class="ref">.dtb-tag</span><div class="desc">Small label chips packed into a cell, with <code>.hot</code> glowing in the accent and <code>.new</code> in success green — labels, categories, environments.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="table-cell" data-interact="auto-play"><div class="stage">
     <table class="dtb-tbl dtb-heat"><thead><tr><th>Region</th><th class="dtb-num">Mon</th><th class="dtb-num">Tue</th><th class="dtb-num">Wed</th><th class="dtb-num">Thu</th></tr></thead><tbody>
       <tr><td>us-east</td><td class="dtb-hc" style="--h:.9">912</td><td class="dtb-hc" style="--h:.7">744</td><td class="dtb-hc" style="--h:1">988</td><td class="dtb-hc" style="--h:.5">521</td></tr>
       <tr><td>eu-west</td><td class="dtb-hc" style="--h:.3">301</td><td class="dtb-hc" style="--h:.45">460</td><td class="dtb-hc" style="--h:.35">377</td><td class="dtb-hc" style="--h:.6">640</td></tr>
@@ -749,7 +749,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
     </tbody></table>
   </div><div class="meta"><div class="nm">Heat-Shaded Cells</div><span class="ref">.dtb-heat</span><div class="desc">Numeric cells shaded by magnitude with a slow brightness breathe — set <code>--h</code> from 0 to 1 per cell to make a table read like a heatmap.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="table-cell" data-interact="auto-play"><div class="stage">
     <table class="dtb-tbl dtb-ticker"><thead><tr><th>Time</th><th>Event</th><th class="dtb-num">Value</th></tr></thead><tbody>
       <tr><td class="dtb-mono dtb-dim">14:02:11</td><td>deploy · api</td><td class="dtb-num dtb-up">ok</td></tr>
       <tr><td class="dtb-mono dtb-dim">14:01:58</td><td>p95 latency</td><td class="dtb-num"><span class="dtb-tk">138 ms</span></td></tr>
@@ -763,7 +763,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
 <h3 class="sec">MATRICES &amp; COMPARISON</h3>
 <div class="gallery">
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="table-matrix" data-interact="auto-play"><div class="stage">
     <table class="dtb-tbl dtb-matrix"><thead><tr><th>Feature</th><th>Free</th><th>Team</th><th>Ent.</th></tr></thead><tbody>
       <tr><td>SSO</td><td><span class="dtb-no">—</span></td><td><span class="dtb-yes">✓</span></td><td><span class="dtb-yes">✓</span></td></tr>
       <tr><td>Audit log</td><td><span class="dtb-no">—</span></td><td><span class="dtb-part"></span></td><td><span class="dtb-yes">✓</span></td></tr>
@@ -772,7 +772,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
     </tbody></table>
   </div><div class="meta"><div class="nm">Feature Matrix</div><span class="ref">.dtb-tbl.dtb-matrix</span><div class="desc">Plans across the top, capabilities down the side, checks popping in one by one — with a half-disc for partial support.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="table-matrix" data-interact="auto-play"><div class="stage">
     <div class="dtb-hm">
       <span></span><b>M</b><b>T</b><b>W</b><b>T</b><b>F</b><b>S</b><b>S</b>
       <span>00–06</span><i style="--a:.15;--d:0"></i><i style="--a:.2;--d:1"></i><i style="--a:.15;--d:2"></i><i style="--a:.25;--d:3"></i><i style="--a:.2;--d:4"></i><i style="--a:.1;--d:5"></i><i style="--a:.1;--d:6"></i>
@@ -782,7 +782,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
     </div>
   </div><div class="meta"><div class="nm">Heatmap Grid</div><span class="ref">.dtb-hm</span><div class="desc">A labelled cell grid where opacity carries the value (<code>--a</code>) and a diagonal wave (<code>--d</code>) breathes across it — traffic by hour and weekday.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="table-matrix" data-interact="auto-play"><div class="stage">
     <table class="dtb-tbl dtb-pivot"><thead><tr><th></th><th class="dtb-num">Q1</th><th class="dtb-num">Q2</th><th class="dtb-num">Q3</th></tr></thead><tbody>
       <tr><th class="dtb-rh">North</th><td>412</td><td>468</td><td>501</td></tr>
       <tr><th class="dtb-rh">South</th><td>289</td><td>301</td><td>344</td></tr>
@@ -791,7 +791,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
     </tbody></table>
   </div><div class="meta"><div class="nm">Pivot Crosshair</div><span class="ref">.dtb-tbl.dtb-pivot</span><div class="desc">Row headers and column headers with a highlighted row, column and their intersection — the pivot-table reading aid.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="table-matrix" data-interact="auto-play"><div class="stage">
     <div class="dtb-risk">
       <span></span><b>Rare</b><b>Poss.</b><b>Likely</b><b>Cert.</b>
       <span>Severe</span><i class="m"></i><i class="h"></i><i class="h"></i><i class="h"></i>
@@ -801,7 +801,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
     </div>
   </div><div class="meta"><div class="nm">Risk Matrix</div><span class="ref">.dtb-risk</span><div class="desc">Likelihood against impact in green, amber and red zones with a pulsing marker on the assessed cell — risk registers and incident reviews.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="table-matrix" data-interact="auto-play"><div class="stage">
     <table class="dtb-tbl dtb-compare"><thead><tr><th></th><th>Basic</th><th class="dtb-rec">Pro<span class="dtb-rec-badge">RECOMMENDED</span></th><th>Max</th></tr></thead><tbody>
       <tr><td>Seats</td><td>3</td><td class="dtb-rec">25</td><td>∞</td></tr>
       <tr><td>Storage</td><td>10 GB</td><td class="dtb-rec">1 TB</td><td>10 TB</td></tr>
@@ -810,7 +810,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
     </tbody></table>
   </div><div class="meta"><div class="nm">Comparison Columns</div><span class="ref">.dtb-tbl.dtb-compare</span><div class="desc">Side-by-side options with one column framed and glowing as the recommendation — pricing tables and vendor comparisons.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="table-matrix" data-interact="auto-play"><div class="stage">
     <table class="dtb-tbl dtb-corr"><thead><tr><th></th><th>CPU</th><th>Mem</th><th>Lat</th><th>Err</th></tr></thead><tbody>
       <tr><th class="dtb-rh">CPU</th><td class="d">1.0</td><td class="p" style="--v:.6">.61</td><td class="p" style="--v:.8">.82</td><td class="p" style="--v:.3">.27</td></tr>
       <tr><th class="dtb-rh">Mem</th><td class="p" style="--v:.6">.61</td><td class="d">1.0</td><td class="p" style="--v:.4">.38</td><td class="n" style="--v:.2">-.14</td></tr>
@@ -819,7 +819,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
     </tbody></table>
   </div><div class="meta"><div class="nm">Correlation Matrix</div><span class="ref">.dtb-tbl.dtb-corr</span><div class="desc">A symmetric matrix with diverging shading (blue positive, red negative, <code>--v</code> strength) and a softly blinking identity diagonal.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="table-matrix" data-interact="auto-play"><div class="stage">
     <div>
       <div class="dtb-cal-wrap">
       <div class="dtb-contrib">
@@ -835,7 +835,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
     </div>
   </div><div class="meta"><div class="nm">Contribution Calendar</div><span class="ref">.dtb-contrib</span><div class="desc">The activity-square calendar: fourteen weeks of cells shaded by volume, lighting up in a diagonal sweep, with ember sparks rising from the busiest weeks and a less-to-more legend.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="table-matrix" data-interact="auto-play"><div class="stage">
     <div>
       <div class="dtb-forge-cap"><b>1,284</b> commits · <b>3,902</b> reviews in the last year</div>
       <div class="dtb-cal-wrap">
@@ -851,7 +851,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
 <h3 class="sec">KEY VALUE &amp; DEFINITION</h3>
 <div class="gallery">
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="key-value" data-interact="auto-play"><div class="stage">
     <div class="dtb-kv">
       <span class="k">Account ID</span><span class="lead"></span><span class="v">7828…9315</span>
       <span class="k">Region</span><span class="lead"></span><span class="v">us-east-1</span>
@@ -861,7 +861,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
     </div>
   </div><div class="meta"><div class="nm">Key-Value with Leaders</div><span class="ref">.dtb-kv</span><div class="desc">Label on the left, value on the right, joined by dotted leaders — the classic fact sheet layout, values fading in as they populate.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="key-value" data-interact="auto-play"><div class="stage">
     <div class="dtb-spec">
       <div class="dtb-spec-h">m7g.large <small>Graviton3</small></div>
       <div class="dtb-spec-r"><span class="k">vCPU</span><span class="v">2</span></div>
@@ -872,7 +872,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
     </div>
   </div><div class="meta"><div class="nm">Spec Card</div><span class="ref">.dtb-spec</span><div class="desc">A titled card of label/value rows with a highlight that walks down the rows — product specs, instance types, device sheets.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="key-value" data-interact="auto-play"><div class="stage">
     <dl class="dtb-def">
       <dt>RPO</dt><dd>Recovery point objective — the maximum tolerated data loss, measured in time.</dd>
       <dt>RTO</dt><dd>Recovery time objective — how long a restore may take before it breaches the SLA.</dd>
@@ -880,7 +880,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
     </dl>
   </div><div class="meta"><div class="nm">Definition List</div><span class="ref">.dtb-def</span><div class="desc">Term-and-definition pairs with a rail under each definition; the last entry types itself out — glossaries and acronym keys.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="key-value" data-interact="auto-play"><div class="stage">
     <div class="dtb-insp">
       <div class="dtb-insp-h"><span class="dtb-chev"></span>Layout</div>
       <div class="dtb-insp-r"><span class="k">display</span><span class="v s">flex</span></div>
@@ -896,7 +896,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
     </div>
   </div><div class="meta"><div class="nm">Properties Inspector</div><span class="ref">.dtb-insp</span><div class="desc">Grouped property rows under collapsible headers, one group folding and unfolding — the side-panel inspector of design and dev tools.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="key-value" data-interact="auto-play"><div class="stage">
     <pre class="dtb-json">{
   <span class="dtb-jk">"id"</span>: <span class="dtb-js">"charts-gauge-cluster"</span>,
   <span class="dtb-jk">"gallery"</span>: <span class="dtb-js">"charts"</span>,
@@ -913,7 +913,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
 <h3 class="sec">LISTS &amp; TREES</h3>
 <div class="gallery">
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="list-tree" data-interact="auto-play"><div class="stage">
     <div class="dtb-tree">
       <div class="dtb-tree-n"><span class="dtb-chev"></span><span class="ic"></span>showcase</div>
       <div class="dtb-tree-kids">
@@ -927,7 +927,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
     </div>
   </div><div class="meta"><div class="nm">File Tree</div><span class="ref">.dtb-tree</span><div class="desc">A folder whose chevron turns as its children slide open, with a selected file row — explorers, repo browsers, sitemap outlines.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="list-tree" data-interact="auto-play"><div class="stage">
     <div class="dtb-org">
       <div class="dtb-org-n root">Platform<small>VP Eng</small></div>
       <div class="dtb-org-v"></div>
@@ -939,7 +939,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
     </div>
   </div><div class="meta"><div class="nm">Org Chart</div><span class="ref">.dtb-org</span><div class="desc">A root node over three children joined by elbow connectors, with pulses travelling down to each branch — org charts and ownership trees.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="list-tree" data-interact="auto-play"><div class="stage">
     <ul class="dtb-outline">
       <li style="--i:0">Migration plan
         <ul>
@@ -957,7 +957,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
     </ul>
   </div><div class="meta"><div class="nm">Nested Outline</div><span class="ref">.dtb-outline</span><div class="desc">A two-level outline with round and diamond bullets that light up in reading order along a dashed rail — plans, agendas, hierarchies.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="list-tree" data-interact="auto-play"><div class="stage">
     <div class="dtb-steps">
       <div class="dtb-step" style="--i:0"><i>1</i><b>Snapshot</b>RDS snapshot taken</div>
       <div class="dtb-step" style="--i:1"><i>2</i><b>Migrate</b>schema v42 applied</div>
@@ -966,9 +966,9 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
     </div>
   </div><div class="meta"><div class="nm">Numbered Steps</div><span class="ref">.dtb-steps</span><div class="desc">Numbered circles on a vertical track that fills green as each step completes — runbooks, onboarding, release procedures.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="list-tree" data-interact="auto-play"><div class="stage">
     <ul class="dtb-check">
-      <li class="dtb-ck-item done"><span class="dtb-cb on"></span>Rotate access keys</li>
+      <li class="dtb-ck-item done"><span class="dtb-cb dtb-on"></span>Rotate access keys</li>
       <li class="dtb-ck-item" style="--i:0"><span class="dtb-cb"></span>Enable MFA on root</li>
       <li class="dtb-ck-item" style="--i:1"><span class="dtb-cb"></span>Close port 22 to 0.0.0.0/0</li>
       <li class="dtb-ck-item" style="--i:2"><span class="dtb-cb"></span>Turn on GuardDuty</li>
@@ -976,20 +976,20 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
     </ul>
   </div><div class="meta"><div class="nm">Checklist</div><span class="ref">.dtb-check</span><div class="desc">Items check themselves off in sequence, striking through as they complete — audit checklists and task lists in progress.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="list-tree" data-interact="auto-play"><div class="stage">
     <div class="dtb-rank">
-      <div class="dtb-rank-r g"><span class="rk">1</span><span>Atlas</span><span class="bar"><i style="--w:96%"></i></span><span class="sc">9,812</span></div>
-      <div class="dtb-rank-r s dn"><span class="rk">2</span><span>Comet</span><span class="bar"><i style="--w:78%"></i></span><span class="sc">7,940</span></div>
-      <div class="dtb-rank-r b up"><span class="rk">3</span><span>Ember</span><span class="bar"><i style="--w:80%"></i></span><span class="sc">8,105</span></div>
-      <div class="dtb-rank-r"><span class="rk">4</span><span>Pixel</span><span class="bar"><i style="--w:51%"></i></span><span class="sc">5,220</span></div>
+      <div class="dtb-rank-r g"><span class="rk">1</span><span>Atlas</span><span class="dtb-rbar"><i style="--w:96%"></i></span><span class="sc">9,812</span></div>
+      <div class="dtb-rank-r s dn"><span class="rk">2</span><span>Comet</span><span class="dtb-rbar"><i style="--w:78%"></i></span><span class="sc">7,940</span></div>
+      <div class="dtb-rank-r b up"><span class="rk">3</span><span>Ember</span><span class="dtb-rbar"><i style="--w:80%"></i></span><span class="sc">8,105</span></div>
+      <div class="dtb-rank-r"><span class="rk">4</span><span>Pixel</span><span class="dtb-rbar"><i style="--w:51%"></i></span><span class="sc">5,220</span></div>
     </div>
   </div><div class="meta"><div class="nm">Leaderboard Swap</div><span class="ref">.dtb-rank</span><div class="desc">Ranked rows with medal badges and score bars; two competitors trade places as a score overtakes — leaderboards and top-N lists.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="list-tree" data-interact="auto-play"><div class="stage">
     <div class="dtb-tl">
       <div class="dtb-now"></div>
-      <div class="dtb-tl-r"><span class="t">09:00</span><span class="d ok"></span><span class="e">Deploy v4.2<small>api</small></span></div>
-      <div class="dtb-tl-r"><span class="t">09:40</span><span class="d ok"></span><span class="e">Canary 10%<small>ok</small></span></div>
+      <div class="dtb-tl-r"><span class="t">09:00</span><span class="d dtb-ok"></span><span class="e">Deploy v4.2<small>api</small></span></div>
+      <div class="dtb-tl-r"><span class="t">09:40</span><span class="d dtb-ok"></span><span class="e">Canary 10%<small>ok</small></span></div>
       <div class="dtb-tl-r"><span class="t">10:15</span><span class="d warn"></span><span class="e">Latency alert<small>p95</small></span></div>
       <div class="dtb-tl-r"><span class="t">10:30</span><span class="d"></span><span class="e">Rollout 100%<small>pending</small></span></div>
     </div>
@@ -1000,7 +1000,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
 <h3 class="sec">GRIDS &amp; SCHEDULES</h3>
 <div class="gallery">
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="grid-layout" data-interact="auto-play"><div class="stage">
     <div class="dtb-grid">
       <div class="dtb-rec" style="--i:0"><b>us-east-1</b><small>14 clusters</small><em>99.98%</em></div>
       <div class="dtb-rec" style="--i:1;--c:var(--pos)"><b>eu-west-1</b><small>9 clusters</small><em>100%</em></div>
@@ -1011,7 +1011,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
     </div>
   </div><div class="meta"><div class="nm">Record Card Grid</div><span class="ref">.dtb-grid</span><div class="desc">Records as a grid of small cards with a coloured figure each, revealed in a stagger — the card-view alternative to a table.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="grid-layout" data-interact="auto-play"><div class="stage">
     <div class="dtb-gantt">
       <div class="dtb-today"></div>
       <div class="dtb-gantt-r"><span>Discovery</span><span class="tr"><i style="--s:0%;--w:22%;--i:0;--c:var(--pos)"></i></span></div>
@@ -1022,7 +1022,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
     </div>
   </div><div class="meta"><div class="nm">Gantt Rows</div><span class="ref">.dtb-gantt</span><div class="desc">Phase bars on gridded tracks (<code>--s</code> start, <code>--w</code> width), a diamond milestone, and a today line sliding across — project plans.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="grid-layout" data-interact="auto-play"><div class="stage">
     <div class="dtb-sched">
       <span></span><b>Mon</b><b>Tue</b><b>Wed</b><b>Thu</b><b>Fri</b>
       <span>09</span><i class="ev"></i><i></i><i class="ev" style="--c-rgb:var(--pos-rgb)"></i><i></i><i class="ev"></i>
@@ -1032,7 +1032,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
     </div>
   </div><div class="meta"><div class="nm">Weekly Schedule Grid</div><span class="ref">.dtb-sched</span><div class="desc">Hours down, weekdays across, colour-blocked slots and the current slot pulsing in the accent — rotas, room bookings, on-call.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="grid-layout" data-interact="auto-play"><div class="stage">
     <div class="dtb-cal">
       <div class="dtb-cal-h">September 2026 <small>‹ ›</small></div>
       <div class="dtb-cal-g">
@@ -1045,7 +1045,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
     </div>
   </div><div class="meta"><div class="nm">Month Calendar</div><span class="ref">.dtb-cal</span><div class="desc">A compact month grid with weekday headers, event dots in token colours, and today ringed by a pulsing halo — date pickers and planning views.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="grid-layout" data-interact="auto-play"><div class="stage">
     <div class="dtb-kanban">
       <div class="dtb-kan-col"><b>To do</b><div class="dtb-kan-card">Write ADR</div><div class="dtb-kan-card out" style="--c:var(--accent)">Fix flaky CI</div><div class="dtb-kan-card" style="--c:var(--crit)">Rotate certs</div></div>
       <div class="dtb-kan-col"><b>Doing</b><div class="dtb-kan-card" style="--c:var(--pos)">Gallery: tables</div><div class="dtb-kan-card in" style="--c:var(--accent)">Fix flaky CI</div></div>
@@ -1053,7 +1053,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
     </div>
   </div><div class="meta"><div class="nm">Kanban Columns</div><span class="ref">.dtb-kanban</span><div class="desc">Three status columns of cards; one card leaves To-do and lands in Doing with a green confirmation ring — boards and workflow states.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="grid-layout" data-interact="auto-play"><div class="stage">
     <div class="dtb-bento">
       <div class="w2 glow"><small>Monthly spend</small><em style="--c:var(--accent)">$18.2K</em></div>
       <div><small>Uptime</small><em style="--c:var(--pos)">99.98</em></div>
@@ -1063,7 +1063,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
     </div>
   </div><div class="meta"><div class="nm">Bento Stat Grid</div><span class="ref">.dtb-bento</span><div class="desc">Mixed-span tiles (<code>.w2</code>, <code>.h2</code>) holding one figure, sparkline or bar each, with the hero tile glowing — dashboard summaries.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="grid-layout" data-interact="auto-play"><div class="stage">
     <div class="dtb-masonry">
       <div><div class="dtb-mas" style="height:54px;--i:0"></div><div class="dtb-mas" style="height:36px;--i:3"></div><div class="dtb-mas" style="height:44px;--i:6"></div></div>
       <div><div class="dtb-mas" style="height:38px;--i:1"></div><div class="dtb-mas" style="height:58px;--i:4"></div><div class="dtb-mas" style="height:30px;--i:7"></div></div>
@@ -1076,7 +1076,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
 <h3 class="sec">LEDGERS, LOGS &amp; TOOLBARS</h3>
 <div class="gallery">
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="table-ledger" data-interact="auto-play"><div class="stage">
     <table class="dtb-tbl dtb-ledger"><thead><tr><th>Date</th><th>Memo</th><th class="dtb-num">Amount</th><th class="dtb-num">Balance</th></tr></thead><tbody>
       <tr><td class="dtb-mono dtb-dim">09-04</td><td>Refund · #10471</td><td class="dtb-num cr">+120.00</td><td class="dtb-num bal">4,382.10</td></tr>
       <tr><td class="dtb-mono dtb-dim">09-03</td><td>AWS · Aug</td><td class="dtb-num dr">-1,812.44</td><td class="dtb-num bal">4,262.10</td></tr>
@@ -1085,7 +1085,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
     </tbody><tfoot><tr><td colspan="3">Closing balance</td><td class="dtb-num">4,382.10</td></tr></tfoot></table>
   </div><div class="meta"><div class="nm">Ledger + Running Balance</div><span class="ref">.dtb-tbl.dtb-ledger</span><div class="desc">Credits in green, debits in red, a running balance column and a closing total, with the newest entry sliding in at the top.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="table-ledger" data-interact="auto-play"><div class="stage">
     <table class="dtb-tbl dtb-diff"><thead><tr><th></th><th>Setting</th><th>Value</th></tr></thead><tbody>
       <tr><td> </td><td>instance</td><td class="dtb-mono">m6g.large</td></tr>
       <tr class="del"><td>−</td><td>min_size</td><td class="dtb-mono">2</td></tr>
@@ -1095,7 +1095,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
     </tbody></table>
   </div><div class="meta"><div class="nm">Diff Table</div><span class="ref">.dtb-tbl.dtb-diff</span><div class="desc">Before/after rows with a plus-minus gutter: removed rows struck through in red, added rows in green, each pulsing in turn — config and plan diffs.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="table-ledger" data-interact="auto-play"><div class="stage">
     <table class="dtb-tbl dtb-audit"><thead><tr><th>When</th><th>Who</th><th>Action</th></tr></thead><tbody>
       <tr><td class="t">14:02:11</td><td><span class="who">jdoe</span></td><td>approved PR #51</td></tr>
       <tr><td class="t">14:01:37</td><td><span class="who">svc-deploy</span></td><td>pushed v4.2.0</td></tr>
@@ -1105,21 +1105,21 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
     </tbody></table>
   </div><div class="meta"><div class="nm">Audit Trail</div><span class="ref">.dtb-tbl.dtb-audit</span><div class="desc">Timestamp, actor chip and action per row, appearing in a cascade as the log fills — audit logs and activity feeds.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="table-ledger" data-interact="auto-play"><div class="stage">
     <div>
       <div class="dtb-pg"><i class="nav">‹</i><i style="--i:0">1</i><i style="--i:1">2</i><i style="--i:2">3</i><i style="--i:3">4</i><i style="--i:4">5</i><i class="dots">…</i><i class="nav">12</i><i class="nav">›</i></div>
       <div class="dtb-pg-info">Showing 41–60 of 234 rows</div>
     </div>
   </div><div class="meta"><div class="nm">Pagination</div><span class="ref">.dtb-pg</span><div class="desc">A pager whose active page steps forward on its own, plus the rows-shown caption — the footer of any paged table.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="table-ledger" data-interact="auto-play"><div class="stage">
     <div class="dtb-toolbar">
       <div class="dtb-tb-row"><div class="dtb-search"><span class="dtb-typed">region:</span><span class="dtb-caret"></span></div><span class="dtb-tb-btn">⚙</span><span class="dtb-tb-btn">↓</span></div>
-      <div class="dtb-tb-row"><span class="dtb-chip on">Prod</span><span class="dtb-chip tog">Errors only</span><span class="dtb-chip">Last 24h</span><span class="dtb-tb-count"><b>318</b> / 2,668</span></div>
+      <div class="dtb-tb-row"><span class="dtb-chip dtb-on">Prod</span><span class="dtb-chip tog">Errors only</span><span class="dtb-chip">Last 24h</span><span class="dtb-tb-count"><b>318</b> / 2,668</span></div>
     </div>
   </div><div class="meta"><div class="nm">Table Toolbar</div><span class="ref">.dtb-toolbar</span><div class="desc">Search box with a typing query, filter chips (one toggling on), column and export buttons, and a live match count — the control strip above a data table.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new"><div class="stage">
+  <div class="tile is-new" data-ctype="table-ledger" data-interact="auto-play"><div class="stage">
     <div class="dtb-empty">
       <span class="dtb-sk w3"></span><span class="dtb-sk w2"></span>
       <div class="dtb-empty-ic"></div>
