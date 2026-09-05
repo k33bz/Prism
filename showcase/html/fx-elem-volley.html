@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Elemental Volley · Prism</title>
+<!-- Prism showcase sample: fx-elem-volley (gallery: fx). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.c-crit { --c: var(--crit); --c-rgb: 200,121,255; }
+.fx-elem { position: relative; width: 330px; max-width: 100%; height: 150px; border-radius: 12px; overflow: hidden; --el: var(--c,var(--accent)); --el-rgb: var(--c-rgb,var(--accent-rgb)); background: radial-gradient(120% 90% at 50% 50%,rgba(var(--el-rgb),.12),rgba(var(--el-rgb),0) 70%),var(--panel2); border: 1px solid rgba(var(--el-rgb),.3); }
+.fx-elem svg { position: absolute; inset: 0px; width: 100%; height: 100%; overflow: visible; }
+.fx-elem-streak-proj { position: absolute; left: -190px; top: 50%; width: 190px; height: 40px; margin-top: -20px; animation: 1.5s cubic-bezier(0.3, 0, 0.8, 1) 0s infinite normal none running fxElemStreakFly; }
+.fx-elem-streak-tail { position: absolute; left: 0px; top: 0px; width: 160px; height: 40px; transform-origin: 100% 50%; animation: 0.3s ease-in-out 0s infinite alternate none running fxElemStreakWob; }
+.fx-elem-streak-head { position: absolute; right: 0px; top: 50%; width: 36px; height: 36px; margin-top: -18px; border-radius: 50%; background: radial-gradient(circle at 46% 46%,rgba(255,255,255,.98) 0,rgba(255,255,255,.9) 16%,var(--el) 44%,rgba(var(--el-rgb),0) 70%); animation: 0.16s ease-in-out 0s infinite alternate none running fxElemStreakHead; }
+.fx-elem-streak-proj .fx-elem-p i { right: 26px; top: 50%; width: var(--s,3px); height: var(--s,3px); animation-name: fxElemEmber; animation-duration: 0.9s; animation-timing-function: ease-out; animation-iteration-count: infinite; animation-delay: var(--d,0s); }
+.fx-elem-volley .fx-elem-streak-proj { top: calc(50% + var(--lane,0px)); animation-name: fxElemStreakFly; animation-duration: 1.8s; animation-timing-function: cubic-bezier(0.3, 0, 0.8, 1); animation-iteration-count: infinite; animation-delay: var(--d,0s); }
+@keyframes fxElemStreakFly { 
+  0% { transform: translate(0px, 16px) rotate(-6deg); opacity: 1; }
+  78% { transform: translate(420px, -12px) rotate(-6deg); opacity: 1; }
+  100% { transform: translate(500px, -16px) rotate(-6deg); opacity: 0; }
+}
+@keyframes fxElemStreakWob { 
+  0% { transform: scaleY(0.88); }
+  100% { transform: scaleY(1.12); }
+}
+@keyframes fxElemStreakHead { 
+  0% { transform: scale(0.92); }
+  100% { transform: scale(1.08); }
+}
+@keyframes fxElemEmber { 
+  0% { transform: translate(0px, 0px); opacity: 1; }
+  100% { transform: translate(-110px,var(--dy,-26px)) scale(.3); opacity: 0; }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="fx-elem fx-elem-volley c-crit" role="img" aria-label="Elemental Volley: three streaks fly across on staggered lanes">
+    <span class="fx-elem-streak-proj" style="--lane:-38px;--d:0s"><svg class="fx-elem-streak-tail" viewBox="0 0 160 40" aria-hidden="true"><defs>
+        <linearGradient id="fxElemVolleyG" x1="1" x2="0" y1="0" y2="0"><stop offset="0" style="stop-color:var(--el);stop-opacity:.95"></stop><stop offset=".5" style="stop-color:var(--el);stop-opacity:.5"></stop><stop offset="1" style="stop-color:var(--el);stop-opacity:0"></stop></linearGradient>
+        <filter id="fxElemVolleyF" x="-10%" y="-40%" width="120%" height="180%"><feTurbulence type="fractalNoise" baseFrequency=".05 .14" numOctaves="2" seed="7" result="n"></feTurbulence><feDisplacementMap in="SourceGraphic" in2="n" scale="12" xChannelSelector="R" yChannelSelector="G"></feDisplacementMap><feGaussianBlur stdDeviation="1.2"></feGaussianBlur></filter>
+      </defs><path fill="url(#fxElemVolleyG)" filter="url(#fxElemVolleyF)" d="M158 20 C120 2,60 6,0 14 C30 19,30 23,0 27 C60 35,120 38,158 20 Z"></path></svg><i class="fx-elem-streak-head"></i></span>
+    <span class="fx-elem-streak-proj" style="--lane:0px;--d:.45s"><svg class="fx-elem-streak-tail" viewBox="0 0 160 40" aria-hidden="true"><path fill="url(#fxElemVolleyG)" filter="url(#fxElemVolleyF)" d="M158 20 C120 2,60 6,0 14 C30 19,30 23,0 27 C60 35,120 38,158 20 Z"></path></svg><i class="fx-elem-streak-head"></i></span>
+    <span class="fx-elem-streak-proj" style="--lane:38px;--d:.9s"><svg class="fx-elem-streak-tail" viewBox="0 0 160 40" aria-hidden="true"><path fill="url(#fxElemVolleyG)" filter="url(#fxElemVolleyF)" d="M158 20 C120 2,60 6,0 14 C30 19,30 23,0 27 C60 35,120 38,158 20 Z"></path></svg><i class="fx-elem-streak-head"></i></span>
+  </div></div></div>
+<div class="meta"><b>Elemental Volley</b> · <code>fx-elem-volley</code><br>FX Store · Elemental Base<p>Composition example: three Streak projectiles on --lane offsets with staggered --d delays. Gradients resolve their colour where they are defined, so the volley carries its own defs. Psychic shown.</p></div>
+
+</body>
+</html>

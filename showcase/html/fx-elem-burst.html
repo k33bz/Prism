@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Elemental Burst · Prism</title>
+<!-- Prism showcase sample: fx-elem-burst (gallery: fx). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.fx-elem { position: relative; width: 330px; max-width: 100%; height: 150px; border-radius: 12px; overflow: hidden; --el: var(--c,var(--accent)); --el-rgb: var(--c-rgb,var(--accent-rgb)); background: radial-gradient(120% 90% at 50% 50%,rgba(var(--el-rgb),.12),rgba(var(--el-rgb),0) 70%),var(--panel2); border: 1px solid rgba(var(--el-rgb),.3); }
+.fx-elem svg { position: absolute; inset: 0px; width: 100%; height: 100%; overflow: visible; }
+.fx-elem-p { position: absolute; inset: 0px; pointer-events: none; }
+.fx-elem-p i { position: absolute; border-radius: 50%; background: var(--el); box-shadow: 0 0 6px var(--el); opacity: 0; }
+.fx-elem-spray .fx-elem-p i { left: 16px; top: calc(50% + var(--y,0px)); width: var(--s,3px); height: var(--s,3px); animation-name: fxElemSprayFly; animation-duration: 2s; animation-timing-function: linear; animation-iteration-count: infinite; animation-delay: var(--d,0s); }
+.fx-elem-streak-proj .fx-elem-p i { right: 26px; top: 50%; width: var(--s,3px); height: var(--s,3px); animation-name: fxElemEmber; animation-duration: 0.9s; animation-timing-function: ease-out; animation-iteration-count: infinite; animation-delay: var(--d,0s); }
+.fx-elem-burst-flash, .fx-elem-burst-ring, .fx-elem-burst-shard { position: absolute; left: 50%; top: 50%; }
+.fx-elem-burst-flash { width: 120px; height: 120px; margin: -60px 0px 0px -60px; border-radius: 50%; background: radial-gradient(circle,rgba(255,255,255,.95) 0,var(--el) 22%,rgba(var(--el-rgb),0) 70%); animation: 1.6s ease-out 0s infinite normal none running fxElemBurstFlash; }
+.fx-elem-burst-ring { width: 20px; height: 20px; margin: -10px 0px 0px -10px; border-radius: 50%; border: 2px solid var(--el); box-shadow: 0 0 10px rgba(var(--el-rgb),.7); animation: 1.6s ease-out 0s infinite normal none running fxElemBurstRing; }
+.fx-elem-burst-ring + .fx-elem-burst-ring { animation-delay: 0.12s; border-width: 1px; }
+.fx-elem-burst-shard { width: 3px; height: 34px; margin: -17px 0px 0px -1.5px; border-radius: 2px; background: linear-gradient(180deg,rgba(255,255,255,.95),var(--el) 40%,rgba(var(--el-rgb),0)); animation: 1.6s ease-out 0s infinite normal none running fxElemBurstShard; }
+.fx-elem-burst .fx-elem-p i { left: 50%; top: 50%; width: var(--s,3px); height: var(--s,3px); animation-name: fxElemBurstSpark; animation-duration: 1.6s; animation-timing-function: ease-out; animation-iteration-count: infinite; }
+.fx-elem-aura .fx-elem-p i { left: calc(50% + var(--x,0px)); top: 60%; width: var(--s,3px); height: var(--s,3px); animation-name: fxElemMote; animation-duration: 2.2s; animation-timing-function: ease-out; animation-iteration-count: infinite; animation-delay: var(--d,0s); }
+@keyframes fxElemSprayFly { 
+  0% { transform: translate(0px, 0px) scale(1); opacity: 0; }
+  8% { opacity: 1; }
+  100% { transform: translate(300px,var(--dy,-24px)) scale(.3); opacity: 0; }
+}
+@keyframes fxElemEmber { 
+  0% { transform: translate(0px, 0px); opacity: 1; }
+  100% { transform: translate(-110px,var(--dy,-26px)) scale(.3); opacity: 0; }
+}
+@keyframes fxElemBurstFlash { 
+  0% { transform: scale(0.1); opacity: 0; }
+  6% { transform: scale(1); opacity: 1; }
+  30% { transform: scale(1.3); opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes fxElemBurstRing { 
+  0% { transform: scale(0.2); opacity: 0; }
+  8% { opacity: 1; }
+  55% { transform: scale(7); opacity: 0; }
+  100% { transform: scale(7); opacity: 0; }
+}
+@keyframes fxElemBurstShard { 
+  0% { transform: rotate(var(--a,0deg)) translateY(-8px) scaleY(.2); opacity: 0; }
+  8% { opacity: 1; }
+  50% { transform: rotate(var(--a,0deg)) translateY(-74px) scaleY(1); opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes fxElemBurstSpark { 
+  0% { transform: translate(0px, 0px); opacity: 0; }
+  6% { opacity: 1; }
+  60% { transform: translate(var(--dx,40px),var(--dy,-40px)); opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes fxElemMote { 
+  0% { transform: translateY(0px); opacity: 0; }
+  15% { opacity: 1; }
+  100% { transform: translateY(-84px) translateX(var(--sx,0px)); opacity: 0; }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="fx-elem fx-elem-burst" role="img" aria-label="Elemental Burst: an impact flash with expanding rings, radial shards and sparks">
+    <i class="fx-elem-burst-flash"></i><i class="fx-elem-burst-ring"></i><i class="fx-elem-burst-ring"></i>
+    <i class="fx-elem-burst-shard" style="--a:0deg"></i><i class="fx-elem-burst-shard" style="--a:45deg"></i><i class="fx-elem-burst-shard" style="--a:90deg"></i><i class="fx-elem-burst-shard" style="--a:135deg"></i><i class="fx-elem-burst-shard" style="--a:180deg"></i><i class="fx-elem-burst-shard" style="--a:225deg"></i><i class="fx-elem-burst-shard" style="--a:270deg"></i><i class="fx-elem-burst-shard" style="--a:315deg"></i>
+    <span class="fx-elem-p"><i style="--dx:58px;--dy:-30px"></i><i style="--dx:-50px;--dy:-44px;--s:2px"></i><i style="--dx:66px;--dy:22px;--s:2px"></i><i style="--dx:-62px;--dy:28px"></i><i style="--dx:14px;--dy:-60px;--s:4px"></i><i style="--dx:-18px;--dy:56px;--s:2px"></i></span>
+  </div></div></div>
+<div class="meta"><b>Elemental Burst</b> · <code>fx-elem-burst</code><br>FX Store · Elemental Base<p>The hit point: a flash disc, two expanding rings, eight shards on --a angles and a spread of sparks on a 1.6s loop. Theme accent shown; pair it with a Streak or Bolt at the landing spot.</p></div>
+
+</body>
+</html>

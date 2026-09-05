@@ -1,0 +1,170 @@
+<h3 class="sec">🜂 Elemental Base — spray, bolt, streak, burst, aura for played cards and attacks</h3>
+<style id="elem-styles">
+/* ===== Elemental base family — pure CSS/SVG, self-contained, namespaced
+   fx-elem-* / fxElem*. Six building blocks meant to be composed into card and
+   attack effects: Spray (jet + particles), Bolt (strike + flicker), Streak
+   (projectile + wavy tail + embers), Burst (impact flash, rings, shards), Aura
+   (played-card glow with rising motes) and Volley (three staggered streaks).
+   The element IS the colour role: add c-info for water, c-warn for electric,
+   c-neg for fire, c-pos for grass, c-crit for psychic, or nothing for the theme
+   accent. Every colour rides --c / --c-rgb so the same markup re-tints. ===== */
+.fx-elem{position:relative;width:330px;max-width:100%;height:150px;border-radius:12px;overflow:hidden;
+  --el:var(--c,var(--accent));--el-rgb:var(--c-rgb,var(--accent-rgb));
+  background:radial-gradient(120% 90% at 50% 50%,rgba(var(--el-rgb),.12),rgba(var(--el-rgb),0) 70%),var(--panel2);
+  border:1px solid rgba(var(--el-rgb),.3)}
+.fx-elem svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.fx-elem-p{position:absolute;inset:0;pointer-events:none}
+.fx-elem-p i{position:absolute;border-radius:50%;background:var(--el);box-shadow:0 0 6px var(--el);opacity:0}
+
+/* (1) Spray: displaced, blurred plume + dash-flow core + particle stream */
+.fx-elem-spray-plume{transform-origin:18px 75px;animation:fxElemSprayBreath 2s ease-in-out infinite}
+.fx-elem-spray-core{stroke:var(--el);stroke-width:4;fill:none;stroke-linecap:round;stroke-dasharray:30 16;opacity:.75;
+  animation:fxElemFlow .9s linear infinite}
+.fx-elem-spray .fx-elem-p i{left:16px;top:calc(50% + var(--y,0px));width:var(--s,3px);height:var(--s,3px);
+  animation-name:fxElemSprayFly;animation-duration:2s;animation-timing-function:linear;animation-iteration-count:infinite;animation-delay:var(--d,0s)}
+@keyframes fxElemSprayBreath{0%,100%{transform:scaleY(.9) skewY(-1deg)}50%{transform:scaleY(1.1) skewY(1.5deg)}}
+@keyframes fxElemFlow{to{stroke-dashoffset:-46}}
+@keyframes fxElemSprayFly{0%{transform:translate(0,0) scale(1);opacity:0}8%{opacity:1}100%{transform:translate(300px,var(--dy,-24px)) scale(.3);opacity:0}}
+
+/* (2) Bolt: glow / mid / core strokes drawn left-to-right (pathLength=1), then flicker and fade */
+.fx-elem-bolt-glow,.fx-elem-bolt-mid,.fx-elem-bolt-core,.fx-elem-bolt-br{fill:none;stroke-linecap:round;stroke-linejoin:round;
+  stroke-dasharray:1;stroke-dashoffset:1;animation:fxElemBoltStrike 1.8s linear infinite}
+.fx-elem-bolt-glow{stroke:var(--el);stroke-width:10;opacity:.35;filter:blur(3px)}
+.fx-elem-bolt-mid{stroke:var(--el);stroke-width:3.2}
+.fx-elem-bolt-core{stroke:rgba(255,255,255,.95);stroke-width:1.3}
+.fx-elem-bolt-br{stroke:var(--el);stroke-width:1.4;opacity:.75;filter:blur(.4px);animation-delay:.14s}
+.fx-elem-bolt-flash{position:absolute;inset:0;background:radial-gradient(60% 45% at 50% 50%,rgba(var(--el-rgb),.55),rgba(var(--el-rgb),0) 70%);
+  opacity:0;animation:fxElemBoltFlash 1.8s linear infinite}
+@keyframes fxElemBoltStrike{0%{stroke-dashoffset:1;opacity:1}16%{stroke-dashoffset:0;opacity:1}22%{opacity:.3}26%{opacity:1}32%{opacity:.45}38%{opacity:1}58%{opacity:0}100%{stroke-dashoffset:0;opacity:0}}
+@keyframes fxElemBoltFlash{0%,12%{opacity:0}17%{opacity:1}24%{opacity:.2}28%{opacity:.7}45%,100%{opacity:0}}
+
+/* (3) Streak: white-hot head + turbulence-distorted tail flies across, embers lag behind */
+.fx-elem-streak-proj{position:absolute;left:-190px;top:50%;width:190px;height:40px;margin-top:-20px;
+  animation:fxElemStreakFly 1.5s cubic-bezier(.3,0,.8,1) infinite}
+.fx-elem-streak-tail{position:absolute;left:0;top:0;width:160px;height:40px;transform-origin:100% 50%;
+  animation:fxElemStreakWob .3s ease-in-out infinite alternate}
+.fx-elem-streak-head{position:absolute;right:0;top:50%;width:36px;height:36px;margin-top:-18px;border-radius:50%;
+  background:radial-gradient(circle at 46% 46%,rgba(255,255,255,.98) 0,rgba(255,255,255,.9) 16%,var(--el) 44%,rgba(var(--el-rgb),0) 70%);
+  animation:fxElemStreakHead .16s ease-in-out infinite alternate}
+.fx-elem-streak-proj .fx-elem-p i{right:26px;top:50%;width:var(--s,3px);height:var(--s,3px);
+  animation-name:fxElemEmber;animation-duration:.9s;animation-timing-function:ease-out;animation-iteration-count:infinite;animation-delay:var(--d,0s)}
+@keyframes fxElemStreakFly{0%{transform:translate(0,16px) rotate(-6deg);opacity:1}78%{transform:translate(420px,-12px) rotate(-6deg);opacity:1}100%{transform:translate(500px,-16px) rotate(-6deg);opacity:0}}
+@keyframes fxElemStreakWob{from{transform:scaleY(.88)}to{transform:scaleY(1.12)}}
+@keyframes fxElemStreakHead{from{transform:scale(.92)}to{transform:scale(1.08)}}
+@keyframes fxElemEmber{0%{transform:translate(0,0);opacity:1}100%{transform:translate(-110px,var(--dy,-26px)) scale(.3);opacity:0}}
+
+/* (4) Burst: impact flash, two expanding rings, eight shards, sparks — 1.6s loop */
+.fx-elem-burst-flash,.fx-elem-burst-ring,.fx-elem-burst-shard{position:absolute;left:50%;top:50%}
+.fx-elem-burst-flash{width:120px;height:120px;margin:-60px 0 0 -60px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,255,255,.95) 0,var(--el) 22%,rgba(var(--el-rgb),0) 70%);
+  animation:fxElemBurstFlash 1.6s ease-out infinite}
+.fx-elem-burst-ring{width:20px;height:20px;margin:-10px 0 0 -10px;border-radius:50%;border:2px solid var(--el);
+  box-shadow:0 0 10px rgba(var(--el-rgb),.7);animation:fxElemBurstRing 1.6s ease-out infinite}
+.fx-elem-burst-ring + .fx-elem-burst-ring{animation-delay:.12s;border-width:1px}
+.fx-elem-burst-shard{width:3px;height:34px;margin:-17px 0 0 -1.5px;border-radius:2px;
+  background:linear-gradient(180deg,rgba(255,255,255,.95),var(--el) 40%,rgba(var(--el-rgb),0));
+  animation:fxElemBurstShard 1.6s ease-out infinite}
+.fx-elem-burst .fx-elem-p i{left:50%;top:50%;width:var(--s,3px);height:var(--s,3px);
+  animation-name:fxElemBurstSpark;animation-duration:1.6s;animation-timing-function:ease-out;animation-iteration-count:infinite}
+@keyframes fxElemBurstFlash{0%{transform:scale(.1);opacity:0}6%{transform:scale(1);opacity:1}30%{transform:scale(1.3);opacity:0}100%{opacity:0}}
+@keyframes fxElemBurstRing{0%{transform:scale(.2);opacity:0}8%{opacity:1}55%{transform:scale(7);opacity:0}100%{transform:scale(7);opacity:0}}
+@keyframes fxElemBurstShard{0%{transform:rotate(var(--a,0deg)) translateY(-8px) scaleY(.2);opacity:0}8%{opacity:1}50%{transform:rotate(var(--a,0deg)) translateY(-74px) scaleY(1);opacity:0}100%{opacity:0}}
+@keyframes fxElemBurstSpark{0%{transform:translate(0,0);opacity:0}6%{opacity:1}60%{transform:translate(var(--dx,40px),var(--dy,-40px));opacity:0}100%{opacity:0}}
+
+/* (5) Aura: a played card lifts and breathes a rim glow while motes rise out of it */
+.fx-elem-aura-halo{position:absolute;left:50%;top:50%;width:140px;height:60px;margin:-10px 0 0 -70px;border-radius:50%;
+  background:radial-gradient(closest-side,rgba(var(--el-rgb),.45),rgba(var(--el-rgb),0));animation:fxElemAuraHalo 2s ease-in-out infinite}
+.fx-elem-aura-card{position:absolute;left:50%;top:50%;width:64px;height:92px;margin:-46px 0 0 -32px;border-radius:6px;
+  background:linear-gradient(160deg,var(--panel),var(--panel2));border:1px solid rgba(var(--el-rgb),.75);
+  box-shadow:0 0 0 0 rgba(var(--el-rgb),.5),0 0 16px rgba(var(--el-rgb),.45);animation:fxElemAuraPulse 2s ease-in-out infinite}
+.fx-elem-aura-card::before{content:"";position:absolute;left:8px;right:8px;top:8px;height:40px;border-radius:4px;
+  background:linear-gradient(135deg,rgba(var(--el-rgb),.35),rgba(var(--el-rgb),.08))}
+.fx-elem-aura-card::after{content:"";position:absolute;left:8px;right:20px;bottom:12px;height:4px;border-radius:2px;background:var(--line);
+  box-shadow:0 10px 0 0 var(--line),0 20px 0 -1px var(--line)}
+.fx-elem-aura .fx-elem-p i{left:calc(50% + var(--x,0px));top:60%;width:var(--s,3px);height:var(--s,3px);
+  animation-name:fxElemMote;animation-duration:2.2s;animation-timing-function:ease-out;animation-iteration-count:infinite;animation-delay:var(--d,0s)}
+@keyframes fxElemAuraHalo{0%,100%{transform:scale(.9);opacity:.6}50%{transform:scale(1.1);opacity:1}}
+@keyframes fxElemAuraPulse{0%,100%{transform:translateY(0);box-shadow:0 0 0 0 rgba(var(--el-rgb),.5),0 0 16px rgba(var(--el-rgb),.45)}
+  50%{transform:translateY(-4px);box-shadow:0 0 0 6px rgba(var(--el-rgb),0),0 0 28px rgba(var(--el-rgb),.8)}}
+@keyframes fxElemMote{0%{transform:translateY(0);opacity:0}15%{opacity:1}100%{transform:translateY(-84px) translateX(var(--sx,0px));opacity:0}}
+
+/* (6) Volley: three streaks on staggered lanes (composition of the streak block) */
+.fx-elem-volley .fx-elem-streak-proj{top:calc(50% + var(--lane,0px));animation-name:fxElemStreakFly;animation-duration:1.8s;
+  animation-timing-function:cubic-bezier(.3,0,.8,1);animation-iteration-count:infinite;animation-delay:var(--d,0s)}
+
+@media(prefers-reduced-motion:reduce){
+  .fx-elem,.fx-elem *,.fx-elem-aura-card::before{animation:none!important}
+  .fx-elem-bolt-glow,.fx-elem-bolt-mid,.fx-elem-bolt-core,.fx-elem-bolt-br{stroke-dashoffset:0;opacity:1}
+  .fx-elem-bolt-flash{opacity:.5}
+  .fx-elem-streak-proj{transform:translate(200px,0)}
+  .fx-elem-burst-ring{transform:scale(3);opacity:.5}
+  .fx-elem-burst-flash{transform:scale(1);opacity:.8}
+  .fx-elem-burst-shard{transform:rotate(var(--a,0deg)) translateY(-40px);opacity:1}
+}
+</style>
+<div class="gallery" id="elemBase">
+
+  <div class="tile is-new" data-fx-id="fx-elem-spray" data-ctype="fx-scene" data-interact="auto-play" data-c="info"><div class="stage"><div class="fx-elem fx-elem-spray c-info" role="img" aria-label="Elemental Spray: a jet of element colour fans out to the right while particles stream off it">
+    <svg viewBox="0 0 330 150" aria-hidden="true"><defs>
+      <linearGradient id="fxElemSprayG" x1="0" x2="1" y1="0" y2="0"><stop offset="0" style="stop-color:var(--el);stop-opacity:1"/><stop offset=".55" style="stop-color:var(--el);stop-opacity:.45"/><stop offset="1" style="stop-color:var(--el);stop-opacity:0"/></linearGradient>
+      <filter id="fxElemSprayF" x="-10%" y="-60%" width="130%" height="220%"><feTurbulence type="fractalNoise" baseFrequency=".02 .07" numOctaves="3" seed="4" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="34" xChannelSelector="R" yChannelSelector="G"/><feGaussianBlur stdDeviation="3.2"/></filter>
+      <filter id="fxElemSprayB" x="-5%" y="-50%" width="115%" height="200%"><feGaussianBlur stdDeviation="1.6"/></filter>
+    </defs>
+      <g class="fx-elem-spray-plume" filter="url(#fxElemSprayF)"><path fill="url(#fxElemSprayG)" opacity=".32" d="M18 75 C70 42,150 24,300 32 L308 118 C160 128,80 106,18 75 Z"/><path fill="url(#fxElemSprayG)" opacity=".45" d="M18 75 C70 58,150 48,262 52 L264 94 C160 98,80 90,18 75 Z"/></g>
+      <path class="fx-elem-spray-core" filter="url(#fxElemSprayB)" d="M18 75 C80 70,150 63,250 60"/>
+    </svg>
+    <span class="fx-elem-p"><i style="--d:0s;--y:-2px;--dy:-30px"></i><i style="--d:.2s;--y:3px;--dy:-10px;--s:2px"></i><i style="--d:.35s;--y:-5px;--dy:-44px;--s:2px"></i><i style="--d:.5s;--y:1px;--dy:8px"></i><i style="--d:.7s;--y:-1px;--dy:-20px;--s:4px"></i><i style="--d:.85s;--y:4px;--dy:18px;--s:2px"></i><i style="--d:1s;--y:-3px;--dy:-36px"></i><i style="--d:1.15s;--y:2px;--dy:-4px;--s:2px"></i><i style="--d:1.3s;--y:-4px;--dy:-52px;--s:2px"></i><i style="--d:1.5s;--y:0;--dy:12px;--s:4px"></i><i style="--d:1.65s;--y:-2px;--dy:-16px"></i><i style="--d:1.8s;--y:3px;--dy:26px;--s:2px"></i></span>
+  </div></div>
+    <div class="meta"><div class="nm">Elemental Spray</div><span class="ref">.fx-elem.fx-elem-spray</span><div class="desc">A jet fans out from the left: a turbulence-displaced plume, a dash-flow core and a stream of fading particles. Water shown; swap the colour role for mist, steam, poison or ice.</div><div class="row"><button class="copy" data-snip='class="fx-elem fx-elem-spray c-info"'>Copy snippet</button></div></div></div>
+
+  <div class="tile is-new" data-fx-id="fx-elem-bolt" data-ctype="fx-scene" data-interact="auto-play" data-c="warn"><div class="stage"><div class="fx-elem fx-elem-bolt c-warn" role="img" aria-label="Elemental Bolt: a lightning strike draws across the stage, flickers and fades">
+    <i class="fx-elem-bolt-flash"></i>
+    <svg viewBox="0 0 330 150" aria-hidden="true">
+      <path class="fx-elem-bolt-glow" pathLength="1" d="M10 78 L48 70 L70 84 L96 66 L128 80 L150 72 L182 88 L205 70 L238 82 L262 68 L292 78 L320 74"/>
+      <path class="fx-elem-bolt-mid" pathLength="1" d="M10 78 L48 70 L70 84 L96 66 L128 80 L150 72 L182 88 L205 70 L238 82 L262 68 L292 78 L320 74"/>
+      <path class="fx-elem-bolt-core" pathLength="1" d="M10 78 L48 70 L70 84 L96 66 L128 80 L150 72 L182 88 L205 70 L238 82 L262 68 L292 78 L320 74"/>
+      <path class="fx-elem-bolt-br" pathLength="1" d="M96 66 L104 44 L118 36 L124 24"/>
+      <path class="fx-elem-bolt-br" pathLength="1" d="M182 88 L190 108 L206 116 L214 130"/>
+      <path class="fx-elem-bolt-br" pathLength="1" d="M238 82 L246 58 L262 50"/>
+      <path class="fx-elem-bolt-br" pathLength="1" d="M150 72 L146 52 L134 44"/>
+      <path class="fx-elem-bolt-br" pathLength="1" d="M70 84 L66 100 L52 108"/>
+    </svg>
+  </div></div>
+    <div class="meta"><div class="nm">Elemental Bolt</div><span class="ref">.fx-elem.fx-elem-bolt</span><div class="desc">Three stacked strokes (blurred glow, mid, white-hot core) draw left to right with pathLength, then flicker and fade while branches fork off. Electric shown.</div><div class="row"><button class="copy" data-snip='class="fx-elem fx-elem-bolt c-warn"'>Copy snippet</button></div></div></div>
+
+  <div class="tile is-new" data-fx-id="fx-elem-streak" data-ctype="fx-scene" data-interact="auto-play" data-c="neg"><div class="stage"><div class="fx-elem fx-elem-streak c-neg" role="img" aria-label="Elemental Streak: a fireball with a wavy tail flies across the stage leaving embers">
+    <span class="fx-elem-streak-proj">
+      <svg class="fx-elem-streak-tail" viewBox="0 0 160 40" aria-hidden="true"><defs>
+        <linearGradient id="fxElemStreakG" x1="1" x2="0" y1="0" y2="0"><stop offset="0" style="stop-color:var(--el);stop-opacity:.95"/><stop offset=".5" style="stop-color:var(--el);stop-opacity:.5"/><stop offset="1" style="stop-color:var(--el);stop-opacity:0"/></linearGradient>
+        <filter id="fxElemStreakF" x="-10%" y="-40%" width="120%" height="180%"><feTurbulence type="fractalNoise" baseFrequency=".05 .14" numOctaves="2" seed="7" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="12" xChannelSelector="R" yChannelSelector="G"/><feGaussianBlur stdDeviation="1.2"/></filter>
+      </defs><path fill="url(#fxElemStreakG)" filter="url(#fxElemStreakF)" d="M158 20 C120 2,60 6,0 14 C30 19,30 23,0 27 C60 35,120 38,158 20 Z"/></svg>
+      <i class="fx-elem-streak-head"></i>
+      <span class="fx-elem-p"><i style="--d:0s;--dy:-30px"></i><i style="--d:.15s;--dy:-12px;--s:2px"></i><i style="--d:.3s;--dy:-40px;--s:2px"></i><i style="--d:.45s;--dy:10px"></i><i style="--d:.6s;--dy:-22px;--s:4px"></i><i style="--d:.75s;--dy:18px;--s:2px"></i></span>
+    </span>
+  </div></div>
+    <div class="meta"><div class="nm">Elemental Streak</div><span class="ref">.fx-elem.fx-elem-streak</span><div class="desc">A projectile with a white-hot head and a turbulence-distorted tail crosses the stage on a slight climb while embers lag behind. Fire shown; use c-info for a water jet or c-crit for plasma.</div><div class="row"><button class="copy" data-snip='class="fx-elem fx-elem-streak c-neg"'>Copy snippet</button></div></div></div>
+
+  <div class="tile is-new" data-fx-id="fx-elem-burst" data-ctype="fx-scene" data-interact="auto-play"><div class="stage"><div class="fx-elem fx-elem-burst" role="img" aria-label="Elemental Burst: an impact flash with expanding rings, radial shards and sparks">
+    <i class="fx-elem-burst-flash"></i><i class="fx-elem-burst-ring"></i><i class="fx-elem-burst-ring"></i>
+    <i class="fx-elem-burst-shard" style="--a:0deg"></i><i class="fx-elem-burst-shard" style="--a:45deg"></i><i class="fx-elem-burst-shard" style="--a:90deg"></i><i class="fx-elem-burst-shard" style="--a:135deg"></i><i class="fx-elem-burst-shard" style="--a:180deg"></i><i class="fx-elem-burst-shard" style="--a:225deg"></i><i class="fx-elem-burst-shard" style="--a:270deg"></i><i class="fx-elem-burst-shard" style="--a:315deg"></i>
+    <span class="fx-elem-p"><i style="--dx:58px;--dy:-30px"></i><i style="--dx:-50px;--dy:-44px;--s:2px"></i><i style="--dx:66px;--dy:22px;--s:2px"></i><i style="--dx:-62px;--dy:28px"></i><i style="--dx:14px;--dy:-60px;--s:4px"></i><i style="--dx:-18px;--dy:56px;--s:2px"></i></span>
+  </div></div>
+    <div class="meta"><div class="nm">Elemental Burst</div><span class="ref">.fx-elem.fx-elem-burst</span><div class="desc">The hit point: a flash disc, two expanding rings, eight shards on --a angles and a spread of sparks on a 1.6s loop. Theme accent shown; pair it with a Streak or Bolt at the landing spot.</div><div class="row"><button class="copy" data-snip='class="fx-elem fx-elem-burst"'>Copy snippet</button></div></div></div>
+
+  <div class="tile is-new" data-fx-id="fx-elem-aura" data-ctype="fx-scene" data-interact="auto-play" data-c="pos"><div class="stage"><div class="fx-elem fx-elem-aura c-pos" role="img" aria-label="Elemental Aura: a played card lifts and glows while motes rise out of it">
+    <i class="fx-elem-aura-halo"></i><i class="fx-elem-aura-card"></i>
+    <span class="fx-elem-p"><i style="--x:-24px;--d:0s;--sx:-6px"></i><i style="--x:-10px;--d:.4s;--s:2px;--sx:4px"></i><i style="--x:4px;--d:.8s;--sx:-3px"></i><i style="--x:18px;--d:1.2s;--s:2px;--sx:8px"></i><i style="--x:26px;--d:1.6s;--sx:-5px"></i><i style="--x:-18px;--d:2s;--s:4px;--sx:2px"></i><i style="--x:12px;--d:.6s;--s:2px;--sx:-8px"></i><i style="--x:-2px;--d:1.4s;--sx:6px"></i></span>
+  </div></div>
+    <div class="meta"><div class="nm">Elemental Aura</div><span class="ref">.fx-elem.fx-elem-aura</span><div class="desc">The played-card state: the card lifts, its rim glow breathes and motes drift up out of it over a soft halo. Grass shown; the card face is plain tokens so any art can sit inside.</div><div class="row"><button class="copy" data-snip='class="fx-elem fx-elem-aura c-pos"'>Copy snippet</button></div></div></div>
+
+  <div class="tile is-new" data-fx-id="fx-elem-volley" data-ctype="fx-scene" data-interact="auto-play" data-c="crit"><div class="stage"><div class="fx-elem fx-elem-volley c-crit" role="img" aria-label="Elemental Volley: three streaks fly across on staggered lanes">
+    <span class="fx-elem-streak-proj" style="--lane:-38px;--d:0s"><svg class="fx-elem-streak-tail" viewBox="0 0 160 40" aria-hidden="true"><defs>
+        <linearGradient id="fxElemVolleyG" x1="1" x2="0" y1="0" y2="0"><stop offset="0" style="stop-color:var(--el);stop-opacity:.95"/><stop offset=".5" style="stop-color:var(--el);stop-opacity:.5"/><stop offset="1" style="stop-color:var(--el);stop-opacity:0"/></linearGradient>
+        <filter id="fxElemVolleyF" x="-10%" y="-40%" width="120%" height="180%"><feTurbulence type="fractalNoise" baseFrequency=".05 .14" numOctaves="2" seed="7" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="12" xChannelSelector="R" yChannelSelector="G"/><feGaussianBlur stdDeviation="1.2"/></filter>
+      </defs><path fill="url(#fxElemVolleyG)" filter="url(#fxElemVolleyF)" d="M158 20 C120 2,60 6,0 14 C30 19,30 23,0 27 C60 35,120 38,158 20 Z"/></svg><i class="fx-elem-streak-head"></i></span>
+    <span class="fx-elem-streak-proj" style="--lane:0px;--d:.45s"><svg class="fx-elem-streak-tail" viewBox="0 0 160 40" aria-hidden="true"><path fill="url(#fxElemVolleyG)" filter="url(#fxElemVolleyF)" d="M158 20 C120 2,60 6,0 14 C30 19,30 23,0 27 C60 35,120 38,158 20 Z"/></svg><i class="fx-elem-streak-head"></i></span>
+    <span class="fx-elem-streak-proj" style="--lane:38px;--d:.9s"><svg class="fx-elem-streak-tail" viewBox="0 0 160 40" aria-hidden="true"><path fill="url(#fxElemVolleyG)" filter="url(#fxElemVolleyF)" d="M158 20 C120 2,60 6,0 14 C30 19,30 23,0 27 C60 35,120 38,158 20 Z"/></svg><i class="fx-elem-streak-head"></i></span>
+  </div></div>
+    <div class="meta"><div class="nm">Elemental Volley</div><span class="ref">.fx-elem.fx-elem-volley</span><div class="desc">Composition example: three Streak projectiles on --lane offsets with staggered --d delays. Gradients resolve their colour where they are defined, so the volley carries its own defs. Psychic shown.</div><div class="row"><button class="copy" data-snip='class="fx-elem fx-elem-volley c-crit"'>Copy snippet</button></div></div></div>
+
+</div>
