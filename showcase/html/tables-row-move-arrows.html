@@ -27,6 +27,12 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
 .dtb-tbl tbody tr:last-child td { border-bottom: 0px; }
 .dtb-tbl tfoot td { border-top: 2px solid var(--line); border-bottom: 0px; font-weight: 800; background: var(--panel2); }
 .dtb-mono { font-family: ui-monospace, Menlo, monospace; font-variant-numeric: tabular-nums; }
+.dtb-rowmove.manual tbody tr td, .dtb-rowmove.manual .dtb-arr, .dtb-resort.manual th, .dtb-resort.manual td, .dtb-resort.manual .dtb-sort-arrow, .dtb-fall.manual td, .dtb-fall.manual .dtb-sort-arrow { transform: none; opacity: 1; box-shadow: none; animation: auto ease 0s 1 normal none running none !important; }
+.dtb-rowmove .dtb-arr, .dtb-resort th.dtb-num, .dtb-fall th.dtb-num { cursor: pointer; user-select: none; }
+.dtb-rowmove .dtb-arr:hover, .dtb-resort th.dtb-num:hover, .dtb-fall th.dtb-num:hover { color: var(--c,var(--accent)); }
+.dtb-tbl.manual td.flip { transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1); }
+.dtb-tbl.manual tr.lifted td { position: relative; z-index: 2; box-shadow: 0 6px 16px rgba(0,0,0,.45),inset 0 0 0 999px rgba(var(--c-rgb,var(--accent-rgb)),.14); }
+.dtb-arr.pressed { background: rgba(var(--c-rgb,var(--accent-rgb)),.22); border-radius: 3px; box-shadow: 0 0 8px rgba(var(--c-rgb,var(--accent-rgb)),.5); color: var(--c,var(--accent)) !important; }
 </style>
 </head>
 <body>
@@ -36,7 +42,7 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
       <tr class="mv lift" style="--to:-1"><td class="dtb-arrows"><span class="dtb-arr press">▲</span><span class="dtb-arr">▼</span></td><td class="dtb-mono">3</td><td>Allow DNS to Pi-hole</td></tr>
       <tr><td class="dtb-arrows"><span class="dtb-arr">▲</span><span class="dtb-arr">▼</span></td><td class="dtb-mono">4</td><td>Drop all</td></tr>
     </tbody></table></div></div>
-<div class="meta"><b>Row Move Arrows</b> · <code>tables-row-move-arrows</code><br>Tables &amp; Data Layouts · SORTING &amp; REORDER<p>A leading column of ▲▼ controls; the pressed arrow lights up and its row lifts over the one above and settles into the slot — manual ordering for rules, priorities and playlists.</p></div>
+<div class="meta"><b>Row Move Arrows</b> · <code>tables-row-move-arrows</code><br>Tables &amp; Data Layouts · SORTING &amp; REORDER<p>A leading column of ▲▼ controls; the pressed arrow lights up and its row lifts over the one above and settles into the slot — manual ordering for rules, priorities and playlists. Click the arrows to try it.</p></div>
 
 </body>
 </html>

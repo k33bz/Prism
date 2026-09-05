@@ -22,9 +22,13 @@ let html = readFileSync(HTML, 'utf8');
 const open = `<script type="text/html" id="pg-${id}">`;
 const start = html.indexOf(open);
 if (start < 0) { console.error(`No ${open} block in Prism.html — use _splice or insert it first.`); process.exit(1); }
-// The template's own script closers are escaped (<\/script>), so the first raw
-// "\n</script>" after the opener is the template's end.
-const end = html.indexOf('\n</script>', start) + '\n</script>'.length;
+// The block ends where the next page template begins (robust even if a draft left
+// a raw </script> inside the template, which would otherwise truncate the search).
+const nextOpen = html.indexOf('\n<script type="text/html" id="pg-', start + open.length);
+const endTag = '\n</script>';
+let end = html.lastIndexOf(endTag, nextOpen < 0 ? html.length : nextOpen);
+if (end < start) { console.error('Could not find the template end; aborting.'); process.exit(1); }
+end += endTag.length;
 const old = html.slice(start, end);
 if (!old.endsWith('</html>\n</script>')) { console.error('Unexpected template tail; aborting.'); process.exit(1); }
 html = html.slice(0, start) + tpl + html.slice(end);

@@ -2,7 +2,7 @@
 
 Every effect in Prism's **Tables & Data Layouts** gallery, recorded as a looping GIF.
 
-**54 effects** · 53 animated · 1.1 MB of GIF · click any GIF to open its standalone HTML sample (raw file; open it locally, GitHub shows source).
+**54 effects** · 54 animated · 1.1 MB of GIF · click any GIF to open its standalone HTML sample (raw file; open it locally, GitHub shows source).
 
 [← Showcase index](../README.md)
 
@@ -19,7 +19,7 @@ Every effect in Prism's **Tables & Data Layouts** gallery, recorded as a looping
 ## SORTING & REORDER
 
 <table>
-<tr><td align="center" valign="top" width="33%"><a href="../html/tables-sortable-header.html"><img src="../gif/tables-sortable-header.gif" width="300" alt="Sortable Header"></a><br><b>Sortable Header</b><br><sub><code>tables-sortable-header</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/tables-row-move-arrows.html"><img src="../gif/tables-row-move-arrows.gif" width="300" alt="Row Move Arrows"></a><br><b>Row Move Arrows</b><br><sub><code>tables-row-move-arrows</code> · static</sub></td><td align="center" valign="top" width="33%"><a href="../html/tables-flash-resort.html"><img src="../gif/tables-flash-resort.gif" width="300" alt="Flash + Resort"></a><br><b>Flash + Resort</b><br><sub><code>tables-flash-resort</code></sub></td></tr>
+<tr><td align="center" valign="top" width="33%"><a href="../html/tables-sortable-header.html"><img src="../gif/tables-sortable-header.gif" width="300" alt="Sortable Header"></a><br><b>Sortable Header</b><br><sub><code>tables-sortable-header</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/tables-row-move-arrows.html"><img src="../gif/tables-row-move-arrows.gif" width="300" alt="Row Move Arrows"></a><br><b>Row Move Arrows</b><br><sub><code>tables-row-move-arrows</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/tables-flash-resort.html"><img src="../gif/tables-flash-resort.gif" width="300" alt="Flash + Resort"></a><br><b>Flash + Resort</b><br><sub><code>tables-flash-resort</code></sub></td></tr>
 <tr><td align="center" valign="top" width="33%"><a href="../html/tables-fall-land-resort.html"><img src="../gif/tables-fall-land-resort.gif" width="300" alt="Fall + Land Resort"></a><br><b>Fall + Land Resort</b><br><sub><code>tables-fall-land-resort</code></sub></td></tr>
 </table>
 

@@ -29,10 +29,20 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
 .dtb-num { font-family: ui-monospace, Menlo, monospace; font-variant-numeric: tabular-nums; text-align: right !important; }
 .dtb-sort-arrow { display: inline-block; margin-left: 4px; font-size: 8px; transform-origin: 50% 55%; animation: 4s ease-in-out 0s infinite normal none running dtbSortFlip; }
 .dtb-row .dtb-num { text-align: right; }
+.dtb-rowmove.manual tbody tr td, .dtb-rowmove.manual .dtb-arr, .dtb-resort.manual th, .dtb-resort.manual td, .dtb-resort.manual .dtb-sort-arrow, .dtb-fall.manual td, .dtb-fall.manual .dtb-sort-arrow { transform: none; opacity: 1; box-shadow: none; animation: auto ease 0s 1 normal none running none !important; }
+.dtb-rowmove .dtb-arr, .dtb-resort th.dtb-num, .dtb-fall th.dtb-num { cursor: pointer; user-select: none; }
+.dtb-rowmove .dtb-arr:hover, .dtb-resort th.dtb-num:hover, .dtb-fall th.dtb-num:hover { color: var(--c,var(--accent)); }
+.dtb-tbl.manual td.flip { transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1); }
+.dtb-tbl.manual tr.lifted td { position: relative; z-index: 2; box-shadow: 0 6px 16px rgba(0,0,0,.45),inset 0 0 0 999px rgba(var(--c-rgb,var(--accent-rgb)),.14); }
+.dtb-resort.manual .flashed { animation: 0.6s ease-out 0s 1 normal none running dtbColFlashOnce !important; }
 @keyframes dtbSortFlip { 
   0%, 42% { transform: rotate(0deg); }
   50%, 92% { transform: rotate(180deg); }
   100% { transform: rotate(360deg); }
+}
+@keyframes dtbColFlashOnce { 
+  0% { box-shadow: inset 0 0 0 999px rgba(var(--c-rgb,var(--accent-rgb)),.45); }
+  100% { box-shadow: inset 0 0 0 999px rgba(var(--c-rgb,var(--accent-rgb)),0); }
 }
 </style>
 </head>
@@ -43,7 +53,7 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
       <tr style="--to:1"><td>ap-south-1</td><td class="dtb-num dtb-sortcol">$27.4K</td><td class="dtb-num">88</td></tr>
       <tr style="--to:-2"><td>sa-east-1</td><td class="dtb-num dtb-sortcol">$2.9K</td><td class="dtb-num">12</td></tr>
     </tbody></table></div></div>
-<div class="meta"><b>Flash + Resort</b> · <code>tables-flash-resort</code><br>Tables &amp; Data Layouts · SORTING &amp; REORDER<p>Clicking a header: the column flashes, the sort arrow flips, the rows dim and glide to their new positions, then settle — the reorder cue of a sortable data grid. Give each row its offset in --to.</p></div>
+<div class="meta"><b>Flash + Resort</b> · <code>tables-flash-resort</code><br>Tables &amp; Data Layouts · SORTING &amp; REORDER<p>Clicking a header: the column flashes, the sort arrow flips, the rows dim and glide to their new positions, then settle — the reorder cue of a sortable data grid. Give each row its offset in --to. Click the Cost header to sort it yourself.</p></div>
 
 </body>
 </html>
