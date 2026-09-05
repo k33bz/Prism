@@ -475,10 +475,37 @@
 .dtb-arr.pressed{color:var(--c,var(--accent))!important;background:rgba(var(--c-rgb,var(--accent-rgb)),.22);border-radius:3px;box-shadow:0 0 8px rgba(var(--c-rgb,var(--accent-rgb)),.5)}
 .dtb-resort.manual .flashed{animation:dtbColFlashOnce .6s ease-out!important}
 @keyframes dtbColFlashOnce{0%{box-shadow:inset 0 0 0 999px rgba(var(--c-rgb,var(--accent-rgb)),.45)}100%{box-shadow:inset 0 0 0 999px rgba(var(--c-rgb,var(--accent-rgb)),0)}}
-.dtb-fall.manual tr.fall-out td{animation:dtbFallOut .55s cubic-bezier(.3,0,.7,.4) forwards!important;transform-origin:20% 50%}
-.dtb-fall.manual tr.land-in td{animation:dtbLandIn .6s cubic-bezier(.2,.8,.3,1.15) both!important}
-@keyframes dtbFallOut{0%{transform:translateY(0) rotate(0);opacity:1}100%{transform:translateY(190%) rotate(var(--rot,-5deg));opacity:0}}
-@keyframes dtbLandIn{0%{transform:translateY(-300%);opacity:0}60%{transform:translateY(6%);opacity:1}100%{transform:translateY(0);opacity:1}}
+/* Fall + Land Resort 2.0. Out: each row lifts 2% (pops on top), hangs a beat (some get
+   stuck), then drops out on its own tilt (--rot), one at a time in a random order (--o).
+   In: the resorted rows fall in from above at 102%, snap down to size and flash as they
+   seat. The ambient loop is pure CSS; manual mode (after a click) is sequenced by JS. */
+.dtb-fall tbody tr{position:relative;transform-origin:50% 50%}
+.dtb-fall:not(.manual) tbody tr{animation:dtbFallCycle 5.6s cubic-bezier(.4,0,.6,1) infinite;animation-delay:calc(var(--o,0)*.36s)}
+.dtb-fall:not(.manual) tbody tr td{animation:dtbSeatCycle 5.6s linear infinite;animation-delay:calc(var(--o,0)*.36s)}
+.dtb-fall.manual tbody tr{animation:none;transition:transform .18s ease-out}
+.dtb-fall.manual tr.lift2{transform:scale(1.02);z-index:3}
+.dtb-fall.manual tr.lift2 td{box-shadow:0 8px 18px rgba(0,0,0,.45)!important}
+.dtb-fall.manual tr.drop2{animation:dtbDropOut .5s cubic-bezier(.5,0,.9,.4) forwards}
+.dtb-fall.manual tr.land2{animation:dtbLandIn2 .64s cubic-bezier(.3,0,.7,1) both}
+.dtb-fall.manual tr.land2 td{animation:dtbSeat2 .64s linear both!important}
+@keyframes dtbFallCycle{
+  0%{transform:translateY(0) scale(1);opacity:1}
+  5%,9%{transform:translateY(0) scale(1.02);opacity:1}
+  19%{transform:translateY(170%) rotate(var(--rot,-5deg)) scale(1.02);opacity:0}
+  19.1%,52%{transform:translateY(-150%) scale(1.02);opacity:0}
+  54%{opacity:1}
+  62%,66%{transform:translateY(0) scale(1.02);opacity:1}
+  72%{transform:scale(.995)}
+  76%,100%{transform:scale(1);opacity:1}}
+@keyframes dtbSeatCycle{
+  0%,2%{box-shadow:none}
+  5%,17%{box-shadow:0 8px 18px rgba(0,0,0,.45)}
+  19%,64%{box-shadow:none}
+  67%{box-shadow:inset 0 0 0 999px rgba(var(--c-rgb,var(--accent-rgb)),.45)}
+  76%,100%{box-shadow:none}}
+@keyframes dtbDropOut{0%{transform:scale(1.02);opacity:1}100%{transform:translateY(170%) rotate(var(--rot,-5deg)) scale(1.02);opacity:0}}
+@keyframes dtbLandIn2{0%{transform:translateY(-150%) scale(1.02);opacity:0}12%{opacity:1}64%{transform:translateY(0) scale(1.02)}78%{transform:scale(.995)}100%{transform:scale(1)}}
+@keyframes dtbSeat2{0%,60%{box-shadow:none}66%{box-shadow:inset 0 0 0 999px rgba(var(--c-rgb,var(--accent-rgb)),.45)}100%{box-shadow:none}}
 
 /* ---- reduced motion: freeze every dtb animation on a legible frame ---- */
 @media (prefers-reduced-motion:reduce){

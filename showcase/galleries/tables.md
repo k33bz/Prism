@@ -2,7 +2,7 @@
 
 Every effect in Prism's **Tables & Data Layouts** gallery, recorded as a looping GIF.
 
-**54 effects** · 54 animated · 1.1 MB of GIF · click any GIF to open its standalone HTML sample (raw file; open it locally, GitHub shows source).
+**54 effects** · 54 animated · 1.2 MB of GIF · click any GIF to open its standalone HTML sample (raw file; open it locally, GitHub shows source).
 
 [← Showcase index](../README.md)
 

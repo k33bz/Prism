@@ -1,6 +1,6 @@
 {
  "name": "Prism GIF showcase",
- "generated": "2026-09-05T14:23:36.674Z",
+ "generated": "2026-09-05T18:49:03.673Z",
  "source": "Prism.html",
  "browser": {
   "engine": "Firefox (WebDriver BiDi)",
@@ -8,7 +8,7 @@
  },
  "count": 2904,
  "animated": 2647,
- "gifBytes": 66700592,
+ "gifBytes": 66806408,
  "settings": {
   "fps": 10,
   "minSeconds": 1.6,
@@ -21719,8 +21719,8 @@
    "duration": 4,
    "frames": 40,
    "width": 344,
-   "height": 163,
-   "bytes": 5304
+   "height": 191,
+   "bytes": 111120
   },
   {
    "id": "tables-status-pill-column",

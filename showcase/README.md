@@ -7,7 +7,7 @@ A visual index of **every facet in Prism** — 2904 effects across 17 galleries,
 - **`galleries/*.md`** — browsable pages, one per gallery, grouped by category.
 - **`manifest.json`** — what was recorded (size, frames, duration) so tooling can consume the suite too.
 
-Stats: 2647 animated · 257 static (single-frame GIF) · 63.6 MB total · 10 fps, 1.6–4 s per clip · rendered by Firefox (WebDriver BiDi) 155.0.1 · generated 2026-09-05.
+Stats: 2647 animated · 257 static (single-frame GIF) · 63.7 MB total · 10 fps, 1.6–4 s per clip · rendered by Firefox (WebDriver BiDi) 155.0.1 · generated 2026-09-05.
 
 > GIFs are for **display only** — they are not part of the Prism library or the MCP catalog. The authoritative, paste-ready source of every effect remains the `#prism-catalog` island in `Prism.html`.
 

@@ -34,32 +34,64 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
 .dtb-rowmove .dtb-arr:hover, .dtb-resort th.dtb-num:hover, .dtb-fall th.dtb-num:hover { color: var(--c,var(--accent)); }
 .dtb-tbl.manual td.flip { transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1); }
 .dtb-tbl.manual tr.lifted td { position: relative; z-index: 2; box-shadow: 0 6px 16px rgba(0,0,0,.45),inset 0 0 0 999px rgba(var(--c-rgb,var(--accent-rgb)),.14); }
-.dtb-fall.manual tr.fall-out td { transform-origin: 20% 50%; animation: 0.55s cubic-bezier(0.3, 0, 0.7, 0.4) 0s 1 normal forwards running dtbFallOut !important; }
-.dtb-fall.manual tr.land-in td { animation: 0.6s cubic-bezier(0.2, 0.8, 0.3, 1.15) 0s 1 normal both running dtbLandIn !important; }
+.dtb-fall tbody tr { position: relative; transform-origin: 50% 50%; }
+.dtb-fall:not(.manual) tbody tr { animation-duration: 5.6s; animation-timing-function: cubic-bezier(0.4, 0, 0.6, 1); animation-iteration-count: infinite; animation-direction: normal; animation-fill-mode: none; animation-play-state: running; animation-name: dtbFallCycle; animation-timeline: auto; animation-range: normal; animation-delay: calc(var(--o,0)*.36s); }
+.dtb-fall:not(.manual) tbody tr td { animation-duration: 5.6s; animation-timing-function: linear; animation-iteration-count: infinite; animation-direction: normal; animation-fill-mode: none; animation-play-state: running; animation-name: dtbSeatCycle; animation-timeline: auto; animation-range: normal; animation-delay: calc(var(--o,0)*.36s); }
+.dtb-fall.manual tbody tr { animation: auto ease 0s 1 normal none running none; transition: transform 0.18s ease-out; }
+.dtb-fall.manual tr.lift2 { transform: scale(1.02); z-index: 3; }
+.dtb-fall.manual tr.lift2 td { box-shadow: rgba(0, 0, 0, 0.45) 0px 8px 18px !important; }
+.dtb-fall.manual tr.drop2 { animation: 0.5s cubic-bezier(0.5, 0, 0.9, 0.4) 0s 1 normal forwards running dtbDropOut; }
+.dtb-fall.manual tr.land2 { animation: 0.64s cubic-bezier(0.3, 0, 0.7, 1) 0s 1 normal both running dtbLandIn2; }
+.dtb-fall.manual tr.land2 td { animation: 0.64s linear 0s 1 normal both running dtbSeat2 !important; }
 @keyframes dtbSortFlip { 
   0%, 42% { transform: rotate(0deg); }
   50%, 92% { transform: rotate(180deg); }
   100% { transform: rotate(360deg); }
 }
-@keyframes dtbFallOut { 
-  0% { transform: translateY(0px) rotate(0deg); opacity: 1; }
-  100% { transform: translateY(190%) rotate(var(--rot,-5deg)); opacity: 0; }
+@keyframes dtbFallCycle { 
+  0% { transform: translateY(0px) scale(1); opacity: 1; }
+  5%, 9% { transform: translateY(0px) scale(1.02); opacity: 1; }
+  19% { transform: translateY(170%) rotate(var(--rot,-5deg)) scale(1.02); opacity: 0; }
+  19.1%, 52% { transform: translateY(-150%) scale(1.02); opacity: 0; }
+  54% { opacity: 1; }
+  62%, 66% { transform: translateY(0px) scale(1.02); opacity: 1; }
+  72% { transform: scale(0.995); }
+  76%, 100% { transform: scale(1); opacity: 1; }
 }
-@keyframes dtbLandIn { 
-  0% { transform: translateY(-300%); opacity: 0; }
-  60% { transform: translateY(6%); opacity: 1; }
-  100% { transform: translateY(0px); opacity: 1; }
+@keyframes dtbSeatCycle { 
+  0%, 2% { box-shadow: none; }
+  5%, 17% { box-shadow: rgba(0, 0, 0, 0.45) 0px 8px 18px; }
+  19%, 64% { box-shadow: none; }
+  67% { box-shadow: inset 0 0 0 999px rgba(var(--c-rgb,var(--accent-rgb)),.45); }
+  76%, 100% { box-shadow: none; }
+}
+@keyframes dtbDropOut { 
+  0% { transform: scale(1.02); opacity: 1; }
+  100% { transform: translateY(170%) rotate(var(--rot,-5deg)) scale(1.02); opacity: 0; }
+}
+@keyframes dtbLandIn2 { 
+  0% { transform: translateY(-150%) scale(1.02); opacity: 0; }
+  12% { opacity: 1; }
+  64% { transform: translateY(0px) scale(1.02); }
+  78% { transform: scale(0.995); }
+  100% { transform: scale(1); }
+}
+@keyframes dtbSeat2 { 
+  0%, 60% { box-shadow: none; }
+  66% { box-shadow: inset 0 0 0 999px rgba(var(--c-rgb,var(--accent-rgb)),.45); }
+  100% { box-shadow: none; }
 }
 </style>
 </head>
 <body>
 <div class="tile"><div class="stage" id="stage"><table class="dtb-tbl dtb-fall"><thead><tr><th>Player</th><th class="dtb-num">Score<span class="dtb-sort-arrow">▼</span></th><th class="dtb-num">Wins</th></tr></thead><tbody>
-      <tr style="--to:1;--i:0;--rot:-5deg"><td>Comet</td><td class="dtb-num">7,940</td><td class="dtb-num">31</td></tr>
-      <tr style="--to:-1;--i:1;--rot:4deg"><td>Atlas</td><td class="dtb-num">9,812</td><td class="dtb-num">44</td></tr>
-      <tr style="--to:1;--i:2;--rot:-3deg"><td>Pixel</td><td class="dtb-num">5,220</td><td class="dtb-num">18</td></tr>
-      <tr style="--to:-1;--i:3;--rot:6deg"><td>Ember</td><td class="dtb-num">8,105</td><td class="dtb-num">36</td></tr>
+      <tr style="--o:2;--rot:-5deg"><td>Comet</td><td class="dtb-num">7,940</td><td class="dtb-num">31</td></tr>
+      <tr style="--o:0;--rot:4deg"><td>Atlas</td><td class="dtb-num">9,812</td><td class="dtb-num">44</td></tr>
+      <tr style="--o:4;--rot:-3deg"><td>Pixel</td><td class="dtb-num">5,220</td><td class="dtb-num">18</td></tr>
+      <tr style="--o:1;--rot:6deg"><td>Ember</td><td class="dtb-num">8,105</td><td class="dtb-num">36</td></tr>
+      <tr style="--o:3;--rot:-2deg"><td>Nova</td><td class="dtb-num">6,470</td><td class="dtb-num">22</td></tr>
     </tbody></table></div></div>
-<div class="meta"><b>Fall + Land Resort</b> · <code>tables-fall-land-resort</code><br>Tables &amp; Data Layouts · SORTING &amp; REORDER<p>The rows tumble out of the table on slight angles, one after another, then drop back in from above already in the new order, landing with a small bounce — the theatrical resort. Offsets in --to, tilt in --rot. Click the Score header to drop and resort.</p></div>
+<div class="meta"><b>Fall + Land Resort</b> · <code>tables-fall-land-resort</code><br>Tables &amp; Data Layouts · SORTING &amp; REORDER<p>Each row lifts 2% to pop on top, hangs a beat (some get stuck), then drops out on its own tilt, one at a time in a random order. The resorted rows fall in from above at 102%, snap down to size and flash as they seat. Order in --o, tilt in --rot. Click the Score header to drop and resort.</p></div>
 
 </body>
 </html>
