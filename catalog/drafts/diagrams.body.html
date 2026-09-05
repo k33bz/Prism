@@ -541,19 +541,6 @@
   </div><div class="meta"><div class="nm">Hub &amp; Spoke</div><span class="ref">.dgm-hub</span><div class="desc">A central hub with six spokes and pulses streaming outward along each one in turn. Distribution, integration and broadcast topologies.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
   <div class="tile is-new" data-ctype="diagram-network" data-interact="auto-play"><div class="stage">
-    <svg class="dgm dgm-sankey" viewBox="0 0 320 160" aria-label="Sankey flow">
-      <path class="band" d="M40 20 H120 C170 20 170 40 220 40 V70 C170 70 170 60 120 60 H40 Z"/>
-      <path class="band b" d="M40 66 H120 C170 66 170 76 220 76 V96 C170 96 170 86 120 86 H40 Z"/>
-      <path class="band c" d="M40 92 H120 C170 92 170 100 220 100 V140 C170 140 170 130 120 130 H40 Z"/>
-      <rect class="nd" x="30" y="20" width="10" height="40"/><rect class="nd" x="30" y="66" width="10" height="20"/><rect class="nd" x="30" y="92" width="10" height="38"/>
-      <rect class="nd" x="220" y="40" width="10" height="56"/><rect class="nd" x="220" y="100" width="10" height="40"/>
-      <path class="stream" d="M40 40 C120 40 140 55 220 68"/><path class="stream" d="M40 111 C120 111 140 118 220 120"/>
-      <text class="mut" x="14" y="40" text-anchor="end">Ads</text><text class="mut" x="14" y="76" text-anchor="end">Search</text><text class="mut" x="14" y="111" text-anchor="end">Referral</text>
-      <text class="mut" x="238" y="68" text-anchor="start">Trial</text><text class="mut" x="238" y="120" text-anchor="start">Bounce</text>
-    </svg>
-  </div><div class="meta"><div class="nm">Sankey Flow</div><span class="ref">.dgm-sankey</span><div class="desc">Three sources feeding two targets through bands whose width carries the volume, with dashed streams flowing through them. Traffic, budget and energy flows.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
-
-  <div class="tile is-new" data-ctype="diagram-network" data-interact="auto-play"><div class="stage">
     <svg class="dgm dgm-er" viewBox="0 0 320 160" aria-label="Entity relationship diagram">
       <rect class="ent" x="14" y="36" width="90" height="70" rx="4"/><rect class="hdr" x="14" y="36" width="90" height="18" rx="4"/><text x="59" y="45">Customer</text>
       <text class="dim" x="59" y="66">id · pk</text><text class="dim" x="59" y="80">email</text><text class="dim" x="59" y="94">created</text>
@@ -589,6 +576,183 @@
       <circle class="bub" style="--i:4;fill:rgba(var(--crit-rgb),.75)" cx="76" cy="112" r="8"/><text class="fi" style="--i:4" x="76" y="112">PR</text>
     </svg>
   </div><div class="meta"><div class="nm">Stakeholder Map</div><span class="ref">.dgm-stake</span><div class="desc">A power/interest grid with the four engagement zones, stakeholder bubbles growing into place sized by influence. Communication planning.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+</div>
+
+<h3 class="sec">SANKEY &amp; FLOW</h3>
+<div class="gallery">
+
+  <div class="tile is-new" data-ctype="diagram-network" data-interact="auto-play"><div class="stage">
+    <svg class="dgm dgm-sk dgm-sankey" viewBox="0 0 320 160" aria-label="Sankey flow: four sources feeding three targets through ribbons whose width carries the volume">
+      <path class="dgm-sk-rib" style="--i:0;--fc:var(--accent);--fc-rgb:var(--accent-rgb)" stroke-width="22" d="M60 29.0 C160 29.0 160 29.0 258 29.0"/>
+      <path class="dgm-sk-rib" style="--i:1;--fc:var(--accent);--fc-rgb:var(--accent-rgb)" stroke-width="14" d="M60 47.0 C160 47.0 160 117.0 258 117.0"/>
+      <path class="dgm-sk-rib" style="--i:2;--fc:var(--info);--fc-rgb:var(--info-rgb)" stroke-width="16" d="M60 70.0 C160 70.0 160 48.0 258 48.0"/>
+      <path class="dgm-sk-rib" style="--i:3;--fc:var(--info);--fc-rgb:var(--info-rgb)" stroke-width="8" d="M60 82.0 C160 82.0 160 76.0 258 76.0"/>
+      <path class="dgm-sk-rib" style="--i:4;--fc:var(--pos);--fc-rgb:var(--pos-rgb)" stroke-width="12" d="M60 100.0 C160 100.0 160 86.0 258 86.0"/>
+      <path class="dgm-sk-rib" style="--i:5;--fc:var(--pos);--fc-rgb:var(--pos-rgb)" stroke-width="4" d="M60 108.0 C160 108.0 160 58.0 258 58.0"/>
+      <path class="dgm-sk-rib" style="--i:6;--fc:var(--warn);--fc-rgb:var(--warn-rgb)" stroke-width="6" d="M60 121.0 C160 121.0 160 95.0 258 95.0"/>
+      <path class="dgm-sk-rib" style="--i:7;--fc:var(--warn);--fc-rgb:var(--warn-rgb)" stroke-width="6" d="M60 127.0 C160 127.0 160 127.0 258 127.0"/>
+      <rect class="dgm-sk-nd" x="52" y="18" width="8" height="36" rx="2" style="fill:var(--accent)"/>
+      <rect class="dgm-sk-nd" x="52" y="62" width="8" height="24" rx="2" style="fill:var(--info)"/>
+      <rect class="dgm-sk-nd" x="52" y="94" width="8" height="16" rx="2" style="fill:var(--pos)"/>
+      <rect class="dgm-sk-nd" x="52" y="118" width="8" height="12" rx="2" style="fill:var(--warn)"/>
+      <rect class="dgm-sk-nd dgm-sk-t" x="258" y="18" width="8" height="42" rx="2"/>
+      <rect class="dgm-sk-nd dgm-sk-t" x="258" y="72" width="8" height="26" rx="2"/>
+      <rect class="dgm-sk-nd dgm-sk-t" x="258" y="110" width="8" height="20" rx="2"/>
+      <text class="mut" x="47" y="36.0" style="text-anchor:end">Ads</text>
+      <text class="mut" x="47" y="74.0" style="text-anchor:end">Search</text>
+      <text class="mut" x="47" y="102.0" style="text-anchor:end">Referral</text>
+      <text class="mut" x="47" y="124.0" style="text-anchor:end">Social</text>
+      <text class="mut" x="270" y="39.0" style="text-anchor:start">Trial</text>
+      <text class="mut" x="270" y="85.0" style="text-anchor:start">Signup</text>
+      <text class="mut" x="270" y="120.0" style="text-anchor:start">Bounce</text>
+    </svg>
+  </div><div class="meta"><div class="nm">Sankey Flow</div><span class="ref">.dgm-sankey</span><div class="desc">Four sources feed three targets through ribbons whose width carries the volume; each ribbon fades in and a sheen travels along it. Traffic, budget and energy flows.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="diagram-network" data-interact="auto-play"><div class="stage">
+    <svg class="dgm dgm-sk dgm-sk-particles" viewBox="0 0 320 160" aria-label="Particle Sankey: dots stream along every ribbon from source to target">
+      <path class="dgm-sk-rib" style="--i:0;--fc:var(--accent);--fc-rgb:var(--accent-rgb)" stroke-width="22" d="M60 29.0 C160 29.0 160 29.0 258 29.0"/><rect class="dgm-sk-p" width="3" height="3" style="offset-path:path('M60 29.0 C160 29.0 160 29.0 258 29.0');--d:0.0s;--oy:-9.5px;--fc:var(--accent)"/><rect class="dgm-sk-p dgm-sk-p2" width="3" height="3" style="offset-path:path('M60 29.0 C160 29.0 160 29.0 258 29.0');--d:1.99s;--oy:-6.3px;--fc:var(--accent)"/><rect class="dgm-sk-p" width="3" height="3" style="offset-path:path('M60 29.0 C160 29.0 160 29.0 258 29.0');--d:1.38s;--oy:-3.2px;--fc:var(--accent)"/><rect class="dgm-sk-p dgm-sk-p2" width="3" height="3" style="offset-path:path('M60 29.0 C160 29.0 160 29.0 258 29.0');--d:0.77s;--oy:0.0px;--fc:var(--accent)"/><rect class="dgm-sk-p" width="3" height="3" style="offset-path:path('M60 29.0 C160 29.0 160 29.0 258 29.0');--d:0.16s;--oy:3.2px;--fc:var(--accent)"/><rect class="dgm-sk-p dgm-sk-p2" width="3" height="3" style="offset-path:path('M60 29.0 C160 29.0 160 29.0 258 29.0');--d:2.15s;--oy:6.3px;--fc:var(--accent)"/><rect class="dgm-sk-p" width="3" height="3" style="offset-path:path('M60 29.0 C160 29.0 160 29.0 258 29.0');--d:1.54s;--oy:9.5px;--fc:var(--accent)"/>
+      <path class="dgm-sk-rib" style="--i:1;--fc:var(--accent);--fc-rgb:var(--accent-rgb)" stroke-width="14" d="M60 47.0 C160 47.0 160 117.0 258 117.0"/><rect class="dgm-sk-p" width="3" height="3" style="offset-path:path('M60 47.0 C160 47.0 160 117.0 258 117.0');--d:2.23s;--oy:-5.5px;--fc:var(--accent)"/><rect class="dgm-sk-p dgm-sk-p2" width="3" height="3" style="offset-path:path('M60 47.0 C160 47.0 160 117.0 258 117.0');--d:1.62s;--oy:-1.8px;--fc:var(--accent)"/><rect class="dgm-sk-p" width="3" height="3" style="offset-path:path('M60 47.0 C160 47.0 160 117.0 258 117.0');--d:1.01s;--oy:1.8px;--fc:var(--accent)"/><rect class="dgm-sk-p dgm-sk-p2" width="3" height="3" style="offset-path:path('M60 47.0 C160 47.0 160 117.0 258 117.0');--d:0.4s;--oy:5.5px;--fc:var(--accent)"/>
+      <path class="dgm-sk-rib" style="--i:2;--fc:var(--info);--fc-rgb:var(--info-rgb)" stroke-width="16" d="M60 70.0 C160 70.0 160 48.0 258 48.0"/><rect class="dgm-sk-p" width="3" height="3" style="offset-path:path('M60 70.0 C160 70.0 160 48.0 258 48.0');--d:1.86s;--oy:-6.5px;--fc:var(--info)"/><rect class="dgm-sk-p dgm-sk-p2" width="3" height="3" style="offset-path:path('M60 70.0 C160 70.0 160 48.0 258 48.0');--d:1.25s;--oy:-3.2px;--fc:var(--info)"/><rect class="dgm-sk-p" width="3" height="3" style="offset-path:path('M60 70.0 C160 70.0 160 48.0 258 48.0');--d:0.64s;--oy:0.0px;--fc:var(--info)"/><rect class="dgm-sk-p dgm-sk-p2" width="3" height="3" style="offset-path:path('M60 70.0 C160 70.0 160 48.0 258 48.0');--d:0.03s;--oy:3.2px;--fc:var(--info)"/><rect class="dgm-sk-p" width="3" height="3" style="offset-path:path('M60 70.0 C160 70.0 160 48.0 258 48.0');--d:2.02s;--oy:6.5px;--fc:var(--info)"/>
+      <path class="dgm-sk-rib" style="--i:3;--fc:var(--info);--fc-rgb:var(--info-rgb)" stroke-width="8" d="M60 82.0 C160 82.0 160 76.0 258 76.0"/><rect class="dgm-sk-p" width="3" height="3" style="offset-path:path('M60 82.0 C160 82.0 160 76.0 258 76.0');--d:1.49s;--oy:-2.5px;--fc:var(--info)"/><rect class="dgm-sk-p dgm-sk-p2" width="3" height="3" style="offset-path:path('M60 82.0 C160 82.0 160 76.0 258 76.0');--d:0.88s;--oy:2.5px;--fc:var(--info)"/>
+      <path class="dgm-sk-rib" style="--i:4;--fc:var(--pos);--fc-rgb:var(--pos-rgb)" stroke-width="12" d="M60 100.0 C160 100.0 160 86.0 258 86.0"/><rect class="dgm-sk-p" width="3" height="3" style="offset-path:path('M60 100.0 C160 100.0 160 86.0 258 86.0');--d:1.12s;--oy:-4.5px;--fc:var(--pos)"/><rect class="dgm-sk-p dgm-sk-p2" width="3" height="3" style="offset-path:path('M60 100.0 C160 100.0 160 86.0 258 86.0');--d:0.51s;--oy:-1.5px;--fc:var(--pos)"/><rect class="dgm-sk-p" width="3" height="3" style="offset-path:path('M60 100.0 C160 100.0 160 86.0 258 86.0');--d:2.5s;--oy:1.5px;--fc:var(--pos)"/><rect class="dgm-sk-p dgm-sk-p2" width="3" height="3" style="offset-path:path('M60 100.0 C160 100.0 160 86.0 258 86.0');--d:1.89s;--oy:4.5px;--fc:var(--pos)"/>
+      <path class="dgm-sk-rib" style="--i:5;--fc:var(--pos);--fc-rgb:var(--pos-rgb)" stroke-width="4" d="M60 108.0 C160 108.0 160 58.0 258 58.0"/><rect class="dgm-sk-p" width="3" height="3" style="offset-path:path('M60 108.0 C160 108.0 160 58.0 258 58.0');--d:0.75s;--oy:-0.5px;--fc:var(--pos)"/><rect class="dgm-sk-p dgm-sk-p2" width="3" height="3" style="offset-path:path('M60 108.0 C160 108.0 160 58.0 258 58.0');--d:0.14s;--oy:0.5px;--fc:var(--pos)"/>
+      <path class="dgm-sk-rib" style="--i:6;--fc:var(--warn);--fc-rgb:var(--warn-rgb)" stroke-width="6" d="M60 121.0 C160 121.0 160 95.0 258 95.0"/><rect class="dgm-sk-p" width="3" height="3" style="offset-path:path('M60 121.0 C160 121.0 160 95.0 258 95.0');--d:0.38s;--oy:-1.5px;--fc:var(--warn)"/><rect class="dgm-sk-p dgm-sk-p2" width="3" height="3" style="offset-path:path('M60 121.0 C160 121.0 160 95.0 258 95.0');--d:2.37s;--oy:1.5px;--fc:var(--warn)"/>
+      <path class="dgm-sk-rib" style="--i:7;--fc:var(--warn);--fc-rgb:var(--warn-rgb)" stroke-width="6" d="M60 127.0 C160 127.0 160 127.0 258 127.0"/><rect class="dgm-sk-p" width="3" height="3" style="offset-path:path('M60 127.0 C160 127.0 160 127.0 258 127.0');--d:0.01s;--oy:-1.5px;--fc:var(--warn)"/><rect class="dgm-sk-p dgm-sk-p2" width="3" height="3" style="offset-path:path('M60 127.0 C160 127.0 160 127.0 258 127.0');--d:2.0s;--oy:1.5px;--fc:var(--warn)"/>
+      <rect class="dgm-sk-nd" x="52" y="18" width="8" height="36" rx="2" style="fill:var(--accent)"/>
+      <rect class="dgm-sk-nd" x="52" y="62" width="8" height="24" rx="2" style="fill:var(--info)"/>
+      <rect class="dgm-sk-nd" x="52" y="94" width="8" height="16" rx="2" style="fill:var(--pos)"/>
+      <rect class="dgm-sk-nd" x="52" y="118" width="8" height="12" rx="2" style="fill:var(--warn)"/>
+      <rect class="dgm-sk-nd dgm-sk-t" x="258" y="18" width="8" height="42" rx="2"/>
+      <rect class="dgm-sk-nd dgm-sk-t" x="258" y="72" width="8" height="26" rx="2"/>
+      <rect class="dgm-sk-nd dgm-sk-t" x="258" y="110" width="8" height="20" rx="2"/>
+      <text class="mut" x="47" y="36.0" style="text-anchor:end">Ads</text>
+      <text class="mut" x="47" y="74.0" style="text-anchor:end">Search</text>
+      <text class="mut" x="47" y="102.0" style="text-anchor:end">Referral</text>
+      <text class="mut" x="47" y="124.0" style="text-anchor:end">Social</text>
+      <text class="mut" x="270" y="39.0" style="text-anchor:start">Trial</text>
+      <text class="mut" x="270" y="85.0" style="text-anchor:start">Signup</text>
+      <text class="mut" x="270" y="120.0" style="text-anchor:start">Bounce</text>
+    </svg>
+  </div><div class="meta"><div class="nm">Particle Sankey</div><span class="ref">.dgm-sk-particles</span><div class="desc">The ribbons carry a stream of small squares from source to target along the flow path, two tones per flow, so volume reads as traffic, not area. Cohorts, populations, where people end up.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="diagram-network" data-interact="auto-play"><div class="stage">
+    <svg class="dgm dgm-sk dgm-sk-gradient" viewBox="0 0 320 160" aria-label="Gradient Sankey: ribbons shade from their source colour to their target colour with a sheen sweeping across">
+      <defs><linearGradient id="dgmSkG0" gradientUnits="userSpaceOnUse" x1="60" x2="258" y1="0" y2="0"><stop offset="0" style="stop-color:var(--accent)"/><stop offset="1" style="stop-color:var(--accent)"/></linearGradient><linearGradient id="dgmSkG1" gradientUnits="userSpaceOnUse" x1="60" x2="258" y1="0" y2="0"><stop offset="0" style="stop-color:var(--accent)"/><stop offset="1" style="stop-color:var(--dim)"/></linearGradient><linearGradient id="dgmSkG2" gradientUnits="userSpaceOnUse" x1="60" x2="258" y1="0" y2="0"><stop offset="0" style="stop-color:var(--info)"/><stop offset="1" style="stop-color:var(--accent)"/></linearGradient><linearGradient id="dgmSkG3" gradientUnits="userSpaceOnUse" x1="60" x2="258" y1="0" y2="0"><stop offset="0" style="stop-color:var(--info)"/><stop offset="1" style="stop-color:var(--crit)"/></linearGradient><linearGradient id="dgmSkG4" gradientUnits="userSpaceOnUse" x1="60" x2="258" y1="0" y2="0"><stop offset="0" style="stop-color:var(--pos)"/><stop offset="1" style="stop-color:var(--crit)"/></linearGradient><linearGradient id="dgmSkG5" gradientUnits="userSpaceOnUse" x1="60" x2="258" y1="0" y2="0"><stop offset="0" style="stop-color:var(--pos)"/><stop offset="1" style="stop-color:var(--accent)"/></linearGradient><linearGradient id="dgmSkG6" gradientUnits="userSpaceOnUse" x1="60" x2="258" y1="0" y2="0"><stop offset="0" style="stop-color:var(--warn)"/><stop offset="1" style="stop-color:var(--crit)"/></linearGradient><linearGradient id="dgmSkG7" gradientUnits="userSpaceOnUse" x1="60" x2="258" y1="0" y2="0"><stop offset="0" style="stop-color:var(--warn)"/><stop offset="1" style="stop-color:var(--dim)"/></linearGradient></defs>
+      <path class="dgm-sk-rib dgm-sk-grad-rib" style="--i:0" stroke="url(#dgmSkG0)" stroke-width="22" d="M60 29.0 C160 29.0 160 29.0 258 29.0"/><path class="dgm-sk-sheen" style="--i:0" stroke-width="22" d="M60 29.0 C160 29.0 160 29.0 258 29.0"/>
+      <path class="dgm-sk-rib dgm-sk-grad-rib" style="--i:1" stroke="url(#dgmSkG1)" stroke-width="14" d="M60 47.0 C160 47.0 160 117.0 258 117.0"/><path class="dgm-sk-sheen" style="--i:1" stroke-width="14" d="M60 47.0 C160 47.0 160 117.0 258 117.0"/>
+      <path class="dgm-sk-rib dgm-sk-grad-rib" style="--i:2" stroke="url(#dgmSkG2)" stroke-width="16" d="M60 70.0 C160 70.0 160 48.0 258 48.0"/><path class="dgm-sk-sheen" style="--i:2" stroke-width="16" d="M60 70.0 C160 70.0 160 48.0 258 48.0"/>
+      <path class="dgm-sk-rib dgm-sk-grad-rib" style="--i:3" stroke="url(#dgmSkG3)" stroke-width="8" d="M60 82.0 C160 82.0 160 76.0 258 76.0"/><path class="dgm-sk-sheen" style="--i:3" stroke-width="8" d="M60 82.0 C160 82.0 160 76.0 258 76.0"/>
+      <path class="dgm-sk-rib dgm-sk-grad-rib" style="--i:4" stroke="url(#dgmSkG4)" stroke-width="12" d="M60 100.0 C160 100.0 160 86.0 258 86.0"/><path class="dgm-sk-sheen" style="--i:4" stroke-width="12" d="M60 100.0 C160 100.0 160 86.0 258 86.0"/>
+      <path class="dgm-sk-rib dgm-sk-grad-rib" style="--i:5" stroke="url(#dgmSkG5)" stroke-width="4" d="M60 108.0 C160 108.0 160 58.0 258 58.0"/><path class="dgm-sk-sheen" style="--i:5" stroke-width="4" d="M60 108.0 C160 108.0 160 58.0 258 58.0"/>
+      <path class="dgm-sk-rib dgm-sk-grad-rib" style="--i:6" stroke="url(#dgmSkG6)" stroke-width="6" d="M60 121.0 C160 121.0 160 95.0 258 95.0"/><path class="dgm-sk-sheen" style="--i:6" stroke-width="6" d="M60 121.0 C160 121.0 160 95.0 258 95.0"/>
+      <path class="dgm-sk-rib dgm-sk-grad-rib" style="--i:7" stroke="url(#dgmSkG7)" stroke-width="6" d="M60 127.0 C160 127.0 160 127.0 258 127.0"/><path class="dgm-sk-sheen" style="--i:7" stroke-width="6" d="M60 127.0 C160 127.0 160 127.0 258 127.0"/>
+      <rect class="dgm-sk-nd" x="52" y="18" width="8" height="36" rx="2" style="fill:var(--accent)"/>
+      <rect class="dgm-sk-nd" x="52" y="62" width="8" height="24" rx="2" style="fill:var(--info)"/>
+      <rect class="dgm-sk-nd" x="52" y="94" width="8" height="16" rx="2" style="fill:var(--pos)"/>
+      <rect class="dgm-sk-nd" x="52" y="118" width="8" height="12" rx="2" style="fill:var(--warn)"/>
+      <rect class="dgm-sk-nd dgm-sk-t" x="258" y="18" width="8" height="42" rx="2"/>
+      <rect class="dgm-sk-nd dgm-sk-t" x="258" y="72" width="8" height="26" rx="2"/>
+      <rect class="dgm-sk-nd dgm-sk-t" x="258" y="110" width="8" height="20" rx="2"/>
+      <text class="mut" x="47" y="36.0" style="text-anchor:end">Ads</text>
+      <text class="mut" x="47" y="74.0" style="text-anchor:end">Search</text>
+      <text class="mut" x="47" y="102.0" style="text-anchor:end">Referral</text>
+      <text class="mut" x="47" y="124.0" style="text-anchor:end">Social</text>
+      <text class="mut" x="270" y="39.0" style="text-anchor:start">Trial</text>
+      <text class="mut" x="270" y="85.0" style="text-anchor:start">Signup</text>
+      <text class="mut" x="270" y="120.0" style="text-anchor:start">Bounce</text>
+    </svg>
+  </div><div class="meta"><div class="nm">Gradient Sankey</div><span class="ref">.dgm-sk-gradient</span><div class="desc">Each ribbon shades from its source colour to its target colour and a highlight sweeps along it in sequence, so the eye follows the flow left to right. The charting-library look.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="diagram-network" data-interact="hover"><div class="stage">
+    <svg class="dgm dgm-sk dgm-sk-focus" viewBox="0 0 320 160" aria-label="Focus and freeze Sankey: hover a flow to grey out and pause every other flow">
+      <g class="dgm-sk-flow" style="--i:0;--fc:var(--accent);--fc-rgb:var(--accent-rgb)"><path class="dgm-sk-rib" style="--i:0;--fc:var(--accent);--fc-rgb:var(--accent-rgb)" stroke-width="22" d="M60 29.0 C160 29.0 160 29.0 258 29.0"/><rect class="dgm-sk-p" width="3" height="3" style="offset-path:path('M60 29.0 C160 29.0 160 29.0 258 29.0');--d:0.0s;--oy:-9.5px;--fc:var(--accent)"/><rect class="dgm-sk-p dgm-sk-p2" width="3" height="3" style="offset-path:path('M60 29.0 C160 29.0 160 29.0 258 29.0');--d:1.99s;--oy:-6.3px;--fc:var(--accent)"/><rect class="dgm-sk-p" width="3" height="3" style="offset-path:path('M60 29.0 C160 29.0 160 29.0 258 29.0');--d:1.38s;--oy:-3.2px;--fc:var(--accent)"/><rect class="dgm-sk-p dgm-sk-p2" width="3" height="3" style="offset-path:path('M60 29.0 C160 29.0 160 29.0 258 29.0');--d:0.77s;--oy:0.0px;--fc:var(--accent)"/><rect class="dgm-sk-p" width="3" height="3" style="offset-path:path('M60 29.0 C160 29.0 160 29.0 258 29.0');--d:0.16s;--oy:3.2px;--fc:var(--accent)"/><rect class="dgm-sk-p dgm-sk-p2" width="3" height="3" style="offset-path:path('M60 29.0 C160 29.0 160 29.0 258 29.0');--d:2.15s;--oy:6.3px;--fc:var(--accent)"/><rect class="dgm-sk-p" width="3" height="3" style="offset-path:path('M60 29.0 C160 29.0 160 29.0 258 29.0');--d:1.54s;--oy:9.5px;--fc:var(--accent)"/></g>
+      <g class="dgm-sk-flow" style="--i:1;--fc:var(--accent);--fc-rgb:var(--accent-rgb)"><path class="dgm-sk-rib" style="--i:1;--fc:var(--accent);--fc-rgb:var(--accent-rgb)" stroke-width="14" d="M60 47.0 C160 47.0 160 117.0 258 117.0"/><rect class="dgm-sk-p" width="3" height="3" style="offset-path:path('M60 47.0 C160 47.0 160 117.0 258 117.0');--d:2.23s;--oy:-5.5px;--fc:var(--accent)"/><rect class="dgm-sk-p dgm-sk-p2" width="3" height="3" style="offset-path:path('M60 47.0 C160 47.0 160 117.0 258 117.0');--d:1.62s;--oy:-1.8px;--fc:var(--accent)"/><rect class="dgm-sk-p" width="3" height="3" style="offset-path:path('M60 47.0 C160 47.0 160 117.0 258 117.0');--d:1.01s;--oy:1.8px;--fc:var(--accent)"/><rect class="dgm-sk-p dgm-sk-p2" width="3" height="3" style="offset-path:path('M60 47.0 C160 47.0 160 117.0 258 117.0');--d:0.4s;--oy:5.5px;--fc:var(--accent)"/></g>
+      <g class="dgm-sk-flow" style="--i:2;--fc:var(--info);--fc-rgb:var(--info-rgb)"><path class="dgm-sk-rib" style="--i:2;--fc:var(--info);--fc-rgb:var(--info-rgb)" stroke-width="16" d="M60 70.0 C160 70.0 160 48.0 258 48.0"/><rect class="dgm-sk-p" width="3" height="3" style="offset-path:path('M60 70.0 C160 70.0 160 48.0 258 48.0');--d:1.86s;--oy:-6.5px;--fc:var(--info)"/><rect class="dgm-sk-p dgm-sk-p2" width="3" height="3" style="offset-path:path('M60 70.0 C160 70.0 160 48.0 258 48.0');--d:1.25s;--oy:-3.2px;--fc:var(--info)"/><rect class="dgm-sk-p" width="3" height="3" style="offset-path:path('M60 70.0 C160 70.0 160 48.0 258 48.0');--d:0.64s;--oy:0.0px;--fc:var(--info)"/><rect class="dgm-sk-p dgm-sk-p2" width="3" height="3" style="offset-path:path('M60 70.0 C160 70.0 160 48.0 258 48.0');--d:0.03s;--oy:3.2px;--fc:var(--info)"/><rect class="dgm-sk-p" width="3" height="3" style="offset-path:path('M60 70.0 C160 70.0 160 48.0 258 48.0');--d:2.02s;--oy:6.5px;--fc:var(--info)"/></g>
+      <g class="dgm-sk-flow" style="--i:3;--fc:var(--info);--fc-rgb:var(--info-rgb)"><path class="dgm-sk-rib" style="--i:3;--fc:var(--info);--fc-rgb:var(--info-rgb)" stroke-width="8" d="M60 82.0 C160 82.0 160 76.0 258 76.0"/><rect class="dgm-sk-p" width="3" height="3" style="offset-path:path('M60 82.0 C160 82.0 160 76.0 258 76.0');--d:1.49s;--oy:-2.5px;--fc:var(--info)"/><rect class="dgm-sk-p dgm-sk-p2" width="3" height="3" style="offset-path:path('M60 82.0 C160 82.0 160 76.0 258 76.0');--d:0.88s;--oy:2.5px;--fc:var(--info)"/></g>
+      <g class="dgm-sk-flow" style="--i:4;--fc:var(--pos);--fc-rgb:var(--pos-rgb)"><path class="dgm-sk-rib" style="--i:4;--fc:var(--pos);--fc-rgb:var(--pos-rgb)" stroke-width="12" d="M60 100.0 C160 100.0 160 86.0 258 86.0"/><rect class="dgm-sk-p" width="3" height="3" style="offset-path:path('M60 100.0 C160 100.0 160 86.0 258 86.0');--d:1.12s;--oy:-4.5px;--fc:var(--pos)"/><rect class="dgm-sk-p dgm-sk-p2" width="3" height="3" style="offset-path:path('M60 100.0 C160 100.0 160 86.0 258 86.0');--d:0.51s;--oy:-1.5px;--fc:var(--pos)"/><rect class="dgm-sk-p" width="3" height="3" style="offset-path:path('M60 100.0 C160 100.0 160 86.0 258 86.0');--d:2.5s;--oy:1.5px;--fc:var(--pos)"/><rect class="dgm-sk-p dgm-sk-p2" width="3" height="3" style="offset-path:path('M60 100.0 C160 100.0 160 86.0 258 86.0');--d:1.89s;--oy:4.5px;--fc:var(--pos)"/></g>
+      <g class="dgm-sk-flow" style="--i:5;--fc:var(--pos);--fc-rgb:var(--pos-rgb)"><path class="dgm-sk-rib" style="--i:5;--fc:var(--pos);--fc-rgb:var(--pos-rgb)" stroke-width="4" d="M60 108.0 C160 108.0 160 58.0 258 58.0"/><rect class="dgm-sk-p" width="3" height="3" style="offset-path:path('M60 108.0 C160 108.0 160 58.0 258 58.0');--d:0.75s;--oy:-0.5px;--fc:var(--pos)"/><rect class="dgm-sk-p dgm-sk-p2" width="3" height="3" style="offset-path:path('M60 108.0 C160 108.0 160 58.0 258 58.0');--d:0.14s;--oy:0.5px;--fc:var(--pos)"/></g>
+      <g class="dgm-sk-flow" style="--i:6;--fc:var(--warn);--fc-rgb:var(--warn-rgb)"><path class="dgm-sk-rib" style="--i:6;--fc:var(--warn);--fc-rgb:var(--warn-rgb)" stroke-width="6" d="M60 121.0 C160 121.0 160 95.0 258 95.0"/><rect class="dgm-sk-p" width="3" height="3" style="offset-path:path('M60 121.0 C160 121.0 160 95.0 258 95.0');--d:0.38s;--oy:-1.5px;--fc:var(--warn)"/><rect class="dgm-sk-p dgm-sk-p2" width="3" height="3" style="offset-path:path('M60 121.0 C160 121.0 160 95.0 258 95.0');--d:2.37s;--oy:1.5px;--fc:var(--warn)"/></g>
+      <g class="dgm-sk-flow" style="--i:7;--fc:var(--warn);--fc-rgb:var(--warn-rgb)"><path class="dgm-sk-rib" style="--i:7;--fc:var(--warn);--fc-rgb:var(--warn-rgb)" stroke-width="6" d="M60 127.0 C160 127.0 160 127.0 258 127.0"/><rect class="dgm-sk-p" width="3" height="3" style="offset-path:path('M60 127.0 C160 127.0 160 127.0 258 127.0');--d:0.01s;--oy:-1.5px;--fc:var(--warn)"/><rect class="dgm-sk-p dgm-sk-p2" width="3" height="3" style="offset-path:path('M60 127.0 C160 127.0 160 127.0 258 127.0');--d:2.0s;--oy:1.5px;--fc:var(--warn)"/></g>
+      <rect class="dgm-sk-nd" x="52" y="18" width="8" height="36" rx="2" style="fill:var(--accent)"/>
+      <rect class="dgm-sk-nd" x="52" y="62" width="8" height="24" rx="2" style="fill:var(--info)"/>
+      <rect class="dgm-sk-nd" x="52" y="94" width="8" height="16" rx="2" style="fill:var(--pos)"/>
+      <rect class="dgm-sk-nd" x="52" y="118" width="8" height="12" rx="2" style="fill:var(--warn)"/>
+      <rect class="dgm-sk-nd dgm-sk-t" x="258" y="18" width="8" height="42" rx="2"/>
+      <rect class="dgm-sk-nd dgm-sk-t" x="258" y="72" width="8" height="26" rx="2"/>
+      <rect class="dgm-sk-nd dgm-sk-t" x="258" y="110" width="8" height="20" rx="2"/>
+      <text class="mut" x="47" y="36.0" style="text-anchor:end">Ads</text>
+      <text class="mut" x="47" y="74.0" style="text-anchor:end">Search</text>
+      <text class="mut" x="47" y="102.0" style="text-anchor:end">Referral</text>
+      <text class="mut" x="47" y="124.0" style="text-anchor:end">Social</text>
+      <text class="mut" x="270" y="39.0" style="text-anchor:start">Trial</text>
+      <text class="mut" x="270" y="85.0" style="text-anchor:start">Signup</text>
+      <text class="mut" x="270" y="120.0" style="text-anchor:start">Bounce</text>
+    </svg>
+  </div><div class="meta"><div class="nm">Focus + Freeze Sankey</div><span class="ref">.dgm-sk-focus</span><div class="desc">Hover any flow: the others grey out and their particles stop dead while the chosen one keeps running. The ambient loop previews it by focusing each flow in turn. <b>Hover a ribbon.</b></div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="diagram-network" data-interact="hover"><div class="stage">
+    <svg class="dgm dgm-sk dgm-sk-glow" viewBox="0 0 320 160" aria-label="Dim and glow Sankey: hover a flow to dim the rest and make the chosen one glow">
+      <g class="dgm-sk-flow" style="--i:0;--fc:var(--accent);--fc-rgb:var(--accent-rgb)"><path class="dgm-sk-rib" style="--i:0;--fc:var(--accent);--fc-rgb:var(--accent-rgb)" stroke-width="22" d="M60 29.0 C160 29.0 160 29.0 258 29.0"/><rect class="dgm-sk-p" width="3" height="3" style="offset-path:path('M60 29.0 C160 29.0 160 29.0 258 29.0');--d:0.0s;--oy:-9.5px;--fc:var(--accent)"/><rect class="dgm-sk-p dgm-sk-p2" width="3" height="3" style="offset-path:path('M60 29.0 C160 29.0 160 29.0 258 29.0');--d:1.99s;--oy:-6.3px;--fc:var(--accent)"/><rect class="dgm-sk-p" width="3" height="3" style="offset-path:path('M60 29.0 C160 29.0 160 29.0 258 29.0');--d:1.38s;--oy:-3.2px;--fc:var(--accent)"/><rect class="dgm-sk-p dgm-sk-p2" width="3" height="3" style="offset-path:path('M60 29.0 C160 29.0 160 29.0 258 29.0');--d:0.77s;--oy:0.0px;--fc:var(--accent)"/><rect class="dgm-sk-p" width="3" height="3" style="offset-path:path('M60 29.0 C160 29.0 160 29.0 258 29.0');--d:0.16s;--oy:3.2px;--fc:var(--accent)"/><rect class="dgm-sk-p dgm-sk-p2" width="3" height="3" style="offset-path:path('M60 29.0 C160 29.0 160 29.0 258 29.0');--d:2.15s;--oy:6.3px;--fc:var(--accent)"/><rect class="dgm-sk-p" width="3" height="3" style="offset-path:path('M60 29.0 C160 29.0 160 29.0 258 29.0');--d:1.54s;--oy:9.5px;--fc:var(--accent)"/></g>
+      <g class="dgm-sk-flow" style="--i:1;--fc:var(--accent);--fc-rgb:var(--accent-rgb)"><path class="dgm-sk-rib" style="--i:1;--fc:var(--accent);--fc-rgb:var(--accent-rgb)" stroke-width="14" d="M60 47.0 C160 47.0 160 117.0 258 117.0"/><rect class="dgm-sk-p" width="3" height="3" style="offset-path:path('M60 47.0 C160 47.0 160 117.0 258 117.0');--d:2.23s;--oy:-5.5px;--fc:var(--accent)"/><rect class="dgm-sk-p dgm-sk-p2" width="3" height="3" style="offset-path:path('M60 47.0 C160 47.0 160 117.0 258 117.0');--d:1.62s;--oy:-1.8px;--fc:var(--accent)"/><rect class="dgm-sk-p" width="3" height="3" style="offset-path:path('M60 47.0 C160 47.0 160 117.0 258 117.0');--d:1.01s;--oy:1.8px;--fc:var(--accent)"/><rect class="dgm-sk-p dgm-sk-p2" width="3" height="3" style="offset-path:path('M60 47.0 C160 47.0 160 117.0 258 117.0');--d:0.4s;--oy:5.5px;--fc:var(--accent)"/></g>
+      <g class="dgm-sk-flow" style="--i:2;--fc:var(--info);--fc-rgb:var(--info-rgb)"><path class="dgm-sk-rib" style="--i:2;--fc:var(--info);--fc-rgb:var(--info-rgb)" stroke-width="16" d="M60 70.0 C160 70.0 160 48.0 258 48.0"/><rect class="dgm-sk-p" width="3" height="3" style="offset-path:path('M60 70.0 C160 70.0 160 48.0 258 48.0');--d:1.86s;--oy:-6.5px;--fc:var(--info)"/><rect class="dgm-sk-p dgm-sk-p2" width="3" height="3" style="offset-path:path('M60 70.0 C160 70.0 160 48.0 258 48.0');--d:1.25s;--oy:-3.2px;--fc:var(--info)"/><rect class="dgm-sk-p" width="3" height="3" style="offset-path:path('M60 70.0 C160 70.0 160 48.0 258 48.0');--d:0.64s;--oy:0.0px;--fc:var(--info)"/><rect class="dgm-sk-p dgm-sk-p2" width="3" height="3" style="offset-path:path('M60 70.0 C160 70.0 160 48.0 258 48.0');--d:0.03s;--oy:3.2px;--fc:var(--info)"/><rect class="dgm-sk-p" width="3" height="3" style="offset-path:path('M60 70.0 C160 70.0 160 48.0 258 48.0');--d:2.02s;--oy:6.5px;--fc:var(--info)"/></g>
+      <g class="dgm-sk-flow" style="--i:3;--fc:var(--info);--fc-rgb:var(--info-rgb)"><path class="dgm-sk-rib" style="--i:3;--fc:var(--info);--fc-rgb:var(--info-rgb)" stroke-width="8" d="M60 82.0 C160 82.0 160 76.0 258 76.0"/><rect class="dgm-sk-p" width="3" height="3" style="offset-path:path('M60 82.0 C160 82.0 160 76.0 258 76.0');--d:1.49s;--oy:-2.5px;--fc:var(--info)"/><rect class="dgm-sk-p dgm-sk-p2" width="3" height="3" style="offset-path:path('M60 82.0 C160 82.0 160 76.0 258 76.0');--d:0.88s;--oy:2.5px;--fc:var(--info)"/></g>
+      <g class="dgm-sk-flow" style="--i:4;--fc:var(--pos);--fc-rgb:var(--pos-rgb)"><path class="dgm-sk-rib" style="--i:4;--fc:var(--pos);--fc-rgb:var(--pos-rgb)" stroke-width="12" d="M60 100.0 C160 100.0 160 86.0 258 86.0"/><rect class="dgm-sk-p" width="3" height="3" style="offset-path:path('M60 100.0 C160 100.0 160 86.0 258 86.0');--d:1.12s;--oy:-4.5px;--fc:var(--pos)"/><rect class="dgm-sk-p dgm-sk-p2" width="3" height="3" style="offset-path:path('M60 100.0 C160 100.0 160 86.0 258 86.0');--d:0.51s;--oy:-1.5px;--fc:var(--pos)"/><rect class="dgm-sk-p" width="3" height="3" style="offset-path:path('M60 100.0 C160 100.0 160 86.0 258 86.0');--d:2.5s;--oy:1.5px;--fc:var(--pos)"/><rect class="dgm-sk-p dgm-sk-p2" width="3" height="3" style="offset-path:path('M60 100.0 C160 100.0 160 86.0 258 86.0');--d:1.89s;--oy:4.5px;--fc:var(--pos)"/></g>
+      <g class="dgm-sk-flow" style="--i:5;--fc:var(--pos);--fc-rgb:var(--pos-rgb)"><path class="dgm-sk-rib" style="--i:5;--fc:var(--pos);--fc-rgb:var(--pos-rgb)" stroke-width="4" d="M60 108.0 C160 108.0 160 58.0 258 58.0"/><rect class="dgm-sk-p" width="3" height="3" style="offset-path:path('M60 108.0 C160 108.0 160 58.0 258 58.0');--d:0.75s;--oy:-0.5px;--fc:var(--pos)"/><rect class="dgm-sk-p dgm-sk-p2" width="3" height="3" style="offset-path:path('M60 108.0 C160 108.0 160 58.0 258 58.0');--d:0.14s;--oy:0.5px;--fc:var(--pos)"/></g>
+      <g class="dgm-sk-flow" style="--i:6;--fc:var(--warn);--fc-rgb:var(--warn-rgb)"><path class="dgm-sk-rib" style="--i:6;--fc:var(--warn);--fc-rgb:var(--warn-rgb)" stroke-width="6" d="M60 121.0 C160 121.0 160 95.0 258 95.0"/><rect class="dgm-sk-p" width="3" height="3" style="offset-path:path('M60 121.0 C160 121.0 160 95.0 258 95.0');--d:0.38s;--oy:-1.5px;--fc:var(--warn)"/><rect class="dgm-sk-p dgm-sk-p2" width="3" height="3" style="offset-path:path('M60 121.0 C160 121.0 160 95.0 258 95.0');--d:2.37s;--oy:1.5px;--fc:var(--warn)"/></g>
+      <g class="dgm-sk-flow" style="--i:7;--fc:var(--warn);--fc-rgb:var(--warn-rgb)"><path class="dgm-sk-rib" style="--i:7;--fc:var(--warn);--fc-rgb:var(--warn-rgb)" stroke-width="6" d="M60 127.0 C160 127.0 160 127.0 258 127.0"/><rect class="dgm-sk-p" width="3" height="3" style="offset-path:path('M60 127.0 C160 127.0 160 127.0 258 127.0');--d:0.01s;--oy:-1.5px;--fc:var(--warn)"/><rect class="dgm-sk-p dgm-sk-p2" width="3" height="3" style="offset-path:path('M60 127.0 C160 127.0 160 127.0 258 127.0');--d:2.0s;--oy:1.5px;--fc:var(--warn)"/></g>
+      <rect class="dgm-sk-nd" x="52" y="18" width="8" height="36" rx="2" style="fill:var(--accent)"/>
+      <rect class="dgm-sk-nd" x="52" y="62" width="8" height="24" rx="2" style="fill:var(--info)"/>
+      <rect class="dgm-sk-nd" x="52" y="94" width="8" height="16" rx="2" style="fill:var(--pos)"/>
+      <rect class="dgm-sk-nd" x="52" y="118" width="8" height="12" rx="2" style="fill:var(--warn)"/>
+      <rect class="dgm-sk-nd dgm-sk-t" x="258" y="18" width="8" height="42" rx="2"/>
+      <rect class="dgm-sk-nd dgm-sk-t" x="258" y="72" width="8" height="26" rx="2"/>
+      <rect class="dgm-sk-nd dgm-sk-t" x="258" y="110" width="8" height="20" rx="2"/>
+      <text class="mut" x="47" y="36.0" style="text-anchor:end">Ads</text>
+      <text class="mut" x="47" y="74.0" style="text-anchor:end">Search</text>
+      <text class="mut" x="47" y="102.0" style="text-anchor:end">Referral</text>
+      <text class="mut" x="47" y="124.0" style="text-anchor:end">Social</text>
+      <text class="mut" x="270" y="39.0" style="text-anchor:start">Trial</text>
+      <text class="mut" x="270" y="85.0" style="text-anchor:start">Signup</text>
+      <text class="mut" x="270" y="120.0" style="text-anchor:start">Bounce</text>
+    </svg>
+  </div><div class="meta"><div class="nm">Dim + Glow Sankey</div><span class="ref">.dgm-sk-glow</span><div class="desc">Hover any flow: the rest dim and the chosen one lights up with a layered glow and quicker particles. The ambient loop previews it by lighting each flow in turn. <b>Hover a ribbon.</b></div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="diagram-network" data-interact="auto-play"><div class="stage">
+    <svg class="dgm dgm-sk dgm-sk-neon" viewBox="0 0 320 160" aria-label="Neon Sankey: thin glowing tubes with a travelling pulse on a dark stage">
+      <rect class="dgm-sk-bg" x="0" y="0" width="320" height="160" rx="10"/>
+      <path class="dgm-sk-rib dgm-sk-tube" style="--i:0;--fc:var(--accent);--fc-rgb:var(--accent-rgb)" stroke-width="22" d="M60 29.0 C160 29.0 160 29.0 258 29.0"/>
+      <path class="dgm-sk-rib dgm-sk-tube" style="--i:1;--fc:var(--accent);--fc-rgb:var(--accent-rgb)" stroke-width="14" d="M60 47.0 C160 47.0 160 117.0 258 117.0"/>
+      <path class="dgm-sk-rib dgm-sk-tube" style="--i:2;--fc:var(--info);--fc-rgb:var(--info-rgb)" stroke-width="16" d="M60 70.0 C160 70.0 160 48.0 258 48.0"/>
+      <path class="dgm-sk-rib dgm-sk-tube" style="--i:3;--fc:var(--info);--fc-rgb:var(--info-rgb)" stroke-width="8" d="M60 82.0 C160 82.0 160 76.0 258 76.0"/>
+      <path class="dgm-sk-rib dgm-sk-tube" style="--i:4;--fc:var(--pos);--fc-rgb:var(--pos-rgb)" stroke-width="12" d="M60 100.0 C160 100.0 160 86.0 258 86.0"/>
+      <path class="dgm-sk-rib dgm-sk-tube" style="--i:5;--fc:var(--pos);--fc-rgb:var(--pos-rgb)" stroke-width="4" d="M60 108.0 C160 108.0 160 58.0 258 58.0"/>
+      <path class="dgm-sk-rib dgm-sk-tube" style="--i:6;--fc:var(--warn);--fc-rgb:var(--warn-rgb)" stroke-width="6" d="M60 121.0 C160 121.0 160 95.0 258 95.0"/>
+      <path class="dgm-sk-rib dgm-sk-tube" style="--i:7;--fc:var(--warn);--fc-rgb:var(--warn-rgb)" stroke-width="6" d="M60 127.0 C160 127.0 160 127.0 258 127.0"/>
+      <path class="dgm-sk-pulse" style="--i:0;--fc:var(--accent);--fc-rgb:var(--accent-rgb)" stroke-width="22" d="M60 29.0 C160 29.0 160 29.0 258 29.0"/>
+      <path class="dgm-sk-pulse" style="--i:1;--fc:var(--accent);--fc-rgb:var(--accent-rgb)" stroke-width="14" d="M60 47.0 C160 47.0 160 117.0 258 117.0"/>
+      <path class="dgm-sk-pulse" style="--i:2;--fc:var(--info);--fc-rgb:var(--info-rgb)" stroke-width="16" d="M60 70.0 C160 70.0 160 48.0 258 48.0"/>
+      <path class="dgm-sk-pulse" style="--i:3;--fc:var(--info);--fc-rgb:var(--info-rgb)" stroke-width="8" d="M60 82.0 C160 82.0 160 76.0 258 76.0"/>
+      <path class="dgm-sk-pulse" style="--i:4;--fc:var(--pos);--fc-rgb:var(--pos-rgb)" stroke-width="12" d="M60 100.0 C160 100.0 160 86.0 258 86.0"/>
+      <path class="dgm-sk-pulse" style="--i:5;--fc:var(--pos);--fc-rgb:var(--pos-rgb)" stroke-width="4" d="M60 108.0 C160 108.0 160 58.0 258 58.0"/>
+      <path class="dgm-sk-pulse" style="--i:6;--fc:var(--warn);--fc-rgb:var(--warn-rgb)" stroke-width="6" d="M60 121.0 C160 121.0 160 95.0 258 95.0"/>
+      <path class="dgm-sk-pulse" style="--i:7;--fc:var(--warn);--fc-rgb:var(--warn-rgb)" stroke-width="6" d="M60 127.0 C160 127.0 160 127.0 258 127.0"/>
+      <rect class="dgm-sk-nd" x="52" y="18" width="8" height="36" rx="2" style="fill:var(--accent)"/>
+      <rect class="dgm-sk-nd" x="52" y="62" width="8" height="24" rx="2" style="fill:var(--info)"/>
+      <rect class="dgm-sk-nd" x="52" y="94" width="8" height="16" rx="2" style="fill:var(--pos)"/>
+      <rect class="dgm-sk-nd" x="52" y="118" width="8" height="12" rx="2" style="fill:var(--warn)"/>
+      <rect class="dgm-sk-nd dgm-sk-t" x="258" y="18" width="8" height="42" rx="2"/>
+      <rect class="dgm-sk-nd dgm-sk-t" x="258" y="72" width="8" height="26" rx="2"/>
+      <rect class="dgm-sk-nd dgm-sk-t" x="258" y="110" width="8" height="20" rx="2"/>
+      <text class="mut" x="47" y="36.0" style="text-anchor:end">Ads</text>
+      <text class="mut" x="47" y="74.0" style="text-anchor:end">Search</text>
+      <text class="mut" x="47" y="102.0" style="text-anchor:end">Referral</text>
+      <text class="mut" x="47" y="124.0" style="text-anchor:end">Social</text>
+      <text class="mut" x="270" y="39.0" style="text-anchor:start">Trial</text>
+      <text class="mut" x="270" y="85.0" style="text-anchor:start">Signup</text>
+      <text class="mut" x="270" y="120.0" style="text-anchor:start">Bounce</text>
+    </svg>
+  </div><div class="meta"><div class="nm">Neon Sankey</div><span class="ref">.dgm-sk-neon</span><div class="desc">The flows as neon tubes: a thin bright core over layered glow in the flow colour, a pulse racing down each tube and one tube flickering like a tired sign. Dark stage by design.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
 </div>
 
