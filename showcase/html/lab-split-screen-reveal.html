@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Split Screen Reveal · Prism</title>
+<!-- Prism showcase sample: lab-split-screen-reveal (gallery: lab). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.lab-rv-mock { position: relative; width: 100%; max-width: 300px; height: 130px; overflow: hidden; box-sizing: border-box; border-radius: 10px; background: var(--panel2); border: 1px solid var(--line); font: 11px / 1.35 ui-sans-serif, system-ui, sans-serif; color: var(--ink); }
+.lab-rv-mock * { box-sizing: border-box; }
+.lab-rv-split { --c: var(--info); --c-rgb: var(--info-rgb); }
+.lab-rv-spl, .lab-rv-spr { position: absolute; top: 0px; bottom: 0px; width: 50%; padding: 22px 16px; display: flex; flex-direction: column; justify-content: center; }
+.lab-rv-spl { left: 0px; background: linear-gradient(160deg,rgba(var(--c-rgb),.55),var(--card)); animation-name: labRvSplitL; }
+.lab-rv-spr { right: 0px; background: var(--card); animation-name: labRvSplitR; }
+.lab-rv-spd { position: absolute; left: 50%; top: 14px; bottom: 14px; width: 2px; margin-left: -1px; background: var(--c); transform-origin: center top; animation-name: labRvSplitD; }
+.lab-rv-spt { animation-name: labRvFadeLate; }
+.lab-rv-spt b { display: block; font-size: 15px; line-height: 1.1; margin-bottom: 5px; }
+.lab-rv-spt span { color: var(--muted); }
+.lab-rv-spl, .lab-rv-spr, .lab-rv-spd, .lab-rv-spt { animation-duration: 4s; animation-timing-function: cubic-bezier(0.3, 0, 0.2, 1); animation-iteration-count: infinite; }
+@keyframes labRvSplitL { 
+  0% { transform: translateX(-100%); }
+  22%, 82% { transform: none; }
+  92%, 100% { transform: translateX(-100%); }
+}
+@keyframes labRvSplitR { 
+  0% { transform: translateX(100%); }
+  22%, 82% { transform: none; }
+  92%, 100% { transform: translateX(100%); }
+}
+@keyframes labRvSplitD { 
+  0%, 22% { transform: scaleY(0); }
+  36%, 82% { transform: scaleY(1); }
+  90%, 100% { transform: scaleY(0); }
+}
+@keyframes labRvFadeLate { 
+  0%, 34% { opacity: 0; }
+  46%, 80% { opacity: 1; }
+  88%, 100% { opacity: 0; }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="lab-rv-mock lab-rv-split">
+      <div class="lab-rv-spl"><div class="lab-rv-spt"><b>Before</b><span>Manual runbooks, 40 min to recover.</span></div></div>
+      <div class="lab-rv-spr"><div class="lab-rv-spt"><b>After</b><span>Nova auto heals in 90 seconds.</span></div></div>
+      <div class="lab-rv-spd"></div>
+    </div></div></div>
+<div class="meta"><b>Split Screen Reveal</b> · <code>lab-split-screen-reveal</code><br>Animation Lab · REVEAL &amp; SCROLL CHOREOGRAPHY<p>Two half panels slide in from opposite edges, a divider draws down between them and the copy fades in last. Use for before and after comparisons.</p></div>
+
+</body>
+</html>

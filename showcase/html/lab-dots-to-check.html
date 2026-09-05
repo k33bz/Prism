@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dots to Check · Prism</title>
+<!-- Prism showcase sample: lab-dots-to-check (gallery: lab). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.lab-ld-dotcheck { position: relative; width: 96px; height: 48px; }
+.lab-ld-dotcheck-d { position: absolute; top: 18px; left: calc(50% - 6px); width: 12px; height: 12px; animation: 4s ease-in-out 0s infinite normal none running labLdDcMove; }
+.lab-ld-dotcheck-b { display: block; width: 12px; height: 12px; border-radius: 50%; background: var(--c,var(--accent)); animation-name: labLdDcHop; animation-duration: 0.6s; animation-timing-function: ease-in-out; animation-iteration-count: infinite; animation-direction: alternate; animation-delay: calc(var(--i)*-.2s); }
+.lab-ld-dotcheck::before { content: ""; position: absolute; left: calc(50% - 20px); top: 4px; width: 40px; height: 40px; border-radius: 50%; background: rgba(var(--pos-rgb),.18); box-shadow: 0 0 0 2px var(--pos); opacity: 0; transform: scale(0); animation: 4s ease-out 0s infinite normal none running labLdDcRing; }
+.lab-ld-dotcheck::after { content: ""; position: absolute; left: calc(50% - 6px); top: 13px; width: 10px; height: 18px; border-right: 3px solid var(--pos); border-bottom: 3px solid var(--pos); transform: rotate(45deg) scale(0); opacity: 0; animation: 4s cubic-bezier(0.34, 1.56, 0.64, 1) 0s infinite normal none running labLdDcCheck; }
+@keyframes labLdDcHop { 
+  0% { transform: translateY(0px); }
+  100% { transform: translateY(-10px); }
+}
+@keyframes labLdDcMove { 
+  0%, 50% { transform: translateX(calc(var(--x)*1px)) scale(1); opacity: 1; }
+  60% { transform: translateX(0px) scale(0.2); opacity: 0; }
+  92% { transform: translateX(0px) scale(0.2); opacity: 0; }
+  100% { transform: translateX(calc(var(--x)*1px)) scale(1); opacity: 1; }
+}
+@keyframes labLdDcRing { 
+  0%, 56% { opacity: 0; transform: scale(0); }
+  64% { opacity: 1; transform: scale(1); }
+  92% { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(0); }
+}
+@keyframes labLdDcCheck { 
+  0%, 58% { opacity: 0; transform: rotate(45deg) scale(0); }
+  68% { opacity: 1; transform: rotate(45deg) scale(1); }
+  92% { opacity: 1; transform: rotate(45deg) scale(1); }
+  100% { opacity: 0; transform: rotate(45deg) scale(0); }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="lab-ld-dotcheck"><span class="lab-ld-dotcheck-d" style="--x:-24"><i class="lab-ld-dotcheck-b" style="--i:0"></i></span><span class="lab-ld-dotcheck-d" style="--x:0"><i class="lab-ld-dotcheck-b" style="--i:1"></i></span><span class="lab-ld-dotcheck-d" style="--x:24"><i class="lab-ld-dotcheck-b" style="--i:2"></i></span></div></div></div>
+<div class="meta"><b>Dots to Check</b> · <code>lab-dots-to-check</code><br>Animation Lab · LOADERS &amp; WAITING STATES<p>Three hopping dots converge and merge, then a green check pops out of the merge point inside a ring. Use where a wait ends in a visible success.</p></div>
+
+</body>
+</html>

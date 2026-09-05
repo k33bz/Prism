@@ -9,18 +9,19 @@ catalog and showcase). Per-batch idea lists are the remaining work; strike ideas
 
 | # | Batch | Gallery | Prefix | Draft | Status |
 |---|-------|---------|--------|-------|--------|
-| 1 | Hover effects (cards, images) | FX Store | `fx-hv-` / `fxHv` | `hover.fx.html` | todo |
+| 1 | Hover effects (cards, images) | FX Store | `fx-hv-` / `fxHv` | `hover.fx.html` | landed (20) |
 | 2 | Ambient backgrounds | Animated Objects | `amb-bg-` / `ambBg` | `backgrounds.objects.html` | landed (21) |
-| 3 | Loaders beyond spinners | Animation Lab | `lab-ld-` / `labLd` | `loaders.lab.html` | todo |
-| 4 | Glow as a system | FX Store | `fx-gl-` / `fxGl` | `glow.fx.html` | todo |
-| 5 | Scroll and reveal choreography | Animation Lab | `lab-rv-` / `labRv` | `reveal.lab.html` | todo |
+| 3 | Loaders beyond spinners | Animation Lab | `lab-ld-` / `labLd` | `loaders.lab.html` | landed (20) |
+| 4 | Glow as a system | FX Store | `fx-gl-` / `fxGl` | `glow.fx.html` | landed (20) |
+| 5 | Scroll and reveal choreography | Animation Lab | `lab-rv-` / `labRv` | `reveal.lab.html` | landed (21) |
 | 6 | 3D CSS | Animated Objects | `ob3d-` / `ob3d` | `threed.objects.html` | todo |
 
 ## Batch 1: hover effects
-Ideas: tilt on hover, sheen sweep, border draw, corner brackets, image zoom with caption rise, mask wipe
-reveal, split reveal, underline grow, icon nudge, lift with shadow, colour flood, blur to focus,
-flip card, glitch on hover, magnetic label, ripple from cursor position (CSS approximation), outline
-pulse, gradient border rotate, text scramble to clear, shadow stack.
+Landed (20): tilt gloss, perimeter draw, bracket snap, zoom caption, diagonal wipe, split reveal, icon
+nudge, fan lift, shadow stack, colour flood, blur focus, flip card, magnetic label, ripple press, scramble
+clear, curtain part, zoom out reveal, outline pulse, shutter reveal, peel corner.
+Skipped: underline grow, gradient border rotate, sheen sweep, glitch on hover (all exist in fx).
+Remaining: none.
 
 ## Batch 2: ambient backgrounds
 Landed (21): gradient drift, mesh gradient blobs, aurora curtains, film grain, dot grid flow, diagonal
@@ -31,23 +32,30 @@ Skipped: rain streaks (objects already has rain and downpour), noise fog (weathe
 overlays exist). Remaining: none.
 
 ## Batch 3: loaders beyond spinners
-Ideas: skeleton shimmer families (card, list, table, avatar), typing dots, liquid fill, morphing
-shape, dash ring progress, bouncing bars, orbit dots, text loader with ellipsis, percentage ring with
-count, segmented ring, DNA helix dots, pulse rings, cube flip loader, wave text, progress with ETA,
-stacked cards shuffle, chasing squares, breathing ring, loading bar with stripes, dots to check.
+Landed (20): skeleton card, skeleton list resolve, skeleton table, skeleton profile scan, ellipsis
+loader, segmented ring count, dots to check, chasing squares, striped progress bar, card stack shuffle,
+staged progress, rolling square, log tail loader, text fill loader, flip tiles, diamond ripple, chomp
+loader, upload cloud, counting percent, caterpillar pills.
+Skipped (already in Prism): DNA helix, liquid fill, morphing shape, bouncing bars, orbit dots, cube flip,
+wave text, breathing and pulse rings, progress with ETA, percentage ring, typing dots, dash ring.
+Remaining: none.
 
 ## Batch 4: glow as a system
-Ideas (all share one glow token `--fx-gl-rgb`): glow ring, glow border, glow text, glow button, glow
-card edge, breathing glow, glow trail, glow divider, glow badge, glow input focus, glow toggle, glow
-progress, glow chip, glow tooltip pointer, glow on hover lift, neon outline text, glow underline,
-glow avatar ring, glow marker on a line, glow status dot set.
+Landed (20, all on one --fx-gl-rgb token): glow ring, glow button, glow card edge, glow trail, glow
+divider, glow badge, glow input focus, glow toggle, glow progress, glow chip, glow tooltip pointer, glow
+hover lift, glow underline, glow avatar ring, glow marker on a line, glow status dot set, glow keyboard
+key, glow slider thumb, glow focus corners, glow checkbox.
+Skipped (already in fx): glow border, breathing glow card, glow text, neon outline text.
+Remaining: none.
 
 ## Batch 5: scroll and reveal choreography
-Ideas (auto-play stand-ins for scroll triggers): staggered fade-up list, slide-in from sides, scale-in
-cards, clip reveal from bottom, text line-by-line reveal, counter roll-up, parallax layers, sticky
-header shrink, image curtain reveal, mask circle reveal, timeline draw as you go, progress bar on
-scroll, section pin then release, letter cascade, blur-to-sharp reveal, rotate-in cards, path draw
-reveal, split screen reveal, reveal with overshoot, zoom-out hero.
+Landed (21): alternate slide list, scale-in card row, clip rise hero, line by line text, stat roll-up,
+parallax scroll scene, sticky header shrink, block sweep reveal, keyhole pan reveal, timeline draw,
+scroll progress bar, pin then release, word cascade, focus pull grid, stand-up cards, route draw, split
+screen reveal, snap deck, zoom-out hero, velocity skew scroll, marker sweep.
+Skipped (already in lab or text): plain fade-up stagger, one-side slide-in, circle mask, curtain split,
+overshoot reveal, blur-in, per-letter cascade.
+Remaining: none.
 
 ## Batch 6: 3D CSS
 Ideas: rotating cube, flip card, carousel ring, folding panel, perspective deck of cards, 3D bar

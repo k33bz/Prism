@@ -16,7 +16,7 @@
 .lab-rv-txt{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .lab-rv-txt em{font-style:normal;color:var(--muted)}
 .lab-rv-val{color:var(--c,var(--accent));font-weight:700;font-variant-numeric:tabular-nums}
-.lab-rv-ln{height:6px;border-radius:3px;background:var(--line);width:var(--w,80%)}
+.lab-rv-ln{display:block;height:6px;border-radius:3px;background:var(--line);width:var(--w,80%)}
 .lab-rv-card{border-radius:8px;background:var(--card);border:1px solid var(--line);padding:9px;display:flex;flex-direction:column;gap:6px}
 .lab-rv-ct{font-weight:700;font-size:11px}
 
@@ -110,7 +110,7 @@
 .lab-rv-tll{position:absolute;left:25px;top:22px;bottom:22px;width:2px;background:var(--c);transform-origin:top;animation-name:labRvTlLine}
 .lab-rv-tli{position:relative;display:flex;align-items:center;gap:12px;height:35px}
 .lab-rv-tln{flex:none;width:10px;height:10px;border-radius:50%;background:var(--panel2);border:2px solid var(--c);box-shadow:0 0 0 3px rgba(var(--c-rgb),.25);margin-left:1px}
-.lab-rv-tlb{color:var(--muted)}
+.lab-rv-tlb{color:var(--muted);transform-origin:left center}
 .lab-rv-tlb b{color:var(--ink);margin-right:6px}
 .lab-rv-tll,.lab-rv-tln,.lab-rv-tlb{animation-duration:4s;animation-timing-function:cubic-bezier(.2,.7,.2,1);animation-iteration-count:infinite}
 .lab-rv-tli:nth-child(2) .lab-rv-tln,.lab-rv-tli:nth-child(2) .lab-rv-tlb{animation-name:labRvTl1}
@@ -128,7 +128,7 @@
 .lab-rv-pct{position:absolute;right:10px;top:9px;z-index:2;font:700 10px/1 ui-monospace,Menlo,monospace;color:var(--c);background:var(--card);border:1px solid var(--line);border-radius:10px;padding:4px 7px;counter-reset:labRvPct var(--lab-rv-p);animation-name:labRvPct}
 .lab-rv-pct::after{content:counter(labRvPct) "% read"}
 .lab-rv-pg{position:absolute;left:14px;right:14px;top:14px;animation-name:labRvScrollLong}
-.lab-rv-pgh{font-size:14px;font-weight:800;margin-bottom:8px}
+.lab-rv-pgh{font-size:14px;font-weight:800;margin-bottom:8px;padding-right:78px}
 .lab-rv-pg .lab-rv-ln{margin-bottom:8px}
 .lab-rv-pbar,.lab-rv-pct,.lab-rv-pg,.lab-rv-prog .lab-rv-thumb{animation-duration:4s;animation-timing-function:cubic-bezier(.4,0,.2,1);animation-iteration-count:infinite}
 .lab-rv-prog .lab-rv-thumb{animation-name:labRvThumbLong}
@@ -249,6 +249,7 @@
   .lab-rv-mock,.lab-rv-mock *{animation-name:none!important}
   .lab-rv-blk{transform:scaleX(0)}
   .lab-rv-prg{opacity:1}
+  .lab-rv-snd:nth-of-type(1){background:var(--c,var(--accent));transform:scale(1.5)}
 }
 </style>
 <div class="gallery">

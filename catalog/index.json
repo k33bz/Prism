@@ -1,5 +1,5 @@
 {
-  "count": 3139,
+  "count": 3220,
   "effects": [
     {
       "id": "charts-big-metric-count-up",
@@ -1896,10 +1896,11 @@
         "sl",
         "ts",
         "lv",
-        "ok",
+        "err",
         "m",
-        "warn",
+        "ok",
         "info",
+        "warn",
         "cursor"
       ],
       "params": [],
@@ -11541,6 +11542,1337 @@
       "description": "Composition example: three Streak projectiles on --lane offsets with staggered --d delays. Gradients resolve their colour where they are defined, so the volley carries its own defs. Psychic shown."
     },
     {
+      "id": "fx-glow-ring",
+      "name": "Glow Ring",
+      "gallery": "fx",
+      "category": "GLOW SYSTEM",
+      "ref": ".fx-gl-ring",
+      "classes": [
+        "fx-gl-ring",
+        "c-info",
+        "fx-gl-ring-core"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "fx",
+        "animated",
+        "new"
+      ],
+      "componentType": "fx-glow",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A hollow ring with inset and outer bloom that breathes while a thin wave ring expands and fades. Use for a single headline value."
+    },
+    {
+      "id": "fx-glow-button",
+      "name": "Glow Button",
+      "gallery": "fx",
+      "category": "GLOW SYSTEM",
+      "ref": ".fx-gl-btn",
+      "classes": [
+        "fx-gl-btn",
+        "c-accent",
+        "fx-gl-btn-el"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "fx",
+        "animated",
+        "new"
+      ],
+      "componentType": "fx-glow",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A primary button cycles idle, raised hover glow and a pressed inset glow so the three states read at a glance. Use for the one main action."
+    },
+    {
+      "id": "fx-glow-card-edge",
+      "name": "Glow Card Edge",
+      "gallery": "fx",
+      "category": "GLOW SYSTEM",
+      "ref": ".fx-gl-edge",
+      "classes": [
+        "fx-gl-edge",
+        "c-crit",
+        "fx-gl-edge-title",
+        "fx-gl-edge-text"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "fx",
+        "animated",
+        "new"
+      ],
+      "componentType": "fx-glow",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "One lit edge bleeds light into the card and walks around all four sides in turn. Use to mark the featured card in a grid."
+    },
+    {
+      "id": "fx-glow-trail",
+      "name": "Glow Trail",
+      "gallery": "fx",
+      "category": "GLOW SYSTEM",
+      "ref": ".fx-gl-trail",
+      "classes": [
+        "fx-gl-trail",
+        "c-info",
+        "fx-gl-trail-track",
+        "fx-gl-trail-dot"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "fx",
+        "animated",
+        "new"
+      ],
+      "componentType": "fx-glow",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A bright head crosses the track while smaller, dimmer followers lag behind it and form a comet tail. Use for transfer or sync progress."
+    },
+    {
+      "id": "fx-glow-divider",
+      "name": "Glow Divider",
+      "gallery": "fx",
+      "category": "GLOW SYSTEM",
+      "ref": ".fx-gl-divider",
+      "classes": [
+        "fx-gl-divider",
+        "c-warn",
+        "fx-gl-divider-line"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "fx",
+        "animated",
+        "new"
+      ],
+      "componentType": "fx-glow",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A rule that fades to both ends with a hot centre bead; it widens and brightens, then settles. Use between sections that need a soft break."
+    },
+    {
+      "id": "fx-glow-badge",
+      "name": "Glow Badge",
+      "gallery": "fx",
+      "category": "GLOW SYSTEM",
+      "ref": ".fx-gl-badge",
+      "classes": [
+        "fx-gl-badge",
+        "c-pos",
+        "fx-gl-badge-pill",
+        "fx-gl-badge-text"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "fx",
+        "animated",
+        "new"
+      ],
+      "componentType": "fx-glow",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A glowing pill beside plain text; a thin ring pings outward from it every two seconds. Use for a release or unread marker."
+    },
+    {
+      "id": "fx-glow-input-focus",
+      "name": "Glow Input Focus",
+      "gallery": "fx",
+      "category": "GLOW SYSTEM",
+      "ref": ".fx-gl-input",
+      "classes": [
+        "fx-gl-input",
+        "c-info",
+        "fx-gl-input-field",
+        "fx-gl-input-text",
+        "fx-gl-input-caret"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "fx",
+        "animated",
+        "new"
+      ],
+      "componentType": "fx-glow",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "The field gains a soft focus ring, text types in behind a glowing caret, then the field blurs again. Use on form fields that need a clear focus state."
+    },
+    {
+      "id": "fx-glow-toggle",
+      "name": "Glow Toggle",
+      "gallery": "fx",
+      "category": "GLOW SYSTEM",
+      "ref": ".fx-gl-toggle",
+      "classes": [
+        "fx-gl-toggle",
+        "c-pos",
+        "fx-gl-toggle-track",
+        "fx-gl-toggle-knob",
+        "fx-gl-toggle-lbl"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "fx",
+        "animated",
+        "new"
+      ],
+      "componentType": "fx-glow",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "The switch flips on, the track fills with tinted light and the knob turns into a lamp, then it flips back. Use for settings that deserve a strong on state."
+    },
+    {
+      "id": "fx-glow-progress",
+      "name": "Glow Progress",
+      "gallery": "fx",
+      "category": "GLOW SYSTEM",
+      "ref": ".fx-gl-progress",
+      "classes": [
+        "fx-gl-progress",
+        "c-accent",
+        "fx-gl-progress-row",
+        "fx-gl-progress-track",
+        "fx-gl-progress-fill",
+        "fx-gl-progress-tip"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "fx",
+        "animated",
+        "new"
+      ],
+      "componentType": "fx-glow",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A tinted fill grows along the track and a white hot tip leads it with the strongest glow. Use for uploads, syncs and long running jobs."
+    },
+    {
+      "id": "fx-glow-chip",
+      "name": "Glow Chip",
+      "gallery": "fx",
+      "category": "GLOW SYSTEM",
+      "ref": ".fx-gl-chips",
+      "classes": [
+        "fx-gl-chips",
+        "c-crit",
+        "fx-gl-chip"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "fx",
+        "animated",
+        "new"
+      ],
+      "componentType": "fx-glow",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A selection glow hops across three filter chips, lighting one at a time with a tinted fill and halo. Use for single choice filters."
+    },
+    {
+      "id": "fx-glow-tooltip-pointer",
+      "name": "Glow Tooltip Pointer",
+      "gallery": "fx",
+      "category": "GLOW SYSTEM",
+      "ref": ".fx-gl-tip",
+      "classes": [
+        "fx-gl-tip",
+        "c-info",
+        "fx-gl-tip-anchor",
+        "fx-gl-tip-bubble"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "fx",
+        "animated",
+        "new"
+      ],
+      "componentType": "fx-glow",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A glowing bubble with a matching arrow pops in above its anchor, holds, then leaves while the anchor lights up. Use for hover help on dense controls."
+    },
+    {
+      "id": "fx-glow-hover-lift",
+      "name": "Glow Hover Lift",
+      "gallery": "fx",
+      "category": "GLOW SYSTEM",
+      "ref": ".fx-gl-lift",
+      "classes": [
+        "fx-gl-lift",
+        "c-accent",
+        "fx-gl-lift-lbl",
+        "fx-gl-lift-val",
+        "fx-gl-lift-sub"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "fx",
+        "animated",
+        "new"
+      ],
+      "componentType": "fx-hover",
+      "interaction": "hover",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "The card rises on hover and a glow pools beneath it; the ambient loop previews the lift without a pointer. Use on clickable KPI cards."
+    },
+    {
+      "id": "fx-glow-underline",
+      "name": "Glow Underline",
+      "gallery": "fx",
+      "category": "GLOW SYSTEM",
+      "ref": ".fx-gl-underline",
+      "classes": [
+        "fx-gl-underline",
+        "c-warn",
+        "fx-gl-underline-word"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "fx",
+        "animated",
+        "new"
+      ],
+      "componentType": "fx-glow",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A glowing rule draws in from the left under the word, holds while the text blooms, then retracts to the right. Use on nav items and headings."
+    },
+    {
+      "id": "fx-glow-avatar-ring",
+      "name": "Glow Avatar Ring",
+      "gallery": "fx",
+      "category": "GLOW SYSTEM",
+      "ref": ".fx-gl-avatar",
+      "classes": [
+        "fx-gl-avatar",
+        "c-pos",
+        "fx-gl-avatar-orbit",
+        "fx-gl-avatar-disc",
+        "fx-gl-avatar-name",
+        "fx-gl-avatar-role"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "fx",
+        "animated",
+        "new"
+      ],
+      "componentType": "fx-glow",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A three quarter conic ring orbits the avatar and a drop-shadow keeps the glow hugging the arc. Use for presence or speaking indicators."
+    },
+    {
+      "id": "fx-glow-marker-on-a-line",
+      "name": "Glow Marker on a Line",
+      "gallery": "fx",
+      "category": "GLOW SYSTEM",
+      "ref": ".fx-gl-marker",
+      "classes": [
+        "fx-gl-marker",
+        "c-neg",
+        "fx-gl-marker-line",
+        "fx-gl-marker-tick",
+        "fx-gl-marker-flag",
+        "fx-gl-marker-dot"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "fx",
+        "animated",
+        "new"
+      ],
+      "componentType": "fx-glow",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A lit marker with a flag slides along a ticked timeline and back, its halo fixed to the point. Use for playheads and current time cursors."
+    },
+    {
+      "id": "fx-glow-status-dot-set",
+      "name": "Glow Status Dot Set",
+      "gallery": "fx",
+      "category": "GLOW SYSTEM",
+      "ref": ".fx-gl-status",
+      "classes": [
+        "fx-gl-status",
+        "c-pos",
+        "fx-gl-status-row",
+        "fx-gl-status-dot",
+        "fx-gl-status-name",
+        "fx-gl-status-val",
+        "c-warn",
+        "c-neg"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "fx",
+        "animated",
+        "new"
+      ],
+      "componentType": "fx-glow",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Each row's lamp pulses a halo in its own role colour; the dot re-reads the family token so one rule tints all three. Use for service rosters."
+    },
+    {
+      "id": "fx-glow-keyboard-key",
+      "name": "Glow Keyboard Key",
+      "gallery": "fx",
+      "category": "GLOW SYSTEM",
+      "ref": ".fx-gl-keys",
+      "classes": [
+        "fx-gl-keys",
+        "c-crit",
+        "fx-gl-key",
+        "fx-gl-key-plus"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "fx",
+        "animated",
+        "new"
+      ],
+      "componentType": "fx-glow",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Three keycaps press in sequence; the pressed cap sinks, its base shortens and it lights up. Use to teach a shortcut in onboarding."
+    },
+    {
+      "id": "fx-glow-slider-thumb",
+      "name": "Glow Slider Thumb",
+      "gallery": "fx",
+      "category": "GLOW SYSTEM",
+      "ref": ".fx-gl-slider",
+      "classes": [
+        "fx-gl-slider",
+        "c-info",
+        "fx-gl-slider-row",
+        "fx-gl-slider-track",
+        "fx-gl-slider-fill",
+        "fx-gl-slider-thumb"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "fx",
+        "animated",
+        "new"
+      ],
+      "componentType": "fx-glow",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "The thumb travels the track with a halo that swells while it moves and relaxes at rest. Use for volume, brightness or range controls."
+    },
+    {
+      "id": "fx-glow-focus-corners",
+      "name": "Glow Focus Corners",
+      "gallery": "fx",
+      "category": "GLOW SYSTEM",
+      "ref": ".fx-gl-corners",
+      "classes": [
+        "fx-gl-corners",
+        "c-warn",
+        "fx-gl-corners-target",
+        "fx-gl-corners-frame",
+        "fx-gl-corner",
+        "fx-gl-corner-tl",
+        "fx-gl-corner-tr",
+        "fx-gl-corner-bl",
+        "fx-gl-corner-br"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "fx",
+        "animated",
+        "new"
+      ],
+      "componentType": "fx-glow",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Four glowing brackets contract onto the target and relax again, like a viewfinder locking on. Use to point out the element a tour step is about."
+    },
+    {
+      "id": "fx-glow-checkbox",
+      "name": "Glow Checkbox",
+      "gallery": "fx",
+      "category": "GLOW SYSTEM",
+      "ref": ".fx-gl-check",
+      "classes": [
+        "fx-gl-check",
+        "c-pos",
+        "fx-gl-check-row",
+        "fx-gl-check-box",
+        "fx-gl-check-lbl"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "fx",
+        "animated",
+        "new"
+      ],
+      "componentType": "fx-glow",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "The box fills with light, a check mark springs in and a ring bursts outward, one row after the other. Use where a confirmed choice should feel rewarding."
+    },
+    {
+      "id": "fx-tilt-gloss",
+      "name": "Tilt Gloss",
+      "gallery": "fx",
+      "category": "HOVER & REVEAL",
+      "ref": ".fx-hv-tilt",
+      "classes": [
+        "fx-hv",
+        "fx-hv-tilt",
+        "fx-hv-card",
+        "fx-hv-t",
+        "fx-hv-b"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "fx",
+        "animated",
+        "new"
+      ],
+      "componentType": "fx-hover",
+      "interaction": "hover",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "The card tilts in perspective toward one corner while a specular highlight slides across its face. Use on feature cards and nav tiles."
+    },
+    {
+      "id": "fx-perimeter-draw",
+      "name": "Perimeter Draw",
+      "gallery": "fx",
+      "category": "HOVER & REVEAL",
+      "ref": ".fx-hv-draw",
+      "classes": [
+        "fx-hv",
+        "fx-hv-draw",
+        "fx-hv-card",
+        "fx-hv-draw-r",
+        "fx-hv-t",
+        "fx-hv-b"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "fx",
+        "animated",
+        "new"
+      ],
+      "componentType": "fx-hover",
+      "interaction": "hover",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A coloured stroke draws itself around the whole border from the top edge and unwinds on leave. Use to mark a focused or selectable card."
+    },
+    {
+      "id": "fx-bracket-snap",
+      "name": "Bracket Snap",
+      "gallery": "fx",
+      "category": "HOVER & REVEAL",
+      "ref": ".fx-hv-brk",
+      "classes": [
+        "fx-hv",
+        "fx-hv-brk",
+        "fx-hv-card",
+        "fx-hv-t",
+        "fx-hv-b",
+        "fx-hv-brk-c",
+        "fx-hv-brk-tl",
+        "fx-hv-brk-tr",
+        "fx-hv-brk-bl",
+        "fx-hv-brk-br"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "fx",
+        "animated",
+        "new"
+      ],
+      "componentType": "fx-hover",
+      "interaction": "hover",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Four corner brackets fly in from outside the card and snap onto its corners. A lock on cue for selectable targets and tiles."
+    },
+    {
+      "id": "fx-zoom-caption",
+      "name": "Zoom Caption",
+      "gallery": "fx",
+      "category": "HOVER & REVEAL",
+      "ref": ".fx-hv-zoom",
+      "classes": [
+        "fx-hv",
+        "fx-hv-zoom",
+        "fx-hv-img",
+        "fx-hv-pic",
+        "fx-hv-cap"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "fx",
+        "animated",
+        "new"
+      ],
+      "componentType": "fx-reveal",
+      "interaction": "hover",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "The image scales up inside its frame while a caption rises from the bottom edge. The classic gallery and media card hover."
+    },
+    {
+      "id": "fx-diagonal-wipe",
+      "name": "Diagonal Wipe",
+      "gallery": "fx",
+      "category": "HOVER & REVEAL",
+      "ref": ".fx-hv-wipe",
+      "classes": [
+        "fx-hv",
+        "fx-hv-wipe",
+        "fx-hv-img",
+        "fx-hv-pic",
+        "fx-hv-wipe-cover"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "fx",
+        "animated",
+        "new"
+      ],
+      "componentType": "fx-reveal",
+      "interaction": "hover",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A slanted cover panel with a coloured leading edge wipes off to the right and uncovers the image beneath. Use for before and after or teaser media."
+    },
+    {
+      "id": "fx-split-reveal",
+      "name": "Split Reveal",
+      "gallery": "fx",
+      "category": "HOVER & REVEAL",
+      "ref": ".fx-hv-split",
+      "classes": [
+        "fx-hv",
+        "fx-hv-split",
+        "fx-hv-img",
+        "fx-hv-pic",
+        "fx-hv-split-a",
+        "fx-hv-split-b",
+        "fx-hv-split-l"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "fx",
+        "animated",
+        "new"
+      ],
+      "componentType": "fx-reveal",
+      "interaction": "hover",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "The image parts into top and bottom halves and a label scales up in the gap between them. Use for album covers and project thumbnails."
+    },
+    {
+      "id": "fx-icon-nudge",
+      "name": "Icon Nudge",
+      "gallery": "fx",
+      "category": "HOVER & REVEAL",
+      "ref": ".fx-hv-nudge",
+      "classes": [
+        "fx-hv",
+        "fx-hv-nudge",
+        "fx-hv-card",
+        "fx-hv-t",
+        "fx-hv-btn",
+        "fx-hv-nudge-l"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "fx",
+        "animated",
+        "new"
+      ],
+      "componentType": "fx-hover",
+      "interaction": "hover",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "The arrow inside a pill button nudges to the right, trailing a short line, while the fill deepens. Use on primary calls to action and links."
+    },
+    {
+      "id": "fx-fan-lift",
+      "name": "Fan Lift",
+      "gallery": "fx",
+      "category": "HOVER & REVEAL",
+      "ref": ".fx-hv-fan",
+      "classes": [
+        "fx-hv",
+        "fx-hv-fan",
+        "fx-hv-card",
+        "fx-hv-t",
+        "fx-hv-b"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "fx",
+        "animated",
+        "new"
+      ],
+      "componentType": "fx-hover",
+      "interaction": "hover",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "The card lifts on a soft shadow and two ghost cards fan out from behind it. Use for stacks, decks and anything with more items behind."
+    },
+    {
+      "id": "fx-shadow-stack",
+      "name": "Shadow Stack",
+      "gallery": "fx",
+      "category": "HOVER & REVEAL",
+      "ref": ".fx-hv-stack",
+      "classes": [
+        "fx-hv",
+        "fx-hv-stack",
+        "fx-hv-card",
+        "fx-hv-t",
+        "fx-hv-b"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "fx",
+        "animated",
+        "new"
+      ],
+      "componentType": "fx-hover",
+      "interaction": "hover",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "The card steps up and to the left while three hard offset shadows stack out behind it in the card colour. A bold, poster style hover."
+    },
+    {
+      "id": "fx-colour-flood",
+      "name": "Colour Flood",
+      "gallery": "fx",
+      "category": "HOVER & REVEAL",
+      "ref": ".fx-hv-flood",
+      "classes": [
+        "fx-hv",
+        "fx-hv-flood",
+        "fx-hv-card",
+        "fx-hv-t",
+        "fx-hv-b"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "fx",
+        "animated",
+        "new"
+      ],
+      "componentType": "fx-hover",
+      "interaction": "hover",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A disc of colour grows from the bottom left corner until it floods the whole card and the body text brightens. Use on primary tiles and menu cards."
+    },
+    {
+      "id": "fx-blur-focus",
+      "name": "Blur Focus",
+      "gallery": "fx",
+      "category": "HOVER & REVEAL",
+      "ref": ".fx-hv-focus",
+      "classes": [
+        "fx-hv",
+        "fx-hv-focus",
+        "fx-hv-img",
+        "fx-hv-pic",
+        "fx-hv-cap"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "fx",
+        "animated",
+        "new"
+      ],
+      "componentType": "fx-reveal",
+      "interaction": "hover",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A blurred, desaturated image snaps into sharp colour and its caption fades in. Use for locked or preview media that resolves on hover."
+    },
+    {
+      "id": "fx-flip-card",
+      "name": "Flip Card",
+      "gallery": "fx",
+      "category": "HOVER & REVEAL",
+      "ref": ".fx-hv-flip",
+      "classes": [
+        "fx-hv",
+        "fx-hv-flip",
+        "fx-hv-flip-in",
+        "fx-hv-card",
+        "fx-hv-t",
+        "fx-hv-b",
+        "fx-hv-flip-back",
+        "fx-hv-flip-n"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "fx",
+        "animated",
+        "new"
+      ],
+      "componentType": "fx-hover",
+      "interaction": "hover",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "The card turns over on its vertical axis to show a stat on a tinted back face. Use for KPI tiles with a detail side."
+    },
+    {
+      "id": "fx-magnetic-label",
+      "name": "Magnetic Label",
+      "gallery": "fx",
+      "category": "HOVER & REVEAL",
+      "ref": ".fx-hv-mag",
+      "classes": [
+        "fx-hv",
+        "fx-hv-mag",
+        "fx-hv-card",
+        "fx-hv-t",
+        "fx-hv-chip"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "fx",
+        "animated",
+        "new"
+      ],
+      "componentType": "fx-hover",
+      "interaction": "hover",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A chip is pulled across the card toward a glowing corner as if magnetised, growing slightly as it arrives. Playful hover for tags and badges."
+    },
+    {
+      "id": "fx-ripple-press",
+      "name": "Ripple Press",
+      "gallery": "fx",
+      "category": "HOVER & REVEAL",
+      "ref": ".fx-hv-rip",
+      "classes": [
+        "fx-hv",
+        "fx-hv-rip",
+        "fx-hv-card",
+        "fx-hv-t",
+        "fx-hv-b"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "fx",
+        "animated",
+        "new"
+      ],
+      "componentType": "fx-hover",
+      "interaction": "hover",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A single wave expands from a fixed press point while the card fill tints. A CSS only stand in for cursor ripples on buttons and list rows."
+    },
+    {
+      "id": "fx-scramble-clear",
+      "name": "Scramble Clear",
+      "gallery": "fx",
+      "category": "HOVER & REVEAL",
+      "ref": ".fx-hv-scr",
+      "classes": [
+        "fx-hv",
+        "fx-hv-scr",
+        "fx-hv-card",
+        "fx-hv-t",
+        "fx-hv-scr-a",
+        "fx-hv-scr-c",
+        "fx-hv-scr-b",
+        "fx-hv-b"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "fx",
+        "animated",
+        "new"
+      ],
+      "componentType": "fx-hover",
+      "interaction": "hover",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A jittering garbled title resolves into clear text behind a moving caret. Use for hacker style headings and reveal on hover labels."
+    },
+    {
+      "id": "fx-curtain-part",
+      "name": "Curtain Part",
+      "gallery": "fx",
+      "category": "HOVER & REVEAL",
+      "ref": ".fx-hv-curt",
+      "classes": [
+        "fx-hv",
+        "fx-hv-curt",
+        "fx-hv-img",
+        "fx-hv-pic",
+        "fx-hv-cap"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "fx",
+        "animated",
+        "new"
+      ],
+      "componentType": "fx-reveal",
+      "interaction": "hover",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Two pleated curtains squeeze to the sides to reveal the image and its caption. Theatrical reveal for launches and featured media."
+    },
+    {
+      "id": "fx-zoom-out-reveal",
+      "name": "Zoom Out Reveal",
+      "gallery": "fx",
+      "category": "HOVER & REVEAL",
+      "ref": ".fx-hv-zout",
+      "classes": [
+        "fx-hv",
+        "fx-hv-zout",
+        "fx-hv-img",
+        "fx-hv-pic",
+        "fx-hv-cap"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "fx",
+        "animated",
+        "new"
+      ],
+      "componentType": "fx-reveal",
+      "interaction": "hover",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A tight crop pulls back to show the full image inside a thin inset frame with a caption. The opposite of the usual zoom in, good for maps and art."
+    },
+    {
+      "id": "fx-outline-pulse",
+      "name": "Outline Pulse",
+      "gallery": "fx",
+      "category": "HOVER & REVEAL",
+      "ref": ".fx-hv-opulse",
+      "classes": [
+        "fx-hv",
+        "fx-hv-opulse",
+        "fx-hv-card",
+        "fx-hv-btn"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "fx",
+        "animated",
+        "new"
+      ],
+      "componentType": "fx-hover",
+      "interaction": "hover",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Two outline rings pulse outward from the button edge and the border stays lit. A focus ring style hover for destructive or important actions."
+    },
+    {
+      "id": "fx-shutter-reveal",
+      "name": "Shutter Reveal",
+      "gallery": "fx",
+      "category": "HOVER & REVEAL",
+      "ref": ".fx-hv-shut",
+      "classes": [
+        "fx-hv",
+        "fx-hv-shut",
+        "fx-hv-img",
+        "fx-hv-pic",
+        "fx-hv-shut-s",
+        "fx-hv-cap"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "fx",
+        "animated",
+        "new"
+      ],
+      "componentType": "fx-reveal",
+      "interaction": "hover",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Six horizontal slats close one after another from the top to uncover the image like blinds. Use for staggered media reveals."
+    },
+    {
+      "id": "fx-peel-corner",
+      "name": "Peel Corner",
+      "gallery": "fx",
+      "category": "HOVER & REVEAL",
+      "ref": ".fx-hv-peel",
+      "classes": [
+        "fx-hv",
+        "fx-hv-peel",
+        "fx-hv-card",
+        "fx-hv-t",
+        "fx-hv-b"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "fx",
+        "animated",
+        "new"
+      ],
+      "componentType": "fx-hover",
+      "interaction": "hover",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "The bottom right corner curls up to show a coloured underside and the surface beneath it. A sticker or page turn cue for notes and cards."
+    },
+    {
       "id": "lab-fade-in",
       "name": "Fade In",
       "gallery": "lab",
@@ -17013,6 +18345,1361 @@
       "description": "Double-thump scale pulse mimicking a heartbeat — good for likes, health, or live-status cues."
     },
     {
+      "id": "lab-skeleton-card",
+      "name": "Skeleton Card",
+      "gallery": "lab",
+      "category": "LOADERS & WAITING STATES",
+      "ref": ".lab-ld-skcard",
+      "classes": [
+        "lab-ld-skcard",
+        "lab-ld-skcard-img",
+        "lab-ld-skcard-ln",
+        "lab-ld-w60",
+        "lab-ld-w90",
+        "lab-ld-w40"
+      ],
+      "params": [],
+      "tags": [
+        "lab",
+        "animated",
+        "new"
+      ],
+      "componentType": "loader",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A card placeholder with an image block and three text lines under a diagonal sheen sweep. Use in place of a card while its data loads."
+    },
+    {
+      "id": "lab-skeleton-list-resolve",
+      "name": "Skeleton List Resolve",
+      "gallery": "lab",
+      "category": "LOADERS & WAITING STATES",
+      "ref": ".lab-ld-sklist",
+      "classes": [
+        "lab-ld-sklist",
+        "lab-ld-sklist-row",
+        "lab-ld-sklist-av",
+        "lab-ld-sklist-tx",
+        "lab-ld-sklist-ph",
+        "lab-ld-sklist-nm",
+        "lab-ld-sklist-sub"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "lab",
+        "animated",
+        "new"
+      ],
+      "componentType": "loader",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Three avatar rows shimmer, then each resolves into real name and role in order as its data arrives. Use for member and contact lists that stream in."
+    },
+    {
+      "id": "lab-skeleton-table",
+      "name": "Skeleton Table",
+      "gallery": "lab",
+      "category": "LOADERS & WAITING STATES",
+      "ref": ".lab-ld-sktable",
+      "classes": [
+        "lab-ld-sktable",
+        "lab-ld-sktable-r",
+        "lab-ld-sktable-c"
+      ],
+      "params": [],
+      "tags": [
+        "lab",
+        "animated",
+        "new"
+      ],
+      "componentType": "loader",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A header row and four body rows of cell bars that pulse in a diagonal wave, set by the per-cell delay index. Use while a data grid fetches its first page."
+    },
+    {
+      "id": "lab-skeleton-profile-scan",
+      "name": "Skeleton Profile Scan",
+      "gallery": "lab",
+      "category": "LOADERS & WAITING STATES",
+      "ref": ".lab-ld-skprof",
+      "classes": [
+        "lab-ld-skprof",
+        "lab-ld-skprof-av",
+        "lab-ld-skprof-nm",
+        "lab-ld-skprof-st"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "lab",
+        "animated",
+        "new"
+      ],
+      "componentType": "loader",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A profile header placeholder: ringed avatar, name bar and three stat blocks with a soft light band scanning top to bottom. Use for account and user pages."
+    },
+    {
+      "id": "lab-ellipsis-loader",
+      "name": "Ellipsis Loader",
+      "gallery": "lab",
+      "category": "LOADERS & WAITING STATES",
+      "ref": ".lab-ld-ellipsis",
+      "classes": [
+        "lab-ld-ellipsis",
+        "lab-ld-ellipsis-dots"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "lab",
+        "animated",
+        "new"
+      ],
+      "componentType": "loader",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "The word Loading with dots that step from none to three and wrap, driven by an animated content string. Use for inline text-only waiting states."
+    },
+    {
+      "id": "lab-segmented-ring-count",
+      "name": "Segmented Ring Count",
+      "gallery": "lab",
+      "category": "LOADERS & WAITING STATES",
+      "ref": ".lab-ld-segring",
+      "classes": [
+        "lab-ld-segring",
+        "lab-ld-segring-s"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "lab",
+        "animated",
+        "new"
+      ],
+      "componentType": "loader",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Twelve ticks light up clockwise while the center counts n of 12, both driven by one registered property on the parent. Use for stepwise jobs with a known count."
+    },
+    {
+      "id": "lab-dots-to-check",
+      "name": "Dots to Check",
+      "gallery": "lab",
+      "category": "LOADERS & WAITING STATES",
+      "ref": ".lab-ld-dotcheck",
+      "classes": [
+        "lab-ld-dotcheck",
+        "lab-ld-dotcheck-d",
+        "lab-ld-dotcheck-b"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "lab",
+        "animated",
+        "new"
+      ],
+      "componentType": "loader",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Three hopping dots converge and merge, then a green check pops out of the merge point inside a ring. Use where a wait ends in a visible success."
+    },
+    {
+      "id": "lab-chasing-squares",
+      "name": "Chasing Squares",
+      "gallery": "lab",
+      "category": "LOADERS & WAITING STATES",
+      "ref": ".lab-ld-chase",
+      "classes": [
+        "lab-ld-chase",
+        "lab-ld-chase-q"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "lab",
+        "animated",
+        "new"
+      ],
+      "componentType": "loader",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Four squares of fading opacity hop clockwise around a two by two grid, each one step behind the last. Use as a compact indeterminate loader for panels."
+    },
+    {
+      "id": "lab-striped-progress-bar",
+      "name": "Striped Progress Bar",
+      "gallery": "lab",
+      "category": "LOADERS & WAITING STATES",
+      "ref": ".lab-ld-stripes",
+      "classes": [
+        "lab-ld-stripes",
+        "lab-ld-stripes-f"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "lab",
+        "animated",
+        "new"
+      ],
+      "componentType": "loader",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A determinate bar fills to full while a barber pole stripe keeps moving across the fill. Use for installs and copies where progress is known but slow."
+    },
+    {
+      "id": "lab-card-stack-shuffle",
+      "name": "Card Stack Shuffle",
+      "gallery": "lab",
+      "category": "LOADERS & WAITING STATES",
+      "ref": ".lab-ld-shuffle",
+      "classes": [
+        "lab-ld-shuffle",
+        "lab-ld-shuffle-c"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "lab",
+        "animated",
+        "new"
+      ],
+      "componentType": "loader",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "The front card slides out to the right and tucks in at the back of the stack while the rest step forward. Use while a deck, feed or queue is being prepared."
+    },
+    {
+      "id": "lab-staged-progress",
+      "name": "Staged Progress",
+      "gallery": "lab",
+      "category": "LOADERS & WAITING STATES",
+      "ref": ".lab-ld-stages",
+      "classes": [
+        "lab-ld-stages",
+        "lab-ld-stages-lb",
+        "lab-ld-stages-pc",
+        "lab-ld-stages-tr",
+        "lab-ld-stages-f"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "lab",
+        "animated",
+        "new"
+      ],
+      "componentType": "loader",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A progress bar with a live percent and a stage label that steps from Uploading through Processing to Done, turning green at the end. Use for multi step jobs."
+    },
+    {
+      "id": "lab-rolling-square",
+      "name": "Rolling Square",
+      "gallery": "lab",
+      "category": "LOADERS & WAITING STATES",
+      "ref": ".lab-ld-roll",
+      "classes": [
+        "lab-ld-roll",
+        "lab-ld-roll-q"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "lab",
+        "animated",
+        "new"
+      ],
+      "componentType": "loader",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A square rolls along a rail, a quarter turn per hop, reaches the end and rolls back. Use for playful waits on a wide, short strip such as a footer."
+    },
+    {
+      "id": "lab-log-tail-loader",
+      "name": "Log Tail Loader",
+      "gallery": "lab",
+      "category": "LOADERS & WAITING STATES",
+      "ref": ".lab-ld-log",
+      "classes": [
+        "lab-ld-log",
+        "lab-ld-log-l",
+        "lab-ld-log-ok",
+        "lab-ld-log-cur"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "lab",
+        "animated",
+        "new"
+      ],
+      "componentType": "loader",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A terminal panel where log lines arrive one after another and end on a green ok line with a blinking cursor. Use for CLI style installs and deploy consoles."
+    },
+    {
+      "id": "lab-text-fill-loader",
+      "name": "Text Fill Loader",
+      "gallery": "lab",
+      "category": "LOADERS & WAITING STATES",
+      "ref": ".lab-ld-textfill",
+      "classes": [
+        "lab-ld-textfill"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "lab",
+        "animated",
+        "new"
+      ],
+      "componentType": "loader",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "An outlined word fills with colour from the bottom up through a background clipped to the glyphs. Use as a hero loader where text is the only element on screen."
+    },
+    {
+      "id": "lab-flip-tiles",
+      "name": "Flip Tiles",
+      "gallery": "lab",
+      "category": "LOADERS & WAITING STATES",
+      "ref": ".lab-ld-fliptiles",
+      "classes": [
+        "lab-ld-fliptiles",
+        "lab-ld-fliptiles-t"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "lab",
+        "animated",
+        "new"
+      ],
+      "componentType": "loader",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Five tiles flip on their horizontal axis in sequence to a coloured back face, then flip on to the plain front. Use for board or grid views that are refreshing."
+    },
+    {
+      "id": "lab-diamond-ripple",
+      "name": "Diamond Ripple",
+      "gallery": "lab",
+      "category": "LOADERS & WAITING STATES",
+      "ref": ".lab-ld-diamond",
+      "classes": [
+        "lab-ld-diamond",
+        "lab-ld-diamond-r"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "lab",
+        "animated",
+        "new"
+      ],
+      "componentType": "loader",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Rotated square outlines expand from a solid centre gem and fade as they grow, three in flight at once. Use for search or scan states that radiate from a point."
+    },
+    {
+      "id": "lab-chomp-loader",
+      "name": "Chomp Loader",
+      "gallery": "lab",
+      "category": "LOADERS & WAITING STATES",
+      "ref": ".lab-ld-chomp",
+      "classes": [
+        "lab-ld-chomp",
+        "lab-ld-chomp-m",
+        "lab-ld-chomp-j",
+        "lab-ld-chomp-d"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "lab",
+        "animated",
+        "new"
+      ],
+      "componentType": "loader",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A round mouth opens and closes while a train of dots glides in from the right and vanishes at the jaws. Use for queue draining or batch consumption states."
+    },
+    {
+      "id": "lab-upload-cloud",
+      "name": "Upload Cloud",
+      "gallery": "lab",
+      "category": "LOADERS & WAITING STATES",
+      "ref": ".lab-ld-upload",
+      "classes": [
+        "lab-ld-upload",
+        "lab-ld-upload-c",
+        "lab-ld-upload-a"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "lab",
+        "animated",
+        "new"
+      ],
+      "componentType": "loader",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "An arrow rises out of the base and fades into a gently bobbing cloud, again and again. Use for uploads and sync in progress toward remote storage."
+    },
+    {
+      "id": "lab-counting-percent",
+      "name": "Counting Percent",
+      "gallery": "lab",
+      "category": "LOADERS & WAITING STATES",
+      "ref": ".lab-ld-count",
+      "classes": [
+        "lab-ld-count",
+        "lab-ld-count-n",
+        "lab-ld-count-tr",
+        "lab-ld-count-f"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "lab",
+        "animated",
+        "new"
+      ],
+      "componentType": "loader",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A large number counts from 0 to 100 through an integer property and a CSS counter while a hairline bar fills in step. Use when the number is the whole message."
+    },
+    {
+      "id": "lab-caterpillar-pills",
+      "name": "Caterpillar Pills",
+      "gallery": "lab",
+      "category": "LOADERS & WAITING STATES",
+      "ref": ".lab-ld-pills",
+      "classes": [
+        "lab-ld-pills",
+        "lab-ld-pills-p"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "lab",
+        "animated",
+        "new"
+      ],
+      "componentType": "loader",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Four pills stretch wide and shrink back in sequence so the row crawls like a caterpillar. Use as a friendly inline loader inside buttons and chips."
+    },
+    {
+      "id": "lab-alternate-slide-list",
+      "name": "Alternate Slide List",
+      "gallery": "lab",
+      "category": "REVEAL & SCROLL CHOREOGRAPHY",
+      "ref": ".lab-rv-alt",
+      "classes": [
+        "lab-rv-mock",
+        "lab-rv-alt",
+        "lab-rv-row",
+        "lab-rv-stg",
+        "lab-rv-ico",
+        "lab-rv-txt",
+        "lab-rv-val"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "lab",
+        "animated",
+        "new"
+      ],
+      "componentType": "motion-reveal",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Rows enter from alternating sides on a stagger, hold, then leave the way they came. Use for activity feeds that build as the page scrolls."
+    },
+    {
+      "id": "lab-scale-in-card-row",
+      "name": "Scale-In Card Row",
+      "gallery": "lab",
+      "category": "REVEAL & SCROLL CHOREOGRAPHY",
+      "ref": ".lab-rv-scale",
+      "classes": [
+        "lab-rv-mock",
+        "lab-rv-scale",
+        "lab-rv-card",
+        "lab-rv-stg",
+        "lab-rv-ico",
+        "lab-rv-ct",
+        "lab-rv-ln"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "lab",
+        "animated",
+        "new"
+      ],
+      "componentType": "motion-reveal",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Three cards grow from half size with a small overshoot, one after another. Use for feature or pricing rows that pop in as they reach the viewport."
+    },
+    {
+      "id": "lab-clip-rise-hero",
+      "name": "Clip Rise Hero",
+      "gallery": "lab",
+      "category": "REVEAL & SCROLL CHOREOGRAPHY",
+      "ref": ".lab-rv-clip",
+      "classes": [
+        "lab-rv-mock",
+        "lab-rv-clip",
+        "lab-rv-hero",
+        "lab-rv-hc",
+        "lab-rv-ht",
+        "lab-rv-hs"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "lab",
+        "animated",
+        "new"
+      ],
+      "componentType": "motion-reveal",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A hero panel unmasks from the bottom edge while its copy drifts up into place, then wipes away upward. Use for banner sections entering on scroll."
+    },
+    {
+      "id": "lab-line-by-line-text",
+      "name": "Line by Line Text",
+      "gallery": "lab",
+      "category": "REVEAL & SCROLL CHOREOGRAPHY",
+      "ref": ".lab-rv-lines",
+      "classes": [
+        "lab-rv-mock",
+        "lab-rv-lines",
+        "lab-rv-lnw",
+        "lab-rv-lni",
+        "lab-rv-stg",
+        "lab-rv-lnh"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "lab",
+        "animated",
+        "new"
+      ],
+      "componentType": "motion-reveal",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Each line rises out of its own clipping box in sequence and exits upward. Use for paragraphs or changelogs that should read in order as they appear."
+    },
+    {
+      "id": "lab-stat-roll-up",
+      "name": "Stat Roll-Up",
+      "gallery": "lab",
+      "category": "REVEAL & SCROLL CHOREOGRAPHY",
+      "ref": ".lab-rv-stat",
+      "classes": [
+        "lab-rv-mock",
+        "lab-rv-stat",
+        "lab-rv-st",
+        "lab-rv-num",
+        "lab-rv-strip",
+        "lab-rv-stg",
+        "lab-rv-sl",
+        "lab-rv-sb"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "lab",
+        "animated",
+        "new"
+      ],
+      "componentType": "motion-reveal",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Three KPI values roll upward through intermediate numbers to their final figure while a bar fills beneath. Use for metric strips that count in on scroll."
+    },
+    {
+      "id": "lab-parallax-scroll-scene",
+      "name": "Parallax Scroll Scene",
+      "gallery": "lab",
+      "category": "REVEAL & SCROLL CHOREOGRAPHY",
+      "ref": ".lab-rv-plx",
+      "classes": [
+        "lab-rv-mock",
+        "lab-rv-plx",
+        "lab-rv-plx-bg",
+        "lab-rv-plx-fg",
+        "lab-rv-ht",
+        "lab-rv-hs",
+        "lab-rv-plx-chip",
+        "lab-rv-plx-mid",
+        "lab-rv-row",
+        "lab-rv-ico",
+        "lab-rv-txt",
+        "lab-rv-val",
+        "lab-rv-thumb"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "lab",
+        "animated",
+        "new"
+      ],
+      "componentType": "motion-reveal",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A simulated scroll moves the glow backdrop, the heading, the card list and a badge at four different speeds, then scrolls back. Use for hero depth."
+    },
+    {
+      "id": "lab-sticky-header-shrink",
+      "name": "Sticky Header Shrink",
+      "gallery": "lab",
+      "category": "REVEAL & SCROLL CHOREOGRAPHY",
+      "ref": ".lab-rv-sticky",
+      "classes": [
+        "lab-rv-mock",
+        "lab-rv-sticky",
+        "lab-rv-sh",
+        "lab-rv-sht",
+        "lab-rv-shb",
+        "lab-rv-sc",
+        "lab-rv-row",
+        "lab-rv-ico",
+        "lab-rv-txt",
+        "lab-rv-thumb"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "lab",
+        "animated",
+        "new"
+      ],
+      "componentType": "motion-reveal",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "As the list scrolls up beneath it, the header compresses to a slim bar with a drop shadow, then grows back. Use for app bars that condense on scroll."
+    },
+    {
+      "id": "lab-block-sweep-reveal",
+      "name": "Block Sweep Reveal",
+      "gallery": "lab",
+      "category": "REVEAL & SCROLL CHOREOGRAPHY",
+      "ref": ".lab-rv-sweep",
+      "classes": [
+        "lab-rv-mock",
+        "lab-rv-sweep",
+        "lab-rv-swc",
+        "lab-rv-swt",
+        "lab-rv-sws",
+        "lab-rv-blk"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "lab",
+        "animated",
+        "new"
+      ],
+      "componentType": "motion-reveal",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A solid block sweeps across the heading area and the copy is left behind as it passes out the far side. Use for section titles that need a bold entrance."
+    },
+    {
+      "id": "lab-keyhole-pan-reveal",
+      "name": "Keyhole Pan Reveal",
+      "gallery": "lab",
+      "category": "REVEAL & SCROLL CHOREOGRAPHY",
+      "ref": ".lab-rv-keyhole",
+      "classes": [
+        "lab-rv-mock",
+        "lab-rv-keyhole",
+        "lab-rv-khb",
+        "lab-rv-ht",
+        "lab-rv-hs",
+        "lab-rv-khl"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "lab",
+        "animated",
+        "new"
+      ],
+      "componentType": "motion-reveal",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A small circular mask opens, pans across the dimmed panel like a torch, then expands to uncover everything. Use for a playful hero or image reveal."
+    },
+    {
+      "id": "lab-timeline-draw",
+      "name": "Timeline Draw",
+      "gallery": "lab",
+      "category": "REVEAL & SCROLL CHOREOGRAPHY",
+      "ref": ".lab-rv-tl",
+      "classes": [
+        "lab-rv-mock",
+        "lab-rv-tl",
+        "lab-rv-tll",
+        "lab-rv-tli",
+        "lab-rv-tln",
+        "lab-rv-tlb"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "lab",
+        "animated",
+        "new"
+      ],
+      "componentType": "motion-reveal",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A vertical spine draws downward and each milestone pops in with its label as the line reaches it. Use for histories or process steps that unfold on scroll."
+    },
+    {
+      "id": "lab-scroll-progress-bar",
+      "name": "Scroll Progress Bar",
+      "gallery": "lab",
+      "category": "REVEAL & SCROLL CHOREOGRAPHY",
+      "ref": ".lab-rv-prog",
+      "classes": [
+        "lab-rv-mock",
+        "lab-rv-prog",
+        "lab-rv-pbar",
+        "lab-rv-pct",
+        "lab-rv-pg",
+        "lab-rv-pgh",
+        "lab-rv-ln",
+        "lab-rv-thumb"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "lab",
+        "animated",
+        "new"
+      ],
+      "componentType": "motion-reveal",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A top bar fills and a percent badge counts up as the article scrolls, then everything snaps back to the top. Use for reading progress on long posts."
+    },
+    {
+      "id": "lab-pin-then-release",
+      "name": "Pin Then Release",
+      "gallery": "lab",
+      "category": "REVEAL & SCROLL CHOREOGRAPHY",
+      "ref": ".lab-rv-pinrel",
+      "classes": [
+        "lab-rv-mock",
+        "lab-rv-pinrel",
+        "lab-rv-prc",
+        "lab-rv-prt",
+        "lab-rv-prs",
+        "lab-rv-prg",
+        "lab-rv-prf",
+        "lab-rv-row",
+        "lab-rv-ico",
+        "lab-rv-txt"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "lab",
+        "animated",
+        "new"
+      ],
+      "componentType": "motion-reveal",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A summary card stays pinned while rows scroll beneath it, then releases and rides away with the content before the page scrolls back. Use for sticky summaries."
+    },
+    {
+      "id": "lab-word-cascade",
+      "name": "Word Cascade",
+      "gallery": "lab",
+      "category": "REVEAL & SCROLL CHOREOGRAPHY",
+      "ref": ".lab-rv-words",
+      "classes": [
+        "lab-rv-mock",
+        "lab-rv-words",
+        "lab-rv-wh",
+        "lab-rv-w",
+        "lab-rv-stg",
+        "lab-rv-wa",
+        "lab-rv-ws"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "lab",
+        "animated",
+        "new"
+      ],
+      "componentType": "motion-reveal",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Heading words rise out of a blur one at a time and the tagline fades in after them. Use for hero titles where per letter motion is too busy."
+    },
+    {
+      "id": "lab-focus-pull-grid",
+      "name": "Focus Pull Grid",
+      "gallery": "lab",
+      "category": "REVEAL & SCROLL CHOREOGRAPHY",
+      "ref": ".lab-rv-focus",
+      "classes": [
+        "lab-rv-mock",
+        "lab-rv-focus",
+        "lab-rv-fg",
+        "lab-rv-stg",
+        "lab-rv-ico",
+        "lab-rv-ln"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "lab",
+        "animated",
+        "new"
+      ],
+      "componentType": "motion-reveal",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A grid of tiles resolves from a soft blur and slight shrink in reading order, then defocuses again. Use for galleries or integrations grids."
+    },
+    {
+      "id": "lab-stand-up-cards",
+      "name": "Stand-Up Cards",
+      "gallery": "lab",
+      "category": "REVEAL & SCROLL CHOREOGRAPHY",
+      "ref": ".lab-rv-stand",
+      "classes": [
+        "lab-rv-mock",
+        "lab-rv-stand",
+        "lab-rv-card",
+        "lab-rv-stg",
+        "lab-rv-ico",
+        "lab-rv-ct",
+        "lab-rv-ln"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "lab",
+        "animated",
+        "new"
+      ],
+      "componentType": "motion-reveal",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Cards hinge up from their bottom edge in perspective, overshoot slightly and settle upright in sequence. Use for plan or feature rows with some drama."
+    },
+    {
+      "id": "lab-route-draw",
+      "name": "Route Draw",
+      "gallery": "lab",
+      "category": "REVEAL & SCROLL CHOREOGRAPHY",
+      "ref": ".lab-rv-route",
+      "classes": [
+        "lab-rv-mock",
+        "lab-rv-route",
+        "lab-rv-rtg",
+        "lab-rv-rtd",
+        "lab-rv-rtp",
+        "lab-rv-rp",
+        "lab-rv-rpc"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "lab",
+        "animated",
+        "new"
+      ],
+      "componentType": "motion-reveal",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A route strokes itself along a dotted guide and pin markers pop up as the line reaches each stop. Use for journey maps or delivery tracking sections."
+    },
+    {
+      "id": "lab-split-screen-reveal",
+      "name": "Split Screen Reveal",
+      "gallery": "lab",
+      "category": "REVEAL & SCROLL CHOREOGRAPHY",
+      "ref": ".lab-rv-split",
+      "classes": [
+        "lab-rv-mock",
+        "lab-rv-split",
+        "lab-rv-spl",
+        "lab-rv-spt",
+        "lab-rv-spr",
+        "lab-rv-spd"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "lab",
+        "animated",
+        "new"
+      ],
+      "componentType": "motion-reveal",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Two half panels slide in from opposite edges, a divider draws down between them and the copy fades in last. Use for before and after comparisons."
+    },
+    {
+      "id": "lab-snap-deck",
+      "name": "Snap Deck",
+      "gallery": "lab",
+      "category": "REVEAL & SCROLL CHOREOGRAPHY",
+      "ref": ".lab-rv-snap",
+      "classes": [
+        "lab-rv-mock",
+        "lab-rv-snap",
+        "lab-rv-snt",
+        "lab-rv-sns",
+        "lab-rv-snd"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "lab",
+        "animated",
+        "new"
+      ],
+      "componentType": "motion-reveal",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Full height sections snap into view one at a time while side dots track the active slide, then the deck scrolls home. Use for scroll snapping story pages."
+    },
+    {
+      "id": "lab-zoom-out-hero",
+      "name": "Zoom-Out Hero",
+      "gallery": "lab",
+      "category": "REVEAL & SCROLL CHOREOGRAPHY",
+      "ref": ".lab-rv-zoom",
+      "classes": [
+        "lab-rv-mock",
+        "lab-rv-zoom",
+        "lab-rv-zh",
+        "lab-rv-zt",
+        "lab-rv-zs"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "lab",
+        "animated",
+        "new"
+      ],
+      "componentType": "motion-reveal",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "The backdrop starts oversized and settles to scale while the title tightens its letter spacing into place. Use for cinematic hero openings on page load."
+    },
+    {
+      "id": "lab-velocity-skew-scroll",
+      "name": "Velocity Skew Scroll",
+      "gallery": "lab",
+      "category": "REVEAL & SCROLL CHOREOGRAPHY",
+      "ref": ".lab-rv-skew",
+      "classes": [
+        "lab-rv-mock",
+        "lab-rv-skew",
+        "lab-rv-skt",
+        "lab-rv-row",
+        "lab-rv-ico",
+        "lab-rv-txt",
+        "lab-rv-val"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "lab",
+        "animated",
+        "new"
+      ],
+      "componentType": "motion-reveal",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "The list shears in the direction of travel while it scrolls fast and straightens as it stops, in both directions. Use for smooth scroll feeds with momentum."
+    },
+    {
+      "id": "lab-marker-sweep",
+      "name": "Marker Sweep",
+      "gallery": "lab",
+      "category": "REVEAL & SCROLL CHOREOGRAPHY",
+      "ref": ".lab-rv-mark",
+      "classes": [
+        "lab-rv-mock",
+        "lab-rv-mark",
+        "lab-rv-mh",
+        "lab-rv-ml",
+        "lab-rv-mk",
+        "lab-rv-stg"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "lab",
+        "animated",
+        "new"
+      ],
+      "componentType": "motion-reveal",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A highlighter band sweeps across the key phrase of each line in turn, as if marked while reading. Use to spotlight figures inside body copy on scroll."
+    },
+    {
       "id": "ai-parallel-agents",
       "name": "Parallel agents",
       "gallery": "ai",
@@ -19176,9 +21863,9 @@
         "gate",
         "experts",
         "expert",
+        "on",
         "ed",
         "ew",
-        "on",
         "cap",
         "pr-playbtn"
       ],
@@ -24549,9 +27236,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A wide multi-stop gradient slides back and forth so the tint slowly wanders across the surface. Hero panels, empty states, sign-in cards."
     },
     {
@@ -24584,9 +27271,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Four blurred colour pools breathe and drift out of phase to form a soft mesh gradient. Landing heroes, pricing tiers, marketing surfaces."
     },
     {
@@ -24619,9 +27306,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Three skewed light curtains sway and brighten over a night gradient. Calm ambient backdrop for status pages and quiet dashboards."
     },
     {
@@ -24653,9 +27340,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Two speckle layers jitter on stepped timing under a vignette, with an occasional frame flicker. Editorial, photo and cinematic surfaces."
     },
     {
@@ -24687,9 +27374,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A dot grid glides diagonally while a soft accent glow crosses it. Technical surfaces, canvas backgrounds, builder tools."
     },
     {
@@ -24721,9 +27408,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Tinted diagonal bands scroll steadily under a top wash. Progress and work in progress areas, maintenance banners, build panels."
     },
     {
@@ -24756,9 +27443,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Glossy spheres of mixed sizes rise and fade on staggered timing. Playful backdrop for onboarding, celebrations and feature intros."
     },
     {
@@ -24791,9 +27478,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Three translucent wave bands scroll at different speeds so they read as depth. Water, audio, flow and shipping themed panels."
     },
     {
@@ -24824,9 +27511,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Three star layers scroll at increasing speeds so the nearest stars slide fastest. Space, launch and night mode backdrops."
     },
     {
@@ -24860,9 +27547,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A honeycomb of cells lights up in a ring that spreads out from the centre. Infrastructure, network and security surfaces."
     },
     {
@@ -24897,9 +27584,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Two sets of contour lines drift and breathe against each other like a shifting relief map. Geo, mapping and exploration panels."
     },
     {
@@ -24932,9 +27619,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Rings expand and fade from a pulsing point on a steady cadence. Signal, broadcast, ping and live location backdrops."
     },
     {
@@ -24968,9 +27655,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A stage beam swings across a faint grid while its light pool follows on the floor. Showcase, launch and featured item panels."
     },
     {
@@ -25003,9 +27690,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Small paper pieces in four colours tumble slowly down the panel. Milestone, reward and celebration backdrops that stay calm."
     },
     {
@@ -25038,9 +27725,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Soft out of focus light discs in three tints drift and swell. Warm ambient backdrop for photo, event and evening themed surfaces."
     },
     {
@@ -25076,9 +27763,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Light pulses travel along printed circuit traces and flash the pads they reach. Hardware, compute and data pipeline surfaces."
     },
     {
@@ -25111,9 +27798,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Three blurred conic wheels spin at different rates and blend into a churning plasma field. High energy backdrop for AI and power features."
     },
     {
@@ -25143,9 +27830,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A tinted checkerboard with a soft band of surface colour sweeping across it so cells fade out and back. Editor and asset canvases."
     },
     {
@@ -25178,9 +27865,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Two gradient blobs reshape their outlines and slowly rotate on opposite corners. Friendly ambient backdrop for product and profile cards."
     },
     {
@@ -25214,9 +27901,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A bright bar sweeps down over a fine raster while a wash follows it. Terminal, monitoring and scanner themed panels."
     },
     {
@@ -25250,9 +27937,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A perspective floor grid streams toward the viewer under a bobbing sun and violet horizon. Retro, gaming and synth themed surfaces."
     },
     {

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Glow Ring · Prism</title>
+<!-- Prism showcase sample: fx-glow-ring (gallery: fx). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.c-info { --c: var(--info); --c-rgb: 68,147,248; }
+.fx-gl-ring, .fx-gl-btn, .fx-gl-edge, .fx-gl-trail, .fx-gl-divider, .fx-gl-badge, .fx-gl-input, .fx-gl-toggle, .fx-gl-progress, .fx-gl-chips, .fx-gl-tip, .fx-gl-lift, .fx-gl-underline, .fx-gl-avatar, .fx-gl-marker, .fx-gl-status, .fx-gl-keys, .fx-gl-slider, .fx-gl-corners, .fx-gl-check { --fx-gl-rgb: var(--c-rgb,var(--accent-rgb)); font-family: ui-sans-serif, system-ui, sans-serif; color: var(--ink); width: 100%; box-sizing: border-box; }
+.fx-gl-ring { max-width: 280px; height: 136px; display: grid; place-items: center; }
+.fx-gl-ring-core { position: relative; width: 92px; height: 92px; border-radius: 50%; border: 3px solid rgba(var(--fx-gl-rgb),.95); display: grid; place-items: center; font-weight: 700; font-size: 19px; letter-spacing: 0.02em; text-shadow: 0 0 10px rgba(var(--fx-gl-rgb),.8); animation: 2s ease-in-out 0s infinite normal none running fxGlRingBreath; }
+.fx-gl-ring-core::after { content: ""; position: absolute; inset: -3px; border-radius: 50%; border: 2px solid rgba(var(--fx-gl-rgb),.85); box-shadow: 0 0 12px rgba(var(--fx-gl-rgb),.6); animation: 2s ease-out 0s infinite normal none running fxGlRingWave; }
+@keyframes fxGlRingBreath { 
+  0%, 100% { box-shadow: inset 0 0 14px rgba(var(--fx-gl-rgb),.45),0 0 8px rgba(var(--fx-gl-rgb),.7),0 0 24px rgba(var(--fx-gl-rgb),.45),0 0 56px rgba(var(--fx-gl-rgb),.25); }
+  50% { box-shadow: inset 0 0 24px rgba(var(--fx-gl-rgb),.65),0 0 12px rgba(var(--fx-gl-rgb),.95),0 0 36px rgba(var(--fx-gl-rgb),.6),0 0 80px rgba(var(--fx-gl-rgb),.35); }
+}
+@keyframes fxGlRingWave { 
+  0% { transform: scale(1); opacity: 0.9; }
+  100% { transform: scale(1.42); opacity: 0; }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="fx-gl-ring c-info"><div class="fx-gl-ring-core">99.98%</div></div></div></div>
+<div class="meta"><b>Glow Ring</b> · <code>fx-glow-ring</code><br>FX Store · GLOW SYSTEM<p>A hollow ring with inset and outer bloom that breathes while a thin wave ring expands and fades. Use for a single headline value.</p></div>
+
+</body>
+</html>

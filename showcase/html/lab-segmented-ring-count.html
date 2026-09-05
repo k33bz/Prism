@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Segmented Ring Count · Prism</title>
+<!-- Prism showcase sample: lab-segmented-ring-count (gallery: lab). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.lab-ld-segring { position: relative; width: 96px; height: 96px; animation: 4s linear 0s infinite normal none running labLdSegT; --lab-ld-t: 0; counter-reset: lab-ld-seg var(--lab-ld-n); font: 600 15px / 1 ui-monospace, Menlo, monospace; color: var(--ink); }
+.lab-ld-segring-s { position: absolute; left: 50%; top: 0px; width: 6px; height: 16px; margin-left: -3px; border-radius: 3px; background: var(--line); transform-origin: 50% 48px; transform: rotate(calc(var(--i)*30deg)); }
+.lab-ld-segring-s::after { content: ""; position: absolute; inset: 0px; border-radius: 3px; background: var(--c,var(--accent)); box-shadow: 0 0 8px rgba(var(--c-rgb,var(--accent-rgb)),.7); opacity: clamp(0,calc(var(--lab-ld-t) - var(--i)),1); }
+.lab-ld-segring::after { content: counter(lab-ld-seg) "/12"; position: absolute; inset: 0px; display: grid; place-items: center; }
+@keyframes labLdSegT { 
+  0% { --lab-ld-t: 0; --lab-ld-n: 0; }
+  84% { --lab-ld-t: 12; --lab-ld-n: 12; }
+  92% { --lab-ld-t: 12; --lab-ld-n: 12; }
+  94%, 100% { --lab-ld-t: 0; --lab-ld-n: 0; }
+}
+@property --lab-ld-t { syntax: "<number>"; inherits: true; initial-value: 0; }
+@property --lab-ld-n { syntax: "<integer>"; inherits: false; initial-value: 0; }
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="lab-ld-segring"><i class="lab-ld-segring-s" style="--i:0"></i><i class="lab-ld-segring-s" style="--i:1"></i><i class="lab-ld-segring-s" style="--i:2"></i><i class="lab-ld-segring-s" style="--i:3"></i><i class="lab-ld-segring-s" style="--i:4"></i><i class="lab-ld-segring-s" style="--i:5"></i><i class="lab-ld-segring-s" style="--i:6"></i><i class="lab-ld-segring-s" style="--i:7"></i><i class="lab-ld-segring-s" style="--i:8"></i><i class="lab-ld-segring-s" style="--i:9"></i><i class="lab-ld-segring-s" style="--i:10"></i><i class="lab-ld-segring-s" style="--i:11"></i></div></div></div>
+<div class="meta"><b>Segmented Ring Count</b> · <code>lab-segmented-ring-count</code><br>Animation Lab · LOADERS &amp; WAITING STATES<p>Twelve ticks light up clockwise while the center counts n of 12, both driven by one registered property on the parent. Use for stepwise jobs with a known count.</p></div>
+
+</body>
+</html>

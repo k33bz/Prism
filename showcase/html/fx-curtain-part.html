@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Curtain Part · Prism</title>
+<!-- Prism showcase sample: fx-curtain-part (gallery: fx). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.fx-hv { --fx-hv-h: 0; --fx-hv-c: var(--c,var(--accent)); --fx-hv-rgb: var(--c-rgb,var(--accent-rgb)); position: relative; box-sizing: border-box; width: 100%; max-width: 240px; font: 12px / 1.35 ui-sans-serif, system-ui, sans-serif; color: var(--ink); animation-name: fxHvCycle; animation-duration: 3.6s; animation-timing-function: ease-in-out; animation-iteration-count: infinite; transition: --fx-hv-h 0.45s; }
+.fx-hv:hover { animation-name: none; --fx-hv-h: 1; }
+.fx-hv-img { position: relative; height: 110px; border-radius: 12px; overflow: hidden; background: var(--panel2); border: 1px solid var(--line); box-sizing: border-box; }
+.fx-hv-pic { position: absolute; inset: 0px; background: radial-gradient(34px 34px at 74% 28%,rgba(255,255,255,.8),rgba(255,255,255,0) 70%),
+  linear-gradient(160deg,rgba(var(--fx-hv-rgb),.8),rgba(var(--fx-hv-rgb),.25) 55%,rgba(0,0,0,.4)),var(--panel2); }
+.fx-hv-pic::after { content: ""; position: absolute; inset: auto 0px 0px; height: 50%; background: linear-gradient(168deg, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.5) 41%), linear-gradient(200deg, rgba(0, 0, 0, 0) 55%, rgba(0, 0, 0, 0.4) 56%); }
+.fx-hv-cap { position: absolute; left: 0px; right: 0px; bottom: 0px; padding: 10px 14px; background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75)); font-weight: 600; font-size: 12px; z-index: 3; }
+.fx-hv-cap small { display: block; font-weight: 400; color: rgba(255, 255, 255, 0.7); font-size: 10px; }
+.fx-hv-zoom .fx-hv-pic { transform: scale(calc(1 + .14*var(--fx-hv-h))); }
+.fx-hv-zoom .fx-hv-cap { transform: translateY(calc(100% * (1 - var(--fx-hv-h)))); }
+.fx-hv-split .fx-hv-img { display: grid; place-items: center; }
+.fx-hv-focus .fx-hv-pic { transform: scale(1.06); filter: blur(calc(7px*(1 - var(--fx-hv-h)))) saturate(calc(.3 + .7*var(--fx-hv-h))); }
+.fx-hv-focus .fx-hv-cap { opacity: var(--fx-hv-h); transform: translateY(calc(6px*(1 - var(--fx-hv-h)))); }
+.fx-hv-curt .fx-hv-img::before, .fx-hv-curt .fx-hv-img::after { content: ""; position: absolute; top: 0px; bottom: 0px; width: 50%; z-index: 2; background: linear-gradient(rgba(0,0,0,.15),rgba(0,0,0,0) 40%,rgba(0,0,0,.25)),repeating-linear-gradient(90deg,rgba(var(--fx-hv-rgb),.95) 0 8px,rgba(var(--fx-hv-rgb),.55) 8px 16px); }
+.fx-hv-curt .fx-hv-img::before { left: 0px; transform-origin: 0px 50%; transform: scaleX(calc(1 - .88*var(--fx-hv-h))); }
+.fx-hv-curt .fx-hv-img::after { right: 0px; transform-origin: 100% 50%; transform: scaleX(calc(1 - .88*var(--fx-hv-h))); }
+.fx-hv-curt .fx-hv-cap { opacity: var(--fx-hv-h); }
+.fx-hv-zout .fx-hv-pic { transform: scale(calc(1.6 - .6*var(--fx-hv-h))); }
+.fx-hv-zout .fx-hv-img::after { content: ""; position: absolute; inset: 8px; border: 1px solid rgba(255,255,255,calc(.7*var(--fx-hv-h))); border-radius: 8px; pointer-events: none; z-index: 2; }
+.fx-hv-zout .fx-hv-cap { opacity: var(--fx-hv-h); }
+.fx-hv-shut .fx-hv-cap { opacity: var(--fx-hv-h); }
+@keyframes fxHvCycle { 
+  0%, 12% { --fx-hv-h: 0; }
+  38%, 62% { --fx-hv-h: 1; }
+  88%, 100% { --fx-hv-h: 0; }
+}
+@property --fx-hv-h { syntax: "<number>"; inherits: true; initial-value: 0; }
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="fx-hv fx-hv-curt"><div class="fx-hv-img"><div class="fx-hv-pic"></div><div class="fx-hv-cap">Nova<small>Curtain up</small></div></div></div></div></div>
+<div class="meta"><b>Curtain Part</b> · <code>fx-curtain-part</code><br>FX Store · HOVER &amp; REVEAL<p>Two pleated curtains squeeze to the sides to reveal the image and its caption. Theatrical reveal for launches and featured media.</p></div>
+
+</body>
+</html>

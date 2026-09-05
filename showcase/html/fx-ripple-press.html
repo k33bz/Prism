@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ripple Press · Prism</title>
+<!-- Prism showcase sample: fx-ripple-press (gallery: fx). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.fx-hv { --fx-hv-h: 0; --fx-hv-c: var(--c,var(--accent)); --fx-hv-rgb: var(--c-rgb,var(--accent-rgb)); position: relative; box-sizing: border-box; width: 100%; max-width: 240px; font: 12px / 1.35 ui-sans-serif, system-ui, sans-serif; color: var(--ink); animation-name: fxHvCycle; animation-duration: 3.6s; animation-timing-function: ease-in-out; animation-iteration-count: infinite; transition: --fx-hv-h 0.45s; }
+.fx-hv:hover { animation-name: none; --fx-hv-h: 1; }
+.fx-hv-card { position: relative; box-sizing: border-box; height: 96px; padding: 16px 18px; border-radius: 12px; background: var(--panel2); border: 1px solid var(--line); overflow: hidden; }
+.fx-hv-t { font-weight: 600; font-size: 13px; margin: 0px 0px 6px; letter-spacing: 0.01em; }
+.fx-hv-b { color: var(--muted); font-size: 11px; }
+.fx-hv-tilt .fx-hv-card { transform: rotateX(calc(7deg*var(--fx-hv-h))) rotateY(calc(-9deg*var(--fx-hv-h))); box-shadow: 0 calc(18px*var(--fx-hv-h)) calc(30px*var(--fx-hv-h)) rgba(0,0,0,.45); border-color: rgba(var(--fx-hv-rgb),calc(.15 + .6*var(--fx-hv-h))); }
+.fx-hv-tilt .fx-hv-card::after { content: ""; position: absolute; inset: 0px; pointer-events: none; opacity: var(--fx-hv-h); background: radial-gradient(130px 90px at calc(85% - 60%*var(--fx-hv-h)) calc(95% - 85%*var(--fx-hv-h)),rgba(255,255,255,.3),rgba(255,255,255,0) 70%); }
+.fx-hv-draw .fx-hv-card { border-color: rgba(var(--fx-hv-rgb),.18); overflow: visible; }
+.fx-hv-brk .fx-hv-card { overflow: visible; border-color: rgba(var(--fx-hv-rgb),calc(.2 + .4*var(--fx-hv-h))); }
+.fx-hv-fan .fx-hv-card { z-index: 1; transform: translateY(calc(-8px*var(--fx-hv-h))); box-shadow: 0 calc(12px*var(--fx-hv-h)) calc(20px*var(--fx-hv-h)) rgba(0,0,0,.45); }
+.fx-hv-stack .fx-hv-card { border-radius: 6px; transform: translate(calc(-7px*var(--fx-hv-h)),calc(-7px*var(--fx-hv-h))); border-color: rgba(var(--fx-hv-rgb),calc(.3 + .7*var(--fx-hv-h))); box-shadow: calc(4px*var(--fx-hv-h)) calc(4px*var(--fx-hv-h)) 0 rgba(var(--fx-hv-rgb),.85),calc(8px*var(--fx-hv-h)) calc(8px*var(--fx-hv-h)) 0 rgba(var(--fx-hv-rgb),.55),calc(12px*var(--fx-hv-h)) calc(12px*var(--fx-hv-h)) 0 rgba(var(--fx-hv-rgb),.28); }
+.fx-hv-flood .fx-hv-card::before { content: ""; position: absolute; left: -20px; bottom: -20px; width: 80px; height: 80px; border-radius: 50%; background: var(--fx-hv-c); transform: scale(calc(5*var(--fx-hv-h))); }
+.fx-hv-flood .fx-hv-t, .fx-hv-flood .fx-hv-b { position: relative; }
+.fx-hv-flood .fx-hv-b { color: var(--ink); opacity: calc(.55 + .45*var(--fx-hv-h)); }
+.fx-hv-flip .fx-hv-card { position: absolute; inset: 0px; backface-visibility: hidden; }
+.fx-hv-mag .fx-hv-card { background: radial-gradient(90px 70px at 88% 18%,rgba(var(--fx-hv-rgb),calc(.45*var(--fx-hv-h))),rgba(var(--fx-hv-rgb),0) 70%),var(--panel2); }
+.fx-hv-rip .fx-hv-card { background: linear-gradient(rgba(var(--fx-hv-rgb),calc(.14*var(--fx-hv-h))),rgba(var(--fx-hv-rgb),calc(.14*var(--fx-hv-h)))),var(--panel2); }
+.fx-hv-rip .fx-hv-card::after { content: ""; position: absolute; left: 150px; top: 52px; width: 60px; height: 60px; margin: -30px 0px 0px -30px; border-radius: 50%; background: radial-gradient(circle,rgba(var(--fx-hv-rgb),.55),rgba(var(--fx-hv-rgb),.15) 60%,rgba(var(--fx-hv-rgb),0) 72%); transform: scale(0); opacity: 0; animation-name: fxHvRipple; animation-duration: 3.6s; animation-timing-function: ease-out; animation-iteration-count: infinite; }
+.fx-hv-rip:hover .fx-hv-card::after { animation-name: fxHvRippleOnce; animation-duration: 0.8s; animation-iteration-count: 1; animation-fill-mode: forwards; }
+.fx-hv-scr .fx-hv-t { position: relative; font-family: ui-monospace, Menlo, monospace; font-size: 14px; height: 18px; width: 11ch; }
+.fx-hv-scr .fx-hv-t::after { content: ""; position: absolute; top: 0px; bottom: 0px; left: calc(100% * var(--fx-hv-h)); width: 2px; background: var(--fx-hv-c); opacity: calc(1 - var(--fx-hv-h)); }
+.fx-hv-opulse .fx-hv-card { display: grid; place-items: center; padding: 0px; }
+.fx-hv-peel .fx-hv-card::before, .fx-hv-peel .fx-hv-card::after { content: ""; position: absolute; right: 0px; bottom: 0px; width: calc(60px*var(--fx-hv-h)); height: calc(60px*var(--fx-hv-h)); }
+.fx-hv-peel .fx-hv-card::before { background: linear-gradient(to top left,var(--bg) 50%,rgba(0,0,0,0) 50%); }
+.fx-hv-peel .fx-hv-card::after { background: linear-gradient(to top left,rgba(0,0,0,0) 50%,rgba(var(--fx-hv-rgb),.95) 50%,rgba(255,255,255,.6) 66%,rgba(var(--fx-hv-rgb),.8) 100%); filter: drop-shadow(rgba(0, 0, 0, 0.45) -3px -3px 4px); }
+@keyframes fxHvCycle { 
+  0%, 12% { --fx-hv-h: 0; }
+  38%, 62% { --fx-hv-h: 1; }
+  88%, 100% { --fx-hv-h: 0; }
+}
+@keyframes fxHvRipple { 
+  0%, 12% { transform: scale(0); opacity: 0.9; }
+  45%, 100% { transform: scale(5.5); opacity: 0; }
+}
+@keyframes fxHvRippleOnce { 
+  0% { transform: scale(0); opacity: 0.9; }
+  100% { transform: scale(5.5); opacity: 0; }
+}
+@property --fx-hv-h { syntax: "<number>"; inherits: true; initial-value: 0; }
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="fx-hv fx-hv-rip"><div class="fx-hv-card"><div class="fx-hv-t">Ember</div><div class="fx-hv-b">Press point at the right</div></div></div></div></div>
+<div class="meta"><b>Ripple Press</b> · <code>fx-ripple-press</code><br>FX Store · HOVER &amp; REVEAL<p>A single wave expands from a fixed press point while the card fill tints. A CSS only stand in for cursor ripples on buttons and list rows.</p></div>
+
+</body>
+</html>

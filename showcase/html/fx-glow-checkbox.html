@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Glow Checkbox · Prism</title>
+<!-- Prism showcase sample: fx-glow-checkbox (gallery: fx). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.c-pos { --c: var(--pos); --c-rgb: 63,185,80; }
+.fx-gl-ring, .fx-gl-btn, .fx-gl-edge, .fx-gl-trail, .fx-gl-divider, .fx-gl-badge, .fx-gl-input, .fx-gl-toggle, .fx-gl-progress, .fx-gl-chips, .fx-gl-tip, .fx-gl-lift, .fx-gl-underline, .fx-gl-avatar, .fx-gl-marker, .fx-gl-status, .fx-gl-keys, .fx-gl-slider, .fx-gl-corners, .fx-gl-check { --fx-gl-rgb: var(--c-rgb,var(--accent-rgb)); font-family: ui-sans-serif, system-ui, sans-serif; color: var(--ink); width: 100%; box-sizing: border-box; }
+.fx-gl-check { max-width: 252px; display: grid; gap: 12px; font-size: 14px; }
+.fx-gl-check-row { display: flex; align-items: center; gap: 12px; }
+.fx-gl-check-box { position: relative; width: 22px; height: 22px; border-radius: 6px; border: 1.5px solid var(--dim); background: var(--panel2); animation-name: fxGlCheckBox; animation-duration: 4s; animation-timing-function: ease-in-out; animation-iteration-count: infinite; animation-delay: var(--d,0s); }
+.fx-gl-check-box::before { content: ""; position: absolute; left: 6px; top: 2px; width: 6px; height: 11px; border-right: 2.5px solid rgba(255, 255, 255, 0.98); border-bottom: 2.5px solid rgba(255, 255, 255, 0.98); transform: rotate(45deg) scale(0); filter: drop-shadow(0 0 4px rgba(var(--fx-gl-rgb),.9)); animation-name: fxGlCheckMark; animation-duration: 4s; animation-timing-function: cubic-bezier(0.3, 1.6, 0.5, 1); animation-iteration-count: infinite; animation-delay: var(--d,0s); }
+.fx-gl-check-box::after { content: ""; position: absolute; inset: -2px; border-radius: 8px; border: 2px solid rgba(var(--fx-gl-rgb),.9); opacity: 0; animation-name: fxGlCheckBurst; animation-duration: 4s; animation-timing-function: ease-out; animation-iteration-count: infinite; animation-delay: var(--d,0s); }
+.fx-gl-check-lbl { color: var(--muted); }
+@keyframes fxGlCheckBox { 
+  0%, 20%, 90%, 100% { border-color: var(--dim); background: var(--panel2); box-shadow: 0 0 0 rgba(var(--fx-gl-rgb),0),0 0 0 rgba(var(--fx-gl-rgb),0); }
+  28%, 80% { border-color: rgba(var(--fx-gl-rgb),1); background: rgba(var(--fx-gl-rgb),.9); box-shadow: 0 0 8px rgba(var(--fx-gl-rgb),.7),0 0 20px rgba(var(--fx-gl-rgb),.4); }
+}
+@keyframes fxGlCheckMark { 
+  0%, 20% { transform: rotate(45deg) scale(0); }
+  30%, 80% { transform: rotate(45deg) scale(1); }
+  88%, 100% { transform: rotate(45deg) scale(0); }
+}
+@keyframes fxGlCheckBurst { 
+  0%, 22% { transform: scale(1); opacity: 0.9; }
+  48%, 100% { transform: scale(1.8); opacity: 0; }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="fx-gl-check c-pos"><div class="fx-gl-check-row"><span class="fx-gl-check-box"></span><span class="fx-gl-check-lbl">Enable sync</span></div><div class="fx-gl-check-row"><span class="fx-gl-check-box" style="--d:.5s"></span><span class="fx-gl-check-lbl">Send weekly digest</span></div></div></div></div>
+<div class="meta"><b>Glow Checkbox</b> · <code>fx-glow-checkbox</code><br>FX Store · GLOW SYSTEM<p>The box fills with light, a check mark springs in and a ring bursts outward, one row after the other. Use where a confirmed choice should feel rewarding.</p></div>
+
+</body>
+</html>

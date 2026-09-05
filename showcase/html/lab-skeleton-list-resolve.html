@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Skeleton List Resolve · Prism</title>
+<!-- Prism showcase sample: lab-skeleton-list-resolve (gallery: lab). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.lab-ld-sklist { width: 100%; max-width: 260px; display: grid; gap: 8px; font: 12px / 1.2 ui-sans-serif, system-ui, sans-serif; color: var(--ink); }
+.lab-ld-sklist-row { display: grid; grid-template-columns: 28px 1fr; gap: 10px; align-items: center; position: relative; height: 30px; }
+.lab-ld-sklist-row:nth-child(1) { animation: 4s linear 0s infinite normal none running labLdRowOne; }
+.lab-ld-sklist-row:nth-child(2) { animation: 4s linear 0s infinite normal none running labLdRowTwo; }
+.lab-ld-sklist-row:nth-child(3) { animation: 4s linear 0s infinite normal none running labLdRowThree; }
+.lab-ld-sklist-av { width: 28px; height: 28px; border-radius: 50%; background: var(--panel2); position: relative; overflow: hidden; }
+.lab-ld-sklist-av::after { content: ""; position: absolute; inset: 0px; background: linear-gradient(100deg, transparent 30%, rgba(255, 255, 255, 0.12) 50%, transparent 70%); transform: translateX(-100%); animation: 1.4s linear 0s infinite normal none running labLdSheen; }
+.lab-ld-sklist-tx { position: relative; }
+.lab-ld-sklist-ph { position: absolute; inset: 0px; display: grid; gap: 6px; align-content: center; opacity: calc(1 - var(--lab-ld-on)); }
+.lab-ld-sklist-ph i { display: block; height: 8px; border-radius: 4px; background: var(--panel2); }
+.lab-ld-sklist-ph i:first-child { width: 45%; }
+.lab-ld-sklist-ph i:last-child { width: 80%; }
+.lab-ld-sklist-nm, .lab-ld-sklist-sub { opacity: var(--lab-ld-on); transform: translateY(calc((1 - var(--lab-ld-on))*3px)); }
+.lab-ld-sklist-nm { font-weight: 600; }
+.lab-ld-sklist-sub { color: var(--muted); font-size: 11px; }
+.lab-ld-sklist-av::before { content: ""; position: absolute; inset: 0px; border-radius: 50%; background: var(--c,var(--accent)); opacity: calc(var(--lab-ld-on)*.85); }
+@keyframes labLdSheen { 
+  100% { transform: translateX(100%); }
+}
+@keyframes labLdRowOne { 
+  0%, 26% { --lab-ld-on: 0; }
+  34%, 94% { --lab-ld-on: 1; }
+  100% { --lab-ld-on: 0; }
+}
+@keyframes labLdRowTwo { 
+  0%, 44% { --lab-ld-on: 0; }
+  52%, 94% { --lab-ld-on: 1; }
+  100% { --lab-ld-on: 0; }
+}
+@keyframes labLdRowThree { 
+  0%, 62% { --lab-ld-on: 0; }
+  70%, 94% { --lab-ld-on: 1; }
+  100% { --lab-ld-on: 0; }
+}
+@property --lab-ld-on { syntax: "<number>"; inherits: true; initial-value: 0; }
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="lab-ld-sklist">
+      <div class="lab-ld-sklist-row"><div class="lab-ld-sklist-av"></div><div class="lab-ld-sklist-tx"><div class="lab-ld-sklist-ph"><i></i><i></i></div><div class="lab-ld-sklist-nm">J. Doe</div><div class="lab-ld-sklist-sub">Atlas, owner</div></div></div>
+      <div class="lab-ld-sklist-row"><div class="lab-ld-sklist-av"></div><div class="lab-ld-sklist-tx"><div class="lab-ld-sklist-ph"><i></i><i></i></div><div class="lab-ld-sklist-nm">R. Patel</div><div class="lab-ld-sklist-sub">Comet, reviewer</div></div></div>
+      <div class="lab-ld-sklist-row"><div class="lab-ld-sklist-av"></div><div class="lab-ld-sklist-tx"><div class="lab-ld-sklist-ph"><i></i><i></i></div><div class="lab-ld-sklist-nm">A. Lee</div><div class="lab-ld-sklist-sub">Ember, editor</div></div></div>
+    </div></div></div>
+<div class="meta"><b>Skeleton List Resolve</b> · <code>lab-skeleton-list-resolve</code><br>Animation Lab · LOADERS &amp; WAITING STATES<p>Three avatar rows shimmer, then each resolves into real name and role in order as its data arrives. Use for member and contact lists that stream in.</p></div>
+
+</body>
+</html>

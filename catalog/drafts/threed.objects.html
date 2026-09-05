@@ -1,0 +1,316 @@
+<h3 class="sec">3D CSS OBJECTS</h3>
+<style id="ob3d-styles">
+/* ===== 3D CSS objects: solids built from token coloured panels with perspective, preserve-3d and
+   transforms only. Prefix ob3d- (classes) / ob3d (keyframes). Colour contract: --oc is
+   var(--c,var(--accent)) and --ocr its rgb twin; lit faces use rgba(var(--ocr),a), plain faces
+   var(--panel2), edges var(--line). Every root is a .ob3d-scene (max 300x150, the perspective
+   wrapper) and each object sits around 90px so it stays inside the stage while it rotates. ===== */
+.ob3d-scene{width:100%;max-width:300px;height:140px;perspective:620px;perspective-origin:50% 45%;display:grid;place-items:center;overflow:hidden;position:relative;font-family:ui-sans-serif,system-ui,sans-serif;color:var(--ink);--oc:var(--c,var(--accent));--ocr:var(--c-rgb,var(--accent-rgb))}
+.ob3d-scene *{box-sizing:border-box}
+
+/* flip card (hover) */
+.ob3d-flip-in{width:120px;height:80px;position:relative;transform-style:preserve-3d;animation:ob3dFlip 4s cubic-bezier(.6,0,.3,1) infinite;transition:transform .7s cubic-bezier(.6,0,.3,1)}
+.ob3d-flip-face{position:absolute;inset:0;backface-visibility:hidden;border:1px solid var(--line);border-radius:10px;background:var(--panel2);display:flex;flex-direction:column;justify-content:center;gap:4px;padding:0 16px}
+.ob3d-flip-face b{font-size:18px}
+.ob3d-flip-face span{font-size:11px;color:var(--muted)}
+.ob3d-flip-back{transform:rotateY(180deg);background:rgba(var(--ocr),.28);border-color:var(--oc)}
+.ob3d-flip:hover .ob3d-flip-in{animation-name:none;transform:rotateY(180deg)}
+@keyframes ob3dFlip{0%,35%{transform:rotateY(0)}50%,85%{transform:rotateY(180deg)}100%{transform:rotateY(360deg)}}
+
+/* coin toss (hover) */
+.ob3d-coin-air{transform-style:preserve-3d;animation:ob3dToss 4s ease-in-out infinite}
+.ob3d-coin-body{width:66px;height:66px;position:relative;transform-style:preserve-3d;animation:ob3dTumble 4s cubic-bezier(.45,0,.55,1) infinite}
+.ob3d-coin-face{position:absolute;inset:0;border-radius:50%;backface-visibility:hidden;background:rgba(var(--ocr),.4);border:3px solid var(--oc);display:grid;place-items:center;font-weight:800;font-size:24px;color:var(--oc);transform:translateZ(3px)}
+.ob3d-coin-tail{transform:rotateX(180deg) translateZ(3px);background:var(--panel2)}
+.ob3d-coin-shadow{position:absolute;left:50%;bottom:8px;width:66px;height:12px;border-radius:50%;background:rgba(0,0,0,.5);transform:translateX(-50%);animation:ob3dCoinShadow 4s ease-in-out infinite}
+.ob3d-coin:hover .ob3d-coin-air,.ob3d-coin:hover .ob3d-coin-shadow{animation-name:none}
+.ob3d-coin:hover .ob3d-coin-body{animation:ob3dCoinSpin .7s linear infinite}
+@keyframes ob3dToss{0%,10%{transform:translateY(22px)}45%{transform:translateY(-28px)}80%,100%{transform:translateY(22px)}}
+@keyframes ob3dTumble{0%,10%{transform:rotateX(0)}80%,100%{transform:rotateX(1080deg)}}
+@keyframes ob3dCoinShadow{0%,10%,80%,100%{transform:translateX(-50%) scale(1);opacity:.6}45%{transform:translateX(-50%) scale(.5);opacity:.2}}
+@keyframes ob3dCoinSpin{to{transform:rotateX(360deg)}}
+
+/* cylinder ring of tiles */
+.ob3d-cyl-rig{transform-style:preserve-3d;transform:rotateX(-14deg)}
+.ob3d-cyl-ring{width:34px;height:50px;position:relative;transform-style:preserve-3d;animation:ob3dCylSpin 4s linear infinite}
+.ob3d-cyl-tile{position:absolute;inset:0;border:1px solid var(--oc);border-radius:4px;background:rgba(var(--ocr),.22);display:grid;place-items:center;font-size:12px;font-weight:700;transform:rotateY(calc(var(--i)*45deg)) translateZ(74px)}
+@keyframes ob3dCylSpin{to{transform:rotateY(360deg)}}
+
+/* tri fold panel */
+.ob3d-fold-rig{width:60px;height:80px;position:relative;transform-style:preserve-3d;transform:rotateX(12deg)}
+.ob3d-fold-p{position:absolute;top:0;width:60px;height:80px;border:1px solid var(--line);background:var(--panel2);padding:10px 8px;display:flex;flex-direction:column;gap:6px}
+.ob3d-fold-p i{display:block;height:5px;border-radius:3px;background:var(--dim)}
+.ob3d-fold-p i:first-child{background:var(--oc);width:60%}
+.ob3d-fold-c{left:0;background:rgba(var(--ocr),.2)}
+.ob3d-fold-l{left:-60px;transform-origin:100% 50%;animation:ob3dFoldL 4s ease-in-out infinite}
+.ob3d-fold-r{left:60px;transform-origin:0 50%;animation:ob3dFoldR 4s ease-in-out infinite}
+@keyframes ob3dFoldL{0%,10%{transform:rotateY(0)}38%,72%{transform:rotateY(165deg)}95%,100%{transform:rotateY(0)}}
+@keyframes ob3dFoldR{0%,28%{transform:rotateY(0)}56%,62%{transform:rotateY(-150deg)}85%,100%{transform:rotateY(0)}}
+
+/* deck of cards */
+.ob3d-deck-rig{width:50px;height:70px;position:relative;transform-style:preserve-3d;transform:translateY(12px) rotateX(60deg) rotateZ(-25deg)}
+.ob3d-deck-card{position:absolute;inset:0;border-radius:6px;border:1px solid var(--line);background:var(--panel2);transform:translateZ(calc(var(--i)*4px))}
+.ob3d-deck-card::after{content:"";position:absolute;inset:7px;border-radius:4px;border:1px solid rgba(var(--ocr),.5);background:linear-gradient(135deg,rgba(var(--ocr),.35),rgba(var(--ocr),.05))}
+.ob3d-deck-top{animation:ob3dDeal 4s ease-in-out infinite;background:rgba(var(--ocr),.3)}
+@keyframes ob3dDeal{0%,8%{transform:translateZ(16px) translateX(0);opacity:1}28%{transform:translateZ(44px) translateX(0);opacity:1}52%{transform:translateZ(44px) translateX(70px);opacity:1}66%{transform:translateZ(-1px) translateX(70px);opacity:1}78%{transform:translateZ(-1px) translateX(70px);opacity:0}79%{transform:translateZ(16px) translateX(0);opacity:0}92%,100%{transform:translateZ(16px) translateX(0);opacity:1}}
+
+/* crate stack */
+.ob3d-stack-rig{width:32px;height:32px;position:relative;transform-style:preserve-3d;transform:translateY(34px) rotateX(-28deg) rotateY(-40deg)}
+.ob3d-stack-cube{position:absolute;inset:0;transform-style:preserve-3d;transform:translateY(calc(var(--i)*-32px))}
+.ob3d-stack-f{position:absolute;inset:0;border:1px solid var(--line)}
+.ob3d-stack-front{background:rgba(var(--ocr),.35);transform:translateZ(16px)}
+.ob3d-stack-side{background:rgba(var(--ocr),.18);transform:rotateY(90deg) translateZ(16px)}
+.ob3d-stack-top{background:rgba(var(--ocr),.62);transform:rotateX(90deg) translateZ(16px)}
+.ob3d-stack-c0{animation:ob3dDrop0 4s cubic-bezier(.3,0,.5,1) infinite}
+.ob3d-stack-c1{animation:ob3dDrop1 4s cubic-bezier(.3,0,.5,1) infinite}
+.ob3d-stack-c2{animation:ob3dDrop2 4s cubic-bezier(.3,0,.5,1) infinite}
+@keyframes ob3dDrop0{0%{transform:translateY(-150px)}12%,88%{transform:translateY(0)}100%{transform:translateY(-150px)}}
+@keyframes ob3dDrop1{0%,10%{transform:translateY(-182px)}24%,88%{transform:translateY(-32px)}100%{transform:translateY(-182px)}}
+@keyframes ob3dDrop2{0%,22%{transform:translateY(-214px)}36%,88%{transform:translateY(-64px)}100%{transform:translateY(-214px)}}
+
+/* book */
+.ob3d-book-rig{width:70px;height:90px;position:relative;transform-style:preserve-3d;transform:translateY(6px) rotateX(35deg) rotateZ(-8deg)}
+.ob3d-book-back{position:absolute;inset:0;border-radius:2px 6px 6px 2px;border:1px solid var(--oc);background:rgba(var(--ocr),.5)}
+.ob3d-book-page{position:absolute;inset:3px 4px;border:1px solid var(--line);background:var(--panel2);transform-origin:0 50%;transform:translateZ(2px);padding:10px 8px;display:flex;flex-direction:column;gap:5px}
+.ob3d-book-page i{display:block;height:3px;border-radius:2px;background:var(--dim)}
+.ob3d-book-p2{transform:translateZ(3px);animation:ob3dPage 4s ease-in-out infinite}
+.ob3d-book-cover{position:absolute;inset:0;border-radius:2px 6px 6px 2px;border:1px solid var(--oc);background:rgba(var(--ocr),.65);transform-origin:0 50%;transform:translateZ(5px);animation:ob3dCover 4s ease-in-out infinite;display:grid;place-items:center;font-weight:800;font-size:13px;letter-spacing:1px}
+@keyframes ob3dCover{0%,10%{transform:translateZ(5px) rotateY(0)}35%,72%{transform:translateZ(5px) rotateY(-175deg)}95%,100%{transform:translateZ(5px) rotateY(0)}}
+@keyframes ob3dPage{0%,25%{transform:translateZ(3px) rotateY(0)}45%,55%{transform:translateZ(3px) rotateY(-170deg)}70%,100%{transform:translateZ(3px) rotateY(0)}}
+
+/* isometric tile floor */
+.ob3d-iso-rig{display:grid;grid-template-columns:repeat(4,22px);gap:4px;transform-style:preserve-3d;transform:rotateX(58deg) rotateZ(45deg)}
+.ob3d-iso-t{width:22px;height:22px;position:relative;transform-style:preserve-3d;animation-name:ob3dIsoFlip;animation-duration:4s;animation-timing-function:ease-in-out;animation-iteration-count:infinite;animation-delay:calc(var(--d)*-1s)}
+.ob3d-iso-t::before,.ob3d-iso-t::after{content:"";position:absolute;inset:0;border-radius:3px;border:1px solid var(--line);background:var(--panel2);backface-visibility:hidden}
+.ob3d-iso-t::after{transform:rotateX(180deg);background:rgba(var(--ocr),.6);border-color:var(--oc)}
+@keyframes ob3dIsoFlip{0%,12%{transform:rotateX(0)}38%,62%{transform:rotateX(180deg)}88%,100%{transform:rotateX(360deg)}}
+
+/* hexagonal prism */
+.ob3d-hex-rig{transform-style:preserve-3d;transform:rotateX(-18deg)}
+.ob3d-hex-body{width:40px;height:70px;position:relative;transform-style:preserve-3d;animation:ob3dHexSpin 4s linear infinite}
+.ob3d-hex-f{position:absolute;inset:0;border:1px solid var(--oc);background:rgba(var(--ocr),.28);backface-visibility:hidden;transform:rotateY(calc(var(--i)*60deg)) translateZ(34.6px)}
+.ob3d-hex-cap{position:absolute;left:-20px;top:0;width:80px;height:70px;background:rgba(var(--ocr),.55);clip-path:polygon(25% 0,75% 0,100% 50%,75% 100%,25% 100%,0 50%);backface-visibility:hidden;transform:rotateX(90deg) translateZ(35px)}
+.ob3d-hex-cap-b{transform:rotateX(-90deg) translateZ(35px)}
+@keyframes ob3dHexSpin{to{transform:rotateY(360deg)}}
+
+/* extruded text */
+.ob3d-text-rig{width:130px;height:56px;position:relative;transform-style:preserve-3d;animation:ob3dTextSwing 4s ease-in-out infinite}
+.ob3d-text-l{position:absolute;inset:0;display:grid;place-items:center;font-weight:900;font-size:42px;letter-spacing:2px;color:rgba(var(--ocr),calc(.6 - var(--i)*.04));transform:translateZ(calc(var(--i)*-2.5px))}
+.ob3d-text-front{color:var(--ink)}
+@keyframes ob3dTextSwing{0%,100%{transform:rotateY(-42deg) rotateX(8deg)}50%{transform:rotateY(42deg) rotateX(-8deg)}}
+
+/* tilted phone */
+.ob3d-phone-rig{transform-style:preserve-3d;animation:ob3dPhoneRock 4s ease-in-out infinite}
+.ob3d-phone-body{width:62px;height:118px;position:relative;transform-style:preserve-3d;border-radius:12px;border:2px solid var(--line);background:var(--panel2)}
+.ob3d-phone-back{position:absolute;inset:0;border-radius:12px;background:var(--line);transform:translateZ(calc(var(--i)*-2px))}
+.ob3d-phone-screen{position:absolute;inset:8px 5px;border-radius:6px;background:var(--bg);overflow:hidden;transform:translateZ(1px)}
+.ob3d-phone-feed{display:flex;flex-direction:column;gap:5px;padding:6px 5px;animation:ob3dPhoneScroll 4s linear infinite}
+.ob3d-phone-feed i{display:block;height:14px;border-radius:3px;border:1px solid var(--line);background:var(--panel2);flex:none}
+.ob3d-phone-feed i:nth-child(3n+1){background:rgba(var(--ocr),.35);border-color:rgba(var(--ocr),.6)}
+.ob3d-phone-notch{position:absolute;left:50%;top:3px;width:18px;height:3px;margin-left:-9px;border-radius:2px;background:var(--line);transform:translateZ(1px)}
+@keyframes ob3dPhoneRock{0%,100%{transform:rotateY(-36deg) rotateX(6deg)}50%{transform:rotateY(-8deg) rotateX(2deg)}}
+@keyframes ob3dPhoneScroll{to{transform:translateY(-57px)}}
+
+/* cube net fold */
+.ob3d-net-rig{width:26px;height:26px;position:relative;transform-style:preserve-3d;transform:translateY(14px) rotateX(58deg) rotateZ(-30deg)}
+.ob3d-net-f{position:absolute;width:26px;height:26px;border:1px solid var(--oc);background:rgba(var(--ocr),.3);transform-style:preserve-3d;animation-name:ob3dNetFold;animation-duration:4s;animation-timing-function:ease-in-out;animation-iteration-count:infinite}
+.ob3d-net-base{left:0;top:0;background:rgba(var(--ocr),.55);animation-name:none}
+.ob3d-net-l{left:-26px;top:0;transform-origin:100% 50%;--ax:0;--ay:1}
+.ob3d-net-r{left:26px;top:0;transform-origin:0 50%;--ax:0;--ay:-1}
+.ob3d-net-t{left:0;top:-26px;transform-origin:50% 100%;--ax:1;--ay:0}
+.ob3d-net-b{left:0;top:26px;transform-origin:50% 0;--ax:-1;--ay:0}
+.ob3d-net-lid{left:0;top:-26px;transform-origin:50% 100%;--ax:1;--ay:0;animation-delay:.25s;background:rgba(var(--ocr),.45)}
+@keyframes ob3dNetFold{0%,12%{transform:rotate3d(var(--ax),var(--ay),0,0deg)}42%,60%{transform:rotate3d(var(--ax),var(--ay),0,-90deg)}90%,100%{transform:rotate3d(var(--ax),var(--ay),0,0deg)}}
+
+/* exploded layers */
+.ob3d-layers-rig{width:72px;height:46px;position:relative;transform-style:preserve-3d;transform:translateY(18px) rotateX(58deg) rotateZ(-32deg)}
+.ob3d-layers-p{position:absolute;inset:0;border-radius:4px;border:1px solid var(--line);background:var(--panel2);animation:ob3dExplode 4s ease-in-out infinite;transform:translateZ(calc(var(--i)*8px))}
+.ob3d-layers-p::after{content:"";position:absolute;inset:8px 10px;border-radius:2px;background:rgba(var(--ocr),.35)}
+.ob3d-layers-p:nth-child(2){background:rgba(var(--ocr),.3);border-color:rgba(var(--ocr),.6)}
+.ob3d-layers-p:nth-child(2)::after{inset:8px 30px 8px 10px;background:rgba(var(--ocr),.7)}
+.ob3d-layers-p:nth-child(3){background:rgba(var(--ocr),.65);border-color:var(--oc)}
+.ob3d-layers-p:nth-child(3)::after{inset:14px 12px;background:rgba(255,255,255,.35)}
+@keyframes ob3dExplode{0%,15%{transform:translateZ(calc(var(--i)*4px))}50%,65%{transform:translateZ(calc(var(--i)*26px))}100%{transform:translateZ(calc(var(--i)*4px))}}
+
+/* gyroscope rings */
+.ob3d-gyro-rig{width:96px;height:96px;position:relative;transform-style:preserve-3d}
+.ob3d-gyro-r{position:absolute;inset:0;border-radius:50%;border:3px solid;animation-duration:4s;animation-timing-function:linear;animation-iteration-count:infinite}
+.ob3d-gyro-a{border-color:rgba(var(--ocr),.4);animation-name:ob3dGyroY}
+.ob3d-gyro-b{inset:9px;border-color:rgba(var(--ocr),.7);animation-name:ob3dGyroX;animation-delay:-1s}
+.ob3d-gyro-c{inset:18px;border-color:var(--oc);animation-name:ob3dGyroD;animation-delay:-2.5s}
+.ob3d-gyro-core{position:absolute;inset:40px;border-radius:50%;background:var(--oc);box-shadow:0 0 14px rgba(var(--ocr),.8)}
+@keyframes ob3dGyroY{to{transform:rotateY(360deg)}}
+@keyframes ob3dGyroX{to{transform:rotateX(360deg)}}
+@keyframes ob3dGyroD{from{transform:rotate3d(1,1,0,0deg)}to{transform:rotate3d(1,1,0,360deg)}}
+
+/* 3d gauge */
+.ob3d-gauge-rig{width:96px;height:96px;position:relative;transform-style:preserve-3d;transform:translateY(14px) rotateX(52deg)}
+.ob3d-gauge-rim{position:absolute;inset:0;border-radius:50%;background:var(--line);transform:translateZ(calc(var(--i)*-2px))}
+.ob3d-gauge-face{position:absolute;inset:0;border-radius:50%;border:1px solid var(--line);background:conic-gradient(from 225deg,var(--pos) 0 90deg,var(--warn) 90deg 180deg,var(--neg) 180deg 270deg,var(--panel2) 270deg 360deg)}
+.ob3d-gauge-face::after{content:"";position:absolute;inset:12px;border-radius:50%;border:1px solid var(--line);background:var(--panel2)}
+.ob3d-gauge-needle{position:absolute;left:50%;top:50%;width:4px;height:42px;margin:-42px 0 0 -2px;border-radius:2px;background:var(--oc);box-shadow:0 0 6px rgba(var(--ocr),.6);transform-origin:50% 100%;transform:translateZ(6px) rotate(-135deg);animation:ob3dNeedle 4s ease-in-out infinite}
+.ob3d-gauge-hub{position:absolute;left:50%;top:50%;width:14px;height:14px;margin:-7px;border-radius:50%;background:var(--ink);transform:translateZ(8px)}
+@keyframes ob3dNeedle{0%,10%{transform:translateZ(6px) rotate(-135deg)}45%{transform:translateZ(6px) rotate(125deg)}60%{transform:translateZ(6px) rotate(100deg)}90%,100%{transform:translateZ(6px) rotate(-135deg)}}
+
+/* staircase */
+.ob3d-stairs-rig{width:0;height:0;position:relative;transform-style:preserve-3d;transform:translate(-36px,36px) rotateX(-26deg) rotateY(-38deg)}
+.ob3d-stairs-s{position:absolute;left:calc(var(--i)*20px);bottom:0;width:20px;height:calc(var(--i)*14px + 14px);transform-style:preserve-3d;transform-origin:50% 100%;animation-name:ob3dStair;animation-duration:4s;animation-timing-function:ease-in-out;animation-iteration-count:infinite;animation-delay:calc(var(--i)*.22s)}
+.ob3d-stairs-f{position:absolute;inset:0;border:1px solid var(--line)}
+.ob3d-stairs-front{background:rgba(var(--ocr),.4);transform:translateZ(10px)}
+.ob3d-stairs-side{background:rgba(var(--ocr),.2);transform:rotateY(90deg) translateZ(10px)}
+.ob3d-stairs-top{bottom:auto;height:20px;background:rgba(var(--ocr),.7);transform:rotateX(90deg) translateZ(10px)}
+@keyframes ob3dStair{0%{transform:scaleY(0)}18%,78%{transform:scaleY(1)}90%,100%{transform:scaleY(0)}}
+
+/* floating islands */
+.ob3d-isl-rig{width:120px;height:80px;position:relative;transform-style:preserve-3d;transform:translateY(6px) rotateX(56deg) rotateZ(-35deg)}
+.ob3d-isl,.ob3d-isl-shadow{position:absolute;left:var(--x);top:var(--y);width:40px;height:40px;animation-duration:4s;animation-timing-function:ease-in-out;animation-iteration-count:infinite;animation-delay:calc(var(--d)*-1s)}
+.ob3d-isl{transform-style:preserve-3d;animation-name:ob3dIslFloat}
+.ob3d-isl-floor{position:absolute;inset:-10px;border-radius:6px;border:1px solid var(--line);background:rgba(255,255,255,.04);transform:translateZ(-15px)}
+.ob3d-isl-shadow{border-radius:50%;background:radial-gradient(closest-side,rgba(0,0,0,.75),rgba(0,0,0,0));transform:translateZ(-14px);animation-name:ob3dIslShadow}
+.ob3d-isl-top{position:absolute;inset:0;border-radius:8px;border:1px solid var(--oc);background:rgba(var(--ocr),.6);transform:translateZ(10px);transform-style:preserve-3d}
+.ob3d-isl-top::after{content:"";position:absolute;inset:11px;border-radius:3px;border:1px solid var(--line);background:var(--panel2);transform:translateZ(7px)}
+.ob3d-isl-front{position:absolute;left:0;top:30px;width:40px;height:20px;border:1px solid var(--line);background:rgba(var(--ocr),.25);transform:rotateX(-90deg)}
+.ob3d-isl-side{position:absolute;left:30px;top:0;width:20px;height:40px;border:1px solid var(--line);background:rgba(var(--ocr),.18);transform:rotateY(90deg)}
+@keyframes ob3dIslFloat{0%,100%{transform:translateZ(0)}50%{transform:translateZ(20px)}}
+@keyframes ob3dIslShadow{0%,100%{transform:translateZ(-14px) scale(1);opacity:.7}50%{transform:translateZ(-14px) scale(.7);opacity:.3}}
+
+/* split flap */
+.ob3d-flap-rig{width:80px;height:76px;position:relative;transform-style:preserve-3d;transform:rotateX(8deg);font-family:ui-monospace,Menlo,monospace;font-weight:700;font-size:44px;line-height:76px}
+.ob3d-flap-h{position:absolute;left:0;width:80px;height:37px;overflow:hidden;border:1px solid var(--line);background:var(--panel2);text-align:center;backface-visibility:hidden}
+.ob3d-flap-h span{position:absolute;left:0;right:0;height:76px;top:0}
+.ob3d-flap-top{top:0;border-radius:6px 6px 0 0}
+.ob3d-flap-bot{top:39px;border-radius:0 0 6px 6px;background:var(--panel)}
+.ob3d-flap-bot span{top:-39px}
+.ob3d-flap-a{transform-origin:50% calc(100% + 1px);transform:translateZ(1px);animation:ob3dFlapA 4s ease-in infinite;color:var(--oc)}
+.ob3d-flap-b{transform-origin:50% -1px;transform:translateZ(1px) rotateX(90deg);animation:ob3dFlapB 4s ease-out infinite;color:var(--oc)}
+.ob3d-flap-hinge{position:absolute;left:-4px;right:-4px;top:37px;height:2px;background:var(--line);transform:translateZ(2px)}
+@keyframes ob3dFlapA{0%,20%{transform:translateZ(1px) rotateX(0)}32%,68%{transform:translateZ(1px) rotateX(-90deg)}80%,100%{transform:translateZ(1px) rotateX(0)}}
+@keyframes ob3dFlapB{0%,32%{transform:translateZ(1px) rotateX(90deg)}44%,56%{transform:translateZ(1px) rotateX(0)}68%,100%{transform:translateZ(1px) rotateX(90deg)}}
+
+/* hinged door */
+.ob3d-door-rig{width:64px;height:104px;position:relative;transform-style:preserve-3d;transform:translateY(4px) rotateY(-22deg) rotateX(4deg)}
+.ob3d-door-frame{position:absolute;inset:-6px;border:6px solid var(--line);border-bottom:0;border-radius:4px 4px 0 0;background:radial-gradient(ellipse at 50% 60%,rgba(var(--ocr),.8),rgba(var(--ocr),.15) 70%);transform:translateZ(-6px)}
+.ob3d-door-sill{position:absolute;left:-6px;right:-6px;bottom:-4px;height:4px;background:var(--line);transform:translateZ(-6px)}
+.ob3d-door-leaf{position:absolute;inset:0;border:1px solid var(--line);background:var(--panel2);transform-origin:0 50%;transform-style:preserve-3d;animation:ob3dDoorSwing 4s ease-in-out infinite}
+.ob3d-door-leaf::before,.ob3d-door-leaf::after{content:"";position:absolute;left:8px;right:8px;border:1px solid var(--dim);border-radius:2px}
+.ob3d-door-leaf::before{top:8px;height:40px}
+.ob3d-door-leaf::after{bottom:8px;height:40px}
+.ob3d-door-knob{position:absolute;right:7px;top:50%;width:6px;height:6px;margin-top:-3px;border-radius:50%;background:var(--oc);box-shadow:0 0 6px rgba(var(--ocr),.7);transform:translateZ(3px)}
+@keyframes ob3dDoorSwing{0%,10%{transform:rotateY(0)}40%,60%{transform:rotateY(-105deg)}88%,100%{transform:rotateY(0)}}
+
+/* picker drum */
+.ob3d-drum-rig{position:relative;width:76px;height:22px;transform-style:preserve-3d;transform:rotateY(-14deg)}
+.ob3d-drum-body{position:absolute;inset:0;transform-style:preserve-3d;animation:ob3dDrumStep 4s ease-in-out infinite}
+.ob3d-drum-s{position:absolute;inset:0;border:1px solid var(--line);background:var(--panel2);backface-visibility:hidden;display:grid;place-items:center;font-size:11px;font-weight:700;transform:rotateX(calc(var(--i)*45deg)) translateZ(27px)}
+.ob3d-drum-win{position:absolute;left:-8px;right:-8px;top:-2px;bottom:-2px;border-top:2px solid var(--oc);border-bottom:2px solid var(--oc);background:rgba(var(--ocr),.15);transform:translateZ(30px)}
+@keyframes ob3dDrumStep{0%{transform:rotateX(0)}8%,12.5%{transform:rotateX(-45deg)}20.5%,25%{transform:rotateX(-90deg)}33%,37.5%{transform:rotateX(-135deg)}45.5%,50%{transform:rotateX(-180deg)}58%,62.5%{transform:rotateX(-225deg)}70.5%,75%{transform:rotateX(-270deg)}83%,87.5%{transform:rotateX(-315deg)}95.5%,100%{transform:rotateX(-360deg)}}
+
+@media (prefers-reduced-motion:reduce){
+  .ob3d-scene *,.ob3d-coin:hover .ob3d-coin-body{animation-name:none;transition:none}
+  .ob3d-flip:hover .ob3d-flip-in{transform:rotateY(180deg)}
+  .ob3d-coin-air{transform:translateY(8px)}
+  .ob3d-coin-body{transform:rotateX(-20deg)}
+  .ob3d-cyl-ring{transform:rotateY(22deg)}
+  .ob3d-fold-l{transform:rotateY(60deg)}
+  .ob3d-fold-r{transform:rotateY(-60deg)}
+  .ob3d-deck-top{transform:translateZ(44px) translateX(30px)}
+  .ob3d-hex-body{transform:rotateY(20deg)}
+  .ob3d-text-rig{transform:rotateY(-32deg) rotateX(8deg)}
+  .ob3d-phone-rig{transform:rotateY(-26deg) rotateX(5deg)}
+  .ob3d-net-f{transform:rotate3d(var(--ax),var(--ay),0,-60deg)}
+  .ob3d-net-base{transform:none}
+  .ob3d-layers-p{transform:translateZ(calc(var(--i)*18px))}
+  .ob3d-gyro-b{transform:rotateX(60deg)}
+  .ob3d-gyro-c{transform:rotate3d(1,1,0,60deg)}
+  .ob3d-gauge-needle{transform:translateZ(6px) rotate(30deg)}
+  .ob3d-isl{transform:translateZ(calc(var(--d)*5px))}
+  .ob3d-flap-a{transform:translateZ(1px) rotateX(-50deg)}
+  .ob3d-flap-b{transform:translateZ(1px) rotateX(50deg)}
+  .ob3d-door-leaf{transform:rotateY(-70deg)}
+  .ob3d-book-cover{transform:translateZ(5px) rotateY(-150deg)}
+  .ob3d-drum-body{transform:rotateX(-20deg)}
+}
+</style>
+<div class="gallery">
+
+  <div class="tile is-new" data-ctype="object-3d" data-interact="hover" data-c="accent"><div class="stage">
+    <div class="ob3d-scene ob3d-flip"><div class="ob3d-flip-in"><div class="ob3d-flip-face ob3d-flip-front"><b>Atlas</b><span>Plan tier, hover to reveal</span></div><div class="ob3d-flip-face ob3d-flip-back"><b>12.4%</b><span>growth this quarter</span></div></div></div>
+  </div><div class="meta"><div class="nm">Flip Card</div><span class="ref">.ob3d-flip</span><div class="desc">A two faced card turns on its Y axis to show the value on its back. Hover holds the flip. Use for KPI reveals and spec sheets.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="object-3d" data-interact="hover" data-c="warn"><div class="stage">
+    <div class="ob3d-scene ob3d-coin"><div class="ob3d-coin-air"><div class="ob3d-coin-body"><div class="ob3d-coin-face">N</div><div class="ob3d-coin-face ob3d-coin-tail">1</div></div></div><div class="ob3d-coin-shadow"></div></div>
+  </div><div class="meta"><div class="nm">Coin Toss</div><span class="ref">.ob3d-coin</span><div class="desc">A coin springs up, tumbles end over end and lands as its shadow shrinks and grows. Hover keeps it spinning. Payments, rewards, decisions.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="object-3d" data-interact="auto-play" data-c="info"><div class="stage">
+    <div class="ob3d-scene ob3d-cyl"><div class="ob3d-cyl-rig"><div class="ob3d-cyl-ring"><div class="ob3d-cyl-tile" style="--i:0">1</div><div class="ob3d-cyl-tile" style="--i:1">2</div><div class="ob3d-cyl-tile" style="--i:2">3</div><div class="ob3d-cyl-tile" style="--i:3">4</div><div class="ob3d-cyl-tile" style="--i:4">5</div><div class="ob3d-cyl-tile" style="--i:5">6</div><div class="ob3d-cyl-tile" style="--i:6">7</div><div class="ob3d-cyl-tile" style="--i:7">8</div></div></div></div>
+  </div><div class="meta"><div class="nm">Cylinder Ring</div><span class="ref">.ob3d-cyl</span><div class="desc">Eight translucent tiles stand around a tilted axis and rotate as one drum. Use for step pickers, galleries or a rotating list of options.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="object-3d" data-interact="auto-play" data-c="accent"><div class="stage">
+    <div class="ob3d-scene ob3d-fold"><div class="ob3d-fold-rig"><div class="ob3d-fold-p ob3d-fold-l"><i></i><i></i><i></i><i></i></div><div class="ob3d-fold-p ob3d-fold-c"><i></i><i></i><i></i><i></i><i></i></div><div class="ob3d-fold-p ob3d-fold-r"><i></i><i></i><i></i><i></i></div></div></div>
+  </div><div class="meta"><div class="nm">Tri Fold Panel</div><span class="ref">.ob3d-fold</span><div class="desc">Two side leaves hinge over a centre panel like a brochure closing, then open again. Use for onboarding steps, spec sheets or collapsible side panels.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="object-3d" data-interact="auto-play" data-c="crit"><div class="stage">
+    <div class="ob3d-scene ob3d-deck"><div class="ob3d-deck-rig"><div class="ob3d-deck-card" style="--i:0"></div><div class="ob3d-deck-card" style="--i:1"></div><div class="ob3d-deck-card" style="--i:2"></div><div class="ob3d-deck-card" style="--i:3"></div><div class="ob3d-deck-card ob3d-deck-top" style="--i:4"></div></div></div>
+  </div><div class="meta"><div class="nm">Deck of Cards</div><span class="ref">.ob3d-deck</span><div class="desc">A stack of cards lies on a tilted table and the top card lifts, slides aside and is dealt. Use for queues, review piles and one at a time flows.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="object-3d" data-interact="auto-play" data-c="pos"><div class="stage">
+    <div class="ob3d-scene ob3d-stack"><div class="ob3d-stack-rig"><div class="ob3d-stack-cube ob3d-stack-c0" style="--i:0"><div class="ob3d-stack-f ob3d-stack-front"></div><div class="ob3d-stack-f ob3d-stack-side"></div><div class="ob3d-stack-f ob3d-stack-top"></div></div><div class="ob3d-stack-cube ob3d-stack-c1" style="--i:1"><div class="ob3d-stack-f ob3d-stack-front"></div><div class="ob3d-stack-f ob3d-stack-side"></div><div class="ob3d-stack-f ob3d-stack-top"></div></div><div class="ob3d-stack-cube ob3d-stack-c2" style="--i:2"><div class="ob3d-stack-f ob3d-stack-front"></div><div class="ob3d-stack-f ob3d-stack-side"></div><div class="ob3d-stack-f ob3d-stack-top"></div></div></div></div>
+  </div><div class="meta"><div class="nm">Crate Stack</div><span class="ref">.ob3d-stack</span><div class="desc">Three isometric crates drop from above and land on each other in turn, then lift away to repeat. Use for builds, layered stacks and storage.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="object-3d" data-interact="auto-play" data-c="accent"><div class="stage">
+    <div class="ob3d-scene ob3d-book"><div class="ob3d-book-rig"><div class="ob3d-book-back"></div><div class="ob3d-book-page"><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="ob3d-book-page ob3d-book-p2"><i></i><i></i><i></i><i></i></div><div class="ob3d-book-cover">NOVA</div></div></div>
+  </div><div class="meta"><div class="nm">Opening Book</div><span class="ref">.ob3d-book</span><div class="desc">A hard cover swings open on its spine and a page turns behind it before both close. Use for docs, guides, changelogs and reading states.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="object-3d" data-interact="auto-play" data-c="info"><div class="stage">
+    <div class="ob3d-scene ob3d-iso"><div class="ob3d-iso-rig"><div class="ob3d-iso-t" style="--d:0"></div><div class="ob3d-iso-t" style="--d:.25"></div><div class="ob3d-iso-t" style="--d:.5"></div><div class="ob3d-iso-t" style="--d:.75"></div><div class="ob3d-iso-t" style="--d:.25"></div><div class="ob3d-iso-t" style="--d:.5"></div><div class="ob3d-iso-t" style="--d:.75"></div><div class="ob3d-iso-t" style="--d:1"></div><div class="ob3d-iso-t" style="--d:.5"></div><div class="ob3d-iso-t" style="--d:.75"></div><div class="ob3d-iso-t" style="--d:1"></div><div class="ob3d-iso-t" style="--d:1.25"></div><div class="ob3d-iso-t" style="--d:.75"></div><div class="ob3d-iso-t" style="--d:1"></div><div class="ob3d-iso-t" style="--d:1.25"></div><div class="ob3d-iso-t" style="--d:1.5"></div></div></div>
+  </div><div class="meta"><div class="nm">Isometric Tile Floor</div><span class="ref">.ob3d-iso</span><div class="desc">A four by four floor of tiles flips over in a diagonal wave, showing the coloured backs. Use for loading floors, map reveals and grid refreshes.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="object-3d" data-interact="auto-play" data-c="crit"><div class="stage">
+    <div class="ob3d-scene ob3d-hex"><div class="ob3d-hex-rig"><div class="ob3d-hex-body"><div class="ob3d-hex-f" style="--i:0"></div><div class="ob3d-hex-f" style="--i:1"></div><div class="ob3d-hex-f" style="--i:2"></div><div class="ob3d-hex-f" style="--i:3"></div><div class="ob3d-hex-f" style="--i:4"></div><div class="ob3d-hex-f" style="--i:5"></div><div class="ob3d-hex-cap"></div><div class="ob3d-hex-cap ob3d-hex-cap-b"></div></div></div></div>
+  </div><div class="meta"><div class="nm">Hex Prism</div><span class="ref">.ob3d-hex</span><div class="desc">Six translucent walls and a hexagon cap turn as one prism, tilted so the top face shows. Use for crystals, tokens, modules and abstract compute.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="object-3d" data-interact="auto-play" data-c="accent"><div class="stage">
+    <div class="ob3d-scene ob3d-text"><div class="ob3d-text-rig"><div class="ob3d-text-l" style="--i:8">NOVA</div><div class="ob3d-text-l" style="--i:7">NOVA</div><div class="ob3d-text-l" style="--i:6">NOVA</div><div class="ob3d-text-l" style="--i:5">NOVA</div><div class="ob3d-text-l" style="--i:4">NOVA</div><div class="ob3d-text-l" style="--i:3">NOVA</div><div class="ob3d-text-l" style="--i:2">NOVA</div><div class="ob3d-text-l" style="--i:1">NOVA</div><div class="ob3d-text-l ob3d-text-front" style="--i:0">NOVA</div></div></div>
+  </div><div class="meta"><div class="nm">Extruded Text</div><span class="ref">.ob3d-text</span><div class="desc">Stacked copies of a word sit behind the front face along Z to build a solid extrusion that swings left and right. Use for logos and hero titles.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="object-3d" data-interact="auto-play" data-c="info"><div class="stage">
+    <div class="ob3d-scene ob3d-phone"><div class="ob3d-phone-rig"><div class="ob3d-phone-body"><div class="ob3d-phone-back" style="--i:1"></div><div class="ob3d-phone-back" style="--i:2"></div><div class="ob3d-phone-back" style="--i:3"></div><div class="ob3d-phone-screen"><div class="ob3d-phone-feed"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div><div class="ob3d-phone-notch"></div></div></div></div>
+  </div><div class="meta"><div class="nm">Tilted Phone Mock</div><span class="ref">.ob3d-phone</span><div class="desc">A phone with stacked back plates rocks in perspective while a feed scrolls up its screen. Use for app previews, mobile mockups and store cards.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="object-3d" data-interact="auto-play" data-c="pos"><div class="stage">
+    <div class="ob3d-scene ob3d-net"><div class="ob3d-net-rig"><div class="ob3d-net-f ob3d-net-base"></div><div class="ob3d-net-f ob3d-net-l"></div><div class="ob3d-net-f ob3d-net-r"></div><div class="ob3d-net-f ob3d-net-b"></div><div class="ob3d-net-f ob3d-net-t"><div class="ob3d-net-f ob3d-net-lid"></div></div></div></div>
+  </div><div class="meta"><div class="nm">Cube Unfold</div><span class="ref">.ob3d-net</span><div class="desc">A cross shaped net lies flat, then its four walls and lid hinge up into a closed cube and unfold again. Use for packaging, assembly and deploy steps.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="object-3d" data-interact="auto-play" data-c="warn"><div class="stage">
+    <div class="ob3d-scene ob3d-layers"><div class="ob3d-layers-rig"><div class="ob3d-layers-p" style="--i:0"></div><div class="ob3d-layers-p" style="--i:1"></div><div class="ob3d-layers-p" style="--i:2"></div></div></div>
+  </div><div class="meta"><div class="nm">Exploded Layers</div><span class="ref">.ob3d-layers</span><div class="desc">Three plates of a card separate along Z into an exploded view and settle back. Use for architecture layers, stack diagrams and component anatomy.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="object-3d" data-interact="auto-play" data-c="info"><div class="stage">
+    <div class="ob3d-scene ob3d-gyro"><div class="ob3d-gyro-rig"><div class="ob3d-gyro-r ob3d-gyro-a"></div><div class="ob3d-gyro-r ob3d-gyro-b"></div><div class="ob3d-gyro-r ob3d-gyro-c"></div><div class="ob3d-gyro-core"></div></div></div>
+  </div><div class="meta"><div class="nm">Gyroscope Rings</div><span class="ref">.ob3d-gyro</span><div class="desc">Three nested rings spin on different axes around a glowing core, like a gimbal. Use for sync, calibration, orbit and thinking states.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="object-3d" data-interact="auto-play" data-c="accent"><div class="stage">
+    <div class="ob3d-scene ob3d-gauge"><div class="ob3d-gauge-rig"><div class="ob3d-gauge-rim" style="--i:4"></div><div class="ob3d-gauge-rim" style="--i:3"></div><div class="ob3d-gauge-rim" style="--i:2"></div><div class="ob3d-gauge-rim" style="--i:1"></div><div class="ob3d-gauge-face"></div><div class="ob3d-gauge-needle"></div><div class="ob3d-gauge-hub"></div></div></div>
+  </div><div class="meta"><div class="nm">3D Gauge Dial</div><span class="ref">.ob3d-gauge</span><div class="desc">A banded dial lies in perspective with a thick rim and a raised needle that sweeps from green through amber to red and back. Use for load or health.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="object-3d" data-interact="auto-play" data-c="pos"><div class="stage">
+    <div class="ob3d-scene ob3d-stairs"><div class="ob3d-stairs-rig"><div class="ob3d-stairs-s" style="--i:0"><div class="ob3d-stairs-f ob3d-stairs-front"></div><div class="ob3d-stairs-f ob3d-stairs-side"></div><div class="ob3d-stairs-f ob3d-stairs-top"></div></div><div class="ob3d-stairs-s" style="--i:1"><div class="ob3d-stairs-f ob3d-stairs-front"></div><div class="ob3d-stairs-f ob3d-stairs-side"></div><div class="ob3d-stairs-f ob3d-stairs-top"></div></div><div class="ob3d-stairs-s" style="--i:2"><div class="ob3d-stairs-f ob3d-stairs-front"></div><div class="ob3d-stairs-f ob3d-stairs-side"></div><div class="ob3d-stairs-f ob3d-stairs-top"></div></div><div class="ob3d-stairs-s" style="--i:3"><div class="ob3d-stairs-f ob3d-stairs-front"></div><div class="ob3d-stairs-f ob3d-stairs-side"></div><div class="ob3d-stairs-f ob3d-stairs-top"></div></div><div class="ob3d-stairs-s" style="--i:4"><div class="ob3d-stairs-f ob3d-stairs-front"></div><div class="ob3d-stairs-f ob3d-stairs-side"></div><div class="ob3d-stairs-f ob3d-stairs-top"></div></div></div></div>
+  </div><div class="meta"><div class="nm">Staircase Steps</div><span class="ref">.ob3d-stairs</span><div class="desc">Five isometric steps grow up from the floor one after another, then sink away and rebuild. Use for growth, level ups, milestones and progress ladders.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="object-3d" data-interact="auto-play" data-c="pos"><div class="stage">
+    <div class="ob3d-scene ob3d-islands"><div class="ob3d-isl-rig"><div class="ob3d-isl-floor"></div><div class="ob3d-isl-shadow" style="--x:0px;--y:24px;--d:0"></div><div class="ob3d-isl-shadow" style="--x:64px;--y:0px;--d:1.3"></div><div class="ob3d-isl-shadow" style="--x:50px;--y:44px;--d:2.6"></div><div class="ob3d-isl" style="--x:0px;--y:24px;--d:0"><div class="ob3d-isl-front"></div><div class="ob3d-isl-side"></div><div class="ob3d-isl-top"></div></div><div class="ob3d-isl" style="--x:64px;--y:0px;--d:1.3"><div class="ob3d-isl-front"></div><div class="ob3d-isl-side"></div><div class="ob3d-isl-top"></div></div><div class="ob3d-isl" style="--x:50px;--y:44px;--d:2.6"><div class="ob3d-isl-front"></div><div class="ob3d-isl-side"></div><div class="ob3d-isl-top"></div></div></div></div>
+  </div><div class="meta"><div class="nm">Floating Islands</div><span class="ref">.ob3d-islands</span><div class="desc">Three slab tiles hover above an isometric plane, bobbing out of phase while their shadows shrink and grow. Use for regions, zones and microservices.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="object-3d" data-interact="auto-play" data-c="accent"><div class="stage">
+    <div class="ob3d-scene ob3d-flap"><div class="ob3d-flap-rig"><div class="ob3d-flap-h ob3d-flap-top"><span>43</span></div><div class="ob3d-flap-h ob3d-flap-bot"><span>42</span></div><div class="ob3d-flap-h ob3d-flap-top ob3d-flap-a"><span>42</span></div><div class="ob3d-flap-h ob3d-flap-bot ob3d-flap-b"><span>43</span></div><div class="ob3d-flap-hinge"></div></div></div>
+  </div><div class="meta"><div class="nm">Split Flap Counter</div><span class="ref">.ob3d-flap</span><div class="desc">A departures board digit: the top half hinges down and the next bottom half swings in to tick the count over. Use for counters, clocks and totals.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="object-3d" data-interact="auto-play" data-c="warn"><div class="stage">
+    <div class="ob3d-scene ob3d-door"><div class="ob3d-door-rig"><div class="ob3d-door-frame"></div><div class="ob3d-door-sill"></div><div class="ob3d-door-leaf"><div class="ob3d-door-knob"></div></div></div></div>
+  </div><div class="meta"><div class="nm">Hinged Door</div><span class="ref">.ob3d-door</span><div class="desc">A panelled door swings open on its hinge to reveal a lit doorway, pauses, then closes. Use for logins, onboarding entry points and access granted states.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="object-3d" data-interact="auto-play" data-c="info"><div class="stage">
+    <div class="ob3d-scene ob3d-drum"><div class="ob3d-drum-rig"><div class="ob3d-drum-body"><div class="ob3d-drum-s" style="--i:0">Atlas</div><div class="ob3d-drum-s" style="--i:1">Comet</div><div class="ob3d-drum-s" style="--i:2">Ember</div><div class="ob3d-drum-s" style="--i:3">Pixel</div><div class="ob3d-drum-s" style="--i:4">Nova</div><div class="ob3d-drum-s" style="--i:5">Orbit</div><div class="ob3d-drum-s" style="--i:6">Flux</div><div class="ob3d-drum-s" style="--i:7">Halo</div></div><div class="ob3d-drum-win"></div></div></div>
+  </div><div class="meta"><div class="nm">Picker Drum</div><span class="ref">.ob3d-drum</span><div class="desc">Eight labelled slats form a horizontal drum that ticks one notch at a time past a highlight window. Use for option pickers, tickers and cycling names.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+</div>

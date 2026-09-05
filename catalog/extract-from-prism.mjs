@@ -85,6 +85,10 @@ const EXTRACT_FN = `function extractInPage(gallery, d){
         }
       }
       for(var rk=0; rk<rules.length; rk++){ if(rules[rk].type===7 && kf.has(rules[rk].name)) rulesOut.push(rules[rk].cssText); }
+      // @property registrations (typed custom properties) that the collected rules reference:
+      // without them a standalone copy loses animated counters / interpolated custom props.
+      var props={}; rulesOut.join('\\n').replace(/--[A-Za-z0-9_-]+/g, function(p){ props[p]=1; return p; });
+      for(var rp=0; rp<rules.length; rp++){ var pr=rules[rp]; if(pr.name && pr.name.indexOf('--')===0 && props[pr.name] && pr.cssText.indexOf('@property')===0) rulesOut.push(pr.cssText); }
     }
     return {css:[...new Set(rulesOut)].join('\\n'), classes:[...classes], keyframes:[...kf]};
   }

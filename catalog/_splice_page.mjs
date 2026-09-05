@@ -20,7 +20,9 @@ const HTML = process.env.PRISM_HTML ? resolve(process.env.PRISM_HTML) : resolve(
 const [, , draftFile, page] = process.argv;
 if (!draftFile || !page) { console.error('usage: node catalog/_splice_page.mjs <draftFile> <page>'); process.exit(1); }
 
-let draft = readFileSync(resolve(HERE, draftFile), 'utf8').replace(/\n$/, '').replace(/<\/script\s*>/gi, '<\\/script>');
+// Drafts are normalised to LF: a CRLF draft would leave \r inside the template and break the
+// tail match (and every later splice) on this page.
+let draft = readFileSync(resolve(HERE, draftFile), 'utf8').replace(/\r\n?/g, '\n').replace(/\n$/, '').replace(/<\/script\s*>/gi, '<\\/script>');
 const firstLine = draft.split('\n')[0].trim();
 if (!/^<h3 class="sec">/.test(firstLine)) { console.error('draft must start with its <h3 class="sec"> line'); process.exit(1); }
 
@@ -38,7 +40,7 @@ if (at >= 0) {
   tpl = tpl.slice(0, at).replace(/\n+$/, '\n') + tpl.slice(end).replace(/^\n+/, '\n');
   action = 'Re-spliced';
 }
-const re = /(\n[ \t]*<\/div>)([ \t]*\n[ \t]*<\/div>[ \t]*\n+<script>)/g;
+const re = /(\r?\n[ \t]*<\/div>)([ \t]*\r?\n(?:[ \t]*\r?\n)*[ \t]*<\/div>[ \t]*(?:\r?\n)+<script>)/g;
 let m, cut = -1;
 while ((m = re.exec(tpl))) cut = m.index + m[1].length;
 if (cut < 0) { console.error('page tail not found'); process.exit(1); }
