@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cube Unfold · Prism</title>
+<!-- Prism showcase sample: objects-cube-unfold (gallery: objects). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.ob3d-scene { width: 100%; max-width: 300px; height: 140px; perspective: 620px; perspective-origin: 50% 45%; display: grid; place-items: center; overflow: hidden; position: relative; font-family: ui-sans-serif, system-ui, sans-serif; color: var(--ink); --oc: var(--c,var(--accent)); --ocr: var(--c-rgb,var(--accent-rgb)); }
+.ob3d-scene * { box-sizing: border-box; }
+.ob3d-net-rig { width: 26px; height: 26px; position: relative; transform-style: preserve-3d; transform: translateY(14px) rotateX(58deg) rotateZ(-30deg); }
+.ob3d-net-f { position: absolute; width: 26px; height: 26px; border: 1px solid var(--oc); background: rgba(var(--ocr),.3); transform-style: preserve-3d; animation-name: ob3dNetFold; animation-duration: 4s; animation-timing-function: ease-in-out; animation-iteration-count: infinite; }
+.ob3d-net-base { left: 0px; top: 0px; background: rgba(var(--ocr),.55); animation-name: none; }
+.ob3d-net-l { left: -26px; top: 0px; transform-origin: 100% 50%; --ax: 0; --ay: 1; }
+.ob3d-net-r { left: 26px; top: 0px; transform-origin: 0px 50%; --ax: 0; --ay: -1; }
+.ob3d-net-t { left: 0px; top: -26px; transform-origin: 50% 100%; --ax: 1; --ay: 0; }
+.ob3d-net-b { left: 0px; top: 26px; transform-origin: 50% 0px; --ax: -1; --ay: 0; }
+.ob3d-net-lid { left: 0px; top: -26px; transform-origin: 50% 100%; --ax: 1; --ay: 0; animation-delay: 0.25s; background: rgba(var(--ocr),.45); }
+@keyframes ob3dNetFold { 
+  0%, 12% { transform: rotate3d(var(--ax),var(--ay),0,0deg); }
+  42%, 60% { transform: rotate3d(var(--ax),var(--ay),0,-90deg); }
+  90%, 100% { transform: rotate3d(var(--ax),var(--ay),0,0deg); }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="ob3d-scene ob3d-net"><div class="ob3d-net-rig"><div class="ob3d-net-f ob3d-net-base"></div><div class="ob3d-net-f ob3d-net-l"></div><div class="ob3d-net-f ob3d-net-r"></div><div class="ob3d-net-f ob3d-net-b"></div><div class="ob3d-net-f ob3d-net-t"><div class="ob3d-net-f ob3d-net-lid"></div></div></div></div></div></div>
+<div class="meta"><b>Cube Unfold</b> · <code>objects-cube-unfold</code><br>Animated Objects · 3D CSS OBJECTS<p>A cross shaped net lies flat, then its four walls and lid hinge up into a closed cube and unfold again. Use for packaging, assembly and deploy steps.</p></div>
+
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Picker Drum · Prism</title>
+<!-- Prism showcase sample: objects-picker-drum (gallery: objects). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.ob3d-scene { width: 100%; max-width: 300px; height: 140px; perspective: 620px; perspective-origin: 50% 45%; display: grid; place-items: center; overflow: hidden; position: relative; font-family: ui-sans-serif, system-ui, sans-serif; color: var(--ink); --oc: var(--c,var(--accent)); --ocr: var(--c-rgb,var(--accent-rgb)); }
+.ob3d-scene * { box-sizing: border-box; }
+.ob3d-drum-rig { position: relative; width: 76px; height: 22px; transform-style: preserve-3d; transform: rotateY(-14deg); }
+.ob3d-drum-body { position: absolute; inset: 0px; transform-style: preserve-3d; animation: 4s ease-in-out 0s infinite normal none running ob3dDrumStep; }
+.ob3d-drum-s { position: absolute; inset: 0px; border: 1px solid var(--line); background: var(--panel2); backface-visibility: hidden; display: grid; place-items: center; font-size: 11px; font-weight: 700; transform: rotateX(calc(var(--i)*45deg)) translateZ(27px); }
+.ob3d-drum-win { position: absolute; inset: -2px -8px; border-top: 2px solid var(--oc); border-bottom: 2px solid var(--oc); background: rgba(var(--ocr),.15); transform: translateZ(30px); }
+@keyframes ob3dDrumStep { 
+  0% { transform: rotateX(0deg); }
+  8%, 12.5% { transform: rotateX(-45deg); }
+  20.5%, 25% { transform: rotateX(-90deg); }
+  33%, 37.5% { transform: rotateX(-135deg); }
+  45.5%, 50% { transform: rotateX(-180deg); }
+  58%, 62.5% { transform: rotateX(-225deg); }
+  70.5%, 75% { transform: rotateX(-270deg); }
+  83%, 87.5% { transform: rotateX(-315deg); }
+  95.5%, 100% { transform: rotateX(-360deg); }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="ob3d-scene ob3d-drum"><div class="ob3d-drum-rig"><div class="ob3d-drum-body"><div class="ob3d-drum-s" style="--i:0">Atlas</div><div class="ob3d-drum-s" style="--i:1">Comet</div><div class="ob3d-drum-s" style="--i:2">Ember</div><div class="ob3d-drum-s" style="--i:3">Pixel</div><div class="ob3d-drum-s" style="--i:4">Nova</div><div class="ob3d-drum-s" style="--i:5">Orbit</div><div class="ob3d-drum-s" style="--i:6">Flux</div><div class="ob3d-drum-s" style="--i:7">Halo</div></div><div class="ob3d-drum-win"></div></div></div></div></div>
+<div class="meta"><b>Picker Drum</b> · <code>objects-picker-drum</code><br>Animated Objects · 3D CSS OBJECTS<p>Eight labelled slats form a horizontal drum that ticks one notch at a time past a highlight window. Use for option pickers, tickers and cycling names.</p></div>
+
+</body>
+</html>
