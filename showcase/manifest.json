@@ -1,6 +1,6 @@
 {
  "name": "Prism GIF showcase",
- "generated": "2026-09-05T19:23:00.619Z",
+ "generated": "2026-09-05T19:32:26.886Z",
  "source": "Prism.html",
  "browser": {
   "engine": "Firefox (WebDriver BiDi)",
@@ -8,7 +8,7 @@
  },
  "count": 3110,
  "animated": 2853,
- "gifBytes": 70144492,
+ "gifBytes": 70128146,
  "settings": {
   "fps": 10,
   "minSeconds": 1.6,
@@ -22095,7 +22095,7 @@
    "frames": 40,
    "width": 344,
    "height": 177,
-   "bytes": 246252
+   "bytes": 229906
   },
   {
    "id": "tables-org-chart",
