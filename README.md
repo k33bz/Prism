@@ -243,7 +243,7 @@ You don't need the MCP server to use Prism as a human:
 open Prism.html            # macOS — or double-click the file, or serve the folder statically
 ```
 
-The page opens on a loader veil, then routes by device: touch devices land on **Mobile**, everything else on **Charts**. A `#hash` in the URL (e.g. `Prism.html#objects`) always wins, so you can deep-link a gallery. To use an element: browse to it, click **Copy** (or **Copy snippet**), and paste. If an effect reads theme tokens, include the design tokens once globally (see [Composing an effect](#composing-an-effect)).
+The page opens on a loader veil, then routes by device: touch devices land on **Mobile**, everything else on **New Facets** (what changed in the last 30 days; adjust the window with the slider). A `#hash` in the URL (e.g. `Prism.html#objects`) always wins, so you can deep-link a gallery. To use an element: browse to it, click **Copy** (or **Copy snippet**), and paste. If an effect reads theme tokens, include the design tokens once globally (see [Composing an effect](#composing-an-effect)).
 
 ---
 
@@ -270,7 +270,7 @@ Fifteen authored galleries, plus special views. Every element carries a name, it
 | 🧭 **Menus & Actions** | Dropdowns, context menus, command palettes, action bars, radial menus | 37 |
 | 📋 **Tables & Data Layouts** | Data tables, status cells, matrices, key-value blocks, lists & trees, grids & schedules, ledgers, toolbars | 54 |
 
-**Special views:** ✦ **New Facets** (live-assembled page harvesting everything tagged new/updated) · 📱 **Mobile** / 🖱️ **Desktop** (the library sliced by input modality) · 🎨 **Idea Gallery** (paste code, tweak variables, preview live).
+**Special views:** ✦ **New Facets** (live-assembled page of everything added or changed in a chosen window, default 30 days, with a day slider and an optional Spectrums toggle; dates come from git history) · 📱 **Mobile** / 🖱️ **Desktop** (the library sliced by input modality) · 🎨 **Idea Gallery** (paste code, tweak variables, preview live).
 
 **Facets & markers.** Prism calls its elements *facets*. New items carry a green **NEW** badge and a subtle pulse; repaired/refreshed ones get a blue **UPDATED** badge. Both are collected automatically on the **New Facets** page. Every tile that runs a CSS animation gets a small **▶** button to replay it on demand, and each gallery has a floating **REPLAY ANIMATIONS** button — theme-aware and kept outside the tile's `.stage`, so it never ends up in a copied snippet.
 
@@ -338,6 +338,8 @@ The island is purpose-built to back an MCP server because everything a tool need
   "needsJs": null,                  // key into an initializer, or null
   "selfContained": false,           // true = renders from html alone (inline styles)
   "isNew": false, "isFixed": true,  // release markers (green NEW / blue UPDATED)
+  "addedOn": "2026-07-13",          // git-derived: first commit the facet appeared in
+  "updatedOn": "2026-07-28",        // git-derived: last commit that changed its markup (or null)
   "html": "<div class=\"nch-gaugetri\">…</div>",
   "css":  ".nch-gaugetri{…} @keyframes nchNeedle3{…}",
   "dataSnip": null                  // author-curated minimal snippet, if any
@@ -392,7 +394,8 @@ The MCP server's `compose` / `compose_with_template` tools do all of this for yo
 The JSON island is **derived**, not hand-maintained. After editing any gallery, refresh it so the agent-facing catalog (and MCP server) stay in sync with what's on the page:
 
 ```bash
-node catalog/extract-from-prism.mjs   # loads Prism.html in headless Chrome, re-extracts every effect
+node catalog/_facet_dates.mjs         # derives addedOn / updatedOn per facet from git history, embeds the #prism-facet-dates island
+node catalog/extract-from-prism.mjs   # loads Prism.html in headless Chrome, re-extracts every effect (merges the dates)
 node catalog/_embed-catalog.mjs       # embeds the fresh manifest into the #prism-catalog island
 ```
 

@@ -8,7 +8,8 @@ source of truth consumed by the MCP server and any AI tooling. `catalog/manifest
 The pipeline re-derives the island from the live gallery templates inside `Prism.html`:
 
 ```
-extract-from-prism.mjs   →  manifest.json + index.json   (headless Chrome / CDP)
+_facet_dates.mjs         →  facet-dates.json + #prism-facet-dates island   (git history: addedOn / updatedOn per facet)
+extract-from-prism.mjs   →  manifest.json + index.json   (headless Chrome / CDP; merges facet-dates.json)
 _embed-catalog.mjs       →  writes the island back into Prism.html   (idempotent)
 _smoke.mjs               →  validates the island parses + shell scripts syntax-check
 _check_ds.mjs            →  design-system coverage & integrity gate (exit non-zero on fail)
