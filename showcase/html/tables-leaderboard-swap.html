@@ -31,12 +31,12 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
 .dtb-rank-r.s .rk { background: var(--muted); color: rgb(11, 14, 23); }
 .dtb-rank-r.b .rk { background: rgba(var(--warn-rgb),.7); color: rgb(26, 16, 0); }
 .dtb-rank-r .bar { height: 5px; border-radius: 3px; background: var(--panel2); overflow: hidden; }
-.dtb-rank-r .bar i { display: block; height: 100%; width: var(--w,50%); background: var(--info); border-radius: 3px; }
+.dtb-rank-r .bar i { display: block; height: 100%; width: var(--w,50%); background: var(--c,var(--accent)); border-radius: 3px; }
 .dtb-rank-r .sc { text-align: right; font-family: ui-monospace, Menlo, monospace; color: var(--muted); }
 .dtb-rank-r.dn { animation: 5s ease-in-out 0s infinite normal none running dtbSwapDownR; position: relative; z-index: 1; }
 .dtb-rank-r.up { animation: 5s ease-in-out 0s infinite normal none running dtbSwapUpR; position: relative; z-index: 2; }
 .dtb-rank-r.up .sc { color: var(--pos); }
-.dtb-sparks i.s { width: 2px; height: 2px; }
+.dtb-sparks i.s { width: 3px; height: 3px; }
 @keyframes dtbCountB { 
   0% { --dtb-n: 0; }
   55%, 100% { --dtb-n: 642; }

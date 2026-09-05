@@ -1,14 +1,14 @@
 {
  "name": "Prism GIF showcase",
- "generated": "2026-09-05T04:32:49.796Z",
+ "generated": "2026-09-05T05:17:18.322Z",
  "source": "Prism.html",
  "browser": {
   "engine": "Firefox (WebDriver BiDi)",
   "version": "155.0.1"
  },
  "count": 2735,
- "animated": 2478,
- "gifBytes": 62255332,
+ "animated": 2477,
+ "gifBytes": 61802343,
  "settings": {
   "fps": 10,
   "minSeconds": 1.6,
@@ -5355,7 +5355,7 @@
    "frames": 24,
    "width": 344,
    "height": 177,
-   "bytes": 269139
+   "bytes": 99530
   },
   {
    "id": "fx-pkmn-aura-jab",
@@ -5370,7 +5370,7 @@
    "frames": 24,
    "width": 344,
    "height": 120,
-   "bytes": 127388
+   "bytes": 59795
   },
   {
    "id": "fx-pkmn-phantom-dive",
@@ -5385,7 +5385,7 @@
    "frames": 28,
    "width": 344,
    "height": 177,
-   "bytes": 76244
+   "bytes": 48732
   },
   {
    "id": "fx-pkmn-powerful-hand",
@@ -5400,7 +5400,7 @@
    "frames": 24,
    "width": 344,
    "height": 188,
-   "bytes": 74424
+   "bytes": 49294
   },
   {
    "id": "fx-pkmn-superb-scissors",
@@ -5414,8 +5414,8 @@
    "duration": 2.2,
    "frames": 22,
    "width": 344,
-   "height": 177,
-   "bytes": 84244
+   "height": 180,
+   "bytes": 73489
   },
   {
    "id": "fx-pkmn-wild-press",
@@ -5430,7 +5430,7 @@
    "frames": 26,
    "width": 344,
    "height": 188,
-   "bytes": 56803
+   "bytes": 45604
   },
   {
    "id": "fx-pkmn-shooting-moons",
@@ -5445,7 +5445,7 @@
    "frames": 24,
    "width": 344,
    "height": 177,
-   "bytes": 60319
+   "bytes": 35626
   },
   {
    "id": "fx-pkmn-night-joker",
@@ -5460,7 +5460,7 @@
    "frames": 28,
    "width": 344,
    "height": 177,
-   "bytes": 114434
+   "bytes": 100171
   },
   {
    "id": "lab-fade-in",
@@ -21255,7 +21255,7 @@
    "frames": 40,
    "width": 344,
    "height": 191,
-   "bytes": 28737
+   "bytes": 26258
   },
   {
    "id": "tables-hover-glow-rows",
@@ -21270,67 +21270,7 @@
    "frames": 40,
    "width": 344,
    "height": 163,
-   "bytes": 17700
-  },
-  {
-   "id": "tables-sortable-header",
-   "name": "Sortable Header",
-   "gallery": "tables",
-   "category": "DATA TABLES",
-   "spectrum": null,
-   "gif": "gif/tables-sortable-header.gif",
-   "html": "html/tables-sortable-header.html",
-   "animated": true,
-   "duration": 4,
-   "frames": 40,
-   "width": 344,
-   "height": 163,
-   "bytes": 12049
-  },
-  {
-   "id": "tables-row-move-arrows",
-   "name": "Row Move Arrows",
-   "gallery": "tables",
-   "category": "DATA TABLES",
-   "spectrum": null,
-   "gif": "gif/tables-row-move-arrows.gif",
-   "html": "html/tables-row-move-arrows.html",
-   "animated": true,
-   "duration": 4,
-   "frames": 40,
-   "width": 344,
-   "height": 163,
-   "bytes": 31076
-  },
-  {
-   "id": "tables-flash-resort",
-   "name": "Flash + Resort",
-   "gallery": "tables",
-   "category": "DATA TABLES",
-   "spectrum": null,
-   "gif": "gif/tables-flash-resort.gif",
-   "html": "html/tables-flash-resort.html",
-   "animated": true,
-   "duration": 4,
-   "frames": 40,
-   "width": 344,
-   "height": 163,
-   "bytes": 29311
-  },
-  {
-   "id": "tables-fall-land-resort",
-   "name": "Fall + Land Resort",
-   "gallery": "tables",
-   "category": "DATA TABLES",
-   "spectrum": null,
-   "gif": "gif/tables-fall-land-resort.gif",
-   "html": "html/tables-fall-land-resort.html",
-   "animated": true,
-   "duration": 4,
-   "frames": 40,
-   "width": 344,
-   "height": 163,
-   "bytes": 5334
+   "bytes": 16091
   },
   {
    "id": "tables-sticky-header-scroll",
@@ -21344,8 +21284,8 @@
    "duration": 4,
    "frames": 40,
    "width": 344,
-   "height": 179,
-   "bytes": 76945
+   "height": 178,
+   "bytes": 68350
   },
   {
    "id": "tables-dense-numeric-table",
@@ -21360,7 +21300,7 @@
    "frames": 16,
    "width": 344,
    "height": 169,
-   "bytes": 15326
+   "bytes": 15356
   },
   {
    "id": "tables-row-selection",
@@ -21375,7 +21315,7 @@
    "frames": 40,
    "width": 344,
    "height": 170,
-   "bytes": 8406
+   "bytes": 7893
   },
   {
    "id": "tables-expandable-detail-row",
@@ -21390,7 +21330,7 @@
    "frames": 40,
    "width": 344,
    "height": 146,
-   "bytes": 21968
+   "bytes": 22530
   },
   {
    "id": "tables-inline-cell-edit",
@@ -21405,7 +21345,7 @@
    "frames": 40,
    "width": 344,
    "height": 167,
-   "bytes": 5740
+   "bytes": 5685
   },
   {
    "id": "tables-totals-row-count-up",
@@ -21438,6 +21378,66 @@
    "bytes": 3136
   },
   {
+   "id": "tables-sortable-header",
+   "name": "Sortable Header",
+   "gallery": "tables",
+   "category": "SORTING & REORDER",
+   "spectrum": null,
+   "gif": "gif/tables-sortable-header.gif",
+   "html": "html/tables-sortable-header.html",
+   "animated": true,
+   "duration": 4,
+   "frames": 40,
+   "width": 344,
+   "height": 163,
+   "bytes": 11767
+  },
+  {
+   "id": "tables-row-move-arrows",
+   "name": "Row Move Arrows",
+   "gallery": "tables",
+   "category": "SORTING & REORDER",
+   "spectrum": null,
+   "gif": "gif/tables-row-move-arrows.gif",
+   "html": "html/tables-row-move-arrows.html",
+   "animated": false,
+   "duration": 0,
+   "frames": 1,
+   "width": 344,
+   "height": 163,
+   "bytes": 4262
+  },
+  {
+   "id": "tables-flash-resort",
+   "name": "Flash + Resort",
+   "gallery": "tables",
+   "category": "SORTING & REORDER",
+   "spectrum": null,
+   "gif": "gif/tables-flash-resort.gif",
+   "html": "html/tables-flash-resort.html",
+   "animated": true,
+   "duration": 4,
+   "frames": 40,
+   "width": 344,
+   "height": 163,
+   "bytes": 5568
+  },
+  {
+   "id": "tables-fall-land-resort",
+   "name": "Fall + Land Resort",
+   "gallery": "tables",
+   "category": "SORTING & REORDER",
+   "spectrum": null,
+   "gif": "gif/tables-fall-land-resort.gif",
+   "html": "html/tables-fall-land-resort.html",
+   "animated": true,
+   "duration": 4,
+   "frames": 40,
+   "width": 344,
+   "height": 163,
+   "bytes": 5325
+  },
+  {
    "id": "tables-status-pill-column",
    "name": "Status Pill Column",
    "gallery": "tables",
@@ -21450,7 +21450,7 @@
    "frames": 16,
    "width": 344,
    "height": 195,
-   "bytes": 9041
+   "bytes": 8977
   },
   {
    "id": "tables-progress-bar-cells",
@@ -21465,7 +21465,7 @@
    "frames": 34,
    "width": 344,
    "height": 163,
-   "bytes": 7730
+   "bytes": 7089
   },
   {
    "id": "tables-sparkline-column",
@@ -21480,7 +21480,7 @@
    "frames": 30,
    "width": 344,
    "height": 176,
-   "bytes": 8193
+   "bytes": 7964
   },
   {
    "id": "tables-delta-cells",
@@ -21495,7 +21495,7 @@
    "frames": 32,
    "width": 344,
    "height": 191,
-   "bytes": 11736
+   "bytes": 11583
   },
   {
    "id": "tables-avatar-presence-column",
@@ -21510,7 +21510,7 @@
    "frames": 16,
    "width": 344,
    "height": 184,
-   "bytes": 7445
+   "bytes": 7705
   },
   {
    "id": "tables-tag-chip-cells",
@@ -21525,7 +21525,7 @@
    "frames": 22,
    "width": 344,
    "height": 168,
-   "bytes": 18067
+   "bytes": 17909
   },
   {
    "id": "tables-heat-shaded-cells",
@@ -21540,7 +21540,7 @@
    "frames": 36,
    "width": 344,
    "height": 163,
-   "bytes": 48205
+   "bytes": 44584
   },
   {
    "id": "tables-live-ticker-table",
@@ -21555,7 +21555,7 @@
    "frames": 40,
    "width": 344,
    "height": 163,
-   "bytes": 16816
+   "bytes": 14861
   },
   {
    "id": "tables-feature-matrix",
@@ -21570,7 +21570,7 @@
    "frames": 40,
    "width": 344,
    "height": 163,
-   "bytes": 5824
+   "bytes": 7038
   },
   {
    "id": "tables-heatmap-grid",
@@ -21585,7 +21585,7 @@
    "frames": 32,
    "width": 344,
    "height": 119,
-   "bytes": 63915
+   "bytes": 53740
   },
   {
    "id": "tables-pivot-crosshair",
@@ -21600,7 +21600,7 @@
    "frames": 40,
    "width": 344,
    "height": 163,
-   "bytes": 16052
+   "bytes": 14363
   },
   {
    "id": "tables-risk-matrix",
@@ -21615,7 +21615,7 @@
    "frames": 18,
    "width": 344,
    "height": 167,
-   "bytes": 8330
+   "bytes": 7098
   },
   {
    "id": "tables-comparison-columns",
@@ -21630,7 +21630,7 @@
    "frames": 40,
    "width": 344,
    "height": 179,
-   "bytes": 79138
+   "bytes": 85181
   },
   {
    "id": "tables-correlation-matrix",
@@ -21645,7 +21645,7 @@
    "frames": 26,
    "width": 344,
    "height": 146,
-   "bytes": 23821
+   "bytes": 23645
   },
   {
    "id": "tables-contribution-calendar",
@@ -21659,8 +21659,8 @@
    "duration": 4,
    "frames": 40,
    "width": 344,
-   "height": 107,
-   "bytes": 87413
+   "height": 117,
+   "bytes": 93411
   },
   {
    "id": "tables-dual-tone-contribution-calendar",
@@ -21675,7 +21675,7 @@
    "frames": 40,
    "width": 344,
    "height": 131,
-   "bytes": 79733
+   "bytes": 82887
   },
   {
    "id": "tables-key-value-with-leaders",
@@ -21689,8 +21689,8 @@
    "duration": 4,
    "frames": 40,
    "width": 344,
-   "height": 125,
-   "bytes": 9372
+   "height": 122,
+   "bytes": 14594
   },
   {
    "id": "tables-spec-card",
@@ -21705,7 +21705,7 @@
    "frames": 40,
    "width": 344,
    "height": 194,
-   "bytes": 14878
+   "bytes": 17466
   },
   {
    "id": "tables-definition-list",
@@ -21720,7 +21720,7 @@
    "frames": 40,
    "width": 344,
    "height": 161,
-   "bytes": 5321
+   "bytes": 5346
   },
   {
    "id": "tables-properties-inspector",
@@ -21735,7 +21735,7 @@
    "frames": 40,
    "width": 344,
    "height": 181,
-   "bytes": 31037
+   "bytes": 17747
   },
   {
    "id": "tables-json-tree",
@@ -21750,7 +21750,7 @@
    "frames": 40,
    "width": 344,
    "height": 226,
-   "bytes": 22019
+   "bytes": 19548
   },
   {
    "id": "tables-file-tree",
@@ -21764,8 +21764,8 @@
    "duration": 4,
    "frames": 40,
    "width": 344,
-   "height": 102,
-   "bytes": 13763
+   "height": 103,
+   "bytes": 6778
   },
   {
    "id": "tables-org-chart",
@@ -21780,7 +21780,7 @@
    "frames": 30,
    "width": 344,
    "height": 121,
-   "bytes": 8559
+   "bytes": 8118
   },
   {
    "id": "tables-nested-outline",
@@ -21795,7 +21795,7 @@
    "frames": 40,
    "width": 344,
    "height": 140,
-   "bytes": 15476
+   "bytes": 14109
   },
   {
    "id": "tables-numbered-steps",
@@ -21810,7 +21810,7 @@
    "frames": 40,
    "width": 344,
    "height": 185,
-   "bytes": 6650
+   "bytes": 6664
   },
   {
    "id": "tables-checklist",
@@ -21825,7 +21825,7 @@
    "frames": 40,
    "width": 344,
    "height": 142,
-   "bytes": 6021
+   "bytes": 6026
   },
   {
    "id": "tables-leaderboard-swap",
@@ -21840,7 +21840,7 @@
    "frames": 40,
    "width": 344,
    "height": 157,
-   "bytes": 21693
+   "bytes": 19153
   },
   {
    "id": "tables-timeline-list-now",
@@ -21855,7 +21855,7 @@
    "frames": 40,
    "width": 344,
    "height": 122,
-   "bytes": 34438
+   "bytes": 33344
   },
   {
    "id": "tables-record-card-grid",
@@ -21870,7 +21870,7 @@
    "frames": 40,
    "width": 344,
    "height": 155,
-   "bytes": 46858
+   "bytes": 44892
   },
   {
    "id": "tables-gantt-rows",
@@ -21885,7 +21885,7 @@
    "frames": 40,
    "width": 344,
    "height": 115,
-   "bytes": 41826
+   "bytes": 39373
   },
   {
    "id": "tables-weekly-schedule-grid",
@@ -21900,7 +21900,7 @@
    "frames": 16,
    "width": 344,
    "height": 133,
-   "bytes": 11551
+   "bytes": 12171
   },
   {
    "id": "tables-month-calendar",
@@ -21915,7 +21915,7 @@
    "frames": 20,
    "width": 344,
    "height": 155,
-   "bytes": 10261
+   "bytes": 9358
   },
   {
    "id": "tables-kanban-columns",
@@ -21930,7 +21930,7 @@
    "frames": 40,
    "width": 344,
    "height": 143,
-   "bytes": 11865
+   "bytes": 11137
   },
   {
    "id": "tables-bento-stat-grid",
@@ -21945,7 +21945,7 @@
    "frames": 34,
    "width": 344,
    "height": 169,
-   "bytes": 30164
+   "bytes": 27454
   },
   {
    "id": "tables-masonry-placeholder",
@@ -21975,7 +21975,7 @@
    "frames": 40,
    "width": 344,
    "height": 191,
-   "bytes": 20271
+   "bytes": 16637
   },
   {
    "id": "tables-diff-table",
@@ -21990,7 +21990,7 @@
    "frames": 30,
    "width": 344,
    "height": 191,
-   "bytes": 30179
+   "bytes": 28523
   },
   {
    "id": "tables-audit-trail",
@@ -22005,7 +22005,7 @@
    "frames": 40,
    "width": 344,
    "height": 188,
-   "bytes": 41399
+   "bytes": 39712
   },
   {
    "id": "tables-pagination",
@@ -22035,7 +22035,7 @@
    "frames": 40,
    "width": 344,
    "height": 93,
-   "bytes": 5317
+   "bytes": 5318
   },
   {
    "id": "tables-empty-table-state",
@@ -22050,7 +22050,7 @@
    "frames": 30,
    "width": 344,
    "height": 173,
-   "bytes": 15558
+   "bytes": 15704
   },
   {
    "id": "spectrums-tonal-dropdown-menu",

@@ -28,9 +28,9 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
 .dtb-outline ul li::before { width: 5px; height: 5px; border-radius: 1px; transform: rotate(45deg); }
 .dtb-outline li.mut { color: var(--muted); }
 @keyframes dtbBullet { 
-  0%, 10% { background: var(--dim); box-shadow: 0 0 0 rgba(var(--info-rgb),0); }
-  16%, 26% { background: var(--info); box-shadow: 0 0 8px rgba(var(--info-rgb),.8); }
-  36%, 100% { background: var(--dim); box-shadow: 0 0 0 rgba(var(--info-rgb),0); }
+  0%, 10% { background: var(--dim); box-shadow: 0 0 0 rgba(var(--c-rgb,var(--accent-rgb)),0); }
+  16%, 26% { background: var(--c,var(--accent)); box-shadow: 0 0 8px rgba(var(--c-rgb,var(--accent-rgb)),.8); }
+  36%, 100% { background: var(--dim); box-shadow: 0 0 0 rgba(var(--c-rgb,var(--accent-rgb)),0); }
 }
 </style>
 </head>
