@@ -1,0 +1,236 @@
+<h3 class="sec">HOVER &amp; REVEAL</h3>
+<style id="fx-hv-styles">
+/* ===== Hover & Reveal family, prefix fx-hv- / fxHv. Small cards and image stand-ins
+   that show a hover state. One registered number, --fx-hv-h (0 = rest, 1 = hovered),
+   drives every derived value through calc(); the ambient loop fxHvCycle sweeps it
+   0 to 1 to 0 in 3.6s so the demo previews the interaction, and :hover disables the
+   loop and pins it to 1 with a short transition. Colour rides --fx-hv-c / --fx-hv-rgb,
+   taken from --c / --c-rgb (theme accent by default). ===== */
+@property --fx-hv-h{syntax:'<number>';inherits:true;initial-value:0}
+.fx-hv{--fx-hv-h:0;--fx-hv-c:var(--c,var(--accent));--fx-hv-rgb:var(--c-rgb,var(--accent-rgb));position:relative;box-sizing:border-box;width:100%;max-width:240px;font:12px/1.35 ui-sans-serif,system-ui,sans-serif;color:var(--ink);
+  animation-name:fxHvCycle;animation-duration:3.6s;animation-timing-function:ease-in-out;animation-iteration-count:infinite;transition:--fx-hv-h .45s ease}
+.fx-hv:hover{animation-name:none;--fx-hv-h:1}
+@keyframes fxHvCycle{0%,12%{--fx-hv-h:0}38%,62%{--fx-hv-h:1}88%,100%{--fx-hv-h:0}}
+.fx-hv-card{position:relative;box-sizing:border-box;height:96px;padding:16px 18px;border-radius:12px;background:var(--panel2);border:1px solid var(--line);overflow:hidden}
+.fx-hv-t{font-weight:600;font-size:13px;margin:0 0 6px;letter-spacing:.01em}
+.fx-hv-b{color:var(--muted);font-size:11px}
+.fx-hv-img{position:relative;height:110px;border-radius:12px;overflow:hidden;background:var(--panel2);border:1px solid var(--line);box-sizing:border-box}
+.fx-hv-pic{position:absolute;inset:0;background:
+  radial-gradient(34px 34px at 74% 28%,rgba(255,255,255,.8),rgba(255,255,255,0) 70%),
+  linear-gradient(160deg,rgba(var(--fx-hv-rgb),.8),rgba(var(--fx-hv-rgb),.25) 55%,rgba(0,0,0,.4)),var(--panel2)}
+.fx-hv-pic::after{content:"";position:absolute;inset:auto 0 0 0;height:50%;background:linear-gradient(168deg,rgba(0,0,0,0) 40%,rgba(0,0,0,.5) 41%),linear-gradient(200deg,rgba(0,0,0,0) 55%,rgba(0,0,0,.4) 56%)}
+.fx-hv-cap{position:absolute;left:0;right:0;bottom:0;padding:10px 14px;background:linear-gradient(rgba(0,0,0,0),rgba(0,0,0,.75));font-weight:600;font-size:12px;z-index:3}
+.fx-hv-cap small{display:block;font-weight:400;color:rgba(255,255,255,.7);font-size:10px}
+.fx-hv-btn{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;border:1px solid rgba(var(--fx-hv-rgb),.5);background:rgba(var(--fx-hv-rgb),calc(.12 + .28*var(--fx-hv-h)));font-weight:600;font-size:12px;color:var(--ink)}
+
+/* (1) Tilt Gloss: perspective tilt toward one corner, a specular highlight slides across as it leans */
+.fx-hv-tilt{perspective:600px}
+.fx-hv-tilt .fx-hv-card{transform:rotateX(calc(7deg*var(--fx-hv-h))) rotateY(calc(-9deg*var(--fx-hv-h)));box-shadow:0 calc(18px*var(--fx-hv-h)) calc(30px*var(--fx-hv-h)) rgba(0,0,0,.45);border-color:rgba(var(--fx-hv-rgb),calc(.15 + .6*var(--fx-hv-h)))}
+.fx-hv-tilt .fx-hv-card::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:var(--fx-hv-h);background:radial-gradient(130px 90px at calc(85% - 60%*var(--fx-hv-h)) calc(95% - 85%*var(--fx-hv-h)),rgba(255,255,255,.3),rgba(255,255,255,0) 70%)}
+
+/* (2) Perimeter Draw: an SVG stroke draws itself around the whole border from the top edge */
+.fx-hv-draw .fx-hv-card{border-color:rgba(var(--fx-hv-rgb),.18);overflow:visible}
+.fx-hv-draw svg{position:absolute;inset:-1px;width:calc(100% + 2px);height:calc(100% + 2px);overflow:visible;pointer-events:none}
+.fx-hv-draw-r{fill:none;stroke:var(--fx-hv-c);stroke-width:2;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:calc(1 - var(--fx-hv-h))}
+
+/* (3) Bracket Snap: four corner brackets fly in from outside and lock onto the card */
+.fx-hv-brk .fx-hv-card{overflow:visible;border-color:rgba(var(--fx-hv-rgb),calc(.2 + .4*var(--fx-hv-h)))}
+.fx-hv-brk-c{--fx-hv-x:-1;--fx-hv-y:-1;position:absolute;width:14px;height:14px;border:2px solid var(--fx-hv-c);border-right:0;border-bottom:0;border-radius:3px 0 0 0;opacity:var(--fx-hv-h);
+  transform:translate(calc(12px*var(--fx-hv-x)*(1 - var(--fx-hv-h))),calc(12px*var(--fx-hv-y)*(1 - var(--fx-hv-h)))) rotate(var(--fx-hv-r,0deg))}
+.fx-hv-brk-tl{left:-6px;top:-6px}
+.fx-hv-brk-tr{right:-6px;top:-6px;--fx-hv-x:1;--fx-hv-r:90deg}
+.fx-hv-brk-bl{left:-6px;bottom:-6px;--fx-hv-y:1;--fx-hv-r:-90deg}
+.fx-hv-brk-br{right:-6px;bottom:-6px;--fx-hv-x:1;--fx-hv-y:1;--fx-hv-r:180deg}
+
+/* (4) Zoom Caption: the image scales up inside its frame while a caption rises from the bottom */
+.fx-hv-zoom .fx-hv-pic{transform:scale(calc(1 + .14*var(--fx-hv-h)))}
+.fx-hv-zoom .fx-hv-cap{transform:translateY(calc(100% * (1 - var(--fx-hv-h))))}
+
+/* (5) Diagonal Wipe: a slanted cover panel wipes off to the right to reveal the image */
+.fx-hv-wipe-cover{position:absolute;inset:0;z-index:2;display:grid;place-content:center;background:var(--panel2);font-weight:600;letter-spacing:.14em;text-transform:uppercase;font-size:11px;color:var(--muted);
+  clip-path:polygon(calc(125% * var(--fx-hv-h)) 0,100% 0,100% 100%,calc(125% * var(--fx-hv-h) - 25%) 100%)}
+.fx-hv-wipe-cover::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(var(--fx-hv-rgb),.6),rgba(var(--fx-hv-rgb),0) 8%)}
+
+/* (6) Split Reveal: the image parts into top and bottom halves and a label appears in the gap */
+.fx-hv-split .fx-hv-img{display:grid;place-items:center}
+.fx-hv-split-a{clip-path:inset(0 0 50% 0);transform:translateY(calc(-32px*var(--fx-hv-h)))}
+.fx-hv-split-b{clip-path:inset(50% 0 0 0);transform:translateY(calc(32px*var(--fx-hv-h)))}
+.fx-hv-split-l{position:relative;font-weight:700;font-size:14px;letter-spacing:.16em;text-transform:uppercase;color:var(--fx-hv-c);opacity:var(--fx-hv-h);transform:scale(calc(.8 + .2*var(--fx-hv-h)))}
+
+/* (7) Icon Nudge: the arrow inside a pill button nudges right and the fill deepens */
+.fx-hv-nudge .fx-hv-btn{margin-top:4px}
+.fx-hv-nudge svg{width:14px;height:14px;transform:translateX(calc(6px*var(--fx-hv-h)))}
+.fx-hv-nudge-l{display:block;height:2px;margin-left:-4px;border-radius:1px;background:var(--fx-hv-c);width:calc(8px*var(--fx-hv-h))}
+
+/* (8) Fan Lift: the card rises and two ghost cards fan out from behind it */
+.fx-hv-fan{padding-top:8px}
+.fx-hv-fan::before,.fx-hv-fan::after{content:"";position:absolute;left:0;right:0;top:8px;height:96px;box-sizing:border-box;border-radius:12px;background:var(--panel);border:1px solid var(--line);transform-origin:50% 130%}
+.fx-hv-fan::before{transform:rotate(calc(-7deg*var(--fx-hv-h))) translateY(calc(5px*var(--fx-hv-h)))}
+.fx-hv-fan::after{transform:rotate(calc(7deg*var(--fx-hv-h))) translateY(calc(5px*var(--fx-hv-h)))}
+.fx-hv-fan .fx-hv-card{z-index:1;transform:translateY(calc(-8px*var(--fx-hv-h)));box-shadow:0 calc(12px*var(--fx-hv-h)) calc(20px*var(--fx-hv-h)) rgba(0,0,0,.45)}
+
+/* (9) Shadow Stack: the card steps up and to the left while hard offset shadows stack behind it */
+.fx-hv-stack .fx-hv-card{border-radius:6px;transform:translate(calc(-7px*var(--fx-hv-h)),calc(-7px*var(--fx-hv-h)));border-color:rgba(var(--fx-hv-rgb),calc(.3 + .7*var(--fx-hv-h)));
+  box-shadow:calc(4px*var(--fx-hv-h)) calc(4px*var(--fx-hv-h)) 0 rgba(var(--fx-hv-rgb),.85),calc(8px*var(--fx-hv-h)) calc(8px*var(--fx-hv-h)) 0 rgba(var(--fx-hv-rgb),.55),calc(12px*var(--fx-hv-h)) calc(12px*var(--fx-hv-h)) 0 rgba(var(--fx-hv-rgb),.28)}
+
+/* (10) Colour Flood: a colour disc grows from the bottom left corner until it fills the card */
+.fx-hv-flood .fx-hv-card::before{content:"";position:absolute;left:-20px;bottom:-20px;width:80px;height:80px;border-radius:50%;background:var(--fx-hv-c);transform:scale(calc(5*var(--fx-hv-h)))}
+.fx-hv-flood .fx-hv-t,.fx-hv-flood .fx-hv-b{position:relative}
+.fx-hv-flood .fx-hv-b{color:var(--ink);opacity:calc(.55 + .45*var(--fx-hv-h))}
+
+/* (11) Blur Focus: a blurred, desaturated image snaps into focus and its caption fades in */
+.fx-hv-focus .fx-hv-pic{transform:scale(1.06);filter:blur(calc(7px*(1 - var(--fx-hv-h)))) saturate(calc(.3 + .7*var(--fx-hv-h)))}
+.fx-hv-focus .fx-hv-cap{opacity:var(--fx-hv-h);transform:translateY(calc(6px*(1 - var(--fx-hv-h))))}
+
+/* (12) Flip Card: the card turns over on its Y axis to show a stat on the back */
+.fx-hv-flip{perspective:700px}
+.fx-hv-flip-in{position:relative;height:96px;transform-style:preserve-3d;transform:rotateY(calc(180deg*var(--fx-hv-h)))}
+.fx-hv-flip .fx-hv-card{position:absolute;inset:0;backface-visibility:hidden}
+.fx-hv-flip-back{transform:rotateY(180deg);background:linear-gradient(135deg,rgba(var(--fx-hv-rgb),.5),rgba(var(--fx-hv-rgb),.12)),var(--panel2);border-color:rgba(var(--fx-hv-rgb),.5)}
+.fx-hv-flip-n{font-size:22px;font-weight:700;letter-spacing:-.02em;color:var(--fx-hv-c);line-height:1.1}
+
+/* (13) Magnetic Label: a chip is pulled toward a glowing corner as if it were magnetised */
+.fx-hv-mag .fx-hv-card{background:radial-gradient(90px 70px at 88% 18%,rgba(var(--fx-hv-rgb),calc(.45*var(--fx-hv-h))),rgba(var(--fx-hv-rgb),0) 70%),var(--panel2)}
+.fx-hv-chip{position:absolute;left:18px;bottom:14px;padding:4px 10px;border-radius:999px;background:rgba(var(--fx-hv-rgb),.2);border:1px solid rgba(var(--fx-hv-rgb),.55);font-size:11px;font-weight:600;color:var(--fx-hv-c);
+  transform:translate(calc(124px*var(--fx-hv-h)),calc(-40px*var(--fx-hv-h))) scale(calc(1 + .12*var(--fx-hv-h)))}
+
+/* (14) Ripple Press: a single wave expands from a fixed press point while the fill tints */
+.fx-hv-rip .fx-hv-card{background:linear-gradient(rgba(var(--fx-hv-rgb),calc(.14*var(--fx-hv-h))),rgba(var(--fx-hv-rgb),calc(.14*var(--fx-hv-h)))),var(--panel2)}
+.fx-hv-rip .fx-hv-card::after{content:"";position:absolute;left:150px;top:52px;width:60px;height:60px;margin:-30px 0 0 -30px;border-radius:50%;
+  background:radial-gradient(circle,rgba(var(--fx-hv-rgb),.55),rgba(var(--fx-hv-rgb),.15) 60%,rgba(var(--fx-hv-rgb),0) 72%);transform:scale(0);opacity:0;
+  animation-name:fxHvRipple;animation-duration:3.6s;animation-timing-function:ease-out;animation-iteration-count:infinite}
+.fx-hv-rip:hover .fx-hv-card::after{animation-name:fxHvRippleOnce;animation-duration:.8s;animation-iteration-count:1;animation-fill-mode:forwards}
+@keyframes fxHvRipple{0%,12%{transform:scale(0);opacity:.9}45%,100%{transform:scale(5.5);opacity:0}}
+@keyframes fxHvRippleOnce{0%{transform:scale(0);opacity:.9}100%{transform:scale(5.5);opacity:0}}
+
+/* (15) Scramble Clear: a garbled monospace title resolves into clear text from left to right */
+.fx-hv-scr .fx-hv-t{position:relative;font-family:ui-monospace,Menlo,monospace;font-size:14px;height:18px;width:11ch}
+.fx-hv-scr-a,.fx-hv-scr-b,.fx-hv-scr-c{position:absolute;left:0;top:0;white-space:nowrap}
+.fx-hv-scr-a,.fx-hv-scr-c{color:var(--fx-hv-c);clip-path:inset(0 0 0 calc(100% * var(--fx-hv-h)))}
+.fx-hv-scr-b{clip-path:inset(0 calc(100% - 100% * var(--fx-hv-h)) 0 0)}
+.fx-hv-scr-c{animation-name:fxHvScrJit;animation-duration:.24s;animation-timing-function:steps(2,end);animation-iteration-count:infinite}
+.fx-hv-scr:hover .fx-hv-scr-c{animation-name:none}
+.fx-hv-scr .fx-hv-t::after{content:"";position:absolute;top:0;bottom:0;left:calc(100% * var(--fx-hv-h));width:2px;background:var(--fx-hv-c);opacity:calc(1 - var(--fx-hv-h))}
+@keyframes fxHvScrJit{0%{opacity:0}50%{opacity:1}}
+
+/* (16) Curtain Part: two pleated curtains squeeze to the sides to reveal the image */
+.fx-hv-curt .fx-hv-img::before,.fx-hv-curt .fx-hv-img::after{content:"";position:absolute;top:0;bottom:0;width:50%;z-index:2;
+  background:linear-gradient(rgba(0,0,0,.15),rgba(0,0,0,0) 40%,rgba(0,0,0,.25)),repeating-linear-gradient(90deg,rgba(var(--fx-hv-rgb),.95) 0 8px,rgba(var(--fx-hv-rgb),.55) 8px 16px)}
+.fx-hv-curt .fx-hv-img::before{left:0;transform-origin:0 50%;transform:scaleX(calc(1 - .88*var(--fx-hv-h)))}
+.fx-hv-curt .fx-hv-img::after{right:0;transform-origin:100% 50%;transform:scaleX(calc(1 - .88*var(--fx-hv-h)))}
+.fx-hv-curt .fx-hv-cap{opacity:var(--fx-hv-h)}
+
+/* (17) Zoom Out Reveal: a tight crop pulls back to show the full image inside an inset frame */
+.fx-hv-zout .fx-hv-pic{transform:scale(calc(1.6 - .6*var(--fx-hv-h)))}
+.fx-hv-zout .fx-hv-img::after{content:"";position:absolute;inset:8px;border:1px solid rgba(255,255,255,calc(.7*var(--fx-hv-h)));border-radius:8px;pointer-events:none;z-index:2}
+.fx-hv-zout .fx-hv-cap{opacity:var(--fx-hv-h)}
+
+/* (18) Outline Pulse: two outline rings pulse outward from the button edge, then the border stays lit */
+.fx-hv-opulse .fx-hv-card{display:grid;place-items:center;padding:0}
+.fx-hv-opulse .fx-hv-btn{position:relative;border-color:rgba(var(--fx-hv-rgb),calc(.4 + .6*var(--fx-hv-h)))}
+.fx-hv-opulse .fx-hv-btn::before,.fx-hv-opulse .fx-hv-btn::after{content:"";position:absolute;inset:-2px;border-radius:inherit;border:2px solid var(--fx-hv-c);opacity:0;
+  animation-name:fxHvOutline;animation-duration:3.6s;animation-timing-function:ease-out;animation-iteration-count:infinite}
+.fx-hv-opulse .fx-hv-btn::after{animation-delay:.3s}
+.fx-hv-opulse:hover .fx-hv-btn::before,.fx-hv-opulse:hover .fx-hv-btn::after{animation-name:fxHvOutlineOnce;animation-duration:.9s;animation-iteration-count:2;animation-delay:0s}
+.fx-hv-opulse:hover .fx-hv-btn::after{animation-delay:.3s}
+@keyframes fxHvOutline{0%,12%{transform:scale(1);opacity:.9}40%,100%{transform:scale(1.45,1.9);opacity:0}}
+@keyframes fxHvOutlineOnce{0%{transform:scale(1);opacity:.9}100%{transform:scale(1.45,1.9);opacity:0}}
+
+/* (19) Shutter Reveal: six horizontal slats close one after another to uncover the image */
+.fx-hv-shut-s{position:absolute;left:0;right:0;height:calc(100%/6 + 1px);top:calc(var(--fx-hv-i)*100%/6);background:var(--panel2);transform-origin:50% 0;z-index:2;
+  transform:scaleY(clamp(0,1 - (var(--fx-hv-h)*1.8 - var(--fx-hv-i)*.16),1))}
+.fx-hv-shut .fx-hv-cap{opacity:var(--fx-hv-h)}
+
+/* (20) Peel Corner: the bottom right corner curls up to show the page underside and the surface beneath */
+.fx-hv-peel .fx-hv-card::before,.fx-hv-peel .fx-hv-card::after{content:"";position:absolute;right:0;bottom:0;width:calc(60px*var(--fx-hv-h));height:calc(60px*var(--fx-hv-h))}
+.fx-hv-peel .fx-hv-card::before{background:linear-gradient(to top left,var(--bg) 50%,rgba(0,0,0,0) 50%)}
+.fx-hv-peel .fx-hv-card::after{background:linear-gradient(to top left,rgba(0,0,0,0) 50%,rgba(var(--fx-hv-rgb),.95) 50%,rgba(255,255,255,.6) 66%,rgba(var(--fx-hv-rgb),.8) 100%);filter:drop-shadow(-3px -3px 4px rgba(0,0,0,.45))}
+
+@media (prefers-reduced-motion:reduce){
+  .fx-hv,.fx-hv *,.fx-hv::before,.fx-hv::after,.fx-hv *::before,.fx-hv *::after{animation-name:none!important;transition:none!important}
+  .fx-hv{--fx-hv-h:1}
+}
+</style>
+<div class="gallery">
+
+  <div class="tile is-new" data-ctype="fx-hover" data-interact="hover" data-c="accent"><div class="stage">
+    <div class="fx-hv fx-hv-tilt"><div class="fx-hv-card"><div class="fx-hv-t">Atlas</div><div class="fx-hv-b">Edge routing, 12.4% faster this week</div></div></div>
+  </div><div class="meta"><div class="nm">Tilt Gloss</div><span class="ref">.fx-hv-tilt</span><div class="desc">The card tilts in perspective toward one corner while a specular highlight slides across its face. Use on feature cards and nav tiles.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="fx-hover" data-interact="hover" data-c="info"><div class="stage">
+    <div class="fx-hv fx-hv-draw"><div class="fx-hv-card"><svg viewBox="0 0 240 96" preserveAspectRatio="none" aria-hidden="true"><rect class="fx-hv-draw-r" x="1" y="1" width="238" height="94" rx="12" pathLength="1"/></svg><div class="fx-hv-t">Comet</div><div class="fx-hv-b">1,284 deploys, 99.98% success</div></div></div>
+  </div><div class="meta"><div class="nm">Perimeter Draw</div><span class="ref">.fx-hv-draw</span><div class="desc">A coloured stroke draws itself around the whole border from the top edge and unwinds on leave. Use to mark a focused or selectable card.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="fx-hover" data-interact="hover" data-c="warn"><div class="stage">
+    <div class="fx-hv fx-hv-brk"><div class="fx-hv-card"><div class="fx-hv-t">Ember</div><div class="fx-hv-b">Target locked, R. Patel reviewing</div><i class="fx-hv-brk-c fx-hv-brk-tl"></i><i class="fx-hv-brk-c fx-hv-brk-tr"></i><i class="fx-hv-brk-c fx-hv-brk-bl"></i><i class="fx-hv-brk-c fx-hv-brk-br"></i></div></div>
+  </div><div class="meta"><div class="nm">Bracket Snap</div><span class="ref">.fx-hv-brk</span><div class="desc">Four corner brackets fly in from outside the card and snap onto its corners. A lock on cue for selectable targets and tiles.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="fx-reveal" data-interact="hover" data-c="info"><div class="stage">
+    <div class="fx-hv fx-hv-zoom"><div class="fx-hv-img"><div class="fx-hv-pic"></div><div class="fx-hv-cap">Nova ridge<small>A. Lee, 1,284 views</small></div></div></div>
+  </div><div class="meta"><div class="nm">Zoom Caption</div><span class="ref">.fx-hv-zoom</span><div class="desc">The image scales up inside its frame while a caption rises from the bottom edge. The classic gallery and media card hover.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="fx-reveal" data-interact="hover" data-c="pos"><div class="stage">
+    <div class="fx-hv fx-hv-wipe"><div class="fx-hv-img"><div class="fx-hv-pic"></div><div class="fx-hv-wipe-cover">Pixel</div></div></div>
+  </div><div class="meta"><div class="nm">Diagonal Wipe</div><span class="ref">.fx-hv-wipe</span><div class="desc">A slanted cover panel with a coloured leading edge wipes off to the right and uncovers the image beneath. Use for before and after or teaser media.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="fx-reveal" data-interact="hover" data-c="crit"><div class="stage">
+    <div class="fx-hv fx-hv-split"><div class="fx-hv-img"><div class="fx-hv-pic fx-hv-split-a"></div><div class="fx-hv-pic fx-hv-split-b"></div><div class="fx-hv-split-l">Comet</div></div></div>
+  </div><div class="meta"><div class="nm">Split Reveal</div><span class="ref">.fx-hv-split</span><div class="desc">The image parts into top and bottom halves and a label scales up in the gap between them. Use for album covers and project thumbnails.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="fx-hover" data-interact="hover" data-c="pos"><div class="stage">
+    <div class="fx-hv fx-hv-nudge"><div class="fx-hv-card"><div class="fx-hv-t">Ready to ship</div><span class="fx-hv-btn">Open Atlas<i class="fx-hv-nudge-l"></i><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M8 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div></div>
+  </div><div class="meta"><div class="nm">Icon Nudge</div><span class="ref">.fx-hv-nudge</span><div class="desc">The arrow inside a pill button nudges to the right, trailing a short line, while the fill deepens. Use on primary calls to action and links.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="fx-hover" data-interact="hover" data-c="accent"><div class="stage">
+    <div class="fx-hv fx-hv-fan"><div class="fx-hv-card"><div class="fx-hv-t">Ember</div><div class="fx-hv-b">3 revisions, J. Doe editing</div></div></div>
+  </div><div class="meta"><div class="nm">Fan Lift</div><span class="ref">.fx-hv-fan</span><div class="desc">The card lifts on a soft shadow and two ghost cards fan out from behind it. Use for stacks, decks and anything with more items behind.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="fx-hover" data-interact="hover" data-c="warn"><div class="stage">
+    <div class="fx-hv fx-hv-stack"><div class="fx-hv-card"><div class="fx-hv-t">Pixel</div><div class="fx-hv-b">Print run, 1,284 units</div></div></div>
+  </div><div class="meta"><div class="nm">Shadow Stack</div><span class="ref">.fx-hv-stack</span><div class="desc">The card steps up and to the left while three hard offset shadows stack out behind it in the card colour. A bold, poster style hover.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="fx-hover" data-interact="hover" data-c="accent"><div class="stage">
+    <div class="fx-hv fx-hv-flood"><div class="fx-hv-card"><div class="fx-hv-t">Nova</div><div class="fx-hv-b">Flooded with colour on hover</div></div></div>
+  </div><div class="meta"><div class="nm">Colour Flood</div><span class="ref">.fx-hv-flood</span><div class="desc">A disc of colour grows from the bottom left corner until it floods the whole card and the body text brightens. Use on primary tiles and menu cards.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="fx-reveal" data-interact="hover" data-c="info"><div class="stage">
+    <div class="fx-hv fx-hv-focus"><div class="fx-hv-img"><div class="fx-hv-pic"></div><div class="fx-hv-cap">Atlas peak<small>In focus, 99.98% sharp</small></div></div></div>
+  </div><div class="meta"><div class="nm">Blur Focus</div><span class="ref">.fx-hv-focus</span><div class="desc">A blurred, desaturated image snaps into sharp colour and its caption fades in. Use for locked or preview media that resolves on hover.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="fx-hover" data-interact="hover" data-c="crit"><div class="stage">
+    <div class="fx-hv fx-hv-flip"><div class="fx-hv-flip-in"><div class="fx-hv-card"><div class="fx-hv-t">Comet</div><div class="fx-hv-b">Hover to see uptime</div></div><div class="fx-hv-card fx-hv-flip-back"><div class="fx-hv-flip-n">99.98%</div><div class="fx-hv-b">uptime over 30 days</div></div></div></div>
+  </div><div class="meta"><div class="nm">Flip Card</div><span class="ref">.fx-hv-flip</span><div class="desc">The card turns over on its vertical axis to show a stat on a tinted back face. Use for KPI tiles with a detail side.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="fx-hover" data-interact="hover" data-c="info"><div class="stage">
+    <div class="fx-hv fx-hv-mag"><div class="fx-hv-card"><div class="fx-hv-t">Atlas</div><span class="fx-hv-chip">Comet</span></div></div>
+  </div><div class="meta"><div class="nm">Magnetic Label</div><span class="ref">.fx-hv-mag</span><div class="desc">A chip is pulled across the card toward a glowing corner as if magnetised, growing slightly as it arrives. Playful hover for tags and badges.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="fx-hover" data-interact="hover" data-c="pos"><div class="stage">
+    <div class="fx-hv fx-hv-rip"><div class="fx-hv-card"><div class="fx-hv-t">Ember</div><div class="fx-hv-b">Press point at the right</div></div></div>
+  </div><div class="meta"><div class="nm">Ripple Press</div><span class="ref">.fx-hv-rip</span><div class="desc">A single wave expands from a fixed press point while the card fill tints. A CSS only stand in for cursor ripples on buttons and list rows.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="fx-hover" data-interact="hover" data-c="crit"><div class="stage">
+    <div class="fx-hv fx-hv-scr"><div class="fx-hv-card"><div class="fx-hv-t"><span class="fx-hv-scr-a">#t!a% &gt;o@e+</span><span class="fx-hv-scr-c">A%l&amp;s C*m?t</span><span class="fx-hv-scr-b">Atlas Comet</span></div><div class="fx-hv-b">Decoding label, 12.4% left</div></div></div>
+  </div><div class="meta"><div class="nm">Scramble Clear</div><span class="ref">.fx-hv-scr</span><div class="desc">A jittering garbled title resolves into clear text behind a moving caret. Use for hacker style headings and reveal on hover labels.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="fx-reveal" data-interact="hover" data-c="neg"><div class="stage">
+    <div class="fx-hv fx-hv-curt"><div class="fx-hv-img"><div class="fx-hv-pic"></div><div class="fx-hv-cap">Nova<small>Curtain up</small></div></div></div>
+  </div><div class="meta"><div class="nm">Curtain Part</div><span class="ref">.fx-hv-curt</span><div class="desc">Two pleated curtains squeeze to the sides to reveal the image and its caption. Theatrical reveal for launches and featured media.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="fx-reveal" data-interact="hover" data-c="warn"><div class="stage">
+    <div class="fx-hv fx-hv-zout"><div class="fx-hv-img"><div class="fx-hv-pic"></div><div class="fx-hv-cap">Ember<small>Full frame</small></div></div></div>
+  </div><div class="meta"><div class="nm">Zoom Out Reveal</div><span class="ref">.fx-hv-zout</span><div class="desc">A tight crop pulls back to show the full image inside a thin inset frame with a caption. The opposite of the usual zoom in, good for maps and art.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="fx-hover" data-interact="hover" data-c="neg"><div class="stage">
+    <div class="fx-hv fx-hv-opulse"><div class="fx-hv-card"><span class="fx-hv-btn">Delete Pixel</span></div></div>
+  </div><div class="meta"><div class="nm">Outline Pulse</div><span class="ref">.fx-hv-opulse</span><div class="desc">Two outline rings pulse outward from the button edge and the border stays lit. A focus ring style hover for destructive or important actions.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="fx-reveal" data-interact="hover" data-c="pos"><div class="stage">
+    <div class="fx-hv fx-hv-shut"><div class="fx-hv-img"><div class="fx-hv-pic"></div><i class="fx-hv-shut-s" style="--fx-hv-i:0"></i><i class="fx-hv-shut-s" style="--fx-hv-i:1"></i><i class="fx-hv-shut-s" style="--fx-hv-i:2"></i><i class="fx-hv-shut-s" style="--fx-hv-i:3"></i><i class="fx-hv-shut-s" style="--fx-hv-i:4"></i><i class="fx-hv-shut-s" style="--fx-hv-i:5"></i><div class="fx-hv-cap">Atlas<small>Blinds open</small></div></div></div>
+  </div><div class="meta"><div class="nm">Shutter Reveal</div><span class="ref">.fx-hv-shut</span><div class="desc">Six horizontal slats close one after another from the top to uncover the image like blinds. Use for staggered media reveals.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="fx-hover" data-interact="hover" data-c="accent"><div class="stage">
+    <div class="fx-hv fx-hv-peel"><div class="fx-hv-card"><div class="fx-hv-t">Pixel</div><div class="fx-hv-b">Lift the corner to peek</div></div></div>
+  </div><div class="meta"><div class="nm">Peel Corner</div><span class="ref">.fx-hv-peel</span><div class="desc">The bottom right corner curls up to show a coloured underside and the surface beneath it. A sticker or page turn cue for notes and cards.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+</div>

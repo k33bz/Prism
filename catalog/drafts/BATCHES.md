@@ -10,7 +10,7 @@ catalog and showcase). Per-batch idea lists are the remaining work; strike ideas
 | # | Batch | Gallery | Prefix | Draft | Status |
 |---|-------|---------|--------|-------|--------|
 | 1 | Hover effects (cards, images) | FX Store | `fx-hv-` / `fxHv` | `hover.fx.html` | todo |
-| 2 | Ambient backgrounds | Animated Objects | `amb-bg-` / `ambBg` | `backgrounds.objects.html` | todo |
+| 2 | Ambient backgrounds | Animated Objects | `amb-bg-` / `ambBg` | `backgrounds.objects.html` | landed (21) |
 | 3 | Loaders beyond spinners | Animation Lab | `lab-ld-` / `labLd` | `loaders.lab.html` | todo |
 | 4 | Glow as a system | FX Store | `fx-gl-` / `fxGl` | `glow.fx.html` | todo |
 | 5 | Scroll and reveal choreography | Animation Lab | `lab-rv-` / `labRv` | `reveal.lab.html` | todo |
@@ -23,10 +23,12 @@ flip card, glitch on hover, magnetic label, ripple from cursor position (CSS app
 pulse, gradient border rotate, text scramble to clear, shadow stack.
 
 ## Batch 2: ambient backgrounds
-Ideas: animated gradient drift, mesh gradient blobs, aurora curtains, film grain, moving dot grid,
-diagonal stripes scroll, floating orbs, wave layers, starfield parallax, hex grid pulse, topographic
-contours drift, noise fog, spotlight sweep, confetti drift, rain streaks, bokeh, circuit traces, plasma,
-checker fade, morphing blob.
+Landed (21): gradient drift, mesh gradient blobs, aurora curtains, film grain, dot grid flow, diagonal
+stripes scroll, floating orbs, wave layers, starfield parallax, hex grid pulse, topographic contours,
+ripple rings, spotlight sweep, confetti drift, bokeh, circuit traces, plasma, checker fade, morphing
+blob, scanline sweep, horizon grid.
+Skipped: rain streaks (objects already has rain and downpour), noise fog (weather fog and fx noise
+overlays exist). Remaining: none.
 
 ## Batch 3: loaders beyond spinners
 Ideas: skeleton shimmer families (card, list, table, avatar), typing dots, liquid fill, morphing

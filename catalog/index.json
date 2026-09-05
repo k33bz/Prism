@@ -1,5 +1,5 @@
 {
-  "count": 3118,
+  "count": 3139,
   "effects": [
     {
       "id": "charts-big-metric-count-up",
@@ -1898,9 +1898,8 @@
         "lv",
         "ok",
         "m",
-        "info",
         "warn",
-        "err",
+        "info",
         "cursor"
       ],
       "params": [],
@@ -19177,9 +19176,9 @@
         "gate",
         "experts",
         "expert",
-        "on",
         "ed",
         "ew",
+        "on",
         "cap",
         "pr-playbtn"
       ],
@@ -24522,6 +24521,739 @@
       "updatedOn": "2026-09-05",
       "author": "k33bz",
       "description": "The whole landing hero as one scene: embers behind a flickering mark, gradient title with the green underline, a tagline that rotates through four lines on a CSS timer, and the action buttons."
+    },
+    {
+      "id": "objects-gradient-drift",
+      "name": "Gradient Drift",
+      "gallery": "objects",
+      "category": "AMBIENT BACKGROUNDS",
+      "ref": ".amb-bg-drift",
+      "classes": [
+        "amb-bg-root",
+        "amb-bg-drift",
+        "amb-bg-tag"
+      ],
+      "params": [],
+      "tags": [
+        "objects",
+        "background",
+        "ambient",
+        "behind-content",
+        "animated",
+        "new"
+      ],
+      "componentType": "object-backdrop",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": true,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A wide multi-stop gradient slides back and forth so the tint slowly wanders across the surface. Hero panels, empty states, sign-in cards."
+    },
+    {
+      "id": "objects-mesh-gradient-blobs",
+      "name": "Mesh Gradient Blobs",
+      "gallery": "objects",
+      "category": "AMBIENT BACKGROUNDS",
+      "ref": ".amb-bg-mesh",
+      "classes": [
+        "amb-bg-root",
+        "amb-bg-mesh",
+        "amb-bg-mesh-b",
+        "amb-bg-tag"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "objects",
+        "background",
+        "ambient",
+        "behind-content",
+        "animated",
+        "new"
+      ],
+      "componentType": "object-backdrop",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": true,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Four blurred colour pools breathe and drift out of phase to form a soft mesh gradient. Landing heroes, pricing tiers, marketing surfaces."
+    },
+    {
+      "id": "objects-aurora-curtains",
+      "name": "Aurora Curtains",
+      "gallery": "objects",
+      "category": "AMBIENT BACKGROUNDS",
+      "ref": ".amb-bg-aurora",
+      "classes": [
+        "amb-bg-root",
+        "amb-bg-aurora",
+        "amb-bg-aurora-c",
+        "amb-bg-tag"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "objects",
+        "background",
+        "ambient",
+        "behind-content",
+        "animated",
+        "new"
+      ],
+      "componentType": "object-backdrop",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": true,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Three skewed light curtains sway and brighten over a night gradient. Calm ambient backdrop for status pages and quiet dashboards."
+    },
+    {
+      "id": "objects-film-grain",
+      "name": "Film Grain",
+      "gallery": "objects",
+      "category": "AMBIENT BACKGROUNDS",
+      "ref": ".amb-bg-grain",
+      "classes": [
+        "amb-bg-root",
+        "amb-bg-grain",
+        "amb-bg-grain-vig",
+        "amb-bg-grain-flick",
+        "amb-bg-tag"
+      ],
+      "params": [],
+      "tags": [
+        "objects",
+        "background",
+        "ambient",
+        "behind-content",
+        "animated",
+        "new"
+      ],
+      "componentType": "object-backdrop",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": true,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Two speckle layers jitter on stepped timing under a vignette, with an occasional frame flicker. Editorial, photo and cinematic surfaces."
+    },
+    {
+      "id": "objects-dot-grid-flow",
+      "name": "Dot Grid Flow",
+      "gallery": "objects",
+      "category": "AMBIENT BACKGROUNDS",
+      "ref": ".amb-bg-dots",
+      "classes": [
+        "amb-bg-root",
+        "amb-bg-dots",
+        "amb-bg-tag"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "objects",
+        "background",
+        "ambient",
+        "behind-content",
+        "animated",
+        "new"
+      ],
+      "componentType": "object-backdrop",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": true,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A dot grid glides diagonally while a soft accent glow crosses it. Technical surfaces, canvas backgrounds, builder tools."
+    },
+    {
+      "id": "objects-diagonal-stripes-scroll",
+      "name": "Diagonal Stripes Scroll",
+      "gallery": "objects",
+      "category": "AMBIENT BACKGROUNDS",
+      "ref": ".amb-bg-stripes",
+      "classes": [
+        "amb-bg-root",
+        "amb-bg-stripes",
+        "amb-bg-tag"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "objects",
+        "background",
+        "ambient",
+        "behind-content",
+        "animated",
+        "new"
+      ],
+      "componentType": "object-backdrop",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": true,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Tinted diagonal bands scroll steadily under a top wash. Progress and work in progress areas, maintenance banners, build panels."
+    },
+    {
+      "id": "objects-floating-orbs",
+      "name": "Floating Orbs",
+      "gallery": "objects",
+      "category": "AMBIENT BACKGROUNDS",
+      "ref": ".amb-bg-orbs",
+      "classes": [
+        "amb-bg-root",
+        "amb-bg-orbs",
+        "amb-bg-orb",
+        "amb-bg-tag"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "objects",
+        "background",
+        "ambient",
+        "behind-content",
+        "animated",
+        "new"
+      ],
+      "componentType": "object-backdrop",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": true,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Glossy spheres of mixed sizes rise and fade on staggered timing. Playful backdrop for onboarding, celebrations and feature intros."
+    },
+    {
+      "id": "objects-wave-layers",
+      "name": "Wave Layers",
+      "gallery": "objects",
+      "category": "AMBIENT BACKGROUNDS",
+      "ref": ".amb-bg-waves",
+      "classes": [
+        "amb-bg-root",
+        "amb-bg-waves",
+        "amb-bg-waves-l",
+        "amb-bg-tag"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "objects",
+        "background",
+        "ambient",
+        "behind-content",
+        "animated",
+        "new"
+      ],
+      "componentType": "object-backdrop",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": true,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Three translucent wave bands scroll at different speeds so they read as depth. Water, audio, flow and shipping themed panels."
+    },
+    {
+      "id": "objects-starfield-parallax",
+      "name": "Starfield Parallax",
+      "gallery": "objects",
+      "category": "AMBIENT BACKGROUNDS",
+      "ref": ".amb-bg-stars",
+      "classes": [
+        "amb-bg-root",
+        "amb-bg-stars",
+        "amb-bg-stars-l",
+        "amb-bg-tag"
+      ],
+      "params": [],
+      "tags": [
+        "objects",
+        "background",
+        "ambient",
+        "behind-content",
+        "animated",
+        "new"
+      ],
+      "componentType": "object-backdrop",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": true,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Three star layers scroll at increasing speeds so the nearest stars slide fastest. Space, launch and night mode backdrops."
+    },
+    {
+      "id": "objects-hex-grid-pulse",
+      "name": "Hex Grid Pulse",
+      "gallery": "objects",
+      "category": "AMBIENT BACKGROUNDS",
+      "ref": ".amb-bg-hex",
+      "classes": [
+        "amb-bg-root",
+        "amb-bg-hex",
+        "amb-bg-hex-svg",
+        "amb-bg-hex-cell",
+        "amb-bg-tag"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "objects",
+        "background",
+        "ambient",
+        "behind-content",
+        "animated",
+        "new"
+      ],
+      "componentType": "object-backdrop",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": true,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A honeycomb of cells lights up in a ring that spreads out from the centre. Infrastructure, network and security surfaces."
+    },
+    {
+      "id": "objects-topographic-contours",
+      "name": "Topographic Contours",
+      "gallery": "objects",
+      "category": "AMBIENT BACKGROUNDS",
+      "ref": ".amb-bg-topo",
+      "classes": [
+        "amb-bg-root",
+        "amb-bg-topo",
+        "amb-bg-topo-svg",
+        "amb-bg-topo-a",
+        "amb-bg-topo-b",
+        "amb-bg-tag"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "objects",
+        "background",
+        "ambient",
+        "behind-content",
+        "animated",
+        "new"
+      ],
+      "componentType": "object-backdrop",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": true,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Two sets of contour lines drift and breathe against each other like a shifting relief map. Geo, mapping and exploration panels."
+    },
+    {
+      "id": "objects-ripple-rings",
+      "name": "Ripple Rings",
+      "gallery": "objects",
+      "category": "AMBIENT BACKGROUNDS",
+      "ref": ".amb-bg-ripple",
+      "classes": [
+        "amb-bg-root",
+        "amb-bg-ripple",
+        "amb-bg-ripple-r",
+        "amb-bg-tag"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "objects",
+        "background",
+        "ambient",
+        "behind-content",
+        "animated",
+        "new"
+      ],
+      "componentType": "object-backdrop",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": true,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Rings expand and fade from a pulsing point on a steady cadence. Signal, broadcast, ping and live location backdrops."
+    },
+    {
+      "id": "objects-spotlight-sweep",
+      "name": "Spotlight Sweep",
+      "gallery": "objects",
+      "category": "AMBIENT BACKGROUNDS",
+      "ref": ".amb-bg-spot",
+      "classes": [
+        "amb-bg-root",
+        "amb-bg-spot",
+        "amb-bg-spot-pool",
+        "amb-bg-spot-beam",
+        "amb-bg-tag"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "objects",
+        "background",
+        "ambient",
+        "behind-content",
+        "animated",
+        "new"
+      ],
+      "componentType": "object-backdrop",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": true,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A stage beam swings across a faint grid while its light pool follows on the floor. Showcase, launch and featured item panels."
+    },
+    {
+      "id": "objects-confetti-drift",
+      "name": "Confetti Drift",
+      "gallery": "objects",
+      "category": "AMBIENT BACKGROUNDS",
+      "ref": ".amb-bg-confetti",
+      "classes": [
+        "amb-bg-root",
+        "amb-bg-confetti",
+        "amb-bg-confetti-p",
+        "amb-bg-tag"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "objects",
+        "background",
+        "ambient",
+        "behind-content",
+        "animated",
+        "new"
+      ],
+      "componentType": "object-backdrop",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": true,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Small paper pieces in four colours tumble slowly down the panel. Milestone, reward and celebration backdrops that stay calm."
+    },
+    {
+      "id": "objects-bokeh",
+      "name": "Bokeh",
+      "gallery": "objects",
+      "category": "AMBIENT BACKGROUNDS",
+      "ref": ".amb-bg-bokeh",
+      "classes": [
+        "amb-bg-root",
+        "amb-bg-bokeh",
+        "amb-bg-bokeh-c",
+        "amb-bg-tag"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "objects",
+        "background",
+        "ambient",
+        "behind-content",
+        "animated",
+        "new"
+      ],
+      "componentType": "object-backdrop",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": true,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Soft out of focus light discs in three tints drift and swell. Warm ambient backdrop for photo, event and evening themed surfaces."
+    },
+    {
+      "id": "objects-circuit-traces",
+      "name": "Circuit Traces",
+      "gallery": "objects",
+      "category": "AMBIENT BACKGROUNDS",
+      "ref": ".amb-bg-circuit",
+      "classes": [
+        "amb-bg-root",
+        "amb-bg-circuit",
+        "amb-bg-circuit-svg",
+        "amb-bg-circuit-t",
+        "amb-bg-circuit-p",
+        "amb-bg-circuit-pad",
+        "amb-bg-tag"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "objects",
+        "background",
+        "ambient",
+        "behind-content",
+        "animated",
+        "new"
+      ],
+      "componentType": "object-backdrop",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": true,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Light pulses travel along printed circuit traces and flash the pads they reach. Hardware, compute and data pipeline surfaces."
+    },
+    {
+      "id": "objects-plasma",
+      "name": "Plasma",
+      "gallery": "objects",
+      "category": "AMBIENT BACKGROUNDS",
+      "ref": ".amb-bg-plasma",
+      "classes": [
+        "amb-bg-root",
+        "amb-bg-plasma",
+        "amb-bg-plasma-l",
+        "amb-bg-tag"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "objects",
+        "background",
+        "ambient",
+        "behind-content",
+        "animated",
+        "new"
+      ],
+      "componentType": "object-backdrop",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": true,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Three blurred conic wheels spin at different rates and blend into a churning plasma field. High energy backdrop for AI and power features."
+    },
+    {
+      "id": "objects-checker-fade",
+      "name": "Checker Fade",
+      "gallery": "objects",
+      "category": "AMBIENT BACKGROUNDS",
+      "ref": ".amb-bg-checker",
+      "classes": [
+        "amb-bg-root",
+        "amb-bg-checker",
+        "amb-bg-tag"
+      ],
+      "params": [],
+      "tags": [
+        "objects",
+        "background",
+        "ambient",
+        "behind-content",
+        "animated",
+        "new"
+      ],
+      "componentType": "object-backdrop",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": true,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A tinted checkerboard with a soft band of surface colour sweeping across it so cells fade out and back. Editor and asset canvases."
+    },
+    {
+      "id": "objects-morphing-blob",
+      "name": "Morphing Blob",
+      "gallery": "objects",
+      "category": "AMBIENT BACKGROUNDS",
+      "ref": ".amb-bg-blob",
+      "classes": [
+        "amb-bg-root",
+        "amb-bg-blob",
+        "amb-bg-blob-s",
+        "amb-bg-tag"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "objects",
+        "background",
+        "ambient",
+        "behind-content",
+        "animated",
+        "new"
+      ],
+      "componentType": "object-backdrop",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": true,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Two gradient blobs reshape their outlines and slowly rotate on opposite corners. Friendly ambient backdrop for product and profile cards."
+    },
+    {
+      "id": "objects-scanline-sweep",
+      "name": "Scanline Sweep",
+      "gallery": "objects",
+      "category": "AMBIENT BACKGROUNDS",
+      "ref": ".amb-bg-scan",
+      "classes": [
+        "amb-bg-root",
+        "amb-bg-scan",
+        "amb-bg-scan-wash",
+        "amb-bg-scan-band",
+        "amb-bg-tag"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "objects",
+        "background",
+        "ambient",
+        "behind-content",
+        "animated",
+        "new"
+      ],
+      "componentType": "object-backdrop",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": true,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A bright bar sweeps down over a fine raster while a wash follows it. Terminal, monitoring and scanner themed panels."
+    },
+    {
+      "id": "objects-horizon-grid",
+      "name": "Horizon Grid",
+      "gallery": "objects",
+      "category": "AMBIENT BACKGROUNDS",
+      "ref": ".amb-bg-floor",
+      "classes": [
+        "amb-bg-root",
+        "amb-bg-floor",
+        "amb-bg-floor-sun",
+        "amb-bg-floor-g",
+        "amb-bg-tag"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "objects",
+        "background",
+        "ambient",
+        "behind-content",
+        "animated",
+        "new"
+      ],
+      "componentType": "object-backdrop",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": true,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A perspective floor grid streams toward the viewer under a bobbing sun and violet horizon. Retro, gaming and synth themed surfaces."
     },
     {
       "id": "input-basic-text-input",
@@ -35382,9 +36114,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Eight geometric avatar shapes cut with clip-path: squircle, hexagon, diamond, shield, octagon, pentagon, triangle and star. The status ring and glow follow the shape, so every presence state still reads."
     },
     {
@@ -35423,9 +36155,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Five solid avatar forms built from transforms and gradients: a rotating cube with initials on its faces, a flipping coin, a lit sphere with a drifting glint, a faceted gem and a spinning cylinder. Colour is the status role."
     },
     {
@@ -35466,9 +36198,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "The live stack with mixed geometric avatars instead of circles: each shape keeps its own status ring, the available ones breathe, and the overflow chip stays round so it reads as a count."
     },
     {

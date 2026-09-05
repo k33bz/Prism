@@ -1,0 +1,300 @@
+<h3 class="sec">LOADERS &amp; WAITING STATES</h3>
+<style id="lab-ld-styles">
+/* ===== Loaders beyond spinners (Animation Lab). Prefix lab-ld- / keyframes labLd*.
+   Skeleton families, text and log loaders, determinate bars, shape loaders and resolve-to-done
+   states. Colour contract: primary is var(--c,var(--accent)) with rgba(var(--c-rgb,var(--accent-rgb)),x);
+   done states use --pos; placeholders use --panel2 / --line with white sheen only. Every loop
+   tells its whole story inside 4s. Registered properties --lab-ld-t (number), --lab-ld-on (number)
+   and --lab-ld-n (integer) drive the timeline-style loaders from one parent animation. ===== */
+@property --lab-ld-t{syntax:'<number>';inherits:true;initial-value:0}
+@property --lab-ld-on{syntax:'<number>';inherits:true;initial-value:0}
+@property --lab-ld-n{syntax:'<integer>';inherits:false;initial-value:0}
+
+/* --- Skeleton card: image block, title, lines, diagonal sheen --- */
+.lab-ld-skcard{width:100%;max-width:240px;padding:10px;border-radius:10px;background:var(--card);border:1px solid var(--line);position:relative;overflow:hidden;box-sizing:border-box}
+.lab-ld-skcard-img{height:50px;border-radius:6px;background:var(--panel2)}
+.lab-ld-skcard-ln{height:9px;border-radius:5px;background:var(--panel2);margin-top:8px}
+.lab-ld-skcard-ln.lab-ld-w60{width:60%}.lab-ld-skcard-ln.lab-ld-w90{width:90%}.lab-ld-skcard-ln.lab-ld-w40{width:40%}
+.lab-ld-skcard::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent 35%,rgba(255,255,255,.1) 50%,transparent 65%);transform:translateX(-100%);animation:labLdSheen 2s ease-in-out infinite}
+@keyframes labLdSheen{to{transform:translateX(100%)}}
+
+/* --- Skeleton list rows that resolve into content one by one --- */
+.lab-ld-sklist{width:100%;max-width:260px;display:grid;gap:8px;font:12px/1.2 ui-sans-serif,system-ui,sans-serif;color:var(--ink)}
+.lab-ld-sklist-row{display:grid;grid-template-columns:28px 1fr;gap:10px;align-items:center;position:relative;height:30px}
+.lab-ld-sklist-row:nth-child(1){animation:labLdRowOne 4s linear infinite}
+.lab-ld-sklist-row:nth-child(2){animation:labLdRowTwo 4s linear infinite}
+.lab-ld-sklist-row:nth-child(3){animation:labLdRowThree 4s linear infinite}
+.lab-ld-sklist-av{width:28px;height:28px;border-radius:50%;background:var(--panel2);position:relative;overflow:hidden}
+.lab-ld-sklist-av::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent 30%,rgba(255,255,255,.12) 50%,transparent 70%);transform:translateX(-100%);animation:labLdSheen 1.4s linear infinite}
+.lab-ld-sklist-tx{position:relative}
+.lab-ld-sklist-ph{position:absolute;inset:0;display:grid;gap:6px;align-content:center;opacity:calc(1 - var(--lab-ld-on))}
+.lab-ld-sklist-ph i{display:block;height:8px;border-radius:4px;background:var(--panel2)}
+.lab-ld-sklist-ph i:first-child{width:45%}.lab-ld-sklist-ph i:last-child{width:80%}
+.lab-ld-sklist-nm,.lab-ld-sklist-sub{opacity:var(--lab-ld-on);transform:translateY(calc((1 - var(--lab-ld-on))*3px))}
+.lab-ld-sklist-nm{font-weight:600}.lab-ld-sklist-sub{color:var(--muted);font-size:11px}
+.lab-ld-sklist-av::before{content:"";position:absolute;inset:0;border-radius:50%;background:var(--c,var(--accent));opacity:calc(var(--lab-ld-on)*.85)}
+@keyframes labLdRowOne{0%,26%{--lab-ld-on:0}34%,94%{--lab-ld-on:1}100%{--lab-ld-on:0}}
+@keyframes labLdRowTwo{0%,44%{--lab-ld-on:0}52%,94%{--lab-ld-on:1}100%{--lab-ld-on:0}}
+@keyframes labLdRowThree{0%,62%{--lab-ld-on:0}70%,94%{--lab-ld-on:1}100%{--lab-ld-on:0}}
+
+/* --- Skeleton table: header plus cells pulsing in a column wave --- */
+.lab-ld-sktable{width:100%;max-width:260px;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--card)}
+.lab-ld-sktable-r{display:grid;grid-template-columns:1.4fr 1fr .8fr;gap:10px;padding:7px 10px;border-top:1px solid var(--line)}
+.lab-ld-sktable-r:first-child{border-top:0;background:var(--panel2)}
+.lab-ld-sktable-c{height:8px;border-radius:4px;background:var(--dim);animation-name:labLdPulse;animation-duration:1.2s;animation-timing-function:ease-in-out;animation-iteration-count:infinite;animation-delay:calc(var(--i,0)*.15s)}
+.lab-ld-sktable-r:first-child .lab-ld-sktable-c{background:var(--dim);animation-name:none;opacity:.7}
+@keyframes labLdPulse{0%,100%{opacity:.25}50%{opacity:.9}}
+
+/* --- Skeleton profile: avatar, name, stats, vertical scan light --- */
+.lab-ld-skprof{width:100%;max-width:220px;padding:12px;border-radius:12px;background:var(--card);border:1px solid var(--line);position:relative;overflow:hidden;display:grid;justify-items:center;gap:8px;box-sizing:border-box}
+.lab-ld-skprof-av{width:40px;height:40px;border-radius:50%;background:var(--panel2);box-shadow:0 0 0 3px rgba(var(--c-rgb,var(--accent-rgb)),.25)}
+.lab-ld-skprof-nm{width:55%;height:9px;border-radius:5px;background:var(--panel2)}
+.lab-ld-skprof-st{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;width:100%}
+.lab-ld-skprof-st i{display:block;height:22px;border-radius:6px;background:var(--panel2)}
+.lab-ld-skprof::after{content:"";position:absolute;left:0;right:0;top:-40%;height:40%;background:linear-gradient(180deg,transparent,rgba(255,255,255,.09),transparent);animation:labLdScan 2s ease-in-out infinite}
+@keyframes labLdScan{to{top:110%}}
+
+/* --- Ellipsis text loader --- */
+.lab-ld-ellipsis{font:600 20px/1 ui-sans-serif,system-ui,sans-serif;color:var(--ink);letter-spacing:.01em}
+.lab-ld-ellipsis-dots{display:inline-block;width:1.3em;text-align:left;color:var(--c,var(--accent))}
+.lab-ld-ellipsis-dots::after{content:"";animation:labLdDots 1.6s steps(1,end) infinite}
+@keyframes labLdDots{0%{content:""}25%{content:"."}50%{content:".."}75%{content:"..."}}
+
+/* --- Segmented ring: 12 ticks light up in order with a live count --- */
+.lab-ld-segring{position:relative;width:96px;height:96px;animation:labLdSegT 4s linear infinite;--lab-ld-t:0;counter-reset:lab-ld-seg var(--lab-ld-n);font:600 15px/1 ui-monospace,Menlo,monospace;color:var(--ink)}
+.lab-ld-segring-s{position:absolute;left:50%;top:0;width:6px;height:16px;margin-left:-3px;border-radius:3px;background:var(--line);transform-origin:50% 48px;transform:rotate(calc(var(--i)*30deg))}
+.lab-ld-segring-s::after{content:"";position:absolute;inset:0;border-radius:3px;background:var(--c,var(--accent));box-shadow:0 0 8px rgba(var(--c-rgb,var(--accent-rgb)),.7);opacity:clamp(0,calc(var(--lab-ld-t) - var(--i)),1)}
+.lab-ld-segring::after{content:counter(lab-ld-seg) "/12";position:absolute;inset:0;display:grid;place-items:center}
+@keyframes labLdSegT{0%{--lab-ld-t:0;--lab-ld-n:0}84%{--lab-ld-t:12;--lab-ld-n:12}92%{--lab-ld-t:12;--lab-ld-n:12}94%,100%{--lab-ld-t:0;--lab-ld-n:0}}
+
+/* --- Dots converge into a check --- */
+.lab-ld-dotcheck{position:relative;width:96px;height:48px}
+.lab-ld-dotcheck-d{position:absolute;top:18px;left:calc(50% - 6px);width:12px;height:12px;animation:labLdDcMove 4s ease-in-out infinite}
+.lab-ld-dotcheck-b{display:block;width:12px;height:12px;border-radius:50%;background:var(--c,var(--accent));animation-name:labLdDcHop;animation-duration:.6s;animation-timing-function:ease-in-out;animation-iteration-count:infinite;animation-direction:alternate;animation-delay:calc(var(--i)*-.2s)}
+.lab-ld-dotcheck::before{content:"";position:absolute;left:calc(50% - 20px);top:4px;width:40px;height:40px;border-radius:50%;background:rgba(var(--pos-rgb),.18);box-shadow:0 0 0 2px var(--pos);opacity:0;transform:scale(0);animation:labLdDcRing 4s ease-out infinite}
+.lab-ld-dotcheck::after{content:"";position:absolute;left:calc(50% - 6px);top:13px;width:10px;height:18px;border-right:3px solid var(--pos);border-bottom:3px solid var(--pos);transform:rotate(45deg) scale(0);opacity:0;animation:labLdDcCheck 4s cubic-bezier(.34,1.56,.64,1) infinite}
+@keyframes labLdDcHop{from{transform:translateY(0)}to{transform:translateY(-10px)}}
+@keyframes labLdDcMove{0%,50%{transform:translateX(calc(var(--x)*1px)) scale(1);opacity:1}60%{transform:translateX(0) scale(.2);opacity:0}92%{transform:translateX(0) scale(.2);opacity:0}100%{transform:translateX(calc(var(--x)*1px)) scale(1);opacity:1}}
+@keyframes labLdDcRing{0%,56%{opacity:0;transform:scale(0)}64%{opacity:1;transform:scale(1)}92%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(0)}}
+@keyframes labLdDcCheck{0%,58%{opacity:0;transform:rotate(45deg) scale(0)}68%{opacity:1;transform:rotate(45deg) scale(1)}92%{opacity:1;transform:rotate(45deg) scale(1)}100%{opacity:0;transform:rotate(45deg) scale(0)}}
+
+/* --- Chasing squares around a 2x2 grid --- */
+.lab-ld-chase{position:relative;width:48px;height:48px}
+.lab-ld-chase-q{position:absolute;left:0;top:0;width:20px;height:20px;border-radius:4px;background:var(--c,var(--accent));opacity:calc(1 - var(--i)*.22);animation-name:labLdChase;animation-duration:2s;animation-timing-function:ease-in-out;animation-iteration-count:infinite;animation-delay:calc(var(--i)*-.5s)}
+@keyframes labLdChase{0%,12%{transform:translate(0,0)}25%,37%{transform:translate(28px,0)}50%,62%{transform:translate(28px,28px)}75%,87%{transform:translate(0,28px)}100%{transform:translate(0,0)}}
+
+/* --- Striped bar: determinate fill with a moving barber pole --- */
+.lab-ld-stripes{width:100%;max-width:240px;height:16px;border-radius:8px;background:var(--panel2);border:1px solid var(--line);overflow:hidden;box-sizing:border-box}
+.lab-ld-stripes-f{height:100%;border-radius:8px;width:0;background-color:var(--c,var(--accent));background-image:repeating-linear-gradient(45deg,rgba(255,255,255,.28) 0 8px,transparent 8px 16px);background-size:22.6px 100%;animation:labLdFill 4s ease-in-out infinite,labLdStripe .5s linear infinite}
+@keyframes labLdFill{0%{width:0}80%,100%{width:100%}}
+@keyframes labLdStripe{to{background-position:22.6px 0}}
+
+/* --- Stacked cards shuffle --- */
+.lab-ld-shuffle{position:relative;width:200px;height:96px}
+.lab-ld-shuffle-c{position:absolute;left:calc(50% - 50px);top:26px;width:100px;height:62px;border-radius:9px;border:1px solid rgba(var(--c-rgb,var(--accent-rgb)),.5);background:linear-gradient(150deg,rgba(var(--c-rgb,var(--accent-rgb)),.55),var(--panel2) 70%),var(--panel);box-shadow:0 8px 18px rgba(0,0,0,.35);display:grid;place-items:center;font:600 13px ui-sans-serif,system-ui,sans-serif;color:var(--ink);animation-name:labLdShuffle;animation-duration:4s;animation-timing-function:ease-in-out;animation-iteration-count:infinite;animation-delay:calc(var(--i)*-1.333s)}
+@keyframes labLdShuffle{0%{transform:translate(0,0) scale(1);filter:brightness(1);z-index:3}16%{transform:translate(78px,-6px) rotate(8deg) scale(1);filter:brightness(1);z-index:3}17%{z-index:1}33%{transform:translate(0,-18px) scale(.86);filter:brightness(.55);z-index:1}66%{transform:translate(0,-9px) scale(.93);filter:brightness(.78);z-index:2}100%{transform:translate(0,0) scale(1);filter:brightness(1);z-index:3}}
+
+/* --- Staged progress with rotating stage labels --- */
+.lab-ld-stages{width:100%;max-width:250px;font:12px/1 ui-sans-serif,system-ui,sans-serif;color:var(--ink)}
+.lab-ld-stages-lb{position:relative;height:16px;margin-bottom:8px}
+.lab-ld-stages-lb span{position:absolute;left:0;top:0;opacity:0;animation-name:labLdStgWin;animation-duration:4s;animation-timing-function:steps(1,end);animation-iteration-count:infinite;animation-delay:var(--d)}
+.lab-ld-stages-lb span:last-of-type{color:var(--pos);font-weight:600}
+.lab-ld-stages-pc{position:absolute;right:0;top:0;color:var(--muted);font-family:ui-monospace,Menlo,monospace;--lab-ld-n:0;counter-reset:lab-ld-pct var(--lab-ld-n);animation:labLdCountUp 4s linear infinite}
+.lab-ld-stages-pc::after{content:counter(lab-ld-pct) "%"}
+.lab-ld-stages-tr{height:8px;border-radius:4px;background:var(--panel2);overflow:hidden}
+.lab-ld-stages-f{height:100%;border-radius:4px;background:var(--c,var(--accent));width:0;animation:labLdStgBar 4s linear infinite}
+@keyframes labLdStgWin{0%{opacity:1}25%,100%{opacity:0}}
+@keyframes labLdStgBar{0%{width:0;background:var(--c,var(--accent))}74%{width:100%;background:var(--c,var(--accent))}76%,100%{width:100%;background:var(--pos)}}
+@keyframes labLdCountUp{0%{--lab-ld-n:0}75%,100%{--lab-ld-n:100}}
+
+/* --- Rolling square along a rail --- */
+.lab-ld-roll{position:relative;width:220px;height:48px}
+.lab-ld-roll::before{content:"";position:absolute;left:0;right:0;bottom:8px;height:2px;border-radius:1px;background:var(--line)}
+.lab-ld-roll-q{position:absolute;left:10px;bottom:10px;width:22px;height:22px;border-radius:4px;background:var(--c,var(--accent));box-shadow:0 4px 10px rgba(var(--c-rgb,var(--accent-rgb)),.4);animation:labLdRoll 4s ease-in-out infinite}
+@keyframes labLdRoll{0%{transform:translateX(0) rotate(0)}12.5%{transform:translateX(44px) rotate(90deg)}25%{transform:translateX(88px) rotate(180deg)}37.5%{transform:translateX(132px) rotate(270deg)}50%{transform:translateX(176px) rotate(360deg)}62.5%{transform:translateX(132px) rotate(270deg)}75%{transform:translateX(88px) rotate(180deg)}87.5%{transform:translateX(44px) rotate(90deg)}100%{transform:translateX(0) rotate(0)}}
+
+/* --- Log tail: lines arrive in order, done line in green --- */
+.lab-ld-log{width:100%;max-width:250px;padding:10px 12px;border-radius:8px;background:var(--bg);border:1px solid var(--line);font:11px/1.6 ui-monospace,Menlo,monospace;color:var(--muted);box-sizing:border-box;animation:labLdLogT 4s linear infinite;--lab-ld-t:0}
+.lab-ld-log-l{opacity:clamp(0,calc((var(--lab-ld-t) - var(--i))*4),1);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lab-ld-log-l b{color:var(--c,var(--accent));font-weight:600}
+.lab-ld-log-l.lab-ld-log-ok{color:var(--pos)}
+.lab-ld-log-cur{display:inline-block;width:7px;height:12px;vertical-align:-2px;background:var(--ink);animation:labLdBlink 1s steps(2,end) infinite}
+@keyframes labLdLogT{0%{--lab-ld-t:0}80%{--lab-ld-t:5}94%{--lab-ld-t:5}96%,100%{--lab-ld-t:0}}
+@keyframes labLdBlink{50%{opacity:0}}
+
+/* --- Text fill: outlined word fills from the bottom --- */
+.lab-ld-textfill{font:800 36px/1 ui-sans-serif,system-ui,sans-serif;letter-spacing:.08em;color:transparent;-webkit-text-stroke:1px rgba(var(--c-rgb,var(--accent-rgb)),.55);background:linear-gradient(0deg,var(--c,var(--accent)) 50%,transparent 50%);background-size:100% 200%;background-position:0 0;-webkit-background-clip:text;background-clip:text;animation:labLdTextFill 3s ease-in-out infinite}
+@keyframes labLdTextFill{0%{background-position:0 0}80%,100%{background-position:0 100%}}
+
+/* --- Flip tiles: a row of tiles flip in sequence and back --- */
+.lab-ld-fliptiles{display:flex;gap:6px;perspective:300px}
+.lab-ld-fliptiles-t{position:relative;width:26px;height:34px;transform-style:preserve-3d;animation-name:labLdFlip;animation-duration:2.4s;animation-timing-function:ease-in-out;animation-iteration-count:infinite;animation-delay:calc(var(--i)*.14s)}
+.lab-ld-fliptiles-t::before,.lab-ld-fliptiles-t::after{content:"";position:absolute;inset:0;border-radius:5px;backface-visibility:hidden}
+.lab-ld-fliptiles-t::before{background:var(--panel2);border:1px solid var(--line)}
+.lab-ld-fliptiles-t::after{background:var(--c,var(--accent));box-shadow:0 0 10px rgba(var(--c-rgb,var(--accent-rgb)),.5);transform:rotateX(180deg)}
+@keyframes labLdFlip{0%{transform:rotateX(0)}30%,50%{transform:rotateX(180deg)}80%,100%{transform:rotateX(360deg)}}
+
+/* --- Diamond ripple: nested outlines expand from the center --- */
+.lab-ld-diamond{position:relative;width:90px;height:90px}
+.lab-ld-diamond-r{position:absolute;left:15px;top:15px;width:60px;height:60px;border:2px solid var(--c,var(--accent));border-radius:6px;transform:rotate(45deg) scale(.15);opacity:0;animation-name:labLdDiamond;animation-duration:2s;animation-timing-function:ease-out;animation-iteration-count:infinite;animation-delay:calc(var(--i)*.66s)}
+.lab-ld-diamond::after{content:"";position:absolute;left:39px;top:39px;width:12px;height:12px;border-radius:2px;background:var(--c,var(--accent));transform:rotate(45deg);box-shadow:0 0 10px rgba(var(--c-rgb,var(--accent-rgb)),.6)}
+@keyframes labLdDiamond{0%{transform:rotate(45deg) scale(.15);opacity:1}100%{transform:rotate(45deg) scale(1);opacity:0}}
+
+/* --- Chomp: a mouth eats a train of dots --- */
+.lab-ld-chomp{position:relative;width:170px;height:40px;overflow:hidden}
+.lab-ld-chomp-m{position:absolute;left:8px;top:6px;width:28px;height:28px}
+.lab-ld-chomp-j{position:absolute;left:0;width:28px;height:14px;background:var(--c,var(--accent));animation-duration:.5s;animation-timing-function:ease-in-out;animation-iteration-count:infinite;animation-direction:alternate}
+.lab-ld-chomp-j:first-child{top:0;border-radius:14px 14px 0 0;transform-origin:50% 100%;animation-name:labLdJawUp}
+.lab-ld-chomp-j:last-child{top:14px;border-radius:0 0 14px 14px;transform-origin:50% 0;animation-name:labLdJawDown}
+.lab-ld-chomp-d{position:absolute;top:16px;left:150px;width:8px;height:8px;border-radius:50%;background:var(--ink);opacity:.85;animation-name:labLdChompDot;animation-duration:1.6s;animation-timing-function:linear;animation-iteration-count:infinite;animation-delay:calc(var(--i)*-.4s)}
+@keyframes labLdJawUp{from{transform:rotate(0)}to{transform:rotate(-32deg)}}
+@keyframes labLdJawDown{from{transform:rotate(0)}to{transform:rotate(32deg)}}
+@keyframes labLdChompDot{0%{transform:translateX(0);opacity:.85}88%{opacity:.85}92%,100%{transform:translateX(-122px);opacity:0}}
+
+/* --- Upload cloud: arrows rise into a cloud --- */
+.lab-ld-upload{position:relative;width:100px;height:72px}
+.lab-ld-upload-c{position:absolute;left:14px;top:16px;width:72px;height:28px;border-radius:14px;background:var(--panel2);border:1px solid var(--line);animation:labLdCloud 2s ease-in-out infinite}
+.lab-ld-upload-c::before,.lab-ld-upload-c::after{content:"";position:absolute;border-radius:50%;background:inherit;border:inherit;bottom:8px}
+.lab-ld-upload-c::before{left:10px;width:28px;height:28px}
+.lab-ld-upload-c::after{left:32px;width:36px;height:36px}
+.lab-ld-upload-a{position:absolute;left:44px;top:52px;width:12px;height:16px;animation:labLdArrow 1.3s ease-out infinite}
+.lab-ld-upload-a::before{content:"";position:absolute;left:3px;top:-1px;width:6px;height:6px;border-left:3px solid var(--c,var(--accent));border-top:3px solid var(--c,var(--accent));transform:rotate(45deg)}
+.lab-ld-upload-a::after{content:"";position:absolute;left:4.5px;top:2px;width:3px;height:14px;border-radius:2px;background:var(--c,var(--accent))}
+@keyframes labLdArrow{0%{transform:translateY(0);opacity:0}25%{opacity:1}100%{transform:translateY(-30px);opacity:0}}
+@keyframes labLdCloud{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+
+/* --- Counting percent with a hairline bar --- */
+.lab-ld-count{width:100%;max-width:200px;text-align:center;font:12px/1.4 ui-sans-serif,system-ui,sans-serif;color:var(--muted)}
+.lab-ld-count-n{font:700 40px/1 ui-monospace,Menlo,monospace;color:var(--ink);--lab-ld-n:0;counter-reset:lab-ld-cnt var(--lab-ld-n);animation:labLdCountUp 4s linear infinite}
+.lab-ld-count-n::before{content:counter(lab-ld-cnt)}
+.lab-ld-count-n i{font-style:normal;font-size:18px;color:var(--c,var(--accent))}
+.lab-ld-count-tr{height:3px;border-radius:2px;background:var(--panel2);margin:8px 0 6px;overflow:hidden}
+.lab-ld-count-f{height:100%;background:var(--c,var(--accent));width:0;animation:labLdFillLin 4s linear infinite}
+@keyframes labLdFillLin{0%{width:0}75%,100%{width:100%}}
+
+/* --- Caterpillar pills: widths stretch in sequence --- */
+.lab-ld-pills{display:flex;gap:6px;align-items:center}
+.lab-ld-pills-p{width:10px;height:10px;border-radius:5px;background:var(--c,var(--accent));opacity:.9;animation-name:labLdStretch;animation-duration:1.2s;animation-timing-function:ease-in-out;animation-iteration-count:infinite;animation-delay:calc(var(--i)*.2s)}
+@keyframes labLdStretch{0%,100%{width:10px;opacity:.6}40%{width:34px;opacity:1}}
+
+
+/* --- Reduced motion: freeze everything in a legible done or resting pose --- */
+@media (prefers-reduced-motion:reduce){
+  [class*="lab-ld-"],[class*="lab-ld-"] *,[class*="lab-ld-"]::before,[class*="lab-ld-"]::after{animation-name:none!important}
+  .lab-ld-sklist-row{--lab-ld-on:1}
+  .lab-ld-segring{--lab-ld-t:12;--lab-ld-n:12}
+  .lab-ld-log{--lab-ld-t:5}
+  .lab-ld-count-n,.lab-ld-stages-pc{--lab-ld-n:100}
+  .lab-ld-stripes-f,.lab-ld-stages-f,.lab-ld-count-f{width:100%}
+  .lab-ld-stages-f{background:var(--pos)}
+  .lab-ld-stages-lb span:last-of-type{opacity:1}
+  .lab-ld-textfill{background-position:0 100%}
+  .lab-ld-dotcheck-d{opacity:0}
+  .lab-ld-dotcheck::before{opacity:1;transform:scale(1)}
+  .lab-ld-dotcheck::after{opacity:1;transform:rotate(45deg) scale(1)}
+  .lab-ld-ellipsis-dots::after{content:"..."}
+  .lab-ld-diamond-r{opacity:.5;transform:rotate(45deg) scale(calc(.4 + var(--i)*.3))}
+  .lab-ld-shuffle-c:nth-child(1){z-index:3}.lab-ld-shuffle-c:nth-child(2){transform:translateY(-9px) scale(.93);filter:brightness(.78);z-index:2}.lab-ld-shuffle-c:nth-child(3){transform:translateY(-18px) scale(.86);filter:brightness(.55);z-index:1}
+  .lab-ld-chase-q:nth-child(2){transform:translate(28px,0)}.lab-ld-chase-q:nth-child(3){transform:translate(28px,28px)}.lab-ld-chase-q:nth-child(4){transform:translate(0,28px)}
+  .lab-ld-chomp-j:first-child{transform:rotate(-20deg)}.lab-ld-chomp-j:last-child{transform:rotate(20deg)}
+  .lab-ld-chomp-d{transform:translateX(calc(var(--i)*-24px))}
+  .lab-ld-upload-a{transform:translateY(-14px);opacity:1}
+  .lab-ld-pills-p:nth-child(2){width:34px}
+  .lab-ld-fliptiles-t:nth-child(odd){transform:rotateX(180deg)}
+  .lab-ld-roll-q{transform:translateX(88px) rotate(180deg)}
+}
+</style>
+<div class="gallery">
+
+  <div class="tile is-new" data-ctype="loader" data-interact="auto-play" data-c="accent"><div class="stage">
+    <div class="lab-ld-skcard"><div class="lab-ld-skcard-img"></div><div class="lab-ld-skcard-ln lab-ld-w60"></div><div class="lab-ld-skcard-ln lab-ld-w90"></div><div class="lab-ld-skcard-ln lab-ld-w40"></div></div>
+  </div><div class="meta"><div class="nm">Skeleton Card</div><span class="ref">.lab-ld-skcard</span><div class="desc">A card placeholder with an image block and three text lines under a diagonal sheen sweep. Use in place of a card while its data loads.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="loader" data-interact="auto-play" data-c="info"><div class="stage">
+    <div class="lab-ld-sklist">
+      <div class="lab-ld-sklist-row"><div class="lab-ld-sklist-av"></div><div class="lab-ld-sklist-tx"><div class="lab-ld-sklist-ph"><i></i><i></i></div><div class="lab-ld-sklist-nm">J. Doe</div><div class="lab-ld-sklist-sub">Atlas, owner</div></div></div>
+      <div class="lab-ld-sklist-row"><div class="lab-ld-sklist-av"></div><div class="lab-ld-sklist-tx"><div class="lab-ld-sklist-ph"><i></i><i></i></div><div class="lab-ld-sklist-nm">R. Patel</div><div class="lab-ld-sklist-sub">Comet, reviewer</div></div></div>
+      <div class="lab-ld-sklist-row"><div class="lab-ld-sklist-av"></div><div class="lab-ld-sklist-tx"><div class="lab-ld-sklist-ph"><i></i><i></i></div><div class="lab-ld-sklist-nm">A. Lee</div><div class="lab-ld-sklist-sub">Ember, editor</div></div></div>
+    </div>
+  </div><div class="meta"><div class="nm">Skeleton List Resolve</div><span class="ref">.lab-ld-sklist</span><div class="desc">Three avatar rows shimmer, then each resolves into real name and role in order as its data arrives. Use for member and contact lists that stream in.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="loader" data-interact="auto-play" data-c="accent"><div class="stage">
+    <div class="lab-ld-sktable">
+      <div class="lab-ld-sktable-r"><div class="lab-ld-sktable-c"></div><div class="lab-ld-sktable-c"></div><div class="lab-ld-sktable-c"></div></div>
+      <div class="lab-ld-sktable-r"><div class="lab-ld-sktable-c" style="--i:0"></div><div class="lab-ld-sktable-c" style="--i:1"></div><div class="lab-ld-sktable-c" style="--i:2"></div></div>
+      <div class="lab-ld-sktable-r"><div class="lab-ld-sktable-c" style="--i:1"></div><div class="lab-ld-sktable-c" style="--i:2"></div><div class="lab-ld-sktable-c" style="--i:3"></div></div>
+      <div class="lab-ld-sktable-r"><div class="lab-ld-sktable-c" style="--i:2"></div><div class="lab-ld-sktable-c" style="--i:3"></div><div class="lab-ld-sktable-c" style="--i:4"></div></div>
+      <div class="lab-ld-sktable-r"><div class="lab-ld-sktable-c" style="--i:3"></div><div class="lab-ld-sktable-c" style="--i:4"></div><div class="lab-ld-sktable-c" style="--i:5"></div></div>
+    </div>
+  </div><div class="meta"><div class="nm">Skeleton Table</div><span class="ref">.lab-ld-sktable</span><div class="desc">A header row and four body rows of cell bars that pulse in a diagonal wave, set by the per-cell delay index. Use while a data grid fetches its first page.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="loader" data-interact="auto-play" data-c="crit"><div class="stage">
+    <div class="lab-ld-skprof"><div class="lab-ld-skprof-av"></div><div class="lab-ld-skprof-nm"></div><div class="lab-ld-skprof-st"><i></i><i></i><i></i></div></div>
+  </div><div class="meta"><div class="nm">Skeleton Profile Scan</div><span class="ref">.lab-ld-skprof</span><div class="desc">A profile header placeholder: ringed avatar, name bar and three stat blocks with a soft light band scanning top to bottom. Use for account and user pages.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="loader" data-interact="auto-play" data-c="accent"><div class="stage">
+    <div class="lab-ld-ellipsis">Loading<span class="lab-ld-ellipsis-dots"></span></div>
+  </div><div class="meta"><div class="nm">Ellipsis Loader</div><span class="ref">.lab-ld-ellipsis</span><div class="desc">The word Loading with dots that step from none to three and wrap, driven by an animated content string. Use for inline text-only waiting states.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="loader" data-interact="auto-play" data-c="info"><div class="stage">
+    <div class="lab-ld-segring"><i class="lab-ld-segring-s" style="--i:0"></i><i class="lab-ld-segring-s" style="--i:1"></i><i class="lab-ld-segring-s" style="--i:2"></i><i class="lab-ld-segring-s" style="--i:3"></i><i class="lab-ld-segring-s" style="--i:4"></i><i class="lab-ld-segring-s" style="--i:5"></i><i class="lab-ld-segring-s" style="--i:6"></i><i class="lab-ld-segring-s" style="--i:7"></i><i class="lab-ld-segring-s" style="--i:8"></i><i class="lab-ld-segring-s" style="--i:9"></i><i class="lab-ld-segring-s" style="--i:10"></i><i class="lab-ld-segring-s" style="--i:11"></i></div>
+  </div><div class="meta"><div class="nm">Segmented Ring Count</div><span class="ref">.lab-ld-segring</span><div class="desc">Twelve ticks light up clockwise while the center counts n of 12, both driven by one registered property on the parent. Use for stepwise jobs with a known count.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="loader" data-interact="auto-play" data-c="accent"><div class="stage">
+    <div class="lab-ld-dotcheck"><span class="lab-ld-dotcheck-d" style="--x:-24"><i class="lab-ld-dotcheck-b" style="--i:0"></i></span><span class="lab-ld-dotcheck-d" style="--x:0"><i class="lab-ld-dotcheck-b" style="--i:1"></i></span><span class="lab-ld-dotcheck-d" style="--x:24"><i class="lab-ld-dotcheck-b" style="--i:2"></i></span></div>
+  </div><div class="meta"><div class="nm">Dots to Check</div><span class="ref">.lab-ld-dotcheck</span><div class="desc">Three hopping dots converge and merge, then a green check pops out of the merge point inside a ring. Use where a wait ends in a visible success.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="loader" data-interact="auto-play" data-c="accent"><div class="stage">
+    <div class="lab-ld-chase"><i class="lab-ld-chase-q" style="--i:0"></i><i class="lab-ld-chase-q" style="--i:1"></i><i class="lab-ld-chase-q" style="--i:2"></i><i class="lab-ld-chase-q" style="--i:3"></i></div>
+  </div><div class="meta"><div class="nm">Chasing Squares</div><span class="ref">.lab-ld-chase</span><div class="desc">Four squares of fading opacity hop clockwise around a two by two grid, each one step behind the last. Use as a compact indeterminate loader for panels.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="loader" data-interact="auto-play" data-c="info"><div class="stage">
+    <div class="lab-ld-stripes"><div class="lab-ld-stripes-f"></div></div>
+  </div><div class="meta"><div class="nm">Striped Progress Bar</div><span class="ref">.lab-ld-stripes</span><div class="desc">A determinate bar fills to full while a barber pole stripe keeps moving across the fill. Use for installs and copies where progress is known but slow.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="loader" data-interact="auto-play" data-c="crit"><div class="stage">
+    <div class="lab-ld-shuffle"><div class="lab-ld-shuffle-c" style="--i:0">Atlas</div><div class="lab-ld-shuffle-c" style="--i:1">Comet</div><div class="lab-ld-shuffle-c" style="--i:2">Ember</div></div>
+  </div><div class="meta"><div class="nm">Card Stack Shuffle</div><span class="ref">.lab-ld-shuffle</span><div class="desc">The front card slides out to the right and tucks in at the back of the stack while the rest step forward. Use while a deck, feed or queue is being prepared.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="loader" data-interact="auto-play" data-c="accent"><div class="stage">
+    <div class="lab-ld-stages"><div class="lab-ld-stages-lb"><span style="--d:0s">Uploading Atlas.zip</span><span style="--d:-3s">Processing</span><span style="--d:-2s">Finalizing</span><span style="--d:-1s">Done</span><b class="lab-ld-stages-pc"></b></div><div class="lab-ld-stages-tr"><div class="lab-ld-stages-f"></div></div></div>
+  </div><div class="meta"><div class="nm">Staged Progress</div><span class="ref">.lab-ld-stages</span><div class="desc">A progress bar with a live percent and a stage label that steps from Uploading through Processing to Done, turning green at the end. Use for multi step jobs.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="loader" data-interact="auto-play" data-c="warn"><div class="stage">
+    <div class="lab-ld-roll"><i class="lab-ld-roll-q"></i></div>
+  </div><div class="meta"><div class="nm">Rolling Square</div><span class="ref">.lab-ld-roll</span><div class="desc">A square rolls along a rail, a quarter turn per hop, reaches the end and rolls back. Use for playful waits on a wide, short strip such as a footer.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="loader" data-interact="auto-play" data-c="pos"><div class="stage">
+    <div class="lab-ld-log"><div class="lab-ld-log-l" style="--i:0">$ <b>fetch</b> atlas@2.4</div><div class="lab-ld-log-l" style="--i:1">resolving 12 packages</div><div class="lab-ld-log-l" style="--i:2">downloading 1,284 KB</div><div class="lab-ld-log-l" style="--i:3">verifying checksums</div><div class="lab-ld-log-l lab-ld-log-ok" style="--i:4">ok in 3.2s <i class="lab-ld-log-cur"></i></div></div>
+  </div><div class="meta"><div class="nm">Log Tail Loader</div><span class="ref">.lab-ld-log</span><div class="desc">A terminal panel where log lines arrive one after another and end on a green ok line with a blinking cursor. Use for CLI style installs and deploy consoles.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="loader" data-interact="auto-play" data-c="accent"><div class="stage">
+    <div class="lab-ld-textfill">LOADING</div>
+  </div><div class="meta"><div class="nm">Text Fill Loader</div><span class="ref">.lab-ld-textfill</span><div class="desc">An outlined word fills with colour from the bottom up through a background clipped to the glyphs. Use as a hero loader where text is the only element on screen.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="loader" data-interact="auto-play" data-c="info"><div class="stage">
+    <div class="lab-ld-fliptiles"><i class="lab-ld-fliptiles-t" style="--i:0"></i><i class="lab-ld-fliptiles-t" style="--i:1"></i><i class="lab-ld-fliptiles-t" style="--i:2"></i><i class="lab-ld-fliptiles-t" style="--i:3"></i><i class="lab-ld-fliptiles-t" style="--i:4"></i></div>
+  </div><div class="meta"><div class="nm">Flip Tiles</div><span class="ref">.lab-ld-fliptiles</span><div class="desc">Five tiles flip on their horizontal axis in sequence to a coloured back face, then flip on to the plain front. Use for board or grid views that are refreshing.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="loader" data-interact="auto-play" data-c="crit"><div class="stage">
+    <div class="lab-ld-diamond"><i class="lab-ld-diamond-r" style="--i:0"></i><i class="lab-ld-diamond-r" style="--i:1"></i><i class="lab-ld-diamond-r" style="--i:2"></i></div>
+  </div><div class="meta"><div class="nm">Diamond Ripple</div><span class="ref">.lab-ld-diamond</span><div class="desc">Rotated square outlines expand from a solid centre gem and fade as they grow, three in flight at once. Use for search or scan states that radiate from a point.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="loader" data-interact="auto-play" data-c="warn"><div class="stage">
+    <div class="lab-ld-chomp"><div class="lab-ld-chomp-m"><i class="lab-ld-chomp-j"></i><i class="lab-ld-chomp-j"></i></div><i class="lab-ld-chomp-d" style="--i:0"></i><i class="lab-ld-chomp-d" style="--i:1"></i><i class="lab-ld-chomp-d" style="--i:2"></i><i class="lab-ld-chomp-d" style="--i:3"></i></div>
+  </div><div class="meta"><div class="nm">Chomp Loader</div><span class="ref">.lab-ld-chomp</span><div class="desc">A round mouth opens and closes while a train of dots glides in from the right and vanishes at the jaws. Use for queue draining or batch consumption states.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="loader" data-interact="auto-play" data-c="info"><div class="stage">
+    <div class="lab-ld-upload"><div class="lab-ld-upload-c"></div><i class="lab-ld-upload-a"></i></div>
+  </div><div class="meta"><div class="nm">Upload Cloud</div><span class="ref">.lab-ld-upload</span><div class="desc">An arrow rises out of the base and fades into a gently bobbing cloud, again and again. Use for uploads and sync in progress toward remote storage.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="loader" data-interact="auto-play" data-c="accent"><div class="stage">
+    <div class="lab-ld-count"><div class="lab-ld-count-n"><i>%</i></div><div class="lab-ld-count-tr"><div class="lab-ld-count-f"></div></div>Syncing Atlas workspace</div>
+  </div><div class="meta"><div class="nm">Counting Percent</div><span class="ref">.lab-ld-count</span><div class="desc">A large number counts from 0 to 100 through an integer property and a CSS counter while a hairline bar fills in step. Use when the number is the whole message.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="loader" data-interact="auto-play" data-c="pos"><div class="stage">
+    <div class="lab-ld-pills"><i class="lab-ld-pills-p" style="--i:0"></i><i class="lab-ld-pills-p" style="--i:1"></i><i class="lab-ld-pills-p" style="--i:2"></i><i class="lab-ld-pills-p" style="--i:3"></i></div>
+  </div><div class="meta"><div class="nm">Caterpillar Pills</div><span class="ref">.lab-ld-pills</span><div class="desc">Four pills stretch wide and shrink back in sequence so the row crawls like a caterpillar. Use as a friendly inline loader inside buttons and chips.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+
+</div>
