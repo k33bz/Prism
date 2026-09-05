@@ -231,7 +231,12 @@ async function launchFirefox() {
 // ---- entry ------------------------------------------------------------------
 export async function launch(kind = 'auto') {
   if (kind === 'chrome') return launchChrome();
-  if (kind === 'firefox') return launchFirefox();
+  if (kind === 'firefox') {
+    // Firefox 155 occasionally never answers session.new on a fresh profile; one
+    // retry with a new profile and port clears it far more often than not.
+    try { return await launchFirefox(); }
+    catch (e) { if (!/session\.new|connect/.test(e.message)) throw e; await sleep(1500); return launchFirefox(); }
+  }
   if (kind !== 'auto') throw new Error('unknown browser: ' + kind + ' (chrome | firefox | auto)');
   try { return await launchFirefox(); } catch (e) { const ff = e.message.split('\n')[0]; try { return await launchChrome(); } catch (e2) { throw new Error(ff + '\n' + e2.message); } }
 }

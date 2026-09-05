@@ -1,5 +1,5 @@
 {
-  "count": 2785,
+  "count": 2885,
   "effects": [
     {
       "id": "charts-big-metric-count-up",
@@ -1830,9 +1830,8 @@
         "lv",
         "warn",
         "m",
-        "ok",
         "info",
-        "err",
+        "ok",
         "cursor"
       ],
       "params": [],
@@ -15575,7 +15574,7 @@
       "isFixed": false,
       "addedOn": "2026-07-13",
       "updatedOn": "2026-07-28",
-      "description": "Forming a plan"
+      "description": "Gathering evidence"
     },
     {
       "id": "ai-processing",
@@ -16439,7 +16438,9 @@
         "pbody",
         "jsonstream",
         "jl",
-        "jcur",
+        "jk",
+        "jv",
+        "jn",
         "cap",
         "pr-playbtn"
       ],
@@ -16521,8 +16522,6 @@
         "cmsg",
         "user",
         "ai",
-        "typing-msg",
-        "mt",
         "cap",
         "pr-playbtn"
       ],
@@ -16559,6 +16558,10 @@
         "tdot",
         "pbody",
         "diffgen",
+        "dl",
+        "ctx",
+        "del",
+        "add",
         "cap",
         "pr-playbtn"
       ],
@@ -16675,7 +16678,6 @@
         "t",
         "s",
         "run",
-        "pend",
         "cap",
         "pr-playbtn"
       ],
@@ -16755,7 +16757,6 @@
         "fail",
         "ai2",
         "meta2",
-        "run",
         "cap"
       ],
       "params": [
@@ -17511,7 +17512,6 @@
         "qreg",
         "qrow",
         "qubit",
-        "collapsed",
         "qcloud",
         "qval",
         "qlabel",
@@ -41773,7 +41773,7 @@
       "isNew": true,
       "isFixed": false,
       "addedOn": "2026-09-04",
-      "updatedOn": null,
+      "updatedOn": "2026-09-05",
       "description": "A leading column of ▲▼ controls; the pressed arrow lights up and its row lifts over the one above and settles into the slot — manual ordering for rules, priorities and playlists. Click the arrows to try it."
     },
     {
@@ -41805,7 +41805,7 @@
       "isNew": true,
       "isFixed": false,
       "addedOn": "2026-09-04",
-      "updatedOn": null,
+      "updatedOn": "2026-09-05",
       "description": "Clicking a header: the column flashes, the sort arrow flips, the rows dim and glide to their new positions, then settle — the reorder cue of a sortable data grid. Give each row its offset in --to. Click the Cost header to sort it yourself."
     },
     {
@@ -43183,7 +43183,7 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
       "description": "The basic Ishikawa skeleton: the problem in the head, a spine that draws in, four flexible cause bones with sub-causes that fade in along them. The early-stage brainstorming form."
     },
@@ -43223,7 +43223,7 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
       "description": "The manufacturing standard: Manpower, Method, Machine, Material, Measurement and Mother Nature, three bones above and three below the spine, environment picked out in green. Lean and Six Sigma defect analysis."
     },
@@ -43263,7 +43263,7 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
       "description": "Four service-delivery bones, Surroundings, Suppliers, Systems and Skills, each with sub-causes. The healthcare, hospitality and support-desk form."
     },
@@ -43301,7 +43301,7 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
       "description": "The marketing fishbone: Product, Price, Place, Promotion, People, Process, Physical Evidence and Performance, four bones a side, drawing in left to right. Customer-experience and service-quality reviews."
     },
@@ -43342,7 +43342,7 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
       "description": "Five operational bones with Environment split out and boxed in green so external conditions are weighed separately from the process. Compliance reviews and quality audits."
     },
@@ -43383,7 +43383,7 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
       "description": "Bones are the workflow stages in order rather than cause types, and a packet rides the spine stage by stage toward the effect. Handoff failures and bottlenecks."
     },
@@ -43422,7 +43422,7 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
       "description": "Staff, Systems, Policies, Communication, Customer Expectations and Service Environment: the customer-interaction bones for low satisfaction scores."
     },
@@ -43462,7 +43462,7 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
       "description": "People, Procedures, Equipment, Policy, Environment and Communication under a cross-marked head: the clinical safety and patient-care form."
     },
@@ -43501,7 +43501,7 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
       "description": "One sub-cause is flagged and a pulse travels from it along the bone, down the spine and into the head, showing the causal path a 5-Whys session would follow."
     },
@@ -43539,7 +43539,7 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
       "description": "Terminator, process box, diamond decision and the yes/no branches, with the connectors drawing in and a token riding the happy path. The workflow primitive."
     },
@@ -43572,7 +43572,7 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
       "description": "Four steps around a ring, starting at 12 o'clock, with an arc and an orbiting marker circling Plan, Do, Check, Act forever. Any cyclical process."
     },
@@ -43610,7 +43610,7 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
       "description": "Diamond decisions branching into outcomes, the chosen path highlighted as it draws and the winning leaf popping in green. Option analysis and playbooks."
     },
@@ -43648,7 +43648,7 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
       "description": "Three role lanes with a process that crosses them and a token following the handoffs, so ownership at each step reads at a glance."
     },
@@ -43682,7 +43682,7 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
       "description": "Four wedge segments around a hub, each lighting in turn clockwise with small direction ticks between them. Iterative and lifecycle processes."
     },
@@ -43716,7 +43716,7 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
       "description": "Rounded states with labelled transitions; the active state lights in sequence Idle, Running, Paused, Done as if the machine were stepping. Lifecycle and protocol docs."
     },
@@ -43748,7 +43748,7 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
       "description": "Five interlocking chevrons that fill progressively left to right, the classic phased-process strip with a timing row underneath."
     },
@@ -43786,7 +43786,7 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
       "description": "Suppliers, Inputs, Process, Outputs, Customers as five columns with the process column emphasised and a flow running left to right beneath them. The Six Sigma scoping view."
     },
@@ -43828,7 +43828,7 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
       "description": "A central idea with four coloured branches growing outward into nodes and second-level twigs, each level drawing in after the last. Brainstorms and topic maps."
     },
@@ -43864,7 +43864,7 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
       "description": "A ranked hierarchy built top-down: each level's connectors draw and its nodes pop in after the parent level, ending on a highlighted leaf. Taxonomies and org-like structures."
     },
@@ -43900,7 +43900,7 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
       "description": "Reporting lines left to right: a director, three managers and their teams with headcounts, the elbow connectors drawing before each column pops in."
     },
@@ -43936,7 +43936,7 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
       "description": "Four tiers stack up from the base, each rising into place with the colour intensifying toward the peak. Ranked building blocks and hierarchies of need."
     },
@@ -43973,7 +43973,7 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
       "description": "Four narrowing stages with counts and conversion rates on the side, revealed top to bottom with a drip falling out of the spout. Sales and marketing funnels."
     },
@@ -44011,7 +44011,7 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
       "description": "Nested rings from core outward with a ripple expanding through them, the layered-hierarchy form of a circle diagram."
     },
@@ -44043,7 +44043,7 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
       "description": "Six equal wedges around a hub, spinning into place one after another so no part outranks another. Values, pillars, and other equal-weight sets."
     },
@@ -44076,7 +44076,7 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
       "description": "System, subsystem, component, module as boxes inside boxes, the highlight stepping inward level by level. Scope and containment diagrams."
     },
@@ -44109,7 +44109,7 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
       "description": "Two translucent circles breathing against each other with the overlap labelled and blinking, where similarities and differences carry no rank."
     },
@@ -44144,7 +44144,7 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
       "description": "Three overlapping sets with the triple intersection marked and called out, the desirable, feasible, viable framing."
     },
@@ -44181,7 +44181,7 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
       "description": "Four equal quadrants, green, red, blue and amber, filling in order with their big letters and bullet points. Strategic positioning at a glance."
     },
@@ -44217,7 +44217,7 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
       "description": "Two labelled axes making four zones, items plotting in one by one and the upper-right zone pulsing as the priority corner. Eisenhower and impact/effort matrices."
     },
@@ -44254,7 +44254,7 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
       "description": "Political, Economic, Social and Technological as four colour-coded columns popping in with their factors. The macro-environment scan."
     },
@@ -44289,7 +44289,7 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
       "description": "A beam scale that tips toward the heavier pan and settles back, the pros-versus-cons metaphor for two-sided comparisons."
     },
@@ -44323,7 +44323,7 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
       "description": "Two markers on a gradient continuum sliding toward each other and back, for positioning items between two poles rather than in boxes."
     },
@@ -44360,7 +44360,7 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
       "description": "Stages across the top and an emotion curve drawing beneath them, with a touchpoint and mood at each stage. The customer or user experience over time."
     },
@@ -44396,7 +44396,7 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
       "description": "A quarter-by-quarter rail with dated milestones that light up as the progress bar reaches them. Product and strategic planning with benchmarks."
     },
@@ -44432,7 +44432,7 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
       "description": "Events alternate left and right of a central spine, each dot and card appearing in date order. Histories, changelogs and project retrospectives."
     },
@@ -44469,7 +44469,7 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
       "description": "Owner-labelled task bars on a week grid with dashed dependency links drawing between them and a milestone diamond at the end. Delivery planning with accountability."
     },
@@ -44504,7 +44504,7 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
       "description": "A runner moves along the track pausing at each flag, and every flag it passes turns green. Progress toward staged goals."
     },
@@ -44542,7 +44542,7 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
       "description": "Activity nodes and duration edges drawing in, with the critical path picked out in red and totalled beneath. Schedule risk at a glance."
     },
@@ -44582,7 +44582,7 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
       "description": "Process boxes with cycle times, flowing arrows and wait times between them, and the lead-time ladder underneath separating value-add from waiting. Lean flow analysis."
     },
@@ -44615,7 +44615,7 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
       "description": "Nodes drifting gently on their springs with edges between them, the busy edges carrying a flowing dash. Service maps and relationship webs."
     },
@@ -44650,7 +44650,7 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
       "description": "A central hub with six spokes and pulses streaming outward along each one in turn. Distribution, integration and broadcast topologies."
     },
@@ -44685,7 +44685,7 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
       "description": "Three sources feeding two targets through bands whose width carries the volume, with dashed streams flowing through them. Traffic, budget and energy flows."
     },
@@ -44720,7 +44720,7 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
       "description": "Two entities with header bands and attribute rows joined by a crow's-foot one-to-many relation that carries a flowing pulse. Data modelling."
     },
@@ -44754,7 +44754,7 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
       "description": "Four groups on a slowly turning ring with chords between them showing who works with whom. Inter-team and inter-region relationships."
     },
@@ -44788,7 +44788,7 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
       "description": "A power/interest grid with the four engagement zones, stakeholder bubbles growing into place sized by influence. Communication planning."
     },
@@ -44820,7 +44820,7 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
       "description": "The nine-block canvas with each block lighting in the order a workshop fills it, partners through revenue. Strategy on one page."
     },
@@ -44860,7 +44860,7 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
       "description": "One objective cascading into three key results with progress bars that fill to their current score, and the initiatives beneath each. Goal alignment."
     },
@@ -44895,7 +44895,7 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
       "description": "Each answer zig-zags down to the next \"why?\" until the root cause card lands in red. The companion to a fishbone session."
     },
@@ -44933,7 +44933,7 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
       "description": "Tasks against roles with the R, A, C and I letters popping into their cells in colour. Responsibility assignment."
     },
@@ -44967,7 +44967,7 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
       "description": "Rivalry at the centre with entrants, substitutes, suppliers and buyers around it, each arrow pressing inward in turn. The industry-analysis framework."
     },
@@ -81067,6 +81067,2824 @@
       "isNew": true,
       "isFixed": false,
       "addedOn": "2026-09-03",
+      "updatedOn": null,
+      "description": "A surface card with a token accent header and a slow edge glow. The system's content container."
+    },
+    {
+      "id": "cloudflare-button-accent",
+      "name": "Pill Button · Primary",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-button",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-btn"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "button",
+      "interaction": "click auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A rounded token-filled button with a soft pulsing glow — the system's primary call-to-action."
+    },
+    {
+      "id": "cloudflare-toggle-accent",
+      "name": "Switch Toggle · Primary",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-toggle",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-toggle"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "button",
+      "interaction": "toggle auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "An on/off switch whose knob glides and glows in the token color; a settings-row control."
+    },
+    {
+      "id": "cloudflare-chip-accent",
+      "name": "Status Chip · Primary",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-chip",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-chip"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "button",
+      "interaction": "auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A compact filter/label chip with a token tint and a sliding sheen. Used in toolbars and lists."
+    },
+    {
+      "id": "cloudflare-menu-accent",
+      "name": "Dropdown Menu · Primary",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-menu",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-menu",
+        "cloudflare-mi",
+        "cloudflare-sel"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "menu",
+      "interaction": "hover click",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A surface menu with a highlighted selected row that breathes in the token tint. The system's standard menu."
+    },
+    {
+      "id": "cloudflare-notification-accent",
+      "name": "Toast Notification · Primary",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-notification",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-toast"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "notification",
+      "interaction": "auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A dismissible toast with a token accent bar that slides in on a loop. The system's inline alert."
+    },
+    {
+      "id": "cloudflare-callout-accent",
+      "name": "Callout Banner · Primary",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-callout",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-callout"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "callout",
+      "interaction": "auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "An emphasis banner with a token-tinted fill and a scanning edge highlight. Draws attention inline."
+    },
+    {
+      "id": "cloudflare-chart-accent",
+      "name": "Mini Bar Chart · Primary",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-chart",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-chart"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart",
+      "interaction": "auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A tiny token-colored bar chart whose bars rise on a loop. A KPI/trend glance for the system."
+    },
+    {
+      "id": "cloudflare-input-accent",
+      "name": "Text Field · Primary",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-input",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-field",
+        "cloudflare-caret"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "input",
+      "interaction": "auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A labeled input with a token focus ring and a blinking caret. The system's form field."
+    },
+    {
+      "id": "cloudflare-progress-accent",
+      "name": "Progress Bar · Primary",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-progress",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-prog"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart",
+      "interaction": "auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A track with a token fill that advances on a loop. Determinate-style progress for the system."
+    },
+    {
+      "id": "cloudflare-avatar-accent",
+      "name": "Avatar Ring · Primary",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-avatar",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-avatar"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "object",
+      "interaction": "auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A circular avatar wrapped by a rotating token gradient ring — presence/status object."
+    },
+    {
+      "id": "cloudflare-badge-accent",
+      "name": "Count Badge · Primary",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-badge",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-badge"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "object",
+      "interaction": "auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A number badge that pops on a heartbeat, tinted by the token color. Notification counter object."
+    },
+    {
+      "id": "cloudflare-tab-accent",
+      "name": "Segmented Tabs · Primary",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-tab",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-tabs"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "segmented-control",
+      "interaction": "toggle auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A pill-track segmented control with a token active indicator that slides between segments."
+    },
+    {
+      "id": "cloudflare-tooltip-accent",
+      "name": "Tooltip · Primary",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-tooltip",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-tip"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "callout",
+      "interaction": "auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A small floating tooltip with a token border that bobs gently. Contextual hint for the system."
+    },
+    {
+      "id": "cloudflare-spinner-accent",
+      "name": "Loading Spinner · Primary",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-spinner",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-spinner"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "object",
+      "interaction": "auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A token-colored arc spinner. The system's indeterminate loading indicator."
+    },
+    {
+      "id": "cloudflare-card-accent",
+      "name": "Feature Card · Primary",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-card",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-card"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "object",
+      "interaction": "auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A surface card with a token accent header and a slow edge glow. The system's content container."
+    },
+    {
+      "id": "cloudflare-checkbox-accent",
+      "name": "Checkbox · Primary",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-checkbox",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-check"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "input",
+      "interaction": "toggle auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A token-filled checkbox whose tick draws in on a loop. The system's boolean input."
+    },
+    {
+      "id": "cloudflare-slider-accent",
+      "name": "Range Slider · Primary",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-slider",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-slider"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "input",
+      "interaction": "auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A track with a token thumb that travels along it. The system's range input."
+    },
+    {
+      "id": "cloudflare-button-info",
+      "name": "Pill Button · Info",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-button",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-btn"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "button",
+      "interaction": "click auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A rounded token-filled button with a soft pulsing glow — the system's primary call-to-action."
+    },
+    {
+      "id": "cloudflare-toggle-info",
+      "name": "Switch Toggle · Info",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-toggle",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-toggle"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "button",
+      "interaction": "toggle auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "An on/off switch whose knob glides and glows in the token color; a settings-row control."
+    },
+    {
+      "id": "cloudflare-chip-info",
+      "name": "Status Chip · Info",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-chip",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-chip"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "button",
+      "interaction": "auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A compact filter/label chip with a token tint and a sliding sheen. Used in toolbars and lists."
+    },
+    {
+      "id": "cloudflare-menu-info",
+      "name": "Dropdown Menu · Info",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-menu",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-menu",
+        "cloudflare-mi",
+        "cloudflare-sel"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "menu",
+      "interaction": "hover click",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A surface menu with a highlighted selected row that breathes in the token tint. The system's standard menu."
+    },
+    {
+      "id": "cloudflare-notification-info",
+      "name": "Toast Notification · Info",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-notification",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-toast"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "notification",
+      "interaction": "auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A dismissible toast with a token accent bar that slides in on a loop. The system's inline alert."
+    },
+    {
+      "id": "cloudflare-callout-info",
+      "name": "Callout Banner · Info",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-callout",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-callout"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "callout",
+      "interaction": "auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "An emphasis banner with a token-tinted fill and a scanning edge highlight. Draws attention inline."
+    },
+    {
+      "id": "cloudflare-chart-info",
+      "name": "Mini Bar Chart · Info",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-chart",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-chart"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart",
+      "interaction": "auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A tiny token-colored bar chart whose bars rise on a loop. A KPI/trend glance for the system."
+    },
+    {
+      "id": "cloudflare-input-info",
+      "name": "Text Field · Info",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-input",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-field",
+        "cloudflare-caret"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "input",
+      "interaction": "auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A labeled input with a token focus ring and a blinking caret. The system's form field."
+    },
+    {
+      "id": "cloudflare-progress-info",
+      "name": "Progress Bar · Info",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-progress",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-prog"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart",
+      "interaction": "auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A track with a token fill that advances on a loop. Determinate-style progress for the system."
+    },
+    {
+      "id": "cloudflare-avatar-info",
+      "name": "Avatar Ring · Info",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-avatar",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-avatar"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "object",
+      "interaction": "auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A circular avatar wrapped by a rotating token gradient ring — presence/status object."
+    },
+    {
+      "id": "cloudflare-badge-info",
+      "name": "Count Badge · Info",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-badge",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-badge"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "object",
+      "interaction": "auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A number badge that pops on a heartbeat, tinted by the token color. Notification counter object."
+    },
+    {
+      "id": "cloudflare-tab-info",
+      "name": "Segmented Tabs · Info",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-tab",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-tabs"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "segmented-control",
+      "interaction": "toggle auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A pill-track segmented control with a token active indicator that slides between segments."
+    },
+    {
+      "id": "cloudflare-tooltip-info",
+      "name": "Tooltip · Info",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-tooltip",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-tip"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "callout",
+      "interaction": "auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A small floating tooltip with a token border that bobs gently. Contextual hint for the system."
+    },
+    {
+      "id": "cloudflare-spinner-info",
+      "name": "Loading Spinner · Info",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-spinner",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-spinner"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "object",
+      "interaction": "auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A token-colored arc spinner. The system's indeterminate loading indicator."
+    },
+    {
+      "id": "cloudflare-card-info",
+      "name": "Feature Card · Info",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-card",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-card"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "object",
+      "interaction": "auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A surface card with a token accent header and a slow edge glow. The system's content container."
+    },
+    {
+      "id": "cloudflare-checkbox-info",
+      "name": "Checkbox · Info",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-checkbox",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-check"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "input",
+      "interaction": "toggle auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A token-filled checkbox whose tick draws in on a loop. The system's boolean input."
+    },
+    {
+      "id": "cloudflare-slider-info",
+      "name": "Range Slider · Info",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-slider",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-slider"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "input",
+      "interaction": "auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A track with a token thumb that travels along it. The system's range input."
+    },
+    {
+      "id": "cloudflare-button-pos",
+      "name": "Pill Button · Success",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-button",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-btn"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "button",
+      "interaction": "click auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A rounded token-filled button with a soft pulsing glow — the system's primary call-to-action."
+    },
+    {
+      "id": "cloudflare-toggle-pos",
+      "name": "Switch Toggle · Success",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-toggle",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-toggle"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "button",
+      "interaction": "toggle auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "An on/off switch whose knob glides and glows in the token color; a settings-row control."
+    },
+    {
+      "id": "cloudflare-chip-pos",
+      "name": "Status Chip · Success",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-chip",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-chip"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "button",
+      "interaction": "auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A compact filter/label chip with a token tint and a sliding sheen. Used in toolbars and lists."
+    },
+    {
+      "id": "cloudflare-menu-pos",
+      "name": "Dropdown Menu · Success",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-menu",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-menu",
+        "cloudflare-mi",
+        "cloudflare-sel"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "menu",
+      "interaction": "hover click",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A surface menu with a highlighted selected row that breathes in the token tint. The system's standard menu."
+    },
+    {
+      "id": "cloudflare-notification-pos",
+      "name": "Toast Notification · Success",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-notification",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-toast"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "notification",
+      "interaction": "auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A dismissible toast with a token accent bar that slides in on a loop. The system's inline alert."
+    },
+    {
+      "id": "cloudflare-callout-pos",
+      "name": "Callout Banner · Success",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-callout",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-callout"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "callout",
+      "interaction": "auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "An emphasis banner with a token-tinted fill and a scanning edge highlight. Draws attention inline."
+    },
+    {
+      "id": "cloudflare-chart-pos",
+      "name": "Mini Bar Chart · Success",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-chart",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-chart"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart",
+      "interaction": "auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A tiny token-colored bar chart whose bars rise on a loop. A KPI/trend glance for the system."
+    },
+    {
+      "id": "cloudflare-input-pos",
+      "name": "Text Field · Success",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-input",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-field",
+        "cloudflare-caret"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "input",
+      "interaction": "auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A labeled input with a token focus ring and a blinking caret. The system's form field."
+    },
+    {
+      "id": "cloudflare-progress-pos",
+      "name": "Progress Bar · Success",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-progress",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-prog"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart",
+      "interaction": "auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A track with a token fill that advances on a loop. Determinate-style progress for the system."
+    },
+    {
+      "id": "cloudflare-avatar-pos",
+      "name": "Avatar Ring · Success",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-avatar",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-avatar"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "object",
+      "interaction": "auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A circular avatar wrapped by a rotating token gradient ring — presence/status object."
+    },
+    {
+      "id": "cloudflare-badge-pos",
+      "name": "Count Badge · Success",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-badge",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-badge"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "object",
+      "interaction": "auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A number badge that pops on a heartbeat, tinted by the token color. Notification counter object."
+    },
+    {
+      "id": "cloudflare-tab-pos",
+      "name": "Segmented Tabs · Success",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-tab",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-tabs"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "segmented-control",
+      "interaction": "toggle auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A pill-track segmented control with a token active indicator that slides between segments."
+    },
+    {
+      "id": "cloudflare-tooltip-pos",
+      "name": "Tooltip · Success",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-tooltip",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-tip"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "callout",
+      "interaction": "auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A small floating tooltip with a token border that bobs gently. Contextual hint for the system."
+    },
+    {
+      "id": "cloudflare-spinner-pos",
+      "name": "Loading Spinner · Success",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-spinner",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-spinner"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "object",
+      "interaction": "auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A token-colored arc spinner. The system's indeterminate loading indicator."
+    },
+    {
+      "id": "cloudflare-card-pos",
+      "name": "Feature Card · Success",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-card",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-card"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "object",
+      "interaction": "auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A surface card with a token accent header and a slow edge glow. The system's content container."
+    },
+    {
+      "id": "cloudflare-checkbox-pos",
+      "name": "Checkbox · Success",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-checkbox",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-check"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "input",
+      "interaction": "toggle auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A token-filled checkbox whose tick draws in on a loop. The system's boolean input."
+    },
+    {
+      "id": "cloudflare-slider-pos",
+      "name": "Range Slider · Success",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-slider",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-slider"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "input",
+      "interaction": "auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A track with a token thumb that travels along it. The system's range input."
+    },
+    {
+      "id": "cloudflare-button-warn",
+      "name": "Pill Button · Warning",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-button",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-btn"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "button",
+      "interaction": "click auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A rounded token-filled button with a soft pulsing glow — the system's primary call-to-action."
+    },
+    {
+      "id": "cloudflare-toggle-warn",
+      "name": "Switch Toggle · Warning",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-toggle",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-toggle"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "button",
+      "interaction": "toggle auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "An on/off switch whose knob glides and glows in the token color; a settings-row control."
+    },
+    {
+      "id": "cloudflare-chip-warn",
+      "name": "Status Chip · Warning",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-chip",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-chip"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "button",
+      "interaction": "auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A compact filter/label chip with a token tint and a sliding sheen. Used in toolbars and lists."
+    },
+    {
+      "id": "cloudflare-menu-warn",
+      "name": "Dropdown Menu · Warning",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-menu",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-menu",
+        "cloudflare-mi",
+        "cloudflare-sel"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "menu",
+      "interaction": "hover click",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A surface menu with a highlighted selected row that breathes in the token tint. The system's standard menu."
+    },
+    {
+      "id": "cloudflare-notification-warn",
+      "name": "Toast Notification · Warning",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-notification",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-toast"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "notification",
+      "interaction": "auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A dismissible toast with a token accent bar that slides in on a loop. The system's inline alert."
+    },
+    {
+      "id": "cloudflare-callout-warn",
+      "name": "Callout Banner · Warning",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-callout",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-callout"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "callout",
+      "interaction": "auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "An emphasis banner with a token-tinted fill and a scanning edge highlight. Draws attention inline."
+    },
+    {
+      "id": "cloudflare-chart-warn",
+      "name": "Mini Bar Chart · Warning",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-chart",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-chart"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart",
+      "interaction": "auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A tiny token-colored bar chart whose bars rise on a loop. A KPI/trend glance for the system."
+    },
+    {
+      "id": "cloudflare-input-warn",
+      "name": "Text Field · Warning",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-input",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-field",
+        "cloudflare-caret"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "input",
+      "interaction": "auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A labeled input with a token focus ring and a blinking caret. The system's form field."
+    },
+    {
+      "id": "cloudflare-progress-warn",
+      "name": "Progress Bar · Warning",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-progress",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-prog"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart",
+      "interaction": "auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A track with a token fill that advances on a loop. Determinate-style progress for the system."
+    },
+    {
+      "id": "cloudflare-avatar-warn",
+      "name": "Avatar Ring · Warning",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-avatar",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-avatar"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "object",
+      "interaction": "auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A circular avatar wrapped by a rotating token gradient ring — presence/status object."
+    },
+    {
+      "id": "cloudflare-badge-warn",
+      "name": "Count Badge · Warning",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-badge",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-badge"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "object",
+      "interaction": "auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A number badge that pops on a heartbeat, tinted by the token color. Notification counter object."
+    },
+    {
+      "id": "cloudflare-tab-warn",
+      "name": "Segmented Tabs · Warning",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-tab",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-tabs"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "segmented-control",
+      "interaction": "toggle auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A pill-track segmented control with a token active indicator that slides between segments."
+    },
+    {
+      "id": "cloudflare-tooltip-warn",
+      "name": "Tooltip · Warning",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-tooltip",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-tip"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "callout",
+      "interaction": "auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A small floating tooltip with a token border that bobs gently. Contextual hint for the system."
+    },
+    {
+      "id": "cloudflare-spinner-warn",
+      "name": "Loading Spinner · Warning",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-spinner",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-spinner"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "object",
+      "interaction": "auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A token-colored arc spinner. The system's indeterminate loading indicator."
+    },
+    {
+      "id": "cloudflare-card-warn",
+      "name": "Feature Card · Warning",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-card",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-card"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "object",
+      "interaction": "auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A surface card with a token accent header and a slow edge glow. The system's content container."
+    },
+    {
+      "id": "cloudflare-checkbox-warn",
+      "name": "Checkbox · Warning",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-checkbox",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-check"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "input",
+      "interaction": "toggle auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A token-filled checkbox whose tick draws in on a loop. The system's boolean input."
+    },
+    {
+      "id": "cloudflare-slider-warn",
+      "name": "Range Slider · Warning",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-slider",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-slider"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "input",
+      "interaction": "auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A track with a token thumb that travels along it. The system's range input."
+    },
+    {
+      "id": "cloudflare-button-neg",
+      "name": "Pill Button · Danger",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-button",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-btn"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "button",
+      "interaction": "click auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A rounded token-filled button with a soft pulsing glow — the system's primary call-to-action."
+    },
+    {
+      "id": "cloudflare-toggle-neg",
+      "name": "Switch Toggle · Danger",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-toggle",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-toggle"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "button",
+      "interaction": "toggle auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "An on/off switch whose knob glides and glows in the token color; a settings-row control."
+    },
+    {
+      "id": "cloudflare-chip-neg",
+      "name": "Status Chip · Danger",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-chip",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-chip"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "button",
+      "interaction": "auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A compact filter/label chip with a token tint and a sliding sheen. Used in toolbars and lists."
+    },
+    {
+      "id": "cloudflare-menu-neg",
+      "name": "Dropdown Menu · Danger",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-menu",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-menu",
+        "cloudflare-mi",
+        "cloudflare-sel"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "menu",
+      "interaction": "hover click",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A surface menu with a highlighted selected row that breathes in the token tint. The system's standard menu."
+    },
+    {
+      "id": "cloudflare-notification-neg",
+      "name": "Toast Notification · Danger",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-notification",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-toast"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "notification",
+      "interaction": "auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A dismissible toast with a token accent bar that slides in on a loop. The system's inline alert."
+    },
+    {
+      "id": "cloudflare-callout-neg",
+      "name": "Callout Banner · Danger",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-callout",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-callout"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "callout",
+      "interaction": "auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "An emphasis banner with a token-tinted fill and a scanning edge highlight. Draws attention inline."
+    },
+    {
+      "id": "cloudflare-chart-neg",
+      "name": "Mini Bar Chart · Danger",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-chart",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-chart"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart",
+      "interaction": "auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A tiny token-colored bar chart whose bars rise on a loop. A KPI/trend glance for the system."
+    },
+    {
+      "id": "cloudflare-input-neg",
+      "name": "Text Field · Danger",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-input",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-field",
+        "cloudflare-caret"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "input",
+      "interaction": "auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A labeled input with a token focus ring and a blinking caret. The system's form field."
+    },
+    {
+      "id": "cloudflare-progress-neg",
+      "name": "Progress Bar · Danger",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-progress",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-prog"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart",
+      "interaction": "auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A track with a token fill that advances on a loop. Determinate-style progress for the system."
+    },
+    {
+      "id": "cloudflare-avatar-neg",
+      "name": "Avatar Ring · Danger",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-avatar",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-avatar"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "object",
+      "interaction": "auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A circular avatar wrapped by a rotating token gradient ring — presence/status object."
+    },
+    {
+      "id": "cloudflare-badge-neg",
+      "name": "Count Badge · Danger",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-badge",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-badge"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "object",
+      "interaction": "auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A number badge that pops on a heartbeat, tinted by the token color. Notification counter object."
+    },
+    {
+      "id": "cloudflare-tab-neg",
+      "name": "Segmented Tabs · Danger",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-tab",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-tabs"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "segmented-control",
+      "interaction": "toggle auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A pill-track segmented control with a token active indicator that slides between segments."
+    },
+    {
+      "id": "cloudflare-tooltip-neg",
+      "name": "Tooltip · Danger",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-tooltip",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-tip"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "callout",
+      "interaction": "auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A small floating tooltip with a token border that bobs gently. Contextual hint for the system."
+    },
+    {
+      "id": "cloudflare-spinner-neg",
+      "name": "Loading Spinner · Danger",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-spinner",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-spinner"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "object",
+      "interaction": "auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A token-colored arc spinner. The system's indeterminate loading indicator."
+    },
+    {
+      "id": "cloudflare-card-neg",
+      "name": "Feature Card · Danger",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-card",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-card"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "object",
+      "interaction": "auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A surface card with a token accent header and a slow edge glow. The system's content container."
+    },
+    {
+      "id": "cloudflare-checkbox-neg",
+      "name": "Checkbox · Danger",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-checkbox",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-check"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "input",
+      "interaction": "toggle auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A token-filled checkbox whose tick draws in on a loop. The system's boolean input."
+    },
+    {
+      "id": "cloudflare-slider-neg",
+      "name": "Range Slider · Danger",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-slider",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-slider"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "input",
+      "interaction": "auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A track with a token thumb that travels along it. The system's range input."
+    },
+    {
+      "id": "cloudflare-button-crit",
+      "name": "Pill Button · Critical",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-button",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-btn"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "button",
+      "interaction": "click auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A rounded token-filled button with a soft pulsing glow — the system's primary call-to-action."
+    },
+    {
+      "id": "cloudflare-toggle-crit",
+      "name": "Switch Toggle · Critical",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-toggle",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-toggle"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "button",
+      "interaction": "toggle auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "An on/off switch whose knob glides and glows in the token color; a settings-row control."
+    },
+    {
+      "id": "cloudflare-chip-crit",
+      "name": "Status Chip · Critical",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-chip",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-chip"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "button",
+      "interaction": "auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A compact filter/label chip with a token tint and a sliding sheen. Used in toolbars and lists."
+    },
+    {
+      "id": "cloudflare-menu-crit",
+      "name": "Dropdown Menu · Critical",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-menu",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-menu",
+        "cloudflare-mi",
+        "cloudflare-sel"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "menu",
+      "interaction": "hover click",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A surface menu with a highlighted selected row that breathes in the token tint. The system's standard menu."
+    },
+    {
+      "id": "cloudflare-notification-crit",
+      "name": "Toast Notification · Critical",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-notification",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-toast"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "notification",
+      "interaction": "auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A dismissible toast with a token accent bar that slides in on a loop. The system's inline alert."
+    },
+    {
+      "id": "cloudflare-callout-crit",
+      "name": "Callout Banner · Critical",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-callout",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-callout"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "callout",
+      "interaction": "auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "An emphasis banner with a token-tinted fill and a scanning edge highlight. Draws attention inline."
+    },
+    {
+      "id": "cloudflare-chart-crit",
+      "name": "Mini Bar Chart · Critical",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-chart",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-chart"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart",
+      "interaction": "auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A tiny token-colored bar chart whose bars rise on a loop. A KPI/trend glance for the system."
+    },
+    {
+      "id": "cloudflare-input-crit",
+      "name": "Text Field · Critical",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-input",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-field",
+        "cloudflare-caret"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "input",
+      "interaction": "auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A labeled input with a token focus ring and a blinking caret. The system's form field."
+    },
+    {
+      "id": "cloudflare-progress-crit",
+      "name": "Progress Bar · Critical",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-progress",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-prog"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart",
+      "interaction": "auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A track with a token fill that advances on a loop. Determinate-style progress for the system."
+    },
+    {
+      "id": "cloudflare-avatar-crit",
+      "name": "Avatar Ring · Critical",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-avatar",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-avatar"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "object",
+      "interaction": "auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A circular avatar wrapped by a rotating token gradient ring — presence/status object."
+    },
+    {
+      "id": "cloudflare-badge-crit",
+      "name": "Count Badge · Critical",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-badge",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-badge"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "object",
+      "interaction": "auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A number badge that pops on a heartbeat, tinted by the token color. Notification counter object."
+    },
+    {
+      "id": "cloudflare-tab-crit",
+      "name": "Segmented Tabs · Critical",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-tab",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-tabs"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "segmented-control",
+      "interaction": "toggle auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A pill-track segmented control with a token active indicator that slides between segments."
+    },
+    {
+      "id": "cloudflare-tooltip-crit",
+      "name": "Tooltip · Critical",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-tooltip",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-tip"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "callout",
+      "interaction": "auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A small floating tooltip with a token border that bobs gently. Contextual hint for the system."
+    },
+    {
+      "id": "cloudflare-spinner-crit",
+      "name": "Loading Spinner · Critical",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-spinner",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-spinner"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "object",
+      "interaction": "auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "description": "A token-colored arc spinner. The system's indeterminate loading indicator."
+    },
+    {
+      "id": "cloudflare-card-crit",
+      "name": "Feature Card · Critical",
+      "gallery": "spectrums",
+      "category": "Cloudflare Orange",
+      "ref": ".cloudflare-card",
+      "classes": [
+        "cloudflare-root",
+        "cloudflare-card"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "cloudflare",
+        "animated",
+        "new"
+      ],
+      "componentType": "object",
+      "interaction": "auto-play",
+      "spectrum": "cloudflare",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
       "updatedOn": null,
       "description": "A surface card with a token accent header and a slow edge glow. The system's content container."
     }
