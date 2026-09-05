@@ -153318,6 +153318,48 @@ body{margin:0;background:radial-gradient(1100px 600px at 80% -10%,rgba(255,153,0
   }
 
   // ---- New Facets: harvest every .tile.is-new from all page templates ----
+  // Scope one harvested gallery stylesheet to the tiles that came from that gallery.
+  // Every page ships its own tile chrome (.stage, .stage svg, .tile ...) and the
+  // Facets page concatenates all of them, so without scoping the LAST page's generic
+  // rules win ties against every other page's facets (objects' `.stage svg{width:118px}`
+  // shrank fx scene SVGs). The suffix is :where(), so specificity inside a gallery is
+  // untouched; only cross-gallery matches are cut. :root/html/body rules stay global.
+  function scopeFacetCss(css, pid){
+    var tag=':where([data-src="'+pid+'"],[data-src="'+pid+'"] *)';
+    var pseudoEl=/(::[a-z-]+(\([^)]*\))?|:(before|after|first-line|first-letter|selection|placeholder|marker|backdrop))\s*$/i;
+    function scopeSel(sel){
+      var parts=[],depth=0,cur='';
+      for(var i=0;i<sel.length;i++){var ch=sel[i]; if(ch==='('||ch==='[')depth++; else if(ch===')'||ch===']')depth--;
+        if(ch===','&&depth===0){parts.push(cur);cur='';} else cur+=ch;}
+      parts.push(cur);
+      return parts.map(function(x){ x=x.trim(); if(!x) return x; if(/^(:root|html|body)\b/.test(x)) return x;
+        var m=pseudoEl.exec(x); return m? x.slice(0,m.index)+tag+m[0] : x+tag; }).join(',');
+    }
+    function walk(text){
+      var out='',i=0,n=text.length;
+      while(i<n){
+        var c=text[i];
+        if(c==='/'&&text[i+1]==='*'){var e=text.indexOf('*/',i+2); e=e<0?n:e+2; out+=text.slice(i,e); i=e; continue;}
+        if(c===' '||c==='\n'||c==='\t'||c==='\r'){out+=c;i++;continue;}
+        var j=i,depth=0;
+        while(j<n && !(text[j]==='{'&&depth===0) && !(text[j]===';'&&depth===0)){ if(text[j]==='('||text[j]==='[')depth++; else if(text[j]===')'||text[j]===']')depth--; j++; }
+        if(j>=n){out+=text.slice(i);break;}
+        if(text[j]===';'){out+=text.slice(i,j+1);i=j+1;continue;}
+        var prelude=text.slice(i,j).trim();
+        var k=j,d=0;
+        for(;k<n;k++){ if(text[k]==='{')d++; else if(text[k]==='}'){d--; if(d===0)break;} }
+        var body=text.slice(j+1,k);
+        if(prelude.charAt(0)==='@'){
+          if(/^@(media|supports|container|layer)\b/i.test(prelude)) out+=prelude+'{'+walk(body)+'}';
+          else out+=prelude+'{'+body+'}';
+        } else out+=scopeSel(prelude)+'{'+body+'}';
+        i=k+1;
+      }
+      return out;
+    }
+    try{ return walk(css); }catch(e){ return css; }
+  }
+
   function buildFacetsSrc(){
     // Pull shared CSS + JS from the charts page (has all common tile / copy primitives)
     var chartsRaw=document.getElementById('pg-charts').textContent.split('<\\/script').join('<'+'/script');
@@ -153363,6 +153405,7 @@ body{margin:0;background:radial-gradient(1100px 600px at 80% -10%,rgba(255,153,0
         t.classList.remove('is-new'); t.classList.remove('is-fixed');
         t.classList.add(isNew?'is-new':'is-fixed');
         t.setAttribute('data-facet-id', id);
+        t.setAttribute('data-src', pid);
         if(added) t.setAttribute('data-added', added);
         if(updated) t.setAttribute('data-updated', updated);
         (isNew?fresh:changed).push(t.outerHTML);
@@ -153372,7 +153415,7 @@ body{margin:0;background:radial-gradient(1100px 600px at 80% -10%,rgba(255,153,0
       if(fresh.length) newGroups.push({id:pid, label:pageLabels[pid], tiles:fresh});
       if(changed.length) updGroups.push({id:pid, label:pageLabels[pid], tiles:changed});
       // Carry this page's OWN css so harvested effects animate exactly as on their home page.
-      d.querySelectorAll('style').forEach(function(st){ harvestStyles+='\n/* ---- '+pid+' styles ---- */\n'+st.textContent; });
+      d.querySelectorAll('style').forEach(function(st){ harvestStyles+='\n/* ---- '+pid+' styles (scoped) ---- */\n'+scopeFacetCss(st.textContent, pid); });
       // Carry this page's init scripts too (JS-driven effects). Each page is isolated in its own
       // try/IIFE so a duplicate declaration or a throw in one page can't break the rest. Charts
       // scripts are added globally below (their copyViz/countup helpers back the tile onclick=).
