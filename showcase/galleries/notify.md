@@ -2,11 +2,11 @@
 
 Every effect in Prism's **Notifications & Status** gallery, recorded as a looping GIF.
 
-**50 effects** · 50 animated · 541 KB of GIF · click any GIF to open its standalone HTML sample (raw file; open it locally, GitHub shows source).
+**52 effects** · 52 animated · 621 KB of GIF · click any GIF to open its standalone HTML sample (raw file; open it locally, GitHub shows source).
 
 [← Showcase index](../README.md)
 
-**Sections:** [TOASTS & SNACKBARS](#toasts-snackbars) · [PROGRESS NOTIFICATIONS](#progress-notifications) · [STATUS BANNERS & INDICATORS](#status-banners-indicators) · [LIVE & CONNECTION](#live-connection) · [EMPTY STATES & SKELETONS](#empty-states-skeletons) · [BADGES & COUNTS](#badges-counts)
+**Sections:** [TOASTS & SNACKBARS](#toasts-snackbars) · [PROGRESS NOTIFICATIONS](#progress-notifications) · [STATUS BANNERS & INDICATORS](#status-banners-indicators) · [LIVE & CONNECTION](#live-connection) · [EMPTY STATES & SKELETONS](#empty-states-skeletons) · [BADGES & COUNTS](#badges-counts) · [PRESENCE & STATUS](#presence-status)
 
 ## TOASTS & SNACKBARS
 
@@ -54,4 +54,10 @@ Every effect in Prism's **Notifications & Status** gallery, recorded as a loopin
 <tr><td align="center" valign="top" width="33%"><a href="../html/notify-bell-w-count-badge.html"><img src="../gif/notify-bell-w-count-badge.gif" width="300" alt="Bell w/ Count Badge"></a><br><b>Bell w/ Count Badge</b><br><sub><code>notify-bell-w-count-badge</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/notify-unread-pill.html"><img src="../gif/notify-unread-pill.gif" width="300" alt="Unread Pill"></a><br><b>Unread Pill</b><br><sub><code>notify-unread-pill</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/notify-new-corner-ribbon.html"><img src="../gif/notify-new-corner-ribbon.gif" width="300" alt="&quot;New&quot; Corner Ribbon"></a><br><b>&quot;New&quot; Corner Ribbon</b><br><sub><code>notify-new-corner-ribbon</code></sub></td></tr>
 <tr><td align="center" valign="top" width="33%"><a href="../html/notify-count-up-badge.html"><img src="../gif/notify-count-up-badge.gif" width="300" alt="Count-up Badge"></a><br><b>Count-up Badge</b><br><sub><code>notify-count-up-badge</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/notify-status-chip-transition.html"><img src="../gif/notify-status-chip-transition.gif" width="300" alt="Status Chip Transition"></a><br><b>Status Chip Transition</b><br><sub><code>notify-status-chip-transition</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/notify-stacked-avatars-more.html"><img src="../gif/notify-stacked-avatars-more.gif" width="300" alt="Stacked Avatars +more"></a><br><b>Stacked Avatars +more</b><br><sub><code>notify-stacked-avatars-more</code></sub></td></tr>
 <tr><td align="center" valign="top" width="33%"><a href="../html/notify-priority-level-badge.html"><img src="../gif/notify-priority-level-badge.gif" width="300" alt="Priority-level Badge"></a><br><b>Priority-level Badge</b><br><sub><code>notify-priority-level-badge</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/notify-dot-indicator-badge.html"><img src="../gif/notify-dot-indicator-badge.gif" width="300" alt="Dot Indicator Badge"></a><br><b>Dot Indicator Badge</b><br><sub><code>notify-dot-indicator-badge</code></sub></td></tr>
+</table>
+
+## PRESENCE & STATUS
+
+<table>
+<tr><td align="center" valign="top" width="33%"><a href="../html/notify-presence-status-set.html"><img src="../gif/notify-presence-status-set.gif" width="300" alt="Presence Status Set"></a><br><b>Presence Status Set</b><br><sub><code>notify-presence-status-set</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/notify-live-avatar-stack-status-rings.html"><img src="../gif/notify-live-avatar-stack-status-rings.gif" width="300" alt="Live Avatar Stack (Status Rings)"></a><br><b>Live Avatar Stack (Status Rings)</b><br><sub><code>notify-live-avatar-stack-status-rings</code></sub></td></tr>
 </table>

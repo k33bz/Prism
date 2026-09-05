@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Live Avatar Stack (Status Rings) · Prism</title>
+<!-- Prism showcase sample: notify-live-avatar-stack-status-rings (gallery: notify). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.ns-avstack { display: flex; align-items: center; }
+.ns-avstack .ns-a { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; color: rgb(255, 255, 255); font-weight: 800; font-size: 12px; border: 2px solid var(--panel); margin-left: -10px; box-shadow: rgba(0, 0, 0, 0.25) 0px 2px 6px; }
+.ns-avstack .ns-a:first-child { margin-left: 0px; }
+.ns-avstack .ns-a1 { background: linear-gradient(135deg,var(--info),#2563eb); }
+.ns-avstack .ns-a2 { background: linear-gradient(135deg,var(--pos),#15803d); }
+.ns-avstack .ns-a3 { background: linear-gradient(135deg,var(--accent),#b45309); }
+.ns-avstack .ns-more { background: var(--card); color: var(--muted); animation: 2.4s ease 0s infinite normal none running nsBlink; }
+.ns-avstack .ns-a:hover, .ns-avstack .ns-a { transition: transform 0.2s; }
+.ns-avstack:hover .ns-a { transform: translateX(4px); }
+@keyframes nsBlink { 
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+.ns-presence[class*="ns-st-"]:not(.ns-st-available) .ns-on::after { display: none; }
+.ns-avstack-live { --max: 3; --expand: 70%; position: relative; }
+.ns-avstack-live .ns-a { position: relative; box-shadow: 0 0 0 2px var(--panel),0 0 0 4px var(--ns-st,var(--pos)),0 0 12px rgba(var(--ns-st-rgb,var(--pos-rgb)),.55); }
+.ns-avstack-live .ns-a.ns-st-available { --ns-st: var(--pos); --ns-st-rgb: var(--pos-rgb); animation: 2.4s ease-in-out 0s infinite normal none running nsRingGlow; }
+.ns-avstack-live .ns-a.ns-st-away { --ns-st: var(--warn); --ns-st-rgb: var(--warn-rgb); }
+.ns-avstack-live .ns-a.ns-st-busy, .ns-avstack-live .ns-a.ns-st-dnd { --ns-st: var(--neg); --ns-st-rgb: var(--neg-rgb); }
+.ns-avstack-live .ns-a.ns-st-ooo { --ns-st: var(--crit); --ns-st-rgb: var(--crit-rgb); }
+.ns-avstack-live .ns-a.ns-st-offline { --ns-st: var(--dim); --ns-st-rgb: var(--dim-rgb,128,128,128); filter: saturate(0.4); }
+.ns-avstack-live .ns-a4 { background: linear-gradient(135deg,var(--crit),var(--info)); }
+.ns-avstack-live .ns-a5 { background: linear-gradient(135deg,var(--warn),var(--neg)); }
+.ns-avstack-live .ns-a.ns-lv-drop { overflow: hidden; animation: 4s cubic-bezier(0.4, 0, 0.2, 1) 0s infinite normal none running nsLvDrop; }
+.ns-avstack-live .ns-a.ns-lv-drop.ns-lv-d2 { animation-name: nsLvDrop2; }
+.ns-avstack-live .ns-more { animation: auto ease 0s 1 normal none running none; box-shadow: 0 0 0 2px var(--panel); overflow: visible; }
+.ns-avstack-live .ns-more::before, .ns-avstack-live .ns-more::after { content: ""; position: absolute; inset: -4px; border-radius: 50%; mask: radial-gradient(farthest-side, transparent calc(100% - 3px), rgb(0, 0, 0) calc(100% - 2px)); }
+.ns-avstack-live .ns-more::before { background: conic-gradient(var(--dim) 0 100%); animation: 4s steps(1) 0s infinite normal none running nsLvRingA; }
+.ns-avstack-live .ns-more::after { background: conic-gradient(var(--warn) 0 33.3%,var(--dim) 33.3% 100%); animation: 4s steps(1) 0s infinite normal none running nsLvRingB; }
+.ns-avstack-live .ns-more i { position: absolute; inset: 0px; display: grid; place-items: center; font-style: normal; animation: 4s steps(1) 0s infinite normal none running nsLvN1; }
+.ns-avstack-live .ns-more i + i { animation-name: nsLvN3; }
+.ns-lv-cap { margin-top: 12px; font: 600 9.5px ui-monospace, Menlo, monospace; color: var(--dim); letter-spacing: 0.03em; display: flex; gap: 10px; }
+.ns-lv-cap b { color: var(--muted); font-weight: 600; }
+@keyframes nsRingGlow { 
+  0%, 100% { box-shadow: 0 0 0 2px var(--panel),0 0 0 4px var(--ns-st),0 0 8px rgba(var(--ns-st-rgb),.4); }
+  50% { box-shadow: 0 0 0 2px var(--panel),0 0 0 4px var(--ns-st),0 0 16px rgba(var(--ns-st-rgb),.8); }
+}
+@keyframes nsLvDrop { 
+  0%, 30% { width: 34px; margin-left: -10px; opacity: 1; --ns-st: var(--pos); --ns-st-rgb: var(--pos-rgb); }
+  31%, 36% { width: 34px; margin-left: -10px; opacity: 1; --ns-st: var(--warn); --ns-st-rgb: var(--warn-rgb); animation-timing-function: steps(1); }
+  40%, 72% { width: 0px; margin-left: 0px; opacity: 0; border-width: 0px; --ns-st: var(--warn); --ns-st-rgb: var(--warn-rgb); }
+  76%, 100% { width: 34px; margin-left: -10px; opacity: 1; --ns-st: var(--pos); --ns-st-rgb: var(--pos-rgb); }
+}
+@keyframes nsLvDrop2 { 
+  0%, 32% { width: 34px; margin-left: -10px; opacity: 1; --ns-st: var(--pos); --ns-st-rgb: var(--pos-rgb); }
+  33%, 37% { width: 34px; margin-left: -10px; opacity: 1; --ns-st: var(--dim); --ns-st-rgb: 128,128,128; animation-timing-function: steps(1); }
+  41%, 72% { width: 0px; margin-left: 0px; opacity: 0; border-width: 0px; --ns-st: var(--dim); --ns-st-rgb: 128,128,128; }
+  77%, 100% { width: 34px; margin-left: -10px; opacity: 1; --ns-st: var(--pos); --ns-st-rgb: var(--pos-rgb); }
+}
+@keyframes nsLvRingA { 
+  0%, 39% { opacity: 1; }
+  40%, 75% { opacity: 0; }
+  76%, 100% { opacity: 1; }
+}
+@keyframes nsLvRingB { 
+  0%, 39% { opacity: 0; }
+  40%, 75% { opacity: 1; }
+  76%, 100% { opacity: 0; }
+}
+@keyframes nsLvN1 { 
+  0%, 39% { opacity: 1; }
+  40%, 75% { opacity: 0; }
+  76%, 100% { opacity: 1; }
+}
+@keyframes nsLvN3 { 
+  0%, 39% { opacity: 0; }
+  40%, 75% { opacity: 1; }
+  76%, 100% { opacity: 0; }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div>
+      <div class="ns-avstack ns-avstack-live" style="--max:3;--expand:70%">
+        <div class="ns-a ns-a1 ns-st-available">AB</div><div class="ns-a ns-a2 ns-st-available">CD</div><div class="ns-a ns-a3 ns-st-available">EF</div>
+        <div class="ns-a ns-a4 ns-st-available ns-lv-drop">GH</div><div class="ns-a ns-a5 ns-st-available ns-lv-drop ns-lv-d2">IJ</div>
+        <div class="ns-a ns-more"><i>+1</i><i>+3</i></div>
+      </div>
+      <div class="ns-lv-cap"><span>--max <b>3</b></span><span>--expand <b>70%</b></span><span>online <b>5 → 3</b></span></div>
+    </div></div></div>
+<div class="meta"><b>Live Avatar Stack (Status Rings)</b> · <code>notify-live-avatar-stack-status-rings</code><br>Notifications &amp; Status · PRESENCE &amp; STATUS<p>Stacked avatars with glowing status rings and an overflow chip whose ring splits by the hidden members' statuses. Visible slots = clamp(online, --max, ceil(--max × (1 + --expand))): six members, five online shows 5 / +1; two go away and offline, the stack folds back to 3 / +3 and the chip ring turns one third away, two thirds offline.</p></div>
+
+</body>
+</html>

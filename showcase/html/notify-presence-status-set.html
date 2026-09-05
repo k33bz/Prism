@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Presence Status Set · Prism</title>
+<!-- Prism showcase sample: notify-presence-status-set (gallery: notify). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.ns-save .ns-lbl::after { content: "Saving…"; animation: 4s step-end 0s infinite normal none running nsSaveTxt; }
+.ns-presence { position: relative; width: 46px; height: 46px; }
+.ns-presence .ns-av { width: 100%; height: 100%; border-radius: 50%; display: grid; place-items: center; background: linear-gradient(135deg,var(--info),var(--crit)); color: rgb(255, 255, 255); font-weight: 800; font-size: 15px; }
+.ns-presence .ns-on { position: absolute; right: -1px; bottom: -1px; width: 14px; height: 14px; border-radius: 50%; background: var(--pos); border: 2.5px solid var(--panel); }
+.ns-presence .ns-on::after { content: ""; position: absolute; inset: 0px; border-radius: 50%; background: var(--pos); animation: 2s ease-out 0s infinite normal none running nsPing; }
+@keyframes nsSaveTxt { 
+  0%, 60% { content: "Saving…"; color: var(--muted); }
+  60.01%, 100% { content: "Saved"; color: var(--pos); }
+}
+@keyframes nsPing { 
+  0% { box-shadow: 0 0 0 0 rgba(var(--cr,63,185,80),.55); }
+  70%, 100% { box-shadow: 0 0 0 8px rgba(var(--cr,63,185,80),0); }
+}
+.ns-presence { --ns-st: var(--pos); --ns-st-rgb: var(--pos-rgb); }
+.ns-presence.ns-st-away { --ns-st: var(--warn); --ns-st-rgb: var(--warn-rgb); }
+.ns-presence.ns-st-busy, .ns-presence.ns-st-dnd { --ns-st: var(--neg); --ns-st-rgb: var(--neg-rgb); }
+.ns-presence.ns-st-ooo { --ns-st: var(--crit); --ns-st-rgb: var(--crit-rgb); }
+.ns-presence.ns-st-offline { --ns-st: var(--dim); --ns-st-rgb: var(--dim-rgb,128,128,128); }
+.ns-presence[class*="ns-st-"] .ns-on { background: var(--ns-st); }
+.ns-presence[class*="ns-st-"]:not(.ns-st-available) .ns-on::after { display: none; }
+.ns-presence[class*="ns-st-"] .ns-on::before { content: ""; position: absolute; inset: 0px; border-radius: 50%; }
+.ns-presence.ns-st-away .ns-on::before { inset: 2px; background: radial-gradient(circle at 62% 38%,var(--panel) 0 2.2px,transparent 2.6px),linear-gradient(90deg,transparent 45%,var(--panel) 45% 55%,transparent 55%); opacity: 0.9; }
+.ns-presence.ns-st-dnd .ns-on::before { inset: calc(50% - 1px) 2px; border-radius: 1px; background: var(--panel); }
+.ns-presence.ns-st-ooo .ns-on { background: var(--panel); box-shadow: inset 0 0 0 2.5px var(--ns-st); }
+.ns-presence.ns-st-ooo .ns-on::before { inset: 0px; background: linear-gradient(45deg,transparent 42%,var(--ns-st) 42% 58%,transparent 58%); clip-path: polygon(28% 72%, 72% 28%, 72% 72%); }
+.ns-presence.ns-st-offline .ns-on { background: var(--panel); box-shadow: inset 0 0 0 2px var(--ns-st); }
+.ns-presence.ns-st-live .ns-on { animation: 4.8s steps(1) 0s infinite normal none running nsStCycle; }
+.ns-presence.ns-st-live .ns-on::after { animation: 2s ease-out 0s infinite normal none running nsPing, 4.8s steps(1) 0s infinite normal none running nsStCyclePing; }
+.ns-st-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px 14px; align-items: flex-start; max-width: 100%; width: 250px; }
+.ns-st-row .ns-st-item { display: flex; flex-direction: column; align-items: center; gap: 6px; font: 600 9.5px ui-sans-serif, system-ui, sans-serif; color: var(--muted); letter-spacing: 0.03em; }
+.ns-st-row .ns-presence { width: 38px; height: 38px; }
+.ns-st-row .ns-presence .ns-av { font-size: 12px; }
+.ns-st-row .ns-presence .ns-on { width: 13px; height: 13px; }
+.ns-st-row .ns-st-livewrap .ns-lbl { position: relative; min-width: 44px; height: 12px; text-align: center; }
+.ns-st-row .ns-st-livewrap .ns-lbl span { position: absolute; left: 0px; right: 0px; opacity: 0; animation: 4.8s steps(1) 0s infinite normal none running nsStLblShow; }
+.ns-st-row .ns-st-livewrap .ns-lbl span:nth-child(1) { animation-delay: 0s; }
+.ns-st-row .ns-st-livewrap .ns-lbl span:nth-child(2) { animation-delay: 0.8s; }
+.ns-st-row .ns-st-livewrap .ns-lbl span:nth-child(3) { animation-delay: 1.6s; }
+.ns-st-row .ns-st-livewrap .ns-lbl span:nth-child(4) { animation-delay: 2.4s; }
+.ns-st-row .ns-st-livewrap .ns-lbl span:nth-child(5) { animation-delay: 3.2s; }
+.ns-st-row .ns-st-livewrap .ns-lbl span:nth-child(6) { animation-delay: 4s; }
+.ns-avstack-live .ns-a.ns-st-available { --ns-st: var(--pos); --ns-st-rgb: var(--pos-rgb); animation: 2.4s ease-in-out 0s infinite normal none running nsRingGlow; }
+.ns-avstack-live .ns-a.ns-st-away { --ns-st: var(--warn); --ns-st-rgb: var(--warn-rgb); }
+.ns-avstack-live .ns-a.ns-st-busy, .ns-avstack-live .ns-a.ns-st-dnd { --ns-st: var(--neg); --ns-st-rgb: var(--neg-rgb); }
+.ns-avstack-live .ns-a.ns-st-ooo { --ns-st: var(--crit); --ns-st-rgb: var(--crit-rgb); }
+.ns-avstack-live .ns-a.ns-st-offline { --ns-st: var(--dim); --ns-st-rgb: var(--dim-rgb,128,128,128); filter: saturate(0.4); }
+@keyframes nsStCycle { 
+  0%, 16.6% { background: var(--pos); box-shadow: none; }
+  16.7%, 33.3% { background: var(--warn); box-shadow: none; }
+  33.4%, 50% { background: var(--neg); box-shadow: none; }
+  50.1%, 66.6% { background: var(--neg); box-shadow: inset 0 3px 0 -1px var(--panel),inset 0 -3px 0 -1px var(--panel); }
+  66.7%, 83.3% { background: var(--panel); box-shadow: inset 0 0 0 2.5px var(--crit); }
+  83.4%, 100% { background: var(--panel); box-shadow: inset 0 0 0 2px var(--dim); }
+}
+@keyframes nsStCyclePing { 
+  0%, 16.6% { opacity: 1; }
+  16.7%, 100% { opacity: 0; }
+}
+@keyframes nsStLblShow { 
+  0%, 16.6% { opacity: 1; }
+  16.7%, 100% { opacity: 0; }
+}
+@keyframes nsRingGlow { 
+  0%, 100% { box-shadow: 0 0 0 2px var(--panel),0 0 0 4px var(--ns-st),0 0 8px rgba(var(--ns-st-rgb),.4); }
+  50% { box-shadow: 0 0 0 2px var(--panel),0 0 0 4px var(--ns-st),0 0 16px rgba(var(--ns-st-rgb),.8); }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="ns-st-row">
+      <div class="ns-st-item ns-st-livewrap"><div class="ns-presence ns-st-live"><div class="ns-av">JD</div><span class="ns-on"></span></div><div class="ns-lbl"><span>available</span><span>away</span><span>busy</span><span>dnd</span><span>ooo</span><span>offline</span></div></div>
+      <div class="ns-st-item"><div class="ns-presence ns-st-available"><div class="ns-av">RP</div><span class="ns-on"></span></div>available</div>
+      <div class="ns-st-item"><div class="ns-presence ns-st-away"><div class="ns-av">AL</div><span class="ns-on"></span></div>away</div>
+      <div class="ns-st-item"><div class="ns-presence ns-st-busy"><div class="ns-av">MK</div><span class="ns-on"></span></div>busy</div>
+      <div class="ns-st-item"><div class="ns-presence ns-st-dnd"><div class="ns-av">SO</div><span class="ns-on"></span></div>dnd</div>
+      <div class="ns-st-item"><div class="ns-presence ns-st-ooo"><div class="ns-av">TN</div><span class="ns-on"></span></div>ooo</div>
+      <div class="ns-st-item"><div class="ns-presence ns-st-offline"><div class="ns-av">EV</div><span class="ns-on"></span></div>offline</div>
+    </div></div></div>
+<div class="meta"><b>Presence Status Set</b> · <code>notify-presence-status-set</code><br>Notifications &amp; Status · PRESENCE &amp; STATUS<p>Six status modifiers for the presence ring: available (pulsing), away (clock), busy, dnd (bar), ooo (arrow ring) and offline (hollow). The first avatar cycles through all six the way a presence feed would update it; add ns-st-live for that loop.</p></div>
+
+</body>
+</html>

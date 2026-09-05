@@ -1,14 +1,14 @@
 {
  "name": "Prism GIF showcase",
- "generated": "2026-09-05T19:00:07.870Z",
+ "generated": "2026-09-05T19:11:48.730Z",
  "source": "Prism.html",
  "browser": {
   "engine": "Firefox (WebDriver BiDi)",
   "version": "155.0.1"
  },
- "count": 3104,
- "animated": 2847,
- "gifBytes": 69518949,
+ "count": 3106,
+ "animated": 2849,
+ "gifBytes": 69600767,
  "settings": {
   "fps": 10,
   "minSeconds": 1.6,
@@ -17521,6 +17521,36 @@
    "width": 344,
    "height": 90,
    "bytes": 4082
+  },
+  {
+   "id": "notify-presence-status-set",
+   "name": "Presence Status Set",
+   "gallery": "notify",
+   "category": "PRESENCE & STATUS",
+   "spectrum": null,
+   "gif": "gif/notify-presence-status-set.gif",
+   "html": "html/notify-presence-status-set.html",
+   "animated": true,
+   "duration": 4,
+   "frames": 40,
+   "width": 344,
+   "height": 147,
+   "bytes": 11836
+  },
+  {
+   "id": "notify-live-avatar-stack-status-rings",
+   "name": "Live Avatar Stack (Status Rings)",
+   "gallery": "notify",
+   "category": "PRESENCE & STATUS",
+   "spectrum": null,
+   "gif": "gif/notify-live-avatar-stack-status-rings.gif",
+   "html": "html/notify-live-avatar-stack-status-rings.html",
+   "animated": true,
+   "duration": 4,
+   "frames": 40,
+   "width": 344,
+   "height": 90,
+   "bytes": 69982
   },
   {
    "id": "arch-service-node",
