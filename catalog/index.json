@@ -1896,11 +1896,11 @@
         "sl",
         "ts",
         "lv",
-        "ok",
-        "m",
-        "warn",
         "info",
+        "m",
+        "ok",
         "err",
+        "warn",
         "cursor"
       ],
       "params": [],
@@ -11363,9 +11363,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A jet fans out from the left: a turbulence-displaced plume, a dash-flow core and a stream of fading particles. Water shown; swap the colour role for mist, steam, poison or ice."
     },
     {
@@ -11399,9 +11399,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Three stacked strokes (blurred glow, mid, white-hot core) draw left to right with pathLength, then flicker and fade while branches fork off. Electric shown."
     },
     {
@@ -11434,9 +11434,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A projectile with a white-hot head and a turbulence-distorted tail crosses the stage on a slight climb while embers lag behind. Fire shown; use c-info for a water jet or c-crit for plasma."
     },
     {
@@ -11468,9 +11468,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "The hit point: a flash disc, two expanding rings, eight shards on --a angles and a spread of sparks on a 1.6s loop. Theme accent shown; pair it with a Streak or Bolt at the landing spot."
     },
     {
@@ -11502,9 +11502,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "The played-card state: the card lifts, its rim glow breathes and motes drift up out of it over a soft halo. Grass shown; the card face is plain tokens so any art can sit inside."
     },
     {
@@ -11536,9 +11536,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Composition example: three Streak projectiles on --lane offsets with staggered --d delays. Gradients resolve their colour where they are defined, so the volley carries its own defs. Psychic shown."
     },
     {
@@ -17986,7 +17986,9 @@
         "pbody",
         "jsonstream",
         "jl",
-        "jcur",
+        "jk",
+        "jv",
+        "jn",
         "cap",
         "pr-playbtn"
       ],
@@ -18109,6 +18111,10 @@
         "tdot",
         "pbody",
         "diffgen",
+        "dl",
+        "ctx",
+        "del",
+        "add",
         "cap",
         "pr-playbtn"
       ],
@@ -18310,7 +18316,6 @@
         "fail",
         "ai2",
         "meta2",
-        "run",
         "cap"
       ],
       "params": [
@@ -19048,7 +19053,6 @@
         "best",
         "bscore",
         "bchip",
-        "dead",
         "cap",
         "pr-playbtn"
       ],
@@ -19086,7 +19090,6 @@
         "qreg",
         "qrow",
         "qubit",
-        "collapsed",
         "qcloud",
         "qval",
         "qlabel",
@@ -44207,7 +44210,7 @@
       "addedOn": "2026-09-04",
       "updatedOn": "2026-09-05",
       "author": "k33bz",
-      "description": "The rows tumble out of the table on slight angles, one after another, then drop back in from above already in the new order, landing with a small bounce — the theatrical resort. Offsets in --to, tilt in --rot. Click the Score header to drop and resort."
+      "description": "Each row lifts 2% to pop on top, hangs a beat (some get stuck), then drops out on its own tilt, one at a time in a random order. The resorted rows fall in from above at 102%, snap down to size and flash as they seat. Order in --o, tilt in --rot. Click the Score header to drop and resort."
     },
     {
       "id": "tables-status-pill-column",

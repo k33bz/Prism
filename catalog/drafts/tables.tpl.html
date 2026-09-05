@@ -520,10 +520,37 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
 .dtb-arr.pressed{color:var(--c,var(--accent))!important;background:rgba(var(--c-rgb,var(--accent-rgb)),.22);border-radius:3px;box-shadow:0 0 8px rgba(var(--c-rgb,var(--accent-rgb)),.5)}
 .dtb-resort.manual .flashed{animation:dtbColFlashOnce .6s ease-out!important}
 @keyframes dtbColFlashOnce{0%{box-shadow:inset 0 0 0 999px rgba(var(--c-rgb,var(--accent-rgb)),.45)}100%{box-shadow:inset 0 0 0 999px rgba(var(--c-rgb,var(--accent-rgb)),0)}}
-.dtb-fall.manual tr.fall-out td{animation:dtbFallOut .55s cubic-bezier(.3,0,.7,.4) forwards!important;transform-origin:20% 50%}
-.dtb-fall.manual tr.land-in td{animation:dtbLandIn .6s cubic-bezier(.2,.8,.3,1.15) both!important}
-@keyframes dtbFallOut{0%{transform:translateY(0) rotate(0);opacity:1}100%{transform:translateY(190%) rotate(var(--rot,-5deg));opacity:0}}
-@keyframes dtbLandIn{0%{transform:translateY(-300%);opacity:0}60%{transform:translateY(6%);opacity:1}100%{transform:translateY(0);opacity:1}}
+/* Fall + Land Resort 2.0. Out: each row lifts 2% (pops on top), hangs a beat (some get
+   stuck), then drops out on its own tilt (--rot), one at a time in a random order (--o).
+   In: the resorted rows fall in from above at 102%, snap down to size and flash as they
+   seat. The ambient loop is pure CSS; manual mode (after a click) is sequenced by JS. */
+.dtb-fall tbody tr{position:relative;transform-origin:50% 50%}
+.dtb-fall:not(.manual) tbody tr{animation:dtbFallCycle 5.6s cubic-bezier(.4,0,.6,1) infinite;animation-delay:calc(var(--o,0)*.36s)}
+.dtb-fall:not(.manual) tbody tr td{animation:dtbSeatCycle 5.6s linear infinite;animation-delay:calc(var(--o,0)*.36s)}
+.dtb-fall.manual tbody tr{animation:none;transition:transform .18s ease-out}
+.dtb-fall.manual tr.lift2{transform:scale(1.02);z-index:3}
+.dtb-fall.manual tr.lift2 td{box-shadow:0 8px 18px rgba(0,0,0,.45)!important}
+.dtb-fall.manual tr.drop2{animation:dtbDropOut .5s cubic-bezier(.5,0,.9,.4) forwards}
+.dtb-fall.manual tr.land2{animation:dtbLandIn2 .64s cubic-bezier(.3,0,.7,1) both}
+.dtb-fall.manual tr.land2 td{animation:dtbSeat2 .64s linear both!important}
+@keyframes dtbFallCycle{
+  0%{transform:translateY(0) scale(1);opacity:1}
+  5%,9%{transform:translateY(0) scale(1.02);opacity:1}
+  19%{transform:translateY(170%) rotate(var(--rot,-5deg)) scale(1.02);opacity:0}
+  19.1%,52%{transform:translateY(-150%) scale(1.02);opacity:0}
+  54%{opacity:1}
+  62%,66%{transform:translateY(0) scale(1.02);opacity:1}
+  72%{transform:scale(.995)}
+  76%,100%{transform:scale(1);opacity:1}}
+@keyframes dtbSeatCycle{
+  0%,2%{box-shadow:none}
+  5%,17%{box-shadow:0 8px 18px rgba(0,0,0,.45)}
+  19%,64%{box-shadow:none}
+  67%{box-shadow:inset 0 0 0 999px rgba(var(--c-rgb,var(--accent-rgb)),.45)}
+  76%,100%{box-shadow:none}}
+@keyframes dtbDropOut{0%{transform:scale(1.02);opacity:1}100%{transform:translateY(170%) rotate(var(--rot,-5deg)) scale(1.02);opacity:0}}
+@keyframes dtbLandIn2{0%{transform:translateY(-150%) scale(1.02);opacity:0}12%{opacity:1}64%{transform:translateY(0) scale(1.02)}78%{transform:scale(.995)}100%{transform:scale(1)}}
+@keyframes dtbSeat2{0%,60%{box-shadow:none}66%{box-shadow:inset 0 0 0 999px rgba(var(--c-rgb,var(--accent-rgb)),.45)}100%{box-shadow:none}}
 
 /* ---- reduced motion: freeze every dtb animation on a legible frame ---- */
 @media (prefers-reduced-motion:reduce){
@@ -672,12 +699,13 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
 
   <div class="tile is-new" data-ctype="table-data" data-interact="click"><div class="stage">
     <table class="dtb-tbl dtb-fall"><thead><tr><th>Player</th><th class="dtb-num">Score<span class="dtb-sort-arrow">▼</span></th><th class="dtb-num">Wins</th></tr></thead><tbody>
-      <tr style="--to:1;--i:0;--rot:-5deg"><td>Comet</td><td class="dtb-num">7,940</td><td class="dtb-num">31</td></tr>
-      <tr style="--to:-1;--i:1;--rot:4deg"><td>Atlas</td><td class="dtb-num">9,812</td><td class="dtb-num">44</td></tr>
-      <tr style="--to:1;--i:2;--rot:-3deg"><td>Pixel</td><td class="dtb-num">5,220</td><td class="dtb-num">18</td></tr>
-      <tr style="--to:-1;--i:3;--rot:6deg"><td>Ember</td><td class="dtb-num">8,105</td><td class="dtb-num">36</td></tr>
+      <tr style="--o:2;--rot:-5deg"><td>Comet</td><td class="dtb-num">7,940</td><td class="dtb-num">31</td></tr>
+      <tr style="--o:0;--rot:4deg"><td>Atlas</td><td class="dtb-num">9,812</td><td class="dtb-num">44</td></tr>
+      <tr style="--o:4;--rot:-3deg"><td>Pixel</td><td class="dtb-num">5,220</td><td class="dtb-num">18</td></tr>
+      <tr style="--o:1;--rot:6deg"><td>Ember</td><td class="dtb-num">8,105</td><td class="dtb-num">36</td></tr>
+      <tr style="--o:3;--rot:-2deg"><td>Nova</td><td class="dtb-num">6,470</td><td class="dtb-num">22</td></tr>
     </tbody></table>
-  </div><div class="meta"><div class="nm">Fall + Land Resort</div><span class="ref">.dtb-tbl.dtb-fall</span><div class="desc">The rows tumble out of the table on slight angles, one after another, then drop back in from above already in the new order, landing with a small bounce — the theatrical resort. Offsets in <code>--to</code>, tilt in <code>--rot</code>. <b>Click the Score header to drop and resort.</b></div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+  </div><div class="meta"><div class="nm">Fall + Land Resort</div><span class="ref">.dtb-tbl.dtb-fall</span><div class="desc">Each row lifts 2% to pop on top, hangs a beat (some get stuck), then drops out on its own tilt, one at a time in a random order. The resorted rows fall in from above at 102%, snap down to size and flash as they seat. Order in <code>--o</code>, tilt in <code>--rot</code>. <b>Click the Score header to drop and resort.</b></div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
 </div>
 
@@ -1178,19 +1206,31 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
       rows.forEach(function(r){ tb.appendChild(r); });
     }); },260);
   });
-  // (3) fall + land: rows tumble out, DOM resorts, rows drop back in
+  // (3) fall + land 2.0: rows lift, hang, drop out one by one (random order, random tilt);
+  //     the resorted rows fall in from above top-to-bottom, snap to size and flash as they seat.
   document.addEventListener('click',function(e){
     var th=e.target.closest('.dtb-fall th.dtb-num'); if(!th) return;
     var tbl=th.closest('table'); if(tbl.getAttribute('data-busy')) return; manual(tbl); tbl.setAttribute('data-busy','1');
     var idx=[].indexOf.call(th.parentNode.children,th), desc=th.getAttribute('data-dir')!=='desc';
     th.setAttribute('data-dir',desc?'desc':'asc'); var arrow=th.querySelector('.dtb-sort-arrow'); if(arrow) arrow.textContent=desc?'▼':'▲';
-    var tb=tbl.tBodies[0], rows=[].slice.call(tb.rows);
-    rows.forEach(function(r,i){ r.classList.remove('land-in'); r.style.setProperty('--rot',((i%2?1:-1)*(3+i*1.2))+'deg'); [].forEach.call(r.children,function(td){ td.style.animationDelay=(i*90)+'ms'; }); r.classList.add('fall-out'); });
+    var tb=tbl.tBodies[0], rows=[].slice.call(tb.rows), order=rows.slice();
+    for(var i=order.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)), t0=order[i]; order[i]=order[j]; order[j]=t0; }
+    var t=0;
+    order.forEach(function(r){
+      var hold=80+Math.random()*(Math.random()<.3?460:160);            // most drop quickly, some get stuck a beat
+      var rot=((Math.random()<.5?-1:1)*(2+Math.random()*5)).toFixed(1)+'deg';
+      r.classList.remove('land2','drop2','lift2'); r.style.setProperty('--rot',rot);
+      (function(r,start,hold){
+        setTimeout(function(){ r.classList.add('lift2'); },start);
+        setTimeout(function(){ r.classList.remove('lift2'); r.classList.add('drop2'); },start+180+hold);
+      })(r,t,hold);
+      t+=190+hold*.5;
+    });
     setTimeout(function(){
       rows.sort(function(a,b){ var d=num(a.children[idx].textContent)-num(b.children[idx].textContent); return desc?-d:d; });
-      rows.forEach(function(r,i){ tb.appendChild(r); r.classList.remove('fall-out'); [].forEach.call(r.children,function(td){ td.style.animationDelay=(i*110)+'ms'; }); r.classList.add('land-in'); });
-      setTimeout(function(){ rows.forEach(function(r){ r.classList.remove('land-in'); [].forEach.call(r.children,function(td){ td.style.animationDelay=''; }); }); tbl.removeAttribute('data-busy'); }, 700+rows.length*110);
-    }, 600+rows.length*90);
+      rows.forEach(function(r,i){ tb.appendChild(r); r.classList.remove('drop2'); r.style.animationDelay=(i*150)+'ms'; [].forEach.call(r.children,function(td){ td.style.animationDelay=(i*150)+'ms'; }); r.classList.add('land2'); });
+      setTimeout(function(){ rows.forEach(function(r){ r.classList.remove('land2'); r.style.animationDelay=''; [].forEach.call(r.children,function(td){ td.style.animationDelay=''; }); }); tbl.removeAttribute('data-busy'); }, 760+rows.length*150);
+    }, t+180+560+140);
   });
 })();
 <\/script>
