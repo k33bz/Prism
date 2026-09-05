@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gantt Rows · Prism</title>
+<!-- Prism showcase sample: tables-gantt-rows (gallery: tables). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.dtb-gantt { width: 100%; max-width: 290px; position: relative; font: 600 9.5px / 1.2 ui-sans-serif, system-ui, sans-serif; color: var(--muted); }
+.dtb-gantt-r { display: grid; grid-template-columns: 56px 1fr; align-items: center; gap: 6px; padding: 3px 0px; }
+.dtb-gantt-r .tr { height: 12px; border-radius: 3px; background: repeating-linear-gradient(90deg,transparent 0 24%,var(--line) 24% 25%); position: relative; }
+.dtb-gantt-r .tr i { position: absolute; top: 1px; bottom: 1px; left: var(--s,0%); width: var(--w,30%); border-radius: 3px; background: var(--c,var(--info)); opacity: 0.85; transform-origin: 0px 50%; animation-duration: 5s; animation-timing-function: ease-out; animation-iteration-count: infinite; animation-direction: normal; animation-fill-mode: none; animation-play-state: running; animation-name: dtbFill; animation-timeline: auto; animation-range: normal; animation-delay: calc(var(--i,0)*.35s); }
+.dtb-gantt-r .tr i.ms { width: 8px; height: 8px; top: 2px; border-radius: 2px; transform: rotate(45deg); background: var(--accent); animation: auto ease 0s 1 normal none running none; }
+.dtb-today { position: absolute; top: 0px; bottom: 0px; left: calc(22% + 62px); width: 2px; background: var(--accent); box-shadow: 0 0 6px var(--accent); animation: 7s linear 0s infinite normal none running dtbToday; }
+@keyframes dtbFill { 
+  0% { transform: scaleX(0); }
+  60%, 90% { transform: scaleX(1); }
+  100% { transform: scaleX(1); }
+}
+@keyframes dtbToday { 
+  0% { left: calc(18% + 62px); }
+  100% { left: calc(78% + 62px); }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="dtb-gantt">
+      <div class="dtb-today"></div>
+      <div class="dtb-gantt-r"><span>Discovery</span><span class="tr"><i style="--s:0%;--w:22%;--i:0;--c:var(--pos)"></i></span></div>
+      <div class="dtb-gantt-r"><span>Design</span><span class="tr"><i style="--s:18%;--w:26%;--i:1"></i></span></div>
+      <div class="dtb-gantt-r"><span>Build</span><span class="tr"><i style="--s:38%;--w:34%;--i:2"></i></span></div>
+      <div class="dtb-gantt-r"><span>QA</span><span class="tr"><i style="--s:64%;--w:18%;--i:3;--c:var(--warn)"></i></span></div>
+      <div class="dtb-gantt-r"><span>Launch</span><span class="tr"><i class="ms" style="--s:84%"></i></span></div>
+    </div></div></div>
+<div class="meta"><b>Gantt Rows</b> · <code>tables-gantt-rows</code><br>Tables &amp; Data Layouts · GRIDS &amp; SCHEDULES<p>Phase bars on gridded tracks (--s start, --w width), a diamond milestone, and a today line sliding across — project plans.</p></div>
+
+</body>
+</html>

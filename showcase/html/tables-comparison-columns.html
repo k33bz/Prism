@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Comparison Columns · Prism</title>
+<!-- Prism showcase sample: tables-comparison-columns (gallery: tables). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.dtb-tbl { width: 100%; max-width: 300px; border-collapse: separate; border-spacing: 0px; font: 11px / 1.35 ui-sans-serif, system-ui, sans-serif; color: var(--ink); background: var(--card); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+.dtb-tbl th { font: 700 9px / 1.2 ui-sans-serif, system-ui, sans-serif; letter-spacing: 0.07em; text-transform: uppercase; color: var(--dim); text-align: left; padding: 7px 9px; background: var(--panel2); border-bottom: 1px solid var(--line); white-space: nowrap; }
+.dtb-tbl td { padding: 6px 9px; border-bottom: 1px solid var(--line); white-space: nowrap; vertical-align: middle; }
+.dtb-tbl tbody tr:last-child td { border-bottom: 0px; }
+.dtb-tbl tfoot td { border-top: 2px solid var(--line); border-bottom: 0px; font-weight: 800; background: var(--panel2); }
+.dtb-mono { font-family: ui-monospace, Menlo, monospace; font-variant-numeric: tabular-nums; }
+.dtb-compare th, .dtb-compare td { text-align: center; }
+.dtb-compare th:first-child, .dtb-compare td:first-child { text-align: left; color: var(--muted); }
+.dtb-compare .dtb-rec { background: rgba(var(--accent-rgb),.08); box-shadow: inset 0 0 0 1px var(--accent); animation: 2.6s ease-in-out 0s infinite normal none running dtbRecGlow; }
+.dtb-compare th.dtb-rec { color: var(--accent); }
+.dtb-rec-badge { display: block; font-size: 7.5px; letter-spacing: 0.1em; color: var(--accent); margin-top: 2px; }
+.dtb-rec { padding: 7px 8px; border: 1px solid var(--line); border-radius: 8px; background: var(--card); animation-duration: 6s; animation-timing-function: ease-in-out; animation-iteration-count: infinite; animation-direction: normal; animation-fill-mode: none; animation-play-state: running; animation-name: dtbFadeUp; animation-timeline: auto; animation-range: normal; animation-delay: calc(var(--i,0)*.25s); }
+.dtb-rec b { display: block; font-size: 10.5px; color: var(--ink); font-weight: 700; }
+.dtb-rec small { display: block; color: var(--muted); font-size: 9px; margin-top: 2px; }
+.dtb-rec em { display: block; font-style: normal; font-family: ui-monospace, Menlo, monospace; color: var(--c,var(--info)); font-size: 11px; margin-top: 4px; font-weight: 700; }
+@keyframes dtbFadeUp { 
+  0% { opacity: 0; transform: translateY(6px); }
+  12%, 80% { opacity: 1; transform: translateY(0px); }
+  92%, 100% { opacity: 0; transform: translateY(6px); }
+}
+@keyframes dtbRecGlow { 
+  0%, 100% { box-shadow: inset 0 0 0 1px var(--accent),0 0 0 rgba(var(--accent-rgb),0); }
+  50% { box-shadow: inset 0 0 0 1px var(--accent),0 0 12px rgba(var(--accent-rgb),.35); }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><table class="dtb-tbl dtb-compare"><thead><tr><th></th><th>Basic</th><th class="dtb-rec">Pro<span class="dtb-rec-badge">RECOMMENDED</span></th><th>Max</th></tr></thead><tbody>
+      <tr><td>Seats</td><td>3</td><td class="dtb-rec">25</td><td>∞</td></tr>
+      <tr><td>Storage</td><td>10 GB</td><td class="dtb-rec">1 TB</td><td>10 TB</td></tr>
+      <tr><td>Support</td><td>Email</td><td class="dtb-rec">24/7</td><td>TAM</td></tr>
+      <tr><td>Price</td><td class="dtb-mono">$0</td><td class="dtb-rec dtb-mono">$49</td><td class="dtb-mono">$299</td></tr>
+    </tbody></table></div></div>
+<div class="meta"><b>Comparison Columns</b> · <code>tables-comparison-columns</code><br>Tables &amp; Data Layouts · MATRICES &amp; COMPARISON<p>Side-by-side options with one column framed and glowing as the recommendation — pricing tables and vendor comparisons.</p></div>
+
+</body>
+</html>

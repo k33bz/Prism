@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JSON Tree · Prism</title>
+<!-- Prism showcase sample: tables-json-tree (gallery: tables). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.dtb-json { width: 100%; max-width: 280px; margin: 0px; padding: 10px 12px; background: var(--card); border: 1px solid var(--line); border-radius: 8px; font: 10.5px / 1.55 ui-monospace, Menlo, monospace; color: var(--muted); white-space: pre; }
+.dtb-jk { color: var(--info); }
+.dtb-js { color: var(--pos); }
+.dtb-jn { color: var(--accent); }
+.dtb-jb { color: var(--crit); }
+.dtb-json-fold { display: block; overflow: hidden; max-height: 60px; animation: 6s ease-in-out 0s infinite normal none running dtbJsonFold; }
+.dtb-json-el { display: block; overflow: hidden; max-height: 0px; opacity: 0; color: var(--dim); animation: 6s ease-in-out 0s infinite normal none running dtbJsonEl; }
+@keyframes dtbJsonFold { 
+  0%, 20% { max-height: 60px; opacity: 1; }
+  30%, 70% { max-height: 0px; opacity: 0; }
+  80%, 100% { max-height: 60px; opacity: 1; }
+}
+@keyframes dtbJsonEl { 
+  0%, 24% { max-height: 0px; opacity: 0; }
+  32%, 68% { max-height: 20px; opacity: 1; }
+  78%, 100% { max-height: 0px; opacity: 0; }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><pre class="dtb-json">{
+  <span class="dtb-jk">"id"</span>: <span class="dtb-js">"charts-gauge-cluster"</span>,
+  <span class="dtb-jk">"gallery"</span>: <span class="dtb-js">"charts"</span>,
+  <span class="dtb-jk">"tags"</span>: [<span class="dtb-json-fold">    <span class="dtb-js">"charts"</span>,
+    <span class="dtb-js">"animated"</span>,
+    <span class="dtb-js">"updated"</span></span><span class="dtb-json-el">    …3 items</span>  ],
+  <span class="dtb-jk">"needsJs"</span>: <span class="dtb-jb">null</span>,
+  <span class="dtb-jk">"frames"</span>: <span class="dtb-jn">16</span>
+}</pre></div></div>
+<div class="meta"><b>JSON Tree</b> · <code>tables-json-tree</code><br>Tables &amp; Data Layouts · KEY VALUE &amp; DEFINITION<p>Syntax-coloured JSON with a node that collapses into an item count and expands again — API payloads, config dumps, catalog records.</p></div>
+
+</body>
+</html>

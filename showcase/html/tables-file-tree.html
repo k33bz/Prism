@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>File Tree · Prism</title>
+<!-- Prism showcase sample: tables-file-tree (gallery: tables). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.dtb-chev { display: inline-block; width: 0px; height: 0px; border-top: 4px solid transparent; border-right: 4px solid transparent; border-bottom: 4px solid transparent; border-image: none; border-left: 6px solid var(--muted); margin-right: 6px; transform-origin: 30% 50%; animation: 5s ease-in-out 0s infinite normal none running dtbChev; }
+.dtb-insp-h .dtb-chev { animation: auto ease 0s 1 normal none running none; transform: rotate(90deg); }
+.dtb-insp-h.fold .dtb-chev { animation: 6s ease-in-out -1.4s infinite normal none running dtbChev; }
+.dtb-tree { width: 100%; max-width: 260px; font: 11px / 1.6 ui-monospace, Menlo, monospace; color: var(--ink); }
+.dtb-tree-n { display: flex; align-items: center; gap: 6px; padding: 1px 6px; border-radius: 5px; white-space: nowrap; }
+.dtb-tree-n .ic { width: 12px; height: 10px; border-radius: 2px; background: var(--warn); position: relative; flex: 0 0 auto; }
+.dtb-tree-n .ic::before { content: ""; position: absolute; left: 0px; top: -2px; width: 5px; height: 2px; border-radius: 1px 1px 0px 0px; background: var(--warn); }
+.dtb-tree-n .fi { width: 9px; height: 11px; border-radius: 1px; background: var(--dim); flex: 0 0 auto; }
+.dtb-tree-n .fi.code { background: var(--info); }
+.dtb-tree-n.sel { background: rgba(var(--accent-rgb),.14); color: var(--accent); }
+.dtb-tree-kids { padding-left: 18px; overflow: hidden; animation: 6s ease-in-out 0s infinite normal none running dtbTreeOpen; }
+.dtb-tree .dtb-chev { animation: 6s ease-in-out 0s infinite normal none running dtbChev; }
+@keyframes dtbChev { 
+  0%, 18% { transform: rotate(0deg); }
+  25%, 80% { transform: rotate(90deg); }
+  88%, 100% { transform: rotate(0deg); }
+}
+@keyframes dtbTreeOpen { 
+  0%, 18% { max-height: 0px; opacity: 0; }
+  28%, 80% { max-height: 90px; opacity: 1; }
+  90%, 100% { max-height: 0px; opacity: 0; }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="dtb-tree">
+      <div class="dtb-tree-n"><span class="dtb-chev"></span><span class="ic"></span>showcase</div>
+      <div class="dtb-tree-kids">
+        <div class="dtb-tree-n sel"><span class="fi code"></span>build.mjs</div>
+        <div class="dtb-tree-n"><span class="fi code"></span>browsers.mjs</div>
+        <div class="dtb-tree-n"><span class="ic"></span>galleries</div>
+        <div class="dtb-tree-n"><span class="fi"></span>manifest.json</div>
+      </div>
+      <div class="dtb-tree-n"><span class="ic"></span>catalog</div>
+      <div class="dtb-tree-n"><span class="fi"></span>README.md</div>
+    </div></div></div>
+<div class="meta"><b>File Tree</b> · <code>tables-file-tree</code><br>Tables &amp; Data Layouts · LISTS &amp; TREES<p>A folder whose chevron turns as its children slide open, with a selected file row — explorers, repo browsers, sitemap outlines.</p></div>
+
+</body>
+</html>

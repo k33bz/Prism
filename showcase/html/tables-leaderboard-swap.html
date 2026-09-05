@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Leaderboard Swap · Prism</title>
+<!-- Prism showcase sample: tables-leaderboard-swap (gallery: tables). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.dtb-count.b { animation: 4s ease-out 0s infinite normal none running dtbCountB; }
+.dtb-insp-r .v.b { color: var(--crit); }
+.dtb-insp-r .v.s { color: var(--pos); }
+.dtb-rank { width: 100%; max-width: 280px; font: 11px / 1.3 ui-sans-serif, system-ui, sans-serif; display: flex; flex-direction: column; gap: 4px; }
+.dtb-rank-r { display: grid; grid-template-columns: 22px 1fr 70px 34px; align-items: center; gap: 8px; padding: 5px 8px; border: 1px solid var(--line); border-radius: 7px; background: var(--card); color: var(--ink); }
+.dtb-rank-r .rk { width: 18px; height: 18px; border-radius: 50%; display: grid; place-items: center; font-weight: 800; font-size: 9.5px; background: var(--panel2); color: var(--muted); }
+.dtb-rank-r.g .rk { background: var(--accent); color: rgb(26, 16, 0); }
+.dtb-rank-r.s .rk { background: var(--muted); color: rgb(11, 14, 23); }
+.dtb-rank-r.b .rk { background: rgba(var(--warn-rgb),.7); color: rgb(26, 16, 0); }
+.dtb-rank-r .bar { height: 5px; border-radius: 3px; background: var(--panel2); overflow: hidden; }
+.dtb-rank-r .bar i { display: block; height: 100%; width: var(--w,50%); background: var(--info); border-radius: 3px; }
+.dtb-rank-r .sc { text-align: right; font-family: ui-monospace, Menlo, monospace; color: var(--muted); }
+.dtb-rank-r.dn { animation: 5s ease-in-out 0s infinite normal none running dtbSwapDownR; position: relative; z-index: 1; }
+.dtb-rank-r.up { animation: 5s ease-in-out 0s infinite normal none running dtbSwapUpR; position: relative; z-index: 2; }
+.dtb-rank-r.up .sc { color: var(--pos); }
+@keyframes dtbCountB { 
+  0% { --dtb-n: 0; }
+  55%, 100% { --dtb-n: 642; }
+}
+@keyframes dtbSwapDownR { 
+  0%, 40% { transform: translateY(0px); }
+  50%, 90% { transform: translateY(calc(100% + 4px)); }
+  100% { transform: translateY(0px); }
+}
+@keyframes dtbSwapUpR { 
+  0%, 40% { transform: translateY(0px); box-shadow: none; }
+  50%, 90% { transform: translateY(calc(-100% - 4px)); box-shadow: 0 0 0 1px var(--pos),0 4px 14px rgba(0,0,0,.4); }
+  100% { transform: translateY(0px); box-shadow: none; }
+}
+.bar { background: var(--panel) !important; border-bottom: var(--bd,1px) solid var(--line) !important; backdrop-filter: none !important; }
+.bar b { color: var(--muted) !important; }
+.bar button { border-radius: var(--r-sm,8px) !important; transition: background var(--dur,.12s) var(--ease,ease),color var(--dur,.12s) var(--ease,ease),border-color var(--dur,.12s) var(--ease,ease) !important; }
+.bar button.on { color: rgb(255, 255, 255) !important; }
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="dtb-rank">
+      <div class="dtb-rank-r g"><span class="rk">1</span><span>Kastro</span><span class="bar"><i style="--w:96%"></i></span><span class="sc">9,812</span></div>
+      <div class="dtb-rank-r s dn"><span class="rk">2</span><span>Nova</span><span class="bar"><i style="--w:78%"></i></span><span class="sc">7,940</span></div>
+      <div class="dtb-rank-r b up"><span class="rk">3</span><span>Fayte</span><span class="bar"><i style="--w:80%"></i></span><span class="sc">8,105</span></div>
+      <div class="dtb-rank-r"><span class="rk">4</span><span>Pixel</span><span class="bar"><i style="--w:51%"></i></span><span class="sc">5,220</span></div>
+    </div></div></div>
+<div class="meta"><b>Leaderboard Swap</b> · <code>tables-leaderboard-swap</code><br>Tables &amp; Data Layouts · LISTS &amp; TREES<p>Ranked rows with medal badges and score bars; two competitors trade places as a score overtakes — leaderboards and top-N lists.</p></div>
+
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Heatmap Grid · Prism</title>
+<!-- Prism showcase sample: tables-heatmap-grid (gallery: tables). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.dtb-hm { display: grid; grid-template-columns: 34px repeat(7, 18px); gap: 3px; align-items: center; font: 600 8.5px ui-sans-serif, system-ui, sans-serif; color: var(--dim); }
+.dtb-hm b { font-weight: 600; text-align: center; }
+.dtb-hm i { display: block; width: 18px; height: 18px; border-radius: 3px; background: rgba(var(--info-rgb),var(--a,.4)); animation-duration: 3.2s; animation-timing-function: ease-in-out; animation-iteration-count: infinite; animation-direction: normal; animation-fill-mode: none; animation-play-state: running; animation-name: dtbWave; animation-timeline: auto; animation-range: normal; animation-delay: calc(var(--d,0)*.13s); }
+@keyframes dtbWave { 
+  0%, 100% { opacity: 0.55; transform: scale(0.92); }
+  50% { opacity: 1; transform: scale(1); }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="dtb-hm">
+      <span></span><b>M</b><b>T</b><b>W</b><b>T</b><b>F</b><b>S</b><b>S</b>
+      <span>00–06</span><i style="--a:.15;--d:0"></i><i style="--a:.2;--d:1"></i><i style="--a:.15;--d:2"></i><i style="--a:.25;--d:3"></i><i style="--a:.2;--d:4"></i><i style="--a:.1;--d:5"></i><i style="--a:.1;--d:6"></i>
+      <span>06–12</span><i style="--a:.6;--d:1"></i><i style="--a:.7;--d:2"></i><i style="--a:.8;--d:3"></i><i style="--a:.75;--d:4"></i><i style="--a:.65;--d:5"></i><i style="--a:.3;--d:6"></i><i style="--a:.2;--d:7"></i>
+      <span>12–18</span><i style="--a:.9;--d:2"></i><i style="--a:1;--d:3"></i><i style="--a:.95;--d:4"></i><i style="--a:1;--d:5"></i><i style="--a:.85;--d:6"></i><i style="--a:.4;--d:7"></i><i style="--a:.3;--d:8"></i>
+      <span>18–24</span><i style="--a:.5;--d:3"></i><i style="--a:.55;--d:4"></i><i style="--a:.6;--d:5"></i><i style="--a:.5;--d:6"></i><i style="--a:.7;--d:7"></i><i style="--a:.45;--d:8"></i><i style="--a:.35;--d:9"></i>
+    </div></div></div>
+<div class="meta"><b>Heatmap Grid</b> · <code>tables-heatmap-grid</code><br>Tables &amp; Data Layouts · MATRICES &amp; COMPARISON<p>A labelled cell grid where opacity carries the value (--a) and a diagonal wave (--d) breathes across it — traffic by hour and weekday.</p></div>
+
+</body>
+</html>
