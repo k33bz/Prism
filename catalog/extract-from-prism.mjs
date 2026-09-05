@@ -11,7 +11,7 @@
    Then: node catalog/_embed-catalog.mjs   (embeds manifest into the #prism-catalog island)
    ========================================================================== */
 import { spawn } from 'node:child_process';
-import { writeFileSync, mkdirSync, readFileSync } from 'node:fs';
+import { writeFileSync, mkdirSync, readFileSync, existsSync } from 'node:fs';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { mkdtempSync } from 'node:fs';
@@ -209,8 +209,12 @@ try {
     // Wait for the frame to settle rather than trusting a flat 3.2s. Spectrums alone is
     // ~1.2k tiles and keeps rendering well past any fixed sleep, so poll until the tile
     // count stops growing (two identical non-zero samples) — big galleries can't truncate.
+    // Also require the shell router to report the requested page as current: the
+    // shell opens on New Facets (PAGES[0]), whose build is heavy, and the very first
+    // go() otherwise races it — one run captured the facets page as "charts".
     const countExpr = `(function(){var f=document.getElementById('gv'),d=f&&f.contentDocument;
-      if(!d||d.readyState==='loading')return -1;return d.querySelectorAll('.tile,.panel').length;})()`;
+      if(window.PrismShell&&window.PrismShell.current&&window.PrismShell.current()!==${JSON.stringify(g.gallery)})return -1;
+      if(!d||d.readyState!=='complete')return -1;return d.querySelectorAll('.tile,.panel').length;})()`;
     let last = -1, stable = 0;
     for (let i = 0; i < 100; i++) {          // 100 x 300ms = 30s ceiling
       await sleep(300);
@@ -264,6 +268,17 @@ try {
     note: 'Include once globally. Effects read --c/--c-rgb for color and --bg/--ink/etc for theming.',
   };
 
+  // Merge git-derived dates (catalog/_facet_dates.mjs) so agents can ask "what is new
+  // since <date>" without the hand-applied is-new / is-fixed badges.
+  try {
+    const datesPath = resolve(HERE, 'facet-dates.json');
+    if (existsSync(datesPath)) {
+      const dates = JSON.parse(readFileSync(datesPath, 'utf8')).facets || {};
+      let hit = 0;
+      for (const r of all) { const d = dates[r.id]; if (d) { r.addedOn = d.added; r.updatedOn = d.updated; hit++; } else { r.addedOn = null; r.updatedOn = null; } }
+      console.log(`dates merged for ${hit}/${all.length} facets (facet-dates.json)`);
+    }
+  } catch (e) { console.warn('facet-dates merge skipped:', e.message); }
   const manifest = {
     name: 'prism-effects', version: '1.0.0', generated: 'EXTRACTOR_RUN',
     description: 'Catalog of offline, self-contained CSS/SVG animations, effects, components and backdrops, structured for programmatic composition (e.g. an MCP server).',
@@ -304,7 +319,7 @@ try {
 
   mkdirSync(OUT, { recursive: true });
   writeFileSync(OUT + '/manifest.json', JSON.stringify(manifest, null, 2));
-  const index = all.map(r => ({ id: r.id, name: r.name, gallery: r.gallery, category: r.category, ref: r.ref, classes: r.classes, params: Object.keys(r.params), tags: r.tags, componentType: r.componentType, interaction: r.interaction, spectrum: r.spectrum, usableAsBackground: r.usableAsBackground, needsJs: r.needsJs, isNew: r.isNew, isFixed: r.isFixed, description: r.description }));
+  const index = all.map(r => ({ id: r.id, name: r.name, gallery: r.gallery, category: r.category, ref: r.ref, classes: r.classes, params: Object.keys(r.params), tags: r.tags, componentType: r.componentType, interaction: r.interaction, spectrum: r.spectrum, usableAsBackground: r.usableAsBackground, needsJs: r.needsJs, isNew: r.isNew, isFixed: r.isFixed, addedOn: r.addedOn || null, updatedOn: r.updatedOn || null, description: r.description }));
   writeFileSync(OUT + '/index.json', JSON.stringify({ count: index.length, effects: index }, null, 2));
   console.log(`\nTOTAL ${all.length} effects → manifest.json (+ index.json)`);
 } catch (e) {
