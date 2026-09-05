@@ -8,8 +8,8 @@
      updated  the date of the most recent commit that changed the tile's markup
               after it was added (null if never changed)
      author   handle of whoever authored the commit that introduced the facet
-              (git author name mapped through AUTHOR_HANDLES; unknown names pass
-              through as-is), so attribution needs no per-tile markup
+              (fork commits map to their handle, everything inherited maps to the
+              upstream handle), so attribution needs no per-tile markup
 
    Ids are derived exactly like catalog/extract-from-prism.mjs does at runtime
    (data-fx-id, else <page>-<slug(name)>, with -2/-3 suffixes for duplicates in
@@ -34,9 +34,12 @@ const ROOT = resolve(HERE, '..');
 const HTML = process.env.PRISM_HTML ? resolve(process.env.PRISM_HTML) : resolve(ROOT, 'Prism.html');
 const OUT = resolve(HERE, 'facet-dates.json');
 const git = (...args) => execFileSync('git', args, { cwd: ROOT, encoding: 'utf8', maxBuffer: 256 * 1024 * 1024 });
-// git author name -> public handle. Upstream is crazy54 (Jeremy Hall); the fork is k33bz.
-const AUTHOR_HANDLES = { 'Jeremy Hall': 'crazy54', 'k33bz': 'k33bz' };
-const handleOf = name => AUTHOR_HANDLES[name] || name;
+// git author -> public handle. The history has two identities: the fork's own commits
+// (k33bz) and everything inherited from upstream, which is attributed to the upstream
+// repository's handle (crazy54). No personal names live here.
+const FORK_HANDLES = { 'k33bz': 'k33bz' };
+const UPSTREAM_HANDLE = 'crazy54';
+const handleOf = name => FORK_HANDLES[name] || UPSTREAM_HANDLE;
 
 const slug = s => (s || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 60);
 const text = html => html.replace(/<[^>]+>/g, ' ').replace(/&quot;/g, '"').replace(/&#39;|&apos;/g, "'").replace(/&nbsp;/g, ' ')
