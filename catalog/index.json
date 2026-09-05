@@ -1,5 +1,5 @@
 {
-  "count": 3110,
+  "count": 3115,
   "effects": [
     {
       "id": "charts-big-metric-count-up",
@@ -1899,7 +1899,6 @@
         "ok",
         "m",
         "info",
-        "err",
         "warn",
         "cursor"
       ],
@@ -18071,9 +18070,6 @@
         "chat",
         "cmsg",
         "user",
-        "ai",
-        "typing-msg",
-        "mt",
         "cap",
         "pr-playbtn"
       ],
@@ -47232,42 +47228,6 @@
       "description": "A central hub with six spokes and pulses streaming outward along each one in turn. Distribution, integration and broadcast topologies."
     },
     {
-      "id": "diagrams-sankey-flow",
-      "name": "Sankey Flow",
-      "gallery": "diagrams",
-      "category": "NETWORK & RELATIONSHIPS",
-      "ref": ".dgm-sankey",
-      "classes": [
-        "dgm",
-        "dgm-sankey",
-        "band",
-        "b",
-        "c",
-        "nd",
-        "stream",
-        "mut"
-      ],
-      "params": [
-        "color"
-      ],
-      "tags": [
-        "diagrams",
-        "animated",
-        "new"
-      ],
-      "componentType": "diagram-network",
-      "interaction": "auto-play",
-      "spectrum": null,
-      "usableAsBackground": false,
-      "needsJs": null,
-      "isNew": true,
-      "isFixed": false,
-      "addedOn": "2026-09-05",
-      "updatedOn": null,
-      "author": "k33bz",
-      "description": "Three sources feeding two targets through bands whose width carries the volume, with dashed streams flowing through them. Traffic, budget and energy flows."
-    },
-    {
       "id": "diagrams-er-diagram",
       "name": "ER Diagram",
       "gallery": "diagrams",
@@ -47372,6 +47332,229 @@
       "updatedOn": null,
       "author": "k33bz",
       "description": "A power/interest grid with the four engagement zones, stakeholder bubbles growing into place sized by influence. Communication planning."
+    },
+    {
+      "id": "diagrams-sankey-flow",
+      "name": "Sankey Flow",
+      "gallery": "diagrams",
+      "category": "SANKEY & FLOW",
+      "ref": ".dgm-sankey",
+      "classes": [
+        "dgm",
+        "dgm-sk",
+        "dgm-sankey",
+        "dgm-sk-rib",
+        "dgm-sk-nd",
+        "dgm-sk-t",
+        "mut"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "diagrams",
+        "animated",
+        "new"
+      ],
+      "componentType": "diagram-network",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": "2026-09-05",
+      "updatedOn": null,
+      "author": "k33bz",
+      "description": "Four sources feed three targets through ribbons whose width carries the volume; each ribbon fades in and a sheen travels along it. Traffic, budget and energy flows."
+    },
+    {
+      "id": "diagrams-particle-sankey",
+      "name": "Particle Sankey",
+      "gallery": "diagrams",
+      "category": "SANKEY & FLOW",
+      "ref": ".dgm-sk-particles",
+      "classes": [
+        "dgm",
+        "dgm-sk",
+        "dgm-sk-particles",
+        "dgm-sk-rib",
+        "dgm-sk-p",
+        "dgm-sk-p2",
+        "dgm-sk-nd",
+        "dgm-sk-t",
+        "mut"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "diagrams",
+        "animated",
+        "new"
+      ],
+      "componentType": "diagram-network",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "The ribbons carry a stream of small squares from source to target along the flow path, two tones per flow, so volume reads as traffic, not area. Cohorts, populations, where people end up."
+    },
+    {
+      "id": "diagrams-gradient-sankey",
+      "name": "Gradient Sankey",
+      "gallery": "diagrams",
+      "category": "SANKEY & FLOW",
+      "ref": ".dgm-sk-gradient",
+      "classes": [
+        "dgm",
+        "dgm-sk",
+        "dgm-sk-gradient",
+        "dgm-sk-rib",
+        "dgm-sk-grad-rib",
+        "dgm-sk-sheen",
+        "dgm-sk-nd",
+        "dgm-sk-t",
+        "mut"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "diagrams",
+        "animated",
+        "new"
+      ],
+      "componentType": "diagram-network",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Each ribbon shades from its source colour to its target colour and a highlight sweeps along it in sequence, so the eye follows the flow left to right. The charting-library look."
+    },
+    {
+      "id": "diagrams-focus-freeze-sankey",
+      "name": "Focus + Freeze Sankey",
+      "gallery": "diagrams",
+      "category": "SANKEY & FLOW",
+      "ref": ".dgm-sk-focus",
+      "classes": [
+        "dgm",
+        "dgm-sk",
+        "dgm-sk-focus",
+        "dgm-sk-flow",
+        "dgm-sk-rib",
+        "dgm-sk-p",
+        "dgm-sk-p2",
+        "dgm-sk-nd",
+        "dgm-sk-t",
+        "mut"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "diagrams",
+        "animated",
+        "new"
+      ],
+      "componentType": "diagram-network",
+      "interaction": "hover",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Hover any flow: the others grey out and their particles stop dead while the chosen one keeps running. The ambient loop previews it by focusing each flow in turn. Hover a ribbon."
+    },
+    {
+      "id": "diagrams-dim-glow-sankey",
+      "name": "Dim + Glow Sankey",
+      "gallery": "diagrams",
+      "category": "SANKEY & FLOW",
+      "ref": ".dgm-sk-glow",
+      "classes": [
+        "dgm",
+        "dgm-sk",
+        "dgm-sk-glow",
+        "dgm-sk-flow",
+        "dgm-sk-rib",
+        "dgm-sk-p",
+        "dgm-sk-p2",
+        "dgm-sk-nd",
+        "dgm-sk-t",
+        "mut"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "diagrams",
+        "animated",
+        "new"
+      ],
+      "componentType": "diagram-network",
+      "interaction": "hover",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Hover any flow: the rest dim and the chosen one lights up with a layered glow and quicker particles. The ambient loop previews it by lighting each flow in turn. Hover a ribbon."
+    },
+    {
+      "id": "diagrams-neon-sankey",
+      "name": "Neon Sankey",
+      "gallery": "diagrams",
+      "category": "SANKEY & FLOW",
+      "ref": ".dgm-sk-neon",
+      "classes": [
+        "dgm",
+        "dgm-sk",
+        "dgm-sk-neon",
+        "dgm-sk-bg",
+        "dgm-sk-rib",
+        "dgm-sk-tube",
+        "dgm-sk-pulse",
+        "dgm-sk-nd",
+        "dgm-sk-t",
+        "mut"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "diagrams",
+        "animated",
+        "new"
+      ],
+      "componentType": "diagram-network",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "The flows as neon tubes: a thin bright core over layered glow in the flow colour, a pulse racing down each tube and one tube flickering like a tired sign. Dark stage by design."
     },
     {
       "id": "diagrams-business-model-canvas",

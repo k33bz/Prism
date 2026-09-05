@@ -2,11 +2,11 @@
 
 Every effect in Prism's **Diagrams & Frameworks** gallery, recorded as a looping GIF.
 
-**53 effects** · 53 animated · 1.5 MB of GIF · click any GIF to open its standalone HTML sample (raw file; open it locally, GitHub shows source).
+**58 effects** · 58 animated · 1.8 MB of GIF · click any GIF to open its standalone HTML sample (raw file; open it locally, GitHub shows source).
 
 [← Showcase index](../README.md)
 
-**Sections:** [FISHBONE (ISHIKAWA)](#fishbone-ishikawa) · [FLOW & LOGIC](#flow-logic) · [HIERARCHY & STRUCTURE](#hierarchy-structure) · [COMPARISON & MATRIX](#comparison-matrix) · [TIMELINE & PLANNING](#timeline-planning) · [NETWORK & RELATIONSHIPS](#network-relationships) · [FRAMEWORKS](#frameworks) · [FLYWHEELS](#flywheels)
+**Sections:** [FISHBONE (ISHIKAWA)](#fishbone-ishikawa) · [FLOW & LOGIC](#flow-logic) · [HIERARCHY & STRUCTURE](#hierarchy-structure) · [COMPARISON & MATRIX](#comparison-matrix) · [TIMELINE & PLANNING](#timeline-planning) · [NETWORK & RELATIONSHIPS](#network-relationships) · [SANKEY & FLOW](#sankey-flow) · [FRAMEWORKS](#frameworks) · [FLYWHEELS](#flywheels)
 
 ## FISHBONE (ISHIKAWA)
 
@@ -51,8 +51,15 @@ Every effect in Prism's **Diagrams & Frameworks** gallery, recorded as a looping
 ## NETWORK & RELATIONSHIPS
 
 <table>
-<tr><td align="center" valign="top" width="33%"><a href="../html/diagrams-network-graph.html"><img src="../gif/diagrams-network-graph.gif" width="300" alt="Network Graph"></a><br><b>Network Graph</b><br><sub><code>diagrams-network-graph</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/diagrams-hub-spoke.html"><img src="../gif/diagrams-hub-spoke.gif" width="300" alt="Hub &amp; Spoke"></a><br><b>Hub &amp; Spoke</b><br><sub><code>diagrams-hub-spoke</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/diagrams-sankey-flow.html"><img src="../gif/diagrams-sankey-flow.gif" width="300" alt="Sankey Flow"></a><br><b>Sankey Flow</b><br><sub><code>diagrams-sankey-flow</code></sub></td></tr>
-<tr><td align="center" valign="top" width="33%"><a href="../html/diagrams-er-diagram.html"><img src="../gif/diagrams-er-diagram.gif" width="300" alt="ER Diagram"></a><br><b>ER Diagram</b><br><sub><code>diagrams-er-diagram</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/diagrams-chord-diagram.html"><img src="../gif/diagrams-chord-diagram.gif" width="300" alt="Chord Diagram"></a><br><b>Chord Diagram</b><br><sub><code>diagrams-chord-diagram</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/diagrams-stakeholder-map.html"><img src="../gif/diagrams-stakeholder-map.gif" width="300" alt="Stakeholder Map"></a><br><b>Stakeholder Map</b><br><sub><code>diagrams-stakeholder-map</code></sub></td></tr>
+<tr><td align="center" valign="top" width="33%"><a href="../html/diagrams-network-graph.html"><img src="../gif/diagrams-network-graph.gif" width="300" alt="Network Graph"></a><br><b>Network Graph</b><br><sub><code>diagrams-network-graph</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/diagrams-hub-spoke.html"><img src="../gif/diagrams-hub-spoke.gif" width="300" alt="Hub &amp; Spoke"></a><br><b>Hub &amp; Spoke</b><br><sub><code>diagrams-hub-spoke</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/diagrams-er-diagram.html"><img src="../gif/diagrams-er-diagram.gif" width="300" alt="ER Diagram"></a><br><b>ER Diagram</b><br><sub><code>diagrams-er-diagram</code></sub></td></tr>
+<tr><td align="center" valign="top" width="33%"><a href="../html/diagrams-chord-diagram.html"><img src="../gif/diagrams-chord-diagram.gif" width="300" alt="Chord Diagram"></a><br><b>Chord Diagram</b><br><sub><code>diagrams-chord-diagram</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/diagrams-stakeholder-map.html"><img src="../gif/diagrams-stakeholder-map.gif" width="300" alt="Stakeholder Map"></a><br><b>Stakeholder Map</b><br><sub><code>diagrams-stakeholder-map</code></sub></td></tr>
+</table>
+
+## SANKEY & FLOW
+
+<table>
+<tr><td align="center" valign="top" width="33%"><a href="../html/diagrams-sankey-flow.html"><img src="../gif/diagrams-sankey-flow.gif" width="300" alt="Sankey Flow"></a><br><b>Sankey Flow</b><br><sub><code>diagrams-sankey-flow</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/diagrams-particle-sankey.html"><img src="../gif/diagrams-particle-sankey.gif" width="300" alt="Particle Sankey"></a><br><b>Particle Sankey</b><br><sub><code>diagrams-particle-sankey</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/diagrams-gradient-sankey.html"><img src="../gif/diagrams-gradient-sankey.gif" width="300" alt="Gradient Sankey"></a><br><b>Gradient Sankey</b><br><sub><code>diagrams-gradient-sankey</code></sub></td></tr>
+<tr><td align="center" valign="top" width="33%"><a href="../html/diagrams-focus-freeze-sankey.html"><img src="../gif/diagrams-focus-freeze-sankey.gif" width="300" alt="Focus + Freeze Sankey"></a><br><b>Focus + Freeze Sankey</b><br><sub><code>diagrams-focus-freeze-sankey</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/diagrams-dim-glow-sankey.html"><img src="../gif/diagrams-dim-glow-sankey.gif" width="300" alt="Dim + Glow Sankey"></a><br><b>Dim + Glow Sankey</b><br><sub><code>diagrams-dim-glow-sankey</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/diagrams-neon-sankey.html"><img src="../gif/diagrams-neon-sankey.gif" width="300" alt="Neon Sankey"></a><br><b>Neon Sankey</b><br><sub><code>diagrams-neon-sankey</code></sub></td></tr>
 </table>
 
 ## FRAMEWORKS

@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Sankey Flow · Prism</title>
-<!-- Prism showcase sample: diagrams-sankey-flow (gallery: diagrams). Offline, self-contained. -->
+<title>Dim + Glow Sankey · Prism</title>
+<!-- Prism showcase sample: diagrams-dim-glow-sankey (gallery: diagrams). Offline, self-contained. -->
 <style id="prism-tokens">
 :root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
 </style>
@@ -53,8 +53,18 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
 .dgm-sankey .dgm-sk-rib { opacity: 0.42; }
 .dgm-sk-particles .dgm-sk-rib { opacity: 0.16; animation-name: none; }
 .dgm-sk-focus .dgm-sk-rib, .dgm-sk-glow .dgm-sk-rib { opacity: 0.28; animation-name: none; transition: opacity 0.25s, filter 0.25s; }
+.dgm-sk-focus .dgm-sk-flow, .dgm-sk-glow .dgm-sk-flow { transition: opacity 0.25s, filter 0.25s; }
+.dgm-sk-focus .dgm-sk-flow { animation-name: dgmSkAutoFocus; animation-duration: 8s; animation-timing-function: steps(1); animation-iteration-count: infinite; animation-delay: calc(var(--i,0)*-1s); }
+.dgm-sk-focus:hover .dgm-sk-flow { animation-name: none; }
+.dgm-sk-focus:hover .dgm-sk-flow:not(:hover) { opacity: 0.14; filter: grayscale(1); }
+.dgm-sk-focus:hover .dgm-sk-flow:not(:hover) .dgm-sk-p { animation-play-state: paused; }
 .dgm-sk-focus .dgm-sk-flow:hover .dgm-sk-rib { opacity: 0.6; }
+.dgm-sk-glow .dgm-sk-flow { animation-name: dgmSkAutoGlow; animation-duration: 8s; animation-timing-function: ease-in-out; animation-iteration-count: infinite; animation-delay: calc(var(--i,0)*-1s); }
+.dgm-sk-glow:hover .dgm-sk-flow { animation-name: none; filter: none; }
+.dgm-sk-glow:hover .dgm-sk-flow:not(:hover) { opacity: 0.18; }
+.dgm-sk-glow .dgm-sk-flow:hover { filter: drop-shadow(0 0 3px var(--fc)) drop-shadow(0 0 9px rgba(var(--fc-rgb),.7)); }
 .dgm-sk-glow .dgm-sk-flow:hover .dgm-sk-rib { opacity: 0.75; }
+.dgm-sk-glow .dgm-sk-flow:hover .dgm-sk-p { animation-duration: 1.2s; }
 .dgm-sk-neon .dgm-sk-nd { filter: drop-shadow(0 0 4px var(--c)); }
 @keyframes dgmDraw { 
   0% { stroke-dashoffset: 400; }
@@ -113,18 +123,26 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
   60% { stroke-dashoffset: -300; opacity: 1; }
   62%, 100% { stroke-dashoffset: -300; opacity: 0; }
 }
+@keyframes dgmSkAutoFocus { 
+  0%, 12% { opacity: 1; filter: none; }
+  12.5%, 100% { opacity: 0.2; filter: grayscale(1); }
+}
+@keyframes dgmSkAutoGlow { 
+  0%, 10% { opacity: 1; filter: drop-shadow(0 0 3px var(--fc)) drop-shadow(0 0 9px rgba(var(--fc-rgb),.7)); }
+  14%, 100% { opacity: 0.3; filter: none; }
+}
 </style>
 </head>
 <body>
-<div class="tile"><div class="stage" id="stage"><svg class="dgm dgm-sk dgm-sankey" viewBox="0 0 320 160" aria-label="Sankey flow: four sources feeding three targets through ribbons whose width carries the volume">
-      <path class="dgm-sk-rib" style="--i:0;--fc:var(--accent);--fc-rgb:var(--accent-rgb)" stroke-width="22" d="M60 29.0 C160 29.0 160 29.0 258 29.0"></path>
-      <path class="dgm-sk-rib" style="--i:1;--fc:var(--accent);--fc-rgb:var(--accent-rgb)" stroke-width="14" d="M60 47.0 C160 47.0 160 117.0 258 117.0"></path>
-      <path class="dgm-sk-rib" style="--i:2;--fc:var(--info);--fc-rgb:var(--info-rgb)" stroke-width="16" d="M60 70.0 C160 70.0 160 48.0 258 48.0"></path>
-      <path class="dgm-sk-rib" style="--i:3;--fc:var(--info);--fc-rgb:var(--info-rgb)" stroke-width="8" d="M60 82.0 C160 82.0 160 76.0 258 76.0"></path>
-      <path class="dgm-sk-rib" style="--i:4;--fc:var(--pos);--fc-rgb:var(--pos-rgb)" stroke-width="12" d="M60 100.0 C160 100.0 160 86.0 258 86.0"></path>
-      <path class="dgm-sk-rib" style="--i:5;--fc:var(--pos);--fc-rgb:var(--pos-rgb)" stroke-width="4" d="M60 108.0 C160 108.0 160 58.0 258 58.0"></path>
-      <path class="dgm-sk-rib" style="--i:6;--fc:var(--warn);--fc-rgb:var(--warn-rgb)" stroke-width="6" d="M60 121.0 C160 121.0 160 95.0 258 95.0"></path>
-      <path class="dgm-sk-rib" style="--i:7;--fc:var(--warn);--fc-rgb:var(--warn-rgb)" stroke-width="6" d="M60 127.0 C160 127.0 160 127.0 258 127.0"></path>
+<div class="tile"><div class="stage" id="stage"><svg class="dgm dgm-sk dgm-sk-glow" viewBox="0 0 320 160" aria-label="Dim and glow Sankey: hover a flow to dim the rest and make the chosen one glow">
+      <g class="dgm-sk-flow" style="--i:0;--fc:var(--accent);--fc-rgb:var(--accent-rgb)"><path class="dgm-sk-rib" style="--i:0;--fc:var(--accent);--fc-rgb:var(--accent-rgb)" stroke-width="22" d="M60 29.0 C160 29.0 160 29.0 258 29.0"></path><rect class="dgm-sk-p" width="3" height="3" style="offset-path:path('M60 29.0 C160 29.0 160 29.0 258 29.0');--d:0.0s;--oy:-9.5px;--fc:var(--accent)"></rect><rect class="dgm-sk-p dgm-sk-p2" width="3" height="3" style="offset-path:path('M60 29.0 C160 29.0 160 29.0 258 29.0');--d:1.99s;--oy:-6.3px;--fc:var(--accent)"></rect><rect class="dgm-sk-p" width="3" height="3" style="offset-path:path('M60 29.0 C160 29.0 160 29.0 258 29.0');--d:1.38s;--oy:-3.2px;--fc:var(--accent)"></rect><rect class="dgm-sk-p dgm-sk-p2" width="3" height="3" style="offset-path:path('M60 29.0 C160 29.0 160 29.0 258 29.0');--d:0.77s;--oy:0.0px;--fc:var(--accent)"></rect><rect class="dgm-sk-p" width="3" height="3" style="offset-path:path('M60 29.0 C160 29.0 160 29.0 258 29.0');--d:0.16s;--oy:3.2px;--fc:var(--accent)"></rect><rect class="dgm-sk-p dgm-sk-p2" width="3" height="3" style="offset-path:path('M60 29.0 C160 29.0 160 29.0 258 29.0');--d:2.15s;--oy:6.3px;--fc:var(--accent)"></rect><rect class="dgm-sk-p" width="3" height="3" style="offset-path:path('M60 29.0 C160 29.0 160 29.0 258 29.0');--d:1.54s;--oy:9.5px;--fc:var(--accent)"></rect></g>
+      <g class="dgm-sk-flow" style="--i:1;--fc:var(--accent);--fc-rgb:var(--accent-rgb)"><path class="dgm-sk-rib" style="--i:1;--fc:var(--accent);--fc-rgb:var(--accent-rgb)" stroke-width="14" d="M60 47.0 C160 47.0 160 117.0 258 117.0"></path><rect class="dgm-sk-p" width="3" height="3" style="offset-path:path('M60 47.0 C160 47.0 160 117.0 258 117.0');--d:2.23s;--oy:-5.5px;--fc:var(--accent)"></rect><rect class="dgm-sk-p dgm-sk-p2" width="3" height="3" style="offset-path:path('M60 47.0 C160 47.0 160 117.0 258 117.0');--d:1.62s;--oy:-1.8px;--fc:var(--accent)"></rect><rect class="dgm-sk-p" width="3" height="3" style="offset-path:path('M60 47.0 C160 47.0 160 117.0 258 117.0');--d:1.01s;--oy:1.8px;--fc:var(--accent)"></rect><rect class="dgm-sk-p dgm-sk-p2" width="3" height="3" style="offset-path:path('M60 47.0 C160 47.0 160 117.0 258 117.0');--d:0.4s;--oy:5.5px;--fc:var(--accent)"></rect></g>
+      <g class="dgm-sk-flow" style="--i:2;--fc:var(--info);--fc-rgb:var(--info-rgb)"><path class="dgm-sk-rib" style="--i:2;--fc:var(--info);--fc-rgb:var(--info-rgb)" stroke-width="16" d="M60 70.0 C160 70.0 160 48.0 258 48.0"></path><rect class="dgm-sk-p" width="3" height="3" style="offset-path:path('M60 70.0 C160 70.0 160 48.0 258 48.0');--d:1.86s;--oy:-6.5px;--fc:var(--info)"></rect><rect class="dgm-sk-p dgm-sk-p2" width="3" height="3" style="offset-path:path('M60 70.0 C160 70.0 160 48.0 258 48.0');--d:1.25s;--oy:-3.2px;--fc:var(--info)"></rect><rect class="dgm-sk-p" width="3" height="3" style="offset-path:path('M60 70.0 C160 70.0 160 48.0 258 48.0');--d:0.64s;--oy:0.0px;--fc:var(--info)"></rect><rect class="dgm-sk-p dgm-sk-p2" width="3" height="3" style="offset-path:path('M60 70.0 C160 70.0 160 48.0 258 48.0');--d:0.03s;--oy:3.2px;--fc:var(--info)"></rect><rect class="dgm-sk-p" width="3" height="3" style="offset-path:path('M60 70.0 C160 70.0 160 48.0 258 48.0');--d:2.02s;--oy:6.5px;--fc:var(--info)"></rect></g>
+      <g class="dgm-sk-flow" style="--i:3;--fc:var(--info);--fc-rgb:var(--info-rgb)"><path class="dgm-sk-rib" style="--i:3;--fc:var(--info);--fc-rgb:var(--info-rgb)" stroke-width="8" d="M60 82.0 C160 82.0 160 76.0 258 76.0"></path><rect class="dgm-sk-p" width="3" height="3" style="offset-path:path('M60 82.0 C160 82.0 160 76.0 258 76.0');--d:1.49s;--oy:-2.5px;--fc:var(--info)"></rect><rect class="dgm-sk-p dgm-sk-p2" width="3" height="3" style="offset-path:path('M60 82.0 C160 82.0 160 76.0 258 76.0');--d:0.88s;--oy:2.5px;--fc:var(--info)"></rect></g>
+      <g class="dgm-sk-flow" style="--i:4;--fc:var(--pos);--fc-rgb:var(--pos-rgb)"><path class="dgm-sk-rib" style="--i:4;--fc:var(--pos);--fc-rgb:var(--pos-rgb)" stroke-width="12" d="M60 100.0 C160 100.0 160 86.0 258 86.0"></path><rect class="dgm-sk-p" width="3" height="3" style="offset-path:path('M60 100.0 C160 100.0 160 86.0 258 86.0');--d:1.12s;--oy:-4.5px;--fc:var(--pos)"></rect><rect class="dgm-sk-p dgm-sk-p2" width="3" height="3" style="offset-path:path('M60 100.0 C160 100.0 160 86.0 258 86.0');--d:0.51s;--oy:-1.5px;--fc:var(--pos)"></rect><rect class="dgm-sk-p" width="3" height="3" style="offset-path:path('M60 100.0 C160 100.0 160 86.0 258 86.0');--d:2.5s;--oy:1.5px;--fc:var(--pos)"></rect><rect class="dgm-sk-p dgm-sk-p2" width="3" height="3" style="offset-path:path('M60 100.0 C160 100.0 160 86.0 258 86.0');--d:1.89s;--oy:4.5px;--fc:var(--pos)"></rect></g>
+      <g class="dgm-sk-flow" style="--i:5;--fc:var(--pos);--fc-rgb:var(--pos-rgb)"><path class="dgm-sk-rib" style="--i:5;--fc:var(--pos);--fc-rgb:var(--pos-rgb)" stroke-width="4" d="M60 108.0 C160 108.0 160 58.0 258 58.0"></path><rect class="dgm-sk-p" width="3" height="3" style="offset-path:path('M60 108.0 C160 108.0 160 58.0 258 58.0');--d:0.75s;--oy:-0.5px;--fc:var(--pos)"></rect><rect class="dgm-sk-p dgm-sk-p2" width="3" height="3" style="offset-path:path('M60 108.0 C160 108.0 160 58.0 258 58.0');--d:0.14s;--oy:0.5px;--fc:var(--pos)"></rect></g>
+      <g class="dgm-sk-flow" style="--i:6;--fc:var(--warn);--fc-rgb:var(--warn-rgb)"><path class="dgm-sk-rib" style="--i:6;--fc:var(--warn);--fc-rgb:var(--warn-rgb)" stroke-width="6" d="M60 121.0 C160 121.0 160 95.0 258 95.0"></path><rect class="dgm-sk-p" width="3" height="3" style="offset-path:path('M60 121.0 C160 121.0 160 95.0 258 95.0');--d:0.38s;--oy:-1.5px;--fc:var(--warn)"></rect><rect class="dgm-sk-p dgm-sk-p2" width="3" height="3" style="offset-path:path('M60 121.0 C160 121.0 160 95.0 258 95.0');--d:2.37s;--oy:1.5px;--fc:var(--warn)"></rect></g>
+      <g class="dgm-sk-flow" style="--i:7;--fc:var(--warn);--fc-rgb:var(--warn-rgb)"><path class="dgm-sk-rib" style="--i:7;--fc:var(--warn);--fc-rgb:var(--warn-rgb)" stroke-width="6" d="M60 127.0 C160 127.0 160 127.0 258 127.0"></path><rect class="dgm-sk-p" width="3" height="3" style="offset-path:path('M60 127.0 C160 127.0 160 127.0 258 127.0');--d:0.01s;--oy:-1.5px;--fc:var(--warn)"></rect><rect class="dgm-sk-p dgm-sk-p2" width="3" height="3" style="offset-path:path('M60 127.0 C160 127.0 160 127.0 258 127.0');--d:2.0s;--oy:1.5px;--fc:var(--warn)"></rect></g>
       <rect class="dgm-sk-nd" x="52" y="18" width="8" height="36" rx="2" style="fill:var(--accent)"></rect>
       <rect class="dgm-sk-nd" x="52" y="62" width="8" height="24" rx="2" style="fill:var(--info)"></rect>
       <rect class="dgm-sk-nd" x="52" y="94" width="8" height="16" rx="2" style="fill:var(--pos)"></rect>
@@ -140,7 +158,7 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
       <text class="mut" x="270" y="85.0" style="text-anchor:start">Signup</text>
       <text class="mut" x="270" y="120.0" style="text-anchor:start">Bounce</text>
     </svg></div></div>
-<div class="meta"><b>Sankey Flow</b> · <code>diagrams-sankey-flow</code><br>Diagrams &amp; Frameworks · SANKEY &amp; FLOW<p>Four sources feed three targets through ribbons whose width carries the volume; each ribbon fades in and a sheen travels along it. Traffic, budget and energy flows.</p></div>
+<div class="meta"><b>Dim + Glow Sankey</b> · <code>diagrams-dim-glow-sankey</code><br>Diagrams &amp; Frameworks · SANKEY &amp; FLOW<p>Hover any flow: the rest dim and the chosen one lights up with a layered glow and quicker particles. The ambient loop previews it by lighting each flow in turn. Hover a ribbon.</p></div>
 
 </body>
 </html>
