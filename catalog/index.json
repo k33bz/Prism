@@ -1,5 +1,5 @@
 {
-  "count": 2720,
+  "count": 2729,
   "effects": [
     {
       "id": "charts-big-metric-count-up",
@@ -1692,9 +1692,10 @@
         "sl",
         "ts",
         "lv",
-        "warn",
-        "m",
         "info",
+        "m",
+        "err",
+        "warn",
         "ok",
         "cursor"
       ],
@@ -15080,9 +15081,6 @@
         "chat",
         "cmsg",
         "user",
-        "ai",
-        "typing-msg",
-        "mt",
         "cap",
         "pr-playbtn"
       ],
@@ -20889,6 +20887,98 @@
       "description": "A balloon drifting and rocking gently with a burner flame. Journeys, uplift, exploration."
     },
     {
+      "id": "objects-rising-embers",
+      "name": "Rising Embers",
+      "gallery": "objects",
+      "category": "FORGE LANDING KIT",
+      "ref": ".kf-embers",
+      "classes": [
+        "kf-embers",
+        "g",
+        "kf-embers-content"
+      ],
+      "params": [],
+      "tags": [
+        "objects",
+        "animated",
+        "new"
+      ],
+      "componentType": "object-backdrop",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "description": "Hot sparks drift up from the bottom edge on staggered arcs, orange with a few green ones mixed in — the ambient backdrop from the kastroso forge landing page. Tint with --kf-hot / --kf-cool; add or remove <i> elements to change density."
+    },
+    {
+      "id": "objects-forge-flame-mark",
+      "name": "Forge Flame Mark",
+      "gallery": "objects",
+      "category": "FORGE LANDING KIT",
+      "ref": ".kf-mark",
+      "classes": [
+        "kf-mark",
+        "kf-flame",
+        "kf-flame-body",
+        "kf-flame-tip",
+        "kf-flame-core",
+        "kf-anvil",
+        "kf-anvil-hl"
+      ],
+      "params": [],
+      "tags": [
+        "objects",
+        "animated",
+        "new"
+      ],
+      "componentType": "object-icon",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "description": "The forge logomark: a flame with a hollow core that flickers over a green anvil bar, wrapped in a warm drop-shadow glow. Pure SVG, token colours, no gradient ids to collide."
+    },
+    {
+      "id": "objects-forge-landing-hero",
+      "name": "Forge Landing Hero",
+      "gallery": "objects",
+      "category": "FORGE LANDING KIT",
+      "ref": ".kf-hero",
+      "classes": [
+        "kf-hero",
+        "kf-embers",
+        "g",
+        "kf-hero-in",
+        "kf-mark",
+        "kf-flame",
+        "kf-flame-body",
+        "kf-flame-core",
+        "kf-anvil",
+        "kf-hero-title",
+        "kf-hero-tag",
+        "kf-hero-btns",
+        "p"
+      ],
+      "params": [],
+      "tags": [
+        "objects",
+        "animated",
+        "new"
+      ],
+      "componentType": "object-scene",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "description": "The whole landing hero as one scene: embers behind a flickering mark, gradient title with the green underline, a tagline that rotates through four lines on a CSS timer, and the action buttons."
+    },
+    {
       "id": "input-basic-text-input",
       "name": "Basic Text Input",
       "gallery": "input",
@@ -26203,6 +26293,54 @@
       "isNew": true,
       "isFixed": false,
       "description": "A white→color→faded vertical gradient with the word stretching taller from its top edge, like wax softening and dripping. Warm, hazard-y themes."
+    },
+    {
+      "id": "text-forge-gradient-title",
+      "name": "Forge Gradient Title",
+      "gallery": "text",
+      "category": "FORGE LANDING KIT",
+      "ref": ".kf-title",
+      "classes": [
+        "kf-title"
+      ],
+      "params": [],
+      "tags": [
+        "text",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "description": "Heading with one word in a hot gradient that sheens slowly, underscored by a green bar that draws in — the landing-page wordmark treatment. Tint with --kf-hot / --kf-cool."
+    },
+    {
+      "id": "text-rotating-tagline",
+      "name": "Rotating Tagline",
+      "gallery": "text",
+      "category": "FORGE LANDING KIT",
+      "ref": ".kf-tagline",
+      "classes": [
+        "kf-tagline"
+      ],
+      "params": [],
+      "tags": [
+        "text",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "description": "Four stacked lines cross-fade on a CSS timer (4.2 s each, no JavaScript) — the landing tagline rotator. Add or remove spans and adjust the animation delays to match."
     },
     {
       "id": "shapes-rainbow-arc-hero",
@@ -38296,6 +38434,92 @@
       "description": "A sorted column with a flipping direction arrow while two rows trade places — the visual grammar of a click-to-sort header."
     },
     {
+      "id": "tables-row-move-arrows",
+      "name": "Row Move Arrows",
+      "gallery": "tables",
+      "category": "DATA TABLES",
+      "ref": ".dtb-tbl.dtb-rowmove",
+      "classes": [
+        "dtb-tbl",
+        "dtb-rowmove",
+        "dtb-arrows",
+        "dtb-arr",
+        "dtb-mono",
+        "mv",
+        "lift",
+        "press"
+      ],
+      "params": [],
+      "tags": [
+        "tables",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "description": "A leading column of ▲▼ controls; the pressed arrow lights up and its row lifts over the one above and settles into the slot — manual ordering for rules, priorities and playlists."
+    },
+    {
+      "id": "tables-flash-resort",
+      "name": "Flash + Resort",
+      "gallery": "tables",
+      "category": "DATA TABLES",
+      "ref": ".dtb-tbl.dtb-resort",
+      "classes": [
+        "dtb-tbl",
+        "dtb-resort",
+        "dtb-num",
+        "dtb-sortcol",
+        "dtb-sort-arrow"
+      ],
+      "params": [],
+      "tags": [
+        "tables",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "description": "Clicking a header: the column flashes, the sort arrow flips, the rows dim and glide to their new positions, then settle — the reorder cue of a sortable data grid. Give each row its offset in --to."
+    },
+    {
+      "id": "tables-fall-land-resort",
+      "name": "Fall + Land Resort",
+      "gallery": "tables",
+      "category": "DATA TABLES",
+      "ref": ".dtb-tbl.dtb-fall",
+      "classes": [
+        "dtb-tbl",
+        "dtb-fall",
+        "dtb-num",
+        "dtb-sort-arrow"
+      ],
+      "params": [],
+      "tags": [
+        "tables",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "description": "The rows tumble out of the table on slight angles, one after another, then drop back in from above already in the new order, landing with a small bounce — the theatrical resort. Offsets in --to, tilt in --rot."
+    },
+    {
       "id": "tables-sticky-header-scroll",
       "name": "Sticky Header Scroll",
       "gallery": "tables",
@@ -38933,6 +39157,36 @@
       "isNew": true,
       "isFixed": false,
       "description": "The activity-square calendar: fourteen weeks of cells shaded by volume, lighting up in a diagonal sweep, with a less-to-more legend."
+    },
+    {
+      "id": "tables-dual-tone-contribution-calendar",
+      "name": "Dual-Tone Contribution Calendar",
+      "gallery": "tables",
+      "category": "MATRICES & COMPARISON",
+      "ref": ".dtb-forge",
+      "classes": [
+        "dtb-forge-cap",
+        "dtb-forge",
+        "dtb-forge-lg",
+        "c",
+        "a"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "tables",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "description": "Each day split diagonally: commits shade the upper-left triangle in the accent, other activity shades the lower-right in green, so two series share one calendar — the \"year at the forge\" heatmap from the kastroso forge landing page. Set --c and --a per cell (0 to 1)."
     },
     {
       "id": "tables-key-value-with-leaders",

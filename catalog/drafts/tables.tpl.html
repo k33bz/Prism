@@ -486,6 +486,52 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
 .dtb-empty small{display:block;margin-top:2px;font-weight:500}
 .dtb-empty-btn{display:inline-block;margin-top:8px;padding:3px 10px;border-radius:6px;border:1px solid var(--accent);color:var(--accent);animation:dtbTagGlow 2.4s ease-in-out infinite}
 
+/* dual-tone contribution calendar (commits ◤ / activity ◢) — from the forge landing page */
+.dtb-forge{display:grid;grid-template-columns:repeat(14,11px);grid-auto-rows:11px;gap:3px;--kf-hot-rgb:var(--accent-rgb);--kf-cool-rgb:var(--pos-rgb)}
+.dtb-forge i{display:block;border-radius:2px;background:linear-gradient(135deg,rgba(var(--kf-hot-rgb),var(--c,0)) 50%,rgba(var(--kf-cool-rgb),var(--a,0)) 50%),var(--panel2);animation:dtbLight 7s ease-in-out infinite;animation-delay:calc(var(--d,0)*.07s)}
+.dtb-forge-lg{display:flex;gap:3px;align-items:center;justify-content:flex-end;margin-top:6px;font:600 8.5px ui-sans-serif,system-ui,sans-serif;color:var(--dim)}
+.dtb-forge-lg i{width:9px;height:9px;border-radius:2px;background:linear-gradient(135deg,rgba(var(--accent-rgb),var(--c,0)) 50%,rgba(var(--pos-rgb),var(--a,0)) 50%),var(--panel2)}
+.dtb-forge-lg b{font-weight:700;margin-right:5px}
+.dtb-forge-lg b.c{color:var(--accent)}.dtb-forge-lg b.a{color:var(--pos)}
+.dtb-forge-cap{font:600 8.5px ui-sans-serif,system-ui,sans-serif;color:var(--muted);margin-bottom:6px;text-align:center}
+.dtb-forge-cap b{color:var(--ink)}
+
+/* row reorder controls: ▲▼ column on the left; a press moves the row one slot up.
+   Every resort facet below moves cells by whole rows via --to (row-height units). */
+.dtb-rowmove td.dtb-arrows{width:22px;padding:2px 4px 2px 8px;color:var(--dim);font-size:8px;line-height:1.1;text-align:center}
+.dtb-rowmove .dtb-arr{display:block;cursor:pointer;color:var(--dim)}
+.dtb-rowmove .dtb-arr.press{animation:dtbArrPress 4s ease-in-out infinite;border-radius:3px}
+@keyframes dtbArrPress{0%,36%{color:var(--dim);background:transparent;box-shadow:0 0 0 0 rgba(var(--accent-rgb),0)}40%,46%{color:var(--accent);background:rgba(var(--accent-rgb),.22);box-shadow:0 0 8px rgba(var(--accent-rgb),.5)}52%,100%{color:var(--dim);background:transparent}}
+.dtb-rowmove tbody tr.mv td{animation:dtbRowMove 4s cubic-bezier(.4,0,.2,1) infinite;position:relative}
+.dtb-rowmove tbody tr.mv.lift td{z-index:2;animation-name:dtbRowMoveLift}
+@keyframes dtbRowMove{0%,46%{transform:translateY(0)}56%,92%{transform:translateY(calc(var(--to,1)*100%))}100%{transform:translateY(0)}}
+@keyframes dtbRowMoveLift{0%,46%{transform:translateY(0);box-shadow:none}48%{box-shadow:0 6px 16px rgba(0,0,0,.45),inset 0 0 0 999px rgba(var(--accent-rgb),.14)}56%,88%{transform:translateY(calc(var(--to,-1)*100%));box-shadow:0 6px 16px rgba(0,0,0,.45),inset 0 0 0 999px rgba(var(--accent-rgb),.14)}92%{transform:translateY(calc(var(--to,-1)*100%));box-shadow:none}100%{transform:translateY(0);box-shadow:none}}
+
+/* flash a clicked column header, then the rows fade and re-settle in the new order */
+.dtb-resort th.dtb-sortcol{animation:dtbColFlash 4s ease-out infinite;color:var(--accent)}
+.dtb-resort td.dtb-sortcol{animation:dtbColFlashCell 4s ease-out infinite}
+@keyframes dtbColFlash{0%,30%{box-shadow:inset 0 0 0 999px rgba(var(--accent-rgb),0)}34%{box-shadow:inset 0 0 0 999px rgba(var(--accent-rgb),.45)}44%,100%{box-shadow:inset 0 0 0 999px rgba(var(--accent-rgb),0)}}
+@keyframes dtbColFlashCell{0%,30%{box-shadow:inset 0 0 0 999px rgba(var(--accent-rgb),0)}35%{box-shadow:inset 0 0 0 999px rgba(var(--accent-rgb),.28)}46%,100%{box-shadow:inset 0 0 0 999px rgba(var(--accent-rgb),0)}}
+.dtb-resort tbody tr td{animation:dtbResort 4s cubic-bezier(.4,0,.2,1) infinite}
+@keyframes dtbResort{0%,36%{transform:translateY(0);opacity:1}44%{opacity:.1}48%{transform:translateY(calc(var(--to,0)*100%));opacity:.1}58%,90%{transform:translateY(calc(var(--to,0)*100%));opacity:1}94%{opacity:.1;transform:translateY(calc(var(--to,0)*100%))}97%{opacity:.1;transform:translateY(0)}100%{opacity:1;transform:translateY(0)}}
+.dtb-resort .dtb-sort-arrow{animation:dtbSortFlip 4s ease-in-out infinite}
+
+/* rows drop out on slight angles, then fall back in from above already resorted */
+.dtb-fall tbody tr td{animation:dtbFall 4s cubic-bezier(.3,0,.6,1) infinite;animation-delay:calc(var(--i,0)*.1s);transform-origin:20% 50%}
+@keyframes dtbFall{
+  0%,24%{transform:translateY(0) rotate(0);opacity:1}
+  26%{transform:translateY(-4%) rotate(0)}
+  42%{transform:translateY(190%) rotate(var(--rot,-5deg));opacity:0}
+  50%{transform:translateY(calc(var(--to,0)*100% - 300%)) rotate(0);opacity:0}
+  52%{opacity:1}
+  62%{transform:translateY(calc(var(--to,0)*100% + 4%)) rotate(0);opacity:1}
+  67%{transform:translateY(calc(var(--to,0)*100% - 2%))}
+  71%,90%{transform:translateY(calc(var(--to,0)*100%));opacity:1}
+  94%{transform:translateY(calc(var(--to,0)*100%));opacity:0}
+  96%{transform:translateY(0);opacity:0}
+  100%{transform:translateY(0);opacity:1}}
+.dtb-fall th .dtb-sort-arrow{animation:dtbSortFlip 4s ease-in-out infinite}
+
 /* ---- reduced motion: freeze every dtb animation on a legible frame ---- */
 @media (prefers-reduced-motion:reduce){
   [class*="dtb-"],[class*="dtb-"]::before,[class*="dtb-"]::after,.dtb-tbl *{animation:none!important}
@@ -533,6 +579,33 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
       <tr><td>cache-01</td><td class="dtb-num">71</td><td class="dtb-num">22</td></tr>
     </tbody></table>
   </div><div class="meta"><div class="nm">Sortable Header</div><span class="ref">.dtb-tbl.dtb-sort</span><div class="desc">A sorted column with a flipping direction arrow while two rows trade places — the visual grammar of a click-to-sort header.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <table class="dtb-tbl dtb-rowmove"><thead><tr><th></th><th>Priority</th><th>Rule</th></tr></thead><tbody>
+      <tr><td class="dtb-arrows"><span class="dtb-arr">▲</span><span class="dtb-arr">▼</span></td><td class="dtb-mono">1</td><td>Allow VPN → LAN</td></tr>
+      <tr class="mv" style="--to:1"><td class="dtb-arrows"><span class="dtb-arr">▲</span><span class="dtb-arr">▼</span></td><td class="dtb-mono">2</td><td>Block guest → IoT</td></tr>
+      <tr class="mv lift" style="--to:-1"><td class="dtb-arrows"><span class="dtb-arr press">▲</span><span class="dtb-arr">▼</span></td><td class="dtb-mono">3</td><td>Allow DNS to Pi-hole</td></tr>
+      <tr><td class="dtb-arrows"><span class="dtb-arr">▲</span><span class="dtb-arr">▼</span></td><td class="dtb-mono">4</td><td>Drop all</td></tr>
+    </tbody></table>
+  </div><div class="meta"><div class="nm">Row Move Arrows</div><span class="ref">.dtb-tbl.dtb-rowmove</span><div class="desc">A leading column of ▲▼ controls; the pressed arrow lights up and its row lifts over the one above and settles into the slot — manual ordering for rules, priorities and playlists.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <table class="dtb-tbl dtb-resort"><thead><tr><th>Region</th><th class="dtb-num dtb-sortcol">Cost<span class="dtb-sort-arrow">▲</span></th><th class="dtb-num">Hosts</th></tr></thead><tbody>
+      <tr style="--to:2"><td>us-east-1</td><td class="dtb-num dtb-sortcol">$41.2K</td><td class="dtb-num">142</td></tr>
+      <tr style="--to:-1"><td>eu-west-1</td><td class="dtb-num dtb-sortcol">$18.7K</td><td class="dtb-num">61</td></tr>
+      <tr style="--to:1"><td>ap-south-1</td><td class="dtb-num dtb-sortcol">$27.4K</td><td class="dtb-num">88</td></tr>
+      <tr style="--to:-2"><td>sa-east-1</td><td class="dtb-num dtb-sortcol">$2.9K</td><td class="dtb-num">12</td></tr>
+    </tbody></table>
+  </div><div class="meta"><div class="nm">Flash + Resort</div><span class="ref">.dtb-tbl.dtb-resort</span><div class="desc">Clicking a header: the column flashes, the sort arrow flips, the rows dim and glide to their new positions, then settle — the reorder cue of a sortable data grid. Give each row its offset in <code>--to</code>.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <table class="dtb-tbl dtb-fall"><thead><tr><th>Player</th><th class="dtb-num">Score<span class="dtb-sort-arrow">▼</span></th><th class="dtb-num">Wins</th></tr></thead><tbody>
+      <tr style="--to:1;--i:0;--rot:-5deg"><td>Nova</td><td class="dtb-num">7,940</td><td class="dtb-num">31</td></tr>
+      <tr style="--to:-1;--i:1;--rot:4deg"><td>Kastro</td><td class="dtb-num">9,812</td><td class="dtb-num">44</td></tr>
+      <tr style="--to:1;--i:2;--rot:-3deg"><td>Pixel</td><td class="dtb-num">5,220</td><td class="dtb-num">18</td></tr>
+      <tr style="--to:-1;--i:3;--rot:6deg"><td>Fayte</td><td class="dtb-num">8,105</td><td class="dtb-num">36</td></tr>
+    </tbody></table>
+  </div><div class="meta"><div class="nm">Fall + Land Resort</div><span class="ref">.dtb-tbl.dtb-fall</span><div class="desc">The rows tumble out of the table on slight angles, one after another, then drop back in from above already in the new order, landing with a small bounce — the theatrical resort. Offsets in <code>--to</code>, tilt in <code>--rot</code>.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
   <div class="tile is-new"><div class="stage">
     <div class="dtb-sticky">
@@ -759,6 +832,14 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
       <div class="dtb-contrib-lg">Less <i style="--a:.12"></i><i style="--a:.35"></i><i style="--a:.6"></i><i style="--a:.9"></i> More</div>
     </div>
   </div><div class="meta"><div class="nm">Contribution Calendar</div><span class="ref">.dtb-contrib</span><div class="desc">The activity-square calendar: fourteen weeks of cells shaded by volume, lighting up in a diagonal sweep, with a less-to-more legend.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <div>
+      <div class="dtb-forge-cap"><b>1,284</b> commits · <b>3,902</b> activities in the last year</div>
+      <div class="dtb-forge"><i style="--c:0.28;--a:0.28;--d:0"></i><i style="--c:0;--a:0;--d:1"></i><i style="--c:0;--a:0.28;--d:2"></i><i style="--c:0;--a:0;--d:3"></i><i style="--c:0;--a:0;--d:4"></i><i style="--c:0;--a:0.76;--d:5"></i><i style="--c:0;--a:0;--d:6"></i><i style="--c:0;--a:0.76;--d:7"></i><i style="--c:0;--a:0.76;--d:8"></i><i style="--c:0;--a:0;--d:9"></i><i style="--c:1;--a:0.28;--d:10"></i><i style="--c:0;--a:0;--d:11"></i><i style="--c:0.28;--a:0.76;--d:12"></i><i style="--c:0;--a:0;--d:13"></i><i style="--c:0.76;--a:0.28;--d:1"></i><i style="--c:0;--a:0;--d:2"></i><i style="--c:0;--a:0.76;--d:3"></i><i style="--c:0.76;--a:0.76;--d:4"></i><i style="--c:0.28;--a:0.52;--d:5"></i><i style="--c:0.52;--a:0.28;--d:6"></i><i style="--c:1;--a:0.28;--d:7"></i><i style="--c:0;--a:0;--d:8"></i><i style="--c:0.52;--a:0.52;--d:9"></i><i style="--c:0.76;--a:0.52;--d:10"></i><i style="--c:0;--a:0;--d:11"></i><i style="--c:0;--a:1;--d:12"></i><i style="--c:0;--a:0;--d:13"></i><i style="--c:0.76;--a:0;--d:14"></i><i style="--c:0.52;--a:1;--d:2"></i><i style="--c:0.28;--a:0.28;--d:3"></i><i style="--c:0.52;--a:0.52;--d:4"></i><i style="--c:0.52;--a:0;--d:5"></i><i style="--c:0.28;--a:0.52;--d:6"></i><i style="--c:0;--a:0;--d:7"></i><i style="--c:0.28;--a:0.76;--d:8"></i><i style="--c:0.76;--a:1;--d:9"></i><i style="--c:0.76;--a:0.52;--d:10"></i><i style="--c:0.28;--a:0;--d:11"></i><i style="--c:0.28;--a:0.28;--d:12"></i><i style="--c:0.52;--a:0;--d:13"></i><i style="--c:0.28;--a:0.28;--d:14"></i><i style="--c:0.52;--a:0.52;--d:15"></i><i style="--c:0;--a:0;--d:3"></i><i style="--c:0.52;--a:0.76;--d:4"></i><i style="--c:0;--a:1;--d:5"></i><i style="--c:0.52;--a:0.28;--d:6"></i><i style="--c:0.28;--a:0.76;--d:7"></i><i style="--c:0;--a:0;--d:8"></i><i style="--c:0;--a:0.28;--d:9"></i><i style="--c:0;--a:0.52;--d:10"></i><i style="--c:0;--a:0.28;--d:11"></i><i style="--c:0;--a:0.52;--d:12"></i><i style="--c:0.52;--a:0.76;--d:13"></i><i style="--c:0;--a:0.76;--d:14"></i><i style="--c:0.52;--a:0.76;--d:15"></i><i style="--c:0;--a:0.52;--d:16"></i><i style="--c:1;--a:1;--d:4"></i><i style="--c:0.52;--a:0.52;--d:5"></i><i style="--c:0.52;--a:0;--d:6"></i><i style="--c:0.52;--a:0;--d:7"></i><i style="--c:0;--a:0;--d:8"></i><i style="--c:0;--a:0;--d:9"></i><i style="--c:0;--a:0;--d:10"></i><i style="--c:0;--a:0.28;--d:11"></i><i style="--c:0;--a:1;--d:12"></i><i style="--c:0.52;--a:0.28;--d:13"></i><i style="--c:0.28;--a:0.76;--d:14"></i><i style="--c:0;--a:0;--d:15"></i><i style="--c:0.52;--a:0.52;--d:16"></i><i style="--c:0;--a:0;--d:17"></i></div>
+      <div class="dtb-forge-lg"><b class="c">◤ commits</b><b class="a">◢ activity</b>less <i></i><i style="--c:.28;--a:.28"></i><i style="--c:.52;--a:.52"></i><i style="--c:.76;--a:.76"></i><i style="--c:1;--a:1"></i> more</div>
+    </div>
+  </div><div class="meta"><div class="nm">Dual-Tone Contribution Calendar</div><span class="ref">.dtb-forge</span><div class="desc">Each day split diagonally: commits shade the upper-left triangle in the accent, other activity shades the lower-right in green, so two series share one calendar — the "year at the forge" heatmap from the kastroso forge landing page. Set <code>--c</code> and <code>--a</code> per cell (0 to 1).</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
 </div>
 

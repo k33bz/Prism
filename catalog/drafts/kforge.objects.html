@@ -1,0 +1,95 @@
+<style>
+/* ==== Forge landing kit (objects) — namespaced kf-* / kf* ====
+   Ported from the kastroso forge landing page. Colour rides two knobs so the whole
+   kit re-tints with the theme: --kf-hot (embers, flame; default --accent) and
+   --kf-cool (anvil bar, green embers; default --pos). Pure CSS/SVG, no JS. */
+.kf-embers{position:relative;width:100%;max-width:330px;height:150px;border-radius:12px;overflow:hidden;
+  --kf-hot:var(--accent);--kf-hot-rgb:var(--accent-rgb);--kf-cool:var(--pos);--kf-cool-rgb:var(--pos-rgb);
+  background:radial-gradient(120% 80% at 50% 110%,rgba(var(--kf-hot-rgb),.22),transparent 60%),var(--panel2)}
+.kf-embers i{position:absolute;bottom:-8px;display:block;width:4px;height:4px;border-radius:50%;
+  background:var(--kf-hot);box-shadow:0 0 6px 1px rgba(var(--kf-hot-rgb),.55);opacity:0;
+  animation:kfRise 9s linear infinite}
+.kf-embers i.g{background:var(--kf-cool);box-shadow:0 0 6px 1px rgba(var(--kf-cool-rgb),.55)}
+.kf-embers i:nth-child(1){left:6%;animation-duration:11s;animation-delay:-1s;width:3px;height:3px}
+.kf-embers i:nth-child(2){left:14%;animation-duration:9s;animation-delay:-2.1s}
+.kf-embers i:nth-child(3){left:22%;animation-duration:13s;animation-delay:-4.4s;width:5px;height:5px}
+.kf-embers i:nth-child(4){left:30%;animation-duration:8s;animation-delay:-1.2s;width:3px;height:3px}
+.kf-embers i:nth-child(5){left:38%;animation-duration:12s;animation-delay:-3.3s}
+.kf-embers i:nth-child(6){left:46%;animation-duration:10s;animation-delay:-5.6s;width:3px;height:3px}
+.kf-embers i:nth-child(7){left:54%;animation-duration:9s;animation-delay:-0.8s;width:5px;height:5px}
+.kf-embers i:nth-child(8){left:62%;animation-duration:12s;animation-delay:-2.9s}
+.kf-embers i:nth-child(9){left:70%;animation-duration:8s;animation-delay:-4.1s;width:3px;height:3px}
+.kf-embers i:nth-child(10){left:78%;animation-duration:11s;animation-delay:-1.7s}
+.kf-embers i:nth-child(11){left:86%;animation-duration:10s;animation-delay:-6.3s;width:5px;height:5px}
+.kf-embers i:nth-child(12){left:93%;animation-duration:9s;animation-delay:-3.8s;width:3px;height:3px}
+.kf-embers i:nth-child(13){left:10%;animation-duration:12s;animation-delay:-7.5s}
+.kf-embers i:nth-child(14){left:66%;animation-duration:11s;animation-delay:-9.1s;width:3px;height:3px}
+@keyframes kfRise{0%{transform:translate(0,0);opacity:0}8%{opacity:.9}55%{transform:translate(8px,-100px);opacity:.5}100%{transform:translate(-6px,-190px);opacity:0}}
+.kf-embers-content{position:relative;z-index:2;display:flex;align-items:center;justify-content:center;height:100%;
+  font:700 13px ui-sans-serif,system-ui,sans-serif;color:var(--ink);letter-spacing:.02em;text-shadow:0 1px 6px rgba(0,0,0,.6)}
+
+.kf-mark{display:block;width:72px;height:72px;filter:drop-shadow(0 0 14px rgba(var(--kf-hot-rgb,var(--accent-rgb)),.35));
+  --kf-hot:var(--accent);--kf-hot-rgb:var(--accent-rgb);--kf-cool:var(--pos);--kf-cool-rgb:var(--pos-rgb)}
+.kf-mark .kf-flame{animation:kfFlicker 3.2s ease-in-out infinite;transform-origin:32px 34px}
+.kf-mark .kf-flame-body{fill:var(--kf-hot)}
+.kf-mark .kf-flame-tip{fill:rgba(255,255,255,.55)}
+.kf-mark .kf-flame-core{fill:var(--panel)}
+.kf-mark .kf-anvil{fill:var(--kf-cool)}
+.kf-mark .kf-anvil-hl{fill:rgba(255,255,255,.35)}
+@keyframes kfFlicker{0%,100%{transform:scale(1)}50%{transform:scale(1.04) translateY(-1px)}}
+
+.kf-hero{position:relative;width:100%;max-width:330px;height:190px;border-radius:12px;overflow:hidden;text-align:center;
+  --kf-hot:var(--accent);--kf-hot-rgb:var(--accent-rgb);--kf-cool:var(--pos);--kf-cool-rgb:var(--pos-rgb);
+  background:radial-gradient(120% 90% at 50% 115%,rgba(var(--kf-hot-rgb),.2),transparent 60%),var(--panel2)}
+.kf-hero .kf-embers{position:absolute;inset:0;max-width:none;height:auto;border-radius:0;background:none}
+.kf-hero-in{position:relative;z-index:2;padding:22px 12px 0}
+.kf-hero .kf-mark{width:44px;height:44px;margin:0 auto}
+.kf-hero-title{margin:8px 0 2px;font:800 26px/1.05 ui-sans-serif,system-ui,sans-serif;letter-spacing:-.02em;color:var(--ink)}
+.kf-hero-title span{display:inline-block;background-image:linear-gradient(100deg,var(--kf-hot),rgba(255,255,255,.75));-webkit-background-clip:text;background-clip:text;color:transparent}
+.kf-hero-title span::after{content:"";display:block;height:4px;border-radius:2px;margin-top:.06em;background:linear-gradient(90deg,rgba(var(--kf-cool-rgb),.55),var(--kf-cool))}
+.kf-hero-tag{position:relative;height:1.4em;margin:6px 0 0;font:500 11.5px/1.4 ui-sans-serif,system-ui,sans-serif;color:var(--muted)}
+.kf-hero-tag span{position:absolute;left:0;right:0;top:0;opacity:0;animation:kfTag 16.8s ease-in-out infinite}
+.kf-hero-tag span:nth-child(2){animation-delay:4.2s}.kf-hero-tag span:nth-child(3){animation-delay:8.4s}.kf-hero-tag span:nth-child(4){animation-delay:12.6s}
+@keyframes kfTag{0%{opacity:0}3%,22%{opacity:1}25%,100%{opacity:0}}
+.kf-hero-btns{display:flex;gap:6px;justify-content:center;margin-top:10px}
+.kf-hero-btns span{padding:4px 11px;border-radius:6px;font:700 10px ui-sans-serif,system-ui,sans-serif;border:1px solid var(--line);color:var(--muted)}
+.kf-hero-btns span.p{background:var(--kf-hot);border-color:var(--kf-hot);color:#1a1000}
+@media (prefers-reduced-motion:reduce){
+  .kf-embers i,.kf-mark .kf-flame{animation:none!important}
+  .kf-embers i{opacity:.6;transform:translateY(-60px)}
+  .kf-hero-tag span{animation:none!important}.kf-hero-tag span:first-child{opacity:1}
+}
+</style>
+
+<h3 class="sec">🔥 FORGE LANDING KIT</h3>
+<div class="gallery">
+
+  <div class="tile is-new" data-ctype="object-backdrop" data-interact="auto-play"><div class="stage">
+    <div class="kf-embers"><i></i><i class="g"></i><i></i><i></i><i class="g"></i><i></i><i></i><i class="g"></i><i></i><i></i><i class="g"></i><i></i><i></i><i class="g"></i><div class="kf-embers-content">Rising embers 🔥</div></div>
+  </div><div class="meta"><div class="nm">Rising Embers</div><span class="ref">.kf-embers</span><div class="desc">Hot sparks drift up from the bottom edge on staggered arcs, orange with a few green ones mixed in — the ambient backdrop from the kastroso forge landing page. Tint with <code>--kf-hot</code> / <code>--kf-cool</code>; add or remove <code>&lt;i&gt;</code> elements to change density.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="object-icon" data-interact="auto-play"><div class="stage">
+    <svg class="kf-mark" viewBox="0 0 64 64" aria-hidden="true">
+      <g class="kf-flame">
+        <path class="kf-flame-body" d="M32 6 C36 16 44 20 44 30 a12 12 0 1 1 -24 0 C20 20 28 16 32 6 z"/>
+        <path class="kf-flame-tip" d="M32 6 C34 14 40 18 42 26 a10 10 0 0 1 -6 -8 C34 15 33 11 32 6 z"/>
+        <path class="kf-flame-core" d="M32 24 c2 5 6 7 6 11 a6 6 0 1 1 -12 0 c0 -4 4 -6 6 -11 z"/>
+      </g>
+      <rect class="kf-anvil" x="14" y="50" width="36" height="7" rx="3.5"/>
+      <rect class="kf-anvil-hl" x="16" y="51" width="16" height="2" rx="1"/>
+    </svg>
+  </div><div class="meta"><div class="nm">Forge Flame Mark</div><span class="ref">.kf-mark</span><div class="desc">The forge logomark: a flame with a hollow core that flickers over a green anvil bar, wrapped in a warm drop-shadow glow. Pure SVG, token colours, no gradient ids to collide.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="object-scene" data-interact="auto-play"><div class="stage">
+    <div class="kf-hero">
+      <div class="kf-embers"><i></i><i class="g"></i><i></i><i></i><i class="g"></i><i></i><i></i><i class="g"></i><i></i><i></i><i class="g"></i><i></i><i></i><i class="g"></i></div>
+      <div class="kf-hero-in">
+        <svg class="kf-mark" viewBox="0 0 64 64" aria-hidden="true"><g class="kf-flame"><path class="kf-flame-body" d="M32 6 C36 16 44 20 44 30 a12 12 0 1 1 -24 0 C20 20 28 16 32 6 z"/><path class="kf-flame-core" d="M32 24 c2 5 6 7 6 11 a6 6 0 1 1 -12 0 c0 -4 4 -6 6 -11 z"/></g><rect class="kf-anvil" x="14" y="50" width="36" height="7" rx="3.5"/></svg>
+        <h1 class="kf-hero-title">kastroso <span>forge</span></h1>
+        <p class="kf-hero-tag"><span>strike while the iron is hot.</span><span>hot metal, cold storage.</span><span>every commit, hammered home.</span><span>quench your code.</span></p>
+        <div class="kf-hero-btns"><span class="p">Sign in</span><span>Explore</span></div>
+      </div>
+    </div>
+  </div><div class="meta"><div class="nm">Forge Landing Hero</div><span class="ref">.kf-hero</span><div class="desc">The whole landing hero as one scene: embers behind a flickering mark, gradient title with the green underline, a tagline that rotates through four lines on a CSS timer, and the action buttons.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+</div>

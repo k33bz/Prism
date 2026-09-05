@@ -1,0 +1,34 @@
+<style>
+/* ==== Forge landing kit (text) — namespaced kf-* / kf* ==== */
+.kf-title{display:inline-block;margin:0;font:800 34px/1.05 ui-sans-serif,system-ui,sans-serif;letter-spacing:-.02em;color:var(--ink);
+  --kf-hot:var(--accent);--kf-hot-rgb:var(--accent-rgb);--kf-cool:var(--pos);--kf-cool-rgb:var(--pos-rgb)}
+.kf-title span{display:inline-block;background-image:linear-gradient(100deg,var(--kf-hot) 0%,rgba(255,255,255,.8) 55%,var(--kf-hot) 100%);background-size:220% 100%;background-repeat:no-repeat;
+  -webkit-background-clip:text;background-clip:text;color:transparent;animation:kfSheen 4.5s ease-in-out infinite}
+.kf-title span::after{content:"";display:block;height:5px;border-radius:2.5px;margin-top:.06em;
+  background:linear-gradient(90deg,rgba(var(--kf-cool-rgb),.5),var(--kf-cool));transform-origin:0 50%;animation:kfBar 4.5s ease-in-out infinite}
+@keyframes kfSheen{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+@keyframes kfBar{0%{transform:scaleX(0)}20%,100%{transform:scaleX(1)}}
+
+.kf-tagline{position:relative;height:1.5em;min-width:220px;margin:0;font:500 15px/1.5 ui-sans-serif,system-ui,sans-serif;color:var(--muted);text-align:center}
+.kf-tagline span{position:absolute;left:0;right:0;top:0;opacity:0;animation:kfTagline 16.8s ease-in-out infinite}
+.kf-tagline span:nth-child(2){animation-delay:4.2s}.kf-tagline span:nth-child(3){animation-delay:8.4s}.kf-tagline span:nth-child(4){animation-delay:12.6s}
+.kf-tagline b{color:var(--accent);font-weight:700}
+@keyframes kfTagline{0%{opacity:0;transform:translateY(4px)}3%,22%{opacity:1;transform:translateY(0)}25%,100%{opacity:0;transform:translateY(-4px)}}
+@media (prefers-reduced-motion:reduce){
+  .kf-title span,.kf-title span::after,.kf-tagline span{animation:none!important}
+  .kf-title span::after{transform:none}.kf-tagline span:first-child{opacity:1}
+}
+</style>
+
+<h3 class="sec">🔥 FORGE LANDING KIT</h3>
+<div class="gallery">
+
+  <div class="tile is-new"><div class="stage">
+    <h1 class="kf-title">kastroso <span>forge</span></h1>
+  </div><div class="meta"><div class="nm">Forge Gradient Title</div><span class="ref">.kf-title</span><div class="desc">Heading with one word in a hot gradient that sheens slowly, underscored by a green bar that draws in — the landing-page wordmark treatment. Tint with <code>--kf-hot</code> / <code>--kf-cool</code>.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <p class="kf-tagline"><span>strike while the <b>iron</b> is hot.</span><span>hot metal, <b>cold</b> storage.</span><span>every commit, <b>hammered</b> home.</span><span><b>quench</b> your code.</span></p>
+  </div><div class="meta"><div class="nm">Rotating Tagline</div><span class="ref">.kf-tagline</span><div class="desc">Four stacked lines cross-fade on a CSS timer (4.2 s each, no JavaScript) — the landing tagline rotator. Add or remove spans and adjust the animation delays to match.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+</div>
