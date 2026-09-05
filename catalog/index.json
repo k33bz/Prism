@@ -1896,10 +1896,11 @@
         "sl",
         "ts",
         "lv",
-        "info",
-        "m",
         "ok",
+        "m",
+        "info",
         "warn",
+        "err",
         "cursor"
       ],
       "params": [],
@@ -17516,7 +17517,8 @@
         "pbody",
         "token-stream",
         "tok",
-        "cap"
+        "cap",
+        "pr-playbtn"
       ],
       "params": [
         "color",
@@ -87741,9 +87743,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A rounded token-filled button with a soft pulsing glow — the system's primary call-to-action."
     },
     {
@@ -87770,9 +87772,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "An on/off switch whose knob glides and glows in the token color; a settings-row control."
     },
     {
@@ -87799,9 +87801,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A compact filter/label chip with a token tint and a sliding sheen. Used in toolbars and lists."
     },
     {
@@ -87830,9 +87832,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A surface menu with a highlighted selected row that breathes in the token tint. The system's standard menu."
     },
     {
@@ -87859,9 +87861,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A dismissible toast with a token accent bar that slides in on a loop. The system's inline alert."
     },
     {
@@ -87888,9 +87890,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "An emphasis banner with a token-tinted fill and a scanning edge highlight. Draws attention inline."
     },
     {
@@ -87917,9 +87919,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A tiny token-colored bar chart whose bars rise on a loop. A KPI/trend glance for the system."
     },
     {
@@ -87947,9 +87949,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A labeled input with a token focus ring and a blinking caret. The system's form field."
     },
     {
@@ -87976,9 +87978,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A track with a token fill that advances on a loop. Determinate-style progress for the system."
     },
     {
@@ -88005,9 +88007,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A circular avatar wrapped by a rotating token gradient ring — presence/status object."
     },
     {
@@ -88034,9 +88036,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A number badge that pops on a heartbeat, tinted by the token color. Notification counter object."
     },
     {
@@ -88063,9 +88065,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A pill-track segmented control with a token active indicator that slides between segments."
     },
     {
@@ -88092,9 +88094,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A small floating tooltip with a token border that bobs gently. Contextual hint for the system."
     },
     {
@@ -88121,9 +88123,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A token-colored arc spinner. The system's indeterminate loading indicator."
     },
     {
@@ -88150,9 +88152,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A surface card with a token accent header and a slow edge glow. The system's content container."
     },
     {
@@ -88179,9 +88181,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A token-filled checkbox whose tick draws in on a loop. The system's boolean input."
     },
     {
@@ -88208,9 +88210,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A track with a token thumb that travels along it. The system's range input."
     },
     {
@@ -88237,9 +88239,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A rounded token-filled button with a soft pulsing glow — the system's primary call-to-action."
     },
     {
@@ -88266,9 +88268,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "An on/off switch whose knob glides and glows in the token color; a settings-row control."
     },
     {
@@ -88295,9 +88297,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A compact filter/label chip with a token tint and a sliding sheen. Used in toolbars and lists."
     },
     {
@@ -88326,9 +88328,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A surface menu with a highlighted selected row that breathes in the token tint. The system's standard menu."
     },
     {
@@ -88355,9 +88357,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A dismissible toast with a token accent bar that slides in on a loop. The system's inline alert."
     },
     {
@@ -88384,9 +88386,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "An emphasis banner with a token-tinted fill and a scanning edge highlight. Draws attention inline."
     },
     {
@@ -88413,9 +88415,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A tiny token-colored bar chart whose bars rise on a loop. A KPI/trend glance for the system."
     },
     {
@@ -88443,9 +88445,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A labeled input with a token focus ring and a blinking caret. The system's form field."
     },
     {
@@ -88472,9 +88474,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A track with a token fill that advances on a loop. Determinate-style progress for the system."
     },
     {
@@ -88501,9 +88503,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A circular avatar wrapped by a rotating token gradient ring — presence/status object."
     },
     {
@@ -88530,9 +88532,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A number badge that pops on a heartbeat, tinted by the token color. Notification counter object."
     },
     {
@@ -88559,9 +88561,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A pill-track segmented control with a token active indicator that slides between segments."
     },
     {
@@ -88588,9 +88590,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A small floating tooltip with a token border that bobs gently. Contextual hint for the system."
     },
     {
@@ -88617,9 +88619,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A token-colored arc spinner. The system's indeterminate loading indicator."
     },
     {
@@ -88646,9 +88648,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A surface card with a token accent header and a slow edge glow. The system's content container."
     },
     {
@@ -88675,9 +88677,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A token-filled checkbox whose tick draws in on a loop. The system's boolean input."
     },
     {
@@ -88704,9 +88706,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A track with a token thumb that travels along it. The system's range input."
     },
     {
@@ -88733,9 +88735,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A rounded token-filled button with a soft pulsing glow — the system's primary call-to-action."
     },
     {
@@ -88762,9 +88764,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "An on/off switch whose knob glides and glows in the token color; a settings-row control."
     },
     {
@@ -88791,9 +88793,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A compact filter/label chip with a token tint and a sliding sheen. Used in toolbars and lists."
     },
     {
@@ -88822,9 +88824,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A surface menu with a highlighted selected row that breathes in the token tint. The system's standard menu."
     },
     {
@@ -88851,9 +88853,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A dismissible toast with a token accent bar that slides in on a loop. The system's inline alert."
     },
     {
@@ -88880,9 +88882,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "An emphasis banner with a token-tinted fill and a scanning edge highlight. Draws attention inline."
     },
     {
@@ -88909,9 +88911,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A tiny token-colored bar chart whose bars rise on a loop. A KPI/trend glance for the system."
     },
     {
@@ -88939,9 +88941,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A labeled input with a token focus ring and a blinking caret. The system's form field."
     },
     {
@@ -88968,9 +88970,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A track with a token fill that advances on a loop. Determinate-style progress for the system."
     },
     {
@@ -88997,9 +88999,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A circular avatar wrapped by a rotating token gradient ring — presence/status object."
     },
     {
@@ -89026,9 +89028,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A number badge that pops on a heartbeat, tinted by the token color. Notification counter object."
     },
     {
@@ -89055,9 +89057,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A pill-track segmented control with a token active indicator that slides between segments."
     },
     {
@@ -89084,9 +89086,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A small floating tooltip with a token border that bobs gently. Contextual hint for the system."
     },
     {
@@ -89113,9 +89115,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A token-colored arc spinner. The system's indeterminate loading indicator."
     },
     {
@@ -89142,9 +89144,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A surface card with a token accent header and a slow edge glow. The system's content container."
     },
     {
@@ -89171,9 +89173,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A token-filled checkbox whose tick draws in on a loop. The system's boolean input."
     },
     {
@@ -89200,9 +89202,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A track with a token thumb that travels along it. The system's range input."
     },
     {
@@ -89229,9 +89231,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A rounded token-filled button with a soft pulsing glow — the system's primary call-to-action."
     },
     {
@@ -89258,9 +89260,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "An on/off switch whose knob glides and glows in the token color; a settings-row control."
     },
     {
@@ -89287,9 +89289,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A compact filter/label chip with a token tint and a sliding sheen. Used in toolbars and lists."
     },
     {
@@ -89318,9 +89320,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A surface menu with a highlighted selected row that breathes in the token tint. The system's standard menu."
     },
     {
@@ -89347,9 +89349,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A dismissible toast with a token accent bar that slides in on a loop. The system's inline alert."
     },
     {
@@ -89376,9 +89378,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "An emphasis banner with a token-tinted fill and a scanning edge highlight. Draws attention inline."
     },
     {
@@ -89405,9 +89407,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A tiny token-colored bar chart whose bars rise on a loop. A KPI/trend glance for the system."
     },
     {
@@ -89435,9 +89437,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A labeled input with a token focus ring and a blinking caret. The system's form field."
     },
     {
@@ -89464,9 +89466,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A track with a token fill that advances on a loop. Determinate-style progress for the system."
     },
     {
@@ -89493,9 +89495,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A circular avatar wrapped by a rotating token gradient ring — presence/status object."
     },
     {
@@ -89522,9 +89524,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A number badge that pops on a heartbeat, tinted by the token color. Notification counter object."
     },
     {
@@ -89551,9 +89553,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A pill-track segmented control with a token active indicator that slides between segments."
     },
     {
@@ -89580,9 +89582,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A small floating tooltip with a token border that bobs gently. Contextual hint for the system."
     },
     {
@@ -89609,9 +89611,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A token-colored arc spinner. The system's indeterminate loading indicator."
     },
     {
@@ -89638,9 +89640,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A surface card with a token accent header and a slow edge glow. The system's content container."
     },
     {
@@ -89667,9 +89669,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A token-filled checkbox whose tick draws in on a loop. The system's boolean input."
     },
     {
@@ -89696,9 +89698,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A track with a token thumb that travels along it. The system's range input."
     },
     {
@@ -89725,9 +89727,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A rounded token-filled button with a soft pulsing glow — the system's primary call-to-action."
     },
     {
@@ -89754,9 +89756,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "An on/off switch whose knob glides and glows in the token color; a settings-row control."
     },
     {
@@ -89783,9 +89785,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A compact filter/label chip with a token tint and a sliding sheen. Used in toolbars and lists."
     },
     {
@@ -89814,9 +89816,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A surface menu with a highlighted selected row that breathes in the token tint. The system's standard menu."
     },
     {
@@ -89843,9 +89845,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A dismissible toast with a token accent bar that slides in on a loop. The system's inline alert."
     },
     {
@@ -89872,9 +89874,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "An emphasis banner with a token-tinted fill and a scanning edge highlight. Draws attention inline."
     },
     {
@@ -89901,9 +89903,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A tiny token-colored bar chart whose bars rise on a loop. A KPI/trend glance for the system."
     },
     {
@@ -89931,9 +89933,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A labeled input with a token focus ring and a blinking caret. The system's form field."
     },
     {
@@ -89960,9 +89962,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A track with a token fill that advances on a loop. Determinate-style progress for the system."
     },
     {
@@ -89989,9 +89991,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A circular avatar wrapped by a rotating token gradient ring — presence/status object."
     },
     {
@@ -90018,9 +90020,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A number badge that pops on a heartbeat, tinted by the token color. Notification counter object."
     },
     {
@@ -90047,9 +90049,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A pill-track segmented control with a token active indicator that slides between segments."
     },
     {
@@ -90076,9 +90078,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A small floating tooltip with a token border that bobs gently. Contextual hint for the system."
     },
     {
@@ -90105,9 +90107,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A token-colored arc spinner. The system's indeterminate loading indicator."
     },
     {
@@ -90134,9 +90136,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A surface card with a token accent header and a slow edge glow. The system's content container."
     },
     {
@@ -90163,9 +90165,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A token-filled checkbox whose tick draws in on a loop. The system's boolean input."
     },
     {
@@ -90192,9 +90194,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A track with a token thumb that travels along it. The system's range input."
     },
     {
@@ -90221,9 +90223,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A rounded token-filled button with a soft pulsing glow — the system's primary call-to-action."
     },
     {
@@ -90250,9 +90252,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "An on/off switch whose knob glides and glows in the token color; a settings-row control."
     },
     {
@@ -90279,9 +90281,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A compact filter/label chip with a token tint and a sliding sheen. Used in toolbars and lists."
     },
     {
@@ -90310,9 +90312,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A surface menu with a highlighted selected row that breathes in the token tint. The system's standard menu."
     },
     {
@@ -90339,9 +90341,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A dismissible toast with a token accent bar that slides in on a loop. The system's inline alert."
     },
     {
@@ -90368,9 +90370,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "An emphasis banner with a token-tinted fill and a scanning edge highlight. Draws attention inline."
     },
     {
@@ -90397,9 +90399,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A tiny token-colored bar chart whose bars rise on a loop. A KPI/trend glance for the system."
     },
     {
@@ -90427,9 +90429,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A labeled input with a token focus ring and a blinking caret. The system's form field."
     },
     {
@@ -90456,9 +90458,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A track with a token fill that advances on a loop. Determinate-style progress for the system."
     },
     {
@@ -90485,9 +90487,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A circular avatar wrapped by a rotating token gradient ring — presence/status object."
     },
     {
@@ -90514,9 +90516,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A number badge that pops on a heartbeat, tinted by the token color. Notification counter object."
     },
     {
@@ -90543,9 +90545,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A pill-track segmented control with a token active indicator that slides between segments."
     },
     {
@@ -90572,9 +90574,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A small floating tooltip with a token border that bobs gently. Contextual hint for the system."
     },
     {
@@ -90601,9 +90603,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A token-colored arc spinner. The system's indeterminate loading indicator."
     },
     {
@@ -90630,9 +90632,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A surface card with a token accent header and a slow edge glow. The system's content container."
     },
     {
@@ -90659,9 +90661,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A rounded token-filled button with a soft pulsing glow — the system's primary call-to-action."
     },
     {
@@ -90688,9 +90690,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "An on/off switch whose knob glides and glows in the token color; a settings-row control."
     },
     {
@@ -90717,9 +90719,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A compact filter/label chip with a token tint and a sliding sheen. Used in toolbars and lists."
     },
     {
@@ -90748,9 +90750,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A surface menu with a highlighted selected row that breathes in the token tint. The system's standard menu."
     },
     {
@@ -90777,9 +90779,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A dismissible toast with a token accent bar that slides in on a loop. The system's inline alert."
     },
     {
@@ -90806,9 +90808,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "An emphasis banner with a token-tinted fill and a scanning edge highlight. Draws attention inline."
     },
     {
@@ -90835,9 +90837,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A tiny token-colored bar chart whose bars rise on a loop. A KPI/trend glance for the system."
     },
     {
@@ -90865,9 +90867,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A labeled input with a token focus ring and a blinking caret. The system's form field."
     },
     {
@@ -90894,9 +90896,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A track with a token fill that advances on a loop. Determinate-style progress for the system."
     },
     {
@@ -90923,9 +90925,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A circular avatar wrapped by a rotating token gradient ring — presence/status object."
     },
     {
@@ -90952,9 +90954,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A number badge that pops on a heartbeat, tinted by the token color. Notification counter object."
     },
     {
@@ -90981,9 +90983,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A pill-track segmented control with a token active indicator that slides between segments."
     },
     {
@@ -91010,9 +91012,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A small floating tooltip with a token border that bobs gently. Contextual hint for the system."
     },
     {
@@ -91039,9 +91041,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A token-colored arc spinner. The system's indeterminate loading indicator."
     },
     {
@@ -91068,9 +91070,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A surface card with a token accent header and a slow edge glow. The system's content container."
     },
     {
@@ -91097,9 +91099,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A token-filled checkbox whose tick draws in on a loop. The system's boolean input."
     },
     {
@@ -91126,9 +91128,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A track with a token thumb that travels along it. The system's range input."
     },
     {
@@ -91155,9 +91157,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A rounded token-filled button with a soft pulsing glow — the system's primary call-to-action."
     },
     {
@@ -91184,9 +91186,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "An on/off switch whose knob glides and glows in the token color; a settings-row control."
     },
     {
@@ -91213,9 +91215,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A compact filter/label chip with a token tint and a sliding sheen. Used in toolbars and lists."
     },
     {
@@ -91244,9 +91246,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A surface menu with a highlighted selected row that breathes in the token tint. The system's standard menu."
     },
     {
@@ -91273,9 +91275,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A dismissible toast with a token accent bar that slides in on a loop. The system's inline alert."
     },
     {
@@ -91302,9 +91304,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "An emphasis banner with a token-tinted fill and a scanning edge highlight. Draws attention inline."
     },
     {
@@ -91331,9 +91333,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A tiny token-colored bar chart whose bars rise on a loop. A KPI/trend glance for the system."
     },
     {
@@ -91361,9 +91363,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A labeled input with a token focus ring and a blinking caret. The system's form field."
     },
     {
@@ -91390,9 +91392,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A track with a token fill that advances on a loop. Determinate-style progress for the system."
     },
     {
@@ -91419,9 +91421,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A circular avatar wrapped by a rotating token gradient ring — presence/status object."
     },
     {
@@ -91448,9 +91450,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A number badge that pops on a heartbeat, tinted by the token color. Notification counter object."
     },
     {
@@ -91477,9 +91479,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A pill-track segmented control with a token active indicator that slides between segments."
     },
     {
@@ -91506,9 +91508,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A small floating tooltip with a token border that bobs gently. Contextual hint for the system."
     },
     {
@@ -91535,9 +91537,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A token-colored arc spinner. The system's indeterminate loading indicator."
     },
     {
@@ -91564,9 +91566,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A surface card with a token accent header and a slow edge glow. The system's content container."
     },
     {
@@ -91593,9 +91595,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A token-filled checkbox whose tick draws in on a loop. The system's boolean input."
     },
     {
@@ -91622,9 +91624,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A track with a token thumb that travels along it. The system's range input."
     },
     {
@@ -91651,9 +91653,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A rounded token-filled button with a soft pulsing glow — the system's primary call-to-action."
     },
     {
@@ -91680,9 +91682,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "An on/off switch whose knob glides and glows in the token color; a settings-row control."
     },
     {
@@ -91709,9 +91711,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A compact filter/label chip with a token tint and a sliding sheen. Used in toolbars and lists."
     },
     {
@@ -91740,9 +91742,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A surface menu with a highlighted selected row that breathes in the token tint. The system's standard menu."
     },
     {
@@ -91769,9 +91771,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A dismissible toast with a token accent bar that slides in on a loop. The system's inline alert."
     },
     {
@@ -91798,9 +91800,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "An emphasis banner with a token-tinted fill and a scanning edge highlight. Draws attention inline."
     },
     {
@@ -91827,9 +91829,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A tiny token-colored bar chart whose bars rise on a loop. A KPI/trend glance for the system."
     },
     {
@@ -91857,9 +91859,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A labeled input with a token focus ring and a blinking caret. The system's form field."
     },
     {
@@ -91886,9 +91888,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A track with a token fill that advances on a loop. Determinate-style progress for the system."
     },
     {
@@ -91915,9 +91917,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A circular avatar wrapped by a rotating token gradient ring — presence/status object."
     },
     {
@@ -91944,9 +91946,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A number badge that pops on a heartbeat, tinted by the token color. Notification counter object."
     },
     {
@@ -91973,9 +91975,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A pill-track segmented control with a token active indicator that slides between segments."
     },
     {
@@ -92002,9 +92004,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A small floating tooltip with a token border that bobs gently. Contextual hint for the system."
     },
     {
@@ -92031,9 +92033,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A token-colored arc spinner. The system's indeterminate loading indicator."
     },
     {
@@ -92060,9 +92062,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A surface card with a token accent header and a slow edge glow. The system's content container."
     },
     {
@@ -92089,9 +92091,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A token-filled checkbox whose tick draws in on a loop. The system's boolean input."
     },
     {
@@ -92118,9 +92120,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A track with a token thumb that travels along it. The system's range input."
     },
     {
@@ -92147,9 +92149,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A rounded token-filled button with a soft pulsing glow — the system's primary call-to-action."
     },
     {
@@ -92176,9 +92178,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "An on/off switch whose knob glides and glows in the token color; a settings-row control."
     },
     {
@@ -92205,9 +92207,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A compact filter/label chip with a token tint and a sliding sheen. Used in toolbars and lists."
     },
     {
@@ -92236,9 +92238,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A surface menu with a highlighted selected row that breathes in the token tint. The system's standard menu."
     },
     {
@@ -92265,9 +92267,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A dismissible toast with a token accent bar that slides in on a loop. The system's inline alert."
     },
     {
@@ -92294,9 +92296,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "An emphasis banner with a token-tinted fill and a scanning edge highlight. Draws attention inline."
     },
     {
@@ -92323,9 +92325,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A tiny token-colored bar chart whose bars rise on a loop. A KPI/trend glance for the system."
     },
     {
@@ -92353,9 +92355,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A labeled input with a token focus ring and a blinking caret. The system's form field."
     },
     {
@@ -92382,9 +92384,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A track with a token fill that advances on a loop. Determinate-style progress for the system."
     },
     {
@@ -92411,9 +92413,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A circular avatar wrapped by a rotating token gradient ring — presence/status object."
     },
     {
@@ -92440,9 +92442,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A number badge that pops on a heartbeat, tinted by the token color. Notification counter object."
     },
     {
@@ -92469,9 +92471,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A pill-track segmented control with a token active indicator that slides between segments."
     },
     {
@@ -92498,9 +92500,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A small floating tooltip with a token border that bobs gently. Contextual hint for the system."
     },
     {
@@ -92527,9 +92529,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A token-colored arc spinner. The system's indeterminate loading indicator."
     },
     {
@@ -92556,9 +92558,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A surface card with a token accent header and a slow edge glow. The system's content container."
     },
     {
@@ -92585,9 +92587,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A token-filled checkbox whose tick draws in on a loop. The system's boolean input."
     },
     {
@@ -92614,9 +92616,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A track with a token thumb that travels along it. The system's range input."
     },
     {
@@ -92643,9 +92645,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A rounded token-filled button with a soft pulsing glow — the system's primary call-to-action."
     },
     {
@@ -92672,9 +92674,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "An on/off switch whose knob glides and glows in the token color; a settings-row control."
     },
     {
@@ -92701,9 +92703,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A compact filter/label chip with a token tint and a sliding sheen. Used in toolbars and lists."
     },
     {
@@ -92732,9 +92734,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A surface menu with a highlighted selected row that breathes in the token tint. The system's standard menu."
     },
     {
@@ -92761,9 +92763,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A dismissible toast with a token accent bar that slides in on a loop. The system's inline alert."
     },
     {
@@ -92790,9 +92792,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "An emphasis banner with a token-tinted fill and a scanning edge highlight. Draws attention inline."
     },
     {
@@ -92819,9 +92821,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A tiny token-colored bar chart whose bars rise on a loop. A KPI/trend glance for the system."
     },
     {
@@ -92849,9 +92851,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A labeled input with a token focus ring and a blinking caret. The system's form field."
     },
     {
@@ -92878,9 +92880,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A track with a token fill that advances on a loop. Determinate-style progress for the system."
     },
     {
@@ -92907,9 +92909,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A circular avatar wrapped by a rotating token gradient ring — presence/status object."
     },
     {
@@ -92936,9 +92938,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A number badge that pops on a heartbeat, tinted by the token color. Notification counter object."
     },
     {
@@ -92965,9 +92967,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A pill-track segmented control with a token active indicator that slides between segments."
     },
     {
@@ -92994,9 +92996,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A small floating tooltip with a token border that bobs gently. Contextual hint for the system."
     },
     {
@@ -93023,9 +93025,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A token-colored arc spinner. The system's indeterminate loading indicator."
     },
     {
@@ -93052,9 +93054,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A surface card with a token accent header and a slow edge glow. The system's content container."
     },
     {
@@ -93081,9 +93083,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A token-filled checkbox whose tick draws in on a loop. The system's boolean input."
     },
     {
@@ -93110,9 +93112,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A track with a token thumb that travels along it. The system's range input."
     },
     {
@@ -93139,9 +93141,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A rounded token-filled button with a soft pulsing glow — the system's primary call-to-action."
     },
     {
@@ -93168,9 +93170,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "An on/off switch whose knob glides and glows in the token color; a settings-row control."
     },
     {
@@ -93197,9 +93199,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A compact filter/label chip with a token tint and a sliding sheen. Used in toolbars and lists."
     },
     {
@@ -93228,9 +93230,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A surface menu with a highlighted selected row that breathes in the token tint. The system's standard menu."
     },
     {
@@ -93257,9 +93259,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A dismissible toast with a token accent bar that slides in on a loop. The system's inline alert."
     },
     {
@@ -93286,9 +93288,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "An emphasis banner with a token-tinted fill and a scanning edge highlight. Draws attention inline."
     },
     {
@@ -93315,9 +93317,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A tiny token-colored bar chart whose bars rise on a loop. A KPI/trend glance for the system."
     },
     {
@@ -93345,9 +93347,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A labeled input with a token focus ring and a blinking caret. The system's form field."
     },
     {
@@ -93374,9 +93376,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A track with a token fill that advances on a loop. Determinate-style progress for the system."
     },
     {
@@ -93403,9 +93405,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A circular avatar wrapped by a rotating token gradient ring — presence/status object."
     },
     {
@@ -93432,9 +93434,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A number badge that pops on a heartbeat, tinted by the token color. Notification counter object."
     },
     {
@@ -93461,9 +93463,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A pill-track segmented control with a token active indicator that slides between segments."
     },
     {
@@ -93490,9 +93492,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A small floating tooltip with a token border that bobs gently. Contextual hint for the system."
     },
     {
@@ -93519,9 +93521,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A token-colored arc spinner. The system's indeterminate loading indicator."
     },
     {
@@ -93548,9 +93550,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A surface card with a token accent header and a slow edge glow. The system's content container."
     }
   ]
