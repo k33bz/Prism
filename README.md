@@ -14,7 +14,7 @@ A single-file gallery of **3,110** offline, self-contained CSS/SVG animations, c
 
 ## About this fork
 
-This is [k33bz/Prism](https://github.com/k33bz/Prism), a fork of [crazy54/Prism](https://github.com/crazy54/Prism) by Jeremy Hall. Upstream is the design library and the MCP server; the fork keeps both intact and adds, on top:
+This is [k33bz/Prism](https://github.com/k33bz/Prism), a fork of [crazy54/Prism](https://github.com/crazy54/Prism). Upstream is the design library and the MCP server; the fork keeps both intact and adds, on top:
 
 - **Two galleries:** 📋 Tables & Data Layouts (55 facets, including click-driven sorting demos and a holographic file tree) and 📐 Diagrams & Frameworks (53 facets: every fishbone variant, flow, hierarchy, comparison, timeline, network, strategy frameworks, flywheels).
 - **New facet families inside existing galleries:** the Elemental Base blocks and Pokémon Battle scenes in FX Store, a self-hosted-Forgejo landing kit in Animated Objects and Text Effects, presence status modifiers and a live avatar stack in Notifications.
