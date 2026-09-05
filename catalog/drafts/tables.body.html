@@ -30,6 +30,33 @@
   </div><div class="meta"><div class="nm">Sortable Header</div><span class="ref">.dtb-tbl.dtb-sort</span><div class="desc">A sorted column with a flipping direction arrow while two rows trade places — the visual grammar of a click-to-sort header.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
   <div class="tile is-new"><div class="stage">
+    <table class="dtb-tbl dtb-rowmove"><thead><tr><th></th><th>Priority</th><th>Rule</th></tr></thead><tbody>
+      <tr><td class="dtb-arrows"><span class="dtb-arr">▲</span><span class="dtb-arr">▼</span></td><td class="dtb-mono">1</td><td>Allow VPN → LAN</td></tr>
+      <tr class="mv" style="--to:1"><td class="dtb-arrows"><span class="dtb-arr">▲</span><span class="dtb-arr">▼</span></td><td class="dtb-mono">2</td><td>Block guest → IoT</td></tr>
+      <tr class="mv lift" style="--to:-1"><td class="dtb-arrows"><span class="dtb-arr press">▲</span><span class="dtb-arr">▼</span></td><td class="dtb-mono">3</td><td>Allow DNS to Pi-hole</td></tr>
+      <tr><td class="dtb-arrows"><span class="dtb-arr">▲</span><span class="dtb-arr">▼</span></td><td class="dtb-mono">4</td><td>Drop all</td></tr>
+    </tbody></table>
+  </div><div class="meta"><div class="nm">Row Move Arrows</div><span class="ref">.dtb-tbl.dtb-rowmove</span><div class="desc">A leading column of ▲▼ controls; the pressed arrow lights up and its row lifts over the one above and settles into the slot — manual ordering for rules, priorities and playlists.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <table class="dtb-tbl dtb-resort"><thead><tr><th>Region</th><th class="dtb-num dtb-sortcol">Cost<span class="dtb-sort-arrow">▲</span></th><th class="dtb-num">Hosts</th></tr></thead><tbody>
+      <tr style="--to:2"><td>us-east-1</td><td class="dtb-num dtb-sortcol">$41.2K</td><td class="dtb-num">142</td></tr>
+      <tr style="--to:-1"><td>eu-west-1</td><td class="dtb-num dtb-sortcol">$18.7K</td><td class="dtb-num">61</td></tr>
+      <tr style="--to:1"><td>ap-south-1</td><td class="dtb-num dtb-sortcol">$27.4K</td><td class="dtb-num">88</td></tr>
+      <tr style="--to:-2"><td>sa-east-1</td><td class="dtb-num dtb-sortcol">$2.9K</td><td class="dtb-num">12</td></tr>
+    </tbody></table>
+  </div><div class="meta"><div class="nm">Flash + Resort</div><span class="ref">.dtb-tbl.dtb-resort</span><div class="desc">Clicking a header: the column flashes, the sort arrow flips, the rows dim and glide to their new positions, then settle — the reorder cue of a sortable data grid. Give each row its offset in <code>--to</code>.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <table class="dtb-tbl dtb-fall"><thead><tr><th>Player</th><th class="dtb-num">Score<span class="dtb-sort-arrow">▼</span></th><th class="dtb-num">Wins</th></tr></thead><tbody>
+      <tr style="--to:1;--i:0;--rot:-5deg"><td>Nova</td><td class="dtb-num">7,940</td><td class="dtb-num">31</td></tr>
+      <tr style="--to:-1;--i:1;--rot:4deg"><td>Kastro</td><td class="dtb-num">9,812</td><td class="dtb-num">44</td></tr>
+      <tr style="--to:1;--i:2;--rot:-3deg"><td>Pixel</td><td class="dtb-num">5,220</td><td class="dtb-num">18</td></tr>
+      <tr style="--to:-1;--i:3;--rot:6deg"><td>Fayte</td><td class="dtb-num">8,105</td><td class="dtb-num">36</td></tr>
+    </tbody></table>
+  </div><div class="meta"><div class="nm">Fall + Land Resort</div><span class="ref">.dtb-tbl.dtb-fall</span><div class="desc">The rows tumble out of the table on slight angles, one after another, then drop back in from above already in the new order, landing with a small bounce — the theatrical resort. Offsets in <code>--to</code>, tilt in <code>--rot</code>.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
     <div class="dtb-sticky">
       <div class="dtb-sticky-head dtb-row"><span>Package</span><span>Version</span><span class="dtb-num">Size</span></div>
       <div class="dtb-sticky-body">
@@ -254,6 +281,14 @@
       <div class="dtb-contrib-lg">Less <i style="--a:.12"></i><i style="--a:.35"></i><i style="--a:.6"></i><i style="--a:.9"></i> More</div>
     </div>
   </div><div class="meta"><div class="nm">Contribution Calendar</div><span class="ref">.dtb-contrib</span><div class="desc">The activity-square calendar: fourteen weeks of cells shaded by volume, lighting up in a diagonal sweep, with a less-to-more legend.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <div>
+      <div class="dtb-forge-cap"><b>1,284</b> commits · <b>3,902</b> activities in the last year</div>
+      <div class="dtb-forge"><i style="--c:0.28;--a:0.28;--d:0"></i><i style="--c:0;--a:0;--d:1"></i><i style="--c:0;--a:0.28;--d:2"></i><i style="--c:0;--a:0;--d:3"></i><i style="--c:0;--a:0;--d:4"></i><i style="--c:0;--a:0.76;--d:5"></i><i style="--c:0;--a:0;--d:6"></i><i style="--c:0;--a:0.76;--d:7"></i><i style="--c:0;--a:0.76;--d:8"></i><i style="--c:0;--a:0;--d:9"></i><i style="--c:1;--a:0.28;--d:10"></i><i style="--c:0;--a:0;--d:11"></i><i style="--c:0.28;--a:0.76;--d:12"></i><i style="--c:0;--a:0;--d:13"></i><i style="--c:0.76;--a:0.28;--d:1"></i><i style="--c:0;--a:0;--d:2"></i><i style="--c:0;--a:0.76;--d:3"></i><i style="--c:0.76;--a:0.76;--d:4"></i><i style="--c:0.28;--a:0.52;--d:5"></i><i style="--c:0.52;--a:0.28;--d:6"></i><i style="--c:1;--a:0.28;--d:7"></i><i style="--c:0;--a:0;--d:8"></i><i style="--c:0.52;--a:0.52;--d:9"></i><i style="--c:0.76;--a:0.52;--d:10"></i><i style="--c:0;--a:0;--d:11"></i><i style="--c:0;--a:1;--d:12"></i><i style="--c:0;--a:0;--d:13"></i><i style="--c:0.76;--a:0;--d:14"></i><i style="--c:0.52;--a:1;--d:2"></i><i style="--c:0.28;--a:0.28;--d:3"></i><i style="--c:0.52;--a:0.52;--d:4"></i><i style="--c:0.52;--a:0;--d:5"></i><i style="--c:0.28;--a:0.52;--d:6"></i><i style="--c:0;--a:0;--d:7"></i><i style="--c:0.28;--a:0.76;--d:8"></i><i style="--c:0.76;--a:1;--d:9"></i><i style="--c:0.76;--a:0.52;--d:10"></i><i style="--c:0.28;--a:0;--d:11"></i><i style="--c:0.28;--a:0.28;--d:12"></i><i style="--c:0.52;--a:0;--d:13"></i><i style="--c:0.28;--a:0.28;--d:14"></i><i style="--c:0.52;--a:0.52;--d:15"></i><i style="--c:0;--a:0;--d:3"></i><i style="--c:0.52;--a:0.76;--d:4"></i><i style="--c:0;--a:1;--d:5"></i><i style="--c:0.52;--a:0.28;--d:6"></i><i style="--c:0.28;--a:0.76;--d:7"></i><i style="--c:0;--a:0;--d:8"></i><i style="--c:0;--a:0.28;--d:9"></i><i style="--c:0;--a:0.52;--d:10"></i><i style="--c:0;--a:0.28;--d:11"></i><i style="--c:0;--a:0.52;--d:12"></i><i style="--c:0.52;--a:0.76;--d:13"></i><i style="--c:0;--a:0.76;--d:14"></i><i style="--c:0.52;--a:0.76;--d:15"></i><i style="--c:0;--a:0.52;--d:16"></i><i style="--c:1;--a:1;--d:4"></i><i style="--c:0.52;--a:0.52;--d:5"></i><i style="--c:0.52;--a:0;--d:6"></i><i style="--c:0.52;--a:0;--d:7"></i><i style="--c:0;--a:0;--d:8"></i><i style="--c:0;--a:0;--d:9"></i><i style="--c:0;--a:0;--d:10"></i><i style="--c:0;--a:0.28;--d:11"></i><i style="--c:0;--a:1;--d:12"></i><i style="--c:0.52;--a:0.28;--d:13"></i><i style="--c:0.28;--a:0.76;--d:14"></i><i style="--c:0;--a:0;--d:15"></i><i style="--c:0.52;--a:0.52;--d:16"></i><i style="--c:0;--a:0;--d:17"></i></div>
+      <div class="dtb-forge-lg"><b class="c">◤ commits</b><b class="a">◢ activity</b>less <i></i><i style="--c:.28;--a:.28"></i><i style="--c:.52;--a:.52"></i><i style="--c:.76;--a:.76"></i><i style="--c:1;--a:1"></i> more</div>
+    </div>
+  </div><div class="meta"><div class="nm">Dual-Tone Contribution Calendar</div><span class="ref">.dtb-forge</span><div class="desc">Each day split diagonally: commits shade the upper-left triangle in the accent, other activity shades the lower-right in green, so two series share one calendar — the "year at the forge" heatmap from the kastroso forge landing page. Set <code>--c</code> and <code>--a</code> per cell (0 to 1).</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
 </div>
 

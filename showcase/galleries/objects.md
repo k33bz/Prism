@@ -2,11 +2,11 @@
 
 Every effect in Prism's **Animated Objects** gallery, recorded as a looping GIF.
 
-**91 effects** · 91 animated · 3.0 MB of GIF · click any GIF to open its standalone HTML sample (raw file; open it locally, GitHub shows source).
+**94 effects** · 94 animated · 3.2 MB of GIF · click any GIF to open its standalone HTML sample (raw file; open it locally, GitHub shows source).
 
 [← Showcase index](../README.md)
 
-**Sections:** [Structures & particles](#structures-particles) · [Signals & line](#signals-line) · [Weather & sky](#weather-sky) · [Ambient weather backdrops](#ambient-weather-backdrops) · [Mechanisms & orbits](#mechanisms-orbits) · [Vitals & status](#vitals-status) · [Time, launch & life](#time-launch-life) · [More mechanisms & infra](#more-mechanisms-infra) · [Animated Emoji](#animated-emoji) · [3D Objects](#3d-objects) · [2D & SVG Objects](#2d-svg-objects)
+**Sections:** [Structures & particles](#structures-particles) · [Signals & line](#signals-line) · [Weather & sky](#weather-sky) · [Ambient weather backdrops](#ambient-weather-backdrops) · [Mechanisms & orbits](#mechanisms-orbits) · [Vitals & status](#vitals-status) · [Time, launch & life](#time-launch-life) · [More mechanisms & infra](#more-mechanisms-infra) · [Animated Emoji](#animated-emoji) · [3D Objects](#3d-objects) · [2D & SVG Objects](#2d-svg-objects) · [FORGE LANDING KIT](#forge-landing-kit)
 
 ## Structures & particles
 
@@ -96,4 +96,10 @@ Every effect in Prism's **Animated Objects** gallery, recorded as a looping GIF.
 <tr><td align="center" valign="top" width="33%"><a href="../html/objects-lightbulb.html"><img src="../gif/objects-lightbulb.gif" width="300" alt="Lightbulb"></a><br><b>Lightbulb</b><br><sub><code>objects-lightbulb</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/objects-battery-charging-2.html"><img src="../gif/objects-battery-charging-2.gif" width="300" alt="Battery Charging"></a><br><b>Battery Charging</b><br><sub><code>objects-battery-charging-2</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/objects-wi-fi-pulse.html"><img src="../gif/objects-wi-fi-pulse.gif" width="300" alt="Wi-Fi Pulse"></a><br><b>Wi-Fi Pulse</b><br><sub><code>objects-wi-fi-pulse</code></sub></td></tr>
 <tr><td align="center" valign="top" width="33%"><a href="../html/objects-gears-mesh.html"><img src="../gif/objects-gears-mesh.gif" width="300" alt="Gears Mesh"></a><br><b>Gears Mesh</b><br><sub><code>objects-gears-mesh</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/objects-pendulum.html"><img src="../gif/objects-pendulum.gif" width="300" alt="Pendulum"></a><br><b>Pendulum</b><br><sub><code>objects-pendulum</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/objects-waving-flag.html"><img src="../gif/objects-waving-flag.gif" width="300" alt="Waving Flag"></a><br><b>Waving Flag</b><br><sub><code>objects-waving-flag</code></sub></td></tr>
 <tr><td align="center" valign="top" width="33%"><a href="../html/objects-compass.html"><img src="../gif/objects-compass.gif" width="300" alt="Compass"></a><br><b>Compass</b><br><sub><code>objects-compass</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/objects-magnet.html"><img src="../gif/objects-magnet.gif" width="300" alt="Magnet"></a><br><b>Magnet</b><br><sub><code>objects-magnet</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/objects-hot-air-balloon.html"><img src="../gif/objects-hot-air-balloon.gif" width="300" alt="Hot-Air Balloon"></a><br><b>Hot-Air Balloon</b><br><sub><code>objects-hot-air-balloon</code></sub></td></tr>
+</table>
+
+## FORGE LANDING KIT
+
+<table>
+<tr><td align="center" valign="top" width="33%"><a href="../html/objects-rising-embers.html"><img src="../gif/objects-rising-embers.gif" width="300" alt="Rising Embers"></a><br><b>Rising Embers</b><br><sub><code>objects-rising-embers</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/objects-forge-flame-mark.html"><img src="../gif/objects-forge-flame-mark.gif" width="300" alt="Forge Flame Mark"></a><br><b>Forge Flame Mark</b><br><sub><code>objects-forge-flame-mark</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/objects-forge-landing-hero.html"><img src="../gif/objects-forge-landing-hero.gif" width="300" alt="Forge Landing Hero"></a><br><b>Forge Landing Hero</b><br><sub><code>objects-forge-landing-hero</code></sub></td></tr>
 </table>

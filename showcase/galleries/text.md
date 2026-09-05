@@ -2,11 +2,11 @@
 
 Every effect in Prism's **Text Effects** gallery, recorded as a looping GIF.
 
-**100 effects** · 86 animated · 2.8 MB of GIF · click any GIF to open its standalone HTML sample (raw file; open it locally, GitHub shows source).
+**102 effects** · 88 animated · 2.8 MB of GIF · click any GIF to open its standalone HTML sample (raw file; open it locally, GitHub shows source).
 
 [← Showcase index](../README.md)
 
-**Sections:** [Gradient & Animated Fill](#gradient-animated-fill) · [Glow & Neon](#glow-neon) · [Outline & Stroke](#outline-stroke) · [Shadow & 3D / Extrude](#shadow-3d-extrude) · [Glitch & Distortion](#glitch-distortion) · [Reveal & Typewriter](#reveal-typewriter) · [Wave & Per](#wave-per) · [Shimmer & Metallic](#shimmer-metallic) · [Fire, Ice & Liquid](#fire-ice-liquid) · [Retro / VHS / Synthwave](#retro-vhs-synthwave) · [Variable](#variable) · [Scramble & Decode](#scramble-decode) · [Marquee & Ticker](#marquee-ticker) · [3D & Extrude](#3d-extrude) · [New Treatments](#new-treatments)
+**Sections:** [Gradient & Animated Fill](#gradient-animated-fill) · [Glow & Neon](#glow-neon) · [Outline & Stroke](#outline-stroke) · [Shadow & 3D / Extrude](#shadow-3d-extrude) · [Glitch & Distortion](#glitch-distortion) · [Reveal & Typewriter](#reveal-typewriter) · [Wave & Per](#wave-per) · [Shimmer & Metallic](#shimmer-metallic) · [Fire, Ice & Liquid](#fire-ice-liquid) · [Retro / VHS / Synthwave](#retro-vhs-synthwave) · [Variable](#variable) · [Scramble & Decode](#scramble-decode) · [Marquee & Ticker](#marquee-ticker) · [3D & Extrude](#3d-extrude) · [New Treatments](#new-treatments) · [FORGE LANDING KIT](#forge-landing-kit)
 
 ## Gradient & Animated Fill
 
@@ -116,4 +116,10 @@ Every effect in Prism's **Text Effects** gallery, recorded as a looping GIF.
 <tr><td align="center" valign="top" width="33%"><a href="../html/text-prism-split.html"><img src="../gif/text-prism-split.gif" width="300" alt="Prism-Split"></a><br><b>Prism-Split</b><br><sub><code>text-prism-split</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/text-aurora-drift.html"><img src="../gif/text-aurora-drift.gif" width="300" alt="Aurora-Drift"></a><br><b>Aurora-Drift</b><br><sub><code>text-aurora-drift</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/text-spotlight-sweep.html"><img src="../gif/text-spotlight-sweep.gif" width="300" alt="Spotlight-Sweep"></a><br><b>Spotlight-Sweep</b><br><sub><code>text-spotlight-sweep</code></sub></td></tr>
 <tr><td align="center" valign="top" width="33%"><a href="../html/text-gooey-wobble.html"><img src="../gif/text-gooey-wobble.gif" width="300" alt="Gooey-Wobble"></a><br><b>Gooey-Wobble</b><br><sub><code>text-gooey-wobble</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/text-shadow-pop.html"><img src="../gif/text-shadow-pop.gif" width="300" alt="Shadow-Pop"></a><br><b>Shadow-Pop</b><br><sub><code>text-shadow-pop</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/text-underline-sweep.html"><img src="../gif/text-underline-sweep.gif" width="300" alt="Underline-Sweep"></a><br><b>Underline-Sweep</b><br><sub><code>text-underline-sweep</code></sub></td></tr>
 <tr><td align="center" valign="top" width="33%"><a href="../html/text-hologram-scan.html"><img src="../gif/text-hologram-scan.gif" width="300" alt="Hologram-Scan"></a><br><b>Hologram-Scan</b><br><sub><code>text-hologram-scan</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/text-melt-drip.html"><img src="../gif/text-melt-drip.gif" width="300" alt="Melt-Drip"></a><br><b>Melt-Drip</b><br><sub><code>text-melt-drip</code></sub></td></tr>
+</table>
+
+## FORGE LANDING KIT
+
+<table>
+<tr><td align="center" valign="top" width="33%"><a href="../html/text-forge-gradient-title.html"><img src="../gif/text-forge-gradient-title.gif" width="300" alt="Forge Gradient Title"></a><br><b>Forge Gradient Title</b><br><sub><code>text-forge-gradient-title</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/text-rotating-tagline.html"><img src="../gif/text-rotating-tagline.gif" width="300" alt="Rotating Tagline"></a><br><b>Rotating Tagline</b><br><sub><code>text-rotating-tagline</code></sub></td></tr>
 </table>
