@@ -214,3 +214,22 @@
   .dgm .seq{opacity:1}.dgm-pyr .tier{transform:none;opacity:1}.dgm-stake .bub{transform:none}
   .dgm-parts .seg{transform:none;opacity:1}.dgm-road .done{stroke-dashoffset:120}
 }
+
+/* ---- flywheels: a faint spoked wheel turns behind a momentum ring; nodes light in turn ---- */
+.dgm-fw .dgm-fw-wheel{transform-box:fill-box;transform-origin:center;animation:dgmFwSpin 14s linear infinite}
+.dgm-fw .dgm-fw-wheel.dgm-fw-accel{animation:dgmFwSpinAccel 5s cubic-bezier(.5,0,.85,.55) infinite}
+.dgm-fw .dgm-fw-rim{fill:none;stroke:var(--line);stroke-width:5;opacity:.55}
+.dgm-fw .dgm-fw-spoke{fill:none;stroke:var(--line);stroke-width:1.5;opacity:.55}
+.dgm-fw .dgm-fw-ring{fill:none;stroke:var(--c);stroke-width:2;stroke-dasharray:8 10;stroke-linecap:round;animation:dgmFwFlow 2.4s linear infinite}
+.dgm-fw .dgm-fw-ring.dgm-fw-accel{animation:dgmFwFlowAccel 5s cubic-bezier(.5,0,.85,.55) infinite}
+.dgm-fw .dgm-fw-hub{fill:var(--panel);stroke:var(--c);stroke-width:2;transform-box:fill-box;transform-origin:center;animation:dgmFwHub 2.8s ease-in-out infinite}
+.dgm-fw .dgm-fw-node{fill:var(--panel2);stroke:var(--line);stroke-width:1;animation-name:dgmFwNode;animation-duration:calc(var(--n,4)*.9s);animation-timing-function:ease-in-out;animation-iteration-count:infinite;animation-delay:calc(var(--i,0)*.9s)}
+.dgm-fw .dgm-fw-inner{stroke-width:1.2;stroke-dasharray:60;stroke-dashoffset:60;animation-name:dgmFwInner;animation-duration:3.6s;animation-timing-function:ease-out;animation-iteration-count:infinite;animation-delay:calc(var(--i,0)*.5s)}
+.dgm-fw text.hd{font-size:8.5px;letter-spacing:.04em}
+@keyframes dgmFwSpin{to{transform:rotate(360deg)}}
+@keyframes dgmFwSpinAccel{0%{transform:rotate(0deg)}100%{transform:rotate(720deg)}}
+@keyframes dgmFwFlow{to{stroke-dashoffset:-36}}
+@keyframes dgmFwFlowAccel{0%{stroke-dashoffset:0}100%{stroke-dashoffset:-360}}
+@keyframes dgmFwHub{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+@keyframes dgmFwNode{0%,10%{stroke:var(--c);fill:rgba(var(--c-rgb),.2)}24%,100%{stroke:var(--line);fill:var(--panel2)}}
+@keyframes dgmFwInner{0%{stroke-dashoffset:60;opacity:0}10%{opacity:1}40%,80%{stroke-dashoffset:0;opacity:1}100%{stroke-dashoffset:0;opacity:0}}
