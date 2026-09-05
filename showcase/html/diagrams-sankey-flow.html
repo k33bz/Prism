@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sankey Flow · Prism</title>
+<!-- Prism showcase sample: diagrams-sankey-flow (gallery: diagrams). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.dgm { display: block; width: 100%; max-width: 320px; height: auto; overflow: visible; font: 600 9px ui-sans-serif, system-ui, sans-serif; --c: var(--accent); --c-rgb: var(--accent-rgb); }
+.dgm text { fill: var(--ink); text-anchor: middle; dominant-baseline: middle; font-size: 9px; font-weight: 600; }
+.dgm text.mut { fill: var(--muted); font-weight: 500; font-size: 8px; }
+.dgm text.dim { fill: var(--dim); font-weight: 500; font-size: 7.5px; }
+.dgm text.hd { font-weight: 800; font-size: 10px; }
+.dgm .ln { fill: none; stroke: var(--line); stroke-width: 1.5; }
+.dgm .ln.c { stroke: var(--c); }
+.dgm .bx { fill: var(--panel2); stroke: var(--line); stroke-width: 1; }
+.dgm .bx.c { stroke: var(--c); fill: rgba(var(--c-rgb),.12); }
+.dgm .bx.pos { stroke: var(--pos); fill: rgba(var(--pos-rgb),.14); }
+.dgm .bx.warn { stroke: var(--warn); fill: rgba(var(--warn-rgb),.14); }
+.dgm .bx.neg { stroke: var(--neg); fill: rgba(var(--neg-rgb),.14); }
+.dgm .bx.info { stroke: var(--info); fill: rgba(var(--info-rgb),.14); }
+.dgm .bx.crit { stroke: var(--crit); fill: rgba(var(--crit-rgb),.14); }
+.dgm .dot { fill: var(--c); }
+.dgm .dr { stroke-dasharray: 400; stroke-dashoffset: 400; animation-name: dgmDraw; animation-duration: 6s; animation-timing-function: ease-out; animation-iteration-count: infinite; animation-delay: calc(var(--i,0)*.22s); }
+.dgm .fi { opacity: 0; animation-name: dgmFade; animation-duration: 6s; animation-timing-function: ease-out; animation-iteration-count: infinite; animation-delay: calc(var(--i,0)*.22s); }
+.dgm .pop { transform-box: fill-box; transform-origin: center center; animation-name: dgmPop; animation-duration: 6s; animation-timing-function: cubic-bezier(0.2, 0.8, 0.3, 1.2); animation-iteration-count: infinite; animation-delay: calc(var(--i,0)*.22s); }
+.dgm .pulse { animation: 2.4s ease-in-out 0s infinite normal none running dgmPulse; }
+.dgm .flow { fill: none; stroke: var(--c); stroke-width: 2; stroke-dasharray: 6, 8; stroke-linecap: round; animation: 1.6s linear 0s infinite normal none running dgmFlow; }
+.dgm .seq { animation-name: dgmSeq; animation-duration: calc(var(--n,4)*1.1s); animation-timing-function: ease-in-out; animation-iteration-count: infinite; animation-delay: calc(var(--i,0)*1.1s); }
+.dgm .seqfill { animation-name: dgmSeqFill; animation-duration: calc(var(--n,4)*1.1s); animation-timing-function: ease-in-out; animation-iteration-count: infinite; animation-delay: calc(var(--i,0)*1.1s); }
+.dgm .spin { transform-box: fill-box; transform-origin: center center; animation: 12s linear 0s infinite normal none running dgmSpin; }
+.dgm-mind .nd { fill: var(--panel2); stroke: var(--line); stroke-width: 1; }
+.dgm-scale .pan.b { fill: rgba(var(--info-rgb),.18); stroke: var(--info); }
+.dgm-sankey .band { fill: rgba(var(--c-rgb),.35); stroke: none; }
+.dgm-sankey .band.b { fill: rgba(var(--info-rgb),.35); }
+.dgm-sankey .band.c { fill: rgba(var(--pos-rgb),.35); }
+.dgm-sankey .nd { fill: var(--ink); }
+.dgm-sankey .stream { fill: none; stroke: rgba(255, 255, 255, 0.35); stroke-width: 2; stroke-dasharray: 4, 10; animation: 1.8s linear 0s infinite normal none running dgmFlow; }
+@keyframes dgmDraw { 
+  0% { stroke-dashoffset: 400; }
+  30%, 88% { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: 0; }
+}
+@keyframes dgmFade { 
+  0%, 4% { opacity: 0; }
+  14%, 88% { opacity: 1; }
+  96%, 100% { opacity: 0; }
+}
+@keyframes dgmPop { 
+  0%, 4% { transform: scale(0.2); opacity: 0; }
+  16%, 88% { transform: scale(1); opacity: 1; }
+  96%, 100% { transform: scale(0.2); opacity: 0; }
+}
+@keyframes dgmPulse { 
+  0%, 100% { filter: drop-shadow(0 0 0 rgba(var(--c-rgb),0)); }
+  50% { filter: drop-shadow(0 0 6px rgba(var(--c-rgb),.9)); }
+}
+@keyframes dgmFlow { 
+  100% { stroke-dashoffset: -28; }
+}
+@keyframes dgmSeq { 
+  0%, 6% { opacity: 0.45; }
+  12%, 22% { opacity: 1; }
+  30%, 100% { opacity: 0.45; }
+}
+@keyframes dgmSeqFill { 
+  0%, 6% { fill-opacity: 0.12; }
+  12%, 22% { fill-opacity: 0.55; }
+  30%, 100% { fill-opacity: 0.12; }
+}
+@keyframes dgmSpin { 
+  100% { transform: rotate(360deg); }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><svg class="dgm dgm-sankey" viewBox="0 0 320 160" aria-label="Sankey flow">
+      <path class="band" d="M40 20 H120 C170 20 170 40 220 40 V70 C170 70 170 60 120 60 H40 Z"></path>
+      <path class="band b" d="M40 66 H120 C170 66 170 76 220 76 V96 C170 96 170 86 120 86 H40 Z"></path>
+      <path class="band c" d="M40 92 H120 C170 92 170 100 220 100 V140 C170 140 170 130 120 130 H40 Z"></path>
+      <rect class="nd" x="30" y="20" width="10" height="40"></rect><rect class="nd" x="30" y="66" width="10" height="20"></rect><rect class="nd" x="30" y="92" width="10" height="38"></rect>
+      <rect class="nd" x="220" y="40" width="10" height="56"></rect><rect class="nd" x="220" y="100" width="10" height="40"></rect>
+      <path class="stream" d="M40 40 C120 40 140 55 220 68"></path><path class="stream" d="M40 111 C120 111 140 118 220 120"></path>
+      <text class="mut" x="14" y="40" text-anchor="end">Ads</text><text class="mut" x="14" y="76" text-anchor="end">Search</text><text class="mut" x="14" y="111" text-anchor="end">Referral</text>
+      <text class="mut" x="238" y="68" text-anchor="start">Trial</text><text class="mut" x="238" y="120" text-anchor="start">Bounce</text>
+    </svg></div></div>
+<div class="meta"><b>Sankey Flow</b> · <code>diagrams-sankey-flow</code><br>Diagrams &amp; Frameworks · NETWORK &amp; RELATIONSHIPS<p>Three sources feeding two targets through bands whose width carries the volume, with dashed streams flowing through them. Traffic, budget and energy flows.</p></div>
+
+</body>
+</html>
