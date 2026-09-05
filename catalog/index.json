@@ -1,5 +1,5 @@
 {
-  "count": 2904,
+  "count": 3104,
   "effects": [
     {
       "id": "charts-big-metric-count-up",
@@ -1899,7 +1899,6 @@
         "info",
         "m",
         "ok",
-        "err",
         "warn",
         "cursor"
       ],
@@ -19177,9 +19176,9 @@
         "gate",
         "experts",
         "expert",
+        "on",
         "ed",
         "ew",
-        "on",
         "cap",
         "pr-playbtn"
       ],
@@ -87716,6 +87715,5842 @@
       "addedOn": "2026-09-05",
       "updatedOn": null,
       "author": "k33bz",
+      "description": "A surface card with a token accent header and a slow edge glow. The system's content container."
+    },
+    {
+      "id": "gcp-button-accent",
+      "name": "Pill Button · Primary",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-button",
+      "classes": [
+        "gcp-root",
+        "gcp-btn"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "button",
+      "interaction": "click auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A rounded token-filled button with a soft pulsing glow — the system's primary call-to-action."
+    },
+    {
+      "id": "gcp-toggle-accent",
+      "name": "Switch Toggle · Primary",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-toggle",
+      "classes": [
+        "gcp-root",
+        "gcp-toggle"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "button",
+      "interaction": "toggle auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "An on/off switch whose knob glides and glows in the token color; a settings-row control."
+    },
+    {
+      "id": "gcp-chip-accent",
+      "name": "Status Chip · Primary",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-chip",
+      "classes": [
+        "gcp-root",
+        "gcp-chip"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "button",
+      "interaction": "auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A compact filter/label chip with a token tint and a sliding sheen. Used in toolbars and lists."
+    },
+    {
+      "id": "gcp-menu-accent",
+      "name": "Dropdown Menu · Primary",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-menu",
+      "classes": [
+        "gcp-root",
+        "gcp-menu",
+        "gcp-mi",
+        "gcp-sel"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "menu",
+      "interaction": "hover click",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A surface menu with a highlighted selected row that breathes in the token tint. The system's standard menu."
+    },
+    {
+      "id": "gcp-notification-accent",
+      "name": "Toast Notification · Primary",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-notification",
+      "classes": [
+        "gcp-root",
+        "gcp-toast"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "notification",
+      "interaction": "auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A dismissible toast with a token accent bar that slides in on a loop. The system's inline alert."
+    },
+    {
+      "id": "gcp-callout-accent",
+      "name": "Callout Banner · Primary",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-callout",
+      "classes": [
+        "gcp-root",
+        "gcp-callout"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "callout",
+      "interaction": "auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "An emphasis banner with a token-tinted fill and a scanning edge highlight. Draws attention inline."
+    },
+    {
+      "id": "gcp-chart-accent",
+      "name": "Mini Bar Chart · Primary",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-chart",
+      "classes": [
+        "gcp-root",
+        "gcp-chart"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart",
+      "interaction": "auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A tiny token-colored bar chart whose bars rise on a loop. A KPI/trend glance for the system."
+    },
+    {
+      "id": "gcp-input-accent",
+      "name": "Text Field · Primary",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-input",
+      "classes": [
+        "gcp-root",
+        "gcp-field",
+        "gcp-caret"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "input",
+      "interaction": "auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A labeled input with a token focus ring and a blinking caret. The system's form field."
+    },
+    {
+      "id": "gcp-progress-accent",
+      "name": "Progress Bar · Primary",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-progress",
+      "classes": [
+        "gcp-root",
+        "gcp-prog"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart",
+      "interaction": "auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A track with a token fill that advances on a loop. Determinate-style progress for the system."
+    },
+    {
+      "id": "gcp-avatar-accent",
+      "name": "Avatar Ring · Primary",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-avatar",
+      "classes": [
+        "gcp-root",
+        "gcp-avatar"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "object",
+      "interaction": "auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A circular avatar wrapped by a rotating token gradient ring — presence/status object."
+    },
+    {
+      "id": "gcp-badge-accent",
+      "name": "Count Badge · Primary",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-badge",
+      "classes": [
+        "gcp-root",
+        "gcp-badge"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "object",
+      "interaction": "auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A number badge that pops on a heartbeat, tinted by the token color. Notification counter object."
+    },
+    {
+      "id": "gcp-tab-accent",
+      "name": "Segmented Tabs · Primary",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-tab",
+      "classes": [
+        "gcp-root",
+        "gcp-tabs"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "segmented-control",
+      "interaction": "toggle auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A pill-track segmented control with a token active indicator that slides between segments."
+    },
+    {
+      "id": "gcp-tooltip-accent",
+      "name": "Tooltip · Primary",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-tooltip",
+      "classes": [
+        "gcp-root",
+        "gcp-tip"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "callout",
+      "interaction": "auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A small floating tooltip with a token border that bobs gently. Contextual hint for the system."
+    },
+    {
+      "id": "gcp-spinner-accent",
+      "name": "Loading Spinner · Primary",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-spinner",
+      "classes": [
+        "gcp-root",
+        "gcp-spinner"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "object",
+      "interaction": "auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A token-colored arc spinner. The system's indeterminate loading indicator."
+    },
+    {
+      "id": "gcp-card-accent",
+      "name": "Feature Card · Primary",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-card",
+      "classes": [
+        "gcp-root",
+        "gcp-card"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "object",
+      "interaction": "auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A surface card with a token accent header and a slow edge glow. The system's content container."
+    },
+    {
+      "id": "gcp-checkbox-accent",
+      "name": "Checkbox · Primary",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-checkbox",
+      "classes": [
+        "gcp-root",
+        "gcp-check"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "input",
+      "interaction": "toggle auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A token-filled checkbox whose tick draws in on a loop. The system's boolean input."
+    },
+    {
+      "id": "gcp-slider-accent",
+      "name": "Range Slider · Primary",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-slider",
+      "classes": [
+        "gcp-root",
+        "gcp-slider"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "input",
+      "interaction": "auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A track with a token thumb that travels along it. The system's range input."
+    },
+    {
+      "id": "gcp-button-info",
+      "name": "Pill Button · Info",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-button",
+      "classes": [
+        "gcp-root",
+        "gcp-btn"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "button",
+      "interaction": "click auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A rounded token-filled button with a soft pulsing glow — the system's primary call-to-action."
+    },
+    {
+      "id": "gcp-toggle-info",
+      "name": "Switch Toggle · Info",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-toggle",
+      "classes": [
+        "gcp-root",
+        "gcp-toggle"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "button",
+      "interaction": "toggle auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "An on/off switch whose knob glides and glows in the token color; a settings-row control."
+    },
+    {
+      "id": "gcp-chip-info",
+      "name": "Status Chip · Info",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-chip",
+      "classes": [
+        "gcp-root",
+        "gcp-chip"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "button",
+      "interaction": "auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A compact filter/label chip with a token tint and a sliding sheen. Used in toolbars and lists."
+    },
+    {
+      "id": "gcp-menu-info",
+      "name": "Dropdown Menu · Info",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-menu",
+      "classes": [
+        "gcp-root",
+        "gcp-menu",
+        "gcp-mi",
+        "gcp-sel"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "menu",
+      "interaction": "hover click",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A surface menu with a highlighted selected row that breathes in the token tint. The system's standard menu."
+    },
+    {
+      "id": "gcp-notification-info",
+      "name": "Toast Notification · Info",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-notification",
+      "classes": [
+        "gcp-root",
+        "gcp-toast"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "notification",
+      "interaction": "auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A dismissible toast with a token accent bar that slides in on a loop. The system's inline alert."
+    },
+    {
+      "id": "gcp-callout-info",
+      "name": "Callout Banner · Info",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-callout",
+      "classes": [
+        "gcp-root",
+        "gcp-callout"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "callout",
+      "interaction": "auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "An emphasis banner with a token-tinted fill and a scanning edge highlight. Draws attention inline."
+    },
+    {
+      "id": "gcp-chart-info",
+      "name": "Mini Bar Chart · Info",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-chart",
+      "classes": [
+        "gcp-root",
+        "gcp-chart"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart",
+      "interaction": "auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A tiny token-colored bar chart whose bars rise on a loop. A KPI/trend glance for the system."
+    },
+    {
+      "id": "gcp-input-info",
+      "name": "Text Field · Info",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-input",
+      "classes": [
+        "gcp-root",
+        "gcp-field",
+        "gcp-caret"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "input",
+      "interaction": "auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A labeled input with a token focus ring and a blinking caret. The system's form field."
+    },
+    {
+      "id": "gcp-progress-info",
+      "name": "Progress Bar · Info",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-progress",
+      "classes": [
+        "gcp-root",
+        "gcp-prog"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart",
+      "interaction": "auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A track with a token fill that advances on a loop. Determinate-style progress for the system."
+    },
+    {
+      "id": "gcp-avatar-info",
+      "name": "Avatar Ring · Info",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-avatar",
+      "classes": [
+        "gcp-root",
+        "gcp-avatar"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "object",
+      "interaction": "auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A circular avatar wrapped by a rotating token gradient ring — presence/status object."
+    },
+    {
+      "id": "gcp-badge-info",
+      "name": "Count Badge · Info",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-badge",
+      "classes": [
+        "gcp-root",
+        "gcp-badge"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "object",
+      "interaction": "auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A number badge that pops on a heartbeat, tinted by the token color. Notification counter object."
+    },
+    {
+      "id": "gcp-tab-info",
+      "name": "Segmented Tabs · Info",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-tab",
+      "classes": [
+        "gcp-root",
+        "gcp-tabs"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "segmented-control",
+      "interaction": "toggle auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A pill-track segmented control with a token active indicator that slides between segments."
+    },
+    {
+      "id": "gcp-tooltip-info",
+      "name": "Tooltip · Info",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-tooltip",
+      "classes": [
+        "gcp-root",
+        "gcp-tip"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "callout",
+      "interaction": "auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A small floating tooltip with a token border that bobs gently. Contextual hint for the system."
+    },
+    {
+      "id": "gcp-spinner-info",
+      "name": "Loading Spinner · Info",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-spinner",
+      "classes": [
+        "gcp-root",
+        "gcp-spinner"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "object",
+      "interaction": "auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A token-colored arc spinner. The system's indeterminate loading indicator."
+    },
+    {
+      "id": "gcp-card-info",
+      "name": "Feature Card · Info",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-card",
+      "classes": [
+        "gcp-root",
+        "gcp-card"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "object",
+      "interaction": "auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A surface card with a token accent header and a slow edge glow. The system's content container."
+    },
+    {
+      "id": "gcp-checkbox-info",
+      "name": "Checkbox · Info",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-checkbox",
+      "classes": [
+        "gcp-root",
+        "gcp-check"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "input",
+      "interaction": "toggle auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A token-filled checkbox whose tick draws in on a loop. The system's boolean input."
+    },
+    {
+      "id": "gcp-slider-info",
+      "name": "Range Slider · Info",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-slider",
+      "classes": [
+        "gcp-root",
+        "gcp-slider"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "input",
+      "interaction": "auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A track with a token thumb that travels along it. The system's range input."
+    },
+    {
+      "id": "gcp-button-pos",
+      "name": "Pill Button · Success",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-button",
+      "classes": [
+        "gcp-root",
+        "gcp-btn"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "button",
+      "interaction": "click auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A rounded token-filled button with a soft pulsing glow — the system's primary call-to-action."
+    },
+    {
+      "id": "gcp-toggle-pos",
+      "name": "Switch Toggle · Success",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-toggle",
+      "classes": [
+        "gcp-root",
+        "gcp-toggle"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "button",
+      "interaction": "toggle auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "An on/off switch whose knob glides and glows in the token color; a settings-row control."
+    },
+    {
+      "id": "gcp-chip-pos",
+      "name": "Status Chip · Success",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-chip",
+      "classes": [
+        "gcp-root",
+        "gcp-chip"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "button",
+      "interaction": "auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A compact filter/label chip with a token tint and a sliding sheen. Used in toolbars and lists."
+    },
+    {
+      "id": "gcp-menu-pos",
+      "name": "Dropdown Menu · Success",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-menu",
+      "classes": [
+        "gcp-root",
+        "gcp-menu",
+        "gcp-mi",
+        "gcp-sel"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "menu",
+      "interaction": "hover click",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A surface menu with a highlighted selected row that breathes in the token tint. The system's standard menu."
+    },
+    {
+      "id": "gcp-notification-pos",
+      "name": "Toast Notification · Success",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-notification",
+      "classes": [
+        "gcp-root",
+        "gcp-toast"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "notification",
+      "interaction": "auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A dismissible toast with a token accent bar that slides in on a loop. The system's inline alert."
+    },
+    {
+      "id": "gcp-callout-pos",
+      "name": "Callout Banner · Success",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-callout",
+      "classes": [
+        "gcp-root",
+        "gcp-callout"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "callout",
+      "interaction": "auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "An emphasis banner with a token-tinted fill and a scanning edge highlight. Draws attention inline."
+    },
+    {
+      "id": "gcp-chart-pos",
+      "name": "Mini Bar Chart · Success",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-chart",
+      "classes": [
+        "gcp-root",
+        "gcp-chart"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart",
+      "interaction": "auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A tiny token-colored bar chart whose bars rise on a loop. A KPI/trend glance for the system."
+    },
+    {
+      "id": "gcp-input-pos",
+      "name": "Text Field · Success",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-input",
+      "classes": [
+        "gcp-root",
+        "gcp-field",
+        "gcp-caret"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "input",
+      "interaction": "auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A labeled input with a token focus ring and a blinking caret. The system's form field."
+    },
+    {
+      "id": "gcp-progress-pos",
+      "name": "Progress Bar · Success",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-progress",
+      "classes": [
+        "gcp-root",
+        "gcp-prog"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart",
+      "interaction": "auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A track with a token fill that advances on a loop. Determinate-style progress for the system."
+    },
+    {
+      "id": "gcp-avatar-pos",
+      "name": "Avatar Ring · Success",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-avatar",
+      "classes": [
+        "gcp-root",
+        "gcp-avatar"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "object",
+      "interaction": "auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A circular avatar wrapped by a rotating token gradient ring — presence/status object."
+    },
+    {
+      "id": "gcp-badge-pos",
+      "name": "Count Badge · Success",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-badge",
+      "classes": [
+        "gcp-root",
+        "gcp-badge"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "object",
+      "interaction": "auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A number badge that pops on a heartbeat, tinted by the token color. Notification counter object."
+    },
+    {
+      "id": "gcp-tab-pos",
+      "name": "Segmented Tabs · Success",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-tab",
+      "classes": [
+        "gcp-root",
+        "gcp-tabs"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "segmented-control",
+      "interaction": "toggle auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A pill-track segmented control with a token active indicator that slides between segments."
+    },
+    {
+      "id": "gcp-tooltip-pos",
+      "name": "Tooltip · Success",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-tooltip",
+      "classes": [
+        "gcp-root",
+        "gcp-tip"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "callout",
+      "interaction": "auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A small floating tooltip with a token border that bobs gently. Contextual hint for the system."
+    },
+    {
+      "id": "gcp-spinner-pos",
+      "name": "Loading Spinner · Success",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-spinner",
+      "classes": [
+        "gcp-root",
+        "gcp-spinner"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "object",
+      "interaction": "auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A token-colored arc spinner. The system's indeterminate loading indicator."
+    },
+    {
+      "id": "gcp-card-pos",
+      "name": "Feature Card · Success",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-card",
+      "classes": [
+        "gcp-root",
+        "gcp-card"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "object",
+      "interaction": "auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A surface card with a token accent header and a slow edge glow. The system's content container."
+    },
+    {
+      "id": "gcp-checkbox-pos",
+      "name": "Checkbox · Success",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-checkbox",
+      "classes": [
+        "gcp-root",
+        "gcp-check"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "input",
+      "interaction": "toggle auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A token-filled checkbox whose tick draws in on a loop. The system's boolean input."
+    },
+    {
+      "id": "gcp-slider-pos",
+      "name": "Range Slider · Success",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-slider",
+      "classes": [
+        "gcp-root",
+        "gcp-slider"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "input",
+      "interaction": "auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A track with a token thumb that travels along it. The system's range input."
+    },
+    {
+      "id": "gcp-button-warn",
+      "name": "Pill Button · Warning",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-button",
+      "classes": [
+        "gcp-root",
+        "gcp-btn"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "button",
+      "interaction": "click auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A rounded token-filled button with a soft pulsing glow — the system's primary call-to-action."
+    },
+    {
+      "id": "gcp-toggle-warn",
+      "name": "Switch Toggle · Warning",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-toggle",
+      "classes": [
+        "gcp-root",
+        "gcp-toggle"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "button",
+      "interaction": "toggle auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "An on/off switch whose knob glides and glows in the token color; a settings-row control."
+    },
+    {
+      "id": "gcp-chip-warn",
+      "name": "Status Chip · Warning",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-chip",
+      "classes": [
+        "gcp-root",
+        "gcp-chip"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "button",
+      "interaction": "auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A compact filter/label chip with a token tint and a sliding sheen. Used in toolbars and lists."
+    },
+    {
+      "id": "gcp-menu-warn",
+      "name": "Dropdown Menu · Warning",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-menu",
+      "classes": [
+        "gcp-root",
+        "gcp-menu",
+        "gcp-mi",
+        "gcp-sel"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "menu",
+      "interaction": "hover click",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A surface menu with a highlighted selected row that breathes in the token tint. The system's standard menu."
+    },
+    {
+      "id": "gcp-notification-warn",
+      "name": "Toast Notification · Warning",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-notification",
+      "classes": [
+        "gcp-root",
+        "gcp-toast"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "notification",
+      "interaction": "auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A dismissible toast with a token accent bar that slides in on a loop. The system's inline alert."
+    },
+    {
+      "id": "gcp-callout-warn",
+      "name": "Callout Banner · Warning",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-callout",
+      "classes": [
+        "gcp-root",
+        "gcp-callout"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "callout",
+      "interaction": "auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "An emphasis banner with a token-tinted fill and a scanning edge highlight. Draws attention inline."
+    },
+    {
+      "id": "gcp-chart-warn",
+      "name": "Mini Bar Chart · Warning",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-chart",
+      "classes": [
+        "gcp-root",
+        "gcp-chart"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart",
+      "interaction": "auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A tiny token-colored bar chart whose bars rise on a loop. A KPI/trend glance for the system."
+    },
+    {
+      "id": "gcp-input-warn",
+      "name": "Text Field · Warning",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-input",
+      "classes": [
+        "gcp-root",
+        "gcp-field",
+        "gcp-caret"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "input",
+      "interaction": "auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A labeled input with a token focus ring and a blinking caret. The system's form field."
+    },
+    {
+      "id": "gcp-progress-warn",
+      "name": "Progress Bar · Warning",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-progress",
+      "classes": [
+        "gcp-root",
+        "gcp-prog"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart",
+      "interaction": "auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A track with a token fill that advances on a loop. Determinate-style progress for the system."
+    },
+    {
+      "id": "gcp-avatar-warn",
+      "name": "Avatar Ring · Warning",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-avatar",
+      "classes": [
+        "gcp-root",
+        "gcp-avatar"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "object",
+      "interaction": "auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A circular avatar wrapped by a rotating token gradient ring — presence/status object."
+    },
+    {
+      "id": "gcp-badge-warn",
+      "name": "Count Badge · Warning",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-badge",
+      "classes": [
+        "gcp-root",
+        "gcp-badge"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "object",
+      "interaction": "auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A number badge that pops on a heartbeat, tinted by the token color. Notification counter object."
+    },
+    {
+      "id": "gcp-tab-warn",
+      "name": "Segmented Tabs · Warning",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-tab",
+      "classes": [
+        "gcp-root",
+        "gcp-tabs"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "segmented-control",
+      "interaction": "toggle auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A pill-track segmented control with a token active indicator that slides between segments."
+    },
+    {
+      "id": "gcp-tooltip-warn",
+      "name": "Tooltip · Warning",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-tooltip",
+      "classes": [
+        "gcp-root",
+        "gcp-tip"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "callout",
+      "interaction": "auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A small floating tooltip with a token border that bobs gently. Contextual hint for the system."
+    },
+    {
+      "id": "gcp-spinner-warn",
+      "name": "Loading Spinner · Warning",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-spinner",
+      "classes": [
+        "gcp-root",
+        "gcp-spinner"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "object",
+      "interaction": "auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A token-colored arc spinner. The system's indeterminate loading indicator."
+    },
+    {
+      "id": "gcp-card-warn",
+      "name": "Feature Card · Warning",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-card",
+      "classes": [
+        "gcp-root",
+        "gcp-card"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "object",
+      "interaction": "auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A surface card with a token accent header and a slow edge glow. The system's content container."
+    },
+    {
+      "id": "gcp-checkbox-warn",
+      "name": "Checkbox · Warning",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-checkbox",
+      "classes": [
+        "gcp-root",
+        "gcp-check"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "input",
+      "interaction": "toggle auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A token-filled checkbox whose tick draws in on a loop. The system's boolean input."
+    },
+    {
+      "id": "gcp-slider-warn",
+      "name": "Range Slider · Warning",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-slider",
+      "classes": [
+        "gcp-root",
+        "gcp-slider"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "input",
+      "interaction": "auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A track with a token thumb that travels along it. The system's range input."
+    },
+    {
+      "id": "gcp-button-neg",
+      "name": "Pill Button · Danger",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-button",
+      "classes": [
+        "gcp-root",
+        "gcp-btn"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "button",
+      "interaction": "click auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A rounded token-filled button with a soft pulsing glow — the system's primary call-to-action."
+    },
+    {
+      "id": "gcp-toggle-neg",
+      "name": "Switch Toggle · Danger",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-toggle",
+      "classes": [
+        "gcp-root",
+        "gcp-toggle"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "button",
+      "interaction": "toggle auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "An on/off switch whose knob glides and glows in the token color; a settings-row control."
+    },
+    {
+      "id": "gcp-chip-neg",
+      "name": "Status Chip · Danger",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-chip",
+      "classes": [
+        "gcp-root",
+        "gcp-chip"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "button",
+      "interaction": "auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A compact filter/label chip with a token tint and a sliding sheen. Used in toolbars and lists."
+    },
+    {
+      "id": "gcp-menu-neg",
+      "name": "Dropdown Menu · Danger",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-menu",
+      "classes": [
+        "gcp-root",
+        "gcp-menu",
+        "gcp-mi",
+        "gcp-sel"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "menu",
+      "interaction": "hover click",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A surface menu with a highlighted selected row that breathes in the token tint. The system's standard menu."
+    },
+    {
+      "id": "gcp-notification-neg",
+      "name": "Toast Notification · Danger",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-notification",
+      "classes": [
+        "gcp-root",
+        "gcp-toast"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "notification",
+      "interaction": "auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A dismissible toast with a token accent bar that slides in on a loop. The system's inline alert."
+    },
+    {
+      "id": "gcp-callout-neg",
+      "name": "Callout Banner · Danger",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-callout",
+      "classes": [
+        "gcp-root",
+        "gcp-callout"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "callout",
+      "interaction": "auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "An emphasis banner with a token-tinted fill and a scanning edge highlight. Draws attention inline."
+    },
+    {
+      "id": "gcp-chart-neg",
+      "name": "Mini Bar Chart · Danger",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-chart",
+      "classes": [
+        "gcp-root",
+        "gcp-chart"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart",
+      "interaction": "auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A tiny token-colored bar chart whose bars rise on a loop. A KPI/trend glance for the system."
+    },
+    {
+      "id": "gcp-input-neg",
+      "name": "Text Field · Danger",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-input",
+      "classes": [
+        "gcp-root",
+        "gcp-field",
+        "gcp-caret"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "input",
+      "interaction": "auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A labeled input with a token focus ring and a blinking caret. The system's form field."
+    },
+    {
+      "id": "gcp-progress-neg",
+      "name": "Progress Bar · Danger",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-progress",
+      "classes": [
+        "gcp-root",
+        "gcp-prog"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart",
+      "interaction": "auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A track with a token fill that advances on a loop. Determinate-style progress for the system."
+    },
+    {
+      "id": "gcp-avatar-neg",
+      "name": "Avatar Ring · Danger",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-avatar",
+      "classes": [
+        "gcp-root",
+        "gcp-avatar"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "object",
+      "interaction": "auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A circular avatar wrapped by a rotating token gradient ring — presence/status object."
+    },
+    {
+      "id": "gcp-badge-neg",
+      "name": "Count Badge · Danger",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-badge",
+      "classes": [
+        "gcp-root",
+        "gcp-badge"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "object",
+      "interaction": "auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A number badge that pops on a heartbeat, tinted by the token color. Notification counter object."
+    },
+    {
+      "id": "gcp-tab-neg",
+      "name": "Segmented Tabs · Danger",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-tab",
+      "classes": [
+        "gcp-root",
+        "gcp-tabs"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "segmented-control",
+      "interaction": "toggle auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A pill-track segmented control with a token active indicator that slides between segments."
+    },
+    {
+      "id": "gcp-tooltip-neg",
+      "name": "Tooltip · Danger",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-tooltip",
+      "classes": [
+        "gcp-root",
+        "gcp-tip"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "callout",
+      "interaction": "auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A small floating tooltip with a token border that bobs gently. Contextual hint for the system."
+    },
+    {
+      "id": "gcp-spinner-neg",
+      "name": "Loading Spinner · Danger",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-spinner",
+      "classes": [
+        "gcp-root",
+        "gcp-spinner"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "object",
+      "interaction": "auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A token-colored arc spinner. The system's indeterminate loading indicator."
+    },
+    {
+      "id": "gcp-card-neg",
+      "name": "Feature Card · Danger",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-card",
+      "classes": [
+        "gcp-root",
+        "gcp-card"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "object",
+      "interaction": "auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A surface card with a token accent header and a slow edge glow. The system's content container."
+    },
+    {
+      "id": "gcp-checkbox-neg",
+      "name": "Checkbox · Danger",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-checkbox",
+      "classes": [
+        "gcp-root",
+        "gcp-check"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "input",
+      "interaction": "toggle auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A token-filled checkbox whose tick draws in on a loop. The system's boolean input."
+    },
+    {
+      "id": "gcp-slider-neg",
+      "name": "Range Slider · Danger",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-slider",
+      "classes": [
+        "gcp-root",
+        "gcp-slider"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "input",
+      "interaction": "auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A track with a token thumb that travels along it. The system's range input."
+    },
+    {
+      "id": "gcp-button-crit",
+      "name": "Pill Button · Critical",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-button",
+      "classes": [
+        "gcp-root",
+        "gcp-btn"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "button",
+      "interaction": "click auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A rounded token-filled button with a soft pulsing glow — the system's primary call-to-action."
+    },
+    {
+      "id": "gcp-toggle-crit",
+      "name": "Switch Toggle · Critical",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-toggle",
+      "classes": [
+        "gcp-root",
+        "gcp-toggle"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "button",
+      "interaction": "toggle auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "An on/off switch whose knob glides and glows in the token color; a settings-row control."
+    },
+    {
+      "id": "gcp-chip-crit",
+      "name": "Status Chip · Critical",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-chip",
+      "classes": [
+        "gcp-root",
+        "gcp-chip"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "button",
+      "interaction": "auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A compact filter/label chip with a token tint and a sliding sheen. Used in toolbars and lists."
+    },
+    {
+      "id": "gcp-menu-crit",
+      "name": "Dropdown Menu · Critical",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-menu",
+      "classes": [
+        "gcp-root",
+        "gcp-menu",
+        "gcp-mi",
+        "gcp-sel"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "menu",
+      "interaction": "hover click",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A surface menu with a highlighted selected row that breathes in the token tint. The system's standard menu."
+    },
+    {
+      "id": "gcp-notification-crit",
+      "name": "Toast Notification · Critical",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-notification",
+      "classes": [
+        "gcp-root",
+        "gcp-toast"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "notification",
+      "interaction": "auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A dismissible toast with a token accent bar that slides in on a loop. The system's inline alert."
+    },
+    {
+      "id": "gcp-callout-crit",
+      "name": "Callout Banner · Critical",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-callout",
+      "classes": [
+        "gcp-root",
+        "gcp-callout"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "callout",
+      "interaction": "auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "An emphasis banner with a token-tinted fill and a scanning edge highlight. Draws attention inline."
+    },
+    {
+      "id": "gcp-chart-crit",
+      "name": "Mini Bar Chart · Critical",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-chart",
+      "classes": [
+        "gcp-root",
+        "gcp-chart"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart",
+      "interaction": "auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A tiny token-colored bar chart whose bars rise on a loop. A KPI/trend glance for the system."
+    },
+    {
+      "id": "gcp-input-crit",
+      "name": "Text Field · Critical",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-input",
+      "classes": [
+        "gcp-root",
+        "gcp-field",
+        "gcp-caret"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "input",
+      "interaction": "auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A labeled input with a token focus ring and a blinking caret. The system's form field."
+    },
+    {
+      "id": "gcp-progress-crit",
+      "name": "Progress Bar · Critical",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-progress",
+      "classes": [
+        "gcp-root",
+        "gcp-prog"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart",
+      "interaction": "auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A track with a token fill that advances on a loop. Determinate-style progress for the system."
+    },
+    {
+      "id": "gcp-avatar-crit",
+      "name": "Avatar Ring · Critical",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-avatar",
+      "classes": [
+        "gcp-root",
+        "gcp-avatar"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "object",
+      "interaction": "auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A circular avatar wrapped by a rotating token gradient ring — presence/status object."
+    },
+    {
+      "id": "gcp-badge-crit",
+      "name": "Count Badge · Critical",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-badge",
+      "classes": [
+        "gcp-root",
+        "gcp-badge"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "object",
+      "interaction": "auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A number badge that pops on a heartbeat, tinted by the token color. Notification counter object."
+    },
+    {
+      "id": "gcp-tab-crit",
+      "name": "Segmented Tabs · Critical",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-tab",
+      "classes": [
+        "gcp-root",
+        "gcp-tabs"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "segmented-control",
+      "interaction": "toggle auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A pill-track segmented control with a token active indicator that slides between segments."
+    },
+    {
+      "id": "gcp-tooltip-crit",
+      "name": "Tooltip · Critical",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-tooltip",
+      "classes": [
+        "gcp-root",
+        "gcp-tip"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "callout",
+      "interaction": "auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A small floating tooltip with a token border that bobs gently. Contextual hint for the system."
+    },
+    {
+      "id": "gcp-spinner-crit",
+      "name": "Loading Spinner · Critical",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-spinner",
+      "classes": [
+        "gcp-root",
+        "gcp-spinner"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "object",
+      "interaction": "auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A token-colored arc spinner. The system's indeterminate loading indicator."
+    },
+    {
+      "id": "gcp-card-crit",
+      "name": "Feature Card · Critical",
+      "gallery": "spectrums",
+      "category": "Google Cloud Console",
+      "ref": ".gcp-card",
+      "classes": [
+        "gcp-root",
+        "gcp-card"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "gcp",
+        "animated",
+        "new"
+      ],
+      "componentType": "object",
+      "interaction": "auto-play",
+      "spectrum": "gcp",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A surface card with a token accent header and a slow edge glow. The system's content container."
+    },
+    {
+      "id": "fluent-button-accent",
+      "name": "Pill Button · Primary",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-button",
+      "classes": [
+        "fluent-root",
+        "fluent-btn"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "button",
+      "interaction": "click auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A rounded token-filled button with a soft pulsing glow — the system's primary call-to-action."
+    },
+    {
+      "id": "fluent-toggle-accent",
+      "name": "Switch Toggle · Primary",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-toggle",
+      "classes": [
+        "fluent-root",
+        "fluent-toggle"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "button",
+      "interaction": "toggle auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "An on/off switch whose knob glides and glows in the token color; a settings-row control."
+    },
+    {
+      "id": "fluent-chip-accent",
+      "name": "Status Chip · Primary",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-chip",
+      "classes": [
+        "fluent-root",
+        "fluent-chip"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "button",
+      "interaction": "auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A compact filter/label chip with a token tint and a sliding sheen. Used in toolbars and lists."
+    },
+    {
+      "id": "fluent-menu-accent",
+      "name": "Dropdown Menu · Primary",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-menu",
+      "classes": [
+        "fluent-root",
+        "fluent-menu",
+        "fluent-mi",
+        "fluent-sel"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "menu",
+      "interaction": "hover click",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A surface menu with a highlighted selected row that breathes in the token tint. The system's standard menu."
+    },
+    {
+      "id": "fluent-notification-accent",
+      "name": "Toast Notification · Primary",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-notification",
+      "classes": [
+        "fluent-root",
+        "fluent-toast"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "notification",
+      "interaction": "auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A dismissible toast with a token accent bar that slides in on a loop. The system's inline alert."
+    },
+    {
+      "id": "fluent-callout-accent",
+      "name": "Callout Banner · Primary",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-callout",
+      "classes": [
+        "fluent-root",
+        "fluent-callout"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "callout",
+      "interaction": "auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "An emphasis banner with a token-tinted fill and a scanning edge highlight. Draws attention inline."
+    },
+    {
+      "id": "fluent-chart-accent",
+      "name": "Mini Bar Chart · Primary",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-chart",
+      "classes": [
+        "fluent-root",
+        "fluent-chart"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart",
+      "interaction": "auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A tiny token-colored bar chart whose bars rise on a loop. A KPI/trend glance for the system."
+    },
+    {
+      "id": "fluent-input-accent",
+      "name": "Text Field · Primary",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-input",
+      "classes": [
+        "fluent-root",
+        "fluent-field",
+        "fluent-caret"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "input",
+      "interaction": "auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A labeled input with a token focus ring and a blinking caret. The system's form field."
+    },
+    {
+      "id": "fluent-progress-accent",
+      "name": "Progress Bar · Primary",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-progress",
+      "classes": [
+        "fluent-root",
+        "fluent-prog"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart",
+      "interaction": "auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A track with a token fill that advances on a loop. Determinate-style progress for the system."
+    },
+    {
+      "id": "fluent-avatar-accent",
+      "name": "Avatar Ring · Primary",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-avatar",
+      "classes": [
+        "fluent-root",
+        "fluent-avatar"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "object",
+      "interaction": "auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A circular avatar wrapped by a rotating token gradient ring — presence/status object."
+    },
+    {
+      "id": "fluent-badge-accent",
+      "name": "Count Badge · Primary",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-badge",
+      "classes": [
+        "fluent-root",
+        "fluent-badge"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "object",
+      "interaction": "auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A number badge that pops on a heartbeat, tinted by the token color. Notification counter object."
+    },
+    {
+      "id": "fluent-tab-accent",
+      "name": "Segmented Tabs · Primary",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-tab",
+      "classes": [
+        "fluent-root",
+        "fluent-tabs"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "segmented-control",
+      "interaction": "toggle auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A pill-track segmented control with a token active indicator that slides between segments."
+    },
+    {
+      "id": "fluent-tooltip-accent",
+      "name": "Tooltip · Primary",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-tooltip",
+      "classes": [
+        "fluent-root",
+        "fluent-tip"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "callout",
+      "interaction": "auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A small floating tooltip with a token border that bobs gently. Contextual hint for the system."
+    },
+    {
+      "id": "fluent-spinner-accent",
+      "name": "Loading Spinner · Primary",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-spinner",
+      "classes": [
+        "fluent-root",
+        "fluent-spinner"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "object",
+      "interaction": "auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A token-colored arc spinner. The system's indeterminate loading indicator."
+    },
+    {
+      "id": "fluent-card-accent",
+      "name": "Feature Card · Primary",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-card",
+      "classes": [
+        "fluent-root",
+        "fluent-card"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "object",
+      "interaction": "auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A surface card with a token accent header and a slow edge glow. The system's content container."
+    },
+    {
+      "id": "fluent-checkbox-accent",
+      "name": "Checkbox · Primary",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-checkbox",
+      "classes": [
+        "fluent-root",
+        "fluent-check"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "input",
+      "interaction": "toggle auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A token-filled checkbox whose tick draws in on a loop. The system's boolean input."
+    },
+    {
+      "id": "fluent-slider-accent",
+      "name": "Range Slider · Primary",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-slider",
+      "classes": [
+        "fluent-root",
+        "fluent-slider"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "input",
+      "interaction": "auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A track with a token thumb that travels along it. The system's range input."
+    },
+    {
+      "id": "fluent-button-info",
+      "name": "Pill Button · Info",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-button",
+      "classes": [
+        "fluent-root",
+        "fluent-btn"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "button",
+      "interaction": "click auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A rounded token-filled button with a soft pulsing glow — the system's primary call-to-action."
+    },
+    {
+      "id": "fluent-toggle-info",
+      "name": "Switch Toggle · Info",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-toggle",
+      "classes": [
+        "fluent-root",
+        "fluent-toggle"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "button",
+      "interaction": "toggle auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "An on/off switch whose knob glides and glows in the token color; a settings-row control."
+    },
+    {
+      "id": "fluent-chip-info",
+      "name": "Status Chip · Info",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-chip",
+      "classes": [
+        "fluent-root",
+        "fluent-chip"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "button",
+      "interaction": "auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A compact filter/label chip with a token tint and a sliding sheen. Used in toolbars and lists."
+    },
+    {
+      "id": "fluent-menu-info",
+      "name": "Dropdown Menu · Info",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-menu",
+      "classes": [
+        "fluent-root",
+        "fluent-menu",
+        "fluent-mi",
+        "fluent-sel"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "menu",
+      "interaction": "hover click",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A surface menu with a highlighted selected row that breathes in the token tint. The system's standard menu."
+    },
+    {
+      "id": "fluent-notification-info",
+      "name": "Toast Notification · Info",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-notification",
+      "classes": [
+        "fluent-root",
+        "fluent-toast"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "notification",
+      "interaction": "auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A dismissible toast with a token accent bar that slides in on a loop. The system's inline alert."
+    },
+    {
+      "id": "fluent-callout-info",
+      "name": "Callout Banner · Info",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-callout",
+      "classes": [
+        "fluent-root",
+        "fluent-callout"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "callout",
+      "interaction": "auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "An emphasis banner with a token-tinted fill and a scanning edge highlight. Draws attention inline."
+    },
+    {
+      "id": "fluent-chart-info",
+      "name": "Mini Bar Chart · Info",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-chart",
+      "classes": [
+        "fluent-root",
+        "fluent-chart"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart",
+      "interaction": "auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A tiny token-colored bar chart whose bars rise on a loop. A KPI/trend glance for the system."
+    },
+    {
+      "id": "fluent-input-info",
+      "name": "Text Field · Info",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-input",
+      "classes": [
+        "fluent-root",
+        "fluent-field",
+        "fluent-caret"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "input",
+      "interaction": "auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A labeled input with a token focus ring and a blinking caret. The system's form field."
+    },
+    {
+      "id": "fluent-progress-info",
+      "name": "Progress Bar · Info",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-progress",
+      "classes": [
+        "fluent-root",
+        "fluent-prog"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart",
+      "interaction": "auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A track with a token fill that advances on a loop. Determinate-style progress for the system."
+    },
+    {
+      "id": "fluent-avatar-info",
+      "name": "Avatar Ring · Info",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-avatar",
+      "classes": [
+        "fluent-root",
+        "fluent-avatar"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "object",
+      "interaction": "auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A circular avatar wrapped by a rotating token gradient ring — presence/status object."
+    },
+    {
+      "id": "fluent-badge-info",
+      "name": "Count Badge · Info",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-badge",
+      "classes": [
+        "fluent-root",
+        "fluent-badge"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "object",
+      "interaction": "auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A number badge that pops on a heartbeat, tinted by the token color. Notification counter object."
+    },
+    {
+      "id": "fluent-tab-info",
+      "name": "Segmented Tabs · Info",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-tab",
+      "classes": [
+        "fluent-root",
+        "fluent-tabs"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "segmented-control",
+      "interaction": "toggle auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A pill-track segmented control with a token active indicator that slides between segments."
+    },
+    {
+      "id": "fluent-tooltip-info",
+      "name": "Tooltip · Info",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-tooltip",
+      "classes": [
+        "fluent-root",
+        "fluent-tip"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "callout",
+      "interaction": "auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A small floating tooltip with a token border that bobs gently. Contextual hint for the system."
+    },
+    {
+      "id": "fluent-spinner-info",
+      "name": "Loading Spinner · Info",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-spinner",
+      "classes": [
+        "fluent-root",
+        "fluent-spinner"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "object",
+      "interaction": "auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A token-colored arc spinner. The system's indeterminate loading indicator."
+    },
+    {
+      "id": "fluent-card-info",
+      "name": "Feature Card · Info",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-card",
+      "classes": [
+        "fluent-root",
+        "fluent-card"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "object",
+      "interaction": "auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A surface card with a token accent header and a slow edge glow. The system's content container."
+    },
+    {
+      "id": "fluent-checkbox-info",
+      "name": "Checkbox · Info",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-checkbox",
+      "classes": [
+        "fluent-root",
+        "fluent-check"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "input",
+      "interaction": "toggle auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A token-filled checkbox whose tick draws in on a loop. The system's boolean input."
+    },
+    {
+      "id": "fluent-slider-info",
+      "name": "Range Slider · Info",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-slider",
+      "classes": [
+        "fluent-root",
+        "fluent-slider"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "input",
+      "interaction": "auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A track with a token thumb that travels along it. The system's range input."
+    },
+    {
+      "id": "fluent-button-pos",
+      "name": "Pill Button · Success",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-button",
+      "classes": [
+        "fluent-root",
+        "fluent-btn"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "button",
+      "interaction": "click auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A rounded token-filled button with a soft pulsing glow — the system's primary call-to-action."
+    },
+    {
+      "id": "fluent-toggle-pos",
+      "name": "Switch Toggle · Success",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-toggle",
+      "classes": [
+        "fluent-root",
+        "fluent-toggle"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "button",
+      "interaction": "toggle auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "An on/off switch whose knob glides and glows in the token color; a settings-row control."
+    },
+    {
+      "id": "fluent-chip-pos",
+      "name": "Status Chip · Success",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-chip",
+      "classes": [
+        "fluent-root",
+        "fluent-chip"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "button",
+      "interaction": "auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A compact filter/label chip with a token tint and a sliding sheen. Used in toolbars and lists."
+    },
+    {
+      "id": "fluent-menu-pos",
+      "name": "Dropdown Menu · Success",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-menu",
+      "classes": [
+        "fluent-root",
+        "fluent-menu",
+        "fluent-mi",
+        "fluent-sel"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "menu",
+      "interaction": "hover click",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A surface menu with a highlighted selected row that breathes in the token tint. The system's standard menu."
+    },
+    {
+      "id": "fluent-notification-pos",
+      "name": "Toast Notification · Success",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-notification",
+      "classes": [
+        "fluent-root",
+        "fluent-toast"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "notification",
+      "interaction": "auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A dismissible toast with a token accent bar that slides in on a loop. The system's inline alert."
+    },
+    {
+      "id": "fluent-callout-pos",
+      "name": "Callout Banner · Success",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-callout",
+      "classes": [
+        "fluent-root",
+        "fluent-callout"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "callout",
+      "interaction": "auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "An emphasis banner with a token-tinted fill and a scanning edge highlight. Draws attention inline."
+    },
+    {
+      "id": "fluent-chart-pos",
+      "name": "Mini Bar Chart · Success",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-chart",
+      "classes": [
+        "fluent-root",
+        "fluent-chart"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart",
+      "interaction": "auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A tiny token-colored bar chart whose bars rise on a loop. A KPI/trend glance for the system."
+    },
+    {
+      "id": "fluent-input-pos",
+      "name": "Text Field · Success",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-input",
+      "classes": [
+        "fluent-root",
+        "fluent-field",
+        "fluent-caret"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "input",
+      "interaction": "auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A labeled input with a token focus ring and a blinking caret. The system's form field."
+    },
+    {
+      "id": "fluent-progress-pos",
+      "name": "Progress Bar · Success",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-progress",
+      "classes": [
+        "fluent-root",
+        "fluent-prog"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart",
+      "interaction": "auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A track with a token fill that advances on a loop. Determinate-style progress for the system."
+    },
+    {
+      "id": "fluent-avatar-pos",
+      "name": "Avatar Ring · Success",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-avatar",
+      "classes": [
+        "fluent-root",
+        "fluent-avatar"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "object",
+      "interaction": "auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A circular avatar wrapped by a rotating token gradient ring — presence/status object."
+    },
+    {
+      "id": "fluent-badge-pos",
+      "name": "Count Badge · Success",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-badge",
+      "classes": [
+        "fluent-root",
+        "fluent-badge"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "object",
+      "interaction": "auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A number badge that pops on a heartbeat, tinted by the token color. Notification counter object."
+    },
+    {
+      "id": "fluent-tab-pos",
+      "name": "Segmented Tabs · Success",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-tab",
+      "classes": [
+        "fluent-root",
+        "fluent-tabs"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "segmented-control",
+      "interaction": "toggle auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A pill-track segmented control with a token active indicator that slides between segments."
+    },
+    {
+      "id": "fluent-tooltip-pos",
+      "name": "Tooltip · Success",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-tooltip",
+      "classes": [
+        "fluent-root",
+        "fluent-tip"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "callout",
+      "interaction": "auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A small floating tooltip with a token border that bobs gently. Contextual hint for the system."
+    },
+    {
+      "id": "fluent-spinner-pos",
+      "name": "Loading Spinner · Success",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-spinner",
+      "classes": [
+        "fluent-root",
+        "fluent-spinner"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "object",
+      "interaction": "auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A token-colored arc spinner. The system's indeterminate loading indicator."
+    },
+    {
+      "id": "fluent-card-pos",
+      "name": "Feature Card · Success",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-card",
+      "classes": [
+        "fluent-root",
+        "fluent-card"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "object",
+      "interaction": "auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A surface card with a token accent header and a slow edge glow. The system's content container."
+    },
+    {
+      "id": "fluent-checkbox-pos",
+      "name": "Checkbox · Success",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-checkbox",
+      "classes": [
+        "fluent-root",
+        "fluent-check"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "input",
+      "interaction": "toggle auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A token-filled checkbox whose tick draws in on a loop. The system's boolean input."
+    },
+    {
+      "id": "fluent-slider-pos",
+      "name": "Range Slider · Success",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-slider",
+      "classes": [
+        "fluent-root",
+        "fluent-slider"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "input",
+      "interaction": "auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A track with a token thumb that travels along it. The system's range input."
+    },
+    {
+      "id": "fluent-button-warn",
+      "name": "Pill Button · Warning",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-button",
+      "classes": [
+        "fluent-root",
+        "fluent-btn"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "button",
+      "interaction": "click auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A rounded token-filled button with a soft pulsing glow — the system's primary call-to-action."
+    },
+    {
+      "id": "fluent-toggle-warn",
+      "name": "Switch Toggle · Warning",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-toggle",
+      "classes": [
+        "fluent-root",
+        "fluent-toggle"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "button",
+      "interaction": "toggle auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "An on/off switch whose knob glides and glows in the token color; a settings-row control."
+    },
+    {
+      "id": "fluent-chip-warn",
+      "name": "Status Chip · Warning",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-chip",
+      "classes": [
+        "fluent-root",
+        "fluent-chip"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "button",
+      "interaction": "auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A compact filter/label chip with a token tint and a sliding sheen. Used in toolbars and lists."
+    },
+    {
+      "id": "fluent-menu-warn",
+      "name": "Dropdown Menu · Warning",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-menu",
+      "classes": [
+        "fluent-root",
+        "fluent-menu",
+        "fluent-mi",
+        "fluent-sel"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "menu",
+      "interaction": "hover click",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A surface menu with a highlighted selected row that breathes in the token tint. The system's standard menu."
+    },
+    {
+      "id": "fluent-notification-warn",
+      "name": "Toast Notification · Warning",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-notification",
+      "classes": [
+        "fluent-root",
+        "fluent-toast"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "notification",
+      "interaction": "auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A dismissible toast with a token accent bar that slides in on a loop. The system's inline alert."
+    },
+    {
+      "id": "fluent-callout-warn",
+      "name": "Callout Banner · Warning",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-callout",
+      "classes": [
+        "fluent-root",
+        "fluent-callout"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "callout",
+      "interaction": "auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "An emphasis banner with a token-tinted fill and a scanning edge highlight. Draws attention inline."
+    },
+    {
+      "id": "fluent-chart-warn",
+      "name": "Mini Bar Chart · Warning",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-chart",
+      "classes": [
+        "fluent-root",
+        "fluent-chart"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart",
+      "interaction": "auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A tiny token-colored bar chart whose bars rise on a loop. A KPI/trend glance for the system."
+    },
+    {
+      "id": "fluent-input-warn",
+      "name": "Text Field · Warning",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-input",
+      "classes": [
+        "fluent-root",
+        "fluent-field",
+        "fluent-caret"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "input",
+      "interaction": "auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A labeled input with a token focus ring and a blinking caret. The system's form field."
+    },
+    {
+      "id": "fluent-progress-warn",
+      "name": "Progress Bar · Warning",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-progress",
+      "classes": [
+        "fluent-root",
+        "fluent-prog"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart",
+      "interaction": "auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A track with a token fill that advances on a loop. Determinate-style progress for the system."
+    },
+    {
+      "id": "fluent-avatar-warn",
+      "name": "Avatar Ring · Warning",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-avatar",
+      "classes": [
+        "fluent-root",
+        "fluent-avatar"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "object",
+      "interaction": "auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A circular avatar wrapped by a rotating token gradient ring — presence/status object."
+    },
+    {
+      "id": "fluent-badge-warn",
+      "name": "Count Badge · Warning",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-badge",
+      "classes": [
+        "fluent-root",
+        "fluent-badge"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "object",
+      "interaction": "auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A number badge that pops on a heartbeat, tinted by the token color. Notification counter object."
+    },
+    {
+      "id": "fluent-tab-warn",
+      "name": "Segmented Tabs · Warning",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-tab",
+      "classes": [
+        "fluent-root",
+        "fluent-tabs"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "segmented-control",
+      "interaction": "toggle auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A pill-track segmented control with a token active indicator that slides between segments."
+    },
+    {
+      "id": "fluent-tooltip-warn",
+      "name": "Tooltip · Warning",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-tooltip",
+      "classes": [
+        "fluent-root",
+        "fluent-tip"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "callout",
+      "interaction": "auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A small floating tooltip with a token border that bobs gently. Contextual hint for the system."
+    },
+    {
+      "id": "fluent-spinner-warn",
+      "name": "Loading Spinner · Warning",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-spinner",
+      "classes": [
+        "fluent-root",
+        "fluent-spinner"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "object",
+      "interaction": "auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A token-colored arc spinner. The system's indeterminate loading indicator."
+    },
+    {
+      "id": "fluent-card-warn",
+      "name": "Feature Card · Warning",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-card",
+      "classes": [
+        "fluent-root",
+        "fluent-card"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "object",
+      "interaction": "auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A surface card with a token accent header and a slow edge glow. The system's content container."
+    },
+    {
+      "id": "fluent-checkbox-warn",
+      "name": "Checkbox · Warning",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-checkbox",
+      "classes": [
+        "fluent-root",
+        "fluent-check"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "input",
+      "interaction": "toggle auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A token-filled checkbox whose tick draws in on a loop. The system's boolean input."
+    },
+    {
+      "id": "fluent-slider-warn",
+      "name": "Range Slider · Warning",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-slider",
+      "classes": [
+        "fluent-root",
+        "fluent-slider"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "input",
+      "interaction": "auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A track with a token thumb that travels along it. The system's range input."
+    },
+    {
+      "id": "fluent-button-neg",
+      "name": "Pill Button · Danger",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-button",
+      "classes": [
+        "fluent-root",
+        "fluent-btn"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "button",
+      "interaction": "click auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A rounded token-filled button with a soft pulsing glow — the system's primary call-to-action."
+    },
+    {
+      "id": "fluent-toggle-neg",
+      "name": "Switch Toggle · Danger",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-toggle",
+      "classes": [
+        "fluent-root",
+        "fluent-toggle"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "button",
+      "interaction": "toggle auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "An on/off switch whose knob glides and glows in the token color; a settings-row control."
+    },
+    {
+      "id": "fluent-chip-neg",
+      "name": "Status Chip · Danger",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-chip",
+      "classes": [
+        "fluent-root",
+        "fluent-chip"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "button",
+      "interaction": "auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A compact filter/label chip with a token tint and a sliding sheen. Used in toolbars and lists."
+    },
+    {
+      "id": "fluent-menu-neg",
+      "name": "Dropdown Menu · Danger",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-menu",
+      "classes": [
+        "fluent-root",
+        "fluent-menu",
+        "fluent-mi",
+        "fluent-sel"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "menu",
+      "interaction": "hover click",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A surface menu with a highlighted selected row that breathes in the token tint. The system's standard menu."
+    },
+    {
+      "id": "fluent-notification-neg",
+      "name": "Toast Notification · Danger",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-notification",
+      "classes": [
+        "fluent-root",
+        "fluent-toast"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "notification",
+      "interaction": "auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A dismissible toast with a token accent bar that slides in on a loop. The system's inline alert."
+    },
+    {
+      "id": "fluent-callout-neg",
+      "name": "Callout Banner · Danger",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-callout",
+      "classes": [
+        "fluent-root",
+        "fluent-callout"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "callout",
+      "interaction": "auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "An emphasis banner with a token-tinted fill and a scanning edge highlight. Draws attention inline."
+    },
+    {
+      "id": "fluent-chart-neg",
+      "name": "Mini Bar Chart · Danger",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-chart",
+      "classes": [
+        "fluent-root",
+        "fluent-chart"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart",
+      "interaction": "auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A tiny token-colored bar chart whose bars rise on a loop. A KPI/trend glance for the system."
+    },
+    {
+      "id": "fluent-input-neg",
+      "name": "Text Field · Danger",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-input",
+      "classes": [
+        "fluent-root",
+        "fluent-field",
+        "fluent-caret"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "input",
+      "interaction": "auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A labeled input with a token focus ring and a blinking caret. The system's form field."
+    },
+    {
+      "id": "fluent-progress-neg",
+      "name": "Progress Bar · Danger",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-progress",
+      "classes": [
+        "fluent-root",
+        "fluent-prog"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart",
+      "interaction": "auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A track with a token fill that advances on a loop. Determinate-style progress for the system."
+    },
+    {
+      "id": "fluent-avatar-neg",
+      "name": "Avatar Ring · Danger",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-avatar",
+      "classes": [
+        "fluent-root",
+        "fluent-avatar"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "object",
+      "interaction": "auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A circular avatar wrapped by a rotating token gradient ring — presence/status object."
+    },
+    {
+      "id": "fluent-badge-neg",
+      "name": "Count Badge · Danger",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-badge",
+      "classes": [
+        "fluent-root",
+        "fluent-badge"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "object",
+      "interaction": "auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A number badge that pops on a heartbeat, tinted by the token color. Notification counter object."
+    },
+    {
+      "id": "fluent-tab-neg",
+      "name": "Segmented Tabs · Danger",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-tab",
+      "classes": [
+        "fluent-root",
+        "fluent-tabs"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "segmented-control",
+      "interaction": "toggle auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A pill-track segmented control with a token active indicator that slides between segments."
+    },
+    {
+      "id": "fluent-tooltip-neg",
+      "name": "Tooltip · Danger",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-tooltip",
+      "classes": [
+        "fluent-root",
+        "fluent-tip"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "callout",
+      "interaction": "auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A small floating tooltip with a token border that bobs gently. Contextual hint for the system."
+    },
+    {
+      "id": "fluent-spinner-neg",
+      "name": "Loading Spinner · Danger",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-spinner",
+      "classes": [
+        "fluent-root",
+        "fluent-spinner"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "object",
+      "interaction": "auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A token-colored arc spinner. The system's indeterminate loading indicator."
+    },
+    {
+      "id": "fluent-card-neg",
+      "name": "Feature Card · Danger",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-card",
+      "classes": [
+        "fluent-root",
+        "fluent-card"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "object",
+      "interaction": "auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A surface card with a token accent header and a slow edge glow. The system's content container."
+    },
+    {
+      "id": "fluent-checkbox-neg",
+      "name": "Checkbox · Danger",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-checkbox",
+      "classes": [
+        "fluent-root",
+        "fluent-check"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "input",
+      "interaction": "toggle auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A token-filled checkbox whose tick draws in on a loop. The system's boolean input."
+    },
+    {
+      "id": "fluent-slider-neg",
+      "name": "Range Slider · Danger",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-slider",
+      "classes": [
+        "fluent-root",
+        "fluent-slider"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "input",
+      "interaction": "auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A track with a token thumb that travels along it. The system's range input."
+    },
+    {
+      "id": "fluent-button-crit",
+      "name": "Pill Button · Critical",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-button",
+      "classes": [
+        "fluent-root",
+        "fluent-btn"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "button",
+      "interaction": "click auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A rounded token-filled button with a soft pulsing glow — the system's primary call-to-action."
+    },
+    {
+      "id": "fluent-toggle-crit",
+      "name": "Switch Toggle · Critical",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-toggle",
+      "classes": [
+        "fluent-root",
+        "fluent-toggle"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "button",
+      "interaction": "toggle auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "An on/off switch whose knob glides and glows in the token color; a settings-row control."
+    },
+    {
+      "id": "fluent-chip-crit",
+      "name": "Status Chip · Critical",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-chip",
+      "classes": [
+        "fluent-root",
+        "fluent-chip"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "button",
+      "interaction": "auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A compact filter/label chip with a token tint and a sliding sheen. Used in toolbars and lists."
+    },
+    {
+      "id": "fluent-menu-crit",
+      "name": "Dropdown Menu · Critical",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-menu",
+      "classes": [
+        "fluent-root",
+        "fluent-menu",
+        "fluent-mi",
+        "fluent-sel"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "menu",
+      "interaction": "hover click",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A surface menu with a highlighted selected row that breathes in the token tint. The system's standard menu."
+    },
+    {
+      "id": "fluent-notification-crit",
+      "name": "Toast Notification · Critical",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-notification",
+      "classes": [
+        "fluent-root",
+        "fluent-toast"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "notification",
+      "interaction": "auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A dismissible toast with a token accent bar that slides in on a loop. The system's inline alert."
+    },
+    {
+      "id": "fluent-callout-crit",
+      "name": "Callout Banner · Critical",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-callout",
+      "classes": [
+        "fluent-root",
+        "fluent-callout"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "callout",
+      "interaction": "auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "An emphasis banner with a token-tinted fill and a scanning edge highlight. Draws attention inline."
+    },
+    {
+      "id": "fluent-chart-crit",
+      "name": "Mini Bar Chart · Critical",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-chart",
+      "classes": [
+        "fluent-root",
+        "fluent-chart"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart",
+      "interaction": "auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A tiny token-colored bar chart whose bars rise on a loop. A KPI/trend glance for the system."
+    },
+    {
+      "id": "fluent-input-crit",
+      "name": "Text Field · Critical",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-input",
+      "classes": [
+        "fluent-root",
+        "fluent-field",
+        "fluent-caret"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "input",
+      "interaction": "auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A labeled input with a token focus ring and a blinking caret. The system's form field."
+    },
+    {
+      "id": "fluent-progress-crit",
+      "name": "Progress Bar · Critical",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-progress",
+      "classes": [
+        "fluent-root",
+        "fluent-prog"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart",
+      "interaction": "auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A track with a token fill that advances on a loop. Determinate-style progress for the system."
+    },
+    {
+      "id": "fluent-avatar-crit",
+      "name": "Avatar Ring · Critical",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-avatar",
+      "classes": [
+        "fluent-root",
+        "fluent-avatar"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "object",
+      "interaction": "auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A circular avatar wrapped by a rotating token gradient ring — presence/status object."
+    },
+    {
+      "id": "fluent-badge-crit",
+      "name": "Count Badge · Critical",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-badge",
+      "classes": [
+        "fluent-root",
+        "fluent-badge"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "object",
+      "interaction": "auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A number badge that pops on a heartbeat, tinted by the token color. Notification counter object."
+    },
+    {
+      "id": "fluent-tab-crit",
+      "name": "Segmented Tabs · Critical",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-tab",
+      "classes": [
+        "fluent-root",
+        "fluent-tabs"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "segmented-control",
+      "interaction": "toggle auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A pill-track segmented control with a token active indicator that slides between segments."
+    },
+    {
+      "id": "fluent-tooltip-crit",
+      "name": "Tooltip · Critical",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-tooltip",
+      "classes": [
+        "fluent-root",
+        "fluent-tip"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "callout",
+      "interaction": "auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A small floating tooltip with a token border that bobs gently. Contextual hint for the system."
+    },
+    {
+      "id": "fluent-spinner-crit",
+      "name": "Loading Spinner · Critical",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-spinner",
+      "classes": [
+        "fluent-root",
+        "fluent-spinner"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "object",
+      "interaction": "auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A token-colored arc spinner. The system's indeterminate loading indicator."
+    },
+    {
+      "id": "fluent-card-crit",
+      "name": "Feature Card · Critical",
+      "gallery": "spectrums",
+      "category": "Fluent (Azure)",
+      "ref": ".fluent-card",
+      "classes": [
+        "fluent-root",
+        "fluent-card"
+      ],
+      "params": [],
+      "tags": [
+        "spectrums",
+        "fluent",
+        "animated",
+        "new"
+      ],
+      "componentType": "object",
+      "interaction": "auto-play",
+      "spectrum": "fluent",
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
       "description": "A surface card with a token accent header and a slow edge glow. The system's content container."
     }
   ]
