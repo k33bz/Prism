@@ -1,0 +1,540 @@
+<h3 class="sec">DATA TABLES</h3>
+<div class="gallery">
+
+  <div class="tile is-new"><div class="stage">
+    <table class="dtb-tbl dtb-zebra"><thead><tr><th>Service</th><th>Region</th><th class="dtb-num">p95 ms</th></tr></thead><tbody>
+      <tr><td>api-gateway</td><td class="dtb-mut">us-east-1</td><td class="dtb-num">142</td></tr>
+      <tr><td>auth</td><td class="dtb-mut">us-east-1</td><td class="dtb-num">88</td></tr>
+      <tr><td>billing</td><td class="dtb-mut">eu-west-1</td><td class="dtb-num">231</td></tr>
+      <tr><td>search</td><td class="dtb-mut">us-west-2</td><td class="dtb-num">64</td></tr>
+      <tr><td>notify</td><td class="dtb-mut">ap-south-1</td><td class="dtb-num">117</td></tr>
+    </tbody></table>
+  </div><div class="meta"><div class="nm">Zebra Table + Scan</div><span class="ref">.dtb-tbl.dtb-zebra</span><div class="desc">The baseline data table: uppercase header, zebra rows, right-aligned numerics, and a soft highlight that scans down the rows. Start every tabular report here.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <table class="dtb-tbl dtb-hoverglow"><thead><tr><th>Account</th><th>Owner</th><th class="dtb-num">Spend</th></tr></thead><tbody>
+      <tr><td>prod-core</td><td class="dtb-mut">platform</td><td class="dtb-num">$41.2K</td></tr>
+      <tr><td>data-lake</td><td class="dtb-mut">analytics</td><td class="dtb-num">$18.7K</td></tr>
+      <tr><td>sandbox</td><td class="dtb-mut">devx</td><td class="dtb-num">$2.9K</td></tr>
+      <tr><td>ml-train</td><td class="dtb-mut">research</td><td class="dtb-num">$27.4K</td></tr>
+    </tbody></table>
+  </div><div class="meta"><div class="nm">Hover-Glow Rows</div><span class="ref">.dtb-tbl.dtb-hoverglow</span><div class="desc">Rows light up one after another with a tinted fill and a left accent bar — the hover treatment, demonstrated on a loop so it reads in a static export.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <table class="dtb-tbl dtb-sort"><thead><tr><th>Host</th><th class="dtb-num dtb-sorted">CPU %<span class="dtb-sort-arrow">▲</span></th><th class="dtb-num">Mem %</th></tr></thead><tbody>
+      <tr><td>web-01</td><td class="dtb-num">12</td><td class="dtb-num">41</td></tr>
+      <tr><td>web-02</td><td class="dtb-num">37</td><td class="dtb-num">58</td></tr>
+      <tr><td>db-01</td><td class="dtb-num">64</td><td class="dtb-num">83</td></tr>
+      <tr><td>cache-01</td><td class="dtb-num">71</td><td class="dtb-num">22</td></tr>
+    </tbody></table>
+  </div><div class="meta"><div class="nm">Sortable Header</div><span class="ref">.dtb-tbl.dtb-sort</span><div class="desc">A sorted column with a flipping direction arrow while two rows trade places — the visual grammar of a click-to-sort header.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <div class="dtb-sticky">
+      <div class="dtb-sticky-head dtb-row"><span>Package</span><span>Version</span><span class="dtb-num">Size</span></div>
+      <div class="dtb-sticky-body">
+        <div class="dtb-row"><span>react</span><span class="dtb-mut dtb-mono">18.3.1</span><span class="dtb-num">6.4K</span></div>
+        <div class="dtb-row"><span>vite</span><span class="dtb-mut dtb-mono">6.0.2</span><span class="dtb-num">1.2M</span></div>
+        <div class="dtb-row"><span>zod</span><span class="dtb-mut dtb-mono">3.23.8</span><span class="dtb-num">57K</span></div>
+        <div class="dtb-row"><span>date-fns</span><span class="dtb-mut dtb-mono">4.1.0</span><span class="dtb-num">88K</span></div>
+        <div class="dtb-row"><span>pino</span><span class="dtb-mut dtb-mono">9.5.0</span><span class="dtb-num">31K</span></div>
+        <div class="dtb-row"><span>react</span><span class="dtb-mut dtb-mono">18.3.1</span><span class="dtb-num">6.4K</span></div>
+        <div class="dtb-row"><span>vite</span><span class="dtb-mut dtb-mono">6.0.2</span><span class="dtb-num">1.2M</span></div>
+        <div class="dtb-row"><span>zod</span><span class="dtb-mut dtb-mono">3.23.8</span><span class="dtb-num">57K</span></div>
+        <div class="dtb-row"><span>date-fns</span><span class="dtb-mut dtb-mono">4.1.0</span><span class="dtb-num">88K</span></div>
+        <div class="dtb-row"><span>pino</span><span class="dtb-mut dtb-mono">9.5.0</span><span class="dtb-num">31K</span></div>
+      </div>
+    </div>
+  </div><div class="meta"><div class="nm">Sticky Header Scroll</div><span class="ref">.dtb-sticky</span><div class="desc">Rows scroll beneath a header that stays put and casts a shadow — a grid-based table for long lists inside a fixed-height panel.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <table class="dtb-tbl dtb-dense"><thead><tr><th>Sym</th><th class="dtb-num">Bid</th><th class="dtb-num">Ask</th><th class="dtb-num">Vol</th><th class="dtb-num">Chg</th></tr></thead><tbody>
+      <tr><td><span class="dtb-live-dot"></span>AMZN</td><td class="dtb-num">188.42</td><td class="dtb-num">188.45</td><td class="dtb-num">41.2M</td><td class="dtb-num dtb-up">+1.8%</td></tr>
+      <tr><td><span class="dtb-live-dot"></span>MSFT</td><td class="dtb-num">412.10</td><td class="dtb-num">412.16</td><td class="dtb-num">18.9M</td><td class="dtb-num dtb-down">-0.4%</td></tr>
+      <tr><td><span class="dtb-live-dot"></span>NVDA</td><td class="dtb-num">131.77</td><td class="dtb-num">131.80</td><td class="dtb-num">212M</td><td class="dtb-num dtb-up">+3.1%</td></tr>
+      <tr><td><span class="dtb-live-dot"></span>GOOG</td><td class="dtb-num">171.05</td><td class="dtb-num">171.09</td><td class="dtb-num">22.4M</td><td class="dtb-num dtb-flat">0.0%</td></tr>
+      <tr><td><span class="dtb-live-dot"></span>META</td><td class="dtb-num">564.30</td><td class="dtb-num">564.41</td><td class="dtb-num">9.7M</td><td class="dtb-num dtb-up">+0.9%</td></tr>
+      <tr><td><span class="dtb-live-dot"></span>TSLA</td><td class="dtb-num">248.98</td><td class="dtb-num">249.02</td><td class="dtb-num">88.1M</td><td class="dtb-num dtb-down">-2.2%</td></tr>
+    </tbody></table>
+  </div><div class="meta"><div class="nm">Dense Numeric Table</div><span class="ref">.dtb-tbl.dtb-dense</span><div class="desc">Compact rows, tabular-figure monospace numbers and a live-feed dot per row — the terminal-style layout for tickers, telemetry and anything with many columns.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <table class="dtb-tbl dtb-select"><thead><tr><th><span class="dtb-cb"></span></th><th>Ticket</th><th>Status</th></tr></thead><tbody>
+      <tr><td><span class="dtb-cb"></span></td><td>INC-4021</td><td><span class="dtb-pill ok">Resolved</span></td></tr>
+      <tr><td><span class="dtb-cb"></span></td><td>INC-4022</td><td><span class="dtb-pill warn">Pending</span></td></tr>
+      <tr><td><span class="dtb-cb on"></span></td><td>INC-4023</td><td><span class="dtb-pill info">In review</span></td></tr>
+      <tr><td><span class="dtb-cb"></span></td><td>INC-4024</td><td><span class="dtb-pill off">Closed</span></td></tr>
+    </tbody></table>
+  </div><div class="meta"><div class="nm">Row Selection</div><span class="ref">.dtb-tbl.dtb-select</span><div class="desc">A checkbox column where rows tick themselves on and off, tinting the whole row while selected — bulk-action tables and pickers.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <table class="dtb-tbl dtb-expand"><thead><tr><th>Order</th><th>Customer</th><th class="dtb-num">Total</th></tr></thead><tbody>
+      <tr><td>#10482</td><td class="dtb-mut">Acme Corp</td><td class="dtb-num">$1,240</td></tr>
+      <tr><td><span class="dtb-chev"></span>#10483</td><td class="dtb-mut">Globex</td><td class="dtb-num">$862</td></tr>
+      <tr class="dtb-detail"><td colspan="3"><div class="dtb-detail-in"><div>3 line items · shipped via ground · tracking <span class="dtb-mono">1Z9F…42</span><br>Net 30 · PO 88-1130 · invoiced 2026-08-30</div></div></td></tr>
+      <tr><td>#10484</td><td class="dtb-mut">Initech</td><td class="dtb-num">$3,015</td></tr>
+    </tbody></table>
+  </div><div class="meta"><div class="nm">Expandable Detail Row</div><span class="ref">.dtb-tbl.dtb-expand</span><div class="desc">A chevron rotates and a detail panel slides open beneath its row, then folds away — master/detail without leaving the table.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <table class="dtb-tbl"><thead><tr><th>Key</th><th>Value</th></tr></thead><tbody>
+      <tr><td class="dtb-mut">region</td><td class="dtb-mono">us-east-1</td></tr>
+      <tr><td class="dtb-mut">instance</td><td><span class="dtb-edit-cell"><span class="dtb-typed">m7g.large</span><span class="dtb-caret"></span></span><span class="dtb-edit-hint">editing</span></td></tr>
+      <tr><td class="dtb-mut">min_size</td><td class="dtb-mono">2</td></tr>
+      <tr><td class="dtb-mut">max_size</td><td class="dtb-mono">12</td></tr>
+    </tbody></table>
+  </div><div class="meta"><div class="nm">Inline Cell Edit</div><span class="ref">.dtb-edit-cell</span><div class="desc">One cell becomes a focused input with a blinking caret and a value being typed — the editing state of an inline-editable grid.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <table class="dtb-tbl dtb-totals"><thead><tr><th>Line</th><th class="dtb-num">Qty</th><th class="dtb-num">Amount</th></tr></thead><tbody>
+      <tr><td>Compute</td><td class="dtb-num">412</td><td class="dtb-num">$812</td></tr>
+      <tr><td>Storage</td><td class="dtb-num">180</td><td class="dtb-num">$296</td></tr>
+      <tr><td>Egress</td><td class="dtb-num">50</td><td class="dtb-num">$176</td></tr>
+    </tbody><tfoot><tr><td>Total</td><td class="dtb-num"><span class="dtb-count b"></span></td><td class="dtb-num">$<span class="dtb-count a"></span></td></tr><tr><td class="dtb-mut">Coverage</td><td class="dtb-num" colspan="2"><span class="dtb-count c"></span>%</td></tr></tfoot></table>
+  </div><div class="meta"><div class="nm">Totals Row + Count-Up</div><span class="ref">.dtb-tbl.dtb-totals</span><div class="desc">A footer row that counts its totals up from zero every few seconds — pure CSS via a registered custom property driving a counter.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <table class="dtb-tbl dtb-skel"><thead><tr><th><span class="dtb-sk w2"></span></th><th><span class="dtb-sk w4"></span></th><th><span class="dtb-sk w2"></span></th></tr></thead><tbody>
+      <tr><td><span class="dtb-sk w3"></span></td><td><span class="dtb-sk w1"></span></td><td><span class="dtb-sk w2"></span></td></tr>
+      <tr><td><span class="dtb-sk w1"></span></td><td><span class="dtb-sk w3"></span></td><td><span class="dtb-sk w4"></span></td></tr>
+      <tr><td><span class="dtb-sk w3"></span></td><td><span class="dtb-sk w2"></span></td><td><span class="dtb-sk w1"></span></td></tr>
+      <tr><td><span class="dtb-sk w2"></span></td><td><span class="dtb-sk w1"></span></td><td><span class="dtb-sk w3"></span></td></tr>
+    </tbody></table>
+  </div><div class="meta"><div class="nm">Skeleton Table</div><span class="ref">.dtb-tbl.dtb-skel</span><div class="desc">Shimmering placeholder bars in the exact shape of the table that is loading — keeps layout stable while data arrives.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+</div>
+
+<h3 class="sec">STATUS &amp; DATA CELLS</h3>
+<div class="gallery">
+
+  <div class="tile is-new"><div class="stage">
+    <table class="dtb-tbl"><thead><tr><th>Check</th><th>Last run</th><th>State</th></tr></thead><tbody>
+      <tr><td>TLS expiry</td><td class="dtb-mut">2m ago</td><td><span class="dtb-pill ok">Pass</span></td></tr>
+      <tr><td>Disk 80%</td><td class="dtb-mut">2m ago</td><td><span class="dtb-pill warn">Warn</span></td></tr>
+      <tr><td>DB replica lag</td><td class="dtb-mut">1m ago</td><td><span class="dtb-pill crit">Fail</span></td></tr>
+      <tr><td>Backups</td><td class="dtb-mut">1h ago</td><td><span class="dtb-pill info">Running</span></td></tr>
+      <tr><td>CDN purge</td><td class="dtb-mut">—</td><td><span class="dtb-pill off">Skipped</span></td></tr>
+    </tbody></table>
+  </div><div class="meta"><div class="nm">Status Pill Column</div><span class="ref">.dtb-pill</span><div class="desc">Tinted status pills in a column — pass, warn, fail, running, skipped — with the failing state pulsing so it cannot be missed.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <table class="dtb-tbl"><thead><tr><th>Migration</th><th>Progress</th></tr></thead><tbody>
+      <tr><td>users</td><td><span class="dtb-bar" style="--w:100%;--c:var(--pos)"><i></i></span><span class="dtb-bar-v">100%</span></td></tr>
+      <tr><td>orders</td><td><span class="dtb-bar" style="--w:72%"><i></i></span><span class="dtb-bar-v">72%</span></td></tr>
+      <tr><td>events</td><td><span class="dtb-bar" style="--w:38%;--c:var(--accent)"><i></i></span><span class="dtb-bar-v">38%</span></td></tr>
+      <tr><td>audit_log</td><td><span class="dtb-bar" style="--w:9%;--c:var(--warn)"><i></i></span><span class="dtb-bar-v">9%</span></td></tr>
+    </tbody></table>
+  </div><div class="meta"><div class="nm">Progress Bar Cells</div><span class="ref">.dtb-bar</span><div class="desc">Inline progress bars that fill to their value inside each cell — set <code>--w</code> per row and recolour with <code>--c</code>.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <table class="dtb-tbl"><thead><tr><th>Metric</th><th>7d</th><th class="dtb-num">Now</th></tr></thead><tbody>
+      <tr><td>Requests</td><td><svg class="dtb-spark" viewBox="0 0 64 18"><polyline class="dtb-spark-line" points="1,14 10,11 19,13 28,8 37,10 46,5 55,7 63,3"/><circle class="dtb-spark-dot" cx="63" cy="3" r="2"/></svg></td><td class="dtb-num">48.2K</td></tr>
+      <tr><td>Errors</td><td><svg class="dtb-spark" viewBox="0 0 64 18" style="--c:var(--neg)"><polyline class="dtb-spark-line" points="1,6 10,9 19,7 28,11 37,9 46,14 55,12 63,15"/><circle class="dtb-spark-dot" cx="63" cy="15" r="2"/></svg></td><td class="dtb-num">0.3%</td></tr>
+      <tr><td>Latency</td><td><svg class="dtb-spark" viewBox="0 0 64 18" style="--c:var(--accent)"><polyline class="dtb-spark-line" points="1,10 10,12 19,6 28,9 37,4 46,8 55,9 63,7"/><circle class="dtb-spark-dot" cx="63" cy="7" r="2"/></svg></td><td class="dtb-num">142ms</td></tr>
+      <tr><td>Uptime</td><td><svg class="dtb-spark" viewBox="0 0 64 18" style="--c:var(--pos)"><polyline class="dtb-spark-line" points="1,9 10,9 19,8 28,9 37,9 46,8 55,9 63,8"/><circle class="dtb-spark-dot" cx="63" cy="8" r="2"/></svg></td><td class="dtb-num">99.98%</td></tr>
+    </tbody></table>
+  </div><div class="meta"><div class="nm">Sparkline Column</div><span class="ref">.dtb-spark</span><div class="desc">A mini trend line drawn into each row with a blinking endpoint — the at-a-glance history column for metric tables.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <table class="dtb-tbl dtb-delta"><thead><tr><th>KPI</th><th class="dtb-num">Value</th><th class="dtb-num">Δ vs LW</th></tr></thead><tbody>
+      <tr><td>Signups</td><td class="dtb-num">1,284</td><td class="dtb-num dtb-up dtb-flash">▲ 12.4%</td></tr>
+      <tr><td>Churn</td><td class="dtb-num">2.1%</td><td class="dtb-num dtb-up">▼ 0.3 pt</td></tr>
+      <tr><td>Refunds</td><td class="dtb-num">$4.9K</td><td class="dtb-num dtb-down dtb-flash">▲ 8.0%</td></tr>
+      <tr><td>NPS</td><td class="dtb-num">61</td><td class="dtb-num dtb-up dtb-flash">▲ 4</td></tr>
+      <tr><td>Tickets</td><td class="dtb-num">318</td><td class="dtb-num dtb-flat">— 0.0%</td></tr>
+    </tbody></table>
+  </div><div class="meta"><div class="nm">Delta Cells</div><span class="ref">.dtb-delta</span><div class="desc">Change-versus-baseline cells with directional arrows in success/danger colours, each flashing when its value updates.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <table class="dtb-tbl"><thead><tr><th>Member</th><th>Role</th><th class="dtb-num">Load</th></tr></thead><tbody>
+      <tr><td><span class="dtb-av">JD<i></i></span>J. Doe</td><td class="dtb-mut">On-call</td><td class="dtb-num">7</td></tr>
+      <tr><td><span class="dtb-av" style="--c:var(--pos);--c-rgb:var(--pos-rgb)">MK<i></i></span>M. Kastro</td><td class="dtb-mut">TAM</td><td class="dtb-num">12</td></tr>
+      <tr><td><span class="dtb-av away" style="--c:var(--accent);--c-rgb:var(--accent-rgb)">AR<i></i></span>A. Rivera</td><td class="dtb-mut">SRE</td><td class="dtb-num">4</td></tr>
+      <tr><td><span class="dtb-av gone" style="--c:var(--crit);--c-rgb:var(--crit-rgb)">SL<i></i></span>S. Lee</td><td class="dtb-mut">Reviewer</td><td class="dtb-num">2</td></tr>
+    </tbody></table>
+  </div><div class="meta"><div class="nm">Avatar + Presence Column</div><span class="ref">.dtb-av</span><div class="desc">Initial avatars with a presence dot (online pulsing, away, offline) beside each name — people tables, assignees, reviewers.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <table class="dtb-tbl"><thead><tr><th>Repo</th><th>Labels</th></tr></thead><tbody>
+      <tr><td>prism</td><td><span class="dtb-tag hot">hot</span><span class="dtb-tag">html</span><span class="dtb-tag">mcp</span></td></tr>
+      <tr><td>mcweb</td><td><span class="dtb-tag">python</span><span class="dtb-tag new">new</span></td></tr>
+      <tr><td>siege-decks</td><td><span class="dtb-tag">game</span><span class="dtb-tag">web</span><span class="dtb-tag">ci</span></td></tr>
+      <tr><td>botfarm</td><td><span class="dtb-tag">node</span><span class="dtb-tag hot">hot</span></td></tr>
+    </tbody></table>
+  </div><div class="meta"><div class="nm">Tag Chip Cells</div><span class="ref">.dtb-tag</span><div class="desc">Small label chips packed into a cell, with <code>.hot</code> glowing in the accent and <code>.new</code> in success green — labels, categories, environments.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <table class="dtb-tbl dtb-heat"><thead><tr><th>Region</th><th class="dtb-num">Mon</th><th class="dtb-num">Tue</th><th class="dtb-num">Wed</th><th class="dtb-num">Thu</th></tr></thead><tbody>
+      <tr><td>us-east</td><td class="dtb-hc" style="--h:.9">912</td><td class="dtb-hc" style="--h:.7">744</td><td class="dtb-hc" style="--h:1">988</td><td class="dtb-hc" style="--h:.5">521</td></tr>
+      <tr><td>eu-west</td><td class="dtb-hc" style="--h:.3">301</td><td class="dtb-hc" style="--h:.45">460</td><td class="dtb-hc" style="--h:.35">377</td><td class="dtb-hc" style="--h:.6">640</td></tr>
+      <tr><td>ap-south</td><td class="dtb-hc" style="--h:.15">158</td><td class="dtb-hc" style="--h:.2">204</td><td class="dtb-hc" style="--h:.25">239</td><td class="dtb-hc" style="--h:.1">96</td></tr>
+      <tr><td>sa-east</td><td class="dtb-hc" style="--h:.05">42</td><td class="dtb-hc" style="--h:.1">88</td><td class="dtb-hc" style="--h:.08">71</td><td class="dtb-hc" style="--h:.12">120</td></tr>
+    </tbody></table>
+  </div><div class="meta"><div class="nm">Heat-Shaded Cells</div><span class="ref">.dtb-heat</span><div class="desc">Numeric cells shaded by magnitude with a slow brightness breathe — set <code>--h</code> from 0 to 1 per cell to make a table read like a heatmap.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <table class="dtb-tbl dtb-ticker"><thead><tr><th>Time</th><th>Event</th><th class="dtb-num">Value</th></tr></thead><tbody>
+      <tr><td class="dtb-mono dtb-dim">14:02:11</td><td>deploy · api</td><td class="dtb-num dtb-up">ok</td></tr>
+      <tr><td class="dtb-mono dtb-dim">14:01:58</td><td>p95 latency</td><td class="dtb-num"><span class="dtb-tk">138 ms</span></td></tr>
+      <tr><td class="dtb-mono dtb-dim">14:01:40</td><td>error rate</td><td class="dtb-num"><span class="dtb-tk dtb-down">0.9%</span></td></tr>
+      <tr><td class="dtb-mono dtb-dim">14:01:22</td><td>scale-out · web</td><td class="dtb-num">+2</td></tr>
+    </tbody></table>
+  </div><div class="meta"><div class="nm">Live Ticker Table</div><span class="ref">.dtb-tbl.dtb-ticker</span><div class="desc">A new row slides in at the top and flashes while existing cells blink as their values refresh — the live feed pattern for ops dashboards.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+</div>
+
+<h3 class="sec">MATRICES &amp; COMPARISON</h3>
+<div class="gallery">
+
+  <div class="tile is-new"><div class="stage">
+    <table class="dtb-tbl dtb-matrix"><thead><tr><th>Feature</th><th>Free</th><th>Team</th><th>Ent.</th></tr></thead><tbody>
+      <tr><td>SSO</td><td><span class="dtb-no">—</span></td><td><span class="dtb-yes">✓</span></td><td><span class="dtb-yes">✓</span></td></tr>
+      <tr><td>Audit log</td><td><span class="dtb-no">—</span></td><td><span class="dtb-part"></span></td><td><span class="dtb-yes">✓</span></td></tr>
+      <tr><td>API access</td><td><span class="dtb-yes">✓</span></td><td><span class="dtb-yes">✓</span></td><td><span class="dtb-yes">✓</span></td></tr>
+      <tr><td>SLA 99.9%</td><td><span class="dtb-no">—</span></td><td><span class="dtb-no">—</span></td><td><span class="dtb-yes">✓</span></td></tr>
+    </tbody></table>
+  </div><div class="meta"><div class="nm">Feature Matrix</div><span class="ref">.dtb-tbl.dtb-matrix</span><div class="desc">Plans across the top, capabilities down the side, checks popping in one by one — with a half-disc for partial support.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <div class="dtb-hm">
+      <span></span><b>M</b><b>T</b><b>W</b><b>T</b><b>F</b><b>S</b><b>S</b>
+      <span>00–06</span><i style="--a:.15;--d:0"></i><i style="--a:.2;--d:1"></i><i style="--a:.15;--d:2"></i><i style="--a:.25;--d:3"></i><i style="--a:.2;--d:4"></i><i style="--a:.1;--d:5"></i><i style="--a:.1;--d:6"></i>
+      <span>06–12</span><i style="--a:.6;--d:1"></i><i style="--a:.7;--d:2"></i><i style="--a:.8;--d:3"></i><i style="--a:.75;--d:4"></i><i style="--a:.65;--d:5"></i><i style="--a:.3;--d:6"></i><i style="--a:.2;--d:7"></i>
+      <span>12–18</span><i style="--a:.9;--d:2"></i><i style="--a:1;--d:3"></i><i style="--a:.95;--d:4"></i><i style="--a:1;--d:5"></i><i style="--a:.85;--d:6"></i><i style="--a:.4;--d:7"></i><i style="--a:.3;--d:8"></i>
+      <span>18–24</span><i style="--a:.5;--d:3"></i><i style="--a:.55;--d:4"></i><i style="--a:.6;--d:5"></i><i style="--a:.5;--d:6"></i><i style="--a:.7;--d:7"></i><i style="--a:.45;--d:8"></i><i style="--a:.35;--d:9"></i>
+    </div>
+  </div><div class="meta"><div class="nm">Heatmap Grid</div><span class="ref">.dtb-hm</span><div class="desc">A labelled cell grid where opacity carries the value (<code>--a</code>) and a diagonal wave (<code>--d</code>) breathes across it — traffic by hour and weekday.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <table class="dtb-tbl dtb-pivot"><thead><tr><th></th><th class="dtb-num">Q1</th><th class="dtb-num">Q2</th><th class="dtb-num">Q3</th></tr></thead><tbody>
+      <tr><th class="dtb-rh">North</th><td>412</td><td>468</td><td>501</td></tr>
+      <tr><th class="dtb-rh">South</th><td>289</td><td>301</td><td>344</td></tr>
+      <tr><th class="dtb-rh">West</th><td>377</td><td>640</td><td>598</td></tr>
+      <tr><th class="dtb-rh">East</th><td>158</td><td>204</td><td>239</td></tr>
+    </tbody></table>
+  </div><div class="meta"><div class="nm">Pivot Crosshair</div><span class="ref">.dtb-tbl.dtb-pivot</span><div class="desc">Row headers and column headers with a highlighted row, column and their intersection — the pivot-table reading aid.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <div class="dtb-risk">
+      <span></span><b>Rare</b><b>Poss.</b><b>Likely</b><b>Cert.</b>
+      <span>Severe</span><i class="m"></i><i class="h"></i><i class="h"></i><i class="h"></i>
+      <span>Major</span><i></i><i class="m"></i><i class="h"><span class="dtb-risk-dot"></span></i><i class="h"></i>
+      <span>Minor</span><i></i><i></i><i class="m"></i><i class="m"></i>
+      <span>Trivial</span><i></i><i></i><i></i><i class="m"></i>
+    </div>
+  </div><div class="meta"><div class="nm">Risk Matrix</div><span class="ref">.dtb-risk</span><div class="desc">Likelihood against impact in green, amber and red zones with a pulsing marker on the assessed cell — risk registers and incident reviews.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <table class="dtb-tbl dtb-compare"><thead><tr><th></th><th>Basic</th><th class="dtb-rec">Pro<span class="dtb-rec-badge">RECOMMENDED</span></th><th>Max</th></tr></thead><tbody>
+      <tr><td>Seats</td><td>3</td><td class="dtb-rec">25</td><td>∞</td></tr>
+      <tr><td>Storage</td><td>10 GB</td><td class="dtb-rec">1 TB</td><td>10 TB</td></tr>
+      <tr><td>Support</td><td>Email</td><td class="dtb-rec">24/7</td><td>TAM</td></tr>
+      <tr><td>Price</td><td class="dtb-mono">$0</td><td class="dtb-rec dtb-mono">$49</td><td class="dtb-mono">$299</td></tr>
+    </tbody></table>
+  </div><div class="meta"><div class="nm">Comparison Columns</div><span class="ref">.dtb-tbl.dtb-compare</span><div class="desc">Side-by-side options with one column framed and glowing as the recommendation — pricing tables and vendor comparisons.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <table class="dtb-tbl dtb-corr"><thead><tr><th></th><th>CPU</th><th>Mem</th><th>Lat</th><th>Err</th></tr></thead><tbody>
+      <tr><th class="dtb-rh">CPU</th><td class="d">1.0</td><td class="p" style="--v:.6">.61</td><td class="p" style="--v:.8">.82</td><td class="p" style="--v:.3">.27</td></tr>
+      <tr><th class="dtb-rh">Mem</th><td class="p" style="--v:.6">.61</td><td class="d">1.0</td><td class="p" style="--v:.4">.38</td><td class="n" style="--v:.2">-.14</td></tr>
+      <tr><th class="dtb-rh">Lat</th><td class="p" style="--v:.8">.82</td><td class="p" style="--v:.4">.38</td><td class="d">1.0</td><td class="p" style="--v:.7">.71</td></tr>
+      <tr><th class="dtb-rh">Err</th><td class="p" style="--v:.3">.27</td><td class="n" style="--v:.2">-.14</td><td class="p" style="--v:.7">.71</td><td class="d">1.0</td></tr>
+    </tbody></table>
+  </div><div class="meta"><div class="nm">Correlation Matrix</div><span class="ref">.dtb-tbl.dtb-corr</span><div class="desc">A symmetric matrix with diverging shading (blue positive, red negative, <code>--v</code> strength) and a softly blinking identity diagonal.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <div>
+      <div class="dtb-contrib">
+        <i style="--a:.12;--d:0"></i><i style="--a:.35;--d:1"></i><i style="--a:.12;--d:2"></i><i style="--a:.6;--d:3"></i><i style="--a:.9;--d:4"></i><i style="--a:.12;--d:5"></i><i style="--a:.35;--d:6"></i><i style="--a:.12;--d:7"></i><i style="--a:.6;--d:8"></i><i style="--a:.35;--d:9"></i><i style="--a:.12;--d:10"></i><i style="--a:.9;--d:11"></i><i style="--a:.6;--d:12"></i><i style="--a:.35;--d:13"></i>
+        <i style="--a:.35;--d:1"></i><i style="--a:.6;--d:2"></i><i style="--a:.35;--d:3"></i><i style="--a:.12;--d:4"></i><i style="--a:.6;--d:5"></i><i style="--a:.9;--d:6"></i><i style="--a:.12;--d:7"></i><i style="--a:.35;--d:8"></i><i style="--a:.12;--d:9"></i><i style="--a:.6;--d:10"></i><i style="--a:.35;--d:11"></i><i style="--a:.12;--d:12"></i><i style="--a:.35;--d:13"></i><i style="--a:.6;--d:14"></i>
+        <i style="--a:.12;--d:2"></i><i style="--a:.12;--d:3"></i><i style="--a:.9;--d:4"></i><i style="--a:.6;--d:5"></i><i style="--a:.35;--d:6"></i><i style="--a:.12;--d:7"></i><i style="--a:.6;--d:8"></i><i style="--a:.9;--d:9"></i><i style="--a:.35;--d:10"></i><i style="--a:.12;--d:11"></i><i style="--a:.6;--d:12"></i><i style="--a:.35;--d:13"></i><i style="--a:.9;--d:14"></i><i style="--a:.12;--d:15"></i>
+        <i style="--a:.6;--d:3"></i><i style="--a:.35;--d:4"></i><i style="--a:.12;--d:5"></i><i style="--a:.35;--d:6"></i><i style="--a:.12;--d:7"></i><i style="--a:.6;--d:8"></i><i style="--a:.35;--d:9"></i><i style="--a:.12;--d:10"></i><i style="--a:.9;--d:11"></i><i style="--a:.6;--d:12"></i><i style="--a:.12;--d:13"></i><i style="--a:.35;--d:14"></i><i style="--a:.12;--d:15"></i><i style="--a:.6;--d:16"></i>
+        <i style="--a:.9;--d:4"></i><i style="--a:.12;--d:5"></i><i style="--a:.35;--d:6"></i><i style="--a:.6;--d:7"></i><i style="--a:.12;--d:8"></i><i style="--a:.35;--d:9"></i><i style="--a:.12;--d:10"></i><i style="--a:.6;--d:11"></i><i style="--a:.35;--d:12"></i><i style="--a:.12;--d:13"></i><i style="--a:.9;--d:14"></i><i style="--a:.6;--d:15"></i><i style="--a:.35;--d:16"></i><i style="--a:.12;--d:17"></i>
+      </div>
+      <div class="dtb-contrib-lg">Less <i style="--a:.12"></i><i style="--a:.35"></i><i style="--a:.6"></i><i style="--a:.9"></i> More</div>
+    </div>
+  </div><div class="meta"><div class="nm">Contribution Calendar</div><span class="ref">.dtb-contrib</span><div class="desc">The activity-square calendar: fourteen weeks of cells shaded by volume, lighting up in a diagonal sweep, with a less-to-more legend.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+</div>
+
+<h3 class="sec">KEY VALUE &amp; DEFINITION</h3>
+<div class="gallery">
+
+  <div class="tile is-new"><div class="stage">
+    <div class="dtb-kv">
+      <span class="k">Account ID</span><span class="lead"></span><span class="v">7828…9315</span>
+      <span class="k">Region</span><span class="lead"></span><span class="v">us-east-1</span>
+      <span class="k">Instances</span><span class="lead"></span><span class="v">42</span>
+      <span class="k">Monthly spend</span><span class="lead"></span><span class="v">$18,204</span>
+      <span class="k">Savings plan</span><span class="lead"></span><span class="v">3-yr · 71%</span>
+    </div>
+  </div><div class="meta"><div class="nm">Key-Value with Leaders</div><span class="ref">.dtb-kv</span><div class="desc">Label on the left, value on the right, joined by dotted leaders — the classic fact sheet layout, values fading in as they populate.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <div class="dtb-spec">
+      <div class="dtb-spec-h">m7g.large <small>Graviton3</small></div>
+      <div class="dtb-spec-r"><span class="k">vCPU</span><span class="v">2</span></div>
+      <div class="dtb-spec-r"><span class="k">Memory</span><span class="v">8 GiB</span></div>
+      <div class="dtb-spec-r"><span class="k">Network</span><span class="v">up to 12.5 Gbps</span></div>
+      <div class="dtb-spec-r"><span class="k">EBS</span><span class="v">up to 10 Gbps</span></div>
+      <div class="dtb-spec-r"><span class="k">On-demand</span><span class="v">$0.0816 / hr</span></div>
+    </div>
+  </div><div class="meta"><div class="nm">Spec Card</div><span class="ref">.dtb-spec</span><div class="desc">A titled card of label/value rows with a highlight that walks down the rows — product specs, instance types, device sheets.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <dl class="dtb-def">
+      <dt>RPO</dt><dd>Recovery point objective — the maximum tolerated data loss, measured in time.</dd>
+      <dt>RTO</dt><dd>Recovery time objective — how long a restore may take before it breaches the SLA.</dd>
+      <dt>MTTR</dt><dd><span class="dtb-typed">Mean time to recovery.</span><span class="dtb-caret"></span></dd>
+    </dl>
+  </div><div class="meta"><div class="nm">Definition List</div><span class="ref">.dtb-def</span><div class="desc">Term-and-definition pairs with a rail under each definition; the last entry types itself out — glossaries and acronym keys.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <div class="dtb-insp">
+      <div class="dtb-insp-h"><span class="dtb-chev"></span>Layout</div>
+      <div class="dtb-insp-r"><span class="k">display</span><span class="v s">flex</span></div>
+      <div class="dtb-insp-r"><span class="k">gap</span><span class="v n">12px</span></div>
+      <div class="dtb-insp-h fold"><span class="dtb-chev"></span>Appearance</div>
+      <div class="dtb-insp-g">
+        <div class="dtb-insp-r"><span class="k">radius</span><span class="v n">14px</span></div>
+        <div class="dtb-insp-r"><span class="k">shadow</span><span class="v b">true</span></div>
+        <div class="dtb-insp-r"><span class="k">theme</span><span class="v s">dark</span></div>
+      </div>
+      <div class="dtb-insp-h"><span class="dtb-chev"></span>Data</div>
+      <div class="dtb-insp-r"><span class="k">rows</span><span class="v n">2,668</span></div>
+    </div>
+  </div><div class="meta"><div class="nm">Properties Inspector</div><span class="ref">.dtb-insp</span><div class="desc">Grouped property rows under collapsible headers, one group folding and unfolding — the side-panel inspector of design and dev tools.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <pre class="dtb-json">{
+  <span class="dtb-jk">"id"</span>: <span class="dtb-js">"charts-gauge-cluster"</span>,
+  <span class="dtb-jk">"gallery"</span>: <span class="dtb-js">"charts"</span>,
+  <span class="dtb-jk">"tags"</span>: [<span class="dtb-json-fold">    <span class="dtb-js">"charts"</span>,
+    <span class="dtb-js">"animated"</span>,
+    <span class="dtb-js">"updated"</span></span><span class="dtb-json-el">    …3 items</span>  ],
+  <span class="dtb-jk">"needsJs"</span>: <span class="dtb-jb">null</span>,
+  <span class="dtb-jk">"frames"</span>: <span class="dtb-jn">16</span>
+}</pre>
+  </div><div class="meta"><div class="nm">JSON Tree</div><span class="ref">.dtb-json</span><div class="desc">Syntax-coloured JSON with a node that collapses into an item count and expands again — API payloads, config dumps, catalog records.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+</div>
+
+<h3 class="sec">LISTS &amp; TREES</h3>
+<div class="gallery">
+
+  <div class="tile is-new"><div class="stage">
+    <div class="dtb-tree">
+      <div class="dtb-tree-n"><span class="dtb-chev"></span><span class="ic"></span>showcase</div>
+      <div class="dtb-tree-kids">
+        <div class="dtb-tree-n sel"><span class="fi code"></span>build.mjs</div>
+        <div class="dtb-tree-n"><span class="fi code"></span>browsers.mjs</div>
+        <div class="dtb-tree-n"><span class="ic"></span>galleries</div>
+        <div class="dtb-tree-n"><span class="fi"></span>manifest.json</div>
+      </div>
+      <div class="dtb-tree-n"><span class="ic"></span>catalog</div>
+      <div class="dtb-tree-n"><span class="fi"></span>README.md</div>
+    </div>
+  </div><div class="meta"><div class="nm">File Tree</div><span class="ref">.dtb-tree</span><div class="desc">A folder whose chevron turns as its children slide open, with a selected file row — explorers, repo browsers, sitemap outlines.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <div class="dtb-org">
+      <div class="dtb-org-n root">Platform<small>VP Eng</small></div>
+      <div class="dtb-org-v"></div>
+      <div class="dtb-org-row">
+        <div class="dtb-org-n"><span class="dtb-org-pulse"></span>Infra<small>12</small></div>
+        <div class="dtb-org-n"><span class="dtb-org-pulse"></span>Data<small>8</small></div>
+        <div class="dtb-org-n"><span class="dtb-org-pulse"></span>SRE<small>6</small></div>
+      </div>
+    </div>
+  </div><div class="meta"><div class="nm">Org Chart</div><span class="ref">.dtb-org</span><div class="desc">A root node over three children joined by elbow connectors, with pulses travelling down to each branch — org charts and ownership trees.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <ul class="dtb-outline">
+      <li style="--i:0">Migration plan
+        <ul>
+          <li style="--i:1">Inventory workloads</li>
+          <li style="--i:2" class="mut">Tag by criticality</li>
+        </ul>
+      </li>
+      <li style="--i:3">Cutover window
+        <ul>
+          <li style="--i:4">DNS TTL to 60s</li>
+          <li style="--i:5" class="mut">Freeze deploys</li>
+        </ul>
+      </li>
+      <li style="--i:6">Validation</li>
+    </ul>
+  </div><div class="meta"><div class="nm">Nested Outline</div><span class="ref">.dtb-outline</span><div class="desc">A two-level outline with round and diamond bullets that light up in reading order along a dashed rail — plans, agendas, hierarchies.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <div class="dtb-steps">
+      <div class="dtb-step" style="--i:0"><i>1</i><b>Snapshot</b>RDS snapshot taken</div>
+      <div class="dtb-step" style="--i:1"><i>2</i><b>Migrate</b>schema v42 applied</div>
+      <div class="dtb-step" style="--i:2"><i>3</i><b>Verify</b>row counts match</div>
+      <div class="dtb-step" style="--i:3"><i>4</i><b>Cut over</b>traffic shifted</div>
+    </div>
+  </div><div class="meta"><div class="nm">Numbered Steps</div><span class="ref">.dtb-steps</span><div class="desc">Numbered circles on a vertical track that fills green as each step completes — runbooks, onboarding, release procedures.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <ul class="dtb-check">
+      <li class="dtb-ck-item done"><span class="dtb-cb on"></span>Rotate access keys</li>
+      <li class="dtb-ck-item" style="--i:0"><span class="dtb-cb"></span>Enable MFA on root</li>
+      <li class="dtb-ck-item" style="--i:1"><span class="dtb-cb"></span>Close port 22 to 0.0.0.0/0</li>
+      <li class="dtb-ck-item" style="--i:2"><span class="dtb-cb"></span>Turn on GuardDuty</li>
+      <li class="dtb-ck-item" style="--i:3"><span class="dtb-cb"></span>Review IAM policies</li>
+    </ul>
+  </div><div class="meta"><div class="nm">Checklist</div><span class="ref">.dtb-check</span><div class="desc">Items check themselves off in sequence, striking through as they complete — audit checklists and task lists in progress.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <div class="dtb-rank">
+      <div class="dtb-rank-r g"><span class="rk">1</span><span>Kastro</span><span class="bar"><i style="--w:96%"></i></span><span class="sc">9,812</span></div>
+      <div class="dtb-rank-r s dn"><span class="rk">2</span><span>Nova</span><span class="bar"><i style="--w:78%"></i></span><span class="sc">7,940</span></div>
+      <div class="dtb-rank-r b up"><span class="rk">3</span><span>Fayte</span><span class="bar"><i style="--w:80%"></i></span><span class="sc">8,105</span></div>
+      <div class="dtb-rank-r"><span class="rk">4</span><span>Pixel</span><span class="bar"><i style="--w:51%"></i></span><span class="sc">5,220</span></div>
+    </div>
+  </div><div class="meta"><div class="nm">Leaderboard Swap</div><span class="ref">.dtb-rank</span><div class="desc">Ranked rows with medal badges and score bars; two competitors trade places as a score overtakes — leaderboards and top-N lists.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <div class="dtb-tl">
+      <div class="dtb-now"></div>
+      <div class="dtb-tl-r"><span class="t">09:00</span><span class="d ok"></span><span class="e">Deploy v4.2<small>api</small></span></div>
+      <div class="dtb-tl-r"><span class="t">09:40</span><span class="d ok"></span><span class="e">Canary 10%<small>ok</small></span></div>
+      <div class="dtb-tl-r"><span class="t">10:15</span><span class="d warn"></span><span class="e">Latency alert<small>p95</small></span></div>
+      <div class="dtb-tl-r"><span class="t">10:30</span><span class="d"></span><span class="e">Rollout 100%<small>pending</small></span></div>
+    </div>
+  </div><div class="meta"><div class="nm">Timeline List + Now</div><span class="ref">.dtb-tl</span><div class="desc">Timestamped events on a vertical rail with a NOW marker that drifts down through the schedule — change logs and incident timelines.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+</div>
+
+<h3 class="sec">GRIDS &amp; SCHEDULES</h3>
+<div class="gallery">
+
+  <div class="tile is-new"><div class="stage">
+    <div class="dtb-grid">
+      <div class="dtb-rec" style="--i:0"><b>us-east-1</b><small>14 clusters</small><em>99.98%</em></div>
+      <div class="dtb-rec" style="--i:1;--c:var(--pos)"><b>eu-west-1</b><small>9 clusters</small><em>100%</em></div>
+      <div class="dtb-rec" style="--i:2;--c:var(--warn)"><b>ap-south-1</b><small>6 clusters</small><em>99.71%</em></div>
+      <div class="dtb-rec" style="--i:3"><b>us-west-2</b><small>11 clusters</small><em>99.95%</em></div>
+      <div class="dtb-rec" style="--i:4;--c:var(--neg)"><b>sa-east-1</b><small>3 clusters</small><em>98.20%</em></div>
+      <div class="dtb-rec" style="--i:5;--c:var(--pos)"><b>ca-central</b><small>4 clusters</small><em>100%</em></div>
+    </div>
+  </div><div class="meta"><div class="nm">Record Card Grid</div><span class="ref">.dtb-grid</span><div class="desc">Records as a grid of small cards with a coloured figure each, revealed in a stagger — the card-view alternative to a table.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <div class="dtb-gantt">
+      <div class="dtb-today"></div>
+      <div class="dtb-gantt-r"><span>Discovery</span><span class="tr"><i style="--s:0%;--w:22%;--i:0;--c:var(--pos)"></i></span></div>
+      <div class="dtb-gantt-r"><span>Design</span><span class="tr"><i style="--s:18%;--w:26%;--i:1"></i></span></div>
+      <div class="dtb-gantt-r"><span>Build</span><span class="tr"><i style="--s:38%;--w:34%;--i:2"></i></span></div>
+      <div class="dtb-gantt-r"><span>QA</span><span class="tr"><i style="--s:64%;--w:18%;--i:3;--c:var(--warn)"></i></span></div>
+      <div class="dtb-gantt-r"><span>Launch</span><span class="tr"><i class="ms" style="--s:84%"></i></span></div>
+    </div>
+  </div><div class="meta"><div class="nm">Gantt Rows</div><span class="ref">.dtb-gantt</span><div class="desc">Phase bars on gridded tracks (<code>--s</code> start, <code>--w</code> width), a diamond milestone, and a today line sliding across — project plans.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <div class="dtb-sched">
+      <span></span><b>Mon</b><b>Tue</b><b>Wed</b><b>Thu</b><b>Fri</b>
+      <span>09</span><i class="ev"></i><i></i><i class="ev" style="--c-rgb:var(--pos-rgb)"></i><i></i><i class="ev"></i>
+      <span>11</span><i></i><i class="ev now" style="--c-rgb:var(--accent-rgb)"></i><i></i><i class="ev" style="--c-rgb:var(--crit-rgb)"></i><i></i>
+      <span>14</span><i class="ev" style="--c-rgb:var(--pos-rgb)"></i><i></i><i></i><i class="ev"></i><i class="ev" style="--c-rgb:var(--warn-rgb)"></i>
+      <span>16</span><i></i><i class="ev"></i><i class="ev" style="--c-rgb:var(--crit-rgb)"></i><i></i><i></i>
+    </div>
+  </div><div class="meta"><div class="nm">Weekly Schedule Grid</div><span class="ref">.dtb-sched</span><div class="desc">Hours down, weekdays across, colour-blocked slots and the current slot pulsing in the accent — rotas, room bookings, on-call.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <div class="dtb-cal">
+      <div class="dtb-cal-h">September 2026 <small>‹ ›</small></div>
+      <div class="dtb-cal-g">
+        <b>M</b><b>T</b><b>W</b><b>T</b><b>F</b><b>S</b><b>S</b>
+        <i class="o">31</i><i>1</i><i class="ev">2</i><i>3</i><i class="today">4</i><i>5</i><i>6</i>
+        <i>7</i><i class="ev" style="--c:var(--pos)">8</i><i>9</i><i>10</i><i class="ev" style="--c:var(--neg)">11</i><i>12</i><i>13</i>
+        <i>14</i><i>15</i><i class="ev">16</i><i>17</i><i>18</i><i>19</i><i>20</i>
+        <i>21</i><i class="ev" style="--c:var(--warn)">22</i><i>23</i><i>24</i><i>25</i><i>26</i><i>27</i>
+      </div>
+    </div>
+  </div><div class="meta"><div class="nm">Month Calendar</div><span class="ref">.dtb-cal</span><div class="desc">A compact month grid with weekday headers, event dots in token colours, and today ringed by a pulsing halo — date pickers and planning views.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <div class="dtb-kanban">
+      <div class="dtb-kan-col"><b>To do</b><div class="dtb-kan-card">Write ADR</div><div class="dtb-kan-card out" style="--c:var(--accent)">Fix flaky CI</div><div class="dtb-kan-card" style="--c:var(--crit)">Rotate certs</div></div>
+      <div class="dtb-kan-col"><b>Doing</b><div class="dtb-kan-card" style="--c:var(--pos)">Gallery: tables</div><div class="dtb-kan-card in" style="--c:var(--accent)">Fix flaky CI</div></div>
+      <div class="dtb-kan-col"><b>Done</b><div class="dtb-kan-card" style="--c:var(--dim)">GIF showcase</div></div>
+    </div>
+  </div><div class="meta"><div class="nm">Kanban Columns</div><span class="ref">.dtb-kanban</span><div class="desc">Three status columns of cards; one card leaves To-do and lands in Doing with a green confirmation ring — boards and workflow states.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <div class="dtb-bento">
+      <div class="w2 glow"><small>Monthly spend</small><em style="--c:var(--accent)">$18.2K</em></div>
+      <div><small>Uptime</small><em style="--c:var(--pos)">99.98</em></div>
+      <div class="h2"><small>Requests</small><svg class="dtb-spark" viewBox="0 0 64 18" preserveAspectRatio="none"><polyline class="dtb-spark-line" points="1,14 10,11 19,13 28,8 37,10 46,5 55,7 63,3"/></svg><em>48K</em></div>
+      <div><small>Errors</small><em style="--c:var(--neg)">0.3%</em></div>
+      <div><small>Coverage</small><span class="dtb-bar" style="--w:72%"><i></i></span></div>
+    </div>
+  </div><div class="meta"><div class="nm">Bento Stat Grid</div><span class="ref">.dtb-bento</span><div class="desc">Mixed-span tiles (<code>.w2</code>, <code>.h2</code>) holding one figure, sparkline or bar each, with the hero tile glowing — dashboard summaries.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <div class="dtb-masonry">
+      <div><div class="dtb-mas" style="height:54px;--i:0"></div><div class="dtb-mas" style="height:36px;--i:3"></div><div class="dtb-mas" style="height:44px;--i:6"></div></div>
+      <div><div class="dtb-mas" style="height:38px;--i:1"></div><div class="dtb-mas" style="height:58px;--i:4"></div><div class="dtb-mas" style="height:30px;--i:7"></div></div>
+      <div><div class="dtb-mas" style="height:46px;--i:2"></div><div class="dtb-mas" style="height:34px;--i:5"></div><div class="dtb-mas" style="height:52px;--i:8"></div></div>
+    </div>
+  </div><div class="meta"><div class="nm">Masonry Placeholder</div><span class="ref">.dtb-masonry</span><div class="desc">Three columns of variable-height cards with a shimmer travelling across them — the loading state of a masonry or gallery layout.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+</div>
+
+<h3 class="sec">LEDGERS, LOGS &amp; TOOLBARS</h3>
+<div class="gallery">
+
+  <div class="tile is-new"><div class="stage">
+    <table class="dtb-tbl dtb-ledger"><thead><tr><th>Date</th><th>Memo</th><th class="dtb-num">Amount</th><th class="dtb-num">Balance</th></tr></thead><tbody>
+      <tr><td class="dtb-mono dtb-dim">09-04</td><td>Refund · #10471</td><td class="dtb-num cr">+120.00</td><td class="dtb-num bal">4,382.10</td></tr>
+      <tr><td class="dtb-mono dtb-dim">09-03</td><td>AWS · Aug</td><td class="dtb-num dr">-1,812.44</td><td class="dtb-num bal">4,262.10</td></tr>
+      <tr><td class="dtb-mono dtb-dim">09-02</td><td>Payout</td><td class="dtb-num cr">+5,000.00</td><td class="dtb-num bal">6,074.54</td></tr>
+      <tr><td class="dtb-mono dtb-dim">09-01</td><td>Domains</td><td class="dtb-num dr">-96.20</td><td class="dtb-num bal">1,074.54</td></tr>
+    </tbody><tfoot><tr><td colspan="3">Closing balance</td><td class="dtb-num">4,382.10</td></tr></tfoot></table>
+  </div><div class="meta"><div class="nm">Ledger + Running Balance</div><span class="ref">.dtb-tbl.dtb-ledger</span><div class="desc">Credits in green, debits in red, a running balance column and a closing total, with the newest entry sliding in at the top.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <table class="dtb-tbl dtb-diff"><thead><tr><th></th><th>Setting</th><th>Value</th></tr></thead><tbody>
+      <tr><td> </td><td>instance</td><td class="dtb-mono">m6g.large</td></tr>
+      <tr class="del"><td>−</td><td>min_size</td><td class="dtb-mono">2</td></tr>
+      <tr class="add"><td>+</td><td>min_size</td><td class="dtb-mono">4</td></tr>
+      <tr><td> </td><td>max_size</td><td class="dtb-mono">12</td></tr>
+      <tr class="add"><td>+</td><td>warm_pool</td><td class="dtb-mono">true</td></tr>
+    </tbody></table>
+  </div><div class="meta"><div class="nm">Diff Table</div><span class="ref">.dtb-tbl.dtb-diff</span><div class="desc">Before/after rows with a plus-minus gutter: removed rows struck through in red, added rows in green, each pulsing in turn — config and plan diffs.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <table class="dtb-tbl dtb-audit"><thead><tr><th>When</th><th>Who</th><th>Action</th></tr></thead><tbody>
+      <tr><td class="t">14:02:11</td><td><span class="who">mkastro</span></td><td>approved PR #51</td></tr>
+      <tr><td class="t">14:01:37</td><td><span class="who">svc-deploy</span></td><td>pushed v4.2.0</td></tr>
+      <tr><td class="t">13:58:02</td><td><span class="who">nova</span></td><td>edited runbook</td></tr>
+      <tr><td class="t">13:55:49</td><td><span class="who">svc-backup</span></td><td>snapshot ok</td></tr>
+      <tr><td class="t">13:51:10</td><td><span class="who">fayte</span></td><td>rotated key</td></tr>
+    </tbody></table>
+  </div><div class="meta"><div class="nm">Audit Trail</div><span class="ref">.dtb-tbl.dtb-audit</span><div class="desc">Timestamp, actor chip and action per row, appearing in a cascade as the log fills — audit logs and activity feeds.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <div>
+      <div class="dtb-pg"><i class="nav">‹</i><i style="--i:0">1</i><i style="--i:1">2</i><i style="--i:2">3</i><i style="--i:3">4</i><i style="--i:4">5</i><i class="dots">…</i><i class="nav">12</i><i class="nav">›</i></div>
+      <div class="dtb-pg-info">Showing 41–60 of 234 rows</div>
+    </div>
+  </div><div class="meta"><div class="nm">Pagination</div><span class="ref">.dtb-pg</span><div class="desc">A pager whose active page steps forward on its own, plus the rows-shown caption — the footer of any paged table.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <div class="dtb-toolbar">
+      <div class="dtb-tb-row"><div class="dtb-search"><span class="dtb-typed">region:</span><span class="dtb-caret"></span></div><span class="dtb-tb-btn">⚙</span><span class="dtb-tb-btn">↓</span></div>
+      <div class="dtb-tb-row"><span class="dtb-chip on">Prod</span><span class="dtb-chip tog">Errors only</span><span class="dtb-chip">Last 24h</span><span class="dtb-tb-count"><b>318</b> / 2,668</span></div>
+    </div>
+  </div><div class="meta"><div class="nm">Table Toolbar</div><span class="ref">.dtb-toolbar</span><div class="desc">Search box with a typing query, filter chips (one toggling on), column and export buttons, and a live match count — the control strip above a data table.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <div class="dtb-empty">
+      <span class="dtb-sk w3"></span><span class="dtb-sk w2"></span>
+      <div class="dtb-empty-ic"></div>
+      <b>No rows match</b><small>Try a wider date range or fewer filters.</small>
+      <span class="dtb-empty-btn">Clear filters</span>
+    </div>
+  </div><div class="meta"><div class="nm">Empty Table State</div><span class="ref">.dtb-empty</span><div class="desc">A dashed frame with ghost rows, a table glyph, a plain-language message and a glowing recovery action — what a table shows when a query returns nothing.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+</div>

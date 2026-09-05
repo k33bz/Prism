@@ -1,5 +1,5 @@
 {
-  "count": 2670,
+  "count": 2720,
   "effects": [
     {
       "id": "charts-big-metric-count-up",
@@ -1692,9 +1692,10 @@
         "sl",
         "ts",
         "lv",
-        "ok",
+        "warn",
         "m",
         "info",
+        "ok",
         "cursor"
       ],
       "params": [],
@@ -16104,9 +16105,9 @@
         "gate",
         "experts",
         "expert",
+        "on",
         "ed",
         "ew",
-        "on",
         "cap",
         "pr-playbtn"
       ],
@@ -38211,6 +38212,1452 @@
       "isNew": true,
       "isFixed": false,
       "description": "A frozen, non-interactive context-menu layout — useful as a clean component reference."
+    },
+    {
+      "id": "tables-zebra-table-scan",
+      "name": "Zebra Table + Scan",
+      "gallery": "tables",
+      "category": "DATA TABLES",
+      "ref": ".dtb-tbl.dtb-zebra",
+      "classes": [
+        "dtb-tbl",
+        "dtb-zebra",
+        "dtb-num",
+        "dtb-mut"
+      ],
+      "params": [],
+      "tags": [
+        "tables",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "description": "The baseline data table: uppercase header, zebra rows, right-aligned numerics, and a soft highlight that scans down the rows. Start every tabular report here."
+    },
+    {
+      "id": "tables-hover-glow-rows",
+      "name": "Hover-Glow Rows",
+      "gallery": "tables",
+      "category": "DATA TABLES",
+      "ref": ".dtb-tbl.dtb-hoverglow",
+      "classes": [
+        "dtb-tbl",
+        "dtb-hoverglow",
+        "dtb-num",
+        "dtb-mut"
+      ],
+      "params": [],
+      "tags": [
+        "tables",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "description": "Rows light up one after another with a tinted fill and a left accent bar — the hover treatment, demonstrated on a loop so it reads in a static export."
+    },
+    {
+      "id": "tables-sortable-header",
+      "name": "Sortable Header",
+      "gallery": "tables",
+      "category": "DATA TABLES",
+      "ref": ".dtb-tbl.dtb-sort",
+      "classes": [
+        "dtb-tbl",
+        "dtb-sort",
+        "dtb-num",
+        "dtb-sorted",
+        "dtb-sort-arrow"
+      ],
+      "params": [],
+      "tags": [
+        "tables",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "description": "A sorted column with a flipping direction arrow while two rows trade places — the visual grammar of a click-to-sort header."
+    },
+    {
+      "id": "tables-sticky-header-scroll",
+      "name": "Sticky Header Scroll",
+      "gallery": "tables",
+      "category": "DATA TABLES",
+      "ref": ".dtb-sticky",
+      "classes": [
+        "dtb-sticky",
+        "dtb-sticky-head",
+        "dtb-row",
+        "dtb-num",
+        "dtb-sticky-body",
+        "dtb-mut",
+        "dtb-mono"
+      ],
+      "params": [],
+      "tags": [
+        "tables",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "description": "Rows scroll beneath a header that stays put and casts a shadow — a grid-based table for long lists inside a fixed-height panel."
+    },
+    {
+      "id": "tables-dense-numeric-table",
+      "name": "Dense Numeric Table",
+      "gallery": "tables",
+      "category": "DATA TABLES",
+      "ref": ".dtb-tbl.dtb-dense",
+      "classes": [
+        "dtb-tbl",
+        "dtb-dense",
+        "dtb-num",
+        "dtb-live-dot",
+        "dtb-up",
+        "dtb-down",
+        "dtb-flat"
+      ],
+      "params": [],
+      "tags": [
+        "tables",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "description": "Compact rows, tabular-figure monospace numbers and a live-feed dot per row — the terminal-style layout for tickers, telemetry and anything with many columns."
+    },
+    {
+      "id": "tables-row-selection",
+      "name": "Row Selection",
+      "gallery": "tables",
+      "category": "DATA TABLES",
+      "ref": ".dtb-tbl.dtb-select",
+      "classes": [
+        "dtb-tbl",
+        "dtb-select",
+        "dtb-cb",
+        "dtb-pill",
+        "ok",
+        "warn",
+        "on",
+        "info",
+        "off"
+      ],
+      "params": [],
+      "tags": [
+        "tables",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "description": "A checkbox column where rows tick themselves on and off, tinting the whole row while selected — bulk-action tables and pickers."
+    },
+    {
+      "id": "tables-expandable-detail-row",
+      "name": "Expandable Detail Row",
+      "gallery": "tables",
+      "category": "DATA TABLES",
+      "ref": ".dtb-tbl.dtb-expand",
+      "classes": [
+        "dtb-tbl",
+        "dtb-expand",
+        "dtb-num",
+        "dtb-mut",
+        "dtb-chev",
+        "dtb-detail",
+        "dtb-detail-in",
+        "dtb-mono"
+      ],
+      "params": [],
+      "tags": [
+        "tables",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "description": "A chevron rotates and a detail panel slides open beneath its row, then folds away — master/detail without leaving the table."
+    },
+    {
+      "id": "tables-inline-cell-edit",
+      "name": "Inline Cell Edit",
+      "gallery": "tables",
+      "category": "DATA TABLES",
+      "ref": ".dtb-edit-cell",
+      "classes": [
+        "dtb-tbl",
+        "dtb-mut",
+        "dtb-mono",
+        "dtb-edit-cell",
+        "dtb-typed",
+        "dtb-caret",
+        "dtb-edit-hint"
+      ],
+      "params": [],
+      "tags": [
+        "tables",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "description": "One cell becomes a focused input with a blinking caret and a value being typed — the editing state of an inline-editable grid."
+    },
+    {
+      "id": "tables-totals-row-count-up",
+      "name": "Totals Row + Count-Up",
+      "gallery": "tables",
+      "category": "DATA TABLES",
+      "ref": ".dtb-tbl.dtb-totals",
+      "classes": [
+        "dtb-tbl",
+        "dtb-totals",
+        "dtb-num",
+        "dtb-count",
+        "b",
+        "a",
+        "dtb-mut",
+        "c"
+      ],
+      "params": [],
+      "tags": [
+        "tables",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "description": "A footer row that counts its totals up from zero every few seconds — pure CSS via a registered custom property driving a counter."
+    },
+    {
+      "id": "tables-skeleton-table",
+      "name": "Skeleton Table",
+      "gallery": "tables",
+      "category": "DATA TABLES",
+      "ref": ".dtb-tbl.dtb-skel",
+      "classes": [
+        "dtb-tbl",
+        "dtb-skel",
+        "dtb-sk",
+        "w2",
+        "w4",
+        "w3",
+        "w1"
+      ],
+      "params": [],
+      "tags": [
+        "tables",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "description": "Shimmering placeholder bars in the exact shape of the table that is loading — keeps layout stable while data arrives."
+    },
+    {
+      "id": "tables-status-pill-column",
+      "name": "Status Pill Column",
+      "gallery": "tables",
+      "category": "STATUS & DATA CELLS",
+      "ref": ".dtb-pill",
+      "classes": [
+        "dtb-tbl",
+        "dtb-mut",
+        "dtb-pill",
+        "ok",
+        "warn",
+        "crit",
+        "info",
+        "off"
+      ],
+      "params": [],
+      "tags": [
+        "tables",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "description": "Tinted status pills in a column — pass, warn, fail, running, skipped — with the failing state pulsing so it cannot be missed."
+    },
+    {
+      "id": "tables-progress-bar-cells",
+      "name": "Progress Bar Cells",
+      "gallery": "tables",
+      "category": "STATUS & DATA CELLS",
+      "ref": ".dtb-bar",
+      "classes": [
+        "dtb-tbl",
+        "dtb-bar",
+        "dtb-bar-v"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "tables",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "description": "Inline progress bars that fill to their value inside each cell — set --w per row and recolour with --c."
+    },
+    {
+      "id": "tables-sparkline-column",
+      "name": "Sparkline Column",
+      "gallery": "tables",
+      "category": "STATUS & DATA CELLS",
+      "ref": ".dtb-spark",
+      "classes": [
+        "dtb-tbl",
+        "dtb-num",
+        "dtb-spark",
+        "dtb-spark-line",
+        "dtb-spark-dot"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "tables",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "description": "A mini trend line drawn into each row with a blinking endpoint — the at-a-glance history column for metric tables."
+    },
+    {
+      "id": "tables-delta-cells",
+      "name": "Delta Cells",
+      "gallery": "tables",
+      "category": "STATUS & DATA CELLS",
+      "ref": ".dtb-delta",
+      "classes": [
+        "dtb-tbl",
+        "dtb-delta",
+        "dtb-num",
+        "dtb-up",
+        "dtb-flash",
+        "dtb-down",
+        "dtb-flat"
+      ],
+      "params": [],
+      "tags": [
+        "tables",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "description": "Change-versus-baseline cells with directional arrows in success/danger colours, each flashing when its value updates."
+    },
+    {
+      "id": "tables-avatar-presence-column",
+      "name": "Avatar + Presence Column",
+      "gallery": "tables",
+      "category": "STATUS & DATA CELLS",
+      "ref": ".dtb-av",
+      "classes": [
+        "dtb-tbl",
+        "dtb-num",
+        "dtb-av",
+        "dtb-mut",
+        "away",
+        "gone"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "tables",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "description": "Initial avatars with a presence dot (online pulsing, away, offline) beside each name — people tables, assignees, reviewers."
+    },
+    {
+      "id": "tables-tag-chip-cells",
+      "name": "Tag Chip Cells",
+      "gallery": "tables",
+      "category": "STATUS & DATA CELLS",
+      "ref": ".dtb-tag",
+      "classes": [
+        "dtb-tbl",
+        "dtb-tag",
+        "hot",
+        "new"
+      ],
+      "params": [],
+      "tags": [
+        "tables",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "description": "Small label chips packed into a cell, with .hot glowing in the accent and .new in success green — labels, categories, environments."
+    },
+    {
+      "id": "tables-heat-shaded-cells",
+      "name": "Heat-Shaded Cells",
+      "gallery": "tables",
+      "category": "STATUS & DATA CELLS",
+      "ref": ".dtb-heat",
+      "classes": [
+        "dtb-tbl",
+        "dtb-heat",
+        "dtb-num",
+        "dtb-hc"
+      ],
+      "params": [],
+      "tags": [
+        "tables",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "description": "Numeric cells shaded by magnitude with a slow brightness breathe — set --h from 0 to 1 per cell to make a table read like a heatmap."
+    },
+    {
+      "id": "tables-live-ticker-table",
+      "name": "Live Ticker Table",
+      "gallery": "tables",
+      "category": "STATUS & DATA CELLS",
+      "ref": ".dtb-tbl.dtb-ticker",
+      "classes": [
+        "dtb-tbl",
+        "dtb-ticker",
+        "dtb-num",
+        "dtb-mono",
+        "dtb-dim",
+        "dtb-up",
+        "dtb-tk",
+        "dtb-down"
+      ],
+      "params": [],
+      "tags": [
+        "tables",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "description": "A new row slides in at the top and flashes while existing cells blink as their values refresh — the live feed pattern for ops dashboards."
+    },
+    {
+      "id": "tables-feature-matrix",
+      "name": "Feature Matrix",
+      "gallery": "tables",
+      "category": "MATRICES & COMPARISON",
+      "ref": ".dtb-tbl.dtb-matrix",
+      "classes": [
+        "dtb-tbl",
+        "dtb-matrix",
+        "dtb-no",
+        "dtb-yes",
+        "dtb-part"
+      ],
+      "params": [],
+      "tags": [
+        "tables",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "description": "Plans across the top, capabilities down the side, checks popping in one by one — with a half-disc for partial support."
+    },
+    {
+      "id": "tables-heatmap-grid",
+      "name": "Heatmap Grid",
+      "gallery": "tables",
+      "category": "MATRICES & COMPARISON",
+      "ref": ".dtb-hm",
+      "classes": [
+        "dtb-hm"
+      ],
+      "params": [],
+      "tags": [
+        "tables",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "description": "A labelled cell grid where opacity carries the value (--a) and a diagonal wave (--d) breathes across it — traffic by hour and weekday."
+    },
+    {
+      "id": "tables-pivot-crosshair",
+      "name": "Pivot Crosshair",
+      "gallery": "tables",
+      "category": "MATRICES & COMPARISON",
+      "ref": ".dtb-tbl.dtb-pivot",
+      "classes": [
+        "dtb-tbl",
+        "dtb-pivot",
+        "dtb-num",
+        "dtb-rh"
+      ],
+      "params": [],
+      "tags": [
+        "tables",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "description": "Row headers and column headers with a highlighted row, column and their intersection — the pivot-table reading aid."
+    },
+    {
+      "id": "tables-risk-matrix",
+      "name": "Risk Matrix",
+      "gallery": "tables",
+      "category": "MATRICES & COMPARISON",
+      "ref": ".dtb-risk",
+      "classes": [
+        "dtb-risk",
+        "m",
+        "h",
+        "dtb-risk-dot"
+      ],
+      "params": [],
+      "tags": [
+        "tables",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "description": "Likelihood against impact in green, amber and red zones with a pulsing marker on the assessed cell — risk registers and incident reviews."
+    },
+    {
+      "id": "tables-comparison-columns",
+      "name": "Comparison Columns",
+      "gallery": "tables",
+      "category": "MATRICES & COMPARISON",
+      "ref": ".dtb-tbl.dtb-compare",
+      "classes": [
+        "dtb-tbl",
+        "dtb-compare",
+        "dtb-rec",
+        "dtb-rec-badge",
+        "dtb-mono"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "tables",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "description": "Side-by-side options with one column framed and glowing as the recommendation — pricing tables and vendor comparisons."
+    },
+    {
+      "id": "tables-correlation-matrix",
+      "name": "Correlation Matrix",
+      "gallery": "tables",
+      "category": "MATRICES & COMPARISON",
+      "ref": ".dtb-tbl.dtb-corr",
+      "classes": [
+        "dtb-tbl",
+        "dtb-corr",
+        "dtb-rh",
+        "d",
+        "p",
+        "n"
+      ],
+      "params": [],
+      "tags": [
+        "tables",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "description": "A symmetric matrix with diverging shading (blue positive, red negative, --v strength) and a softly blinking identity diagonal."
+    },
+    {
+      "id": "tables-contribution-calendar",
+      "name": "Contribution Calendar",
+      "gallery": "tables",
+      "category": "MATRICES & COMPARISON",
+      "ref": ".dtb-contrib",
+      "classes": [
+        "dtb-contrib",
+        "dtb-contrib-lg"
+      ],
+      "params": [],
+      "tags": [
+        "tables",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "description": "The activity-square calendar: fourteen weeks of cells shaded by volume, lighting up in a diagonal sweep, with a less-to-more legend."
+    },
+    {
+      "id": "tables-key-value-with-leaders",
+      "name": "Key-Value with Leaders",
+      "gallery": "tables",
+      "category": "KEY VALUE & DEFINITION",
+      "ref": ".dtb-kv",
+      "classes": [
+        "dtb-kv",
+        "k",
+        "lead",
+        "v"
+      ],
+      "params": [],
+      "tags": [
+        "tables",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "description": "Label on the left, value on the right, joined by dotted leaders — the classic fact sheet layout, values fading in as they populate."
+    },
+    {
+      "id": "tables-spec-card",
+      "name": "Spec Card",
+      "gallery": "tables",
+      "category": "KEY VALUE & DEFINITION",
+      "ref": ".dtb-spec",
+      "classes": [
+        "dtb-spec",
+        "dtb-spec-h",
+        "dtb-spec-r",
+        "k",
+        "v"
+      ],
+      "params": [],
+      "tags": [
+        "tables",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "description": "A titled card of label/value rows with a highlight that walks down the rows — product specs, instance types, device sheets."
+    },
+    {
+      "id": "tables-definition-list",
+      "name": "Definition List",
+      "gallery": "tables",
+      "category": "KEY VALUE & DEFINITION",
+      "ref": ".dtb-def",
+      "classes": [
+        "dtb-def",
+        "dtb-typed",
+        "dtb-caret"
+      ],
+      "params": [],
+      "tags": [
+        "tables",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "description": "Term-and-definition pairs with a rail under each definition; the last entry types itself out — glossaries and acronym keys."
+    },
+    {
+      "id": "tables-properties-inspector",
+      "name": "Properties Inspector",
+      "gallery": "tables",
+      "category": "KEY VALUE & DEFINITION",
+      "ref": ".dtb-insp",
+      "classes": [
+        "dtb-insp",
+        "dtb-insp-h",
+        "dtb-chev",
+        "dtb-insp-r",
+        "k",
+        "v",
+        "s",
+        "n",
+        "fold",
+        "dtb-insp-g",
+        "b"
+      ],
+      "params": [],
+      "tags": [
+        "tables",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "description": "Grouped property rows under collapsible headers, one group folding and unfolding — the side-panel inspector of design and dev tools."
+    },
+    {
+      "id": "tables-json-tree",
+      "name": "JSON Tree",
+      "gallery": "tables",
+      "category": "KEY VALUE & DEFINITION",
+      "ref": ".dtb-json",
+      "classes": [
+        "dtb-json",
+        "dtb-jk",
+        "dtb-js",
+        "dtb-json-fold",
+        "dtb-json-el",
+        "dtb-jb",
+        "dtb-jn"
+      ],
+      "params": [],
+      "tags": [
+        "tables",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "description": "Syntax-coloured JSON with a node that collapses into an item count and expands again — API payloads, config dumps, catalog records."
+    },
+    {
+      "id": "tables-file-tree",
+      "name": "File Tree",
+      "gallery": "tables",
+      "category": "LISTS & TREES",
+      "ref": ".dtb-tree",
+      "classes": [
+        "dtb-tree",
+        "dtb-tree-n",
+        "dtb-chev",
+        "ic",
+        "dtb-tree-kids",
+        "sel",
+        "fi",
+        "code"
+      ],
+      "params": [],
+      "tags": [
+        "tables",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "description": "A folder whose chevron turns as its children slide open, with a selected file row — explorers, repo browsers, sitemap outlines."
+    },
+    {
+      "id": "tables-org-chart",
+      "name": "Org Chart",
+      "gallery": "tables",
+      "category": "LISTS & TREES",
+      "ref": ".dtb-org",
+      "classes": [
+        "dtb-org",
+        "dtb-org-n",
+        "root",
+        "dtb-org-v",
+        "dtb-org-row",
+        "dtb-org-pulse"
+      ],
+      "params": [],
+      "tags": [
+        "tables",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "description": "A root node over three children joined by elbow connectors, with pulses travelling down to each branch — org charts and ownership trees."
+    },
+    {
+      "id": "tables-nested-outline",
+      "name": "Nested Outline",
+      "gallery": "tables",
+      "category": "LISTS & TREES",
+      "ref": ".dtb-outline",
+      "classes": [
+        "dtb-outline",
+        "mut"
+      ],
+      "params": [],
+      "tags": [
+        "tables",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "description": "A two-level outline with round and diamond bullets that light up in reading order along a dashed rail — plans, agendas, hierarchies."
+    },
+    {
+      "id": "tables-numbered-steps",
+      "name": "Numbered Steps",
+      "gallery": "tables",
+      "category": "LISTS & TREES",
+      "ref": ".dtb-steps",
+      "classes": [
+        "dtb-steps",
+        "dtb-step"
+      ],
+      "params": [],
+      "tags": [
+        "tables",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "description": "Numbered circles on a vertical track that fills green as each step completes — runbooks, onboarding, release procedures."
+    },
+    {
+      "id": "tables-checklist",
+      "name": "Checklist",
+      "gallery": "tables",
+      "category": "LISTS & TREES",
+      "ref": ".dtb-check",
+      "classes": [
+        "dtb-check",
+        "dtb-ck-item",
+        "done",
+        "dtb-cb",
+        "on"
+      ],
+      "params": [],
+      "tags": [
+        "tables",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "description": "Items check themselves off in sequence, striking through as they complete — audit checklists and task lists in progress."
+    },
+    {
+      "id": "tables-leaderboard-swap",
+      "name": "Leaderboard Swap",
+      "gallery": "tables",
+      "category": "LISTS & TREES",
+      "ref": ".dtb-rank",
+      "classes": [
+        "dtb-rank",
+        "dtb-rank-r",
+        "g",
+        "rk",
+        "bar",
+        "sc",
+        "s",
+        "dn",
+        "b",
+        "up"
+      ],
+      "params": [],
+      "tags": [
+        "tables",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "description": "Ranked rows with medal badges and score bars; two competitors trade places as a score overtakes — leaderboards and top-N lists."
+    },
+    {
+      "id": "tables-timeline-list-now",
+      "name": "Timeline List + Now",
+      "gallery": "tables",
+      "category": "LISTS & TREES",
+      "ref": ".dtb-tl",
+      "classes": [
+        "dtb-tl",
+        "dtb-now",
+        "dtb-tl-r",
+        "t",
+        "d",
+        "ok",
+        "e",
+        "warn"
+      ],
+      "params": [],
+      "tags": [
+        "tables",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "description": "Timestamped events on a vertical rail with a NOW marker that drifts down through the schedule — change logs and incident timelines."
+    },
+    {
+      "id": "tables-record-card-grid",
+      "name": "Record Card Grid",
+      "gallery": "tables",
+      "category": "GRIDS & SCHEDULES",
+      "ref": ".dtb-grid",
+      "classes": [
+        "dtb-grid",
+        "dtb-rec"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "tables",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "description": "Records as a grid of small cards with a coloured figure each, revealed in a stagger — the card-view alternative to a table."
+    },
+    {
+      "id": "tables-gantt-rows",
+      "name": "Gantt Rows",
+      "gallery": "tables",
+      "category": "GRIDS & SCHEDULES",
+      "ref": ".dtb-gantt",
+      "classes": [
+        "dtb-gantt",
+        "dtb-today",
+        "dtb-gantt-r",
+        "tr",
+        "ms"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "tables",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "description": "Phase bars on gridded tracks (--s start, --w width), a diamond milestone, and a today line sliding across — project plans."
+    },
+    {
+      "id": "tables-weekly-schedule-grid",
+      "name": "Weekly Schedule Grid",
+      "gallery": "tables",
+      "category": "GRIDS & SCHEDULES",
+      "ref": ".dtb-sched",
+      "classes": [
+        "dtb-sched",
+        "ev",
+        "now"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "tables",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "description": "Hours down, weekdays across, colour-blocked slots and the current slot pulsing in the accent — rotas, room bookings, on-call."
+    },
+    {
+      "id": "tables-month-calendar",
+      "name": "Month Calendar",
+      "gallery": "tables",
+      "category": "GRIDS & SCHEDULES",
+      "ref": ".dtb-cal",
+      "classes": [
+        "dtb-cal",
+        "dtb-cal-h",
+        "dtb-cal-g",
+        "o",
+        "ev",
+        "today"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "tables",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "description": "A compact month grid with weekday headers, event dots in token colours, and today ringed by a pulsing halo — date pickers and planning views."
+    },
+    {
+      "id": "tables-kanban-columns",
+      "name": "Kanban Columns",
+      "gallery": "tables",
+      "category": "GRIDS & SCHEDULES",
+      "ref": ".dtb-kanban",
+      "classes": [
+        "dtb-kanban",
+        "dtb-kan-col",
+        "dtb-kan-card",
+        "out",
+        "in"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "tables",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "description": "Three status columns of cards; one card leaves To-do and lands in Doing with a green confirmation ring — boards and workflow states."
+    },
+    {
+      "id": "tables-bento-stat-grid",
+      "name": "Bento Stat Grid",
+      "gallery": "tables",
+      "category": "GRIDS & SCHEDULES",
+      "ref": ".dtb-bento",
+      "classes": [
+        "dtb-bento",
+        "w2",
+        "glow",
+        "h2",
+        "dtb-spark",
+        "dtb-spark-line",
+        "dtb-bar"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "tables",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "description": "Mixed-span tiles (.w2, .h2) holding one figure, sparkline or bar each, with the hero tile glowing — dashboard summaries."
+    },
+    {
+      "id": "tables-masonry-placeholder",
+      "name": "Masonry Placeholder",
+      "gallery": "tables",
+      "category": "GRIDS & SCHEDULES",
+      "ref": ".dtb-masonry",
+      "classes": [
+        "dtb-masonry",
+        "dtb-mas"
+      ],
+      "params": [],
+      "tags": [
+        "tables",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "description": "Three columns of variable-height cards with a shimmer travelling across them — the loading state of a masonry or gallery layout."
+    },
+    {
+      "id": "tables-ledger-running-balance",
+      "name": "Ledger + Running Balance",
+      "gallery": "tables",
+      "category": "LEDGERS, LOGS & TOOLBARS",
+      "ref": ".dtb-tbl.dtb-ledger",
+      "classes": [
+        "dtb-tbl",
+        "dtb-ledger",
+        "dtb-num",
+        "dtb-mono",
+        "dtb-dim",
+        "cr",
+        "bal",
+        "dr"
+      ],
+      "params": [],
+      "tags": [
+        "tables",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "description": "Credits in green, debits in red, a running balance column and a closing total, with the newest entry sliding in at the top."
+    },
+    {
+      "id": "tables-diff-table",
+      "name": "Diff Table",
+      "gallery": "tables",
+      "category": "LEDGERS, LOGS & TOOLBARS",
+      "ref": ".dtb-tbl.dtb-diff",
+      "classes": [
+        "dtb-tbl",
+        "dtb-diff",
+        "dtb-mono",
+        "del",
+        "add"
+      ],
+      "params": [],
+      "tags": [
+        "tables",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "description": "Before/after rows with a plus-minus gutter: removed rows struck through in red, added rows in green, each pulsing in turn — config and plan diffs."
+    },
+    {
+      "id": "tables-audit-trail",
+      "name": "Audit Trail",
+      "gallery": "tables",
+      "category": "LEDGERS, LOGS & TOOLBARS",
+      "ref": ".dtb-tbl.dtb-audit",
+      "classes": [
+        "dtb-tbl",
+        "dtb-audit",
+        "t",
+        "who"
+      ],
+      "params": [],
+      "tags": [
+        "tables",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "description": "Timestamp, actor chip and action per row, appearing in a cascade as the log fills — audit logs and activity feeds."
+    },
+    {
+      "id": "tables-pagination",
+      "name": "Pagination",
+      "gallery": "tables",
+      "category": "LEDGERS, LOGS & TOOLBARS",
+      "ref": ".dtb-pg",
+      "classes": [
+        "dtb-pg",
+        "nav",
+        "dots",
+        "dtb-pg-info"
+      ],
+      "params": [],
+      "tags": [
+        "tables",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "description": "A pager whose active page steps forward on its own, plus the rows-shown caption — the footer of any paged table."
+    },
+    {
+      "id": "tables-table-toolbar",
+      "name": "Table Toolbar",
+      "gallery": "tables",
+      "category": "LEDGERS, LOGS & TOOLBARS",
+      "ref": ".dtb-toolbar",
+      "classes": [
+        "dtb-toolbar",
+        "dtb-tb-row",
+        "dtb-search",
+        "dtb-typed",
+        "dtb-caret",
+        "dtb-tb-btn",
+        "dtb-chip",
+        "on",
+        "tog",
+        "dtb-tb-count"
+      ],
+      "params": [],
+      "tags": [
+        "tables",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "description": "Search box with a typing query, filter chips (one toggling on), column and export buttons, and a live match count — the control strip above a data table."
+    },
+    {
+      "id": "tables-empty-table-state",
+      "name": "Empty Table State",
+      "gallery": "tables",
+      "category": "LEDGERS, LOGS & TOOLBARS",
+      "ref": ".dtb-empty",
+      "classes": [
+        "dtb-empty",
+        "dtb-sk",
+        "w3",
+        "w2",
+        "dtb-empty-ic",
+        "dtb-empty-btn"
+      ],
+      "params": [],
+      "tags": [
+        "tables",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "description": "A dashed frame with ghost rows, a table glyph, a plain-language message and a glowing recovery action — what a table shows when a query returns nothing."
     },
     {
       "id": "spectrums-tonal-dropdown-menu",

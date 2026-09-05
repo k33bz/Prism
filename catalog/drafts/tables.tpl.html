@@ -1,0 +1,1071 @@
+<script type="text/html" id="pg-tables"><!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>📋 Tables & Data Layouts · Prism</title>
+<style>
+:root{
+  --bg:#0b0e17; --panel:#121623; --panel2:#171d2e; --card:#141b2b; --line:#243049;
+  --ink:#eaf1f9; --muted:#8593a8; --dim:#5b6678;
+  --crit:#c879ff;  --crit-rgb:200,121,255;
+  --neg:#f85149;   --neg-rgb:248,81,73;
+  --warn:#e0a52b;  --warn-rgb:224,165,43;
+  --pos:#3fb950;   --pos-rgb:63,185,80;
+  --info:#4493f8;  --info-rgb:68,147,248;
+  --accent:#ff9900;--accent-rgb:255,153,0;
+  --cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%);
+}
+.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}
+.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}
+.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(1100px 600px at 85% -10%,rgba(255,153,0,.05),transparent 60%),var(--bg);
+  color:var(--ink);font:14px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;padding-bottom:90px}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.92em}
+.head{padding:28px 32px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#232f3e,var(--panel));position:relative}
+.head h1{margin:0;font-size:25px;font-weight:800;letter-spacing:-.01em}
+.head p{margin:7px 0 0;color:var(--muted);font-size:13px;max-width:820px}
+.wrap{max-width:1240px;margin:0 auto;padding:22px 32px 0}
+h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);font-weight:800;margin:26px 0 12px;padding-bottom:7px;border-bottom:1px solid var(--line)}
+.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column}
+.tile .stage{padding:26px 18px;min-height:130px;display:flex;align-items:center;justify-content:center;background:repeating-linear-gradient(135deg,rgba(255,255,255,.012) 0 10px,transparent 10px 20px);position:relative}
+.tile .meta{padding:12px 14px;border-top:1px solid var(--line)}
+.tile .nm{font-weight:700;font-size:13.5px}
+.tile .ref{font-family:ui-monospace,Menlo,monospace;font-size:11.5px;color:var(--accent);background:var(--panel2);border:1px solid var(--line);border-radius:6px;padding:2px 7px;display:inline-block;margin-top:6px}
+.tile .desc{color:var(--muted);font-size:12px;margin-top:8px}
+.tile .row{display:flex;gap:8px;margin-top:10px}
+.tile .copy{flex:1;background:var(--panel2);border:1px solid var(--line);color:var(--ink);border-radius:8px;padding:7px;font-size:12px;cursor:pointer;transition:.15s;font-family:inherit}
+.tile .copy:hover{border-color:var(--accent);color:var(--accent)}
+.tile .copy.ok{border-color:var(--pos);color:var(--pos)}
+.el-pill{display:inline-block;background:rgba(var(--c-rgb),.14);color:var(--c);border-radius:11px;padding:3px 10px;font-size:11px;font-weight:800}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.001s!important;animation-iteration-count:1!important}}
+</style>
+<style id="tables-styles">
+/* ================= Tables & Data Layouts gallery — prefix dtb- / dtb* =================
+   Report-grade tables, matrices, key-value blocks, lists, trees, grids, schedules and
+   ledgers. Fully self-contained, offline, pure HTML + CSS. Colour comes ONLY from the
+   shared design tokens; recolourable families read --c / --c-rgb (add a c-* class or
+   set them inline). Every tile stays legible on a frozen frame: motion is a scan, a
+   highlight, a fill or an insert — never the only carrier of the information.
+   No selector references .tile or :hover for load-bearing styling (copy-helper friendly). */
+
+/* ---- shared table primitive ---- */
+.dtb-tbl{width:100%;max-width:300px;border-collapse:separate;border-spacing:0;font:11px/1.35 ui-sans-serif,system-ui,sans-serif;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.dtb-tbl th{font:700 9px/1.2 ui-sans-serif,system-ui,sans-serif;letter-spacing:.07em;text-transform:uppercase;color:var(--dim);text-align:left;padding:7px 9px;background:var(--panel2);border-bottom:1px solid var(--line);white-space:nowrap}
+.dtb-tbl td{padding:6px 9px;border-bottom:1px solid var(--line);white-space:nowrap;vertical-align:middle}
+.dtb-tbl tbody tr:last-child td{border-bottom:0}
+.dtb-tbl tfoot td{border-top:2px solid var(--line);border-bottom:0;font-weight:800;background:var(--panel2)}
+.dtb-num{text-align:right!important;font-family:ui-monospace,Menlo,monospace;font-variant-numeric:tabular-nums}
+.dtb-mono{font-family:ui-monospace,Menlo,monospace;font-variant-numeric:tabular-nums}
+.dtb-mut{color:var(--muted)}
+.dtb-dim{color:var(--dim)}
+.dtb-cap{margin-top:8px;font:600 9.5px/1.3 ui-sans-serif,system-ui,sans-serif;color:var(--muted);text-align:center;letter-spacing:.02em}
+
+/* ---- shared keyframes ---- */
+@keyframes dtbShimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+@keyframes dtbFadeUp{0%{opacity:0;transform:translateY(6px)}12%,80%{opacity:1;transform:translateY(0)}92%,100%{opacity:0;transform:translateY(6px)}}
+@keyframes dtbBlink{0%,100%{opacity:1}50%{opacity:.25}}
+@keyframes dtbCaret{0%,49%{opacity:1}50%,100%{opacity:0}}
+@keyframes dtbPop{0%,60%{transform:scale(.4);opacity:0}70%{transform:scale(1.25);opacity:1}78%,92%{transform:scale(1);opacity:1}100%{transform:scale(1);opacity:1}}
+@keyframes dtbDraw{0%{stroke-dashoffset:120}55%,85%{stroke-dashoffset:0}100%{stroke-dashoffset:0}}
+@keyframes dtbFill{0%{transform:scaleX(0)}60%,90%{transform:scaleX(1)}100%{transform:scaleX(1)}}
+@keyframes dtbFlash{0%{box-shadow:inset 0 0 0 999px rgba(var(--pos-rgb),.28)}35%,100%{box-shadow:inset 0 0 0 999px rgba(var(--pos-rgb),0)}}
+@keyframes dtbInsert{0%{opacity:0;transform:translateY(-100%)}10%{opacity:1;transform:translateY(0);box-shadow:inset 0 0 0 999px rgba(var(--accent-rgb),.22)}45%,100%{opacity:1;transform:translateY(0);box-shadow:inset 0 0 0 999px rgba(var(--accent-rgb),0)}}
+
+/* ===================== A. DATA TABLES ===================== */
+/* zebra + scanning row highlight */
+.dtb-zebra tbody tr:nth-child(even) td{background:rgba(255,255,255,.028)}
+.dtb-zebra tbody tr td{animation:dtbRowScan 4.5s linear infinite}
+.dtb-zebra tbody tr:nth-child(2) td{animation-delay:.6s}
+.dtb-zebra tbody tr:nth-child(3) td{animation-delay:1.2s}
+.dtb-zebra tbody tr:nth-child(4) td{animation-delay:1.8s}
+.dtb-zebra tbody tr:nth-child(5) td{animation-delay:2.4s}
+@keyframes dtbRowScan{0%,4%{box-shadow:inset 0 0 0 999px rgba(var(--accent-rgb),0)}9%{box-shadow:inset 0 0 0 999px rgba(var(--accent-rgb),.14)}22%,100%{box-shadow:inset 0 0 0 999px rgba(var(--accent-rgb),0)}}
+
+/* hover-glow rows: cycling row light with a left accent bar */
+.dtb-hoverglow tbody tr td{animation:dtbHov 6s ease-in-out infinite}
+.dtb-hoverglow tbody tr td:first-child{animation-name:dtbHovBar}
+.dtb-hoverglow tbody tr:nth-child(2) td{animation-delay:1.5s}
+.dtb-hoverglow tbody tr:nth-child(3) td{animation-delay:3s}
+.dtb-hoverglow tbody tr:nth-child(4) td{animation-delay:4.5s}
+@keyframes dtbHov{0%,5%{box-shadow:inset 0 0 0 999px rgba(var(--info-rgb),0)}10%,20%{box-shadow:inset 0 0 0 999px rgba(var(--info-rgb),.13)}27%,100%{box-shadow:inset 0 0 0 999px rgba(var(--info-rgb),0)}}
+@keyframes dtbHovBar{0%,5%{box-shadow:inset 0 0 0 999px rgba(var(--info-rgb),0),inset 0 0 0 0 var(--info)}10%,20%{box-shadow:inset 0 0 0 999px rgba(var(--info-rgb),.13),inset 2px 0 0 0 var(--info)}27%,100%{box-shadow:inset 0 0 0 999px rgba(var(--info-rgb),0),inset 0 0 0 0 var(--info)}}
+
+/* sortable header + two rows swapping places */
+.dtb-sort th.dtb-sorted{color:var(--accent)}
+.dtb-sort-arrow{display:inline-block;margin-left:4px;font-size:8px;transform-origin:50% 55%;animation:dtbSortFlip 4s ease-in-out infinite}
+@keyframes dtbSortFlip{0%,42%{transform:rotate(0)}50%,92%{transform:rotate(180deg)}100%{transform:rotate(360deg)}}
+.dtb-sort tbody tr:nth-child(2) td{animation:dtbSwapDown 4s ease-in-out infinite;position:relative;z-index:2}
+.dtb-sort tbody tr:nth-child(3) td{animation:dtbSwapUp 4s ease-in-out infinite;position:relative;z-index:1}
+@keyframes dtbSwapDown{0%,42%{transform:translateY(0)}50%,92%{transform:translateY(100%)}100%{transform:translateY(0)}}
+@keyframes dtbSwapUp{0%,42%{transform:translateY(0)}50%,92%{transform:translateY(-100%)}100%{transform:translateY(0)}}
+
+/* sticky header over an auto-scrolling body (div-based rows) */
+.dtb-sticky{width:100%;max-width:300px;height:132px;overflow:hidden;border:1px solid var(--line);border-radius:8px;background:var(--card);position:relative;font:11px/1.3 ui-sans-serif,system-ui,sans-serif}
+.dtb-row{display:grid;grid-template-columns:1.6fr 1fr .8fr;align-items:center;gap:6px;padding:6px 10px;border-bottom:1px solid var(--line);color:var(--ink)}
+.dtb-row .dtb-num{text-align:right}
+.dtb-sticky-head{position:absolute;top:0;left:0;right:0;z-index:3;background:var(--panel2);font:700 9px/1.2 ui-sans-serif,system-ui,sans-serif;letter-spacing:.07em;text-transform:uppercase;color:var(--dim);box-shadow:0 4px 10px rgba(0,0,0,.35);padding:7px 10px}
+.dtb-sticky-body{padding-top:26px;animation:dtbScrollUp 9s linear infinite}
+@keyframes dtbScrollUp{0%{transform:translateY(0)}100%{transform:translateY(-50%)}}
+
+/* dense numeric table + live cell */
+.dtb-dense{font-size:10px}
+.dtb-dense th{padding:4px 7px;font-size:8.5px}
+.dtb-dense td{padding:3px 7px}
+.dtb-live-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--pos);box-shadow:0 0 6px var(--pos);margin-right:5px;vertical-align:1px;animation:dtbBlink 1.2s ease-in-out infinite}
+
+/* row selection with checkboxes */
+.dtb-cb{display:inline-block;width:12px;height:12px;border:1px solid var(--dim);border-radius:3px;position:relative;vertical-align:-2px;background:var(--panel)}
+.dtb-cb::after{content:"";position:absolute;left:3px;top:0;width:4px;height:7px;border:solid var(--panel);border-width:0 2px 2px 0;transform:rotate(45deg) scale(0);opacity:0}
+.dtb-cb.on{background:var(--info);border-color:var(--info)}
+.dtb-cb.on::after{transform:rotate(45deg) scale(1);opacity:1}
+.dtb-select tbody tr:nth-child(2) .dtb-cb{animation:dtbCbOn 5s steps(1) infinite}
+.dtb-select tbody tr:nth-child(2) .dtb-cb::after{animation:dtbCbMark 5s ease-out infinite}
+.dtb-select tbody tr:nth-child(2) td{animation:dtbSelRow 5s steps(1) infinite}
+.dtb-select tbody tr:nth-child(4) .dtb-cb{animation:dtbCbOn 5s steps(1) infinite;animation-delay:1.2s}
+.dtb-select tbody tr:nth-child(4) .dtb-cb::after{animation:dtbCbMark 5s ease-out infinite;animation-delay:1.2s}
+.dtb-select tbody tr:nth-child(4) td{animation:dtbSelRow 5s steps(1) infinite;animation-delay:1.2s}
+@keyframes dtbCbOn{0%,19%{background:var(--panel);border-color:var(--dim)}20%,75%{background:var(--info);border-color:var(--info)}76%,100%{background:var(--panel);border-color:var(--dim)}}
+@keyframes dtbCbMark{0%,19%{transform:rotate(45deg) scale(0);opacity:0}24%,75%{transform:rotate(45deg) scale(1);opacity:1}76%,100%{transform:rotate(45deg) scale(0);opacity:0}}
+@keyframes dtbSelRow{0%,19%{box-shadow:inset 0 0 0 999px rgba(var(--info-rgb),0)}20%,75%{box-shadow:inset 0 0 0 999px rgba(var(--info-rgb),.12)}76%,100%{box-shadow:inset 0 0 0 999px rgba(var(--info-rgb),0)}}
+
+/* expandable detail row */
+.dtb-chev{display:inline-block;width:0;height:0;border:4px solid transparent;border-left:6px solid var(--muted);margin-right:6px;transform-origin:30% 50%;animation:dtbChev 5s ease-in-out infinite}
+@keyframes dtbChev{0%,18%{transform:rotate(0)}25%,80%{transform:rotate(90deg)}88%,100%{transform:rotate(0)}}
+.dtb-expand tr.dtb-detail td{padding:0;border-bottom:0}
+.dtb-detail-in{max-height:0;overflow:hidden;background:rgba(var(--info-rgb),.06);border-left:2px solid var(--info);animation:dtbExpand 5s ease-in-out infinite}
+.dtb-detail-in > div{padding:6px 10px 7px;font-size:10px;color:var(--muted);line-height:1.5}
+@keyframes dtbExpand{0%,18%{max-height:0}28%,78%{max-height:60px}90%,100%{max-height:0}}
+
+/* inline cell editing */
+.dtb-edit-cell{display:inline-block;min-width:78px;padding:1px 6px;border:1px solid var(--info);border-radius:4px;background:rgba(var(--info-rgb),.09);box-shadow:0 0 0 3px rgba(var(--info-rgb),.14);font-family:ui-monospace,Menlo,monospace}
+.dtb-typed{display:inline-block;overflow:hidden;white-space:nowrap;vertical-align:bottom;max-width:0;animation:dtbType 4.5s steps(9,end) infinite}
+@keyframes dtbType{0%,12%{max-width:0}55%,90%{max-width:5.4em}100%{max-width:0}}
+.dtb-caret{display:inline-block;width:1px;height:11px;background:var(--ink);vertical-align:-2px;margin-left:1px;animation:dtbCaret 1s steps(1) infinite}
+.dtb-edit-hint{font-size:8.5px;color:var(--info);text-transform:uppercase;letter-spacing:.06em;font-weight:800;margin-left:6px}
+
+/* totals row with counting numbers (registered property + counter) */
+@property --dtb-n{syntax:'<integer>';inherits:false;initial-value:0}
+.dtb-count{display:inline-block;counter-reset:dtbn var(--dtb-n)}
+.dtb-count::after{content:counter(dtbn)}
+.dtb-count.a{animation:dtbCountA 4s ease-out infinite}
+.dtb-count.b{animation:dtbCountB 4s ease-out infinite}
+.dtb-count.c{animation:dtbCountC 4s ease-out infinite}
+@keyframes dtbCountA{0%{--dtb-n:0}55%,100%{--dtb-n:1284}}
+@keyframes dtbCountB{0%{--dtb-n:0}55%,100%{--dtb-n:642}}
+@keyframes dtbCountC{0%{--dtb-n:0}55%,100%{--dtb-n:98}}
+.dtb-totals tfoot td{color:var(--accent)}
+
+/* skeleton loading table */
+.dtb-sk{display:block;height:9px;border-radius:4px;background:linear-gradient(90deg,var(--panel2) 25%,rgba(255,255,255,.09) 50%,var(--panel2) 75%);background-size:200% 100%;animation:dtbShimmer 1.5s linear infinite}
+.dtb-sk.w1{width:70%}.dtb-sk.w2{width:45%}.dtb-sk.w3{width:85%}.dtb-sk.w4{width:30%}
+.dtb-skel th .dtb-sk{background:linear-gradient(90deg,var(--line) 25%,rgba(255,255,255,.12) 50%,var(--line) 75%);background-size:200% 100%}
+
+/* ===================== B. STATUS & DATA CELLS ===================== */
+.dtb-pill{display:inline-block;padding:1px 7px;border-radius:10px;font-size:9px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;line-height:1.5}
+.dtb-pill.ok{color:var(--pos);background:rgba(var(--pos-rgb),.14)}
+.dtb-pill.warn{color:var(--warn);background:rgba(var(--warn-rgb),.14)}
+.dtb-pill.crit{color:var(--neg);background:rgba(var(--neg-rgb),.16);animation:dtbPillPulse 1.3s ease-in-out infinite}
+.dtb-pill.info{color:var(--info);background:rgba(var(--info-rgb),.14)}
+.dtb-pill.off{color:var(--dim);background:rgba(255,255,255,.05)}
+@keyframes dtbPillPulse{0%,100%{box-shadow:0 0 0 0 rgba(var(--neg-rgb),.5)}60%{box-shadow:0 0 0 5px rgba(var(--neg-rgb),0)}}
+
+.dtb-bar{display:inline-block;width:64px;height:6px;border-radius:3px;background:var(--panel2);overflow:hidden;vertical-align:middle;margin-right:6px}
+.dtb-bar i{display:block;height:100%;width:var(--w,60%);border-radius:3px;background:var(--c,var(--info));transform-origin:0 50%;animation:dtbFill 3.4s ease-out infinite}
+.dtb-bar-v{font-size:9.5px;color:var(--muted);font-family:ui-monospace,Menlo,monospace}
+
+.dtb-spark{display:inline-block;width:64px;height:18px;vertical-align:middle;overflow:visible}
+.dtb-spark-line{fill:none;stroke:var(--c,var(--info));stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:120;stroke-dashoffset:120;animation:dtbDraw 3s ease-out infinite}
+.dtb-spark-dot{fill:var(--c,var(--info));animation:dtbBlink 1.6s ease-in-out infinite}
+
+.dtb-up{color:var(--pos);font-weight:800}
+.dtb-down{color:var(--neg);font-weight:800}
+.dtb-flat{color:var(--dim);font-weight:800}
+.dtb-delta td.dtb-flash{animation:dtbFlash 3.2s ease-out infinite}
+.dtb-delta tbody tr:nth-child(3) td.dtb-flash{animation-delay:1.1s;animation-name:dtbFlashNeg}
+.dtb-delta tbody tr:nth-child(4) td.dtb-flash{animation-delay:2.2s}
+@keyframes dtbFlashNeg{0%{box-shadow:inset 0 0 0 999px rgba(var(--neg-rgb),.28)}35%,100%{box-shadow:inset 0 0 0 999px rgba(var(--neg-rgb),0)}}
+
+.dtb-av{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:rgba(var(--c-rgb,var(--info-rgb)),.25);color:var(--c,var(--info));font:800 8.5px ui-sans-serif,system-ui,sans-serif;margin-right:7px;vertical-align:middle;position:relative}
+.dtb-av i{position:absolute;right:-1px;bottom:-1px;width:6px;height:6px;border-radius:50%;background:var(--pos);border:1.5px solid var(--card);animation:dtbBlink 1.4s ease-in-out infinite}
+.dtb-av.away i{background:var(--warn);animation:none}
+.dtb-av.gone i{background:var(--dim);animation:none}
+
+.dtb-tag{display:inline-block;padding:1px 6px;border-radius:5px;background:var(--panel2);border:1px solid var(--line);font-size:9px;color:var(--muted);margin-right:3px;font-weight:700}
+.dtb-tag.hot{border-color:var(--accent);color:var(--accent);animation:dtbTagGlow 2.2s ease-in-out infinite}
+.dtb-tag.new{border-color:var(--pos);color:var(--pos)}
+@keyframes dtbTagGlow{0%,100%{box-shadow:0 0 0 rgba(var(--accent-rgb),0)}50%{box-shadow:0 0 8px rgba(var(--accent-rgb),.6)}}
+
+.dtb-heat td.dtb-hc{text-align:right;font-family:ui-monospace,Menlo,monospace;background:rgba(var(--accent-rgb),calc(var(--h,.5)*.62));color:var(--ink);animation:dtbHeatPulse 3.6s ease-in-out infinite;animation-delay:calc(var(--h,.5)*-1.6s)}
+@keyframes dtbHeatPulse{0%,100%{filter:brightness(1)}50%{filter:brightness(1.28)}}
+
+.dtb-ticker tbody tr:first-child td{animation:dtbInsert 4s cubic-bezier(.2,.8,.3,1) infinite}
+.dtb-ticker tbody tr:nth-child(2) td .dtb-tk{animation:dtbFlash 4s ease-out infinite;animation-delay:1.6s;padding:0 3px;border-radius:3px}
+.dtb-ticker tbody tr:nth-child(3) td .dtb-tk{animation:dtbFlashNeg 4s ease-out infinite;animation-delay:2.6s;padding:0 3px;border-radius:3px}
+.dtb-tk{display:inline-block}
+
+/* ===================== C. MATRICES & COMPARISON ===================== */
+.dtb-matrix td{text-align:center}
+.dtb-matrix td:first-child{text-align:left;color:var(--muted)}
+.dtb-matrix th{text-align:center}
+.dtb-matrix th:first-child{text-align:left}
+.dtb-yes{display:inline-block;color:var(--pos);font-weight:900;animation:dtbPop 4.8s ease-out infinite}
+.dtb-no{color:var(--dim)}
+.dtb-part{display:inline-block;width:10px;height:10px;border-radius:50%;background:conic-gradient(var(--warn) 0 50%,var(--panel2) 50% 100%);vertical-align:-1px}
+.dtb-matrix tr:nth-child(1) .dtb-yes{animation-delay:0s}.dtb-matrix tr:nth-child(2) .dtb-yes{animation-delay:.25s}.dtb-matrix tr:nth-child(3) .dtb-yes{animation-delay:.5s}.dtb-matrix tr:nth-child(4) .dtb-yes{animation-delay:.75s}
+.dtb-matrix td:nth-child(3) .dtb-yes{animation-delay:.9s}.dtb-matrix td:nth-child(4) .dtb-yes{animation-delay:1.3s}
+
+.dtb-hm{display:grid;grid-template-columns:34px repeat(7,18px);gap:3px;align-items:center;font:600 8.5px ui-sans-serif,system-ui,sans-serif;color:var(--dim)}
+.dtb-hm b{font-weight:600;text-align:center}
+.dtb-hm i{display:block;width:18px;height:18px;border-radius:3px;background:rgba(var(--info-rgb),var(--a,.4));animation:dtbWave 3.2s ease-in-out infinite;animation-delay:calc(var(--d,0)*.13s)}
+@keyframes dtbWave{0%,100%{opacity:.55;transform:scale(.92)}50%{opacity:1;transform:scale(1)}}
+
+.dtb-pivot th.dtb-rh{background:var(--panel2);color:var(--muted);text-transform:none;letter-spacing:0;font-size:10px}
+.dtb-pivot td{text-align:right;font-family:ui-monospace,Menlo,monospace}
+.dtb-pivot tbody tr:nth-child(3) td{animation:dtbRowLite 5s ease-in-out infinite}
+.dtb-pivot tbody tr td:nth-child(3){animation:dtbRowLite 5s ease-in-out infinite}
+.dtb-pivot tbody tr:nth-child(3) td:nth-child(3){animation:dtbHit 5s ease-in-out infinite;color:var(--accent);font-weight:800}
+@keyframes dtbRowLite{0%,15%{box-shadow:inset 0 0 0 999px rgba(var(--accent-rgb),0)}30%,70%{box-shadow:inset 0 0 0 999px rgba(var(--accent-rgb),.09)}85%,100%{box-shadow:inset 0 0 0 999px rgba(var(--accent-rgb),0)}}
+@keyframes dtbHit{0%,15%{box-shadow:inset 0 0 0 999px rgba(var(--accent-rgb),0),inset 0 0 0 0 var(--accent)}30%,70%{box-shadow:inset 0 0 0 999px rgba(var(--accent-rgb),.22),inset 0 0 0 1px var(--accent)}85%,100%{box-shadow:inset 0 0 0 999px rgba(var(--accent-rgb),0),inset 0 0 0 0 var(--accent)}}
+
+.dtb-risk{display:grid;grid-template-columns:auto repeat(4,32px);grid-auto-rows:26px;gap:3px;align-items:center;font:700 8px ui-sans-serif,system-ui,sans-serif;color:var(--dim);text-transform:uppercase;letter-spacing:.05em}
+.dtb-risk span{text-align:right;padding-right:4px}
+.dtb-risk b{font-weight:700;text-align:center;align-self:start}
+.dtb-risk i{display:block;height:26px;border-radius:4px;position:relative;background:rgba(var(--pos-rgb),.22)}
+.dtb-risk i.m{background:rgba(var(--warn-rgb),.28)}
+.dtb-risk i.h{background:rgba(var(--neg-rgb),.34)}
+.dtb-risk-dot{position:absolute;left:50%;top:50%;width:10px;height:10px;margin:-5px 0 0 -5px;border-radius:50%;background:var(--ink);box-shadow:0 0 0 2px var(--neg);animation:dtbRiskPulse 1.8s ease-out infinite}
+@keyframes dtbRiskPulse{0%{box-shadow:0 0 0 2px var(--neg),0 0 0 2px rgba(var(--neg-rgb),.6)}100%{box-shadow:0 0 0 2px var(--neg),0 0 0 12px rgba(var(--neg-rgb),0)}}
+
+.dtb-compare th,.dtb-compare td{text-align:center}
+.dtb-compare th:first-child,.dtb-compare td:first-child{text-align:left;color:var(--muted)}
+.dtb-compare .dtb-rec{background:rgba(var(--accent-rgb),.08);box-shadow:inset 0 0 0 1px var(--accent);animation:dtbRecGlow 2.6s ease-in-out infinite}
+.dtb-compare th.dtb-rec{color:var(--accent)}
+.dtb-rec-badge{display:block;font-size:7.5px;letter-spacing:.1em;color:var(--accent);margin-top:2px}
+@keyframes dtbRecGlow{0%,100%{box-shadow:inset 0 0 0 1px var(--accent),0 0 0 rgba(var(--accent-rgb),0)}50%{box-shadow:inset 0 0 0 1px var(--accent),0 0 12px rgba(var(--accent-rgb),.35)}}
+
+.dtb-corr{font-family:ui-monospace,Menlo,monospace}
+.dtb-corr th{text-align:center;padding:5px 6px}
+.dtb-corr td{text-align:center;padding:5px 6px;font-size:10px}
+.dtb-corr td.p{background:rgba(var(--info-rgb),calc(var(--v,.5)*.75))}
+.dtb-corr td.n{background:rgba(var(--neg-rgb),calc(var(--v,.5)*.75))}
+.dtb-corr td.d{background:rgba(var(--accent-rgb),.3);color:var(--accent);font-weight:800;animation:dtbBlink 2.6s ease-in-out infinite}
+
+.dtb-contrib{display:grid;grid-template-columns:repeat(14,10px);grid-auto-rows:10px;gap:2px}
+.dtb-contrib i{display:block;border-radius:2px;background:rgba(var(--pos-rgb),var(--a,.12));animation:dtbLight 7s ease-in-out infinite;animation-delay:calc(var(--d,0)*.07s)}
+@keyframes dtbLight{0%,8%{filter:brightness(.6);transform:scale(.85)}14%,60%{filter:brightness(1.15);transform:scale(1)}70%,100%{filter:brightness(1);transform:scale(1)}}
+.dtb-contrib-lg{display:flex;gap:3px;align-items:center;justify-content:flex-end;margin-top:6px;font:600 8.5px ui-sans-serif,system-ui,sans-serif;color:var(--dim)}
+.dtb-contrib-lg i{width:9px;height:9px;border-radius:2px;background:rgba(var(--pos-rgb),var(--a,.12))}
+
+/* ===================== D. KEY-VALUE & DEFINITION ===================== */
+.dtb-kv{display:grid;grid-template-columns:auto 1fr auto;column-gap:8px;row-gap:6px;width:100%;max-width:280px;font:11px/1.3 ui-sans-serif,system-ui,sans-serif;align-items:end}
+.dtb-kv .k{color:var(--muted)}
+.dtb-kv .lead{border-bottom:1px dotted var(--dim);margin-bottom:3px;opacity:.7}
+.dtb-kv .v{color:var(--ink);font-family:ui-monospace,Menlo,monospace;font-variant-numeric:tabular-nums;text-align:right;animation:dtbFadeUp 6s ease-in-out infinite}
+.dtb-kv .v:nth-of-type(2){animation-delay:.2s}.dtb-kv .v:nth-of-type(3){animation-delay:.4s}.dtb-kv .v:nth-of-type(4){animation-delay:.6s}.dtb-kv .v:nth-of-type(5){animation-delay:.8s}
+
+.dtb-spec{width:100%;max-width:280px;background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden;font:11px/1.3 ui-sans-serif,system-ui,sans-serif}
+.dtb-spec-h{padding:8px 12px;background:var(--panel2);border-bottom:1px solid var(--line);font-weight:800;font-size:11px;letter-spacing:.02em}
+.dtb-spec-h small{float:right;color:var(--dim);font-weight:600;font-size:9px;text-transform:uppercase;letter-spacing:.08em}
+.dtb-spec-r{display:grid;grid-template-columns:90px 1fr;padding:6px 12px;border-bottom:1px solid var(--line);animation:dtbRowLite 6s ease-in-out infinite}
+.dtb-spec-r:last-child{border-bottom:0}
+.dtb-spec-r:nth-child(3){animation-delay:1.2s}.dtb-spec-r:nth-child(4){animation-delay:2.4s}.dtb-spec-r:nth-child(5){animation-delay:3.6s}.dtb-spec-r:nth-child(6){animation-delay:4.8s}
+.dtb-spec-r .k{color:var(--muted)}
+.dtb-spec-r .v{color:var(--ink);font-family:ui-monospace,Menlo,monospace}
+
+.dtb-def{width:100%;max-width:280px;margin:0;font:11px/1.4 ui-sans-serif,system-ui,sans-serif}
+.dtb-def dt{font-weight:800;color:var(--info);font-family:ui-monospace,Menlo,monospace;font-size:10.5px;margin-top:6px}
+.dtb-def dt:first-child{margin-top:0}
+.dtb-def dd{margin:1px 0 0 12px;color:var(--muted);border-left:2px solid var(--line);padding-left:8px}
+.dtb-def dd .dtb-typed{max-width:0;animation:dtbTypeLong 6s steps(26,end) infinite;color:var(--ink)}
+@keyframes dtbTypeLong{0%,8%{max-width:0}55%,92%{max-width:15em}100%{max-width:0}}
+
+.dtb-insp{width:100%;max-width:280px;background:var(--card);border:1px solid var(--line);border-radius:8px;overflow:hidden;font:10.5px/1.3 ui-sans-serif,system-ui,sans-serif}
+.dtb-insp-h{display:flex;align-items:center;gap:6px;padding:6px 10px;background:var(--panel2);font-weight:800;font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--line)}
+.dtb-insp-h .dtb-chev{animation:none;transform:rotate(90deg)}
+.dtb-insp-h.fold .dtb-chev{animation:dtbChev 6s ease-in-out infinite;animation-delay:-1.4s}
+.dtb-insp-r{display:grid;grid-template-columns:80px 1fr;padding:4px 10px 4px 22px;border-bottom:1px solid var(--line)}
+.dtb-insp-r .k{color:var(--muted)}
+.dtb-insp-r .v{color:var(--ink);font-family:ui-monospace,Menlo,monospace}
+.dtb-insp-r .v.b{color:var(--crit)}.dtb-insp-r .v.n{color:var(--accent)}.dtb-insp-r .v.s{color:var(--pos)}
+.dtb-insp-g{overflow:hidden;animation:dtbFold 6s ease-in-out infinite;animation-delay:-1.4s}
+@keyframes dtbFold{0%,18%{max-height:80px}28%,78%{max-height:0}90%,100%{max-height:80px}}
+
+.dtb-json{width:100%;max-width:280px;margin:0;padding:10px 12px;background:var(--card);border:1px solid var(--line);border-radius:8px;font:10.5px/1.55 ui-monospace,Menlo,monospace;color:var(--muted);white-space:pre}
+.dtb-jk{color:var(--info)}.dtb-js{color:var(--pos)}.dtb-jn{color:var(--accent)}.dtb-jb{color:var(--crit)}
+.dtb-json-fold{display:block;overflow:hidden;max-height:60px;animation:dtbJsonFold 6s ease-in-out infinite}
+.dtb-json-el{display:block;overflow:hidden;max-height:0;opacity:0;color:var(--dim);animation:dtbJsonEl 6s ease-in-out infinite}
+@keyframes dtbJsonFold{0%,20%{max-height:60px;opacity:1}30%,70%{max-height:0;opacity:0}80%,100%{max-height:60px;opacity:1}}
+@keyframes dtbJsonEl{0%,24%{max-height:0;opacity:0}32%,68%{max-height:20px;opacity:1}78%,100%{max-height:0;opacity:0}}
+
+/* ===================== E. LISTS & TREES ===================== */
+.dtb-tree{width:100%;max-width:260px;font:11px/1.6 ui-monospace,Menlo,monospace;color:var(--ink)}
+.dtb-tree-n{display:flex;align-items:center;gap:6px;padding:1px 6px;border-radius:5px;white-space:nowrap}
+.dtb-tree-n .ic{width:12px;height:10px;border-radius:2px;background:var(--warn);position:relative;flex:0 0 auto}
+.dtb-tree-n .ic::before{content:"";position:absolute;left:0;top:-2px;width:5px;height:2px;border-radius:1px 1px 0 0;background:var(--warn)}
+.dtb-tree-n .fi{width:9px;height:11px;border-radius:1px;background:var(--dim);flex:0 0 auto}
+.dtb-tree-n .fi.code{background:var(--info)}
+.dtb-tree-n.sel{background:rgba(var(--accent-rgb),.14);color:var(--accent)}
+.dtb-tree-kids{padding-left:18px;overflow:hidden;animation:dtbTreeOpen 6s ease-in-out infinite}
+.dtb-tree .dtb-chev{animation:dtbChev 6s ease-in-out infinite}
+@keyframes dtbTreeOpen{0%,18%{max-height:0;opacity:0}28%,80%{max-height:90px;opacity:1}90%,100%{max-height:0;opacity:0}}
+
+.dtb-org{display:flex;flex-direction:column;align-items:center;width:100%;max-width:280px;font:700 9.5px/1.2 ui-sans-serif,system-ui,sans-serif}
+.dtb-org-n{padding:5px 10px;border:1px solid var(--line);border-radius:7px;background:var(--panel2);color:var(--ink);text-align:center;min-width:64px;position:relative}
+.dtb-org-n small{display:block;font-weight:600;font-size:8px;color:var(--muted);letter-spacing:.04em;text-transform:uppercase;margin-top:1px}
+.dtb-org-n.root{border-color:var(--accent);color:var(--accent);box-shadow:0 0 12px rgba(var(--accent-rgb),.2)}
+.dtb-org-v{width:2px;height:16px;background:linear-gradient(180deg,var(--accent),var(--line))}
+.dtb-org-row{display:flex;gap:10px;position:relative;padding-top:12px}
+.dtb-org-row::before{content:"";position:absolute;left:13%;right:13%;top:0;height:2px;background:var(--line)}
+.dtb-org-row .dtb-org-n::before{content:"";position:absolute;left:50%;top:-12px;width:2px;height:12px;background:var(--line)}
+.dtb-org-pulse{position:absolute;left:50%;top:-12px;width:6px;height:6px;margin-left:-2px;border-radius:50%;background:var(--accent);box-shadow:0 0 6px var(--accent);animation:dtbOrgPulse 3s ease-in-out infinite}
+.dtb-org-row .dtb-org-n:nth-child(2) .dtb-org-pulse{animation-delay:1s}.dtb-org-row .dtb-org-n:nth-child(3) .dtb-org-pulse{animation-delay:2s}
+@keyframes dtbOrgPulse{0%,60%{opacity:0;transform:translateY(0)}65%{opacity:1}90%{opacity:1;transform:translateY(12px)}100%{opacity:0;transform:translateY(12px)}}
+
+.dtb-outline{width:100%;max-width:260px;margin:0;padding:0;list-style:none;font:11px/1.5 ui-sans-serif,system-ui,sans-serif;color:var(--ink)}
+.dtb-outline li{position:relative;padding-left:16px}
+.dtb-outline li::before{content:"";position:absolute;left:3px;top:.55em;width:6px;height:6px;border-radius:50%;background:var(--dim);animation:dtbBullet 5s ease-in-out infinite;animation-delay:calc(var(--i,0)*.45s)}
+.dtb-outline ul{list-style:none;margin:0;padding:0 0 0 6px;border-left:1px dashed var(--line);margin-left:6px}
+.dtb-outline ul li::before{width:5px;height:5px;border-radius:1px;transform:rotate(45deg)}
+.dtb-outline li.mut{color:var(--muted)}
+@keyframes dtbBullet{0%,10%{background:var(--dim);box-shadow:0 0 0 rgba(var(--info-rgb),0)}16%,26%{background:var(--info);box-shadow:0 0 8px rgba(var(--info-rgb),.8)}36%,100%{background:var(--dim);box-shadow:0 0 0 rgba(var(--info-rgb),0)}}
+
+.dtb-steps{width:100%;max-width:260px;position:relative;font:11px/1.3 ui-sans-serif,system-ui,sans-serif;padding-left:30px}
+.dtb-steps::before{content:"";position:absolute;left:10px;top:10px;bottom:10px;width:2px;background:var(--line)}
+.dtb-steps::after{content:"";position:absolute;left:10px;top:10px;bottom:10px;width:2px;background:var(--pos);transform-origin:50% 0;animation:dtbTrack 6s ease-in-out infinite}
+@keyframes dtbTrack{0%,8%{transform:scaleY(0)}70%,88%{transform:scaleY(1)}100%{transform:scaleY(0)}}
+.dtb-step{position:relative;padding:4px 0 10px;color:var(--muted)}
+.dtb-step:last-child{padding-bottom:0}
+.dtb-step b{display:block;color:var(--ink);font-weight:700}
+.dtb-step i{position:absolute;left:-30px;top:2px;width:22px;height:22px;border-radius:50%;background:var(--panel2);border:2px solid var(--line);display:grid;place-items:center;font:800 9px ui-sans-serif,system-ui,sans-serif;color:var(--muted);font-style:normal;animation:dtbStepOn 6s steps(1) infinite;animation-delay:calc(var(--i,0)*1.15s)}
+@keyframes dtbStepOn{0%,12%{background:var(--panel2);border-color:var(--line);color:var(--muted)}13%,88%{background:var(--pos);border-color:var(--pos);color:#06140a}100%{background:var(--panel2);border-color:var(--line);color:var(--muted)}}
+
+.dtb-check{width:100%;max-width:260px;margin:0;padding:0;list-style:none;font:11px/1.4 ui-sans-serif,system-ui,sans-serif}
+.dtb-ck-item{display:flex;align-items:center;gap:8px;padding:4px 0;color:var(--ink);animation:dtbDone 7s steps(1) infinite;animation-delay:calc(var(--i,0)*1.2s)}
+.dtb-ck-item .dtb-cb{animation:dtbCbOn 7s steps(1) infinite;animation-delay:calc(var(--i,0)*1.2s)}
+.dtb-ck-item .dtb-cb::after{animation:dtbCbMark 7s ease-out infinite;animation-delay:calc(var(--i,0)*1.2s)}
+.dtb-ck-item .dtb-cb.on{animation:none}.dtb-ck-item .dtb-cb.on::after{animation:none}
+.dtb-ck-item.done{color:var(--dim);text-decoration:line-through;animation:none}
+@keyframes dtbDone{0%,19%{color:var(--ink);text-decoration:none}20%,75%{color:var(--dim);text-decoration:line-through}76%,100%{color:var(--ink);text-decoration:none}}
+
+.dtb-rank{width:100%;max-width:280px;font:11px/1.3 ui-sans-serif,system-ui,sans-serif;display:flex;flex-direction:column;gap:4px}
+.dtb-rank-r{display:grid;grid-template-columns:22px 1fr 70px 34px;align-items:center;gap:8px;padding:5px 8px;border:1px solid var(--line);border-radius:7px;background:var(--card);color:var(--ink)}
+.dtb-rank-r .rk{width:18px;height:18px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:9.5px;background:var(--panel2);color:var(--muted)}
+.dtb-rank-r.g .rk{background:var(--accent);color:#1a1000}.dtb-rank-r.s .rk{background:var(--muted);color:#0b0e17}.dtb-rank-r.b .rk{background:rgba(var(--warn-rgb),.7);color:#1a1000}
+.dtb-rank-r .bar{height:5px;border-radius:3px;background:var(--panel2);overflow:hidden}
+.dtb-rank-r .bar i{display:block;height:100%;width:var(--w,50%);background:var(--info);border-radius:3px}
+.dtb-rank-r .sc{text-align:right;font-family:ui-monospace,Menlo,monospace;color:var(--muted)}
+.dtb-rank-r.dn{animation:dtbSwapDownR 5s ease-in-out infinite;position:relative;z-index:1}
+.dtb-rank-r.up{animation:dtbSwapUpR 5s ease-in-out infinite;position:relative;z-index:2}
+.dtb-rank-r.up .sc{color:var(--pos)}
+@keyframes dtbSwapDownR{0%,40%{transform:translateY(0)}50%,90%{transform:translateY(calc(100% + 4px))}100%{transform:translateY(0)}}
+@keyframes dtbSwapUpR{0%,40%{transform:translateY(0);box-shadow:none}50%,90%{transform:translateY(calc(-100% - 4px));box-shadow:0 0 0 1px var(--pos),0 4px 14px rgba(0,0,0,.4)}100%{transform:translateY(0);box-shadow:none}}
+
+.dtb-tl{width:100%;max-width:280px;position:relative;font:11px/1.3 ui-sans-serif,system-ui,sans-serif}
+.dtb-tl-r{display:grid;grid-template-columns:44px 14px 1fr;align-items:center;gap:6px;padding:5px 0;position:relative}
+.dtb-tl-r .t{font-family:ui-monospace,Menlo,monospace;font-size:9.5px;color:var(--dim);text-align:right}
+.dtb-tl-r .d{width:8px;height:8px;border-radius:50%;background:var(--panel2);border:2px solid var(--line);justify-self:center}
+.dtb-tl-r .d.ok{border-color:var(--pos);background:var(--pos)}.dtb-tl-r .d.warn{border-color:var(--warn);background:var(--warn)}
+.dtb-tl-r .e{color:var(--ink)}
+.dtb-tl-r .e small{color:var(--muted);margin-left:5px;font-size:9.5px}
+.dtb-tl::before{content:"";position:absolute;left:54px;top:8px;bottom:8px;width:2px;background:var(--line);margin-left:-1px}
+.dtb-now{position:absolute;left:44px;right:0;top:0;height:2px;background:var(--accent);box-shadow:0 0 8px var(--accent);animation:dtbNow 6s ease-in-out infinite;pointer-events:none}
+.dtb-now::before{content:"NOW";position:absolute;right:0;top:-5px;font:800 7px ui-sans-serif,system-ui,sans-serif;color:#1a1000;background:var(--accent);padding:1px 4px;border-radius:3px;letter-spacing:.08em}
+@keyframes dtbNow{0%,10%{top:14%}45%,55%{top:60%}90%,100%{top:14%}}
+
+/* ===================== F. GRIDS & SCHEDULES ===================== */
+.dtb-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;width:100%;max-width:290px;font:10px/1.3 ui-sans-serif,system-ui,sans-serif}
+.dtb-rec{padding:7px 8px;border:1px solid var(--line);border-radius:8px;background:var(--card);animation:dtbFadeUp 6s ease-in-out infinite;animation-delay:calc(var(--i,0)*.25s)}
+.dtb-rec b{display:block;font-size:10.5px;color:var(--ink);font-weight:700}
+.dtb-rec small{display:block;color:var(--muted);font-size:9px;margin-top:2px}
+.dtb-rec em{display:block;font-style:normal;font-family:ui-monospace,Menlo,monospace;color:var(--c,var(--info));font-size:11px;margin-top:4px;font-weight:700}
+
+.dtb-gantt{width:100%;max-width:290px;position:relative;font:600 9.5px/1.2 ui-sans-serif,system-ui,sans-serif;color:var(--muted)}
+.dtb-gantt-r{display:grid;grid-template-columns:56px 1fr;align-items:center;gap:6px;padding:3px 0}
+.dtb-gantt-r .tr{height:12px;border-radius:3px;background:repeating-linear-gradient(90deg,transparent 0 24%,var(--line) 24% 25%);position:relative}
+.dtb-gantt-r .tr i{position:absolute;top:1px;bottom:1px;left:var(--s,0%);width:var(--w,30%);border-radius:3px;background:var(--c,var(--info));opacity:.85;transform-origin:0 50%;animation:dtbFill 5s ease-out infinite;animation-delay:calc(var(--i,0)*.35s)}
+.dtb-gantt-r .tr i.ms{width:8px;height:8px;top:2px;border-radius:2px;transform:rotate(45deg);background:var(--accent);animation:none}
+.dtb-today{position:absolute;top:0;bottom:0;left:calc(56px + 6px + 22%);width:2px;background:var(--accent);box-shadow:0 0 6px var(--accent);animation:dtbToday 7s linear infinite}
+@keyframes dtbToday{0%{left:calc(62px + 18%)}100%{left:calc(62px + 78%)}}
+
+.dtb-sched{display:grid;grid-template-columns:34px repeat(5,1fr);grid-auto-rows:20px;gap:2px;width:100%;max-width:290px;font:600 8.5px ui-sans-serif,system-ui,sans-serif;color:var(--dim)}
+.dtb-sched b{font-weight:700;text-align:center;line-height:20px;text-transform:uppercase;letter-spacing:.05em}
+.dtb-sched span{text-align:right;padding-right:4px;line-height:20px;font-family:ui-monospace,Menlo,monospace}
+.dtb-sched i{display:block;border-radius:3px;background:rgba(255,255,255,.035)}
+.dtb-sched i.ev{background:rgba(var(--c-rgb,var(--info-rgb)),.35);box-shadow:inset 0 0 0 1px rgba(var(--c-rgb,var(--info-rgb)),.5)}
+.dtb-sched i.now{animation:dtbSlot 1.6s ease-in-out infinite}
+@keyframes dtbSlot{0%,100%{box-shadow:inset 0 0 0 1px var(--accent),0 0 0 rgba(var(--accent-rgb),0)}50%{box-shadow:inset 0 0 0 2px var(--accent),0 0 10px rgba(var(--accent-rgb),.6)}}
+
+.dtb-cal{width:100%;max-width:230px;font:600 9px ui-sans-serif,system-ui,sans-serif}
+.dtb-cal-h{display:flex;justify-content:space-between;align-items:center;font-size:10.5px;font-weight:800;color:var(--ink);margin-bottom:5px}
+.dtb-cal-h small{color:var(--dim);font-weight:700}
+.dtb-cal-g{display:grid;grid-template-columns:repeat(7,1fr);gap:2px}
+.dtb-cal-g b{text-align:center;color:var(--dim);font-size:8px;text-transform:uppercase;padding:2px 0}
+.dtb-cal-g i{display:grid;place-items:center;height:22px;border-radius:5px;font-style:normal;color:var(--muted);position:relative;background:rgba(255,255,255,.025)}
+.dtb-cal-g i.o{color:var(--dim);opacity:.45}
+.dtb-cal-g i.ev::after{content:"";position:absolute;bottom:2px;left:50%;width:4px;height:4px;margin-left:-2px;border-radius:50%;background:var(--c,var(--info))}
+.dtb-cal-g i.today{background:var(--accent);color:#1a1000;font-weight:800;animation:dtbTodayRing 2s ease-out infinite}
+@keyframes dtbTodayRing{0%{box-shadow:0 0 0 0 rgba(var(--accent-rgb),.6)}100%{box-shadow:0 0 0 8px rgba(var(--accent-rgb),0)}}
+
+.dtb-kanban{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;width:100%;max-width:290px;font:600 9px/1.25 ui-sans-serif,system-ui,sans-serif}
+.dtb-kan-col{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:6px;min-height:104px}
+.dtb-kan-col b{display:block;font-size:8px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);margin:0 2px 6px}
+.dtb-kan-card{background:var(--panel2);border:1px solid var(--line);border-radius:6px;padding:5px 6px;color:var(--ink);margin-bottom:5px;border-left:3px solid var(--c,var(--info))}
+.dtb-kan-card.out{animation:dtbKanOut 5s ease-in-out infinite}
+.dtb-kan-card.in{animation:dtbKanIn 5s ease-in-out infinite}
+@keyframes dtbKanOut{0%,25%{opacity:1;transform:translateX(0)}40%,88%{opacity:0;transform:translateX(30px)}100%{opacity:1;transform:translateX(0)}}
+@keyframes dtbKanIn{0%,32%{opacity:0;transform:translateX(-30px)}45%,88%{opacity:1;transform:translateX(0);box-shadow:0 0 0 1px var(--pos)}100%{opacity:0;transform:translateX(-30px)}}
+
+.dtb-bento{display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:44px;gap:6px;width:100%;max-width:290px;font:600 9px/1.2 ui-sans-serif,system-ui,sans-serif}
+.dtb-bento div{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:6px 8px;color:var(--muted);display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden}
+.dtb-bento div.w2{grid-column:span 2}.dtb-bento div.h2{grid-row:span 2}
+.dtb-bento em{font-style:normal;font-family:ui-monospace,Menlo,monospace;font-size:15px;font-weight:800;color:var(--c,var(--ink))}
+.dtb-bento small{font-size:8px;letter-spacing:.06em;text-transform:uppercase}
+.dtb-bento .dtb-bar{width:100%;margin:0}
+.dtb-bento .dtb-spark{width:100%;height:20px}
+.dtb-bento .glow{animation:dtbBentoGlow 3s ease-in-out infinite}
+@keyframes dtbBentoGlow{0%,100%{box-shadow:inset 0 0 0 1px rgba(var(--accent-rgb),0)}50%{box-shadow:inset 0 0 0 1px var(--accent),0 0 12px rgba(var(--accent-rgb),.25)}}
+
+.dtb-masonry{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;width:100%;max-width:290px;align-items:start}
+.dtb-masonry > div{display:flex;flex-direction:column;gap:6px}
+.dtb-mas{border-radius:7px;border:1px solid var(--line);background:linear-gradient(110deg,var(--card) 30%,rgba(255,255,255,.07) 50%,var(--card) 70%);background-size:220% 100%;animation:dtbShimmer 2.6s linear infinite;animation-delay:calc(var(--i,0)*-.4s);position:relative}
+.dtb-mas::after{content:"";position:absolute;left:8px;right:8px;bottom:7px;height:5px;border-radius:3px;background:var(--panel2)}
+
+/* ===================== G. LEDGERS, LOGS & TOOLBARS ===================== */
+.dtb-ledger td.cr{color:var(--pos)}
+.dtb-ledger td.dr{color:var(--neg)}
+.dtb-ledger td.bal{color:var(--ink);font-weight:700}
+.dtb-ledger tbody tr:first-child td{animation:dtbInsert 5s cubic-bezier(.2,.8,.3,1) infinite}
+.dtb-ledger tfoot td{font-size:10px}
+
+.dtb-diff td:first-child{width:14px;text-align:center;font-family:ui-monospace,Menlo,monospace;font-weight:800;color:var(--dim);padding-right:4px;padding-left:8px}
+.dtb-diff tr.add td{background:rgba(var(--pos-rgb),.13)}
+.dtb-diff tr.add td:first-child{color:var(--pos)}
+.dtb-diff tr.del td{background:rgba(var(--neg-rgb),.13);color:var(--muted);text-decoration:line-through}
+.dtb-diff tr.del td:first-child{color:var(--neg);text-decoration:none}
+.dtb-diff tr.add td{animation:dtbDiffAdd 3s ease-in-out infinite}
+.dtb-diff tr.del td{animation:dtbDiffDel 3s ease-in-out infinite;animation-delay:1.5s}
+@keyframes dtbDiffAdd{0%,100%{box-shadow:inset 0 0 0 999px rgba(var(--pos-rgb),0)}50%{box-shadow:inset 0 0 0 999px rgba(var(--pos-rgb),.16)}}
+@keyframes dtbDiffDel{0%,100%{box-shadow:inset 0 0 0 999px rgba(var(--neg-rgb),0)}50%{box-shadow:inset 0 0 0 999px rgba(var(--neg-rgb),.16)}}
+
+.dtb-audit td{font-size:10.5px}
+.dtb-audit td.t{font-family:ui-monospace,Menlo,monospace;color:var(--dim);font-size:9.5px}
+.dtb-audit td .who{display:inline-block;padding:0 5px;border-radius:4px;background:var(--panel2);font-weight:700;color:var(--info);font-size:9.5px}
+.dtb-audit tbody tr td{animation:dtbFadeUp 7s ease-in-out infinite}
+.dtb-audit tbody tr:nth-child(2) td{animation-delay:.5s}.dtb-audit tbody tr:nth-child(3) td{animation-delay:1s}.dtb-audit tbody tr:nth-child(4) td{animation-delay:1.5s}.dtb-audit tbody tr:nth-child(5) td{animation-delay:2s}
+
+.dtb-pg{display:inline-flex;align-items:center;gap:4px;font:700 10.5px ui-sans-serif,system-ui,sans-serif}
+.dtb-pg i{display:grid;place-items:center;min-width:24px;height:24px;padding:0 6px;border-radius:6px;border:1px solid var(--line);background:var(--card);color:var(--muted);font-style:normal;animation:dtbPage 6s steps(1) infinite;animation-delay:calc(var(--i,0)*-1.2s)}
+.dtb-pg i.nav{animation:none;color:var(--dim)}
+.dtb-pg i.dots{animation:none;border-color:transparent;background:transparent}
+@keyframes dtbPage{0%,19%{background:var(--accent);border-color:var(--accent);color:#1a1000}20%,100%{background:var(--card);border-color:var(--line);color:var(--muted)}}
+.dtb-pg-info{font:600 9.5px ui-sans-serif,system-ui,sans-serif;color:var(--dim);margin-top:8px;text-align:center}
+
+.dtb-toolbar{width:100%;max-width:290px;font:600 9.5px ui-sans-serif,system-ui,sans-serif;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:8px;display:flex;flex-direction:column;gap:7px}
+.dtb-tb-row{display:flex;align-items:center;gap:6px}
+.dtb-search{flex:1;display:flex;align-items:center;gap:6px;padding:4px 8px;border:1px solid var(--line);border-radius:6px;background:var(--panel);color:var(--ink);font-family:ui-monospace,Menlo,monospace;font-size:10px}
+.dtb-search::before{content:"";width:8px;height:8px;border:1.5px solid var(--dim);border-radius:50%;box-shadow:3px 3px 0 -1px var(--dim);flex:0 0 auto}
+.dtb-search .dtb-typed{animation:dtbType 5s steps(7,end) infinite}
+.dtb-chip{padding:2px 8px;border-radius:12px;border:1px solid var(--line);background:var(--panel);color:var(--muted);font-size:9px;white-space:nowrap}
+.dtb-chip.on{border-color:var(--info);color:var(--info);background:rgba(var(--info-rgb),.12)}
+.dtb-chip.tog{animation:dtbChip 5s steps(1) infinite}
+@keyframes dtbChip{0%,35%{border-color:var(--line);color:var(--muted);background:var(--panel)}36%,85%{border-color:var(--info);color:var(--info);background:rgba(var(--info-rgb),.12)}86%,100%{border-color:var(--line);color:var(--muted);background:var(--panel)}}
+.dtb-tb-btn{display:grid;place-items:center;width:24px;height:24px;border-radius:6px;border:1px solid var(--line);background:var(--panel);color:var(--muted);font-size:11px}
+.dtb-tb-count{margin-left:auto;font-family:ui-monospace,Menlo,monospace;color:var(--dim);font-size:9px;font-weight:600}
+.dtb-tb-count b{color:var(--ink);animation:dtbCountFlip 5s steps(1) infinite}
+@keyframes dtbCountFlip{0%,35%{color:var(--ink)}36%,50%{color:var(--info)}51%,85%{color:var(--ink)}}
+
+.dtb-empty{width:100%;max-width:290px;border:1px dashed var(--line);border-radius:10px;padding:10px;position:relative;font:600 10px ui-sans-serif,system-ui,sans-serif;text-align:center;color:var(--muted)}
+.dtb-empty .dtb-sk{opacity:.35;margin:0 auto 8px;animation-duration:3s}
+.dtb-empty-ic{width:30px;height:24px;margin:4px auto 6px;border:2px solid var(--dim);border-radius:5px;position:relative;opacity:.8}
+.dtb-empty-ic::before,.dtb-empty-ic::after{content:"";position:absolute;left:5px;right:5px;height:2px;background:var(--dim);border-radius:1px;top:6px}
+.dtb-empty-ic::after{top:13px;right:11px}
+.dtb-empty b{display:block;color:var(--ink);font-size:11px}
+.dtb-empty small{display:block;margin-top:2px;font-weight:500}
+.dtb-empty-btn{display:inline-block;margin-top:8px;padding:3px 10px;border-radius:6px;border:1px solid var(--accent);color:var(--accent);animation:dtbTagGlow 2.4s ease-in-out infinite}
+
+/* ---- reduced motion: freeze every dtb animation on a legible frame ---- */
+@media (prefers-reduced-motion:reduce){
+  [class*="dtb-"],[class*="dtb-"]::before,[class*="dtb-"]::after,.dtb-tbl *{animation:none!important}
+  .dtb-detail-in,.dtb-tree-kids,.dtb-insp-g,.dtb-json-fold{max-height:none!important;opacity:1!important}
+  .dtb-typed{max-width:none!important}
+  .dtb-yes{transform:none;opacity:1}
+  .dtb-kan-card.in{opacity:0}
+}
+
+</style>
+</head>
+<body>
+<div class="head">
+  <h1>📋 Tables & Data Layouts</h1>
+  <p>Structured data at report grade — data tables, status and metric cells, matrices, key-value and definition blocks, lists and trees, grids and schedules, ledgers, logs and table toolbars.</p>
+</div>
+<div class="wrap">
+<h3 class="sec">DATA TABLES</h3>
+<div class="gallery">
+
+  <div class="tile is-new"><div class="stage">
+    <table class="dtb-tbl dtb-zebra"><thead><tr><th>Service</th><th>Region</th><th class="dtb-num">p95 ms</th></tr></thead><tbody>
+      <tr><td>api-gateway</td><td class="dtb-mut">us-east-1</td><td class="dtb-num">142</td></tr>
+      <tr><td>auth</td><td class="dtb-mut">us-east-1</td><td class="dtb-num">88</td></tr>
+      <tr><td>billing</td><td class="dtb-mut">eu-west-1</td><td class="dtb-num">231</td></tr>
+      <tr><td>search</td><td class="dtb-mut">us-west-2</td><td class="dtb-num">64</td></tr>
+      <tr><td>notify</td><td class="dtb-mut">ap-south-1</td><td class="dtb-num">117</td></tr>
+    </tbody></table>
+  </div><div class="meta"><div class="nm">Zebra Table + Scan</div><span class="ref">.dtb-tbl.dtb-zebra</span><div class="desc">The baseline data table: uppercase header, zebra rows, right-aligned numerics, and a soft highlight that scans down the rows. Start every tabular report here.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <table class="dtb-tbl dtb-hoverglow"><thead><tr><th>Account</th><th>Owner</th><th class="dtb-num">Spend</th></tr></thead><tbody>
+      <tr><td>prod-core</td><td class="dtb-mut">platform</td><td class="dtb-num">$41.2K</td></tr>
+      <tr><td>data-lake</td><td class="dtb-mut">analytics</td><td class="dtb-num">$18.7K</td></tr>
+      <tr><td>sandbox</td><td class="dtb-mut">devx</td><td class="dtb-num">$2.9K</td></tr>
+      <tr><td>ml-train</td><td class="dtb-mut">research</td><td class="dtb-num">$27.4K</td></tr>
+    </tbody></table>
+  </div><div class="meta"><div class="nm">Hover-Glow Rows</div><span class="ref">.dtb-tbl.dtb-hoverglow</span><div class="desc">Rows light up one after another with a tinted fill and a left accent bar — the hover treatment, demonstrated on a loop so it reads in a static export.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <table class="dtb-tbl dtb-sort"><thead><tr><th>Host</th><th class="dtb-num dtb-sorted">CPU %<span class="dtb-sort-arrow">▲</span></th><th class="dtb-num">Mem %</th></tr></thead><tbody>
+      <tr><td>web-01</td><td class="dtb-num">12</td><td class="dtb-num">41</td></tr>
+      <tr><td>web-02</td><td class="dtb-num">37</td><td class="dtb-num">58</td></tr>
+      <tr><td>db-01</td><td class="dtb-num">64</td><td class="dtb-num">83</td></tr>
+      <tr><td>cache-01</td><td class="dtb-num">71</td><td class="dtb-num">22</td></tr>
+    </tbody></table>
+  </div><div class="meta"><div class="nm">Sortable Header</div><span class="ref">.dtb-tbl.dtb-sort</span><div class="desc">A sorted column with a flipping direction arrow while two rows trade places — the visual grammar of a click-to-sort header.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <div class="dtb-sticky">
+      <div class="dtb-sticky-head dtb-row"><span>Package</span><span>Version</span><span class="dtb-num">Size</span></div>
+      <div class="dtb-sticky-body">
+        <div class="dtb-row"><span>react</span><span class="dtb-mut dtb-mono">18.3.1</span><span class="dtb-num">6.4K</span></div>
+        <div class="dtb-row"><span>vite</span><span class="dtb-mut dtb-mono">6.0.2</span><span class="dtb-num">1.2M</span></div>
+        <div class="dtb-row"><span>zod</span><span class="dtb-mut dtb-mono">3.23.8</span><span class="dtb-num">57K</span></div>
+        <div class="dtb-row"><span>date-fns</span><span class="dtb-mut dtb-mono">4.1.0</span><span class="dtb-num">88K</span></div>
+        <div class="dtb-row"><span>pino</span><span class="dtb-mut dtb-mono">9.5.0</span><span class="dtb-num">31K</span></div>
+        <div class="dtb-row"><span>react</span><span class="dtb-mut dtb-mono">18.3.1</span><span class="dtb-num">6.4K</span></div>
+        <div class="dtb-row"><span>vite</span><span class="dtb-mut dtb-mono">6.0.2</span><span class="dtb-num">1.2M</span></div>
+        <div class="dtb-row"><span>zod</span><span class="dtb-mut dtb-mono">3.23.8</span><span class="dtb-num">57K</span></div>
+        <div class="dtb-row"><span>date-fns</span><span class="dtb-mut dtb-mono">4.1.0</span><span class="dtb-num">88K</span></div>
+        <div class="dtb-row"><span>pino</span><span class="dtb-mut dtb-mono">9.5.0</span><span class="dtb-num">31K</span></div>
+      </div>
+    </div>
+  </div><div class="meta"><div class="nm">Sticky Header Scroll</div><span class="ref">.dtb-sticky</span><div class="desc">Rows scroll beneath a header that stays put and casts a shadow — a grid-based table for long lists inside a fixed-height panel.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <table class="dtb-tbl dtb-dense"><thead><tr><th>Sym</th><th class="dtb-num">Bid</th><th class="dtb-num">Ask</th><th class="dtb-num">Vol</th><th class="dtb-num">Chg</th></tr></thead><tbody>
+      <tr><td><span class="dtb-live-dot"></span>AMZN</td><td class="dtb-num">188.42</td><td class="dtb-num">188.45</td><td class="dtb-num">41.2M</td><td class="dtb-num dtb-up">+1.8%</td></tr>
+      <tr><td><span class="dtb-live-dot"></span>MSFT</td><td class="dtb-num">412.10</td><td class="dtb-num">412.16</td><td class="dtb-num">18.9M</td><td class="dtb-num dtb-down">-0.4%</td></tr>
+      <tr><td><span class="dtb-live-dot"></span>NVDA</td><td class="dtb-num">131.77</td><td class="dtb-num">131.80</td><td class="dtb-num">212M</td><td class="dtb-num dtb-up">+3.1%</td></tr>
+      <tr><td><span class="dtb-live-dot"></span>GOOG</td><td class="dtb-num">171.05</td><td class="dtb-num">171.09</td><td class="dtb-num">22.4M</td><td class="dtb-num dtb-flat">0.0%</td></tr>
+      <tr><td><span class="dtb-live-dot"></span>META</td><td class="dtb-num">564.30</td><td class="dtb-num">564.41</td><td class="dtb-num">9.7M</td><td class="dtb-num dtb-up">+0.9%</td></tr>
+      <tr><td><span class="dtb-live-dot"></span>TSLA</td><td class="dtb-num">248.98</td><td class="dtb-num">249.02</td><td class="dtb-num">88.1M</td><td class="dtb-num dtb-down">-2.2%</td></tr>
+    </tbody></table>
+  </div><div class="meta"><div class="nm">Dense Numeric Table</div><span class="ref">.dtb-tbl.dtb-dense</span><div class="desc">Compact rows, tabular-figure monospace numbers and a live-feed dot per row — the terminal-style layout for tickers, telemetry and anything with many columns.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <table class="dtb-tbl dtb-select"><thead><tr><th><span class="dtb-cb"></span></th><th>Ticket</th><th>Status</th></tr></thead><tbody>
+      <tr><td><span class="dtb-cb"></span></td><td>INC-4021</td><td><span class="dtb-pill ok">Resolved</span></td></tr>
+      <tr><td><span class="dtb-cb"></span></td><td>INC-4022</td><td><span class="dtb-pill warn">Pending</span></td></tr>
+      <tr><td><span class="dtb-cb on"></span></td><td>INC-4023</td><td><span class="dtb-pill info">In review</span></td></tr>
+      <tr><td><span class="dtb-cb"></span></td><td>INC-4024</td><td><span class="dtb-pill off">Closed</span></td></tr>
+    </tbody></table>
+  </div><div class="meta"><div class="nm">Row Selection</div><span class="ref">.dtb-tbl.dtb-select</span><div class="desc">A checkbox column where rows tick themselves on and off, tinting the whole row while selected — bulk-action tables and pickers.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <table class="dtb-tbl dtb-expand"><thead><tr><th>Order</th><th>Customer</th><th class="dtb-num">Total</th></tr></thead><tbody>
+      <tr><td>#10482</td><td class="dtb-mut">Acme Corp</td><td class="dtb-num">$1,240</td></tr>
+      <tr><td><span class="dtb-chev"></span>#10483</td><td class="dtb-mut">Globex</td><td class="dtb-num">$862</td></tr>
+      <tr class="dtb-detail"><td colspan="3"><div class="dtb-detail-in"><div>3 line items · shipped via ground · tracking <span class="dtb-mono">1Z9F…42</span><br>Net 30 · PO 88-1130 · invoiced 2026-08-30</div></div></td></tr>
+      <tr><td>#10484</td><td class="dtb-mut">Initech</td><td class="dtb-num">$3,015</td></tr>
+    </tbody></table>
+  </div><div class="meta"><div class="nm">Expandable Detail Row</div><span class="ref">.dtb-tbl.dtb-expand</span><div class="desc">A chevron rotates and a detail panel slides open beneath its row, then folds away — master/detail without leaving the table.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <table class="dtb-tbl"><thead><tr><th>Key</th><th>Value</th></tr></thead><tbody>
+      <tr><td class="dtb-mut">region</td><td class="dtb-mono">us-east-1</td></tr>
+      <tr><td class="dtb-mut">instance</td><td><span class="dtb-edit-cell"><span class="dtb-typed">m7g.large</span><span class="dtb-caret"></span></span><span class="dtb-edit-hint">editing</span></td></tr>
+      <tr><td class="dtb-mut">min_size</td><td class="dtb-mono">2</td></tr>
+      <tr><td class="dtb-mut">max_size</td><td class="dtb-mono">12</td></tr>
+    </tbody></table>
+  </div><div class="meta"><div class="nm">Inline Cell Edit</div><span class="ref">.dtb-edit-cell</span><div class="desc">One cell becomes a focused input with a blinking caret and a value being typed — the editing state of an inline-editable grid.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <table class="dtb-tbl dtb-totals"><thead><tr><th>Line</th><th class="dtb-num">Qty</th><th class="dtb-num">Amount</th></tr></thead><tbody>
+      <tr><td>Compute</td><td class="dtb-num">412</td><td class="dtb-num">$812</td></tr>
+      <tr><td>Storage</td><td class="dtb-num">180</td><td class="dtb-num">$296</td></tr>
+      <tr><td>Egress</td><td class="dtb-num">50</td><td class="dtb-num">$176</td></tr>
+    </tbody><tfoot><tr><td>Total</td><td class="dtb-num"><span class="dtb-count b"></span></td><td class="dtb-num">$<span class="dtb-count a"></span></td></tr><tr><td class="dtb-mut">Coverage</td><td class="dtb-num" colspan="2"><span class="dtb-count c"></span>%</td></tr></tfoot></table>
+  </div><div class="meta"><div class="nm">Totals Row + Count-Up</div><span class="ref">.dtb-tbl.dtb-totals</span><div class="desc">A footer row that counts its totals up from zero every few seconds — pure CSS via a registered custom property driving a counter.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <table class="dtb-tbl dtb-skel"><thead><tr><th><span class="dtb-sk w2"></span></th><th><span class="dtb-sk w4"></span></th><th><span class="dtb-sk w2"></span></th></tr></thead><tbody>
+      <tr><td><span class="dtb-sk w3"></span></td><td><span class="dtb-sk w1"></span></td><td><span class="dtb-sk w2"></span></td></tr>
+      <tr><td><span class="dtb-sk w1"></span></td><td><span class="dtb-sk w3"></span></td><td><span class="dtb-sk w4"></span></td></tr>
+      <tr><td><span class="dtb-sk w3"></span></td><td><span class="dtb-sk w2"></span></td><td><span class="dtb-sk w1"></span></td></tr>
+      <tr><td><span class="dtb-sk w2"></span></td><td><span class="dtb-sk w1"></span></td><td><span class="dtb-sk w3"></span></td></tr>
+    </tbody></table>
+  </div><div class="meta"><div class="nm">Skeleton Table</div><span class="ref">.dtb-tbl.dtb-skel</span><div class="desc">Shimmering placeholder bars in the exact shape of the table that is loading — keeps layout stable while data arrives.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+</div>
+
+<h3 class="sec">STATUS &amp; DATA CELLS</h3>
+<div class="gallery">
+
+  <div class="tile is-new"><div class="stage">
+    <table class="dtb-tbl"><thead><tr><th>Check</th><th>Last run</th><th>State</th></tr></thead><tbody>
+      <tr><td>TLS expiry</td><td class="dtb-mut">2m ago</td><td><span class="dtb-pill ok">Pass</span></td></tr>
+      <tr><td>Disk 80%</td><td class="dtb-mut">2m ago</td><td><span class="dtb-pill warn">Warn</span></td></tr>
+      <tr><td>DB replica lag</td><td class="dtb-mut">1m ago</td><td><span class="dtb-pill crit">Fail</span></td></tr>
+      <tr><td>Backups</td><td class="dtb-mut">1h ago</td><td><span class="dtb-pill info">Running</span></td></tr>
+      <tr><td>CDN purge</td><td class="dtb-mut">—</td><td><span class="dtb-pill off">Skipped</span></td></tr>
+    </tbody></table>
+  </div><div class="meta"><div class="nm">Status Pill Column</div><span class="ref">.dtb-pill</span><div class="desc">Tinted status pills in a column — pass, warn, fail, running, skipped — with the failing state pulsing so it cannot be missed.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <table class="dtb-tbl"><thead><tr><th>Migration</th><th>Progress</th></tr></thead><tbody>
+      <tr><td>users</td><td><span class="dtb-bar" style="--w:100%;--c:var(--pos)"><i></i></span><span class="dtb-bar-v">100%</span></td></tr>
+      <tr><td>orders</td><td><span class="dtb-bar" style="--w:72%"><i></i></span><span class="dtb-bar-v">72%</span></td></tr>
+      <tr><td>events</td><td><span class="dtb-bar" style="--w:38%;--c:var(--accent)"><i></i></span><span class="dtb-bar-v">38%</span></td></tr>
+      <tr><td>audit_log</td><td><span class="dtb-bar" style="--w:9%;--c:var(--warn)"><i></i></span><span class="dtb-bar-v">9%</span></td></tr>
+    </tbody></table>
+  </div><div class="meta"><div class="nm">Progress Bar Cells</div><span class="ref">.dtb-bar</span><div class="desc">Inline progress bars that fill to their value inside each cell — set <code>--w</code> per row and recolour with <code>--c</code>.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <table class="dtb-tbl"><thead><tr><th>Metric</th><th>7d</th><th class="dtb-num">Now</th></tr></thead><tbody>
+      <tr><td>Requests</td><td><svg class="dtb-spark" viewBox="0 0 64 18"><polyline class="dtb-spark-line" points="1,14 10,11 19,13 28,8 37,10 46,5 55,7 63,3"/><circle class="dtb-spark-dot" cx="63" cy="3" r="2"/></svg></td><td class="dtb-num">48.2K</td></tr>
+      <tr><td>Errors</td><td><svg class="dtb-spark" viewBox="0 0 64 18" style="--c:var(--neg)"><polyline class="dtb-spark-line" points="1,6 10,9 19,7 28,11 37,9 46,14 55,12 63,15"/><circle class="dtb-spark-dot" cx="63" cy="15" r="2"/></svg></td><td class="dtb-num">0.3%</td></tr>
+      <tr><td>Latency</td><td><svg class="dtb-spark" viewBox="0 0 64 18" style="--c:var(--accent)"><polyline class="dtb-spark-line" points="1,10 10,12 19,6 28,9 37,4 46,8 55,9 63,7"/><circle class="dtb-spark-dot" cx="63" cy="7" r="2"/></svg></td><td class="dtb-num">142ms</td></tr>
+      <tr><td>Uptime</td><td><svg class="dtb-spark" viewBox="0 0 64 18" style="--c:var(--pos)"><polyline class="dtb-spark-line" points="1,9 10,9 19,8 28,9 37,9 46,8 55,9 63,8"/><circle class="dtb-spark-dot" cx="63" cy="8" r="2"/></svg></td><td class="dtb-num">99.98%</td></tr>
+    </tbody></table>
+  </div><div class="meta"><div class="nm">Sparkline Column</div><span class="ref">.dtb-spark</span><div class="desc">A mini trend line drawn into each row with a blinking endpoint — the at-a-glance history column for metric tables.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <table class="dtb-tbl dtb-delta"><thead><tr><th>KPI</th><th class="dtb-num">Value</th><th class="dtb-num">Δ vs LW</th></tr></thead><tbody>
+      <tr><td>Signups</td><td class="dtb-num">1,284</td><td class="dtb-num dtb-up dtb-flash">▲ 12.4%</td></tr>
+      <tr><td>Churn</td><td class="dtb-num">2.1%</td><td class="dtb-num dtb-up">▼ 0.3 pt</td></tr>
+      <tr><td>Refunds</td><td class="dtb-num">$4.9K</td><td class="dtb-num dtb-down dtb-flash">▲ 8.0%</td></tr>
+      <tr><td>NPS</td><td class="dtb-num">61</td><td class="dtb-num dtb-up dtb-flash">▲ 4</td></tr>
+      <tr><td>Tickets</td><td class="dtb-num">318</td><td class="dtb-num dtb-flat">— 0.0%</td></tr>
+    </tbody></table>
+  </div><div class="meta"><div class="nm">Delta Cells</div><span class="ref">.dtb-delta</span><div class="desc">Change-versus-baseline cells with directional arrows in success/danger colours, each flashing when its value updates.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <table class="dtb-tbl"><thead><tr><th>Member</th><th>Role</th><th class="dtb-num">Load</th></tr></thead><tbody>
+      <tr><td><span class="dtb-av">JD<i></i></span>J. Doe</td><td class="dtb-mut">On-call</td><td class="dtb-num">7</td></tr>
+      <tr><td><span class="dtb-av" style="--c:var(--pos);--c-rgb:var(--pos-rgb)">MK<i></i></span>M. Kastro</td><td class="dtb-mut">TAM</td><td class="dtb-num">12</td></tr>
+      <tr><td><span class="dtb-av away" style="--c:var(--accent);--c-rgb:var(--accent-rgb)">AR<i></i></span>A. Rivera</td><td class="dtb-mut">SRE</td><td class="dtb-num">4</td></tr>
+      <tr><td><span class="dtb-av gone" style="--c:var(--crit);--c-rgb:var(--crit-rgb)">SL<i></i></span>S. Lee</td><td class="dtb-mut">Reviewer</td><td class="dtb-num">2</td></tr>
+    </tbody></table>
+  </div><div class="meta"><div class="nm">Avatar + Presence Column</div><span class="ref">.dtb-av</span><div class="desc">Initial avatars with a presence dot (online pulsing, away, offline) beside each name — people tables, assignees, reviewers.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <table class="dtb-tbl"><thead><tr><th>Repo</th><th>Labels</th></tr></thead><tbody>
+      <tr><td>prism</td><td><span class="dtb-tag hot">hot</span><span class="dtb-tag">html</span><span class="dtb-tag">mcp</span></td></tr>
+      <tr><td>mcweb</td><td><span class="dtb-tag">python</span><span class="dtb-tag new">new</span></td></tr>
+      <tr><td>siege-decks</td><td><span class="dtb-tag">game</span><span class="dtb-tag">web</span><span class="dtb-tag">ci</span></td></tr>
+      <tr><td>botfarm</td><td><span class="dtb-tag">node</span><span class="dtb-tag hot">hot</span></td></tr>
+    </tbody></table>
+  </div><div class="meta"><div class="nm">Tag Chip Cells</div><span class="ref">.dtb-tag</span><div class="desc">Small label chips packed into a cell, with <code>.hot</code> glowing in the accent and <code>.new</code> in success green — labels, categories, environments.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <table class="dtb-tbl dtb-heat"><thead><tr><th>Region</th><th class="dtb-num">Mon</th><th class="dtb-num">Tue</th><th class="dtb-num">Wed</th><th class="dtb-num">Thu</th></tr></thead><tbody>
+      <tr><td>us-east</td><td class="dtb-hc" style="--h:.9">912</td><td class="dtb-hc" style="--h:.7">744</td><td class="dtb-hc" style="--h:1">988</td><td class="dtb-hc" style="--h:.5">521</td></tr>
+      <tr><td>eu-west</td><td class="dtb-hc" style="--h:.3">301</td><td class="dtb-hc" style="--h:.45">460</td><td class="dtb-hc" style="--h:.35">377</td><td class="dtb-hc" style="--h:.6">640</td></tr>
+      <tr><td>ap-south</td><td class="dtb-hc" style="--h:.15">158</td><td class="dtb-hc" style="--h:.2">204</td><td class="dtb-hc" style="--h:.25">239</td><td class="dtb-hc" style="--h:.1">96</td></tr>
+      <tr><td>sa-east</td><td class="dtb-hc" style="--h:.05">42</td><td class="dtb-hc" style="--h:.1">88</td><td class="dtb-hc" style="--h:.08">71</td><td class="dtb-hc" style="--h:.12">120</td></tr>
+    </tbody></table>
+  </div><div class="meta"><div class="nm">Heat-Shaded Cells</div><span class="ref">.dtb-heat</span><div class="desc">Numeric cells shaded by magnitude with a slow brightness breathe — set <code>--h</code> from 0 to 1 per cell to make a table read like a heatmap.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <table class="dtb-tbl dtb-ticker"><thead><tr><th>Time</th><th>Event</th><th class="dtb-num">Value</th></tr></thead><tbody>
+      <tr><td class="dtb-mono dtb-dim">14:02:11</td><td>deploy · api</td><td class="dtb-num dtb-up">ok</td></tr>
+      <tr><td class="dtb-mono dtb-dim">14:01:58</td><td>p95 latency</td><td class="dtb-num"><span class="dtb-tk">138 ms</span></td></tr>
+      <tr><td class="dtb-mono dtb-dim">14:01:40</td><td>error rate</td><td class="dtb-num"><span class="dtb-tk dtb-down">0.9%</span></td></tr>
+      <tr><td class="dtb-mono dtb-dim">14:01:22</td><td>scale-out · web</td><td class="dtb-num">+2</td></tr>
+    </tbody></table>
+  </div><div class="meta"><div class="nm">Live Ticker Table</div><span class="ref">.dtb-tbl.dtb-ticker</span><div class="desc">A new row slides in at the top and flashes while existing cells blink as their values refresh — the live feed pattern for ops dashboards.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+</div>
+
+<h3 class="sec">MATRICES &amp; COMPARISON</h3>
+<div class="gallery">
+
+  <div class="tile is-new"><div class="stage">
+    <table class="dtb-tbl dtb-matrix"><thead><tr><th>Feature</th><th>Free</th><th>Team</th><th>Ent.</th></tr></thead><tbody>
+      <tr><td>SSO</td><td><span class="dtb-no">—</span></td><td><span class="dtb-yes">✓</span></td><td><span class="dtb-yes">✓</span></td></tr>
+      <tr><td>Audit log</td><td><span class="dtb-no">—</span></td><td><span class="dtb-part"></span></td><td><span class="dtb-yes">✓</span></td></tr>
+      <tr><td>API access</td><td><span class="dtb-yes">✓</span></td><td><span class="dtb-yes">✓</span></td><td><span class="dtb-yes">✓</span></td></tr>
+      <tr><td>SLA 99.9%</td><td><span class="dtb-no">—</span></td><td><span class="dtb-no">—</span></td><td><span class="dtb-yes">✓</span></td></tr>
+    </tbody></table>
+  </div><div class="meta"><div class="nm">Feature Matrix</div><span class="ref">.dtb-tbl.dtb-matrix</span><div class="desc">Plans across the top, capabilities down the side, checks popping in one by one — with a half-disc for partial support.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <div class="dtb-hm">
+      <span></span><b>M</b><b>T</b><b>W</b><b>T</b><b>F</b><b>S</b><b>S</b>
+      <span>00–06</span><i style="--a:.15;--d:0"></i><i style="--a:.2;--d:1"></i><i style="--a:.15;--d:2"></i><i style="--a:.25;--d:3"></i><i style="--a:.2;--d:4"></i><i style="--a:.1;--d:5"></i><i style="--a:.1;--d:6"></i>
+      <span>06–12</span><i style="--a:.6;--d:1"></i><i style="--a:.7;--d:2"></i><i style="--a:.8;--d:3"></i><i style="--a:.75;--d:4"></i><i style="--a:.65;--d:5"></i><i style="--a:.3;--d:6"></i><i style="--a:.2;--d:7"></i>
+      <span>12–18</span><i style="--a:.9;--d:2"></i><i style="--a:1;--d:3"></i><i style="--a:.95;--d:4"></i><i style="--a:1;--d:5"></i><i style="--a:.85;--d:6"></i><i style="--a:.4;--d:7"></i><i style="--a:.3;--d:8"></i>
+      <span>18–24</span><i style="--a:.5;--d:3"></i><i style="--a:.55;--d:4"></i><i style="--a:.6;--d:5"></i><i style="--a:.5;--d:6"></i><i style="--a:.7;--d:7"></i><i style="--a:.45;--d:8"></i><i style="--a:.35;--d:9"></i>
+    </div>
+  </div><div class="meta"><div class="nm">Heatmap Grid</div><span class="ref">.dtb-hm</span><div class="desc">A labelled cell grid where opacity carries the value (<code>--a</code>) and a diagonal wave (<code>--d</code>) breathes across it — traffic by hour and weekday.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <table class="dtb-tbl dtb-pivot"><thead><tr><th></th><th class="dtb-num">Q1</th><th class="dtb-num">Q2</th><th class="dtb-num">Q3</th></tr></thead><tbody>
+      <tr><th class="dtb-rh">North</th><td>412</td><td>468</td><td>501</td></tr>
+      <tr><th class="dtb-rh">South</th><td>289</td><td>301</td><td>344</td></tr>
+      <tr><th class="dtb-rh">West</th><td>377</td><td>640</td><td>598</td></tr>
+      <tr><th class="dtb-rh">East</th><td>158</td><td>204</td><td>239</td></tr>
+    </tbody></table>
+  </div><div class="meta"><div class="nm">Pivot Crosshair</div><span class="ref">.dtb-tbl.dtb-pivot</span><div class="desc">Row headers and column headers with a highlighted row, column and their intersection — the pivot-table reading aid.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <div class="dtb-risk">
+      <span></span><b>Rare</b><b>Poss.</b><b>Likely</b><b>Cert.</b>
+      <span>Severe</span><i class="m"></i><i class="h"></i><i class="h"></i><i class="h"></i>
+      <span>Major</span><i></i><i class="m"></i><i class="h"><span class="dtb-risk-dot"></span></i><i class="h"></i>
+      <span>Minor</span><i></i><i></i><i class="m"></i><i class="m"></i>
+      <span>Trivial</span><i></i><i></i><i></i><i class="m"></i>
+    </div>
+  </div><div class="meta"><div class="nm">Risk Matrix</div><span class="ref">.dtb-risk</span><div class="desc">Likelihood against impact in green, amber and red zones with a pulsing marker on the assessed cell — risk registers and incident reviews.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <table class="dtb-tbl dtb-compare"><thead><tr><th></th><th>Basic</th><th class="dtb-rec">Pro<span class="dtb-rec-badge">RECOMMENDED</span></th><th>Max</th></tr></thead><tbody>
+      <tr><td>Seats</td><td>3</td><td class="dtb-rec">25</td><td>∞</td></tr>
+      <tr><td>Storage</td><td>10 GB</td><td class="dtb-rec">1 TB</td><td>10 TB</td></tr>
+      <tr><td>Support</td><td>Email</td><td class="dtb-rec">24/7</td><td>TAM</td></tr>
+      <tr><td>Price</td><td class="dtb-mono">$0</td><td class="dtb-rec dtb-mono">$49</td><td class="dtb-mono">$299</td></tr>
+    </tbody></table>
+  </div><div class="meta"><div class="nm">Comparison Columns</div><span class="ref">.dtb-tbl.dtb-compare</span><div class="desc">Side-by-side options with one column framed and glowing as the recommendation — pricing tables and vendor comparisons.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <table class="dtb-tbl dtb-corr"><thead><tr><th></th><th>CPU</th><th>Mem</th><th>Lat</th><th>Err</th></tr></thead><tbody>
+      <tr><th class="dtb-rh">CPU</th><td class="d">1.0</td><td class="p" style="--v:.6">.61</td><td class="p" style="--v:.8">.82</td><td class="p" style="--v:.3">.27</td></tr>
+      <tr><th class="dtb-rh">Mem</th><td class="p" style="--v:.6">.61</td><td class="d">1.0</td><td class="p" style="--v:.4">.38</td><td class="n" style="--v:.2">-.14</td></tr>
+      <tr><th class="dtb-rh">Lat</th><td class="p" style="--v:.8">.82</td><td class="p" style="--v:.4">.38</td><td class="d">1.0</td><td class="p" style="--v:.7">.71</td></tr>
+      <tr><th class="dtb-rh">Err</th><td class="p" style="--v:.3">.27</td><td class="n" style="--v:.2">-.14</td><td class="p" style="--v:.7">.71</td><td class="d">1.0</td></tr>
+    </tbody></table>
+  </div><div class="meta"><div class="nm">Correlation Matrix</div><span class="ref">.dtb-tbl.dtb-corr</span><div class="desc">A symmetric matrix with diverging shading (blue positive, red negative, <code>--v</code> strength) and a softly blinking identity diagonal.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <div>
+      <div class="dtb-contrib">
+        <i style="--a:.12;--d:0"></i><i style="--a:.35;--d:1"></i><i style="--a:.12;--d:2"></i><i style="--a:.6;--d:3"></i><i style="--a:.9;--d:4"></i><i style="--a:.12;--d:5"></i><i style="--a:.35;--d:6"></i><i style="--a:.12;--d:7"></i><i style="--a:.6;--d:8"></i><i style="--a:.35;--d:9"></i><i style="--a:.12;--d:10"></i><i style="--a:.9;--d:11"></i><i style="--a:.6;--d:12"></i><i style="--a:.35;--d:13"></i>
+        <i style="--a:.35;--d:1"></i><i style="--a:.6;--d:2"></i><i style="--a:.35;--d:3"></i><i style="--a:.12;--d:4"></i><i style="--a:.6;--d:5"></i><i style="--a:.9;--d:6"></i><i style="--a:.12;--d:7"></i><i style="--a:.35;--d:8"></i><i style="--a:.12;--d:9"></i><i style="--a:.6;--d:10"></i><i style="--a:.35;--d:11"></i><i style="--a:.12;--d:12"></i><i style="--a:.35;--d:13"></i><i style="--a:.6;--d:14"></i>
+        <i style="--a:.12;--d:2"></i><i style="--a:.12;--d:3"></i><i style="--a:.9;--d:4"></i><i style="--a:.6;--d:5"></i><i style="--a:.35;--d:6"></i><i style="--a:.12;--d:7"></i><i style="--a:.6;--d:8"></i><i style="--a:.9;--d:9"></i><i style="--a:.35;--d:10"></i><i style="--a:.12;--d:11"></i><i style="--a:.6;--d:12"></i><i style="--a:.35;--d:13"></i><i style="--a:.9;--d:14"></i><i style="--a:.12;--d:15"></i>
+        <i style="--a:.6;--d:3"></i><i style="--a:.35;--d:4"></i><i style="--a:.12;--d:5"></i><i style="--a:.35;--d:6"></i><i style="--a:.12;--d:7"></i><i style="--a:.6;--d:8"></i><i style="--a:.35;--d:9"></i><i style="--a:.12;--d:10"></i><i style="--a:.9;--d:11"></i><i style="--a:.6;--d:12"></i><i style="--a:.12;--d:13"></i><i style="--a:.35;--d:14"></i><i style="--a:.12;--d:15"></i><i style="--a:.6;--d:16"></i>
+        <i style="--a:.9;--d:4"></i><i style="--a:.12;--d:5"></i><i style="--a:.35;--d:6"></i><i style="--a:.6;--d:7"></i><i style="--a:.12;--d:8"></i><i style="--a:.35;--d:9"></i><i style="--a:.12;--d:10"></i><i style="--a:.6;--d:11"></i><i style="--a:.35;--d:12"></i><i style="--a:.12;--d:13"></i><i style="--a:.9;--d:14"></i><i style="--a:.6;--d:15"></i><i style="--a:.35;--d:16"></i><i style="--a:.12;--d:17"></i>
+      </div>
+      <div class="dtb-contrib-lg">Less <i style="--a:.12"></i><i style="--a:.35"></i><i style="--a:.6"></i><i style="--a:.9"></i> More</div>
+    </div>
+  </div><div class="meta"><div class="nm">Contribution Calendar</div><span class="ref">.dtb-contrib</span><div class="desc">The activity-square calendar: fourteen weeks of cells shaded by volume, lighting up in a diagonal sweep, with a less-to-more legend.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+</div>
+
+<h3 class="sec">KEY VALUE &amp; DEFINITION</h3>
+<div class="gallery">
+
+  <div class="tile is-new"><div class="stage">
+    <div class="dtb-kv">
+      <span class="k">Account ID</span><span class="lead"></span><span class="v">7828…9315</span>
+      <span class="k">Region</span><span class="lead"></span><span class="v">us-east-1</span>
+      <span class="k">Instances</span><span class="lead"></span><span class="v">42</span>
+      <span class="k">Monthly spend</span><span class="lead"></span><span class="v">$18,204</span>
+      <span class="k">Savings plan</span><span class="lead"></span><span class="v">3-yr · 71%</span>
+    </div>
+  </div><div class="meta"><div class="nm">Key-Value with Leaders</div><span class="ref">.dtb-kv</span><div class="desc">Label on the left, value on the right, joined by dotted leaders — the classic fact sheet layout, values fading in as they populate.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <div class="dtb-spec">
+      <div class="dtb-spec-h">m7g.large <small>Graviton3</small></div>
+      <div class="dtb-spec-r"><span class="k">vCPU</span><span class="v">2</span></div>
+      <div class="dtb-spec-r"><span class="k">Memory</span><span class="v">8 GiB</span></div>
+      <div class="dtb-spec-r"><span class="k">Network</span><span class="v">up to 12.5 Gbps</span></div>
+      <div class="dtb-spec-r"><span class="k">EBS</span><span class="v">up to 10 Gbps</span></div>
+      <div class="dtb-spec-r"><span class="k">On-demand</span><span class="v">$0.0816 / hr</span></div>
+    </div>
+  </div><div class="meta"><div class="nm">Spec Card</div><span class="ref">.dtb-spec</span><div class="desc">A titled card of label/value rows with a highlight that walks down the rows — product specs, instance types, device sheets.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <dl class="dtb-def">
+      <dt>RPO</dt><dd>Recovery point objective — the maximum tolerated data loss, measured in time.</dd>
+      <dt>RTO</dt><dd>Recovery time objective — how long a restore may take before it breaches the SLA.</dd>
+      <dt>MTTR</dt><dd><span class="dtb-typed">Mean time to recovery.</span><span class="dtb-caret"></span></dd>
+    </dl>
+  </div><div class="meta"><div class="nm">Definition List</div><span class="ref">.dtb-def</span><div class="desc">Term-and-definition pairs with a rail under each definition; the last entry types itself out — glossaries and acronym keys.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <div class="dtb-insp">
+      <div class="dtb-insp-h"><span class="dtb-chev"></span>Layout</div>
+      <div class="dtb-insp-r"><span class="k">display</span><span class="v s">flex</span></div>
+      <div class="dtb-insp-r"><span class="k">gap</span><span class="v n">12px</span></div>
+      <div class="dtb-insp-h fold"><span class="dtb-chev"></span>Appearance</div>
+      <div class="dtb-insp-g">
+        <div class="dtb-insp-r"><span class="k">radius</span><span class="v n">14px</span></div>
+        <div class="dtb-insp-r"><span class="k">shadow</span><span class="v b">true</span></div>
+        <div class="dtb-insp-r"><span class="k">theme</span><span class="v s">dark</span></div>
+      </div>
+      <div class="dtb-insp-h"><span class="dtb-chev"></span>Data</div>
+      <div class="dtb-insp-r"><span class="k">rows</span><span class="v n">2,668</span></div>
+    </div>
+  </div><div class="meta"><div class="nm">Properties Inspector</div><span class="ref">.dtb-insp</span><div class="desc">Grouped property rows under collapsible headers, one group folding and unfolding — the side-panel inspector of design and dev tools.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <pre class="dtb-json">{
+  <span class="dtb-jk">"id"</span>: <span class="dtb-js">"charts-gauge-cluster"</span>,
+  <span class="dtb-jk">"gallery"</span>: <span class="dtb-js">"charts"</span>,
+  <span class="dtb-jk">"tags"</span>: [<span class="dtb-json-fold">    <span class="dtb-js">"charts"</span>,
+    <span class="dtb-js">"animated"</span>,
+    <span class="dtb-js">"updated"</span></span><span class="dtb-json-el">    …3 items</span>  ],
+  <span class="dtb-jk">"needsJs"</span>: <span class="dtb-jb">null</span>,
+  <span class="dtb-jk">"frames"</span>: <span class="dtb-jn">16</span>
+}</pre>
+  </div><div class="meta"><div class="nm">JSON Tree</div><span class="ref">.dtb-json</span><div class="desc">Syntax-coloured JSON with a node that collapses into an item count and expands again — API payloads, config dumps, catalog records.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+</div>
+
+<h3 class="sec">LISTS &amp; TREES</h3>
+<div class="gallery">
+
+  <div class="tile is-new"><div class="stage">
+    <div class="dtb-tree">
+      <div class="dtb-tree-n"><span class="dtb-chev"></span><span class="ic"></span>showcase</div>
+      <div class="dtb-tree-kids">
+        <div class="dtb-tree-n sel"><span class="fi code"></span>build.mjs</div>
+        <div class="dtb-tree-n"><span class="fi code"></span>browsers.mjs</div>
+        <div class="dtb-tree-n"><span class="ic"></span>galleries</div>
+        <div class="dtb-tree-n"><span class="fi"></span>manifest.json</div>
+      </div>
+      <div class="dtb-tree-n"><span class="ic"></span>catalog</div>
+      <div class="dtb-tree-n"><span class="fi"></span>README.md</div>
+    </div>
+  </div><div class="meta"><div class="nm">File Tree</div><span class="ref">.dtb-tree</span><div class="desc">A folder whose chevron turns as its children slide open, with a selected file row — explorers, repo browsers, sitemap outlines.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <div class="dtb-org">
+      <div class="dtb-org-n root">Platform<small>VP Eng</small></div>
+      <div class="dtb-org-v"></div>
+      <div class="dtb-org-row">
+        <div class="dtb-org-n"><span class="dtb-org-pulse"></span>Infra<small>12</small></div>
+        <div class="dtb-org-n"><span class="dtb-org-pulse"></span>Data<small>8</small></div>
+        <div class="dtb-org-n"><span class="dtb-org-pulse"></span>SRE<small>6</small></div>
+      </div>
+    </div>
+  </div><div class="meta"><div class="nm">Org Chart</div><span class="ref">.dtb-org</span><div class="desc">A root node over three children joined by elbow connectors, with pulses travelling down to each branch — org charts and ownership trees.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <ul class="dtb-outline">
+      <li style="--i:0">Migration plan
+        <ul>
+          <li style="--i:1">Inventory workloads</li>
+          <li style="--i:2" class="mut">Tag by criticality</li>
+        </ul>
+      </li>
+      <li style="--i:3">Cutover window
+        <ul>
+          <li style="--i:4">DNS TTL to 60s</li>
+          <li style="--i:5" class="mut">Freeze deploys</li>
+        </ul>
+      </li>
+      <li style="--i:6">Validation</li>
+    </ul>
+  </div><div class="meta"><div class="nm">Nested Outline</div><span class="ref">.dtb-outline</span><div class="desc">A two-level outline with round and diamond bullets that light up in reading order along a dashed rail — plans, agendas, hierarchies.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <div class="dtb-steps">
+      <div class="dtb-step" style="--i:0"><i>1</i><b>Snapshot</b>RDS snapshot taken</div>
+      <div class="dtb-step" style="--i:1"><i>2</i><b>Migrate</b>schema v42 applied</div>
+      <div class="dtb-step" style="--i:2"><i>3</i><b>Verify</b>row counts match</div>
+      <div class="dtb-step" style="--i:3"><i>4</i><b>Cut over</b>traffic shifted</div>
+    </div>
+  </div><div class="meta"><div class="nm">Numbered Steps</div><span class="ref">.dtb-steps</span><div class="desc">Numbered circles on a vertical track that fills green as each step completes — runbooks, onboarding, release procedures.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <ul class="dtb-check">
+      <li class="dtb-ck-item done"><span class="dtb-cb on"></span>Rotate access keys</li>
+      <li class="dtb-ck-item" style="--i:0"><span class="dtb-cb"></span>Enable MFA on root</li>
+      <li class="dtb-ck-item" style="--i:1"><span class="dtb-cb"></span>Close port 22 to 0.0.0.0/0</li>
+      <li class="dtb-ck-item" style="--i:2"><span class="dtb-cb"></span>Turn on GuardDuty</li>
+      <li class="dtb-ck-item" style="--i:3"><span class="dtb-cb"></span>Review IAM policies</li>
+    </ul>
+  </div><div class="meta"><div class="nm">Checklist</div><span class="ref">.dtb-check</span><div class="desc">Items check themselves off in sequence, striking through as they complete — audit checklists and task lists in progress.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <div class="dtb-rank">
+      <div class="dtb-rank-r g"><span class="rk">1</span><span>Kastro</span><span class="bar"><i style="--w:96%"></i></span><span class="sc">9,812</span></div>
+      <div class="dtb-rank-r s dn"><span class="rk">2</span><span>Nova</span><span class="bar"><i style="--w:78%"></i></span><span class="sc">7,940</span></div>
+      <div class="dtb-rank-r b up"><span class="rk">3</span><span>Fayte</span><span class="bar"><i style="--w:80%"></i></span><span class="sc">8,105</span></div>
+      <div class="dtb-rank-r"><span class="rk">4</span><span>Pixel</span><span class="bar"><i style="--w:51%"></i></span><span class="sc">5,220</span></div>
+    </div>
+  </div><div class="meta"><div class="nm">Leaderboard Swap</div><span class="ref">.dtb-rank</span><div class="desc">Ranked rows with medal badges and score bars; two competitors trade places as a score overtakes — leaderboards and top-N lists.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <div class="dtb-tl">
+      <div class="dtb-now"></div>
+      <div class="dtb-tl-r"><span class="t">09:00</span><span class="d ok"></span><span class="e">Deploy v4.2<small>api</small></span></div>
+      <div class="dtb-tl-r"><span class="t">09:40</span><span class="d ok"></span><span class="e">Canary 10%<small>ok</small></span></div>
+      <div class="dtb-tl-r"><span class="t">10:15</span><span class="d warn"></span><span class="e">Latency alert<small>p95</small></span></div>
+      <div class="dtb-tl-r"><span class="t">10:30</span><span class="d"></span><span class="e">Rollout 100%<small>pending</small></span></div>
+    </div>
+  </div><div class="meta"><div class="nm">Timeline List + Now</div><span class="ref">.dtb-tl</span><div class="desc">Timestamped events on a vertical rail with a NOW marker that drifts down through the schedule — change logs and incident timelines.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+</div>
+
+<h3 class="sec">GRIDS &amp; SCHEDULES</h3>
+<div class="gallery">
+
+  <div class="tile is-new"><div class="stage">
+    <div class="dtb-grid">
+      <div class="dtb-rec" style="--i:0"><b>us-east-1</b><small>14 clusters</small><em>99.98%</em></div>
+      <div class="dtb-rec" style="--i:1;--c:var(--pos)"><b>eu-west-1</b><small>9 clusters</small><em>100%</em></div>
+      <div class="dtb-rec" style="--i:2;--c:var(--warn)"><b>ap-south-1</b><small>6 clusters</small><em>99.71%</em></div>
+      <div class="dtb-rec" style="--i:3"><b>us-west-2</b><small>11 clusters</small><em>99.95%</em></div>
+      <div class="dtb-rec" style="--i:4;--c:var(--neg)"><b>sa-east-1</b><small>3 clusters</small><em>98.20%</em></div>
+      <div class="dtb-rec" style="--i:5;--c:var(--pos)"><b>ca-central</b><small>4 clusters</small><em>100%</em></div>
+    </div>
+  </div><div class="meta"><div class="nm">Record Card Grid</div><span class="ref">.dtb-grid</span><div class="desc">Records as a grid of small cards with a coloured figure each, revealed in a stagger — the card-view alternative to a table.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <div class="dtb-gantt">
+      <div class="dtb-today"></div>
+      <div class="dtb-gantt-r"><span>Discovery</span><span class="tr"><i style="--s:0%;--w:22%;--i:0;--c:var(--pos)"></i></span></div>
+      <div class="dtb-gantt-r"><span>Design</span><span class="tr"><i style="--s:18%;--w:26%;--i:1"></i></span></div>
+      <div class="dtb-gantt-r"><span>Build</span><span class="tr"><i style="--s:38%;--w:34%;--i:2"></i></span></div>
+      <div class="dtb-gantt-r"><span>QA</span><span class="tr"><i style="--s:64%;--w:18%;--i:3;--c:var(--warn)"></i></span></div>
+      <div class="dtb-gantt-r"><span>Launch</span><span class="tr"><i class="ms" style="--s:84%"></i></span></div>
+    </div>
+  </div><div class="meta"><div class="nm">Gantt Rows</div><span class="ref">.dtb-gantt</span><div class="desc">Phase bars on gridded tracks (<code>--s</code> start, <code>--w</code> width), a diamond milestone, and a today line sliding across — project plans.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <div class="dtb-sched">
+      <span></span><b>Mon</b><b>Tue</b><b>Wed</b><b>Thu</b><b>Fri</b>
+      <span>09</span><i class="ev"></i><i></i><i class="ev" style="--c-rgb:var(--pos-rgb)"></i><i></i><i class="ev"></i>
+      <span>11</span><i></i><i class="ev now" style="--c-rgb:var(--accent-rgb)"></i><i></i><i class="ev" style="--c-rgb:var(--crit-rgb)"></i><i></i>
+      <span>14</span><i class="ev" style="--c-rgb:var(--pos-rgb)"></i><i></i><i></i><i class="ev"></i><i class="ev" style="--c-rgb:var(--warn-rgb)"></i>
+      <span>16</span><i></i><i class="ev"></i><i class="ev" style="--c-rgb:var(--crit-rgb)"></i><i></i><i></i>
+    </div>
+  </div><div class="meta"><div class="nm">Weekly Schedule Grid</div><span class="ref">.dtb-sched</span><div class="desc">Hours down, weekdays across, colour-blocked slots and the current slot pulsing in the accent — rotas, room bookings, on-call.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <div class="dtb-cal">
+      <div class="dtb-cal-h">September 2026 <small>‹ ›</small></div>
+      <div class="dtb-cal-g">
+        <b>M</b><b>T</b><b>W</b><b>T</b><b>F</b><b>S</b><b>S</b>
+        <i class="o">31</i><i>1</i><i class="ev">2</i><i>3</i><i class="today">4</i><i>5</i><i>6</i>
+        <i>7</i><i class="ev" style="--c:var(--pos)">8</i><i>9</i><i>10</i><i class="ev" style="--c:var(--neg)">11</i><i>12</i><i>13</i>
+        <i>14</i><i>15</i><i class="ev">16</i><i>17</i><i>18</i><i>19</i><i>20</i>
+        <i>21</i><i class="ev" style="--c:var(--warn)">22</i><i>23</i><i>24</i><i>25</i><i>26</i><i>27</i>
+      </div>
+    </div>
+  </div><div class="meta"><div class="nm">Month Calendar</div><span class="ref">.dtb-cal</span><div class="desc">A compact month grid with weekday headers, event dots in token colours, and today ringed by a pulsing halo — date pickers and planning views.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <div class="dtb-kanban">
+      <div class="dtb-kan-col"><b>To do</b><div class="dtb-kan-card">Write ADR</div><div class="dtb-kan-card out" style="--c:var(--accent)">Fix flaky CI</div><div class="dtb-kan-card" style="--c:var(--crit)">Rotate certs</div></div>
+      <div class="dtb-kan-col"><b>Doing</b><div class="dtb-kan-card" style="--c:var(--pos)">Gallery: tables</div><div class="dtb-kan-card in" style="--c:var(--accent)">Fix flaky CI</div></div>
+      <div class="dtb-kan-col"><b>Done</b><div class="dtb-kan-card" style="--c:var(--dim)">GIF showcase</div></div>
+    </div>
+  </div><div class="meta"><div class="nm">Kanban Columns</div><span class="ref">.dtb-kanban</span><div class="desc">Three status columns of cards; one card leaves To-do and lands in Doing with a green confirmation ring — boards and workflow states.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <div class="dtb-bento">
+      <div class="w2 glow"><small>Monthly spend</small><em style="--c:var(--accent)">$18.2K</em></div>
+      <div><small>Uptime</small><em style="--c:var(--pos)">99.98</em></div>
+      <div class="h2"><small>Requests</small><svg class="dtb-spark" viewBox="0 0 64 18" preserveAspectRatio="none"><polyline class="dtb-spark-line" points="1,14 10,11 19,13 28,8 37,10 46,5 55,7 63,3"/></svg><em>48K</em></div>
+      <div><small>Errors</small><em style="--c:var(--neg)">0.3%</em></div>
+      <div><small>Coverage</small><span class="dtb-bar" style="--w:72%"><i></i></span></div>
+    </div>
+  </div><div class="meta"><div class="nm">Bento Stat Grid</div><span class="ref">.dtb-bento</span><div class="desc">Mixed-span tiles (<code>.w2</code>, <code>.h2</code>) holding one figure, sparkline or bar each, with the hero tile glowing — dashboard summaries.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <div class="dtb-masonry">
+      <div><div class="dtb-mas" style="height:54px;--i:0"></div><div class="dtb-mas" style="height:36px;--i:3"></div><div class="dtb-mas" style="height:44px;--i:6"></div></div>
+      <div><div class="dtb-mas" style="height:38px;--i:1"></div><div class="dtb-mas" style="height:58px;--i:4"></div><div class="dtb-mas" style="height:30px;--i:7"></div></div>
+      <div><div class="dtb-mas" style="height:46px;--i:2"></div><div class="dtb-mas" style="height:34px;--i:5"></div><div class="dtb-mas" style="height:52px;--i:8"></div></div>
+    </div>
+  </div><div class="meta"><div class="nm">Masonry Placeholder</div><span class="ref">.dtb-masonry</span><div class="desc">Three columns of variable-height cards with a shimmer travelling across them — the loading state of a masonry or gallery layout.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+</div>
+
+<h3 class="sec">LEDGERS, LOGS &amp; TOOLBARS</h3>
+<div class="gallery">
+
+  <div class="tile is-new"><div class="stage">
+    <table class="dtb-tbl dtb-ledger"><thead><tr><th>Date</th><th>Memo</th><th class="dtb-num">Amount</th><th class="dtb-num">Balance</th></tr></thead><tbody>
+      <tr><td class="dtb-mono dtb-dim">09-04</td><td>Refund · #10471</td><td class="dtb-num cr">+120.00</td><td class="dtb-num bal">4,382.10</td></tr>
+      <tr><td class="dtb-mono dtb-dim">09-03</td><td>AWS · Aug</td><td class="dtb-num dr">-1,812.44</td><td class="dtb-num bal">4,262.10</td></tr>
+      <tr><td class="dtb-mono dtb-dim">09-02</td><td>Payout</td><td class="dtb-num cr">+5,000.00</td><td class="dtb-num bal">6,074.54</td></tr>
+      <tr><td class="dtb-mono dtb-dim">09-01</td><td>Domains</td><td class="dtb-num dr">-96.20</td><td class="dtb-num bal">1,074.54</td></tr>
+    </tbody><tfoot><tr><td colspan="3">Closing balance</td><td class="dtb-num">4,382.10</td></tr></tfoot></table>
+  </div><div class="meta"><div class="nm">Ledger + Running Balance</div><span class="ref">.dtb-tbl.dtb-ledger</span><div class="desc">Credits in green, debits in red, a running balance column and a closing total, with the newest entry sliding in at the top.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <table class="dtb-tbl dtb-diff"><thead><tr><th></th><th>Setting</th><th>Value</th></tr></thead><tbody>
+      <tr><td> </td><td>instance</td><td class="dtb-mono">m6g.large</td></tr>
+      <tr class="del"><td>−</td><td>min_size</td><td class="dtb-mono">2</td></tr>
+      <tr class="add"><td>+</td><td>min_size</td><td class="dtb-mono">4</td></tr>
+      <tr><td> </td><td>max_size</td><td class="dtb-mono">12</td></tr>
+      <tr class="add"><td>+</td><td>warm_pool</td><td class="dtb-mono">true</td></tr>
+    </tbody></table>
+  </div><div class="meta"><div class="nm">Diff Table</div><span class="ref">.dtb-tbl.dtb-diff</span><div class="desc">Before/after rows with a plus-minus gutter: removed rows struck through in red, added rows in green, each pulsing in turn — config and plan diffs.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <table class="dtb-tbl dtb-audit"><thead><tr><th>When</th><th>Who</th><th>Action</th></tr></thead><tbody>
+      <tr><td class="t">14:02:11</td><td><span class="who">mkastro</span></td><td>approved PR #51</td></tr>
+      <tr><td class="t">14:01:37</td><td><span class="who">svc-deploy</span></td><td>pushed v4.2.0</td></tr>
+      <tr><td class="t">13:58:02</td><td><span class="who">nova</span></td><td>edited runbook</td></tr>
+      <tr><td class="t">13:55:49</td><td><span class="who">svc-backup</span></td><td>snapshot ok</td></tr>
+      <tr><td class="t">13:51:10</td><td><span class="who">fayte</span></td><td>rotated key</td></tr>
+    </tbody></table>
+  </div><div class="meta"><div class="nm">Audit Trail</div><span class="ref">.dtb-tbl.dtb-audit</span><div class="desc">Timestamp, actor chip and action per row, appearing in a cascade as the log fills — audit logs and activity feeds.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <div>
+      <div class="dtb-pg"><i class="nav">‹</i><i style="--i:0">1</i><i style="--i:1">2</i><i style="--i:2">3</i><i style="--i:3">4</i><i style="--i:4">5</i><i class="dots">…</i><i class="nav">12</i><i class="nav">›</i></div>
+      <div class="dtb-pg-info">Showing 41–60 of 234 rows</div>
+    </div>
+  </div><div class="meta"><div class="nm">Pagination</div><span class="ref">.dtb-pg</span><div class="desc">A pager whose active page steps forward on its own, plus the rows-shown caption — the footer of any paged table.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <div class="dtb-toolbar">
+      <div class="dtb-tb-row"><div class="dtb-search"><span class="dtb-typed">region:</span><span class="dtb-caret"></span></div><span class="dtb-tb-btn">⚙</span><span class="dtb-tb-btn">↓</span></div>
+      <div class="dtb-tb-row"><span class="dtb-chip on">Prod</span><span class="dtb-chip tog">Errors only</span><span class="dtb-chip">Last 24h</span><span class="dtb-tb-count"><b>318</b> / 2,668</span></div>
+    </div>
+  </div><div class="meta"><div class="nm">Table Toolbar</div><span class="ref">.dtb-toolbar</span><div class="desc">Search box with a typing query, filter chips (one toggling on), column and export buttons, and a live match count — the control strip above a data table.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new"><div class="stage">
+    <div class="dtb-empty">
+      <span class="dtb-sk w3"></span><span class="dtb-sk w2"></span>
+      <div class="dtb-empty-ic"></div>
+      <b>No rows match</b><small>Try a wider date range or fewer filters.</small>
+      <span class="dtb-empty-btn">Clear filters</span>
+    </div>
+  </div><div class="meta"><div class="nm">Empty Table State</div><span class="ref">.dtb-empty</span><div class="desc">A dashed frame with ghost rows, a table glyph, a plain-language message and a glowing recovery action — what a table shows when a query returns nothing.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+</div>
+</div>
+<script>
+function copyViz(btn){
+  var stage=btn.closest('.tile').querySelector('.stage');
+  var html=stage.innerHTML.replace(/\s+$/,'').trim();
+  var usedClasses=new Set();
+  (html.match(/class="[^"]*"/g)||[]).forEach(function(m){m.replace(/class="/,'').replace(/"/,'').split(/\s+/).forEach(function(c){if(c)usedClasses.add(c)})});
+  var cssRules=[];
+  try{var sheets=document.styleSheets;for(var s=0;s<sheets.length;s++){var rules=sheets[s].cssRules;for(var r=0;r<rules.length;r++){var rule=rules[r];if(rule.type===7&&html.indexOf(rule.name)!==-1){cssRules.push(rule.cssText)}if(rule.type===1&&rule.selectorText){for(var uc of usedClasses){if(rule.selectorText.indexOf('.'+uc)!==-1&&!rule.selectorText.includes('.tile')){cssRules.push(rule.cssText);break}}}}}}catch(e){}
+  cssRules=[...new Set(cssRules)];
+  var output='<!-- Prism Component -->\n'+html;
+  if(cssRules.length>0)output+='\n\n<style>\n'+cssRules.join('\n')+'\n</style>';
+  function sgCopy(txt){try{if(navigator.clipboard&&navigator.clipboard.writeText){return navigator.clipboard.writeText(txt).catch(function(){return sgCopyFallback(txt);});}}catch(e){}return Promise.resolve(sgCopyFallback(txt));}
+  function sgCopyFallback(txt){var ta=document.createElement('textarea');ta.value=txt;ta.setAttribute('readonly','');ta.style.cssText='position:fixed;top:0;left:0;width:1px;height:1px;opacity:0';document.body.appendChild(ta);ta.focus();ta.select();try{ta.setSelectionRange(0,txt.length);}catch(e){}var ok=false;try{ok=document.execCommand('copy');}catch(e){}document.body.removeChild(ta);if(!ok)return Promise.reject(new Error('copy failed'));return true;}
+  sgCopy(output).then(function(){var o=btn.dataset.lbl||btn.textContent;btn.dataset.lbl=o;btn.textContent='✓ Copied';btn.classList.add('ok');setTimeout(function(){btn.textContent=o;btn.classList.remove('ok');btn.removeAttribute('data-lbl');},1300);},function(){var o=btn.dataset.lbl||btn.textContent;btn.dataset.lbl=o;btn.textContent='✗ Press ⌘C';btn.classList.add('ok');setTimeout(function(){btn.textContent=o;btn.classList.remove('ok');btn.removeAttribute('data-lbl');},1500);});
+}
+/* data-snip copy for snippet buttons */
+document.addEventListener('click',function(e){var b=e.target.closest('.copy[data-snip]');if(!b)return;var t=b.getAttribute('data-snip');
+  function fb(){var ta=document.createElement('textarea');ta.value=t;ta.style.cssText='position:fixed;opacity:0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy')}catch(e){}document.body.removeChild(ta);}
+  (navigator.clipboard&&navigator.clipboard.writeText?navigator.clipboard.writeText(t).catch(fb):Promise.resolve(fb()));
+  var o=b.dataset.lbl||b.textContent;b.dataset.lbl=o;b.textContent='✓ Copied';b.classList.add('ok');setTimeout(function(){b.textContent=o;b.classList.remove('ok');},1300);
+});
+<\/script>
+</body>
+</html>
+</script>

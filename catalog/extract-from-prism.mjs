@@ -47,6 +47,7 @@ const GALLERIES = [
   // 1668 — the stale-manifest root cause. Titles match the #prism-catalog island.
   { gallery: 'obsidian', title: 'Obsidian Facets' },
   { gallery: 'menus', title: 'Menus & Actions' },
+  { gallery: 'tables', title: 'Tables & Data Layouts' },
   { gallery: 'spectrums', title: 'Spectrums' },
 ];
 
