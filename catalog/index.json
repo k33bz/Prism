@@ -1,5 +1,5 @@
 {
-  "count": 3104,
+  "count": 3106,
   "effects": [
     {
       "id": "charts-big-metric-count-up",
@@ -1896,11 +1896,10 @@
         "sl",
         "ts",
         "lv",
-        "ok",
-        "m",
         "info",
-        "warn",
+        "m",
         "err",
+        "ok",
         "cursor"
       ],
       "params": [],
@@ -17517,8 +17516,7 @@
         "pbody",
         "token-stream",
         "tok",
-        "cap",
-        "pr-playbtn"
+        "cap"
       ],
       "params": [
         "color",
@@ -35264,6 +35262,85 @@
       "updatedOn": "2026-07-28",
       "author": "crazy54",
       "description": "An icon with a pinging dot marker; use for a countless \"has new activity\" hint."
+    },
+    {
+      "id": "notify-presence-status-set",
+      "name": "Presence Status Set",
+      "gallery": "notify",
+      "category": "PRESENCE & STATUS",
+      "ref": ".ns-presence.ns-st-*",
+      "classes": [
+        "ns-st-row",
+        "ns-st-item",
+        "ns-st-livewrap",
+        "ns-presence",
+        "ns-st-live",
+        "ns-av",
+        "ns-on",
+        "ns-lbl",
+        "ns-st-available",
+        "ns-st-away",
+        "ns-st-busy",
+        "ns-st-dnd",
+        "ns-st-ooo",
+        "ns-st-offline"
+      ],
+      "params": [],
+      "tags": [
+        "notify",
+        "animated",
+        "new"
+      ],
+      "componentType": "avatar",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Six status modifiers for the presence ring: available (pulsing), away (clock), busy, dnd (bar), ooo (arrow ring) and offline (hollow). The first avatar cycles through all six the way a presence feed would update it; add ns-st-live for that loop."
+    },
+    {
+      "id": "notify-live-avatar-stack-status-rings",
+      "name": "Live Avatar Stack (Status Rings)",
+      "gallery": "notify",
+      "category": "PRESENCE & STATUS",
+      "ref": ".ns-avstack.ns-avstack-live",
+      "classes": [
+        "ns-avstack",
+        "ns-avstack-live",
+        "ns-a",
+        "ns-a1",
+        "ns-st-available",
+        "ns-a2",
+        "ns-a3",
+        "ns-a4",
+        "ns-lv-drop",
+        "ns-a5",
+        "ns-lv-d2",
+        "ns-more",
+        "ns-lv-cap"
+      ],
+      "params": [],
+      "tags": [
+        "notify",
+        "animated",
+        "new"
+      ],
+      "componentType": "avatar",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Stacked avatars with glowing status rings and an overflow chip whose ring splits by the hidden members' statuses. Visible slots = clamp(online, --max, ceil(--max × (1 + --expand))): six members, five online shows 5 / +1; two go away and offline, the stack folds back to 3 / +3 and the chip ring turns one third away, two thirds offline."
     },
     {
       "id": "arch-service-node",

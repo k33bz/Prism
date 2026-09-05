@@ -1,0 +1,103 @@
+<h3 class="sec">👥 PRESENCE &amp; STATUS</h3>
+<style id="ns-presence-ext-styles">
+/* ===== Presence extensions (k33bz fork). Status modifiers for .ns-presence and a live
+   avatar stack whose rings carry status and whose overflow chip splits its ring by the
+   hidden members' statuses. Pure CSS, ns-* namespaced, tokens only. =====
+   Status colour roles: available=pos, away=warn, busy/dnd=neg, ooo=crit, offline=dim. */
+.ns-presence{--ns-st:var(--pos);--ns-st-rgb:var(--pos-rgb)}
+.ns-presence.ns-st-away{--ns-st:var(--warn);--ns-st-rgb:var(--warn-rgb)}
+.ns-presence.ns-st-busy,.ns-presence.ns-st-dnd{--ns-st:var(--neg);--ns-st-rgb:var(--neg-rgb)}
+.ns-presence.ns-st-ooo{--ns-st:var(--crit);--ns-st-rgb:var(--crit-rgb)}
+.ns-presence.ns-st-offline{--ns-st:var(--dim);--ns-st-rgb:var(--dim-rgb,128,128,128)}
+.ns-presence[class*="ns-st-"] .ns-on{background:var(--ns-st)}
+.ns-presence[class*="ns-st-"]:not(.ns-st-available) .ns-on::after{display:none}
+.ns-presence[class*="ns-st-"] .ns-on::before{content:"";position:absolute;inset:0;border-radius:50%}
+.ns-presence.ns-st-away .ns-on::before{inset:2px;background:radial-gradient(circle at 62% 38%,var(--panel) 0 2.2px,transparent 2.6px),linear-gradient(90deg,transparent 45%,var(--panel) 45% 55%,transparent 55%);opacity:.9}
+.ns-presence.ns-st-dnd .ns-on::before{left:2px;right:2px;top:calc(50% - 1px);bottom:calc(50% - 1px);border-radius:1px;background:var(--panel)}
+.ns-presence.ns-st-ooo .ns-on{background:var(--panel);box-shadow:inset 0 0 0 2.5px var(--ns-st)}
+.ns-presence.ns-st-ooo .ns-on::before{inset:0;background:linear-gradient(45deg,transparent 42%,var(--ns-st) 42% 58%,transparent 58%);clip-path:polygon(28% 72%,72% 28%,72% 72%)}
+.ns-presence.ns-st-offline .ns-on{background:var(--panel);box-shadow:inset 0 0 0 2px var(--ns-st)}
+.ns-presence.ns-st-live .ns-on{animation:nsStCycle 4.8s steps(1) infinite}
+.ns-presence.ns-st-live .ns-on::after{animation:nsPing 2s ease-out infinite,nsStCyclePing 4.8s steps(1) infinite}
+.ns-st-row{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 14px;align-items:flex-start;max-width:100%;width:250px}
+.ns-st-row .ns-st-item{display:flex;flex-direction:column;align-items:center;gap:6px;font:600 9.5px ui-sans-serif,system-ui,sans-serif;color:var(--muted);letter-spacing:.03em}
+.ns-st-row .ns-presence{width:38px;height:38px}
+.ns-st-row .ns-presence .ns-av{font-size:12px}
+.ns-st-row .ns-presence .ns-on{width:13px;height:13px}
+@keyframes nsStCycle{0%,16.6%{background:var(--pos);box-shadow:none}16.7%,33.3%{background:var(--warn);box-shadow:none}33.4%,50%{background:var(--neg);box-shadow:none}50.1%,66.6%{background:var(--neg);box-shadow:inset 0 3px 0 -1px var(--panel),inset 0 -3px 0 -1px var(--panel)}66.7%,83.3%{background:var(--panel);box-shadow:inset 0 0 0 2.5px var(--crit)}83.4%,100%{background:var(--panel);box-shadow:inset 0 0 0 2px var(--dim)}}
+@keyframes nsStCyclePing{0%,16.6%{opacity:1}16.7%,100%{opacity:0}}
+.ns-st-row .ns-st-livewrap .ns-lbl{position:relative;min-width:44px;height:12px;text-align:center}
+.ns-st-row .ns-st-livewrap .ns-lbl span{position:absolute;left:0;right:0;opacity:0;animation:nsStLblShow 4.8s steps(1) infinite}
+.ns-st-row .ns-st-livewrap .ns-lbl span:nth-child(1){animation-delay:0s}.ns-st-row .ns-st-livewrap .ns-lbl span:nth-child(2){animation-delay:.8s}.ns-st-row .ns-st-livewrap .ns-lbl span:nth-child(3){animation-delay:1.6s}.ns-st-row .ns-st-livewrap .ns-lbl span:nth-child(4){animation-delay:2.4s}.ns-st-row .ns-st-livewrap .ns-lbl span:nth-child(5){animation-delay:3.2s}.ns-st-row .ns-st-livewrap .ns-lbl span:nth-child(6){animation-delay:4s}
+@keyframes nsStLblShow{0%,16.6%{opacity:1}16.7%,100%{opacity:0}}
+
+/* Live avatar stack: status rings + split overflow ring. Contract for a real feed:
+   visible = clamp(online, --max, ceil(--max * (1 + --expand))); everyone else folds into
+   the overflow chip, whose ring is a conic gradient of the hidden members' statuses. */
+.ns-avstack-live{--max:3;--expand:70%;position:relative}
+.ns-avstack-live .ns-a{position:relative;box-shadow:0 0 0 2px var(--panel),0 0 0 4px var(--ns-st,var(--pos)),0 0 12px rgba(var(--ns-st-rgb,var(--pos-rgb)),.55)}
+.ns-avstack-live .ns-a.ns-st-available{--ns-st:var(--pos);--ns-st-rgb:var(--pos-rgb);animation:nsRingGlow 2.4s ease-in-out infinite}
+.ns-avstack-live .ns-a.ns-st-away{--ns-st:var(--warn);--ns-st-rgb:var(--warn-rgb)}
+.ns-avstack-live .ns-a.ns-st-busy,.ns-avstack-live .ns-a.ns-st-dnd{--ns-st:var(--neg);--ns-st-rgb:var(--neg-rgb)}
+.ns-avstack-live .ns-a.ns-st-ooo{--ns-st:var(--crit);--ns-st-rgb:var(--crit-rgb)}
+.ns-avstack-live .ns-a.ns-st-offline{--ns-st:var(--dim);--ns-st-rgb:var(--dim-rgb,128,128,128);filter:saturate(.4)}
+.ns-avstack-live .ns-a4{background:linear-gradient(135deg,var(--crit),var(--info))}
+.ns-avstack-live .ns-a5{background:linear-gradient(135deg,var(--warn),var(--neg))}
+.ns-avstack-live .ns-a.ns-lv-drop{overflow:hidden;animation:nsLvDrop 4s cubic-bezier(.4,0,.2,1) infinite}
+.ns-avstack-live .ns-a.ns-lv-drop.ns-lv-d2{animation-name:nsLvDrop2}
+.ns-avstack-live .ns-more{animation:none;box-shadow:0 0 0 2px var(--panel);overflow:visible}
+.ns-avstack-live .ns-more::before,.ns-avstack-live .ns-more::after{content:"";position:absolute;inset:-4px;border-radius:50%;
+  -webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 3px),#000 calc(100% - 2px));mask:radial-gradient(farthest-side,transparent calc(100% - 3px),#000 calc(100% - 2px))}
+.ns-avstack-live .ns-more::before{background:conic-gradient(var(--dim) 0 100%);animation:nsLvRingA 4s steps(1) infinite}
+.ns-avstack-live .ns-more::after{background:conic-gradient(var(--warn) 0 33.3%,var(--dim) 33.3% 100%);animation:nsLvRingB 4s steps(1) infinite}
+.ns-avstack-live .ns-more i{position:absolute;inset:0;display:grid;place-items:center;font-style:normal;animation:nsLvN1 4s steps(1) infinite}
+.ns-avstack-live .ns-more i + i{animation-name:nsLvN3}
+@keyframes nsRingGlow{0%,100%{box-shadow:0 0 0 2px var(--panel),0 0 0 4px var(--ns-st),0 0 8px rgba(var(--ns-st-rgb),.4)}50%{box-shadow:0 0 0 2px var(--panel),0 0 0 4px var(--ns-st),0 0 16px rgba(var(--ns-st-rgb),.8)}}
+@keyframes nsLvDrop{0%,30%{width:34px;margin-left:-10px;opacity:1;--ns-st:var(--pos);--ns-st-rgb:var(--pos-rgb)}
+  31%,36%{width:34px;margin-left:-10px;opacity:1;--ns-st:var(--warn);--ns-st-rgb:var(--warn-rgb);animation-timing-function:steps(1)}
+  40%,72%{width:0;margin-left:0;opacity:0;border-width:0;--ns-st:var(--warn);--ns-st-rgb:var(--warn-rgb)}
+  76%,100%{width:34px;margin-left:-10px;opacity:1;--ns-st:var(--pos);--ns-st-rgb:var(--pos-rgb)}}
+@keyframes nsLvDrop2{0%,32%{width:34px;margin-left:-10px;opacity:1;--ns-st:var(--pos);--ns-st-rgb:var(--pos-rgb)}
+  33%,37%{width:34px;margin-left:-10px;opacity:1;--ns-st:var(--dim);--ns-st-rgb:128,128,128;animation-timing-function:steps(1)}
+  41%,72%{width:0;margin-left:0;opacity:0;border-width:0;--ns-st:var(--dim);--ns-st-rgb:128,128,128}
+  77%,100%{width:34px;margin-left:-10px;opacity:1;--ns-st:var(--pos);--ns-st-rgb:var(--pos-rgb)}}
+@keyframes nsLvRingA{0%,39%{opacity:1}40%,75%{opacity:0}76%,100%{opacity:1}}
+@keyframes nsLvRingB{0%,39%{opacity:0}40%,75%{opacity:1}76%,100%{opacity:0}}
+@keyframes nsLvN1{0%,39%{opacity:1}40%,75%{opacity:0}76%,100%{opacity:1}}
+@keyframes nsLvN3{0%,39%{opacity:0}40%,75%{opacity:1}76%,100%{opacity:0}}
+.ns-lv-cap{margin-top:12px;font:600 9.5px ui-monospace,Menlo,monospace;color:var(--dim);letter-spacing:.03em;display:flex;gap:10px}
+.ns-lv-cap b{color:var(--muted);font-weight:600}
+@media (prefers-reduced-motion:reduce){
+  .ns-presence.ns-st-live .ns-on,.ns-st-row .ns-st-livewrap .ns-lbl span,.ns-avstack-live .ns-a,.ns-avstack-live .ns-more::before,.ns-avstack-live .ns-more::after,.ns-avstack-live .ns-more i{animation:none!important}
+  .ns-st-row .ns-st-livewrap .ns-lbl span:first-child{opacity:1}
+  .ns-avstack-live .ns-a.ns-lv-drop{width:0;margin-left:0;opacity:0;border-width:0}
+  .ns-avstack-live .ns-more::before{opacity:0}.ns-avstack-live .ns-more::after{opacity:1}
+  .ns-avstack-live .ns-more i:first-child{opacity:0}.ns-avstack-live .ns-more i + i{opacity:1}
+}
+</style>
+<div class="gallery">
+
+  <div class="tile is-new" data-ctype="avatar" data-interact="auto-play"><div class="stage">
+    <div class="ns-st-row">
+      <div class="ns-st-item ns-st-livewrap"><div class="ns-presence ns-st-live"><div class="ns-av">JD</div><span class="ns-on"></span></div><div class="ns-lbl"><span>available</span><span>away</span><span>busy</span><span>dnd</span><span>ooo</span><span>offline</span></div></div>
+      <div class="ns-st-item"><div class="ns-presence ns-st-available"><div class="ns-av">RP</div><span class="ns-on"></span></div>available</div>
+      <div class="ns-st-item"><div class="ns-presence ns-st-away"><div class="ns-av">AL</div><span class="ns-on"></span></div>away</div>
+      <div class="ns-st-item"><div class="ns-presence ns-st-busy"><div class="ns-av">MK</div><span class="ns-on"></span></div>busy</div>
+      <div class="ns-st-item"><div class="ns-presence ns-st-dnd"><div class="ns-av">SO</div><span class="ns-on"></span></div>dnd</div>
+      <div class="ns-st-item"><div class="ns-presence ns-st-ooo"><div class="ns-av">TN</div><span class="ns-on"></span></div>ooo</div>
+      <div class="ns-st-item"><div class="ns-presence ns-st-offline"><div class="ns-av">EV</div><span class="ns-on"></span></div>offline</div>
+    </div>
+  </div><div class="meta"><div class="nm">Presence Status Set</div><span class="ref">.ns-presence.ns-st-*</span><div class="desc">Six status modifiers for the presence ring: available (pulsing), away (clock), busy, dnd (bar), ooo (arrow ring) and offline (hollow). The first avatar cycles through all six the way a presence feed would update it; add <code>ns-st-live</code> for that loop.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="avatar" data-interact="auto-play"><div class="stage">
+    <div>
+      <div class="ns-avstack ns-avstack-live" style="--max:3;--expand:70%">
+        <div class="ns-a ns-a1 ns-st-available">AB</div><div class="ns-a ns-a2 ns-st-available">CD</div><div class="ns-a ns-a3 ns-st-available">EF</div>
+        <div class="ns-a ns-a4 ns-st-available ns-lv-drop">GH</div><div class="ns-a ns-a5 ns-st-available ns-lv-drop ns-lv-d2">IJ</div>
+        <div class="ns-a ns-more"><i>+1</i><i>+3</i></div>
+      </div>
+      <div class="ns-lv-cap"><span>--max <b>3</b></span><span>--expand <b>70%</b></span><span>online <b>5 → 3</b></span></div>
+    </div>
+  </div><div class="meta"><div class="nm">Live Avatar Stack (Status Rings)</div><span class="ref">.ns-avstack.ns-avstack-live</span><div class="desc">Stacked avatars with glowing status rings and an overflow chip whose ring splits by the hidden members' statuses. Visible slots = clamp(online, <code>--max</code>, ceil(<code>--max</code> × (1 + <code>--expand</code>))): six members, five online shows 5 / +1; two go away and offline, the stack folds back to 3 / +3 and the chip ring turns one third away, two thirds offline.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+</div>
