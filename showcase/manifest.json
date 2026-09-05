@@ -1,14 +1,14 @@
 {
  "name": "Prism GIF showcase",
- "generated": "2026-09-05T19:11:48.730Z",
+ "generated": "2026-09-05T19:19:17.500Z",
  "source": "Prism.html",
  "browser": {
   "engine": "Firefox (WebDriver BiDi)",
   "version": "155.0.1"
  },
- "count": 3106,
- "animated": 2849,
- "gifBytes": 69600767,
+ "count": 3109,
+ "animated": 2852,
+ "gifBytes": 69898240,
  "settings": {
   "fps": 10,
   "minSeconds": 1.6,
@@ -23116,6 +23116,51 @@
    "width": 344,
    "height": 181,
    "bytes": 22496
+  },
+  {
+   "id": "diagrams-amazon-flywheel",
+   "name": "Amazon Flywheel",
+   "gallery": "diagrams",
+   "category": "FLYWHEELS",
+   "spectrum": null,
+   "gif": "gif/diagrams-amazon-flywheel.gif",
+   "html": "html/diagrams-amazon-flywheel.html",
+   "animated": true,
+   "duration": 4,
+   "frames": 40,
+   "width": 344,
+   "height": 181,
+   "bytes": 97240
+  },
+  {
+   "id": "diagrams-data-flywheel",
+   "name": "Data Flywheel",
+   "gallery": "diagrams",
+   "category": "FLYWHEELS",
+   "spectrum": null,
+   "gif": "gif/diagrams-data-flywheel.gif",
+   "html": "html/diagrams-data-flywheel.html",
+   "animated": true,
+   "duration": 4,
+   "frames": 40,
+   "width": 344,
+   "height": 181,
+   "bytes": 101925
+  },
+  {
+   "id": "diagrams-growth-flywheel-attract-engage-delight",
+   "name": "Growth Flywheel (Attract, Engage, Delight)",
+   "gallery": "diagrams",
+   "category": "FLYWHEELS",
+   "spectrum": null,
+   "gif": "gif/diagrams-growth-flywheel-attract-engage-delight.gif",
+   "html": "html/diagrams-growth-flywheel-attract-engage-delight.html",
+   "animated": true,
+   "duration": 4,
+   "frames": 40,
+   "width": 344,
+   "height": 181,
+   "bytes": 98308
   },
   {
    "id": "spectrums-tonal-dropdown-menu",

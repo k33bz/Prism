@@ -2,11 +2,11 @@
 
 Every effect in Prism's **Diagrams & Frameworks** gallery, recorded as a looping GIF.
 
-**50 effects** · 50 animated · 1.2 MB of GIF · click any GIF to open its standalone HTML sample (raw file; open it locally, GitHub shows source).
+**53 effects** · 53 animated · 1.5 MB of GIF · click any GIF to open its standalone HTML sample (raw file; open it locally, GitHub shows source).
 
 [← Showcase index](../README.md)
 
-**Sections:** [FISHBONE (ISHIKAWA)](#fishbone-ishikawa) · [FLOW & LOGIC](#flow-logic) · [HIERARCHY & STRUCTURE](#hierarchy-structure) · [COMPARISON & MATRIX](#comparison-matrix) · [TIMELINE & PLANNING](#timeline-planning) · [NETWORK & RELATIONSHIPS](#network-relationships) · [FRAMEWORKS](#frameworks)
+**Sections:** [FISHBONE (ISHIKAWA)](#fishbone-ishikawa) · [FLOW & LOGIC](#flow-logic) · [HIERARCHY & STRUCTURE](#hierarchy-structure) · [COMPARISON & MATRIX](#comparison-matrix) · [TIMELINE & PLANNING](#timeline-planning) · [NETWORK & RELATIONSHIPS](#network-relationships) · [FRAMEWORKS](#frameworks) · [FLYWHEELS](#flywheels)
 
 ## FISHBONE (ISHIKAWA)
 
@@ -60,4 +60,10 @@ Every effect in Prism's **Diagrams & Frameworks** gallery, recorded as a looping
 <table>
 <tr><td align="center" valign="top" width="33%"><a href="../html/diagrams-business-model-canvas.html"><img src="../gif/diagrams-business-model-canvas.gif" width="300" alt="Business Model Canvas"></a><br><b>Business Model Canvas</b><br><sub><code>diagrams-business-model-canvas</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/diagrams-okr-tree.html"><img src="../gif/diagrams-okr-tree.gif" width="300" alt="OKR Tree"></a><br><b>OKR Tree</b><br><sub><code>diagrams-okr-tree</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/diagrams-5-whys-chain.html"><img src="../gif/diagrams-5-whys-chain.gif" width="300" alt="5 Whys Chain"></a><br><b>5 Whys Chain</b><br><sub><code>diagrams-5-whys-chain</code></sub></td></tr>
 <tr><td align="center" valign="top" width="33%"><a href="../html/diagrams-raci-matrix.html"><img src="../gif/diagrams-raci-matrix.gif" width="300" alt="RACI Matrix"></a><br><b>RACI Matrix</b><br><sub><code>diagrams-raci-matrix</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/diagrams-five-forces.html"><img src="../gif/diagrams-five-forces.gif" width="300" alt="Five Forces"></a><br><b>Five Forces</b><br><sub><code>diagrams-five-forces</code></sub></td></tr>
+</table>
+
+## FLYWHEELS
+
+<table>
+<tr><td align="center" valign="top" width="33%"><a href="../html/diagrams-amazon-flywheel.html"><img src="../gif/diagrams-amazon-flywheel.gif" width="300" alt="Amazon Flywheel"></a><br><b>Amazon Flywheel</b><br><sub><code>diagrams-amazon-flywheel</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/diagrams-data-flywheel.html"><img src="../gif/diagrams-data-flywheel.gif" width="300" alt="Data Flywheel"></a><br><b>Data Flywheel</b><br><sub><code>diagrams-data-flywheel</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/diagrams-growth-flywheel-attract-engage-delight.html"><img src="../gif/diagrams-growth-flywheel-attract-engage-delight.gif" width="300" alt="Growth Flywheel (Attract, Engage, Delight)"></a><br><b>Growth Flywheel (Attract, Engage, Delight)</b><br><sub><code>diagrams-growth-flywheel-attract-engage-delight</code></sub></td></tr>
 </table>

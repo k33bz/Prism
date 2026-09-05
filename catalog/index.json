@@ -1,5 +1,5 @@
 {
-  "count": 3106,
+  "count": 3109,
   "effects": [
     {
       "id": "charts-big-metric-count-up",
@@ -1896,10 +1896,11 @@
         "sl",
         "ts",
         "lv",
-        "info",
+        "ok",
         "m",
         "err",
-        "ok",
+        "info",
+        "warn",
         "cursor"
       ],
       "params": [],
@@ -17516,7 +17517,8 @@
         "pbody",
         "token-stream",
         "tok",
-        "cap"
+        "cap",
+        "pr-playbtn"
       ],
       "params": [
         "color",
@@ -35298,9 +35300,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Six status modifiers for the presence ring: available (pulsing), away (clock), busy, dnd (bar), ooo (arrow ring) and offline (hollow). The first avatar cycles through all six the way a presence feed would update it; add ns-st-live for that loop."
     },
     {
@@ -35337,9 +35339,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Stacked avatars with glowing status rings and an overflow chip whose ring splits by the hidden members' statuses. Visible slots = clamp(online, --max, ceil(--max × (1 + --expand))): six members, five online shows 5 / +1; two go away and offline, the stack folds back to 3 / +3 and the chip ring turns one third away, two thirds offline."
     },
     {
@@ -47512,6 +47514,129 @@
       "updatedOn": null,
       "author": "k33bz",
       "description": "Rivalry at the centre with entrants, substitutes, suppliers and buyers around it, each arrow pressing inward in turn. The industry-analysis framework."
+    },
+    {
+      "id": "diagrams-amazon-flywheel",
+      "name": "Amazon Flywheel",
+      "gallery": "diagrams",
+      "category": "FLYWHEELS",
+      "ref": ".dgm-flywheel",
+      "classes": [
+        "dgm",
+        "dgm-fw",
+        "dgm-flywheel",
+        "dgm-fw-wheel",
+        "dgm-fw-rim",
+        "dgm-fw-spoke",
+        "dgm-fw-ring",
+        "ln",
+        "c",
+        "dgm-fw-node",
+        "dgm-fw-inner",
+        "dim",
+        "dgm-fw-hub",
+        "hd"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "diagrams",
+        "animated",
+        "new"
+      ],
+      "componentType": "diagram-flow",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "The napkin loop: customer experience drives traffic, traffic draws sellers, sellers widen selection, selection improves the experience, while growth funds a lower cost structure and lower prices that feed the same loop. The wheel turns, the ring carries momentum and each node lights in turn."
+    },
+    {
+      "id": "diagrams-data-flywheel",
+      "name": "Data Flywheel",
+      "gallery": "diagrams",
+      "category": "FLYWHEELS",
+      "ref": ".dgm-flywheel-data",
+      "classes": [
+        "dgm",
+        "dgm-fw",
+        "dgm-flywheel-data",
+        "dgm-fw-wheel",
+        "dgm-fw-accel",
+        "dgm-fw-rim",
+        "dgm-fw-spoke",
+        "dgm-fw-ring",
+        "dgm-fw-node",
+        "dgm-fw-hub",
+        "hd",
+        "dim"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "diagrams",
+        "animated",
+        "new"
+      ],
+      "componentType": "diagram-flow",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "The cloud data flywheel in five stages: move data, run it on managed data services, build data-driven apps, analyze everything, then turbocharge with ML. The wheel and its momentum ring accelerate through each loop, the \"spin-up\" that no single stage powers on its own."
+    },
+    {
+      "id": "diagrams-growth-flywheel-attract-engage-delight",
+      "name": "Growth Flywheel (Attract, Engage, Delight)",
+      "gallery": "diagrams",
+      "category": "FLYWHEELS",
+      "ref": ".dgm-flywheel-3",
+      "classes": [
+        "dgm",
+        "dgm-fw",
+        "dgm-flywheel-3",
+        "dgm-fw-wheel",
+        "dgm-fw-rim",
+        "dgm-fw-spoke",
+        "seg",
+        "seqfill",
+        "dgm-fw-ring",
+        "ln",
+        "c",
+        "dgm-fw-hub",
+        "hd"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "diagrams",
+        "animated",
+        "new"
+      ],
+      "componentType": "diagram-flow",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "The three-segment marketing flywheel with customers at the hub: attract, engage, delight, each wedge lighting in turn as the momentum ring circles. Swap the labels for any three-stage loop."
     },
     {
       "id": "spectrums-tonal-dropdown-menu",

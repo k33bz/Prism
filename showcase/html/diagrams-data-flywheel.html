@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Data Flywheel · Prism</title>
+<!-- Prism showcase sample: diagrams-data-flywheel (gallery: diagrams). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.dgm { display: block; width: 100%; max-width: 320px; height: auto; overflow: visible; font: 600 9px ui-sans-serif, system-ui, sans-serif; --c: var(--accent); --c-rgb: var(--accent-rgb); }
+.dgm text { fill: var(--ink); text-anchor: middle; dominant-baseline: middle; font-size: 9px; font-weight: 600; }
+.dgm text.mut { fill: var(--muted); font-weight: 500; font-size: 8px; }
+.dgm text.dim { fill: var(--dim); font-weight: 500; font-size: 7.5px; }
+.dgm text.hd { font-weight: 800; font-size: 10px; }
+.dgm .ln { fill: none; stroke: var(--line); stroke-width: 1.5; }
+.dgm .ln.c { stroke: var(--c); }
+.dgm .bx { fill: var(--panel2); stroke: var(--line); stroke-width: 1; }
+.dgm .bx.c { stroke: var(--c); fill: rgba(var(--c-rgb),.12); }
+.dgm .bx.pos { stroke: var(--pos); fill: rgba(var(--pos-rgb),.14); }
+.dgm .bx.warn { stroke: var(--warn); fill: rgba(var(--warn-rgb),.14); }
+.dgm .bx.neg { stroke: var(--neg); fill: rgba(var(--neg-rgb),.14); }
+.dgm .bx.info { stroke: var(--info); fill: rgba(var(--info-rgb),.14); }
+.dgm .bx.crit { stroke: var(--crit); fill: rgba(var(--crit-rgb),.14); }
+.dgm .dot { fill: var(--c); }
+.dgm .dr { stroke-dasharray: 400; stroke-dashoffset: 400; animation-name: dgmDraw; animation-duration: 6s; animation-timing-function: ease-out; animation-iteration-count: infinite; animation-delay: calc(var(--i,0)*.22s); }
+.dgm .fi { opacity: 0; animation-name: dgmFade; animation-duration: 6s; animation-timing-function: ease-out; animation-iteration-count: infinite; animation-delay: calc(var(--i,0)*.22s); }
+.dgm .pop { transform-box: fill-box; transform-origin: center center; animation-name: dgmPop; animation-duration: 6s; animation-timing-function: cubic-bezier(0.2, 0.8, 0.3, 1.2); animation-iteration-count: infinite; animation-delay: calc(var(--i,0)*.22s); }
+.dgm .pulse { animation: 2.4s ease-in-out 0s infinite normal none running dgmPulse; }
+.dgm .flow { fill: none; stroke: var(--c); stroke-width: 2; stroke-dasharray: 6, 8; stroke-linecap: round; animation: 1.6s linear 0s infinite normal none running dgmFlow; }
+.dgm .seq { animation-name: dgmSeq; animation-duration: calc(var(--n,4)*1.1s); animation-timing-function: ease-in-out; animation-iteration-count: infinite; animation-delay: calc(var(--i,0)*1.1s); }
+.dgm .seqfill { animation-name: dgmSeqFill; animation-duration: calc(var(--n,4)*1.1s); animation-timing-function: ease-in-out; animation-iteration-count: infinite; animation-delay: calc(var(--i,0)*1.1s); }
+.dgm .spin { transform-box: fill-box; transform-origin: center center; animation: 12s linear 0s infinite normal none running dgmSpin; }
+.dgm-fw .dgm-fw-wheel { transform-box: fill-box; transform-origin: center center; animation: 14s linear 0s infinite normal none running dgmFwSpin; }
+.dgm-fw .dgm-fw-wheel.dgm-fw-accel { animation: 5s cubic-bezier(0.5, 0, 0.85, 0.55) 0s infinite normal none running dgmFwSpinAccel; }
+.dgm-fw .dgm-fw-rim { fill: none; stroke: var(--line); stroke-width: 5; opacity: 0.55; }
+.dgm-fw .dgm-fw-spoke { fill: none; stroke: var(--line); stroke-width: 1.5; opacity: 0.55; }
+.dgm-fw .dgm-fw-ring { fill: none; stroke: var(--c); stroke-width: 2; stroke-dasharray: 8, 10; stroke-linecap: round; animation: 2.4s linear 0s infinite normal none running dgmFwFlow; }
+.dgm-fw .dgm-fw-ring.dgm-fw-accel { animation: 5s cubic-bezier(0.5, 0, 0.85, 0.55) 0s infinite normal none running dgmFwFlowAccel; }
+.dgm-fw .dgm-fw-hub { fill: var(--panel); stroke: var(--c); stroke-width: 2; transform-box: fill-box; transform-origin: center center; animation: 2.8s ease-in-out 0s infinite normal none running dgmFwHub; }
+.dgm-fw .dgm-fw-node { fill: var(--panel2); stroke: var(--line); stroke-width: 1; animation-name: dgmFwNode; animation-duration: calc(var(--n,4)*.9s); animation-timing-function: ease-in-out; animation-iteration-count: infinite; animation-delay: calc(var(--i,0)*.9s); }
+.dgm-fw .dgm-fw-inner { stroke-width: 1.2; stroke-dasharray: 60; stroke-dashoffset: 60; animation-name: dgmFwInner; animation-duration: 3.6s; animation-timing-function: ease-out; animation-iteration-count: infinite; animation-delay: calc(var(--i,0)*.5s); }
+.dgm-fw text.hd { font-size: 8.5px; letter-spacing: 0.04em; }
+@keyframes dgmDraw { 
+  0% { stroke-dashoffset: 400; }
+  30%, 88% { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: 0; }
+}
+@keyframes dgmFade { 
+  0%, 4% { opacity: 0; }
+  14%, 88% { opacity: 1; }
+  96%, 100% { opacity: 0; }
+}
+@keyframes dgmPop { 
+  0%, 4% { transform: scale(0.2); opacity: 0; }
+  16%, 88% { transform: scale(1); opacity: 1; }
+  96%, 100% { transform: scale(0.2); opacity: 0; }
+}
+@keyframes dgmPulse { 
+  0%, 100% { filter: drop-shadow(0 0 0 rgba(var(--c-rgb),0)); }
+  50% { filter: drop-shadow(0 0 6px rgba(var(--c-rgb),.9)); }
+}
+@keyframes dgmFlow { 
+  100% { stroke-dashoffset: -28; }
+}
+@keyframes dgmSeq { 
+  0%, 6% { opacity: 0.45; }
+  12%, 22% { opacity: 1; }
+  30%, 100% { opacity: 0.45; }
+}
+@keyframes dgmSeqFill { 
+  0%, 6% { fill-opacity: 0.12; }
+  12%, 22% { fill-opacity: 0.55; }
+  30%, 100% { fill-opacity: 0.12; }
+}
+@keyframes dgmSpin { 
+  100% { transform: rotate(360deg); }
+}
+@keyframes dgmFwSpin { 
+  100% { transform: rotate(360deg); }
+}
+@keyframes dgmFwSpinAccel { 
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(720deg); }
+}
+@keyframes dgmFwFlow { 
+  100% { stroke-dashoffset: -36; }
+}
+@keyframes dgmFwFlowAccel { 
+  0% { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: -360; }
+}
+@keyframes dgmFwHub { 
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+}
+@keyframes dgmFwNode { 
+  0%, 10% { stroke: var(--c); fill: rgba(var(--c-rgb),.2); }
+  24%, 100% { stroke: var(--line); fill: var(--panel2); }
+}
+@keyframes dgmFwInner { 
+  0% { stroke-dashoffset: 60; opacity: 0; }
+  10% { opacity: 1; }
+  40%, 80% { stroke-dashoffset: 0; opacity: 1; }
+  100% { stroke-dashoffset: 0; opacity: 0; }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><svg class="dgm dgm-fw dgm-flywheel-data" viewBox="0 0 320 160" aria-label="Data flywheel: move data, managed data, data-driven apps, analyze, ML turbocharge, spinning up around a data hub">
+      <g class="dgm-fw-wheel dgm-fw-accel"><circle class="dgm-fw-rim" cx="160" cy="80" r="56"></circle>
+        <path class="dgm-fw-spoke" d="M160 24 V136 M104 80 H216 M120.4 40.4 L199.6 119.6 M199.6 40.4 L120.4 119.6"></path></g>
+      <circle class="dgm-fw-ring dgm-fw-accel" cx="160" cy="80" r="56"></circle>
+      <g style="--i:0;--n:5"><rect class="dgm-fw-node" x="129" y="13" width="62" height="22" rx="5"></rect><text x="160" y="24">Move data</text></g>
+      <g style="--i:1;--n:5"><rect class="dgm-fw-node" x="200" y="52" width="62" height="22" rx="5"></rect><text x="231" y="59">Managed</text><text x="231" y="68">data</text></g>
+      <g style="--i:2;--n:5"><rect class="dgm-fw-node" x="170" y="118" width="62" height="22" rx="5"></rect><text x="201" y="125">Data-driven</text><text x="201" y="134">apps</text></g>
+      <g style="--i:3;--n:5"><rect class="dgm-fw-node" x="88" y="118" width="62" height="22" rx="5"></rect><text x="119" y="129">Analyze</text></g>
+      <g style="--i:4;--n:5"><rect class="dgm-fw-node" x="58" y="52" width="62" height="22" rx="5"></rect><text x="89" y="59">ML</text><text x="89" y="68">turbocharge</text></g>
+      <circle class="dgm-fw-hub" cx="160" cy="80" r="17"></circle><text class="hd" x="160" y="80">DATA</text>
+      <text class="dim" x="160" y="152">spin-up: each turn faster than the last</text>
+    </svg></div></div>
+<div class="meta"><b>Data Flywheel</b> · <code>diagrams-data-flywheel</code><br>Diagrams &amp; Frameworks · FLYWHEELS<p>The cloud data flywheel in five stages: move data, run it on managed data services, build data-driven apps, analyze everything, then turbocharge with ML. The wheel and its momentum ring accelerate through each loop, the &quot;spin-up&quot; that no single stage powers on its own.</p></div>
+
+</body>
+</html>
