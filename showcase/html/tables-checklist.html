@@ -23,7 +23,7 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
 <style id="effect-css">
 .dtb-cb { display: inline-block; width: 12px; height: 12px; border: 1px solid var(--dim); border-radius: 3px; position: relative; vertical-align: -2px; background: var(--panel); }
 .dtb-cb::after { content: ""; position: absolute; left: 3px; top: 0px; width: 4px; height: 7px; border-top-color: ; border-top-style: ; border-right-color: ; border-right-style: ; border-bottom-color: ; border-bottom-style: ; border-left-color: ; border-left-style: ; border-image-source: ; border-image-slice: ; border-image-width: ; border-image-outset: ; border-image-repeat: ; border-width: 0px 2px 2px 0px; transform: rotate(45deg) scale(0); opacity: 0; }
-.dtb-cb.on { background: var(--info); border-color: var(--info); }
+.dtb-cb.on { background: var(--c,var(--accent)); border-color: var(--c,var(--accent)); }
 .dtb-cb.on::after { transform: rotate(45deg) scale(1); opacity: 1; }
 .dtb-select tbody tr:nth-child(2) .dtb-cb { animation: 5s steps(1) 0s infinite normal none running dtbCbOn; }
 .dtb-select tbody tr:nth-child(2) .dtb-cb::after { animation: 5s ease-out 0s infinite normal none running dtbCbMark; }
@@ -36,10 +36,10 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
 .dtb-ck-item .dtb-cb.on { animation: auto ease 0s 1 normal none running none; }
 .dtb-ck-item .dtb-cb.on::after { animation: auto ease 0s 1 normal none running none; }
 .dtb-ck-item.done { color: var(--dim); text-decoration: line-through; animation: auto ease 0s 1 normal none running none; }
-.dtb-chip.on { border-color: var(--info); color: var(--info); background: rgba(var(--info-rgb),.12); }
+.dtb-chip.on { border-color: var(--c,var(--accent)); color: var(--c,var(--accent)); background: rgba(var(--c-rgb,var(--accent-rgb)),.12); }
 @keyframes dtbCbOn { 
   0%, 19% { background: var(--panel); border-color: var(--dim); }
-  20%, 75% { background: var(--info); border-color: var(--info); }
+  20%, 75% { background: var(--c,var(--accent)); border-color: var(--c,var(--accent)); }
   76%, 100% { background: var(--panel); border-color: var(--dim); }
 }
 @keyframes dtbCbMark { 

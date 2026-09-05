@@ -2,7 +2,7 @@
 
 Every effect in Prism's **FX Store** gallery, recorded as a looping GIF.
 
-**154 effects** · 137 animated · 7.2 MB of GIF · click any GIF to open its standalone HTML sample (raw file; open it locally, GitHub shows source).
+**154 effects** · 137 animated · 6.9 MB of GIF · click any GIF to open its standalone HTML sample (raw file; open it locally, GitHub shows source).
 
 [← Showcase index](../README.md)
 

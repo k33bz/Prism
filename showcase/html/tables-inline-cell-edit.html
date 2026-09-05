@@ -28,10 +28,10 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
 .dtb-tbl tfoot td { border-top: 2px solid var(--line); border-bottom: 0px; font-weight: 800; background: var(--panel2); }
 .dtb-mono { font-family: ui-monospace, Menlo, monospace; font-variant-numeric: tabular-nums; }
 .dtb-mut { color: var(--muted); }
-.dtb-edit-cell { display: inline-block; min-width: 78px; padding: 1px 6px; border: 1px solid var(--info); border-radius: 4px; background: rgba(var(--info-rgb),.09); box-shadow: 0 0 0 3px rgba(var(--info-rgb),.14); font-family: ui-monospace, Menlo, monospace; }
+.dtb-edit-cell { display: inline-block; min-width: 78px; padding: 1px 6px; border: 1px solid var(--c,var(--accent)); border-radius: 4px; background: rgba(var(--c-rgb,var(--accent-rgb)),.09); box-shadow: 0 0 0 3px rgba(var(--c-rgb,var(--accent-rgb)),.14); font-family: ui-monospace, Menlo, monospace; }
 .dtb-typed { display: inline-block; overflow: hidden; white-space: nowrap; vertical-align: bottom; max-width: 0px; animation: 4.5s steps(9) 0s infinite normal none running dtbType; }
 .dtb-caret { display: inline-block; width: 1px; height: 11px; background: var(--ink); vertical-align: -2px; margin-left: 1px; animation: 1s steps(1) 0s infinite normal none running dtbCaret; }
-.dtb-edit-hint { font-size: 8.5px; color: var(--info); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 800; margin-left: 6px; }
+.dtb-edit-hint { font-size: 8.5px; color: var(--c,var(--accent)); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 800; margin-left: 6px; }
 .dtb-def dd .dtb-typed { max-width: 0px; animation: 6s steps(26) 0s infinite normal none running dtbTypeLong; color: var(--ink); }
 .dtb-search .dtb-typed { animation: 5s steps(7) 0s infinite normal none running dtbType; }
 @keyframes dtbCaret { 
