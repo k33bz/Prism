@@ -1828,11 +1828,10 @@
         "sl",
         "ts",
         "lv",
-        "err",
-        "m",
-        "info",
         "ok",
+        "m",
         "warn",
+        "info",
         "cursor"
       ],
       "params": [],
@@ -10040,7 +10039,7 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-04",
       "updatedOn": null,
       "description": "Dragapult ex's meta-defining dive: a spectral teal dart plunges onto the defending card and bursts purple, then three phantom wisps arc down to the bench and bank their damage counters, each bench card flaring as its counters land."
     },
@@ -10073,7 +10072,7 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-04",
       "updatedOn": null,
       "description": "Alakazam's hand IS the weapon: a little card-fan shimmers up during the wind-up, then a giant translucent psychic hand presses DOWN onto the defending card, pink ripple rings spreading from the press as the card squashes."
     },
@@ -10110,7 +10109,7 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-04",
       "updatedOn": null,
       "description": "Crustle's bite, seen from the receiving end: two huge chitinous blades X-snap across the defending card in under a beat - white slash flash at the crossing, shell chips flying, the whole stage jolting."
     },
@@ -10152,7 +10151,7 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-04",
       "updatedOn": null,
       "description": "Hariyama's 210-for-70-back: a shadow grows on the defending card, the massive open palm slams from above with a flattened ground shockwave and dust - then the recoil dust cloud puffs on Hariyama's own card as its own late beat."
     },
@@ -10195,7 +10194,7 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-04",
       "updatedOn": null,
       "description": "Mega Clefable ex throws crescent moons like blades: three pink-and-gold crescents spin and bob across the corridor, shedding gold sparkles, and burst into stars on the defending card."
     },
@@ -10232,7 +10231,7 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-04",
       "updatedOn": null,
       "description": "N's Zoroark ex's dark illusion: the zone dims - subtly, never a full flash - then a three-line magenta claw-swipe with a white-hot core tears across the defending card and illusory card-shapes flutter away from the tear."
     },
@@ -17600,9 +17599,9 @@
         "gate",
         "experts",
         "expert",
+        "on",
         "ed",
         "ew",
-        "on",
         "cap",
         "pr-playbtn"
       ],
@@ -22716,7 +22715,7 @@
       "isNew": true,
       "isFixed": false,
       "addedOn": "2026-09-04",
-      "updatedOn": null,
+      "updatedOn": "2026-09-05",
       "description": "Hot sparks drift up from the bottom edge on staggered arcs, orange with a few green ones mixed in — the ambient backdrop from a Forgejo landing page. Tint with --kf-hot / --kf-cool; add or remove <i> elements to change density."
     },
     {
@@ -22786,7 +22785,7 @@
       "isNew": true,
       "isFixed": false,
       "addedOn": "2026-09-04",
-      "updatedOn": null,
+      "updatedOn": "2026-09-05",
       "description": "The whole landing hero as one scene: embers behind a flickering mark, gradient title with the green underline, a tagline that rotates through four lines on a CSS timer, and the action buttons."
     },
     {
@@ -28530,7 +28529,7 @@
       "isNew": true,
       "isFixed": false,
       "addedOn": "2026-09-04",
-      "updatedOn": null,
+      "updatedOn": "2026-09-05",
       "description": "Heading with one word in a hot gradient that sheens slowly, underscored by a green bar that draws in — the landing-page wordmark treatment. Tint with --kf-hot / --kf-cool."
     },
     {
@@ -41449,7 +41448,9 @@
         "dtb-num",
         "dtb-mut"
       ],
-      "params": [],
+      "params": [
+        "color"
+      ],
       "tags": [
         "tables",
         "animated",
@@ -41465,127 +41466,6 @@
       "addedOn": "2026-09-04",
       "updatedOn": null,
       "description": "Rows light up one after another with a tinted fill and a left accent bar — the hover treatment, demonstrated on a loop so it reads in a static export."
-    },
-    {
-      "id": "tables-sortable-header",
-      "name": "Sortable Header",
-      "gallery": "tables",
-      "category": "DATA TABLES",
-      "ref": ".dtb-tbl.dtb-sort",
-      "classes": [
-        "dtb-tbl",
-        "dtb-sort",
-        "dtb-num",
-        "dtb-sorted",
-        "dtb-sort-arrow"
-      ],
-      "params": [],
-      "tags": [
-        "tables",
-        "animated",
-        "new"
-      ],
-      "componentType": null,
-      "interaction": null,
-      "spectrum": null,
-      "usableAsBackground": false,
-      "needsJs": null,
-      "isNew": true,
-      "isFixed": false,
-      "addedOn": "2026-09-04",
-      "updatedOn": null,
-      "description": "A sorted column with a flipping direction arrow while two rows trade places — the visual grammar of a click-to-sort header."
-    },
-    {
-      "id": "tables-row-move-arrows",
-      "name": "Row Move Arrows",
-      "gallery": "tables",
-      "category": "DATA TABLES",
-      "ref": ".dtb-tbl.dtb-rowmove",
-      "classes": [
-        "dtb-tbl",
-        "dtb-rowmove",
-        "dtb-arrows",
-        "dtb-arr",
-        "dtb-mono",
-        "mv",
-        "lift",
-        "press"
-      ],
-      "params": [],
-      "tags": [
-        "tables",
-        "new"
-      ],
-      "componentType": null,
-      "interaction": null,
-      "spectrum": null,
-      "usableAsBackground": false,
-      "needsJs": null,
-      "isNew": true,
-      "isFixed": false,
-      "addedOn": "2026-09-04",
-      "updatedOn": null,
-      "description": "A leading column of ▲▼ controls; the pressed arrow lights up and its row lifts over the one above and settles into the slot — manual ordering for rules, priorities and playlists."
-    },
-    {
-      "id": "tables-flash-resort",
-      "name": "Flash + Resort",
-      "gallery": "tables",
-      "category": "DATA TABLES",
-      "ref": ".dtb-tbl.dtb-resort",
-      "classes": [
-        "dtb-tbl",
-        "dtb-resort",
-        "dtb-num",
-        "dtb-sortcol",
-        "dtb-sort-arrow"
-      ],
-      "params": [],
-      "tags": [
-        "tables",
-        "animated",
-        "new"
-      ],
-      "componentType": null,
-      "interaction": null,
-      "spectrum": null,
-      "usableAsBackground": false,
-      "needsJs": null,
-      "isNew": true,
-      "isFixed": false,
-      "addedOn": "2026-09-04",
-      "updatedOn": null,
-      "description": "Clicking a header: the column flashes, the sort arrow flips, the rows dim and glide to their new positions, then settle — the reorder cue of a sortable data grid. Give each row its offset in --to."
-    },
-    {
-      "id": "tables-fall-land-resort",
-      "name": "Fall + Land Resort",
-      "gallery": "tables",
-      "category": "DATA TABLES",
-      "ref": ".dtb-tbl.dtb-fall",
-      "classes": [
-        "dtb-tbl",
-        "dtb-fall",
-        "dtb-num",
-        "dtb-sort-arrow"
-      ],
-      "params": [],
-      "tags": [
-        "tables",
-        "animated",
-        "new"
-      ],
-      "componentType": null,
-      "interaction": null,
-      "spectrum": null,
-      "usableAsBackground": false,
-      "needsJs": null,
-      "isNew": true,
-      "isFixed": false,
-      "addedOn": "2026-09-04",
-      "updatedOn": null,
-      "description": "The rows tumble out of the table on slight angles, one after another, then drop back in from above already in the new order, landing with a small bounce — the theatrical resort. Offsets in --to, tilt in --rot."
     },
     {
       "id": "tables-sticky-header-scroll",
@@ -41668,7 +41548,9 @@
         "info",
         "off"
       ],
-      "params": [],
+      "params": [
+        "color"
+      ],
       "tags": [
         "tables",
         "animated",
@@ -41701,7 +41583,9 @@
         "dtb-detail-in",
         "dtb-mono"
       ],
-      "params": [],
+      "params": [
+        "color"
+      ],
       "tags": [
         "tables",
         "animated",
@@ -41733,7 +41617,9 @@
         "dtb-caret",
         "dtb-edit-hint"
       ],
-      "params": [],
+      "params": [
+        "color"
+      ],
       "tags": [
         "tables",
         "animated",
@@ -41814,6 +41700,127 @@
       "addedOn": "2026-09-04",
       "updatedOn": null,
       "description": "Shimmering placeholder bars in the exact shape of the table that is loading — keeps layout stable while data arrives."
+    },
+    {
+      "id": "tables-sortable-header",
+      "name": "Sortable Header",
+      "gallery": "tables",
+      "category": "SORTING & REORDER",
+      "ref": ".dtb-tbl.dtb-sort",
+      "classes": [
+        "dtb-tbl",
+        "dtb-sort",
+        "dtb-num",
+        "dtb-sorted",
+        "dtb-sort-arrow"
+      ],
+      "params": [],
+      "tags": [
+        "tables",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": "2026-09-04",
+      "updatedOn": null,
+      "description": "A sorted column with a flipping direction arrow while two rows trade places — the visual grammar of a click-to-sort header."
+    },
+    {
+      "id": "tables-row-move-arrows",
+      "name": "Row Move Arrows",
+      "gallery": "tables",
+      "category": "SORTING & REORDER",
+      "ref": ".dtb-tbl.dtb-rowmove",
+      "classes": [
+        "dtb-tbl",
+        "dtb-rowmove",
+        "dtb-arrows",
+        "dtb-arr",
+        "dtb-mono",
+        "mv",
+        "lift",
+        "press"
+      ],
+      "params": [],
+      "tags": [
+        "tables",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": "2026-09-04",
+      "updatedOn": null,
+      "description": "A leading column of ▲▼ controls; the pressed arrow lights up and its row lifts over the one above and settles into the slot — manual ordering for rules, priorities and playlists."
+    },
+    {
+      "id": "tables-flash-resort",
+      "name": "Flash + Resort",
+      "gallery": "tables",
+      "category": "SORTING & REORDER",
+      "ref": ".dtb-tbl.dtb-resort",
+      "classes": [
+        "dtb-tbl",
+        "dtb-resort",
+        "dtb-num",
+        "dtb-sortcol",
+        "dtb-sort-arrow"
+      ],
+      "params": [],
+      "tags": [
+        "tables",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": "2026-09-04",
+      "updatedOn": null,
+      "description": "Clicking a header: the column flashes, the sort arrow flips, the rows dim and glide to their new positions, then settle — the reorder cue of a sortable data grid. Give each row its offset in --to."
+    },
+    {
+      "id": "tables-fall-land-resort",
+      "name": "Fall + Land Resort",
+      "gallery": "tables",
+      "category": "SORTING & REORDER",
+      "ref": ".dtb-tbl.dtb-fall",
+      "classes": [
+        "dtb-tbl",
+        "dtb-fall",
+        "dtb-num",
+        "dtb-sort-arrow"
+      ],
+      "params": [],
+      "tags": [
+        "tables",
+        "animated",
+        "new"
+      ],
+      "componentType": null,
+      "interaction": null,
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": "2026-09-04",
+      "updatedOn": "2026-09-05",
+      "description": "The rows tumble out of the table on slight angles, one after another, then drop back in from above already in the new order, landing with a small bounce — the theatrical resort. Offsets in --to, tilt in --rot."
     },
     {
       "id": "tables-status-pill-column",
@@ -41972,7 +41979,7 @@
       "isNew": true,
       "isFixed": false,
       "addedOn": "2026-09-04",
-      "updatedOn": null,
+      "updatedOn": "2026-09-05",
       "description": "Initial avatars with a presence dot (online pulsing, away, offline) beside each name — people tables, assignees, reviewers."
     },
     {
@@ -42105,7 +42112,9 @@
       "classes": [
         "dtb-hm"
       ],
-      "params": [],
+      "params": [
+        "color"
+      ],
       "tags": [
         "tables",
         "animated",
@@ -42226,7 +42235,9 @@
         "p",
         "n"
       ],
-      "params": [],
+      "params": [
+        "color"
+      ],
       "tags": [
         "tables",
         "animated",
@@ -42256,7 +42267,9 @@
         "s",
         "dtb-contrib-lg"
       ],
-      "params": [],
+      "params": [
+        "color"
+      ],
       "tags": [
         "tables",
         "animated",
@@ -42270,7 +42283,7 @@
       "isNew": true,
       "isFixed": false,
       "addedOn": "2026-09-04",
-      "updatedOn": null,
+      "updatedOn": "2026-09-05",
       "description": "The activity-square calendar: fourteen weeks of cells shaded by volume, lighting up in a diagonal sweep, with ember sparks rising from the busiest weeks and a less-to-more legend."
     },
     {
@@ -42305,7 +42318,7 @@
       "isNew": true,
       "isFixed": false,
       "addedOn": "2026-09-04",
-      "updatedOn": null,
+      "updatedOn": "2026-09-05",
       "description": "Each day split diagonally: one series shades the upper-left triangle (blue), a second shades the lower-right (violet), so two series share one calendar, with sparks in both colours rising from the busiest weeks — the \"year at the forge\" heatmap from a Forgejo landing page. Set --c and --a per cell (0 to 1); recolour with --dtb-a-rgb / --dtb-b-rgb."
     },
     {
@@ -42378,7 +42391,9 @@
         "dtb-typed",
         "dtb-caret"
       ],
-      "params": [],
+      "params": [
+        "color"
+      ],
       "tags": [
         "tables",
         "animated",
@@ -42446,7 +42461,9 @@
         "dtb-jb",
         "dtb-jn"
       ],
-      "params": [],
+      "params": [
+        "color"
+      ],
       "tags": [
         "tables",
         "animated",
@@ -42479,7 +42496,9 @@
         "fi",
         "code"
       ],
-      "params": [],
+      "params": [
+        "color"
+      ],
       "tags": [
         "tables",
         "animated",
@@ -42537,7 +42556,9 @@
         "dtb-outline",
         "mut"
       ],
-      "params": [],
+      "params": [
+        "color"
+      ],
       "tags": [
         "tables",
         "animated",
@@ -42594,7 +42615,9 @@
         "dtb-cb",
         "on"
       ],
-      "params": [],
+      "params": [
+        "color"
+      ],
       "tags": [
         "tables",
         "animated",
@@ -42629,7 +42652,9 @@
         "b",
         "up"
       ],
-      "params": [],
+      "params": [
+        "color"
+      ],
       "tags": [
         "tables",
         "animated",
@@ -42643,7 +42668,7 @@
       "isNew": true,
       "isFixed": false,
       "addedOn": "2026-09-04",
-      "updatedOn": null,
+      "updatedOn": "2026-09-05",
       "description": "Ranked rows with medal badges and score bars; two competitors trade places as a score overtakes — leaderboards and top-N lists."
     },
     {
@@ -42971,7 +42996,9 @@
         "t",
         "who"
       ],
-      "params": [],
+      "params": [
+        "color"
+      ],
       "tags": [
         "tables",
         "animated",
@@ -42985,7 +43012,7 @@
       "isNew": true,
       "isFixed": false,
       "addedOn": "2026-09-04",
-      "updatedOn": null,
+      "updatedOn": "2026-09-05",
       "description": "Timestamp, actor chip and action per row, appearing in a cascade as the log fills — audit logs and activity feeds."
     },
     {
@@ -43035,7 +43062,9 @@
         "tog",
         "dtb-tb-count"
       ],
-      "params": [],
+      "params": [
+        "color"
+      ],
       "tags": [
         "tables",
         "animated",
