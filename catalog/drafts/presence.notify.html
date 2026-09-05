@@ -67,12 +67,69 @@
 @keyframes nsLvN3{0%,39%{opacity:0}40%,75%{opacity:1}76%,100%{opacity:0}}
 .ns-lv-cap{margin-top:12px;font:600 9.5px ui-monospace,Menlo,monospace;color:var(--dim);letter-spacing:.03em;display:flex;gap:10px}
 .ns-lv-cap b{color:var(--muted);font-weight:600}
+
+/* Avatar shapes. .ns-shp is a 40px avatar whose ring and face both take the modifier's clip-path
+   (the ring sits behind the face, 3px larger, in the status colour), so any 2D shape keeps a status
+   ring and a glow via drop-shadow. 3D forms are transform based: cube, coin, sphere, gem. */
+.ns-shp{position:relative;width:40px;height:40px;--ns-st:var(--pos);--ns-st-rgb:var(--pos-rgb);filter:drop-shadow(0 0 5px rgba(var(--ns-st-rgb),.6))}
+.ns-shp .ns-shp-ring{position:absolute;inset:0;background:var(--ns-st)}
+.ns-shp .ns-shp-face{position:absolute;inset:3px;display:grid;place-items:center;background:linear-gradient(135deg,var(--info),var(--crit));color:#fff;font:800 12px ui-sans-serif,system-ui,sans-serif;font-style:normal}
+.ns-shp.ns-st-away{--ns-st:var(--warn);--ns-st-rgb:var(--warn-rgb)}
+.ns-shp.ns-st-busy,.ns-shp.ns-st-dnd{--ns-st:var(--neg);--ns-st-rgb:var(--neg-rgb)}
+.ns-shp.ns-st-ooo{--ns-st:var(--crit);--ns-st-rgb:var(--crit-rgb)}
+.ns-shp.ns-st-offline{--ns-st:var(--dim);--ns-st-rgb:var(--dim-rgb,128,128,128)}
+.ns-shp-squircle > *{border-radius:38%}
+.ns-shp-hex > *{clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%)}
+.ns-shp-diamond > *{clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%)}
+.ns-shp-shield > *{clip-path:polygon(0 0,100% 0,100% 62%,50% 100%,0 62%)}
+.ns-shp-octagon > *{clip-path:polygon(30% 0,70% 0,100% 30%,100% 70%,70% 100%,30% 100%,0 70%,0 30%)}
+.ns-shp-tri > *{clip-path:polygon(50% 0,100% 100%,0 100%)}
+.ns-shp-pent > *{clip-path:polygon(50% 0,100% 38%,82% 100%,18% 100%,0 38%)}
+.ns-shp-star > *{clip-path:polygon(50% 0,63% 34%,100% 38%,72% 62%,80% 100%,50% 80%,20% 100%,28% 62%,0 38%,37% 34%)}
+.ns-shp-tri .ns-shp-face{inset:6px 4px 3px}
+.ns-shp-star .ns-shp-face{font-size:10px}
+.ns-shp-row{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 12px;width:260px;max-width:100%}
+.ns-shp-row .ns-shp-item{display:flex;flex-direction:column;align-items:center;gap:5px;font:600 9px ui-sans-serif,system-ui,sans-serif;color:var(--muted);letter-spacing:.03em}
+/* 3D forms */
+.ns-shp-3d{perspective:220px;filter:none}
+.ns-shp-3d .ns-shp-solid{position:absolute;inset:0;transform-style:preserve-3d}
+.ns-shp-cube .ns-shp-solid{animation:nsShpSpin 4s linear infinite}
+.ns-shp-cube .ns-shp-fc{position:absolute;inset:4px;display:grid;place-items:center;color:#fff;font:800 11px ui-sans-serif,system-ui,sans-serif;font-style:normal;background:rgba(var(--ns-st-rgb),.85);border:1px solid rgba(255,255,255,.35);backface-visibility:hidden}
+.ns-shp-cube .ns-shp-fc:nth-child(1){transform:translateZ(16px)}
+.ns-shp-cube .ns-shp-fc:nth-child(2){transform:rotateY(90deg) translateZ(16px);background:rgba(var(--ns-st-rgb),.6)}
+.ns-shp-cube .ns-shp-fc:nth-child(3){transform:rotateY(180deg) translateZ(16px)}
+.ns-shp-cube .ns-shp-fc:nth-child(4){transform:rotateY(-90deg) translateZ(16px);background:rgba(var(--ns-st-rgb),.6)}
+.ns-shp-cube .ns-shp-fc:nth-child(5){transform:rotateX(90deg) translateZ(16px);background:rgba(var(--ns-st-rgb),1)}
+.ns-shp-cube .ns-shp-fc:nth-child(6){transform:rotateX(-90deg) translateZ(16px);background:rgba(var(--ns-st-rgb),.4)}
+.ns-shp-coin .ns-shp-solid{animation:nsShpFlip 3.2s ease-in-out infinite}
+.ns-shp-coin .ns-shp-fc{position:absolute;inset:2px;border-radius:50%;display:grid;place-items:center;color:#fff;font:800 12px ui-sans-serif,system-ui,sans-serif;font-style:normal;background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.55),rgba(255,255,255,0) 40%),var(--ns-st);box-shadow:inset 0 0 0 3px rgba(0,0,0,.18);backface-visibility:hidden}
+.ns-shp-coin .ns-shp-fc:nth-child(2){transform:rotateY(180deg)}
+.ns-shp-coin .ns-shp-edge{position:absolute;inset:2px;border-radius:50%;background:rgba(var(--ns-st-rgb),.5);transform:translateZ(-3px)}
+.ns-shp-sphere .ns-shp-face{inset:2px;border-radius:50%;background:radial-gradient(circle at 32% 28%,rgba(255,255,255,.75) 0,rgba(255,255,255,.15) 22%,rgba(0,0,0,0) 45%),radial-gradient(circle at 70% 75%,rgba(0,0,0,.35),rgba(0,0,0,0) 50%),var(--ns-st);box-shadow:0 6px 10px rgba(0,0,0,.35)}
+.ns-shp-sphere .ns-shp-hl{position:absolute;left:6px;top:6px;width:10px;height:6px;border-radius:50%;background:rgba(255,255,255,.7);filter:blur(1px);animation:nsShpGlint 3s ease-in-out infinite}
+.ns-shp-gem .ns-shp-face{inset:3px;clip-path:polygon(50% 0,100% 30%,82% 100%,18% 100%,0 30%);background:conic-gradient(from 210deg at 50% 38%,rgba(255,255,255,.55),rgba(var(--ns-st-rgb),1) 30%,rgba(0,0,0,.35) 55%,rgba(var(--ns-st-rgb),.9) 75%,rgba(255,255,255,.4) 100%);animation:nsShpSparkle 2.6s ease-in-out infinite}
+.ns-shp-gem .ns-shp-ring{clip-path:polygon(50% 0,100% 30%,82% 100%,18% 100%,0 30%)}
+.ns-shp-cyl .ns-shp-solid{animation:nsShpSpin 5s linear infinite}
+.ns-shp-cyl .ns-shp-fc{position:absolute;left:14px;top:4px;width:12px;height:32px;display:grid;place-items:center;background:rgba(var(--ns-st-rgb),calc(.35 + var(--k,0)*.1));border:0;color:#fff;font:800 10px ui-sans-serif,system-ui,sans-serif;font-style:normal;transform:rotateY(calc(var(--n,0)*45deg)) translateZ(14px);backface-visibility:hidden}
+@keyframes nsShpSpin{from{transform:rotateX(-18deg) rotateY(0)}to{transform:rotateX(-18deg) rotateY(360deg)}}
+@keyframes nsShpFlip{0%,15%{transform:rotateY(0)}50%,65%{transform:rotateY(180deg)}100%{transform:rotateY(360deg)}}
+@keyframes nsShpGlint{0%,100%{transform:translate(0,0) scale(1);opacity:.7}50%{transform:translate(3px,2px) scale(1.2);opacity:1}}
+@keyframes nsShpSparkle{0%,100%{filter:brightness(1)}50%{filter:brightness(1.35)}}
+.ns-avstack-live.ns-avstack-shapes .ns-shp{width:34px;height:34px;margin-left:-8px}
+.ns-avstack-live.ns-avstack-shapes .ns-shp:first-child{margin-left:0}
+.ns-avstack-live.ns-avstack-shapes .ns-shp .ns-shp-face{font-size:10px}
+.ns-avstack-live.ns-avstack-shapes .ns-shp.ns-st-available{animation:nsShpBreathe 2.4s ease-in-out infinite}
+.ns-avstack-live.ns-avstack-shapes .ns-more i{animation-name:none;opacity:1}
+.ns-avstack-live.ns-avstack-shapes .ns-more::before{animation-name:none;opacity:1;background:conic-gradient(var(--warn) 0 50%,var(--dim) 50% 100%)}
+.ns-avstack-live.ns-avstack-shapes .ns-more::after{animation-name:none;opacity:0}
+@keyframes nsShpBreathe{0%,100%{filter:drop-shadow(0 0 3px rgba(var(--ns-st-rgb),.45))}50%{filter:drop-shadow(0 0 9px rgba(var(--ns-st-rgb),.9))}}
 @media (prefers-reduced-motion:reduce){
   .ns-presence.ns-st-live .ns-on,.ns-st-row .ns-st-livewrap .ns-lbl span,.ns-avstack-live .ns-a,.ns-avstack-live .ns-more::before,.ns-avstack-live .ns-more::after,.ns-avstack-live .ns-more i{animation:none!important}
   .ns-st-row .ns-st-livewrap .ns-lbl span:first-child{opacity:1}
   .ns-avstack-live .ns-a.ns-lv-drop{width:0;margin-left:0;opacity:0;border-width:0}
   .ns-avstack-live .ns-more::before{opacity:0}.ns-avstack-live .ns-more::after{opacity:1}
   .ns-avstack-live .ns-more i:first-child{opacity:0}.ns-avstack-live .ns-more i + i{opacity:1}
+  .ns-shp *,.ns-shp{animation:none!important}
 }
 </style>
 <div class="gallery">
@@ -99,5 +156,30 @@
       <div class="ns-lv-cap"><span>--max <b>3</b></span><span>--expand <b>70%</b></span><span>online <b>5 → 3</b></span></div>
     </div>
   </div><div class="meta"><div class="nm">Live Avatar Stack (Status Rings)</div><span class="ref">.ns-avstack.ns-avstack-live</span><div class="desc">Stacked avatars with glowing status rings and an overflow chip whose ring splits by the hidden members' statuses. Visible slots = clamp(online, <code>--max</code>, ceil(<code>--max</code> × (1 + <code>--expand</code>))): six members, five online shows 5 / +1; two go away and offline, the stack folds back to 3 / +3 and the chip ring turns one third away, two thirds offline.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+
+  <div class="tile is-new" data-ctype="avatar" data-interact="auto-play" data-c="pos"><div class="stage">
+    <div class="ns-shp-row" role="img" aria-label="Avatar shapes: squircle, hexagon, diamond, shield, octagon, pentagon, triangle and star, each with a status ring">
+      <div class="ns-shp-item"><div class="ns-shp ns-shp-squircle ns-st-available"><i class="ns-shp-ring"></i><b class="ns-shp-face">JD</b></div>squircle</div><div class="ns-shp-item"><div class="ns-shp ns-shp-hex ns-st-away"><i class="ns-shp-ring"></i><b class="ns-shp-face">RP</b></div>hex</div><div class="ns-shp-item"><div class="ns-shp ns-shp-diamond ns-st-busy"><i class="ns-shp-ring"></i><b class="ns-shp-face">AL</b></div>diamond</div><div class="ns-shp-item"><div class="ns-shp ns-shp-shield ns-st-available"><i class="ns-shp-ring"></i><b class="ns-shp-face">MK</b></div>shield</div>
+      <div class="ns-shp-item"><div class="ns-shp ns-shp-octagon ns-st-ooo"><i class="ns-shp-ring"></i><b class="ns-shp-face">SO</b></div>octagon</div><div class="ns-shp-item"><div class="ns-shp ns-shp-pent ns-st-available"><i class="ns-shp-ring"></i><b class="ns-shp-face">TN</b></div>pent</div><div class="ns-shp-item"><div class="ns-shp ns-shp-tri ns-st-offline"><i class="ns-shp-ring"></i><b class="ns-shp-face">EV</b></div>tri</div><div class="ns-shp-item"><div class="ns-shp ns-shp-star ns-st-available"><i class="ns-shp-ring"></i><b class="ns-shp-face">NK</b></div>star</div>
+    </div>
+  </div><div class="meta"><div class="nm">Avatar Shapes 2D</div><span class="ref">.ns-shp.ns-shp-*</span><div class="desc">Eight geometric avatar shapes cut with clip-path: squircle, hexagon, diamond, shield, octagon, pentagon, triangle and star. The status ring and glow follow the shape, so every presence state still reads.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="avatar" data-interact="auto-play" data-c="info"><div class="stage">
+    <div class="ns-shp-row" role="img" aria-label="Avatar 3D forms: a rotating cube, a flipping coin, a lit sphere, a faceted gem and a spinning cylinder">
+      <div class="ns-shp-item"><div class="ns-shp ns-shp-3d ns-shp-cube" style="--ns-st:var(--info);--ns-st-rgb:var(--info-rgb)"><div class="ns-shp-solid"><i class="ns-shp-fc">JD</i><i class="ns-shp-fc">JD</i><i class="ns-shp-fc">JD</i><i class="ns-shp-fc">JD</i><i class="ns-shp-fc"></i><i class="ns-shp-fc"></i></div></div>cube</div>
+      <div class="ns-shp-item"><div class="ns-shp ns-shp-3d ns-shp-coin" style="--ns-st:var(--warn);--ns-st-rgb:var(--warn-rgb)"><div class="ns-shp-solid"><i class="ns-shp-edge"></i><i class="ns-shp-fc">RP</i><i class="ns-shp-fc">RP</i></div></div>coin</div>
+      <div class="ns-shp-item"><div class="ns-shp ns-shp-sphere" style="--ns-st:var(--pos);--ns-st-rgb:var(--pos-rgb)"><b class="ns-shp-face">AL</b><i class="ns-shp-hl"></i></div>sphere</div>
+      <div class="ns-shp-item"><div class="ns-shp ns-shp-gem" style="--ns-st:var(--crit);--ns-st-rgb:var(--crit-rgb)"><i class="ns-shp-ring"></i><b class="ns-shp-face"></b></div>gem</div>
+      <div class="ns-shp-item"><div class="ns-shp ns-shp-3d ns-shp-cyl" style="--ns-st:var(--neg);--ns-st-rgb:var(--neg-rgb)"><div class="ns-shp-solid"><i class="ns-shp-fc" style="--n:0;--k:3">M</i><i class="ns-shp-fc" style="--n:1;--k:2"></i><i class="ns-shp-fc" style="--n:2;--k:1">K</i><i class="ns-shp-fc" style="--n:3;--k:0"></i><i class="ns-shp-fc" style="--n:4;--k:1"></i><i class="ns-shp-fc" style="--n:5;--k:2"></i><i class="ns-shp-fc" style="--n:6;--k:3"></i><i class="ns-shp-fc" style="--n:7;--k:2"></i></div></div>cylinder</div>
+    </div>
+  </div><div class="meta"><div class="nm">Avatar Shapes 3D</div><span class="ref">.ns-shp.ns-shp-3d</span><div class="desc">Five solid avatar forms built from transforms and gradients: a rotating cube with initials on its faces, a flipping coin, a lit sphere with a drifting glint, a faceted gem and a spinning cylinder. Colour is the status role.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="avatar" data-interact="auto-play" data-c="pos"><div class="stage">
+    <div class="ns-avstack ns-avstack-live ns-avstack-shapes" role="img" aria-label="Stacked avatars in mixed geometric shapes with status rings">
+      <div class="ns-shp ns-shp-hex ns-st-available"><i class="ns-shp-ring"></i><b class="ns-shp-face">AB</b></div><div class="ns-shp ns-shp-squircle ns-st-available"><i class="ns-shp-ring"></i><b class="ns-shp-face">CD</b></div><div class="ns-shp ns-shp-diamond ns-st-away"><i class="ns-shp-ring"></i><b class="ns-shp-face">EF</b></div><div class="ns-shp ns-shp-shield ns-st-busy"><i class="ns-shp-ring"></i><b class="ns-shp-face">GH</b></div><div class="ns-shp ns-shp-octagon ns-st-offline"><i class="ns-shp-ring"></i><b class="ns-shp-face">IJ</b></div>
+      <div class="ns-a ns-more" style="animation:none"><i>+4</i></div>
+    </div>
+  </div><div class="meta"><div class="nm">Shaped Avatar Stack</div><span class="ref">.ns-avstack.ns-avstack-shapes</span><div class="desc">The live stack with mixed geometric avatars instead of circles: each shape keeps its own status ring, the available ones breathe, and the overflow chip stays round so it reads as a count.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
 </div>
