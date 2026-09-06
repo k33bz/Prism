@@ -1,5 +1,5 @@
 {
-  "count": 3382,
+  "count": 3390,
   "effects": [
     {
       "id": "charts-big-metric-count-up",
@@ -1899,7 +1899,6 @@
         "info",
         "m",
         "warn",
-        "err",
         "ok",
         "cursor"
       ],
@@ -23903,9 +23902,9 @@
         "gate",
         "experts",
         "expert",
+        "on",
         "ed",
         "ew",
-        "on",
         "cap",
         "pr-playbtn"
       ],
@@ -31356,9 +31355,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Fat blobs peel off a molten base and drift slowly up a tapered vessel, merging through a gooey filter. Retro hero and loading backdrops."
     },
     {
@@ -31394,9 +31393,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A denser swarm of small blobs churns up the tube on a two second cycle for a livelier, energetic plasma feel. Active or busy states."
     },
     {
@@ -31433,9 +31432,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Accent blobs and a second violet role rise together and fuse where they overlap, blending colour through the gooey filter. Brand duo surfaces."
     },
     {
@@ -31470,9 +31469,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Large metaballs drift across the whole width and gently merge and part, a soft living wallpaper. Full bleed heroes and empty backgrounds."
     },
     {
@@ -31509,9 +31508,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Small bubbles stream up a slim glass tube, growing and coalescing near the top before they pop. Progress, carbonation and activity cues."
     },
     {
@@ -31546,9 +31545,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Blobs swell and stretch from a ceiling of molten wax, then pinch off and fall away. Playful headers, halloween and slime themed surfaces."
     },
     {
@@ -31583,9 +31582,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Blobs circle a central mass and fuse into it as they swing past, then stretch back out. Loaders, spinners and processing indicators."
     },
     {
@@ -31620,9 +31619,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "One rounded mass stretches wide then pinches back to a ball, breathing between two shapes. Logo bugs, mascots and idle chat avatars."
     },
     {
@@ -31657,9 +31656,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A pulsing hot base sheds blobs that merge into a column rising and thinning as it climbs and fades. Temperature, energy and load surfaces."
     },
     {
@@ -31692,9 +31691,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A wide reflective pool wobbles at its surface and flicks droplets that arc up and rejoin the mass. Liquid metal and premium footer bands."
     },
     {
@@ -31727,9 +31726,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Rising blobs cycle through the semantic roles, drifting from accent through green, blue and violet as they climb. Themed or seasonal backdrops."
     },
     {
@@ -31764,9 +31763,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Two blobs drift apart into distinct balls then glide back and fuse into one, over and over. Sync, pairing and connection metaphors."
     },
     {
@@ -35417,6 +35416,277 @@
       "updatedOn": null,
       "author": "k33bz",
       "description": ""
+    },
+    {
+      "id": "input-nixie-digit",
+      "name": "Nixie Digit",
+      "gallery": "input",
+      "category": "NIXIE TUBES",
+      "ref": ".in-nix-tube",
+      "classes": [
+        "in-nix",
+        "in-nix-tube",
+        "in-nix-num",
+        "in-nix-flick",
+        "in-nix-base"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "input",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-kpi",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A single glow-discharge tube counting zero through nine, one warm cathode lit at a time with a warm-up flicker and the ghost numerals faint behind it. The vintage nixie readout."
+    },
+    {
+      "id": "input-nixie-clock",
+      "name": "Nixie Clock",
+      "gallery": "input",
+      "category": "NIXIE TUBES",
+      "ref": ".in-nix (clock)",
+      "classes": [
+        "in-nix",
+        "in-nix-tube",
+        "in-nix-num",
+        "in-nix-cyc",
+        "in-nix-base",
+        "in-nix-colon"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "input",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-kpi",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Six tubes showing hours, minutes and seconds with glowing colon separators; the seconds tube races through its digits while the minutes and hours tick slowly. A nixie desk clock."
+    },
+    {
+      "id": "input-nixie-counter",
+      "name": "Nixie Counter",
+      "gallery": "input",
+      "category": "NIXIE TUBES",
+      "ref": ".in-nix (counter)",
+      "classes": [
+        "in-nix",
+        "in-nix-tube",
+        "in-nix-num",
+        "in-nix-cyc",
+        "in-nix-base"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "input",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-kpi",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A four-tube counter whose last digit spins while the higher tubes carry slowly, an odometer of glowing tubes. Fake figures only."
+    },
+    {
+      "id": "input-nixie-stepper",
+      "name": "Nixie Stepper",
+      "gallery": "input",
+      "category": "NIXIE TUBES",
+      "ref": ".in-nix-step",
+      "classes": [
+        "in-nix",
+        "in-nix-step",
+        "in-nix-btns",
+        "in-nix-up",
+        "in-nix-down",
+        "in-nix-tube",
+        "in-nix-num",
+        "in-nix-cyc",
+        "in-nix-base"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "input",
+        "animated",
+        "new"
+      ],
+      "componentType": "input-number",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A tube flanked by up and down buttons; the up button pulses as the digit steps upward on the idle loop. A retro numeric input control. Wire the buttons to set the lit cathode."
+    },
+    {
+      "id": "input-nixie-percent",
+      "name": "Nixie Percent",
+      "gallery": "input",
+      "category": "NIXIE TUBES",
+      "ref": ".in-nix (percent)",
+      "classes": [
+        "in-nix",
+        "in-nix-tube",
+        "in-nix-num",
+        "in-nix-cyc",
+        "in-nix-base"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "input",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-gauge",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Two digit tubes and a fixed percent-symbol tube; the ones digit races while the tens climbs, a glowing progress readout. Symbol tube stays lit like an IN-15."
+    },
+    {
+      "id": "input-nixie-voltmeter",
+      "name": "Nixie Voltmeter",
+      "gallery": "input",
+      "category": "NIXIE TUBES",
+      "ref": ".in-nix (meter)",
+      "classes": [
+        "in-nix",
+        "in-nix-tube",
+        "in-nix-num",
+        "in-nix-cyc",
+        "in-nix-base",
+        "in-nix-flick",
+        "in-nix-colon"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "input",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-kpi",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A four-tube reading with a decimal point and a unit tube, the last digits flickering like a live measurement. Colour from the warn role for a lab-instrument feel."
+    },
+    {
+      "id": "input-nixie-symbol-tube",
+      "name": "Nixie Symbol Tube",
+      "gallery": "input",
+      "category": "NIXIE TUBES",
+      "ref": ".in-nix (symbol)",
+      "classes": [
+        "in-nix",
+        "in-nix-tube",
+        "in-nix-num",
+        "in-nix-cyc",
+        "in-nix-base"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "input",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-kpi",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A wide symbol tube cycling through plus, minus, percent, micro, pi, ohm and more, the way the old IN-15 symbol nixies worked. One symbol lit at a time."
+    },
+    {
+      "id": "input-nixie-loading",
+      "name": "Nixie Loading",
+      "gallery": "input",
+      "category": "NIXIE TUBES",
+      "ref": ".in-nix-spin",
+      "classes": [
+        "in-nix",
+        "in-nix-tube",
+        "in-nix-num",
+        "in-nix-spin",
+        "in-nix-base"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "input",
+        "animated",
+        "new"
+      ],
+      "componentType": "loader",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Two tubes spinning rapidly through their digits like a slot reel, a glow-tube waiting state. Set the tubes to the real value when the work is done."
     },
     {
       "id": "text-gradient-flow-staple",
@@ -45515,9 +45785,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A two spine, four leaf datacenter fabric with server rows, packets fanning across every spine to leaf uplink. Use for clos network diagrams."
     },
     {
@@ -45550,9 +45820,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Five fully connected peers with packets hopping edge to edge around the mesh. Use for peer to peer or full mesh overlay diagrams."
     },
     {
@@ -45587,9 +45857,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Three node layers with weighted edges and a signal wave that lights each layer left to right. Use for model or inference flow visuals."
     },
     {
@@ -45623,9 +45893,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "One connection carries four independent streams that keep flowing while a single TCP lane stalls. Use to explain head of line blocking."
     },
     {
@@ -45662,9 +45932,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A packet crosses a router graph, meets congestion on the top path, then reroutes along the lower path. Use for routing and failover visuals."
     },
     {
@@ -45703,9 +45973,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "An origin plus edge points of presence, with a request routed to the nearest edge and a cache hit glow. Use for content delivery diagrams."
     },
     {
@@ -45739,9 +46009,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Three autonomous system clouds exchange route advertisements across bidirectional peering links. Use for interdomain and BGP diagrams."
     },
     {
@@ -45777,9 +46047,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A balancer sprays requests to a server pool with per node throughput bars pulsing. Use for load balancer and autoscaling visuals."
     },
     {
@@ -45814,9 +46084,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A broker takes messages from publishers and flows them outward to subscriber groups. Use for event bus and messaging topology diagrams."
     },
     {
@@ -45851,9 +46121,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A grid of services with sidecar dots and mutual TLS links pulsing between them. Use for service mesh and zero trust topology diagrams."
     },
     {
@@ -45887,9 +46157,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A token circulates a ring of six nodes, lighting each as it passes. Use for token ring, loop and circular bus network visuals."
     },
     {
@@ -45923,9 +46193,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A central hub with eight spokes and traffic radiating outward to each leaf node. Use for hub and spoke or central switch diagrams."
     },
     {
@@ -45960,9 +46230,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A physical underlay fabric carries a dashed logical tunnel arcing above between two endpoints. Use for VPN, VXLAN and SD WAN diagrams."
     },
     {
@@ -45998,9 +46268,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Edges coloured by latency, with one link heating to red and traffic rerouting to a faster path. Use for SLA and latency aware routing visuals."
     },
     {
