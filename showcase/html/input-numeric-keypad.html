@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Numeric Keypad · Prism</title>
+<!-- Prism showcase sample: input-numeric-keypad (gallery: input). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.in-scf { position: relative; width: 100%; max-width: 300px; height: 150px; border-radius: 12px; overflow: hidden; background: var(--bg); padding: 8px; font: 800 8px ui-sans-serif, system-ui, sans-serif; letter-spacing: 0.1em; color: var(--bg); text-transform: uppercase; }
+.in-scf-pad { display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 1fr); gap: 5px; height: 100%; }
+.in-scf-pad b { border-radius: 6px; background: var(--panel2); display: grid; place-items: center; color: var(--muted); font-size: 11px; animation: 4.5s steps(1) 0s infinite normal none running inScfKey; }
+.in-scf-pad b:nth-child(1) { animation-delay: 0s; }
+.in-scf-pad b:nth-child(5) { animation-delay: 0.5s; }
+.in-scf-pad b:nth-child(9) { animation-delay: 1s; }
+.in-scf-pad b:nth-child(3) { animation-delay: 1.5s; }
+.in-scf-pad b:nth-child(7) { animation-delay: 2s; }
+.in-scf-pad b:nth-child(2) { animation-delay: 2.5s; }
+@keyframes inScfKey { 
+  0%, 10%, 100% { background: var(--panel2); color: var(--muted); box-shadow: none; }
+  2%, 8% { background: var(--info); color: var(--bg); box-shadow: 0 0 8px rgba(var(--info-rgb),.7); }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="in-scf in-scf-pad" role="img" aria-label="Numeric keypad lighting keys in sequence">
+      <b>1</b><b>2</b><b>3</b><b>4</b><b>5</b><b>6</b><b>7</b><b>8</b><b>9</b>
+    </div></div></div>
+<div class="meta"><b>Numeric Keypad</b> · <code>input-numeric-keypad</code><br>Input Methods · RETRO SCIFI CONTROL PANELS<p>A three by three keypad whose keys light in an access-code sequence. An entry pad for a control surface.</p></div>
+
+</body>
+</html>

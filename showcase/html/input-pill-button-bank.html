@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pill Button Bank · Prism</title>
+<!-- Prism showcase sample: input-pill-button-bank (gallery: input). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.in-scf { position: relative; width: 100%; max-width: 300px; height: 150px; border-radius: 12px; overflow: hidden; background: var(--bg); padding: 8px; font: 800 8px ui-sans-serif, system-ui, sans-serif; letter-spacing: 0.1em; color: var(--bg); text-transform: uppercase; }
+.in-scf-pill { border-radius: 999px; display: flex; align-items: center; padding: 0px 8px; height: 16px; overflow: hidden; }
+.in-scf-b { background: var(--accent); }
+.in-scf-c { background: var(--crit); }
+.in-scf-i { background: var(--info); }
+.in-scf-w { background: var(--warn); }
+.in-scf-p { background: var(--pos); }
+.in-scf-n { background: var(--neg); }
+.in-scf-cmd-nav .in-scf-pill { height: 0px; flex: 1 1 0%; animation: 4s steps(1) 0s infinite normal none running inScfNav; }
+.in-scf-cmd-nav .in-scf-pill:nth-child(1) { animation-delay: 0s; }
+.in-scf-cmd-nav .in-scf-pill:nth-child(2) { animation-delay: 1s; }
+.in-scf-cmd-nav .in-scf-pill:nth-child(3) { animation-delay: 2s; }
+.in-scf-cmd-nav .in-scf-pill:nth-child(4) { animation-delay: 3s; }
+.in-scf-bank { display: flex; flex-direction: column; gap: 6px; justify-content: center; height: 100%; }
+.in-scf-bank .in-scf-row { display: flex; gap: 6px; }
+.in-scf-bank .in-scf-pill { flex: 1 1 0%; justify-content: center; animation: 2.4s ease-in-out 0s infinite normal none running inScfBlink; }
+.in-scf-bank .in-scf-pill:nth-child(2) { animation-delay: 0.3s; }
+.in-scf-bank .in-scf-pill:nth-child(3) { animation-delay: 0.6s; }
+.in-scf-bank .in-scf-row:nth-child(2) .in-scf-pill { animation-delay: 0.9s; }
+.in-scf-bank .in-scf-row:nth-child(2) .in-scf-pill:nth-child(2) { animation-delay: 1.2s; }
+.in-scf-bank .in-scf-row:nth-child(2) .in-scf-pill:nth-child(3) { animation-delay: 1.5s; }
+@keyframes inScfNav { 
+  0%, 100% { filter: brightness(0.55); }
+  12% { filter: brightness(1); }
+}
+@keyframes inScfBlink { 
+  0%, 100% { filter: brightness(0.5); }
+  50% { filter: brightness(1.1); }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="in-scf in-scf-bank" role="img" aria-label="Pill button bank">
+      <div class="in-scf-row"><span class="in-scf-pill in-scf-b">SYS</span><span class="in-scf-pill in-scf-c">NAV</span><span class="in-scf-pill in-scf-i">OPS</span></div>
+      <div class="in-scf-row"><span class="in-scf-pill in-scf-w">ENG</span><span class="in-scf-pill in-scf-p">MED</span><span class="in-scf-pill in-scf-n">SEC</span></div>
+    </div></div></div>
+<div class="meta"><b>Pill Button Bank</b> · <code>input-pill-button-bank</code><br>Input Methods · RETRO SCIFI CONTROL PANELS<p>Two rows of rounded-end console buttons in the six token colours, each brightening in turn. A control-pad surface for a sci-fi UI.</p></div>
+
+</body>
+</html>

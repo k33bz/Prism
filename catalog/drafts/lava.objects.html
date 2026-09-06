@@ -1,0 +1,304 @@
+<h3 class="sec">LAVA LAMPS &amp; FLUID</h3>
+<style id="amb-lava-styles">
+/* ===== Lava lamps and gooey fluid backdrops. Prefix amb-lava- / ambLava.
+   Each root is a full-bleed 300x150 rounded block. The metaball merge is an SVG
+   gooey filter (feGaussianBlur then feColorMatrix sharpening the alpha threshold)
+   applied to a group of blurred circles; every tile owns a UNIQUE filter id.
+   Colour contract: blobs ride var(--c,var(--accent)) with a second role in
+   rgba(var(--info-rgb)/--crit-rgb/...,alpha); lamp body is a soft vertical gradient
+   of --panel/--panel2/--bg; surfaces --bg/--panel/--panel2, text --muted. Only white
+   and black appear as literals. Every loop resolves inside 4s. ===== */
+.amb-lava-root{position:relative;width:100%;max-width:300px;height:150px;border-radius:10px;overflow:hidden;background:linear-gradient(180deg,var(--bg),var(--panel2));isolation:isolate}
+.amb-lava-svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+.amb-lava-tag{position:absolute;left:12px;bottom:10px;z-index:6;font:500 10px/1 ui-monospace,Menlo,monospace;letter-spacing:.05em;color:var(--muted);opacity:.85;pointer-events:none;text-shadow:0 1px 4px rgba(0,0,0,.55)}
+/* lamp-body gradient stops (SVG) */
+.amb-lava-lampA{stop-color:var(--panel2)}
+.amb-lava-lampB{stop-color:var(--panel)}
+.amb-lava-lampC{stop-color:var(--bg)}
+/* blob fills */
+.amb-lava-b{fill:var(--c,var(--accent))}
+.amb-lava-bi{fill:rgba(var(--info-rgb),.85)}
+.amb-lava-bc{fill:rgba(var(--crit-rgb),.85)}
+.amb-lava-bp{fill:rgba(var(--pos-rgb),.85)}
+.amb-lava-bw{fill:rgba(var(--warn-rgb),.85)}
+.amb-lava-bn{fill:rgba(var(--neg-rgb),.9)}
+.amb-lava-glass{fill:rgba(255,255,255,.05);stroke:rgba(255,255,255,.08);stroke-width:1}
+.amb-lava-cap{fill:var(--line)}
+
+/* 1 classic lava lamp: a few fat blobs peel off a base and drift up the vessel */
+.amb-lava-clsc-b{transform-box:fill-box;transform-origin:center;animation-name:ambLavaRise;animation-duration:4s;animation-timing-function:ease-in-out;animation-iteration-count:infinite;animation-delay:var(--d,0s)}
+@keyframes ambLavaRise{0%{transform:translateY(6px) scale(.7)}18%{transform:translateY(-4px) scale(1.05)}52%{transform:translateY(-92px) scale(1.18)}84%{transform:translateY(-4px) scale(1)}100%{transform:translateY(6px) scale(.7)}}
+
+/* 2 fast plasma lamp: many small blobs churn quickly */
+.amb-lava-plsm-b{transform-box:fill-box;transform-origin:center;animation-name:ambLavaPlasma;animation-duration:2s;animation-timing-function:ease-in-out;animation-iteration-count:infinite;animation-delay:var(--d,0s)}
+@keyframes ambLavaPlasma{0%{transform:translate(0,8px) scale(.6)}50%{transform:translate(var(--sx,6px),-88px) scale(1.15)}100%{transform:translate(0,8px) scale(.6)}}
+
+/* 3 two-tone lava: accent and a second role rise and blend where they overlap */
+.amb-lava-two-b{transform-box:fill-box;transform-origin:center;animation-name:ambLavaRise;animation-duration:4s;animation-timing-function:ease-in-out;animation-iteration-count:infinite;animation-delay:var(--d,0s)}
+
+/* 4 blob field: metaballs drift across the whole surface as wallpaper */
+.amb-lava-fld-b{transform-box:fill-box;transform-origin:center;animation-name:ambLavaDrift;animation-duration:4s;animation-timing-function:ease-in-out;animation-iteration-count:infinite;animation-delay:var(--d,0s)}
+@keyframes ambLavaDrift{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(var(--dx,30px),var(--dy,-14px)) scale(1.12)}66%{transform:translate(calc(var(--dx,30px)*-.6),calc(var(--dy,-14px)*-1)) scale(.9)}}
+
+/* 5 bubble column: small bubbles stream up a tube and coalesce near the top */
+.amb-lava-bub-b{transform-box:fill-box;transform-origin:center;animation-name:ambLavaBubble;animation-duration:4s;animation-timing-function:cubic-bezier(.4,0,.7,1);animation-iteration-count:infinite;animation-delay:var(--d,0s)}
+@keyframes ambLavaBubble{0%{transform:translateY(12px) scale(.4);opacity:0}12%{opacity:1}80%{transform:translateY(-104px) scale(1.1);opacity:1}100%{transform:translateY(-118px) scale(1.4);opacity:0}}
+
+/* 6 wax drip: blobs swell at the ceiling then drop */
+.amb-lava-drp-b{transform-box:fill-box;transform-origin:center top;animation-name:ambLavaDrip;animation-duration:4s;animation-timing-function:ease-in;animation-iteration-count:infinite;animation-delay:var(--d,0s)}
+@keyframes ambLavaDrip{0%{transform:translateY(0) scaleY(.5) scaleX(1.1)}30%{transform:translateY(6px) scaleY(1.3) scaleX(.9)}45%{transform:translateY(10px) scaleY(1) scaleX(1)}100%{transform:translateY(150px) scaleY(1.1) scaleX(.95)}}
+
+/* 7 gooey orbit: blobs circle a centre, merging as they pass */
+.amb-lava-orb-g{transform-box:view-box;transform-origin:150px 75px;animation-name:ambLavaOrbit;animation-duration:4s;animation-timing-function:linear;animation-iteration-count:infinite;animation-delay:var(--d,0s)}
+@keyframes ambLavaOrbit{to{transform:rotate(360deg)}}
+
+/* 8 liquid blob morph: one mass stretches and pinches */
+.amb-lava-mrf-a{transform-box:fill-box;transform-origin:center;animation-name:ambLavaMorphA;animation-duration:4s;animation-timing-function:ease-in-out;animation-iteration-count:infinite}
+.amb-lava-mrf-b{transform-box:fill-box;transform-origin:center;animation-name:ambLavaMorphB;animation-duration:4s;animation-timing-function:ease-in-out;animation-iteration-count:infinite}
+@keyframes ambLavaMorphA{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-26px,0) scale(.8,1.25)}}
+@keyframes ambLavaMorphB{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(26px,0) scale(.8,1.25)}}
+
+/* 9 rising heat plume: blobs merge upward from a hot base */
+.amb-lava-plm-b{transform-box:fill-box;transform-origin:center;animation-name:ambLavaPlume;animation-duration:4s;animation-timing-function:cubic-bezier(.5,0,.6,1);animation-iteration-count:infinite;animation-delay:var(--d,0s)}
+@keyframes ambLavaPlume{0%{transform:translate(0,14px) scale(1.2)}55%{transform:translate(var(--sx,8px),-70px) scale(.7)}100%{transform:translate(0,-118px) scale(.3);opacity:0}}
+.amb-lava-plm-base{transform-box:fill-box;transform-origin:center;animation-name:ambLavaBaseGlow;animation-duration:2s;animation-timing-function:ease-in-out;animation-iteration-count:infinite}
+@keyframes ambLavaBaseGlow{0%,100%{transform:scaleX(1)}50%{transform:scaleX(1.12)}}
+
+/* 10 mercury pool: a reflective pool wobbles and flicks droplets up */
+.amb-lava-mrc-pool{transform-box:fill-box;transform-origin:center bottom;animation-name:ambLavaWobble;animation-duration:2s;animation-timing-function:ease-in-out;animation-iteration-count:infinite}
+@keyframes ambLavaWobble{0%,100%{transform:scale(1,1)}50%{transform:scale(1.03,.9)}}
+.amb-lava-mrc-drop{transform-box:fill-box;transform-origin:center;animation-name:ambLavaDroplet;animation-duration:4s;animation-timing-function:ease-out;animation-iteration-count:infinite;animation-delay:var(--d,0s)}
+@keyframes ambLavaDroplet{0%{transform:translateY(0) scale(.4)}20%{transform:translateY(-46px) scale(1)}40%,100%{transform:translateY(0) scale(.4)}}
+
+/* 11 colour-shift lamp: rising blobs cycle through the semantic roles */
+.amb-lava-shf-b{transform-box:fill-box;transform-origin:center;animation-name:ambLavaRise,ambLavaHue;animation-duration:4s,4s;animation-timing-function:ease-in-out,linear;animation-iteration-count:infinite,infinite;animation-delay:var(--d,0s),var(--d,0s)}
+@keyframes ambLavaHue{0%,100%{fill:var(--accent)}25%{fill:var(--pos)}50%{fill:var(--info)}75%{fill:var(--crit)}}
+
+/* 12 split and merge: two blobs join at centre then separate */
+.amb-lava-spl-l{transform-box:fill-box;transform-origin:center;animation-name:ambLavaSplitL;animation-duration:4s;animation-timing-function:ease-in-out;animation-iteration-count:infinite}
+.amb-lava-spl-r{transform-box:fill-box;transform-origin:center;animation-name:ambLavaSplitR;animation-duration:4s;animation-timing-function:ease-in-out;animation-iteration-count:infinite}
+@keyframes ambLavaSplitL{0%,100%{transform:translateX(0) scale(1)}50%{transform:translateX(40px) scale(1.1)}}
+@keyframes ambLavaSplitR{0%,100%{transform:translateX(0) scale(1)}50%{transform:translateX(-40px) scale(1.1)}}
+
+@media (prefers-reduced-motion:reduce){
+  .amb-lava-clsc-b,.amb-lava-plsm-b,.amb-lava-two-b,.amb-lava-fld-b,.amb-lava-bub-b,.amb-lava-drp-b,.amb-lava-orb-g,.amb-lava-mrf-a,.amb-lava-mrf-b,.amb-lava-plm-b,.amb-lava-plm-base,.amb-lava-mrc-pool,.amb-lava-mrc-drop,.amb-lava-shf-b,.amb-lava-spl-l,.amb-lava-spl-r{animation-name:none}
+  .amb-lava-bub-b,.amb-lava-plm-b{opacity:1}
+}
+</style>
+<div class="gallery">
+
+  <div class="tile is-new" data-ctype="object-backdrop" data-interact="auto-play" data-c="accent"><div class="stage">
+    <div class="amb-lava-root">
+      <svg class="amb-lava-svg" viewBox="0 0 300 150" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs>
+        <filter id="ambLavaGoo1" x="-40%" y="-30%" width="180%" height="160%"><feGaussianBlur in="SourceGraphic" stdDeviation="6" result="b"/><feColorMatrix in="b" type="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 20 -9"/></filter>
+        <linearGradient id="ambLavaLamp1" x1="0" y1="0" x2="0" y2="1"><stop class="amb-lava-lampA" offset="0"/><stop class="amb-lava-lampB" offset="1"/></linearGradient>
+        <clipPath id="ambLavaClip1"><path d="M120,22 L180,22 L186,132 L114,132 Z"/></clipPath>
+      </defs>
+        <rect x="140" y="8" width="20" height="12" class="amb-lava-cap"/>
+        <path d="M120,22 L180,22 L186,132 L114,132 Z" fill="url(#ambLavaLamp1)"/>
+        <path d="M108,132 L192,132 L198,144 L102,144 Z" class="amb-lava-cap"/>
+        <g clip-path="url(#ambLavaClip1)"><g filter="url(#ambLavaGoo1)">
+          <ellipse cx="150" cy="128" rx="30" ry="16" class="amb-lava-b"/>
+          <circle class="amb-lava-b amb-lava-clsc-b" cx="146" cy="122" r="16"/>
+          <circle class="amb-lava-b amb-lava-clsc-b" cx="158" cy="122" r="12" style="--d:-1.4s"/>
+          <circle class="amb-lava-b amb-lava-clsc-b" cx="140" cy="122" r="14" style="--d:-2.7s"/>
+        </g></g>
+      </svg>
+      <span class="amb-lava-tag">Atlas · idle</span>
+    </div>
+  </div><div class="meta"><div class="nm">Classic Lava Lamp</div><span class="ref">.amb-lava-root</span><div class="desc">Fat blobs peel off a molten base and drift slowly up a tapered vessel, merging through a gooey filter. Retro hero and loading backdrops.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="object-backdrop" data-interact="auto-play" data-c="crit"><div class="stage">
+    <div class="amb-lava-root">
+      <svg class="amb-lava-svg" viewBox="0 0 300 150" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs>
+        <filter id="ambLavaGoo2" x="-40%" y="-30%" width="180%" height="160%"><feGaussianBlur in="SourceGraphic" stdDeviation="5" result="b"/><feColorMatrix in="b" type="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 22 -10"/></filter>
+        <linearGradient id="ambLavaLamp2" x1="0" y1="0" x2="0" y2="1"><stop class="amb-lava-lampA" offset="0"/><stop class="amb-lava-lampC" offset="1"/></linearGradient>
+        <clipPath id="ambLavaClip2"><path d="M118,20 L182,20 L188,134 L112,134 Z"/></clipPath>
+      </defs>
+        <path d="M118,20 L182,20 L188,134 L112,134 Z" fill="url(#ambLavaLamp2)"/>
+        <g clip-path="url(#ambLavaClip2)"><g filter="url(#ambLavaGoo2)">
+          <ellipse cx="150" cy="132" rx="30" ry="12" class="amb-lava-b"/>
+          <circle class="amb-lava-b amb-lava-plsm-b" cx="140" cy="126" r="10" style="--d:-.2s;--sx:8px"/>
+          <circle class="amb-lava-b amb-lava-plsm-b" cx="158" cy="126" r="9" style="--d:-.9s;--sx:-6px"/>
+          <circle class="amb-lava-b amb-lava-plsm-b" cx="150" cy="126" r="11" style="--d:-1.4s;--sx:4px"/>
+          <circle class="amb-lava-b amb-lava-plsm-b" cx="132" cy="126" r="8" style="--d:-1.7s;--sx:10px"/>
+          <circle class="amb-lava-b amb-lava-plsm-b" cx="166" cy="126" r="8" style="--d:-.5s;--sx:-9px"/>
+        </g></g>
+      </svg>
+      <span class="amb-lava-tag">Nova · surge</span>
+    </div>
+  </div><div class="meta"><div class="nm">Fast Plasma Lamp</div><span class="ref">.amb-lava-plsm-b</span><div class="desc">A denser swarm of small blobs churns up the tube on a two second cycle for a livelier, energetic plasma feel. Active or busy states.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="object-backdrop" data-interact="auto-play" data-c="accent"><div class="stage">
+    <div class="amb-lava-root">
+      <svg class="amb-lava-svg" viewBox="0 0 300 150" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs>
+        <filter id="ambLavaGoo3" x="-40%" y="-30%" width="180%" height="160%"><feGaussianBlur in="SourceGraphic" stdDeviation="6" result="b"/><feColorMatrix in="b" type="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 20 -9"/></filter>
+        <linearGradient id="ambLavaLamp3" x1="0" y1="0" x2="0" y2="1"><stop class="amb-lava-lampA" offset="0"/><stop class="amb-lava-lampB" offset="1"/></linearGradient>
+        <clipPath id="ambLavaClip3"><path d="M118,20 L182,20 L188,134 L112,134 Z"/></clipPath>
+      </defs>
+        <path d="M118,20 L182,20 L188,134 L112,134 Z" fill="url(#ambLavaLamp3)"/>
+        <g clip-path="url(#ambLavaClip3)"><g filter="url(#ambLavaGoo3)">
+          <circle class="amb-lava-b amb-lava-two-b" cx="142" cy="124" r="15" style="--d:0s"/>
+          <circle class="amb-lava-b amb-lava-two-b" cx="140" cy="124" r="12" style="--d:-2s"/>
+          <circle class="amb-lava-bc amb-lava-two-b" cx="160" cy="124" r="14" style="--d:-1s"/>
+          <circle class="amb-lava-bc amb-lava-two-b" cx="158" cy="124" r="11" style="--d:-3s"/>
+        </g></g>
+      </svg>
+      <span class="amb-lava-tag">Comet · blend</span>
+    </div>
+  </div><div class="meta"><div class="nm">Two-Tone Lava</div><span class="ref">.amb-lava-two-b</span><div class="desc">Accent blobs and a second violet role rise together and fuse where they overlap, blending colour through the gooey filter. Brand duo surfaces.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="object-backdrop" data-interact="auto-play" data-c="info"><div class="stage">
+    <div class="amb-lava-root">
+      <svg class="amb-lava-svg" viewBox="0 0 300 150" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs>
+        <filter id="ambLavaGoo4" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur in="SourceGraphic" stdDeviation="8" result="b"/><feColorMatrix in="b" type="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 18 -8"/></filter>
+      </defs>
+        <g filter="url(#ambLavaGoo4)">
+          <circle class="amb-lava-b amb-lava-fld-b" cx="60" cy="50" r="26" style="--dx:40px;--dy:20px;--d:0s"/>
+          <circle class="amb-lava-bi amb-lava-fld-b" cx="150" cy="90" r="30" style="--dx:-46px;--dy:-24px;--d:-1.3s"/>
+          <circle class="amb-lava-b amb-lava-fld-b" cx="230" cy="46" r="24" style="--dx:-30px;--dy:26px;--d:-2.1s"/>
+          <circle class="amb-lava-bi amb-lava-fld-b" cx="250" cy="112" r="22" style="--dx:-34px;--dy:-18px;--d:-3s"/>
+          <circle class="amb-lava-b amb-lava-fld-b" cx="120" cy="30" r="18" style="--dx:26px;--dy:30px;--d:-2.6s"/>
+        </g>
+      </svg>
+      <span class="amb-lava-tag">Ember · drift</span>
+    </div>
+  </div><div class="meta"><div class="nm">Blob Field</div><span class="ref">.amb-lava-fld-b</span><div class="desc">Large metaballs drift across the whole width and gently merge and part, a soft living wallpaper. Full bleed heroes and empty backgrounds.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="object-backdrop" data-interact="auto-play" data-c="pos"><div class="stage">
+    <div class="amb-lava-root">
+      <svg class="amb-lava-svg" viewBox="0 0 300 150" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs>
+        <filter id="ambLavaGoo5" x="-40%" y="-30%" width="180%" height="160%"><feGaussianBlur in="SourceGraphic" stdDeviation="5" result="b"/><feColorMatrix in="b" type="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 20 -9"/></filter>
+        <linearGradient id="ambLavaLamp5" x1="0" y1="0" x2="0" y2="1"><stop class="amb-lava-lampC" offset="0"/><stop class="amb-lava-lampA" offset="1"/></linearGradient>
+      </defs>
+        <rect x="126" y="14" width="48" height="124" rx="10" fill="url(#ambLavaLamp5)"/>
+        <rect x="126" y="14" width="48" height="124" rx="10" class="amb-lava-glass"/>
+        <g filter="url(#ambLavaGoo5)">
+          <ellipse cx="150" cy="122" rx="20" ry="10" class="amb-lava-b"/>
+          <circle class="amb-lava-b amb-lava-bub-b" cx="144" cy="122" r="7" style="--d:0s"/>
+          <circle class="amb-lava-b amb-lava-bub-b" cx="156" cy="122" r="6" style="--d:-1s"/>
+          <circle class="amb-lava-b amb-lava-bub-b" cx="150" cy="122" r="8" style="--d:-2s"/>
+          <circle class="amb-lava-b amb-lava-bub-b" cx="148" cy="122" r="5" style="--d:-3s"/>
+          <circle class="amb-lava-b amb-lava-bub-b" cx="158" cy="122" r="5" style="--d:-2.5s"/>
+        </g>
+      </svg>
+      <span class="amb-lava-tag">Pixel · rise</span>
+    </div>
+  </div><div class="meta"><div class="nm">Bubble Column</div><span class="ref">.amb-lava-bub-b</span><div class="desc">Small bubbles stream up a slim glass tube, growing and coalescing near the top before they pop. Progress, carbonation and activity cues.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="object-backdrop" data-interact="auto-play" data-c="warn"><div class="stage">
+    <div class="amb-lava-root">
+      <svg class="amb-lava-svg" viewBox="0 0 300 150" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs>
+        <filter id="ambLavaGoo6" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur in="SourceGraphic" stdDeviation="6" result="b"/><feColorMatrix in="b" type="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 20 -9"/></filter>
+      </defs>
+        <rect x="0" y="0" width="300" height="18" class="amb-lava-cap"/>
+        <g filter="url(#ambLavaGoo6)">
+          <rect x="0" y="0" width="300" height="20" class="amb-lava-b"/>
+          <circle class="amb-lava-b amb-lava-drp-b" cx="70" cy="18" r="12" style="--d:0s"/>
+          <circle class="amb-lava-b amb-lava-drp-b" cx="150" cy="18" r="14" style="--d:-1.6s"/>
+          <circle class="amb-lava-b amb-lava-drp-b" cx="228" cy="18" r="11" style="--d:-2.9s"/>
+        </g>
+      </svg>
+      <span class="amb-lava-tag">Atlas · drip</span>
+    </div>
+  </div><div class="meta"><div class="nm">Wax Drip</div><span class="ref">.amb-lava-drp-b</span><div class="desc">Blobs swell and stretch from a ceiling of molten wax, then pinch off and fall away. Playful headers, halloween and slime themed surfaces.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="object-backdrop" data-interact="auto-play" data-c="crit"><div class="stage">
+    <div class="amb-lava-root">
+      <svg class="amb-lava-svg" viewBox="0 0 300 150" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs>
+        <filter id="ambLavaGoo7" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur in="SourceGraphic" stdDeviation="6" result="b"/><feColorMatrix in="b" type="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 20 -9"/></filter>
+      </defs>
+        <g filter="url(#ambLavaGoo7)">
+          <circle class="amb-lava-b" cx="150" cy="75" r="16"/>
+          <g class="amb-lava-orb-g" style="--d:0s"><circle class="amb-lava-b" cx="204" cy="75" r="13"/></g>
+          <g class="amb-lava-orb-g" style="--d:-1.3s"><circle class="amb-lava-bc" cx="192" cy="75" r="11"/></g>
+          <g class="amb-lava-orb-g" style="--d:-2.6s"><circle class="amb-lava-b" cx="210" cy="75" r="10"/></g>
+        </g>
+      </svg>
+      <span class="amb-lava-tag">Nova · orbit</span>
+    </div>
+  </div><div class="meta"><div class="nm">Gooey Orbit</div><span class="ref">.amb-lava-orb-g</span><div class="desc">Blobs circle a central mass and fuse into it as they swing past, then stretch back out. Loaders, spinners and processing indicators.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="object-backdrop" data-interact="auto-play" data-c="accent"><div class="stage">
+    <div class="amb-lava-root">
+      <svg class="amb-lava-svg" viewBox="0 0 300 150" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs>
+        <filter id="ambLavaGoo8" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur in="SourceGraphic" stdDeviation="7" result="b"/><feColorMatrix in="b" type="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 20 -9"/></filter>
+      </defs>
+        <g filter="url(#ambLavaGoo8)">
+          <circle class="amb-lava-b amb-lava-mrf-a" cx="150" cy="75" r="26"/>
+          <circle class="amb-lava-b amb-lava-mrf-b" cx="150" cy="75" r="26"/>
+        </g>
+      </svg>
+      <span class="amb-lava-tag">Comet · morph</span>
+    </div>
+  </div><div class="meta"><div class="nm">Liquid Blob Morph</div><span class="ref">.amb-lava-mrf-a</span><div class="desc">One rounded mass stretches wide then pinches back to a ball, breathing between two shapes. Logo bugs, mascots and idle chat avatars.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="object-backdrop" data-interact="auto-play" data-c="neg"><div class="stage">
+    <div class="amb-lava-root">
+      <svg class="amb-lava-svg" viewBox="0 0 300 150" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs>
+        <filter id="ambLavaGoo9" x="-40%" y="-30%" width="180%" height="160%"><feGaussianBlur in="SourceGraphic" stdDeviation="6" result="b"/><feColorMatrix in="b" type="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 20 -9"/></filter>
+        <linearGradient id="ambLavaGrad9" x1="0" y1="1" x2="0" y2="0"><stop class="amb-lava-lampC" offset="0"/><stop class="amb-lava-lampA" offset="1"/></linearGradient>
+      </defs>
+        <rect x="0" y="0" width="300" height="150" fill="url(#ambLavaGrad9)"/>
+        <g filter="url(#ambLavaGoo9)">
+          <ellipse class="amb-lava-bn amb-lava-plm-base" cx="150" cy="146" rx="34" ry="14"/>
+          <circle class="amb-lava-bn amb-lava-plm-b" cx="150" cy="140" r="14" style="--d:0s;--sx:6px"/>
+          <circle class="amb-lava-bn amb-lava-plm-b" cx="140" cy="140" r="10" style="--d:-1.3s;--sx:-8px"/>
+          <circle class="amb-lava-bn amb-lava-plm-b" cx="160" cy="140" r="11" style="--d:-2.6s;--sx:4px"/>
+        </g>
+      </svg>
+      <span class="amb-lava-tag">Ember · plume</span>
+    </div>
+  </div><div class="meta"><div class="nm">Rising Heat Plume</div><span class="ref">.amb-lava-plm-b</span><div class="desc">A pulsing hot base sheds blobs that merge into a column rising and thinning as it climbs and fades. Temperature, energy and load surfaces.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="object-backdrop" data-interact="auto-play" data-c="info"><div class="stage">
+    <div class="amb-lava-root">
+      <svg class="amb-lava-svg" viewBox="0 0 300 150" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs>
+        <filter id="ambLavaGoo10" x="-30%" y="-40%" width="160%" height="180%"><feGaussianBlur in="SourceGraphic" stdDeviation="6" result="b"/><feColorMatrix in="b" type="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 22 -10"/></filter>
+      </defs>
+        <g filter="url(#ambLavaGoo10)">
+          <ellipse class="amb-lava-bi amb-lava-mrc-pool" cx="150" cy="140" rx="120" ry="22"/>
+          <circle class="amb-lava-bi amb-lava-mrc-drop" cx="110" cy="128" r="9" style="--d:0s"/>
+          <circle class="amb-lava-bi amb-lava-mrc-drop" cx="180" cy="128" r="8" style="--d:-1.6s"/>
+          <circle class="amb-lava-bi amb-lava-mrc-drop" cx="150" cy="128" r="10" style="--d:-2.8s"/>
+        </g>
+        <ellipse cx="120" cy="132" rx="40" ry="6" fill="rgba(255,255,255,.12)"/>
+      </svg>
+      <span class="amb-lava-tag">Pixel · pool</span>
+    </div>
+  </div><div class="meta"><div class="nm">Mercury Pool</div><span class="ref">.amb-lava-mrc-pool</span><div class="desc">A wide reflective pool wobbles at its surface and flicks droplets that arc up and rejoin the mass. Liquid metal and premium footer bands.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="object-backdrop" data-interact="auto-play" data-c="accent"><div class="stage">
+    <div class="amb-lava-root">
+      <svg class="amb-lava-svg" viewBox="0 0 300 150" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs>
+        <filter id="ambLavaGoo11" x="-40%" y="-30%" width="180%" height="160%"><feGaussianBlur in="SourceGraphic" stdDeviation="6" result="b"/><feColorMatrix in="b" type="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 20 -9"/></filter>
+        <linearGradient id="ambLavaLamp11" x1="0" y1="0" x2="0" y2="1"><stop class="amb-lava-lampA" offset="0"/><stop class="amb-lava-lampB" offset="1"/></linearGradient>
+        <clipPath id="ambLavaClip11"><path d="M118,20 L182,20 L188,134 L112,134 Z"/></clipPath>
+      </defs>
+        <path d="M118,20 L182,20 L188,134 L112,134 Z" fill="url(#ambLavaLamp11)"/>
+        <g clip-path="url(#ambLavaClip11)"><g filter="url(#ambLavaGoo11)">
+          <ellipse cx="150" cy="130" rx="28" ry="12" class="amb-lava-shf-b"/>
+          <circle class="amb-lava-shf-b" cx="146" cy="124" r="14" style="--d:0s"/>
+          <circle class="amb-lava-shf-b" cx="158" cy="124" r="11" style="--d:-1.5s"/>
+          <circle class="amb-lava-shf-b" cx="140" cy="124" r="12" style="--d:-3s"/>
+        </g></g>
+      </svg>
+      <span class="amb-lava-tag">Atlas · cycle</span>
+    </div>
+  </div><div class="meta"><div class="nm">Colour-Shift Lamp</div><span class="ref">.amb-lava-shf-b</span><div class="desc">Rising blobs cycle through the semantic roles, drifting from accent through green, blue and violet as they climb. Themed or seasonal backdrops.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="object-backdrop" data-interact="auto-play" data-c="pos"><div class="stage">
+    <div class="amb-lava-root">
+      <svg class="amb-lava-svg" viewBox="0 0 300 150" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs>
+        <filter id="ambLavaGoo12" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur in="SourceGraphic" stdDeviation="7" result="b"/><feColorMatrix in="b" type="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 20 -9"/></filter>
+      </defs>
+        <g filter="url(#ambLavaGoo12)">
+          <circle class="amb-lava-b amb-lava-spl-l" cx="150" cy="75" r="22"/>
+          <circle class="amb-lava-b amb-lava-spl-r" cx="150" cy="75" r="22"/>
+        </g>
+      </svg>
+      <span class="amb-lava-tag">Nova · split</span>
+    </div>
+  </div><div class="meta"><div class="nm">Split and Merge</div><span class="ref">.amb-lava-spl-l</span><div class="desc">Two blobs drift apart into distinct balls then glide back and fuse into one, over and over. Sync, pairing and connection metaphors.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+</div>

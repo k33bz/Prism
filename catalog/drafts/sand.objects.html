@@ -1,0 +1,217 @@
+<h3 class="sec">HOURGLASS &amp; SAND</h3>
+<style id="obj-sand-styles">
+/* ===== Hourglass and sand timers: draining bulbs, falling grains, growing cones, ring drains.
+   Prefix obj-sand- / objSand. Each root fits a 300x150 stage (width:100%;max-width:300px).
+   Colour contract: sand rides var(--warn,var(--accent)) and rgba(var(--warn-rgb,var(--accent-rgb)),x)
+   with per-tile var(--c) accents; glass outlines var(--line)/var(--muted); frames var(--panel2)/--panel.
+   Secondary tints use --pos/--info/--crit. Only white and black appear as literals. Loops finish in 4s. ===== */
+@property --obj-sand-pct{syntax:"<integer>";inherits:true;initial-value:0}
+
+.obj-sand-root{position:relative;width:100%;max-width:300px;height:150px;border-radius:10px;overflow:hidden;background:linear-gradient(160deg,var(--panel2),var(--panel));display:grid;place-items:center;isolation:isolate}
+.obj-sand-tag{position:absolute;left:12px;bottom:9px;z-index:8;font:500 10px/1 ui-monospace,Menlo,monospace;letter-spacing:.06em;color:var(--muted);opacity:.9;pointer-events:none;text-shadow:0 1px 4px rgba(0,0,0,.5)}
+
+/* 1 classic hourglass: two triangular bulbs, top pile shrinks, bottom cone grows, stream through pinch */
+.obj-sand-cls{position:relative;width:82px;height:118px}
+.obj-sand-cls-fr{position:absolute;left:8px;right:8px;top:0;height:6px;background:var(--panel2);border-radius:3px;box-shadow:0 1px 0 rgba(0,0,0,.4)}
+.obj-sand-cls-fr.obj-sand-cls-fb{top:auto;bottom:0}
+.obj-sand-cls-bulb{position:absolute;left:0;right:0;height:52px;overflow:hidden}
+.obj-sand-cls-top{top:7px;border:1.5px solid var(--muted);border-bottom:none;clip-path:polygon(0 0,100% 0,54% 100%,46% 100%)}
+.obj-sand-cls-bot{bottom:7px;border:1.5px solid var(--muted);border-top:none;clip-path:polygon(46% 0,54% 0,100% 100%,0 100%)}
+.obj-sand-cls-tsand{position:absolute;left:0;right:0;top:0;height:100%;background:linear-gradient(180deg,rgba(var(--warn-rgb),.95),var(--warn));clip-path:polygon(0 0,100% 0,54% 100%,46% 100%);transform-origin:top;animation:objSandClsTop 4s ease-in-out infinite}
+.obj-sand-cls-bsand{position:absolute;left:0;right:0;bottom:0;height:100%;background:linear-gradient(180deg,var(--warn),rgba(var(--warn-rgb),.8));clip-path:polygon(50% 42%,100% 100%,0 100%);transform:scaleY(0);transform-origin:bottom;animation:objSandClsBot 4s ease-in-out infinite}
+.obj-sand-cls-stream{position:absolute;left:50%;top:52px;width:2px;height:20px;margin-left:-1px;background:linear-gradient(180deg,rgba(var(--warn-rgb),.2),var(--warn));animation:objSandClsStream 4s linear infinite}
+@keyframes objSandClsTop{0%{transform:scaleY(1)}86%,100%{transform:scaleY(.02)}}
+@keyframes objSandClsBot{0%{transform:scaleY(.02)}86%,100%{transform:scaleY(1)}}
+@keyframes objSandClsStream{0%,88%{opacity:1}92%,100%{opacity:0}}
+
+/* 2 wide hourglass with rounded bulbs */
+.obj-sand-wide{position:relative;width:104px;height:112px}
+.obj-sand-wide-glass{position:absolute;inset:0;border:1.5px solid var(--line)}
+.obj-sand-wide-b{position:absolute;left:4px;right:4px;height:50px;overflow:hidden;border:1.5px solid var(--muted)}
+.obj-sand-wide-b.obj-sand-wide-t{top:0;border-radius:44px 44px 8px 8px;border-bottom:none}
+.obj-sand-wide-b.obj-sand-wide-bt{bottom:0;border-radius:8px 8px 44px 44px;border-top:none}
+.obj-sand-wide-ts{position:absolute;left:0;right:0;top:0;height:100%;background:radial-gradient(120% 90% at 50% 0,rgba(var(--warn-rgb),.95),var(--warn));transform-origin:top;animation:objSandWideT 4s ease-in-out infinite}
+.obj-sand-wide-bs{position:absolute;left:0;right:0;bottom:0;height:100%;background:radial-gradient(120% 120% at 50% 100%,var(--warn),rgba(var(--warn-rgb),.75));clip-path:polygon(50% 30%,100% 100%,0 100%);transform:scaleY(0);transform-origin:bottom;animation:objSandWideB 4s ease-in-out infinite}
+.obj-sand-wide-neck{position:absolute;left:50%;top:52px;width:2px;height:12px;margin-left:-1px;background:var(--warn);animation:objSandClsStream 4s linear infinite}
+@keyframes objSandWideT{0%{transform:scaleY(1)}88%,100%{transform:scaleY(.05)}}
+@keyframes objSandWideB{0%{transform:scaleY(.05)}88%,100%{transform:scaleY(1)}}
+
+/* 3 falling stream close-up: grains streaming, cone growing */
+.obj-sand-fall{position:relative;width:120px;height:120px}
+.obj-sand-fall-g{position:absolute;left:50%;top:6px;width:3px;height:3px;margin-left:-1.5px;border-radius:1px;background:var(--warn);animation-name:objSandFallG;animation-duration:1s;animation-timing-function:cubic-bezier(.5,0,.9,.4);animation-iteration-count:infinite;animation-delay:var(--d,0s)}
+.obj-sand-fall-cone{position:absolute;left:50%;bottom:8px;width:76px;height:44px;margin-left:-38px;background:linear-gradient(180deg,var(--warn),rgba(var(--warn-rgb),.7));clip-path:polygon(50% 0,100% 100%,0 100%);transform:scaleY(.15);transform-origin:bottom;animation:objSandFallCone 4s ease-in-out infinite}
+.obj-sand-fall-base{position:absolute;left:8px;right:8px;bottom:6px;height:4px;border-radius:2px;background:rgba(var(--warn-rgb),.35)}
+@keyframes objSandFallG{0%{transform:translate(0,0);opacity:0}10%{opacity:1}100%{transform:translate(var(--dx,0),96px);opacity:.6}}
+@keyframes objSandFallCone{0%{transform:scaleY(.15)}100%{transform:scaleY(1)}}
+
+/* 4 egg timer: rounded body draining */
+.obj-sand-egg{position:relative;width:78px;height:118px}
+.obj-sand-egg-body{position:absolute;inset:0;border:1.5px solid var(--muted);border-radius:40px 40px 40px 40px/54px 54px 54px 54px;overflow:hidden;background:rgba(255,255,255,.02)}
+.obj-sand-egg-top{position:absolute;left:0;right:0;top:0;height:50%;background:radial-gradient(120% 100% at 50% 0,rgba(var(--warn-rgb),.9),var(--warn));transform-origin:top;animation:objSandWideT 4s ease-in-out infinite}
+.obj-sand-egg-bot{position:absolute;left:0;right:0;bottom:0;height:50%;background:radial-gradient(120% 120% at 50% 100%,var(--warn),rgba(var(--warn-rgb),.72));clip-path:polygon(50% 20%,100% 100%,0 100%);transform:scaleY(0);transform-origin:bottom;animation:objSandWideB 4s ease-in-out infinite}
+.obj-sand-egg-neck{position:absolute;left:50%;top:50%;width:2px;height:14px;margin:-7px 0 0 -1px;background:var(--warn);animation:objSandClsStream 4s linear infinite}
+.obj-sand-egg-cap{position:absolute;left:22px;right:22px;height:5px;background:var(--panel2);border-radius:3px}
+.obj-sand-egg-cap.obj-sand-egg-ct{top:-2px}
+.obj-sand-egg-cap.obj-sand-egg-cb{bottom:-2px}
+
+/* 5 pouring sand pile: spout builds an angled pile that avalanches */
+.obj-sand-pour{position:relative;width:140px;height:120px}
+.obj-sand-pour-spout{position:absolute;left:14px;top:8px;width:34px;height:16px;background:var(--panel2);border:1px solid var(--line);border-radius:3px 8px 3px 3px;transform:rotate(-14deg)}
+.obj-sand-pour-stream{position:absolute;left:44px;top:22px;width:2px;height:70px;background:linear-gradient(180deg,rgba(var(--warn-rgb),.3),var(--warn));transform:rotate(6deg);transform-origin:top;animation:objSandPourStream 2s ease-in-out infinite}
+.obj-sand-pour-pile{position:absolute;left:16px;bottom:8px;width:96px;height:56px;background:linear-gradient(160deg,var(--warn),rgba(var(--warn-rgb),.7));clip-path:polygon(38% 0,100% 100%,0 100%);transform-origin:bottom left;animation:objSandPourPile 4s ease-in-out infinite}
+.obj-sand-pour-base{position:absolute;left:8px;right:8px;bottom:6px;height:4px;border-radius:2px;background:rgba(var(--warn-rgb),.35)}
+@keyframes objSandPourPile{0%{transform:scale(.2,.2)}70%{transform:scale(1,1.06)}74%{transform:scale(1.08,.9)}100%{transform:scale(1,1)}}
+@keyframes objSandPourStream{0%,68%,100%{opacity:1}72%,80%{opacity:.25}}
+
+/* 6 sand clock with percent counter */
+.obj-sand-pctc{position:relative;width:150px;height:120px;display:flex;align-items:center;gap:14px;justify-content:center;animation:objSandPctDrive 4s linear infinite}
+.obj-sand-pctc-hg{position:relative;width:60px;height:104px;flex:none}
+.obj-sand-pctc-b{position:absolute;left:2px;right:2px;height:46px;overflow:hidden;border:1.5px solid var(--muted)}
+.obj-sand-pctc-b.obj-sand-pctc-t{top:4px;border-radius:30px 30px 6px 6px;border-bottom:none}
+.obj-sand-pctc-b.obj-sand-pctc-bt{bottom:4px;border-radius:6px 6px 30px 30px;border-top:none}
+.obj-sand-pctc-ts{position:absolute;left:0;right:0;top:0;height:100%;background:var(--warn);transform-origin:top;transform:scaleY(calc(1 - var(--obj-sand-pct)/100))}
+.obj-sand-pctc-bs{position:absolute;left:0;right:0;bottom:0;height:100%;background:rgba(var(--warn-rgb),.85);clip-path:polygon(50% 35%,100% 100%,0 100%);transform-origin:bottom;transform:scaleY(calc(var(--obj-sand-pct)/100))}
+.obj-sand-pctc-neck{position:absolute;left:50%;top:50px;width:2px;height:8px;margin-left:-1px;background:var(--warn)}
+.obj-sand-pctc-num{font:800 22px ui-sans-serif,system-ui,sans-serif;color:var(--ink);counter-reset:objSandPct var(--obj-sand-pct);min-width:58px}
+.obj-sand-pctc-num::after{content:counter(objSandPct) "%";color:var(--warn)}
+.obj-sand-pctc-lab{display:block;font:500 9px/1.4 ui-monospace,Menlo,monospace;color:var(--muted);letter-spacing:.08em;margin-top:3px}
+@keyframes objSandPctDrive{0%{--obj-sand-pct:0}92%,100%{--obj-sand-pct:100}}
+
+/* 7 flipping hourglass: whole glass rotates 180 to reset */
+.obj-sand-flip{position:relative;width:70px;height:114px;animation:objSandFlipSpin 4s cubic-bezier(.7,0,.3,1) infinite}
+.obj-sand-flip-fr{position:absolute;left:4px;right:4px;height:6px;background:var(--panel2);border-radius:3px}
+.obj-sand-flip-fr.obj-sand-flip-ft{top:0}
+.obj-sand-flip-fr.obj-sand-flip-fb{bottom:0}
+.obj-sand-flip-b{position:absolute;left:0;right:0;height:48px;overflow:hidden}
+.obj-sand-flip-t{top:8px;border:1.5px solid var(--muted);border-bottom:none;clip-path:polygon(0 0,100% 0,55% 100%,45% 100%)}
+.obj-sand-flip-bt{bottom:8px;border:1.5px solid var(--muted);border-top:none;clip-path:polygon(45% 0,55% 0,100% 100%,0 100%)}
+.obj-sand-flip-ts{position:absolute;inset:0;background:var(--warn);clip-path:polygon(0 0,100% 0,55% 100%,45% 100%);transform-origin:top;animation:objSandFlipTop 4s ease-in-out infinite}
+.obj-sand-flip-bs{position:absolute;inset:0;background:rgba(var(--warn-rgb),.85);clip-path:polygon(50% 45%,100% 100%,0 100%);transform:scaleY(0);transform-origin:bottom;animation:objSandFlipBot 4s ease-in-out infinite}
+@keyframes objSandFlipSpin{0%,72%{transform:rotate(0)}86%,100%{transform:rotate(180deg)}}
+@keyframes objSandFlipTop{0%{transform:scaleY(1)}70%,100%{transform:scaleY(.06)}}
+@keyframes objSandFlipBot{0%{transform:scaleY(.06)}70%,100%{transform:scaleY(1)}}
+
+/* 8 twin hourglass race: two drain at different rates */
+.obj-sand-race{position:relative;width:150px;height:118px;display:flex;gap:18px;justify-content:center;align-items:center}
+.obj-sand-race-u{position:relative;width:52px;height:100px}
+.obj-sand-race-b{position:absolute;left:0;right:0;height:42px;overflow:hidden;border:1.5px solid var(--muted)}
+.obj-sand-race-t{top:4px;border-radius:24px 24px 5px 5px;border-bottom:none}
+.obj-sand-race-bt{bottom:4px;border-radius:5px 5px 24px 24px;border-top:none}
+.obj-sand-race-ts{position:absolute;inset:0;transform-origin:top}
+.obj-sand-race-bs{position:absolute;inset:0;clip-path:polygon(50% 40%,100% 100%,0 100%);transform:scaleY(0);transform-origin:bottom}
+.obj-sand-race-u:nth-child(1) .obj-sand-race-ts{background:var(--warn);animation:objSandRaceAt 4s cubic-bezier(.4,0,.6,1) infinite}
+.obj-sand-race-u:nth-child(1) .obj-sand-race-bs{background:rgba(var(--warn-rgb),.85);animation:objSandRaceAb 4s cubic-bezier(.4,0,.6,1) infinite}
+.obj-sand-race-u:nth-child(2) .obj-sand-race-ts{background:var(--info);animation:objSandRaceBt 4s ease-in infinite}
+.obj-sand-race-u:nth-child(2) .obj-sand-race-bs{background:rgba(var(--info-rgb),.85);animation:objSandRaceBb 4s ease-in infinite}
+.obj-sand-race-fr{position:absolute;left:2px;right:2px;height:4px;background:var(--panel2);border-radius:2px}
+.obj-sand-race-fr.obj-sand-race-frt{top:-2px}
+.obj-sand-race-fr.obj-sand-race-frb{bottom:-2px}
+@keyframes objSandRaceAt{0%{transform:scaleY(1)}75%,100%{transform:scaleY(.05)}}
+@keyframes objSandRaceAb{0%{transform:scaleY(.05)}75%,100%{transform:scaleY(1)}}
+@keyframes objSandRaceBt{0%{transform:scaleY(1)}96%,100%{transform:scaleY(.05)}}
+@keyframes objSandRaceBb{0%{transform:scaleY(.05)}96%,100%{transform:scaleY(1)}}
+
+/* 9 sand timer ring: circular arc drains */
+.obj-sand-ring{position:relative;width:112px;height:112px}
+.obj-sand-ring-svg{width:112px;height:112px;transform:rotate(-90deg)}
+.obj-sand-ring-track{fill:none;stroke:var(--line);stroke-width:9}
+.obj-sand-ring-arc{fill:none;stroke:var(--warn);stroke-width:9;stroke-linecap:round;stroke-dasharray:288;animation:objSandRingArc 4s cubic-bezier(.5,0,.5,1) infinite}
+.obj-sand-ring-mid{position:absolute;inset:0;display:grid;place-items:center;font:800 15px ui-sans-serif,system-ui,sans-serif;color:var(--warn);counter-reset:objSandRingP var(--obj-sand-pct);animation:objSandPctDrive 4s linear infinite}
+.obj-sand-ring-mid::after{content:counter(objSandRingP) "%"}
+@keyframes objSandRingArc{0%{stroke-dashoffset:0}92%,100%{stroke-dashoffset:288}}
+
+/* 10 dune drift: wind-blown ridges shifting */
+.obj-sand-dune{background:linear-gradient(180deg,var(--panel),var(--panel2))}
+.obj-sand-dune-l{position:absolute;left:-20%;width:140%;height:60px;background:linear-gradient(180deg,rgba(var(--warn-rgb),.5),rgba(var(--warn-rgb),.15));border-radius:50% 50% 0 0/100% 100% 0 0;animation-name:objSandDune;animation-duration:4s;animation-timing-function:ease-in-out;animation-iteration-count:infinite;animation-delay:var(--d,0s)}
+.obj-sand-dune-l:nth-child(1){bottom:-16px;opacity:.9}
+.obj-sand-dune-l:nth-child(2){bottom:2px;opacity:.7;background:linear-gradient(180deg,rgba(var(--warn-rgb),.4),rgba(var(--warn-rgb),.1))}
+.obj-sand-dune-l:nth-child(3){bottom:22px;opacity:.5;height:44px;background:linear-gradient(180deg,rgba(var(--warn-rgb),.3),transparent)}
+.obj-sand-dune-wind{position:absolute;top:14px;left:-40%;width:60%;height:2px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.4),transparent);animation:objSandDuneWind 4s linear infinite}
+@keyframes objSandDune{0%,100%{transform:translateX(0)}50%{transform:translateX(18px)}}
+@keyframes objSandDuneWind{0%{transform:translateX(0)}100%{transform:translateX(240px)}}
+
+/* 11 sinking in sand: object settles, grains displace */
+.obj-sand-sink{position:relative;width:130px;height:118px}
+.obj-sand-sink-bed{position:absolute;left:0;right:0;bottom:0;height:56px;background:linear-gradient(180deg,var(--warn),rgba(var(--warn-rgb),.7))}
+.obj-sand-sink-obj{position:absolute;left:50%;width:34px;height:34px;margin-left:-17px;border-radius:6px;background:linear-gradient(150deg,var(--info),rgba(var(--info-rgb),.7));box-shadow:0 3px 8px rgba(0,0,0,.4);animation:objSandSinkObj 4s ease-in-out infinite}
+.obj-sand-sink-g{position:absolute;bottom:56px;width:4px;height:4px;border-radius:1px;background:var(--warn);animation-name:objSandSinkG;animation-duration:1.4s;animation-timing-function:ease-out;animation-iteration-count:infinite;animation-delay:var(--d,0s)}
+.obj-sand-sink-line{position:absolute;left:0;right:0;bottom:56px;height:2px;background:rgba(255,255,255,.25)}
+@keyframes objSandSinkObj{0%{bottom:78px}70%,100%{bottom:40px}}
+@keyframes objSandSinkG{0%{transform:translate(0,0);opacity:0}20%{opacity:1}100%{transform:translate(var(--dx,10px),-16px);opacity:0}}
+
+/* 12 sand mandala sweep: bright band lays a pattern */
+.obj-sand-mand{position:relative;width:120px;height:120px;border-radius:50%;overflow:hidden;background:var(--panel2);border:1.5px solid var(--line)}
+.obj-sand-mand-p{position:absolute;inset:0;background:
+  repeating-conic-gradient(from 0deg,rgba(var(--warn-rgb),.55) 0deg 6deg,transparent 6deg 18deg),
+  radial-gradient(circle,transparent 20%,rgba(var(--warn-rgb),.3) 21% 23%,transparent 24% 40%,rgba(var(--warn-rgb),.3) 41% 43%,transparent 44%);
+  clip-path:inset(0 100% 0 0);animation:objSandMandLay 4s ease-in-out infinite}
+.obj-sand-mand-sweep{position:absolute;top:0;bottom:0;width:14px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.5),transparent);animation:objSandMandSweep 4s ease-in-out infinite}
+.obj-sand-mand-core{position:absolute;left:50%;top:50%;width:16px;height:16px;margin:-8px 0 0 -8px;border-radius:50%;background:var(--warn);box-shadow:0 0 10px rgba(var(--warn-rgb),.7)}
+@keyframes objSandMandLay{0%{clip-path:inset(0 100% 0 0)}80%,100%{clip-path:inset(0 0 0 0)}}
+@keyframes objSandMandSweep{0%{left:-14px}80%,100%{left:120px}}
+
+@media (prefers-reduced-motion:reduce){
+  .obj-sand-root *,.obj-sand-root *::before,.obj-sand-root *::after{animation-name:none!important;animation-duration:0s!important}
+  .obj-sand-cls-tsand,.obj-sand-wide-ts,.obj-sand-egg-top,.obj-sand-flip-ts{transform:scaleY(.5)}
+  .obj-sand-cls-bsand,.obj-sand-wide-bs,.obj-sand-egg-bot,.obj-sand-flip-bs{transform:scaleY(.5)}
+  .obj-sand-fall-cone{transform:scaleY(.6)}
+  .obj-sand-pour-pile{transform:scale(1,1)}
+  .obj-sand-race-ts{transform:scaleY(.5)}
+  .obj-sand-race-bs{transform:scaleY(.5)}
+  .obj-sand-ring-arc{stroke-dashoffset:130}
+  .obj-sand-pctc,.obj-sand-ring-mid{--obj-sand-pct:58}
+  .obj-sand-mand-p{clip-path:inset(0 0 0 0)}
+  .obj-sand-sink-obj{bottom:50px}
+}
+</style>
+<div class="gallery">
+
+  <div class="tile is-new" data-ctype="loader" data-interact="auto-play" data-c="warn"><div class="stage">
+    <div class="obj-sand-root"><div class="obj-sand-cls"><span class="obj-sand-cls-fr obj-sand-cls-ft"></span><span class="obj-sand-cls-bulb obj-sand-cls-top"><span class="obj-sand-cls-tsand"></span></span><span class="obj-sand-cls-stream"></span><span class="obj-sand-cls-bulb obj-sand-cls-bot"><span class="obj-sand-cls-bsand"></span></span><span class="obj-sand-cls-fr obj-sand-cls-fb"></span></div><span class="obj-sand-tag">Atlas · timer</span></div>
+  </div><div class="meta"><div class="nm">Classic Hourglass</div><span class="ref">.obj-sand-cls</span><div class="desc">Two triangular bulbs with a stream through the pinch: the top pile shrinks as the bottom cone grows, then it resets. Loading and pending states.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="loader" data-interact="auto-play" data-c="warn"><div class="stage">
+    <div class="obj-sand-root"><div class="obj-sand-wide"><span class="obj-sand-wide-b obj-sand-wide-t"><span class="obj-sand-wide-ts"></span></span><span class="obj-sand-wide-neck"></span><span class="obj-sand-wide-b obj-sand-wide-bt"><span class="obj-sand-wide-bs"></span></span></div><span class="obj-sand-tag">Comet · wait</span></div>
+  </div><div class="meta"><div class="nm">Wide Hourglass</div><span class="ref">.obj-sand-wide</span><div class="desc">A squat hourglass with rounded bulbs drains top to bottom on a gentle loop. A softer, friendlier timer for empty and waiting states.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="loader" data-interact="auto-play" data-c="warn"><div class="stage">
+    <div class="obj-sand-root"><div class="obj-sand-fall"><span class="obj-sand-fall-g" style="--d:0s;--dx:-3px"></span><span class="obj-sand-fall-g" style="--d:.2s;--dx:2px"></span><span class="obj-sand-fall-g" style="--d:.4s;--dx:-1px"></span><span class="obj-sand-fall-g" style="--d:.6s;--dx:3px"></span><span class="obj-sand-fall-g" style="--d:.8s;--dx:-2px"></span><span class="obj-sand-fall-cone"></span><span class="obj-sand-fall-base"></span></div><span class="obj-sand-tag">Ember · fill</span></div>
+  </div><div class="meta"><div class="nm">Falling Stream</div><span class="ref">.obj-sand-fall</span><div class="desc">A close-up of grains streaming down and piling into a cone that grows over the cycle. Progress that fills toward a goal.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="loader" data-interact="auto-play" data-c="warn"><div class="stage">
+    <div class="obj-sand-root"><div class="obj-sand-egg"><span class="obj-sand-egg-cap obj-sand-egg-ct"></span><span class="obj-sand-egg-top"></span><span class="obj-sand-egg-neck"></span><span class="obj-sand-egg-bot"></span><span class="obj-sand-egg-cap obj-sand-egg-cb"></span><span class="obj-sand-egg-body"></span></div><span class="obj-sand-tag">Pixel · brew</span></div>
+  </div><div class="meta"><div class="nm">Egg Timer</div><span class="ref">.obj-sand-egg</span><div class="desc">A rounded kitchen-style timer body drains its sand from the upper half into the lower half. Short countdowns and cook timers.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="loader" data-interact="auto-play" data-c="warn"><div class="stage">
+    <div class="obj-sand-root"><div class="obj-sand-pour"><span class="obj-sand-pour-spout"></span><span class="obj-sand-pour-stream"></span><span class="obj-sand-pour-pile"></span><span class="obj-sand-pour-base"></span></div><span class="obj-sand-tag">Nova · pour</span></div>
+  </div><div class="meta"><div class="nm">Pouring Pile</div><span class="ref">.obj-sand-pour</span><div class="desc">Sand pours from a tilted spout and builds an angled heap that settles and briefly avalanches. A playful accumulation loop.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="loader" data-interact="auto-play" data-c="warn"><div class="stage">
+    <div class="obj-sand-root"><div class="obj-sand-pctc"><div class="obj-sand-pctc-hg"><span class="obj-sand-pctc-b obj-sand-pctc-t"><span class="obj-sand-pctc-ts"></span></span><span class="obj-sand-pctc-neck"></span><span class="obj-sand-pctc-b obj-sand-pctc-bt"><span class="obj-sand-pctc-bs"></span></span></div><div class="obj-sand-pctc-num"><span class="obj-sand-pctc-lab">fallen</span></div></div><span class="obj-sand-tag">Atlas · 0 to 100</span></div>
+  </div><div class="meta"><div class="nm">Percent Clock</div><span class="ref">.obj-sand-pctc</span><div class="desc">An hourglass paired with a live 0 to 100 percent readout of how much sand has fallen, counted by a registered property. Progress timers.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="loader" data-interact="auto-play" data-c="warn"><div class="stage">
+    <div class="obj-sand-root"><div class="obj-sand-flip"><span class="obj-sand-flip-fr obj-sand-flip-ft"></span><span class="obj-sand-flip-b obj-sand-flip-t"><span class="obj-sand-flip-ts"></span></span><span class="obj-sand-flip-b obj-sand-flip-bt"><span class="obj-sand-flip-bs"></span></span><span class="obj-sand-flip-fr obj-sand-flip-fb"></span></div><span class="obj-sand-tag">Comet · flip</span></div>
+  </div><div class="meta"><div class="nm">Flipping Hourglass</div><span class="ref">.obj-sand-flip</span><div class="desc">The sand drains, then the whole glass rotates 180 degrees to reset and start again. A self-restarting timer motif.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="loader" data-interact="auto-play" data-c="info"><div class="stage">
+    <div class="obj-sand-root"><div class="obj-sand-race"><div class="obj-sand-race-u"><span class="obj-sand-race-fr obj-sand-race-frt"></span><span class="obj-sand-race-b obj-sand-race-t"><span class="obj-sand-race-ts"></span></span><span class="obj-sand-race-b obj-sand-race-bt"><span class="obj-sand-race-bs"></span></span><span class="obj-sand-race-fr obj-sand-race-frb"></span></div><div class="obj-sand-race-u"><span class="obj-sand-race-fr obj-sand-race-frt"></span><span class="obj-sand-race-b obj-sand-race-t"><span class="obj-sand-race-ts"></span></span><span class="obj-sand-race-b obj-sand-race-bt"><span class="obj-sand-race-bs"></span></span><span class="obj-sand-race-fr obj-sand-race-frb"></span></div></div><span class="obj-sand-tag">Atlas vs Comet</span></div>
+  </div><div class="meta"><div class="nm">Twin Race</div><span class="ref">.obj-sand-race</span><div class="desc">Two hourglasses drain at different rates so one finishes well before the other. Comparisons, A vs B, and split timers.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="loader" data-interact="auto-play" data-c="warn"><div class="stage">
+    <div class="obj-sand-root"><div class="obj-sand-ring"><svg class="obj-sand-ring-svg" viewBox="0 0 112 112"><circle class="obj-sand-ring-track" cx="56" cy="56" r="46"></circle><circle class="obj-sand-ring-arc" cx="56" cy="56" r="46"></circle></svg><span class="obj-sand-ring-mid"></span></div><span class="obj-sand-tag">Ember · ring</span></div>
+  </div><div class="meta"><div class="nm">Timer Ring</div><span class="ref">.obj-sand-ring</span><div class="desc">A circular timer whose sand-coloured arc drains around the dial while a percent count ticks down inside. Countdown widgets.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="loader" data-interact="auto-play" data-c="warn"><div class="stage">
+    <div class="obj-sand-root obj-sand-dune"><span class="obj-sand-dune-l" style="--d:0s"></span><span class="obj-sand-dune-l" style="--d:.6s"></span><span class="obj-sand-dune-l" style="--d:1.2s"></span><span class="obj-sand-dune-wind"></span><span class="obj-sand-tag">Nova · drift</span></div>
+  </div><div class="meta"><div class="nm">Dune Drift</div><span class="ref">.obj-sand-dune</span><div class="desc">Layered wind-blown sand ridges slide back and forth while a gust streaks across the top. A warm ambient backdrop.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="loader" data-interact="auto-play" data-c="info"><div class="stage">
+    <div class="obj-sand-root"><div class="obj-sand-sink"><span class="obj-sand-sink-obj"></span><span class="obj-sand-sink-line"></span><span class="obj-sand-sink-bed"></span><span class="obj-sand-sink-g" style="--d:0s;--dx:-12px"></span><span class="obj-sand-sink-g" style="--d:.5s;--dx:12px"></span><span class="obj-sand-sink-g" style="--d:1s;--dx:-8px"></span></div><span class="obj-sand-tag">Pixel · settle</span></div>
+  </div><div class="meta"><div class="nm">Sinking In Sand</div><span class="ref">.obj-sand-sink</span><div class="desc">A block slowly settles into a sand bed while displaced grains puff outward. A tactile metaphor for saving or archiving.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="loader" data-interact="auto-play" data-c="warn"><div class="stage">
+    <div class="obj-sand-root"><div class="obj-sand-mand"><span class="obj-sand-mand-p"></span><span class="obj-sand-mand-sweep"></span><span class="obj-sand-mand-core"></span></div><span class="obj-sand-tag">Nova · mandala</span></div>
+  </div><div class="meta"><div class="nm">Mandala Sweep</div><span class="ref">.obj-sand-mand</span><div class="desc">A bright band sweeps across a disc and lays down a radial sand pattern behind it. A satisfying build and complete loop.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+</div>
