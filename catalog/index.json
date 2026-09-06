@@ -1,5 +1,5 @@
 {
-  "count": 3333,
+  "count": 3343,
   "effects": [
     {
       "id": "charts-big-metric-count-up",
@@ -1898,8 +1898,9 @@
         "lv",
         "ok",
         "m",
-        "warn",
+        "err",
         "info",
+        "warn",
         "cursor"
       ],
       "params": [],
@@ -19252,9 +19253,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Six outer hexes flip on their edges in a chase around a central hex, which fills from cyan to violet as the count climbs to 100%. A honeycomb progress loader."
     },
     {
@@ -34207,6 +34208,318 @@
       "updatedOn": null,
       "author": "k33bz",
       "description": "A ring expands from the centre and the button tints on hover, the material-style ripple. The loop fires it periodically."
+    },
+    {
+      "id": "input-command-panel",
+      "name": "Command Panel",
+      "gallery": "input",
+      "category": "RETRO SCIFI CONTROL PANELS",
+      "ref": ".in-scf-cmd",
+      "classes": [
+        "in-scf",
+        "in-scf-cmd",
+        "in-scf-cmd-elbow",
+        "in-scf-cmd-nav",
+        "in-scf-pill",
+        "in-scf-b",
+        "in-scf-c",
+        "in-scf-i",
+        "in-scf-w",
+        "in-scf-cmd-body",
+        "in-scf-bar"
+      ],
+      "params": [],
+      "tags": [
+        "input",
+        "animated",
+        "new"
+      ],
+      "componentType": "button",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "The signature swept-elbow header over a column of pill navigation that lights in turn, beside a readout of animated bars. The retro starship-console look, built from tokens so it retints."
+    },
+    {
+      "id": "input-pill-button-bank",
+      "name": "Pill Button Bank",
+      "gallery": "input",
+      "category": "RETRO SCIFI CONTROL PANELS",
+      "ref": ".in-scf-bank",
+      "classes": [
+        "in-scf",
+        "in-scf-bank",
+        "in-scf-row",
+        "in-scf-pill",
+        "in-scf-b",
+        "in-scf-c",
+        "in-scf-i",
+        "in-scf-w",
+        "in-scf-p",
+        "in-scf-n"
+      ],
+      "params": [],
+      "tags": [
+        "input",
+        "animated",
+        "new"
+      ],
+      "componentType": "button",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Two rows of rounded-end console buttons in the six token colours, each brightening in turn. A control-pad surface for a sci-fi UI."
+    },
+    {
+      "id": "input-status-readout",
+      "name": "Status Readout",
+      "gallery": "input",
+      "category": "RETRO SCIFI CONTROL PANELS",
+      "ref": ".in-scf-stat",
+      "classes": [
+        "in-scf",
+        "in-scf-stat",
+        "in-scf-line",
+        "in-scf-dot",
+        "in-scf-lbl",
+        "in-scf-track"
+      ],
+      "params": [],
+      "tags": [
+        "input",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-kpi",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Labelled status rows with pinging indicator lamps and filling level tracks in green, amber and red. A system-status console."
+    },
+    {
+      "id": "input-alert-console",
+      "name": "Alert Console",
+      "gallery": "input",
+      "category": "RETRO SCIFI CONTROL PANELS",
+      "ref": ".in-scf-alert",
+      "classes": [
+        "in-scf",
+        "in-scf-alert",
+        "in-scf-caps",
+        "in-scf-mid"
+      ],
+      "params": [],
+      "tags": [
+        "input",
+        "animated",
+        "new"
+      ],
+      "componentType": "badge",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Red end bars and a centre legend flash in unison, the classic emergency-alert panel. Generic wording, colour from the neg role."
+    },
+    {
+      "id": "input-numeric-keypad",
+      "name": "Numeric Keypad",
+      "gallery": "input",
+      "category": "RETRO SCIFI CONTROL PANELS",
+      "ref": ".in-scf-pad",
+      "classes": [
+        "in-scf",
+        "in-scf-pad"
+      ],
+      "params": [],
+      "tags": [
+        "input",
+        "animated",
+        "new"
+      ],
+      "componentType": "button",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A three by three keypad whose keys light in an access-code sequence. An entry pad for a control surface."
+    },
+    {
+      "id": "input-radial-segment-dial",
+      "name": "Radial Segment Dial",
+      "gallery": "input",
+      "category": "RETRO SCIFI CONTROL PANELS",
+      "ref": ".in-scf-dial",
+      "classes": [
+        "in-scf",
+        "in-scf-dial",
+        "seg",
+        "ptr"
+      ],
+      "params": [],
+      "tags": [
+        "input",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-gauge",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A ring of coloured segments with a pointer sweeping across them, each segment lighting as it passes. A rotary control readout."
+    },
+    {
+      "id": "input-power-distribution",
+      "name": "Power Distribution",
+      "gallery": "input",
+      "category": "RETRO SCIFI CONTROL PANELS",
+      "ref": ".in-scf-eq",
+      "classes": [
+        "in-scf",
+        "in-scf-eq"
+      ],
+      "params": [],
+      "tags": [
+        "input",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-bar",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A row of vertical bars pumping like a level meter, cyan into violet, the power-routing display of a console."
+    },
+    {
+      "id": "input-sensor-sweep",
+      "name": "Sensor Sweep",
+      "gallery": "input",
+      "category": "RETRO SCIFI CONTROL PANELS",
+      "ref": ".in-scf-sensor",
+      "classes": [
+        "in-scf",
+        "in-scf-sensor",
+        "sweep",
+        "blip"
+      ],
+      "params": [],
+      "tags": [
+        "input",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-flow",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A radial grid with a sweeping beam that reveals blips as it passes, the sensor scope of a control panel. Colour from the pos role."
+    },
+    {
+      "id": "input-data-column",
+      "name": "Data Column",
+      "gallery": "input",
+      "category": "RETRO SCIFI CONTROL PANELS",
+      "ref": ".in-scf-data",
+      "classes": [
+        "in-scf",
+        "in-scf-data",
+        "roll"
+      ],
+      "params": [],
+      "tags": [
+        "input",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-kpi",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A monospace readout of system values scrolling upward on a loop, the telemetry feed of a starship console. Fake values only."
+    },
+    {
+      "id": "input-command-strip",
+      "name": "Command Strip",
+      "gallery": "input",
+      "category": "RETRO SCIFI CONTROL PANELS",
+      "ref": ".in-scf-strip",
+      "classes": [
+        "in-scf",
+        "in-scf-strip",
+        "cap",
+        "l",
+        "seg",
+        "r"
+      ],
+      "params": [],
+      "tags": [
+        "input",
+        "animated",
+        "new"
+      ],
+      "componentType": "button",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": ""
     },
     {
       "id": "text-gradient-flow-staple",
