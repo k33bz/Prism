@@ -1,5 +1,5 @@
 {
-  "count": 3277,
+  "count": 3293,
   "effects": [
     {
       "id": "charts-big-metric-count-up",
@@ -1896,10 +1896,10 @@
         "sl",
         "ts",
         "lv",
-        "ok",
-        "m",
         "info",
+        "m",
         "warn",
+        "ok",
         "cursor"
       ],
       "params": [],
@@ -6377,9 +6377,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Nested bubbles size children inside parents and grow in on a loop. Use it for hierarchy where each node is a count."
     },
     {
@@ -6412,9 +6412,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Polygonal cells partition the frame by area, fade in, and a highlight walks between them. Use it for organic part to whole."
     },
     {
@@ -6447,9 +6447,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Layered rectangles draw outward level by level, each row a tier of the tree. Use it to read depth and breadth at once."
     },
     {
@@ -6485,9 +6485,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Rings of arcs fan out from a labelled core with a drill highlight sweeping each tier. Use it for compact deep hierarchy."
     },
     {
@@ -6517,9 +6517,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Hover or wait: one cell zooms to fill the frame and its children appear, then zooms back. Use it to navigate a treemap."
     },
     {
@@ -6548,9 +6548,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Cells resize between last period and this one while their values update. Hover to hold the new state. Use it to show shift."
     },
     {
@@ -6579,9 +6579,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Cell size carries one metric while colour intensity carries a second, with a legend strip. Use it for size against pressure."
     },
     {
@@ -6612,9 +6612,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Each cell holds a small trend line that redraws in place. Use it when a treemap slice also needs its recent trajectory."
     },
     {
@@ -6648,9 +6648,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Parent bars give way to their child bars, which grow into place, then collapse back. Use it to drill a ranked breakdown."
     },
     {
@@ -6681,9 +6681,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Tree links draw from the root, then resolve into a ranked bar list on the right. Use it to turn a cluster into an order."
     },
     {
@@ -6714,9 +6714,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Three sets overlap by proportional area and breathe gently so shared regions read. Use it for membership across groups."
     },
     {
@@ -6743,9 +6743,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A ten by ten dot grid fills left to right to a share, here 63 in 100. Use it to make a percentage feel concrete."
     },
     {
@@ -6780,9 +6780,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Five point responses stack out from a zero line, disagree left and agree right. Use it for survey sentiment per item."
     },
     {
@@ -6813,9 +6813,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A half donut split into zones with a needle that swings to the reading and settles. Use it for a single rate against bands."
     },
     {
@@ -6848,9 +6848,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Concentric rings hold one tree level each and segments light in turn from the core outward. Use it for layered share."
     },
     {
@@ -6880,9 +6880,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "An inner ring draws first, then the outer ring, so a parent breaks into its children. Use it for two level composition."
     },
     {
@@ -6909,10 +6909,595 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
+      "addedOn": "2026-09-05",
+      "updatedOn": null,
+      "author": "k33bz",
+      "description": "Widening layers slide in from the side while each value rolls up into place. Use it for a funnel or a ranked staged total."
+    },
+    {
+      "id": "charts-pipe-cross-section",
+      "name": "Pipe Cross Section",
+      "gallery": "charts",
+      "category": "LIQUID GAUGES & VARIANCE BANDS",
+      "ref": ".chx-lq-pipe-lvl",
+      "classes": [
+        "chx-lq-fig",
+        "chx-lq-pipe-wrap",
+        "chx-lq-svg",
+        "chx-lq-shell",
+        "chx-lq-pipe-lvl",
+        "chx-lq-body2",
+        "chx-lq-w2",
+        "chx-lq-body",
+        "chx-lq-w1",
+        "chx-lq-crest",
+        "chx-lq-menisc",
+        "chx-lq-pipe-pct",
+        "chx-lq-odo-win",
+        "chx-lq-odo"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "charts",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-gauge",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
       "addedOn": null,
       "updatedOn": null,
       "author": null,
-      "description": "Widening layers slide in from the side while each value rolls up into place. Use it for a funnel or a ranked staged total."
+      "description": "A pipe seen end on with a sloshing two layer surface and a percent that counts up as the level rises. Use for a fill or capacity reading."
+    },
+    {
+      "id": "charts-liquid-tank",
+      "name": "Liquid Tank",
+      "gallery": "charts",
+      "category": "LIQUID GAUGES & VARIANCE BANDS",
+      "ref": ".chx-lq-tank-lvl",
+      "classes": [
+        "chx-lq-fig",
+        "chx-lq-svg",
+        "chx-lq-shell",
+        "chx-lq-tank-lvl",
+        "chx-lq-body2",
+        "chx-lq-w2",
+        "chx-lq-body",
+        "chx-lq-w1",
+        "chx-lq-tick",
+        "chx-lq-target",
+        "chx-lq-cap"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "charts",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-gauge",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A rounded tank whose level rises with a wave surface past graduated ticks and a dashed target line. Use for a level against a goal."
+    },
+    {
+      "id": "charts-liquid-ring",
+      "name": "Liquid Ring",
+      "gallery": "charts",
+      "category": "LIQUID GAUGES & VARIANCE BANDS",
+      "ref": ".chx-lq-ring-flow",
+      "classes": [
+        "chx-lq-fig",
+        "chx-lq-svg",
+        "chx-lq-ring-track",
+        "chx-lq-ring-flow",
+        "chx-lq-ring-bub",
+        "chx-lq-bub",
+        "chx-lq-ring-bub2",
+        "chx-lq-val"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "charts",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-gauge",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A torus channel where fluid streams around the loop with bubbles carried along at two speeds. Use for a circulating or throughput reading."
+    },
+    {
+      "id": "charts-liquid-pipe-run",
+      "name": "Liquid Pipe Run",
+      "gallery": "charts",
+      "category": "LIQUID GAUGES & VARIANCE BANDS",
+      "ref": ".chx-lq-run-flow",
+      "classes": [
+        "chx-lq-fig",
+        "chx-lq-svg",
+        "chx-lq-shell",
+        "chx-lq-run-fill",
+        "chx-lq-run-flow",
+        "chx-lq-run-dash",
+        "chx-lq-bub",
+        "chx-lq-valve-h",
+        "chx-lq-cap"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "charts",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-gauge",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A horizontal pipe with fluid streaming left to right past a turning valve, speed reading the value. Use for a flow rate or pipeline stage."
+    },
+    {
+      "id": "charts-liquid-drop-gauge",
+      "name": "Liquid Drop Gauge",
+      "gallery": "charts",
+      "category": "LIQUID GAUGES & VARIANCE BANDS",
+      "ref": ".chx-lq-drop-lvl",
+      "classes": [
+        "chx-lq-fig",
+        "chx-lq-svg",
+        "chx-lq-shell",
+        "chx-lq-drop-lvl",
+        "chx-lq-body2",
+        "chx-lq-w2",
+        "chx-lq-body",
+        "chx-lq-w1",
+        "chx-lq-val",
+        "chx-lq-drop-val"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "charts",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-gauge",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A teardrop vessel filling from the base with a wave surface inside the drop outline. Use for a humidity, moisture or fill reading."
+    },
+    {
+      "id": "charts-liquid-battery",
+      "name": "Liquid Battery",
+      "gallery": "charts",
+      "category": "LIQUID GAUGES & VARIANCE BANDS",
+      "ref": ".chx-lq-cell-lvl",
+      "classes": [
+        "chx-lq-fig",
+        "chx-lq-svg",
+        "chx-lq-shell",
+        "chx-lq-cell-lvl",
+        "chx-lq-body",
+        "chx-lq-w1",
+        "chx-lq-c2",
+        "chx-lq-w2",
+        "chx-lq-c3",
+        "chx-lq-cap"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "charts",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-gauge",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Three cells that flood with fluid one after another in a staged sequence. Use for a battery, capacity or multi stage fill."
+    },
+    {
+      "id": "charts-dual-tank-compare",
+      "name": "Dual Tank Compare",
+      "gallery": "charts",
+      "category": "LIQUID GAUGES & VARIANCE BANDS",
+      "ref": ".chx-lq-da",
+      "classes": [
+        "chx-lq-fig",
+        "chx-lq-svg",
+        "chx-lq-shell",
+        "chx-lq-da",
+        "chx-lq-body2",
+        "chx-lq-w2",
+        "chx-lq-body",
+        "chx-lq-w1",
+        "chx-lq-db",
+        "chx-lq-cap"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "charts",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-gauge",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Two tanks whose levels settle to actual and target so the shortfall shows as the gap. Use to compare a value against its plan."
+    },
+    {
+      "id": "charts-liquid-thermometer",
+      "name": "Liquid Thermometer",
+      "gallery": "charts",
+      "category": "LIQUID GAUGES & VARIANCE BANDS",
+      "ref": ".chx-lq-therm-lvl",
+      "classes": [
+        "chx-lq-fig",
+        "chx-lq-svg",
+        "chx-lq-shell",
+        "chx-lq-therm-bulb",
+        "chx-lq-therm-lvl",
+        "chx-lq-body2",
+        "chx-lq-w2",
+        "chx-lq-body",
+        "chx-lq-w1",
+        "chx-lq-tick",
+        "chx-lq-cap"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "charts",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-gauge",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A bulb and column where the fluid rises with a rippling top surface against a small scale. Use for a temperature or intensity reading."
+    },
+    {
+      "id": "charts-range-area-band",
+      "name": "Range Area Band",
+      "gallery": "charts",
+      "category": "LIQUID GAUGES & VARIANCE BANDS",
+      "ref": ".chx-lq-band",
+      "classes": [
+        "chx-lq-chart",
+        "chx-lq-ax",
+        "chx-lq-band",
+        "chx-lq-line",
+        "chx-lq-lbl"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "charts",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-line",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A shaded min to max band fades in, then a median line draws through the middle. Use to show a spread with its central trend."
+    },
+    {
+      "id": "charts-fan-chart",
+      "name": "Fan Chart",
+      "gallery": "charts",
+      "category": "LIQUID GAUGES & VARIANCE BANDS",
+      "ref": ".chx-lq-fanwrap",
+      "classes": [
+        "chx-lq-chart",
+        "chx-lq-ax",
+        "chx-lq-grid",
+        "chx-lq-fanwrap",
+        "chx-lq-fan3",
+        "chx-lq-fan2",
+        "chx-lq-fan1",
+        "chx-lq-line",
+        "chx-lq-lbl"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "charts",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-line",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A forecast band opens from the present and widens into three confidence tiers over time. Use for a projection with uncertainty."
+    },
+    {
+      "id": "charts-sigma-band-outliers",
+      "name": "Sigma Band Outliers",
+      "gallery": "charts",
+      "category": "LIQUID GAUGES & VARIANCE BANDS",
+      "ref": ".chx-lq-out",
+      "classes": [
+        "chx-lq-chart",
+        "chx-lq-ax",
+        "chx-lq-sig",
+        "chx-lq-mean",
+        "chx-lq-pt",
+        "chx-lq-out",
+        "chx-lq-lbl"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "charts",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-line",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A mean line inside a one sigma band, with points outside the band pulsing red. Use to flag readings beyond normal variation."
+    },
+    {
+      "id": "charts-error-bars-on-columns",
+      "name": "Error Bars On Columns",
+      "gallery": "charts",
+      "category": "LIQUID GAUGES & VARIANCE BANDS",
+      "ref": ".chx-lq-whisk",
+      "classes": [
+        "chx-lq-chart",
+        "chx-lq-ax",
+        "chx-lq-col",
+        "chx-lq-whisk",
+        "chx-lq-lbl"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "charts",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-line",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Columns grow to their value, then whiskers extend above and below to show the margin. Use for measured values with uncertainty."
+    },
+    {
+      "id": "charts-deviation-area",
+      "name": "Deviation Area",
+      "gallery": "charts",
+      "category": "LIQUID GAUGES & VARIANCE BANDS",
+      "ref": ".chx-lq-devpos",
+      "classes": [
+        "chx-lq-chart",
+        "chx-lq-devclip",
+        "chx-lq-ax",
+        "chx-lq-devpos",
+        "chx-lq-devneg",
+        "chx-lq-base",
+        "chx-lq-line",
+        "chx-lq-lbl"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "charts",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-line",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A series wipes in against a baseline, tinting green above and red below the zero line. Use to show gains and shortfalls versus a norm."
+    },
+    {
+      "id": "charts-variance-to-plan",
+      "name": "Variance To Plan",
+      "gallery": "charts",
+      "category": "LIQUID GAUGES & VARIANCE BANDS",
+      "ref": ".chx-lq-vcol",
+      "classes": [
+        "chx-lq-chart",
+        "chx-lq-ax",
+        "chx-lq-over",
+        "chx-lq-vcol",
+        "chx-lq-under",
+        "chx-lq-planline",
+        "chx-lq-strip",
+        "chx-lq-lbl"
+      ],
+      "params": [],
+      "tags": [
+        "charts",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-line",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Actual columns rise against a plan line, coloured over or under, with a running variance strip below. Use for budget or target tracking."
+    },
+    {
+      "id": "charts-bollinger-envelope",
+      "name": "Bollinger Envelope",
+      "gallery": "charts",
+      "category": "LIQUID GAUGES & VARIANCE BANDS",
+      "ref": ".chx-lq-boll",
+      "classes": [
+        "chx-lq-chart",
+        "chx-lq-ax",
+        "chx-lq-boll",
+        "chx-lq-ma",
+        "chx-lq-price",
+        "chx-lq-lbl"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "charts",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-line",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A moving average with upper and lower bands hugging a jittery price line as it draws in. Use for volatility or range tracking."
+    },
+    {
+      "id": "charts-control-limits-band",
+      "name": "Control Limits Band",
+      "gallery": "charts",
+      "category": "LIQUID GAUGES & VARIANCE BANDS",
+      "ref": ".chx-lq-breach",
+      "classes": [
+        "chx-lq-chart",
+        "chx-lq-ax",
+        "chx-lq-cl",
+        "chx-lq-center",
+        "chx-lq-spc",
+        "chx-lq-spcpt",
+        "chx-lq-breach",
+        "chx-lq-lbl"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "charts",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-line",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A centre line between upper and lower control limits, with a point beyond a limit flashing red. Use for process control monitoring."
     },
     {
       "id": "fx-pulse-glow-winner",
@@ -23023,9 +23608,9 @@
         "gate",
         "experts",
         "expert",
-        "on",
         "ed",
         "ew",
+        "on",
         "cap",
         "pr-playbtn"
       ],

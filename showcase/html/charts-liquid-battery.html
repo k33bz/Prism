@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Liquid Battery · Prism</title>
+<!-- Prism showcase sample: charts-liquid-battery (gallery: charts). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.chx-lq-fig { width: 100%; max-width: 300px; height: 150px; display: flex; align-items: center; justify-content: center; gap: 14px; box-sizing: border-box; }
+.chx-lq-svg { display: block; height: 100%; overflow: visible; }
+.chx-lq-body { fill: rgba(var(--c-rgb,var(--accent-rgb)),.34); }
+.chx-lq-shell { fill: rgba(var(--c-rgb,var(--accent-rgb)),.05); stroke: rgba(var(--c-rgb,var(--accent-rgb)),.55); stroke-width: 2; }
+.chx-lq-cap { fill: var(--muted); font: 500 7px ui-sans-serif, system-ui, sans-serif; text-anchor: middle; }
+.chx-lq-w1 { animation-name: chxLqWave; animation-duration: 2.4s; animation-timing-function: linear; animation-iteration-count: infinite; }
+.chx-lq-w2 { animation-name: chxLqWave; animation-duration: 3.6s; animation-timing-function: linear; animation-iteration-count: infinite; }
+.chx-lq-cell-lvl { transform: translateY(0px); animation-name: chxLqCellFill; animation-duration: 4s; animation-timing-function: ease-in-out; animation-iteration-count: infinite; }
+.chx-lq-c2 { animation-delay: 0.5s; }
+.chx-lq-c3 { animation-delay: 1s; }
+@keyframes chxLqWave { 
+  100% { transform: translateX(-40px); }
+}
+@keyframes chxLqCellFill { 
+  0% { transform: translateY(46px); }
+  30% { transform: translateY(4px); }
+  85% { transform: translateY(4px); }
+  100% { transform: translateY(46px); }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="chx-lq-fig"><svg class="chx-lq-svg" viewBox="0 0 150 100"><defs><clipPath id="chxLqClipB1"><rect x="16" y="30" width="34" height="52" rx="5"></rect></clipPath><clipPath id="chxLqClipB2"><rect x="58" y="30" width="34" height="52" rx="5"></rect></clipPath><clipPath id="chxLqClipB3"><rect x="100" y="30" width="34" height="52" rx="5"></rect></clipPath></defs>
+      <rect x="27" y="24" width="12" height="6" rx="2" fill="rgba(var(--c-rgb,var(--accent-rgb)),.55)"></rect><rect x="69" y="24" width="12" height="6" rx="2" fill="rgba(var(--c-rgb,var(--accent-rgb)),.55)"></rect><rect x="111" y="24" width="12" height="6" rx="2" fill="rgba(var(--c-rgb,var(--accent-rgb)),.55)"></rect>
+      <rect class="chx-lq-shell" x="16" y="30" width="34" height="52" rx="5"></rect><rect class="chx-lq-shell" x="58" y="30" width="34" height="52" rx="5"></rect><rect class="chx-lq-shell" x="100" y="30" width="34" height="52" rx="5"></rect>
+      <g clip-path="url(#chxLqClipB1)"><g class="chx-lq-cell-lvl"><path class="chx-lq-body chx-lq-w1" d="M-160 2q10 -4 20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0V160H-160Z"></path></g></g>
+      <g clip-path="url(#chxLqClipB2)"><g class="chx-lq-cell-lvl chx-lq-c2"><path class="chx-lq-body chx-lq-w2" d="M-160 2q10 -4 20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0V160H-160Z"></path></g></g>
+      <g clip-path="url(#chxLqClipB3)"><g class="chx-lq-cell-lvl chx-lq-c3"><path class="chx-lq-body chx-lq-w1" d="M-160 2q10 -4 20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0V160H-160Z"></path></g></g>
+      <text class="chx-lq-cap" x="75" y="96">3 cells charging</text>
+    </svg></div></div></div>
+<div class="meta"><b>Liquid Battery</b> · <code>charts-liquid-battery</code><br>Charts &amp; Metrics · LIQUID GAUGES &amp; VARIANCE BANDS<p>Three cells that flood with fluid one after another in a staged sequence. Use for a battery, capacity or multi stage fill.</p></div>
+
+</body>
+</html>

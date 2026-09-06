@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sigma Band Outliers · Prism</title>
+<!-- Prism showcase sample: charts-sigma-band-outliers (gallery: charts). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.chx-lq-chart { width: 100%; max-width: 300px; height: 150px; display: block; }
+.chx-lq-ax { stroke: var(--line); stroke-width: 1; }
+.chx-lq-lbl { fill: var(--muted); font: 400 8px ui-sans-serif, system-ui, sans-serif; }
+.chx-lq-sig { fill: rgba(var(--c-rgb,var(--accent-rgb)),.18); }
+.chx-lq-mean { stroke: var(--c,var(--accent)); stroke-width: 1.5; stroke-dasharray: 4, 3; }
+.chx-lq-pt { fill: var(--c,var(--accent)); }
+.chx-lq-out { fill: var(--neg); animation-name: chxLqOut; animation-duration: 1.4s; animation-timing-function: ease-in-out; animation-iteration-count: infinite; }
+@keyframes chxLqOut { 
+  0%, 100% { r: 2.5; opacity: 0.6; }
+  50% { r: 5; opacity: 1; }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><svg class="chx-lq-chart" viewBox="0 0 300 150">
+      <line class="chx-lq-ax" x1="30" y1="18" x2="30" y2="126"></line><line class="chx-lq-ax" x1="30" y1="126" x2="286" y2="126"></line>
+      <rect class="chx-lq-sig" x="30" y="56" width="256" height="34"></rect>
+      <line class="chx-lq-mean" x1="30" y1="73" x2="286" y2="73"></line>
+      <circle class="chx-lq-pt" cx="52" cy="66" r="2.5"></circle><circle class="chx-lq-pt" cx="80" cy="78" r="2.5"></circle><circle class="chx-lq-out" cx="108" cy="34"></circle><circle class="chx-lq-pt" cx="136" cy="70" r="2.5"></circle><circle class="chx-lq-pt" cx="164" cy="82" r="2.5"></circle><circle class="chx-lq-pt" cx="192" cy="64" r="2.5"></circle><circle class="chx-lq-out" cx="220" cy="112"></circle><circle class="chx-lq-pt" cx="248" cy="76" r="2.5"></circle><circle class="chx-lq-pt" cx="270" cy="68" r="2.5"></circle>
+      <text class="chx-lq-lbl" x="4" y="76">mean</text><text class="chx-lq-lbl" x="234" y="138">1 sigma</text>
+    </svg></div></div>
+<div class="meta"><b>Sigma Band Outliers</b> · <code>charts-sigma-band-outliers</code><br>Charts &amp; Metrics · LIQUID GAUGES &amp; VARIANCE BANDS<p>A mean line inside a one sigma band, with points outside the band pulsing red. Use to flag readings beyond normal variation.</p></div>
+
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Deviation Area · Prism</title>
+<!-- Prism showcase sample: charts-deviation-area (gallery: charts). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.chx-lq-chart { width: 100%; max-width: 300px; height: 150px; display: block; }
+.chx-lq-ax { stroke: var(--line); stroke-width: 1; }
+.chx-lq-lbl { fill: var(--muted); font: 400 8px ui-sans-serif, system-ui, sans-serif; }
+.chx-lq-line { fill: none; stroke: var(--c,var(--accent)); stroke-width: 2; stroke-dasharray: 320; stroke-dashoffset: 320; animation-name: chxLqDraw; animation-duration: 4s; animation-timing-function: ease-in-out; animation-iteration-count: infinite; }
+.chx-lq-devpos { fill: rgba(var(--pos-rgb),.35); }
+.chx-lq-devneg { fill: rgba(var(--neg-rgb),.35); }
+.chx-lq-devclip { animation-name: chxLqWipe; animation-duration: 4s; animation-timing-function: ease-in-out; animation-iteration-count: infinite; transform-origin: left center; transform: scaleX(0); }
+.chx-lq-base { stroke: var(--muted); stroke-width: 1; }
+@keyframes chxLqDraw { 
+  0% { stroke-dashoffset: 320; }
+  22% { stroke-dashoffset: 320; }
+  70% { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: 0; }
+}
+@keyframes chxLqWipe { 
+  0% { transform: scaleX(0); }
+  60% { transform: scaleX(1); }
+  90% { transform: scaleX(1); }
+  100% { transform: scaleX(0); }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><svg class="chx-lq-chart" viewBox="0 0 300 150"><defs><clipPath id="chxLqClipDev"><rect class="chx-lq-devclip" x="30" y="18" width="256" height="108"></rect></clipPath></defs>
+      <line class="chx-lq-ax" x1="30" y1="18" x2="30" y2="126"></line><line class="chx-lq-ax" x1="30" y1="126" x2="286" y2="126"></line>
+      <g clip-path="url(#chxLqClipDev)">
+        <path class="chx-lq-devpos" d="M30 72 66 72 66 54 102 44 138 60 138 72Z"></path>
+        <path class="chx-lq-devneg" d="M138 72 138 72 174 90 210 100 246 84 270 96 270 72Z"></path>
+        <path class="chx-lq-devpos" d="M246 72 246 84 270 72Z"></path>
+      </g>
+      <line class="chx-lq-base" x1="30" y1="72" x2="286" y2="72"></line>
+      <polyline class="chx-lq-line" points="30 72 66 54 102 44 138 66 174 90 210 100 246 84 270 74"></polyline>
+      <text class="chx-lq-lbl" x="4" y="60">+</text><text class="chx-lq-lbl" x="6" y="90">-</text><text class="chx-lq-lbl" x="150" y="138">baseline</text>
+    </svg></div></div>
+<div class="meta"><b>Deviation Area</b> · <code>charts-deviation-area</code><br>Charts &amp; Metrics · LIQUID GAUGES &amp; VARIANCE BANDS<p>A series wipes in against a baseline, tinting green above and red below the zero line. Use to show gains and shortfalls versus a norm.</p></div>
+
+</body>
+</html>

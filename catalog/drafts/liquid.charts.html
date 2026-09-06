@@ -8,9 +8,8 @@
    variance to plan, bollinger envelope, control limits). Colour contract: liquid body and band
    fills are rgba(var(--c-rgb,var(--accent-rgb)),x) with a lighter white crest; semantic breaches
    use --neg, over/under plan use --pos/--neg, axes use --line. Every ambient loop tells its whole
-   story inside 4s. Registered property --chx-lq-pct (integer) drives the counting label. ===== */
-
-@property --chx-lq-pct{syntax:'<integer>';inherits:false;initial-value:0}
+   story inside 4s. The headline percent counts up via an odometer strip (translateY through a
+   clipped one-row window) so it rises in step with the fill. ===== */
 
 .chx-lq-fig{width:100%;max-width:300px;height:150px;display:flex;align-items:center;justify-content:center;gap:14px;box-sizing:border-box}
 .chx-lq-svg{display:block;height:100%;overflow:visible}
@@ -30,11 +29,13 @@
 
 /* ---- 1. pipe cross-section (headline) ---- */
 .chx-lq-pipe-lvl{transform:translateY(30px);animation-name:chxLqPipeFill;animation-duration:4s;animation-timing-function:ease-in-out;animation-iteration-count:infinite}
-@keyframes chxLqPipeFill{0%{transform:translateY(92px)}45%{transform:translateY(30px)}72%{transform:translateY(30px)}100%{transform:translateY(92px)}}
+@keyframes chxLqPipeFill{0%{transform:translateY(92px)}40%{transform:translateY(30px)}90%{transform:translateY(30px)}100%{transform:translateY(92px)}}
 .chx-lq-pipe-wrap{position:relative;height:100%;display:flex;align-items:center}
-.chx-lq-pipe-pct{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;--chx-lq-pct:78;color:var(--ink);font:700 20px ui-sans-serif,system-ui,sans-serif;animation-name:chxLqCount;animation-duration:4s;animation-timing-function:ease-in-out;animation-iteration-count:infinite}
-.chx-lq-pipe-pct::after{content:counter(chxpct) '%';counter-reset:chxpct var(--chx-lq-pct)}
-@keyframes chxLqCount{0%{--chx-lq-pct:6}45%{--chx-lq-pct:78}72%{--chx-lq-pct:78}100%{--chx-lq-pct:6}}
+.chx-lq-pipe-pct{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:var(--ink);font:700 20px ui-sans-serif,system-ui,sans-serif}
+.chx-lq-odo-win{height:24px;overflow:hidden;line-height:24px}
+.chx-lq-odo{transform:translateY(-144px);animation-name:chxLqOdo;animation-duration:4s;animation-timing-function:ease-in-out;animation-iteration-count:infinite}
+.chx-lq-odo>span{display:block;height:24px;text-align:center}
+@keyframes chxLqOdo{0%{transform:translateY(0)}40%{transform:translateY(-144px)}90%{transform:translateY(-144px)}100%{transform:translateY(0)}}
 .chx-lq-menisc{fill:rgba(255,255,255,.14)}
 
 /* ---- 2. tank ---- */
@@ -162,7 +163,7 @@
         <ellipse class="chx-lq-menisc" cx="60" cy="8" rx="60" ry="10"/>
       </g>
       <circle class="chx-lq-shell" cx="60" cy="60" r="50" fill="none"/>
-    </svg><div class="chx-lq-pipe-pct"></div></div></div>
+    </svg><div class="chx-lq-pipe-pct"><div class="chx-lq-odo-win"><div class="chx-lq-odo"><span>0%</span><span>13%</span><span>26%</span><span>39%</span><span>52%</span><span>65%</span><span>78%</span></div></div></div></div></div>
   </div><div class="meta"><div class="nm">Pipe Cross Section</div><span class="ref">.chx-lq-pipe-lvl</span><div class="desc">A pipe seen end on with a sloshing two layer surface and a percent that counts up as the level rises. Use for a fill or capacity reading.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
   <div class="tile is-new" data-ctype="chart-gauge" data-interact="auto-play" data-c="gauge"><div class="stage">
