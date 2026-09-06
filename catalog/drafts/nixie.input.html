@@ -42,7 +42,7 @@
   </div><div class="meta"><div class="nm">Nixie Digit</div><span class="ref">.in-nix-tube</span><div class="desc">A single glow-discharge tube counting zero through nine, one warm cathode lit at a time with a warm-up flicker and the ghost numerals faint behind it. The vintage nixie readout.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
   <div class="tile is-new" data-ctype="chart-kpi" data-interact="auto-play" data-c="accent"><div class="stage">
-    <div class="in-nix" role="img" aria-label="Nixie clock showing hours minutes seconds">
+    <div class="in-nix in-nix-clock" role="img" aria-label="Nixie clock showing hours minutes seconds">
       <div class="in-nix-tube"><div class="in-nix-num in-nix-cyc"><b style="animation-duration:12s;animation-delay:-1.2s;color:var(--nx);text-shadow:0 0 6px rgba(var(--nx-rgb),.8)">1</b></div><span class="in-nix-base"></span></div>
       <div class="in-nix-tube"><div class="in-nix-num in-nix-cyc"><b style="animation-duration:12s;animation-delay:0s">0</b><b style="animation-duration:12s;animation-delay:-6s">4</b></div><span class="in-nix-base"></span></div>
       <span class="in-nix-colon">:</span>
@@ -51,16 +51,16 @@
       <span class="in-nix-colon" style="animation-duration:1s">:</span>
       <div class="in-nix-tube"><div class="in-nix-num in-nix-cyc"><b style="animation-duration:.6s;animation-delay:0s">0</b><b style="animation-duration:.6s;animation-delay:-.06s">1</b><b style="animation-duration:.6s;animation-delay:-.12s">2</b><b style="animation-duration:.6s;animation-delay:-.18s">3</b><b style="animation-duration:.6s;animation-delay:-.24s">4</b><b style="animation-duration:.6s;animation-delay:-.3s">5</b><b style="animation-duration:.6s;animation-delay:-.36s">6</b><b style="animation-duration:.6s;animation-delay:-.42s">7</b><b style="animation-duration:.6s;animation-delay:-.48s">8</b><b style="animation-duration:.6s;animation-delay:-.54s">9</b></div><span class="in-nix-base"></span></div>
     </div>
-  </div><div class="meta"><div class="nm">Nixie Clock</div><span class="ref">.in-nix (clock)</span><div class="desc">Six tubes showing hours, minutes and seconds with glowing colon separators; the seconds tube races through its digits while the minutes and hours tick slowly. A nixie desk clock.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+  </div><div class="meta"><div class="nm">Nixie Clock</div><span class="ref">.in-nix-clock</span><div class="desc">Six tubes showing hours, minutes and seconds with glowing colon separators; the seconds tube races through its digits while the minutes and hours tick slowly. A nixie desk clock.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
   <div class="tile is-new" data-ctype="chart-kpi" data-interact="auto-play" data-c="accent"><div class="stage">
-    <div class="in-nix" role="img" aria-label="Nixie counter ticking upward">
+    <div class="in-nix in-nix-counter" role="img" aria-label="Nixie counter ticking upward">
       <div class="in-nix-tube"><div class="in-nix-num in-nix-cyc"><b style="animation-duration:60s;animation-delay:0s;color:var(--nx);text-shadow:0 0 6px rgba(var(--nx-rgb),.8)">1</b></div><span class="in-nix-base"></span></div>
       <div class="in-nix-tube"><div class="in-nix-num in-nix-cyc"><b style="animation-duration:24s;animation-delay:0s">2</b><b style="animation-duration:24s;animation-delay:-12s">8</b></div><span class="in-nix-base"></span></div>
       <div class="in-nix-tube"><div class="in-nix-num in-nix-cyc"><b style="animation-duration:6s;animation-delay:0s">0</b><b style="animation-duration:6s;animation-delay:-3s">4</b></div><span class="in-nix-base"></span></div>
       <div class="in-nix-tube"><div class="in-nix-num in-nix-cyc"><b style="animation-duration:.9s;animation-delay:0s">0</b><b style="animation-duration:.9s;animation-delay:-.09s">1</b><b style="animation-duration:.9s;animation-delay:-.18s">2</b><b style="animation-duration:.9s;animation-delay:-.27s">3</b><b style="animation-duration:.9s;animation-delay:-.36s">4</b><b style="animation-duration:.9s;animation-delay:-.45s">5</b><b style="animation-duration:.9s;animation-delay:-.54s">6</b><b style="animation-duration:.9s;animation-delay:-.63s">7</b><b style="animation-duration:.9s;animation-delay:-.72s">8</b><b style="animation-duration:.9s;animation-delay:-.81s">9</b></div><span class="in-nix-base"></span></div>
     </div>
-  </div><div class="meta"><div class="nm">Nixie Counter</div><span class="ref">.in-nix (counter)</span><div class="desc">A four-tube counter whose last digit spins while the higher tubes carry slowly, an odometer of glowing tubes. Fake figures only.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+  </div><div class="meta"><div class="nm">Nixie Counter</div><span class="ref">.in-nix-counter</span><div class="desc">A four-tube counter whose last digit spins while the higher tubes carry slowly, an odometer of glowing tubes. Fake figures only.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
   <div class="tile is-new" data-ctype="input-number" data-interact="auto-play" data-c="accent"><div class="stage">
     <div class="in-nix in-nix-step" role="img" aria-label="Nixie stepper control with up and down buttons">
@@ -70,28 +70,28 @@
   </div><div class="meta"><div class="nm">Nixie Stepper</div><span class="ref">.in-nix-step</span><div class="desc">A tube flanked by up and down buttons; the up button pulses as the digit steps upward on the idle loop. A retro numeric input control. Wire the buttons to set the lit cathode.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
   <div class="tile is-new" data-ctype="chart-gauge" data-interact="auto-play" data-c="accent"><div class="stage">
-    <div class="in-nix" role="img" aria-label="Nixie percentage readout climbing">
+    <div class="in-nix in-nix-percent" role="img" aria-label="Nixie percentage readout climbing">
       <div class="in-nix-tube"><div class="in-nix-num in-nix-cyc"><b style="animation-duration:8s;animation-delay:0s">0</b><b style="animation-duration:8s;animation-delay:-4s">1</b></div><span class="in-nix-base"></span></div>
       <div class="in-nix-tube"><div class="in-nix-num in-nix-cyc"><b style="animation-duration:.8s;animation-delay:0s">0</b><b style="animation-duration:.8s;animation-delay:-.08s">1</b><b style="animation-duration:.8s;animation-delay:-.16s">2</b><b style="animation-duration:.8s;animation-delay:-.24s">3</b><b style="animation-duration:.8s;animation-delay:-.32s">4</b><b style="animation-duration:.8s;animation-delay:-.4s">5</b><b style="animation-duration:.8s;animation-delay:-.48s">6</b><b style="animation-duration:.8s;animation-delay:-.56s">7</b><b style="animation-duration:.8s;animation-delay:-.64s">8</b><b style="animation-duration:.8s;animation-delay:-.72s">9</b></div><span class="in-nix-base"></span></div>
       <div class="in-nix-tube"><div class="in-nix-num"><b style="color:var(--nx);text-shadow:0 0 6px rgba(var(--nx-rgb),.9);font-size:20px">%</b></div><span class="in-nix-base"></span></div>
     </div>
-  </div><div class="meta"><div class="nm">Nixie Percent</div><span class="ref">.in-nix (percent)</span><div class="desc">Two digit tubes and a fixed percent-symbol tube; the ones digit races while the tens climbs, a glowing progress readout. Symbol tube stays lit like an IN-15.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+  </div><div class="meta"><div class="nm">Nixie Percent</div><span class="ref">.in-nix-percent</span><div class="desc">Two digit tubes and a fixed percent-symbol tube; the ones digit races while the tens climbs, a glowing progress readout. Symbol tube stays lit like an IN-15.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
   <div class="tile is-new" data-ctype="chart-kpi" data-interact="auto-play" data-c="warn"><div class="stage">
-    <div class="in-nix" role="img" aria-label="Nixie voltmeter with a decimal point">
+    <div class="in-nix in-nix-meter" role="img" aria-label="Nixie voltmeter with a decimal point">
       <div class="in-nix-tube"><div class="in-nix-num in-nix-cyc"><b style="animation-duration:10s;animation-delay:0s;color:var(--nx);text-shadow:0 0 6px rgba(var(--nx-rgb),.8)">2</b></div><span class="in-nix-base"></span></div>
       <div class="in-nix-tube"><div class="in-nix-num in-nix-flick"><b style="animation-duration:1.6s;animation-delay:0s">1</b><b style="animation-duration:1.6s;animation-delay:-.4s">2</b><b style="animation-duration:1.6s;animation-delay:-.8s">3</b><b style="animation-duration:1.6s;animation-delay:-1.2s">4</b></div><span class="in-nix-base"></span></div>
       <span class="in-nix-colon" style="font-size:16px;animation:none;align-self:flex-end;padding-bottom:6px">.</span>
       <div class="in-nix-tube"><div class="in-nix-num in-nix-flick"><b style="animation-duration:.7s;animation-delay:0s">4</b><b style="animation-duration:.7s;animation-delay:-.23s">7</b><b style="animation-duration:.7s;animation-delay:-.46s">9</b></div><span class="in-nix-base"></span></div>
       <div class="in-nix-tube"><div class="in-nix-num"><b style="color:var(--nx);text-shadow:0 0 6px rgba(var(--nx-rgb),.9);font-size:20px">V</b></div><span class="in-nix-base"></span></div>
     </div>
-  </div><div class="meta"><div class="nm">Nixie Voltmeter</div><span class="ref">.in-nix (meter)</span><div class="desc">A four-tube reading with a decimal point and a unit tube, the last digits flickering like a live measurement. Colour from the warn role for a lab-instrument feel.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+  </div><div class="meta"><div class="nm">Nixie Voltmeter</div><span class="ref">.in-nix-meter</span><div class="desc">A four-tube reading with a decimal point and a unit tube, the last digits flickering like a live measurement. Colour from the warn role for a lab-instrument feel.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
   <div class="tile is-new" data-ctype="chart-kpi" data-interact="auto-play" data-c="accent"><div class="stage">
-    <div class="in-nix" role="img" aria-label="Nixie symbol tube cycling symbols">
+    <div class="in-nix in-nix-symbol" role="img" aria-label="Nixie symbol tube cycling symbols">
       <div class="in-nix-tube" style="width:40px"><div class="in-nix-num in-nix-cyc"><b style="animation-duration:5s;animation-delay:0s;font-size:22px">+</b><b style="animation-duration:5s;animation-delay:-.5s;font-size:22px">&minus;</b><b style="animation-duration:5s;animation-delay:-1s;font-size:20px">%</b><b style="animation-duration:5s;animation-delay:-1.5s;font-size:20px">&micro;</b><b style="animation-duration:5s;animation-delay:-2s;font-size:22px">&pi;</b><b style="animation-duration:5s;animation-delay:-2.5s;font-size:20px">&Omega;</b><b style="animation-duration:5s;animation-delay:-3s;font-size:22px">&deg;</b><b style="animation-duration:5s;animation-delay:-3.5s;font-size:22px">&times;</b><b style="animation-duration:5s;animation-delay:-4s;font-size:22px">&divide;</b><b style="animation-duration:5s;animation-delay:-4.5s;font-size:22px">=</b></div><span class="in-nix-base"></span></div>
     </div>
-  </div><div class="meta"><div class="nm">Nixie Symbol Tube</div><span class="ref">.in-nix (symbol)</span><div class="desc">A wide symbol tube cycling through plus, minus, percent, micro, pi, ohm and more, the way the old IN-15 symbol nixies worked. One symbol lit at a time.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+  </div><div class="meta"><div class="nm">Nixie Symbol Tube</div><span class="ref">.in-nix-symbol</span><div class="desc">A wide symbol tube cycling through plus, minus, percent, micro, pi, ohm and more, the way the old IN-15 symbol nixies worked. One symbol lit at a time.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
   <div class="tile is-new" data-ctype="loader" data-interact="auto-play" data-c="accent"><div class="stage">
     <div class="in-nix" role="img" aria-label="Nixie loading spinner cycling digits fast">
