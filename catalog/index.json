@@ -1,5 +1,5 @@
 {
-  "count": 3356,
+  "count": 3382,
   "effects": [
     {
       "id": "charts-big-metric-count-up",
@@ -1896,10 +1896,10 @@
         "sl",
         "ts",
         "lv",
-        "err",
-        "m",
         "info",
+        "m",
         "warn",
+        "err",
         "ok",
         "cursor"
       ],
@@ -19287,9 +19287,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "The hex map, but each outer hex flips on the edge that touches the central hex, so the ring rolls around it almost like a wheel while the centre fills to 100%."
     },
     {
@@ -23903,9 +23903,9 @@
         "gate",
         "experts",
         "expert",
-        "on",
         "ed",
         "ew",
+        "on",
         "cap",
         "pr-playbtn"
       ],
@@ -30939,9 +30939,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Two triangular bulbs with a stream through the pinch: the top pile shrinks as the bottom cone grows, then it resets. Loading and pending states."
     },
     {
@@ -30974,9 +30974,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A squat hourglass with rounded bulbs drains top to bottom on a gentle loop. A softer, friendlier timer for empty and waiting states."
     },
     {
@@ -31006,9 +31006,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A close-up of grains streaming down and piling into a cone that grows over the cycle. Progress that fills toward a goal."
     },
     {
@@ -31042,9 +31042,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A rounded kitchen-style timer body drains its sand from the upper half into the lower half. Short countdowns and cook timers."
     },
     {
@@ -31075,9 +31075,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Sand pours from a tilted spout and builds an angled heap that settles and briefly avalanches. A playful accumulation loop."
     },
     {
@@ -31113,9 +31113,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "An hourglass paired with a live 0 to 100 percent readout of how much sand has fallen, counted by a registered property. Progress timers."
     },
     {
@@ -31150,9 +31150,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "The sand drains, then the whole glass rotates 180 degrees to reset and start again. A self-restarting timer motif."
     },
     {
@@ -31188,9 +31188,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Two hourglasses drain at different rates so one finishes well before the other. Comparisons, A vs B, and split timers."
     },
     {
@@ -31221,9 +31221,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A circular timer whose sand-coloured arc drains around the dial while a percent count ticks down inside. Countdown widgets."
     },
     {
@@ -31252,9 +31252,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Layered wind-blown sand ridges slide back and forth while a gust streaks across the top. A warm ambient backdrop."
     },
     {
@@ -31285,9 +31285,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A block slowly settles into a sand bed while displaced grains puff outward. A tactile metaphor for saving or archiving."
     },
     {
@@ -31317,10 +31317,457 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
+      "addedOn": "2026-09-05",
+      "updatedOn": null,
+      "author": "k33bz",
+      "description": "A bright band sweeps across a disc and lays down a radial sand pattern behind it. A satisfying build and complete loop."
+    },
+    {
+      "id": "objects-classic-lava-lamp",
+      "name": "Classic Lava Lamp",
+      "gallery": "objects",
+      "category": "LAVA LAMPS & FLUID",
+      "ref": ".amb-lava-root",
+      "classes": [
+        "amb-lava-root",
+        "amb-lava-svg",
+        "amb-lava-lampA",
+        "amb-lava-lampB",
+        "amb-lava-cap",
+        "amb-lava-b",
+        "amb-lava-clsc-b",
+        "amb-lava-tag"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "objects",
+        "background",
+        "ambient",
+        "behind-content",
+        "animated",
+        "new"
+      ],
+      "componentType": "object-backdrop",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": true,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
       "addedOn": null,
       "updatedOn": null,
       "author": null,
-      "description": "A bright band sweeps across a disc and lays down a radial sand pattern behind it. A satisfying build and complete loop."
+      "description": "Fat blobs peel off a molten base and drift slowly up a tapered vessel, merging through a gooey filter. Retro hero and loading backdrops."
+    },
+    {
+      "id": "objects-fast-plasma-lamp",
+      "name": "Fast Plasma Lamp",
+      "gallery": "objects",
+      "category": "LAVA LAMPS & FLUID",
+      "ref": ".amb-lava-plsm-b",
+      "classes": [
+        "amb-lava-root",
+        "amb-lava-svg",
+        "amb-lava-lampA",
+        "amb-lava-lampC",
+        "amb-lava-b",
+        "amb-lava-plsm-b",
+        "amb-lava-tag"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "objects",
+        "background",
+        "ambient",
+        "behind-content",
+        "animated",
+        "new"
+      ],
+      "componentType": "object-backdrop",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": true,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A denser swarm of small blobs churns up the tube on a two second cycle for a livelier, energetic plasma feel. Active or busy states."
+    },
+    {
+      "id": "objects-two-tone-lava",
+      "name": "Two-Tone Lava",
+      "gallery": "objects",
+      "category": "LAVA LAMPS & FLUID",
+      "ref": ".amb-lava-two-b",
+      "classes": [
+        "amb-lava-root",
+        "amb-lava-svg",
+        "amb-lava-lampA",
+        "amb-lava-lampB",
+        "amb-lava-b",
+        "amb-lava-two-b",
+        "amb-lava-bc",
+        "amb-lava-tag"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "objects",
+        "background",
+        "ambient",
+        "behind-content",
+        "animated",
+        "new"
+      ],
+      "componentType": "object-backdrop",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": true,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Accent blobs and a second violet role rise together and fuse where they overlap, blending colour through the gooey filter. Brand duo surfaces."
+    },
+    {
+      "id": "objects-blob-field",
+      "name": "Blob Field",
+      "gallery": "objects",
+      "category": "LAVA LAMPS & FLUID",
+      "ref": ".amb-lava-fld-b",
+      "classes": [
+        "amb-lava-root",
+        "amb-lava-svg",
+        "amb-lava-b",
+        "amb-lava-fld-b",
+        "amb-lava-bi",
+        "amb-lava-tag"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "objects",
+        "background",
+        "ambient",
+        "behind-content",
+        "animated",
+        "new"
+      ],
+      "componentType": "object-backdrop",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": true,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Large metaballs drift across the whole width and gently merge and part, a soft living wallpaper. Full bleed heroes and empty backgrounds."
+    },
+    {
+      "id": "objects-bubble-column",
+      "name": "Bubble Column",
+      "gallery": "objects",
+      "category": "LAVA LAMPS & FLUID",
+      "ref": ".amb-lava-bub-b",
+      "classes": [
+        "amb-lava-root",
+        "amb-lava-svg",
+        "amb-lava-lampC",
+        "amb-lava-lampA",
+        "amb-lava-glass",
+        "amb-lava-b",
+        "amb-lava-bub-b",
+        "amb-lava-tag"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "objects",
+        "background",
+        "ambient",
+        "behind-content",
+        "animated",
+        "new"
+      ],
+      "componentType": "object-backdrop",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": true,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Small bubbles stream up a slim glass tube, growing and coalescing near the top before they pop. Progress, carbonation and activity cues."
+    },
+    {
+      "id": "objects-wax-drip",
+      "name": "Wax Drip",
+      "gallery": "objects",
+      "category": "LAVA LAMPS & FLUID",
+      "ref": ".amb-lava-drp-b",
+      "classes": [
+        "amb-lava-root",
+        "amb-lava-svg",
+        "amb-lava-cap",
+        "amb-lava-b",
+        "amb-lava-drp-b",
+        "amb-lava-tag"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "objects",
+        "background",
+        "ambient",
+        "behind-content",
+        "animated",
+        "new"
+      ],
+      "componentType": "object-backdrop",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": true,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Blobs swell and stretch from a ceiling of molten wax, then pinch off and fall away. Playful headers, halloween and slime themed surfaces."
+    },
+    {
+      "id": "objects-gooey-orbit",
+      "name": "Gooey Orbit",
+      "gallery": "objects",
+      "category": "LAVA LAMPS & FLUID",
+      "ref": ".amb-lava-orb-g",
+      "classes": [
+        "amb-lava-root",
+        "amb-lava-svg",
+        "amb-lava-b",
+        "amb-lava-orb-g",
+        "amb-lava-bc",
+        "amb-lava-tag"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "objects",
+        "background",
+        "ambient",
+        "behind-content",
+        "animated",
+        "new"
+      ],
+      "componentType": "object-backdrop",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": true,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Blobs circle a central mass and fuse into it as they swing past, then stretch back out. Loaders, spinners and processing indicators."
+    },
+    {
+      "id": "objects-liquid-blob-morph",
+      "name": "Liquid Blob Morph",
+      "gallery": "objects",
+      "category": "LAVA LAMPS & FLUID",
+      "ref": ".amb-lava-mrf-a",
+      "classes": [
+        "amb-lava-root",
+        "amb-lava-svg",
+        "amb-lava-b",
+        "amb-lava-mrf-a",
+        "amb-lava-mrf-b",
+        "amb-lava-tag"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "objects",
+        "background",
+        "ambient",
+        "behind-content",
+        "animated",
+        "new"
+      ],
+      "componentType": "object-backdrop",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": true,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "One rounded mass stretches wide then pinches back to a ball, breathing between two shapes. Logo bugs, mascots and idle chat avatars."
+    },
+    {
+      "id": "objects-rising-heat-plume",
+      "name": "Rising Heat Plume",
+      "gallery": "objects",
+      "category": "LAVA LAMPS & FLUID",
+      "ref": ".amb-lava-plm-b",
+      "classes": [
+        "amb-lava-root",
+        "amb-lava-svg",
+        "amb-lava-lampC",
+        "amb-lava-lampA",
+        "amb-lava-bn",
+        "amb-lava-plm-base",
+        "amb-lava-plm-b",
+        "amb-lava-tag"
+      ],
+      "params": [],
+      "tags": [
+        "objects",
+        "background",
+        "ambient",
+        "behind-content",
+        "animated",
+        "new"
+      ],
+      "componentType": "object-backdrop",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": true,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A pulsing hot base sheds blobs that merge into a column rising and thinning as it climbs and fades. Temperature, energy and load surfaces."
+    },
+    {
+      "id": "objects-mercury-pool",
+      "name": "Mercury Pool",
+      "gallery": "objects",
+      "category": "LAVA LAMPS & FLUID",
+      "ref": ".amb-lava-mrc-pool",
+      "classes": [
+        "amb-lava-root",
+        "amb-lava-svg",
+        "amb-lava-bi",
+        "amb-lava-mrc-pool",
+        "amb-lava-mrc-drop",
+        "amb-lava-tag"
+      ],
+      "params": [],
+      "tags": [
+        "objects",
+        "background",
+        "ambient",
+        "behind-content",
+        "animated",
+        "new"
+      ],
+      "componentType": "object-backdrop",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": true,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A wide reflective pool wobbles at its surface and flicks droplets that arc up and rejoin the mass. Liquid metal and premium footer bands."
+    },
+    {
+      "id": "objects-colour-shift-lamp",
+      "name": "Colour-Shift Lamp",
+      "gallery": "objects",
+      "category": "LAVA LAMPS & FLUID",
+      "ref": ".amb-lava-shf-b",
+      "classes": [
+        "amb-lava-root",
+        "amb-lava-svg",
+        "amb-lava-lampA",
+        "amb-lava-lampB",
+        "amb-lava-shf-b",
+        "amb-lava-tag"
+      ],
+      "params": [],
+      "tags": [
+        "objects",
+        "background",
+        "ambient",
+        "behind-content",
+        "animated",
+        "new"
+      ],
+      "componentType": "object-backdrop",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": true,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Rising blobs cycle through the semantic roles, drifting from accent through green, blue and violet as they climb. Themed or seasonal backdrops."
+    },
+    {
+      "id": "objects-split-and-merge",
+      "name": "Split and Merge",
+      "gallery": "objects",
+      "category": "LAVA LAMPS & FLUID",
+      "ref": ".amb-lava-spl-l",
+      "classes": [
+        "amb-lava-root",
+        "amb-lava-svg",
+        "amb-lava-b",
+        "amb-lava-spl-l",
+        "amb-lava-spl-r",
+        "amb-lava-tag"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "objects",
+        "background",
+        "ambient",
+        "behind-content",
+        "animated",
+        "new"
+      ],
+      "componentType": "object-backdrop",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": true,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Two blobs drift apart into distinct balls then glide back and fuse into one, over and over. Sync, pairing and connection metaphors."
     },
     {
       "id": "input-basic-text-input",
@@ -45035,6 +45482,526 @@
       "updatedOn": null,
       "author": "k33bz",
       "description": "An on-prem datacentre reaches private-subnet EC2 through a VPN Gateway into the VPC, the pattern for hybrid connectivity."
+    },
+    {
+      "id": "arch-spine-leaf-fabric",
+      "name": "Spine Leaf Fabric",
+      "gallery": "arch",
+      "category": "NETWORK FLOW MAPS",
+      "ref": ".arch-net-spine",
+      "classes": [
+        "arch-net-svg",
+        "arch-net-spine",
+        "arch-net-wire",
+        "arch-net-flow",
+        "arch-net-fast",
+        "arch-net-box",
+        "arch-net-gl",
+        "arch-net-lbl",
+        "arch-net-neu"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "arch",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-flow",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A two spine, four leaf datacenter fabric with server rows, packets fanning across every spine to leaf uplink. Use for clos network diagrams."
+    },
+    {
+      "id": "arch-mesh-network-2",
+      "name": "Mesh Network",
+      "gallery": "arch",
+      "category": "NETWORK FLOW MAPS",
+      "ref": ".arch-net-mesh",
+      "classes": [
+        "arch-net-svg",
+        "arch-net-mesh",
+        "arch-net-wire",
+        "arch-net-flow",
+        "arch-net-slow",
+        "arch-net-cir",
+        "arch-net-nm"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "arch",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-flow",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Five fully connected peers with packets hopping edge to edge around the mesh. Use for peer to peer or full mesh overlay diagrams."
+    },
+    {
+      "id": "arch-neural-network-map",
+      "name": "Neural Network Map",
+      "gallery": "arch",
+      "category": "NETWORK FLOW MAPS",
+      "ref": ".arch-net-neural",
+      "classes": [
+        "arch-net-svg",
+        "arch-net-neural",
+        "arch-net-wire",
+        "arch-net-flow",
+        "arch-net-slow",
+        "arch-net-cir",
+        "arch-net-lit",
+        "arch-net-lit4",
+        "arch-net-lbl"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "arch",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-flow",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Three node layers with weighted edges and a signal wave that lights each layer left to right. Use for model or inference flow visuals."
+    },
+    {
+      "id": "arch-quic-multiplexed-streams",
+      "name": "QUIC Multiplexed Streams",
+      "gallery": "arch",
+      "category": "NETWORK FLOW MAPS",
+      "ref": ".arch-net-quic",
+      "classes": [
+        "arch-net-svg",
+        "arch-net-quic",
+        "arch-net-wire",
+        "arch-net-flow",
+        "arch-net-stall",
+        "arch-net-box",
+        "arch-net-lbl",
+        "arch-net-cap"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "arch",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-flow",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "One connection carries four independent streams that keep flowing while a single TCP lane stalls. Use to explain head of line blocking."
+    },
+    {
+      "id": "arch-packet-routing",
+      "name": "Packet Routing",
+      "gallery": "arch",
+      "category": "NETWORK FLOW MAPS",
+      "ref": ".arch-net-route",
+      "classes": [
+        "arch-net-svg",
+        "arch-net-route",
+        "arch-net-wire",
+        "arch-net-r1",
+        "arch-net-r2",
+        "arch-net-hot",
+        "arch-net-cir",
+        "arch-net-dia",
+        "arch-net-nm",
+        "arch-net-cap",
+        "arch-net-lbl"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "arch",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-flow",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A packet crosses a router graph, meets congestion on the top path, then reroutes along the lower path. Use for routing and failover visuals."
+    },
+    {
+      "id": "arch-cdn-edge-map",
+      "name": "CDN Edge Map",
+      "gallery": "arch",
+      "category": "NETWORK FLOW MAPS",
+      "ref": ".arch-net-cdn",
+      "classes": [
+        "arch-net-svg",
+        "arch-net-cdn",
+        "arch-net-wired",
+        "arch-net-wire",
+        "arch-net-flow",
+        "arch-net-fast",
+        "arch-net-lit",
+        "arch-net-box",
+        "arch-net-gl",
+        "arch-net-lbl",
+        "arch-net-cir",
+        "arch-net-nm",
+        "arch-net-cap"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "arch",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-flow",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "An origin plus edge points of presence, with a request routed to the nearest edge and a cache hit glow. Use for content delivery diagrams."
+    },
+    {
+      "id": "arch-bgp-peering",
+      "name": "BGP Peering",
+      "gallery": "arch",
+      "category": "NETWORK FLOW MAPS",
+      "ref": ".arch-net-bgp",
+      "classes": [
+        "arch-net-svg",
+        "arch-net-bgp",
+        "arch-net-wire",
+        "arch-net-flow",
+        "arch-net-box",
+        "arch-net-nm",
+        "arch-net-lbl",
+        "arch-net-cap"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "arch",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-flow",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Three autonomous system clouds exchange route advertisements across bidirectional peering links. Use for interdomain and BGP diagrams."
+    },
+    {
+      "id": "arch-load-balanced-fan-out",
+      "name": "Load Balanced Fan Out",
+      "gallery": "arch",
+      "category": "NETWORK FLOW MAPS",
+      "ref": ".arch-net-lb",
+      "classes": [
+        "arch-net-svg",
+        "arch-net-lb",
+        "arch-net-wire",
+        "arch-net-flow",
+        "arch-net-fast",
+        "arch-net-dia",
+        "arch-net-nm",
+        "arch-net-box",
+        "arch-net-bar",
+        "arch-net-lbl"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "arch",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-flow",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A balancer sprays requests to a server pool with per node throughput bars pulsing. Use for load balancer and autoscaling visuals."
+    },
+    {
+      "id": "arch-pub-sub-fabric",
+      "name": "Pub Sub Fabric",
+      "gallery": "arch",
+      "category": "NETWORK FLOW MAPS",
+      "ref": ".arch-net-pubsub",
+      "classes": [
+        "arch-net-svg",
+        "arch-net-pubsub",
+        "arch-net-wire",
+        "arch-net-flow",
+        "arch-net-cir",
+        "arch-net-lbl",
+        "arch-net-box",
+        "arch-net-gl",
+        "arch-net-nm"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "arch",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-flow",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A broker takes messages from publishers and flows them outward to subscriber groups. Use for event bus and messaging topology diagrams."
+    },
+    {
+      "id": "arch-service-mesh",
+      "name": "Service Mesh",
+      "gallery": "arch",
+      "category": "NETWORK FLOW MAPS",
+      "ref": ".arch-net-svcmesh",
+      "classes": [
+        "arch-net-svg",
+        "arch-net-svcmesh",
+        "arch-net-wired",
+        "arch-net-flow",
+        "arch-net-box",
+        "arch-net-cir",
+        "arch-net-lit",
+        "arch-net-lbl",
+        "arch-net-cap"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "arch",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-flow",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A grid of services with sidecar dots and mutual TLS links pulsing between them. Use for service mesh and zero trust topology diagrams."
+    },
+    {
+      "id": "arch-ring-topology-2",
+      "name": "Ring Topology",
+      "gallery": "arch",
+      "category": "NETWORK FLOW MAPS",
+      "ref": ".arch-net-ring",
+      "classes": [
+        "arch-net-svg",
+        "arch-net-ring",
+        "arch-net-wire",
+        "arch-net-token",
+        "arch-net-cir",
+        "arch-net-lit",
+        "arch-net-lit4",
+        "arch-net-lbl"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "arch",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-flow",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A token circulates a ring of six nodes, lighting each as it passes. Use for token ring, loop and circular bus network visuals."
+    },
+    {
+      "id": "arch-star-topology-2",
+      "name": "Star Topology",
+      "gallery": "arch",
+      "category": "NETWORK FLOW MAPS",
+      "ref": ".arch-net-star",
+      "classes": [
+        "arch-net-svg",
+        "arch-net-star",
+        "arch-net-wire",
+        "arch-net-flow",
+        "arch-net-cir",
+        "arch-net-box",
+        "arch-net-gl",
+        "arch-net-nm"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "arch",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-flow",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A central hub with eight spokes and traffic radiating outward to each leaf node. Use for hub and spoke or central switch diagrams."
+    },
+    {
+      "id": "arch-overlay-underlay",
+      "name": "Overlay Underlay",
+      "gallery": "arch",
+      "category": "NETWORK FLOW MAPS",
+      "ref": ".arch-net-overlay",
+      "classes": [
+        "arch-net-svg",
+        "arch-net-overlay",
+        "arch-net-wire",
+        "arch-net-flow",
+        "arch-net-wired",
+        "arch-net-slow",
+        "arch-net-neu",
+        "arch-net-dia",
+        "arch-net-cap"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "arch",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-flow",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A physical underlay fabric carries a dashed logical tunnel arcing above between two endpoints. Use for VPN, VXLAN and SD WAN diagrams."
+    },
+    {
+      "id": "arch-latency-heat-links",
+      "name": "Latency Heat Links",
+      "gallery": "arch",
+      "category": "NETWORK FLOW MAPS",
+      "ref": ".arch-net-heat",
+      "classes": [
+        "arch-net-svg",
+        "arch-net-heat",
+        "arch-net-wire",
+        "arch-net-flow",
+        "arch-net-r1",
+        "arch-net-hot",
+        "arch-net-r2",
+        "arch-net-cir",
+        "arch-net-nm",
+        "arch-net-cap"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "arch",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-flow",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Edges coloured by latency, with one link heating to red and traffic rerouting to a faster path. Use for SLA and latency aware routing visuals."
     },
     {
       "id": "callouts-note-callout",

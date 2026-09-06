@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Two-Tone Lava · Prism</title>
+<!-- Prism showcase sample: objects-two-tone-lava (gallery: objects). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.amb-lava-root { position: relative; width: 100%; max-width: 300px; height: 150px; border-radius: 10px; overflow: hidden; background: linear-gradient(180deg,var(--bg),var(--panel2)); isolation: isolate; }
+.amb-lava-svg { position: absolute; inset: 0px; width: 100%; height: 100%; display: block; }
+.amb-lava-tag { position: absolute; left: 12px; bottom: 10px; z-index: 6; font: 500 10px / 1 ui-monospace, Menlo, monospace; letter-spacing: 0.05em; color: var(--muted); opacity: 0.85; pointer-events: none; text-shadow: rgba(0, 0, 0, 0.55) 0px 1px 4px; }
+.amb-lava-lampA { stop-color: var(--panel2); }
+.amb-lava-lampB { stop-color: var(--panel); }
+.amb-lava-b { fill: var(--c,var(--accent)); }
+.amb-lava-bc { fill: rgba(var(--crit-rgb),.85); }
+.amb-lava-two-b { transform-box: fill-box; transform-origin: center center; animation-name: ambLavaRise; animation-duration: 4s; animation-timing-function: ease-in-out; animation-iteration-count: infinite; animation-delay: var(--d,0s); }
+@keyframes ambLavaRise { 
+  0% { transform: translateY(6px) scale(0.7); }
+  18% { transform: translateY(-4px) scale(1.05); }
+  52% { transform: translateY(-92px) scale(1.18); }
+  84% { transform: translateY(-4px) scale(1); }
+  100% { transform: translateY(6px) scale(0.7); }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage bg" id="stage"><div class="amb-lava-root">
+      <svg class="amb-lava-svg" viewBox="0 0 300 150" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs>
+        <filter id="ambLavaGoo3" x="-40%" y="-30%" width="180%" height="160%"><feGaussianBlur in="SourceGraphic" stdDeviation="6" result="b"></feGaussianBlur><feColorMatrix in="b" type="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 20 -9"></feColorMatrix></filter>
+        <linearGradient id="ambLavaLamp3" x1="0" y1="0" x2="0" y2="1"><stop class="amb-lava-lampA" offset="0"></stop><stop class="amb-lava-lampB" offset="1"></stop></linearGradient>
+        <clipPath id="ambLavaClip3"><path d="M118,20 L182,20 L188,134 L112,134 Z"></path></clipPath>
+      </defs>
+        <path d="M118,20 L182,20 L188,134 L112,134 Z" fill="url(#ambLavaLamp3)"></path>
+        <g clip-path="url(#ambLavaClip3)"><g filter="url(#ambLavaGoo3)">
+          <circle class="amb-lava-b amb-lava-two-b" cx="142" cy="124" r="15" style="--d:0s"></circle>
+          <circle class="amb-lava-b amb-lava-two-b" cx="140" cy="124" r="12" style="--d:-2s"></circle>
+          <circle class="amb-lava-bc amb-lava-two-b" cx="160" cy="124" r="14" style="--d:-1s"></circle>
+          <circle class="amb-lava-bc amb-lava-two-b" cx="158" cy="124" r="11" style="--d:-3s"></circle>
+        </g></g>
+      </svg>
+      <span class="amb-lava-tag">Comet · blend</span>
+    </div></div></div>
+<div class="meta"><b>Two-Tone Lava</b> · <code>objects-two-tone-lava</code><br>Animated Objects · LAVA LAMPS &amp; FLUID<p>Accent blobs and a second violet role rise together and fuse where they overlap, blending colour through the gooey filter. Brand duo surfaces.</p></div>
+
+</body>
+</html>

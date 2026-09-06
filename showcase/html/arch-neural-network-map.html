@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Neural Network Map · Prism</title>
+<!-- Prism showcase sample: arch-neural-network-map (gallery: arch). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.arch-net-svg { width: 100%; max-width: 300px; height: auto; display: block; }
+.arch-net-cir { fill: rgba(var(--cr,var(--accent-rgb)),.15); stroke: rgba(var(--cr,var(--accent-rgb)),.85); stroke-width: 1; }
+.arch-net-lbl { fill: var(--muted); font-size: 6px; text-anchor: middle; font-family: ui-sans-serif, system-ui, sans-serif; }
+.arch-net-wire { fill: none; stroke: var(--line); stroke-width: 1; }
+.arch-net-flow { fill: none; stroke: var(--c,var(--accent)); stroke-width: 1.7; stroke-linecap: round; stroke-dasharray: 2.5, 12.5; animation-name: archNetFlow; animation-duration: 1s; animation-timing-function: linear; animation-iteration-count: infinite; animation-delay: var(--fd,0s); }
+.arch-net-slow { animation-duration: 1.6s; }
+.arch-net-lit { transform-box: fill-box; transform-origin: center center; animation-name: archNetLit; animation-duration: 3s; animation-timing-function: ease-out; animation-iteration-count: infinite; animation-delay: var(--ld,0s); }
+.arch-net-lit4 { animation-duration: 4s; }
+@keyframes archNetFlow { 
+  100% { stroke-dashoffset: -15; }
+}
+@keyframes archNetLit { 
+  0%, 55%, 100% { opacity: 0; transform: scale(0.5); }
+  16% { opacity: 0.75; transform: scale(1); }
+  40% { opacity: 0; transform: scale(1.6); }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><svg class="arch-net-svg arch-net-neural" viewBox="0 0 300 150" style="--c:var(--info);--cr:var(--info-rgb)" role="img" aria-label="Neural network layers with signal propagation">
+      <g class="arch-net-wire" style="opacity:.5"><path d="M46 35 150 25M46 35 150 58M46 35 150 92M46 35 150 125M46 75 150 25M46 75 150 58M46 75 150 92M46 75 150 125M46 115 150 25M46 115 150 58M46 115 150 92M46 115 150 125"></path></g>
+      <g class="arch-net-wire" style="opacity:.5"><path d="M150 25 254 55M150 25 254 95M150 58 254 55M150 58 254 95M150 92 254 55M150 92 254 95M150 125 254 55M150 125 254 95"></path></g>
+      <path class="arch-net-flow arch-net-slow" style="--fd:0s" d="M46 35 150 58"></path>
+      <path class="arch-net-flow arch-net-slow" style="--fd:.15s" d="M46 75 150 92"></path>
+      <path class="arch-net-flow arch-net-slow" style="--fd:.3s" d="M46 115 150 25"></path>
+      <path class="arch-net-flow arch-net-slow" style="--fd:1.2s" d="M150 58 254 55"></path>
+      <path class="arch-net-flow arch-net-slow" style="--fd:1.4s" d="M150 92 254 95"></path>
+      <g style="--cr:var(--info-rgb)">
+        <circle class="arch-net-cir" cx="46" cy="35" r="7"></circle><circle class="arch-net-cir" cx="46" cy="75" r="7"></circle><circle class="arch-net-cir" cx="46" cy="115" r="7"></circle>
+        <circle class="arch-net-cir" cx="150" cy="25" r="7"></circle><circle class="arch-net-cir" cx="150" cy="58" r="7"></circle><circle class="arch-net-cir" cx="150" cy="92" r="7"></circle><circle class="arch-net-cir" cx="150" cy="125" r="7"></circle>
+        <circle class="arch-net-cir" cx="254" cy="55" r="7"></circle><circle class="arch-net-cir" cx="254" cy="95" r="7"></circle>
+      </g>
+      <g fill="var(--info)">
+        <circle class="arch-net-lit arch-net-lit4" style="--ld:0s" cx="46" cy="35" r="7"></circle><circle class="arch-net-lit arch-net-lit4" style="--ld:0s" cx="46" cy="75" r="7"></circle><circle class="arch-net-lit arch-net-lit4" style="--ld:0s" cx="46" cy="115" r="7"></circle>
+        <circle class="arch-net-lit arch-net-lit4" style="--ld:1.2s" cx="150" cy="25" r="7"></circle><circle class="arch-net-lit arch-net-lit4" style="--ld:1.2s" cx="150" cy="58" r="7"></circle><circle class="arch-net-lit arch-net-lit4" style="--ld:1.2s" cx="150" cy="92" r="7"></circle><circle class="arch-net-lit arch-net-lit4" style="--ld:1.2s" cx="150" cy="125" r="7"></circle>
+        <circle class="arch-net-lit arch-net-lit4" style="--ld:2.4s" cx="254" cy="55" r="7"></circle><circle class="arch-net-lit arch-net-lit4" style="--ld:2.4s" cx="254" cy="95" r="7"></circle>
+      </g>
+      <text class="arch-net-lbl" x="46" y="140">input</text><text class="arch-net-lbl" x="150" y="145">hidden</text><text class="arch-net-lbl" x="254" y="120">output</text>
+    </svg></div></div>
+<div class="meta"><b>Neural Network Map</b> · <code>arch-neural-network-map</code><br>Architecture Diagrams · NETWORK FLOW MAPS<p>Three node layers with weighted edges and a signal wave that lights each layer left to right. Use for model or inference flow visuals.</p></div>
+
+</body>
+</html>

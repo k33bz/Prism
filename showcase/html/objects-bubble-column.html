@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bubble Column · Prism</title>
+<!-- Prism showcase sample: objects-bubble-column (gallery: objects). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.amb-lava-root { position: relative; width: 100%; max-width: 300px; height: 150px; border-radius: 10px; overflow: hidden; background: linear-gradient(180deg,var(--bg),var(--panel2)); isolation: isolate; }
+.amb-lava-svg { position: absolute; inset: 0px; width: 100%; height: 100%; display: block; }
+.amb-lava-tag { position: absolute; left: 12px; bottom: 10px; z-index: 6; font: 500 10px / 1 ui-monospace, Menlo, monospace; letter-spacing: 0.05em; color: var(--muted); opacity: 0.85; pointer-events: none; text-shadow: rgba(0, 0, 0, 0.55) 0px 1px 4px; }
+.amb-lava-lampA { stop-color: var(--panel2); }
+.amb-lava-lampC { stop-color: var(--bg); }
+.amb-lava-b { fill: var(--c,var(--accent)); }
+.amb-lava-glass { fill: rgba(255, 255, 255, 0.05); stroke: rgba(255, 255, 255, 0.08); stroke-width: 1; }
+.amb-lava-bub-b { transform-box: fill-box; transform-origin: center center; animation-name: ambLavaBubble; animation-duration: 4s; animation-timing-function: cubic-bezier(0.4, 0, 0.7, 1); animation-iteration-count: infinite; animation-delay: var(--d,0s); }
+@keyframes ambLavaBubble { 
+  0% { transform: translateY(12px) scale(0.7); opacity: 0; }
+  14% { opacity: 1; }
+  80% { transform: translateY(-104px) scale(1.15); opacity: 1; }
+  100% { transform: translateY(-120px) scale(1.4); opacity: 0; }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage bg" id="stage"><div class="amb-lava-root">
+      <svg class="amb-lava-svg" viewBox="0 0 300 150" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs>
+        <filter id="ambLavaGoo5" x="-40%" y="-30%" width="180%" height="160%"><feGaussianBlur in="SourceGraphic" stdDeviation="5" result="b"></feGaussianBlur><feColorMatrix in="b" type="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 20 -9"></feColorMatrix></filter>
+        <linearGradient id="ambLavaLamp5" x1="0" y1="0" x2="0" y2="1"><stop class="amb-lava-lampC" offset="0"></stop><stop class="amb-lava-lampA" offset="1"></stop></linearGradient>
+      </defs>
+        <rect x="126" y="14" width="48" height="124" rx="10" fill="url(#ambLavaLamp5)"></rect>
+        <rect x="126" y="14" width="48" height="124" rx="10" class="amb-lava-glass"></rect>
+        <g filter="url(#ambLavaGoo5)">
+          <ellipse cx="150" cy="124" rx="20" ry="11" class="amb-lava-b"></ellipse>
+          <circle class="amb-lava-b amb-lava-bub-b" cx="144" cy="122" r="10" style="--d:0s"></circle>
+          <circle class="amb-lava-b amb-lava-bub-b" cx="157" cy="122" r="8" style="--d:-.9s"></circle>
+          <circle class="amb-lava-b amb-lava-bub-b" cx="150" cy="122" r="11" style="--d:-1.8s"></circle>
+          <circle class="amb-lava-b amb-lava-bub-b" cx="146" cy="122" r="7" style="--d:-2.6s"></circle>
+          <circle class="amb-lava-b amb-lava-bub-b" cx="158" cy="122" r="8" style="--d:-3.3s"></circle>
+        </g>
+      </svg>
+      <span class="amb-lava-tag">Pixel · rise</span>
+    </div></div></div>
+<div class="meta"><b>Bubble Column</b> · <code>objects-bubble-column</code><br>Animated Objects · LAVA LAMPS &amp; FLUID<p>Small bubbles stream up a slim glass tube, growing and coalescing near the top before they pop. Progress, carbonation and activity cues.</p></div>
+
+</body>
+</html>
