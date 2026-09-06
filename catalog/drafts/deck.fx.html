@@ -1,0 +1,66 @@
+<h3 class="sec">DECK &amp; HAND</h3>
+<style id="deck-styles">
+/* ===== Deck & hand (k33bz fork). Card-handling animations built from a lightweight face-down
+   card (.dk-c, .dk-c.up for face-up). Each tile is a small stage with a deck/pile/hand and cards
+   that draw, deal, fan or shuffle. Pure CSS, tokens only, dk- prefix, reduced-motion safe. ===== */
+.dk{position:relative;width:100%;max-width:300px;height:150px;margin:0 auto;perspective:760px}
+.dk-c{position:absolute;width:44px;height:62px;border-radius:6px;background:linear-gradient(160deg,var(--panel2),var(--panel));border:1px solid var(--line);box-shadow:0 3px 9px rgba(0,0,0,.5);transform-origin:center;backface-visibility:hidden}
+.dk-c::after{content:"";position:absolute;inset:5px;border-radius:3px;border:1px solid rgba(var(--accent-rgb),.35);background:repeating-linear-gradient(45deg,rgba(var(--info-rgb),.18) 0 3px,transparent 3px 7px)}
+.dk-c.up::after{border-color:rgba(var(--pos-rgb),.45);background:radial-gradient(120% 90% at 50% 25%,rgba(var(--info-rgb),.55),rgba(var(--crit-rgb),.3) 60%,var(--bg))}
+.dk-tag{position:absolute;font:800 7px ui-sans-serif,system-ui,sans-serif;letter-spacing:.12em;color:var(--muted);opacity:.7}
+/* draw from deck (top) */
+.dk-drawtop .dk-draw{animation:dkDrawTop 3.4s ease-in-out infinite}
+@keyframes dkDrawTop{0%,10%{transform:translate(0,0)}26%{transform:translate(0,-30px)}56%,76%{transform:translate(182px,0)}92%,100%{transform:translate(0,0)}}
+/* draw from discard */
+.dk-drawdisc .dk-draw{animation:dkDrawDisc 3.4s ease-in-out infinite}
+@keyframes dkDrawDisc{0%,10%{transform:rotate(-6deg)}26%{transform:translate(0,-28px) rotate(0)}56%,76%{transform:translate(-182px,0) rotate(0)}92%,100%{transform:rotate(-6deg)}}
+/* deal out to seats */
+.dk-deal .dk-d{animation:dkDeal 3.8s ease-in-out infinite;animation-delay:var(--d)}
+@keyframes dkDeal{0%{transform:translate(0,0) rotate(0);opacity:0}5%{opacity:1}28%,82%{transform:translate(var(--tx),var(--ty)) rotate(var(--r));opacity:1}94%,100%{transform:translate(0,0) rotate(0);opacity:0}}
+/* fan a hand */
+.dk-fan .dk-f{transform-origin:50% 155%;animation:dkFan 4s ease-in-out infinite;animation-delay:var(--d)}
+@keyframes dkFan{0%,10%{transform:rotate(0) translateY(0)}45%,76%{transform:rotate(var(--a)) translateY(-4px)}94%,100%{transform:rotate(0) translateY(0)}}
+/* riffle + bridge shuffle */
+.dk-riffle .dk-l{animation:dkRiffL 3.6s ease-in-out infinite;animation-delay:var(--d)}
+.dk-riffle .dk-r{animation:dkRiffR 3.6s ease-in-out infinite;animation-delay:var(--d)}
+@keyframes dkRiffL{0%,12%{transform:translate(0,0) rotate(0)}38%{transform:translate(12px,-15px) rotate(-7deg)}60%,74%{transform:translate(32px,0) rotate(0)}86%{transform:translate(32px,-4px)}92%,100%{transform:translate(0,0)}}
+@keyframes dkRiffR{0%,12%{transform:translate(0,0) rotate(0)}38%{transform:translate(-12px,-15px) rotate(7deg)}60%,74%{transform:translate(-32px,0) rotate(0)}86%{transform:translate(-32px,-4px)}92%,100%{transform:translate(0,0)}}
+/* overhand / side shuffle */
+.dk-overhand .dk-ch{animation:dkOver 3.2s ease-in-out infinite;animation-delay:var(--d)}
+@keyframes dkOver{0%,10%{transform:translate(0,0)}28%{transform:translate(6px,-26px)}52%{transform:translate(-52px,-26px)}72%,100%{transform:translate(-52px,0)}}
+/* table wash */
+.dk-wash .dk-w{animation:dkWash 4.4s ease-in-out infinite;animation-delay:var(--d)}
+@keyframes dkWash{0%,8%{transform:translate(0,0) rotate(0)}30%{transform:translate(var(--tx),var(--ty)) rotate(var(--r))}55%{transform:translate(calc(var(--tx)*.8),var(--ty)) rotate(calc(var(--r) + 14deg))}70%{transform:translate(var(--tx),var(--ty)) rotate(var(--r))}92%,100%{transform:translate(0,0) rotate(0)}}
+@media (prefers-reduced-motion:reduce){.dk-c{animation:none!important}}
+</style>
+<div class="gallery">
+
+  <div class="tile is-new" data-ctype="loader" data-interact="auto-play" data-c="info"><div class="stage">
+    <div class="dk dk-drawtop" role="img" aria-label="Draw from Deck"><span class="dk-tag" style="left:30px;top:112px">DECK</span><span class="dk-c " style="left:30.0px;top:44.0px;"></span><span class="dk-c " style="left:30.7px;top:43.3px;"></span><span class="dk-c " style="left:31.4px;top:42.6px;"></span><span class="dk-c " style="left:32.1px;top:41.9px;"></span><span class="dk-c " style="left:32.8px;top:41.2px;"></span><span class="dk-c dk-draw" style="left:27px;top:41px;"></span></div>
+  </div><div class="meta"><div class="nm">Draw from Deck</div><span class="ref">.dk-drawtop</span><div class="desc">The top card lifts off the deck at left and travels to your hand, so you can see exactly where the draw comes from. The face-down deck stays put.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="loader" data-interact="auto-play" data-c="pos"><div class="stage">
+    <div class="dk dk-drawdisc" role="img" aria-label="Draw from Discard"><span class="dk-tag" style="left:196px;top:114px">DISCARD</span><span class="dk-c up " style="left:205px;top:46px;transform:rotate(-7deg)"></span><span class="dk-c up " style="left:205px;top:46px;transform:rotate(3deg)"></span><span class="dk-c up " style="left:205px;top:46px;transform:rotate(-2deg)"></span><span class="dk-c up " style="left:205px;top:46px;transform:rotate(5deg)"></span><span class="dk-c up " style="left:205px;top:46px;transform:rotate(-4deg)"></span><span class="dk-c up dk-draw" style="left:205px;top:44px;transform:rotate(-6deg)"></span></div>
+  </div><div class="meta"><div class="nm">Draw from Discard</div><span class="ref">.dk-drawdisc</span><div class="desc">A face-up card lifts off the discard pile at right and comes across to your hand, drawing from the discard rather than the deck.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="loader" data-interact="auto-play" data-c="accent"><div class="stage">
+    <div class="dk dk-deal" role="img" aria-label="Deal Out"><span class="dk-tag" style="left:126px;top:0">DECK</span><span class="dk-c " style="left:126.0px;top:10.0px;"></span><span class="dk-c " style="left:126.7px;top:9.3px;"></span><span class="dk-c " style="left:127.4px;top:8.6px;"></span><span class="dk-c " style="left:128.1px;top:7.9px;"></span><span class="dk-c " style="left:128.8px;top:7.2px;"></span><span class="dk-c " style="left:129.5px;top:6.5px;"></span><span class="dk-c dk-d" style="left:126px;top:8px;--tx:-108px;--ty:74px;--r:-8deg;--d:0.00s"></span><span class="dk-c dk-d" style="left:126px;top:8px;--tx:-34px;--ty:92px;--r:-3deg;--d:0.34s"></span><span class="dk-c dk-d" style="left:126px;top:8px;--tx:42px;--ty:92px;--r:3deg;--d:0.68s"></span><span class="dk-c dk-d" style="left:126px;top:8px;--tx:112px;--ty:74px;--r:8deg;--d:1.02s"></span></div>
+  </div><div class="meta"><div class="nm">Deal Out</div><span class="ref">.dk-deal</span><div class="desc">The deck deals a card out to each of four seats in turn, so the source is clear. (Deal In, over in Card Motion, arrives from the upper right; this one shows the deck it leaves.)</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="loader" data-interact="auto-play" data-c="crit"><div class="stage">
+    <div class="dk dk-fan" role="img" aria-label="Fan a Hand"><span class="dk-c up dk-f" style="left:128px;top:74px;--a:-46deg;--d:0.00s"></span><span class="dk-c up dk-f" style="left:128px;top:74px;--a:-23deg;--d:0.05s"></span><span class="dk-c up dk-f" style="left:128px;top:74px;--a:0deg;--d:0.10s"></span><span class="dk-c up dk-f" style="left:128px;top:74px;--a:23deg;--d:0.15s"></span><span class="dk-c up dk-f" style="left:128px;top:74px;--a:46deg;--d:0.20s"></span></div>
+  </div><div class="meta"><div class="nm">Fan a Hand</div><span class="ref">.dk-fan</span><div class="desc">A stack fans out into a neat arc and closes again, the cards spread in your hand.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="loader" data-interact="auto-play" data-c="warn"><div class="stage">
+    <div class="dk dk-riffle" role="img" aria-label="Riffle & Bridge"><span class="dk-c dk-l" style="left:94px;top:44px;--d:0.00s"></span><span class="dk-c dk-l" style="left:94px;top:44px;--d:0.05s"></span><span class="dk-c dk-l" style="left:94px;top:44px;--d:0.10s"></span><span class="dk-c dk-l" style="left:94px;top:44px;--d:0.15s"></span><span class="dk-c dk-l" style="left:94px;top:44px;--d:0.20s"></span><span class="dk-c dk-r" style="left:158px;top:44px;--d:0.00s"></span><span class="dk-c dk-r" style="left:158px;top:44px;--d:0.05s"></span><span class="dk-c dk-r" style="left:158px;top:44px;--d:0.10s"></span><span class="dk-c dk-r" style="left:158px;top:44px;--d:0.15s"></span><span class="dk-c dk-r" style="left:158px;top:44px;--d:0.20s"></span></div>
+  </div><div class="meta"><div class="nm">Riffle & Bridge</div><span class="ref">.dk-riffle</span><div class="desc">Two halves lift, riffle toward each other and settle into one stack with a small bridge, the classic shuffle.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="loader" data-interact="auto-play" data-c="info"><div class="stage">
+    <div class="dk dk-overhand" role="img" aria-label="Overhand Shuffle"><span class="dk-c " style="left:128.0px;top:44.0px;"></span><span class="dk-c " style="left:128.7px;top:43.3px;"></span><span class="dk-c " style="left:129.4px;top:42.6px;"></span><span class="dk-c " style="left:130.1px;top:41.9px;"></span><span class="dk-c " style="left:130.8px;top:41.2px;"></span><span class="dk-c dk-ch" style="left:128px;top:40px;--d:0.00s"></span><span class="dk-c dk-ch" style="left:128px;top:40px;--d:0.08s"></span><span class="dk-c dk-ch" style="left:128px;top:40px;--d:0.16s"></span></div>
+  </div><div class="meta"><div class="nm">Overhand Shuffle</div><span class="ref">.dk-overhand</span><div class="desc">A packet is drawn off the top and dropped to the front over and over, the overhand or side shuffle.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="loader" data-interact="auto-play" data-c="crit"><div class="stage">
+    <div class="dk dk-wash" role="img" aria-label="Table Wash"><span class="dk-c dk-w" style="left:128px;top:44px;--tx:-98px;--ty:-16px;--r:-20deg;--d:0.00s"></span><span class="dk-c dk-w" style="left:128px;top:44px;--tx:-44px;--ty:26px;--r:13deg;--d:0.07s"></span><span class="dk-c dk-w" style="left:128px;top:44px;--tx:28px;--ty:-32px;--r:22deg;--d:0.14s"></span><span class="dk-c dk-w" style="left:128px;top:44px;--tx:86px;--ty:8px;--r:-15deg;--d:0.21s"></span><span class="dk-c dk-w" style="left:128px;top:44px;--tx:-72px;--ty:32px;--r:-26deg;--d:0.28s"></span><span class="dk-c dk-w" style="left:128px;top:44px;--tx:52px;--ty:36px;--r:9deg;--d:0.35s"></span><span class="dk-c dk-w" style="left:128px;top:44px;--tx:4px;--ty:-6px;--r:5deg;--d:0.42s"></span></div>
+  </div><div class="meta"><div class="nm">Table Wash</div><span class="ref">.dk-wash</span><div class="desc">Cards spread flat across the table, swirl, and gather back into a stack, the wash you do before a deal.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+</div>
