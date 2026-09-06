@@ -1,6 +1,6 @@
 {
  "name": "Prism GIF showcase",
- "generated": "2026-09-06T14:27:27.977Z",
+ "generated": "2026-09-06T15:08:48.756Z",
  "source": "Prism.html",
  "browser": {
   "engine": "Firefox (WebDriver BiDi)",
@@ -8,7 +8,7 @@
  },
  "count": 3429,
  "animated": 3172,
- "gifBytes": 90208743,
+ "gifBytes": 90254058,
  "settings": {
   "fps": 10,
   "minSeconds": 1.6,
@@ -7556,11 +7556,11 @@
    "gif": "gif/fx-overhand-shuffle.gif",
    "html": "html/fx-overhand-shuffle.html",
    "animated": true,
-   "duration": 3.2,
-   "frames": 32,
+   "duration": 3.6,
+   "frames": 36,
    "width": 344,
    "height": 175,
-   "bytes": 72551
+   "bytes": 133232
   },
   {
    "id": "fx-table-wash",
@@ -7695,7 +7695,7 @@
    "frames": 40,
    "width": 344,
    "height": 175,
-   "bytes": 23503
+   "bytes": 7829
   },
   {
    "id": "fx-confetti-foil",
@@ -7785,7 +7785,7 @@
    "frames": 40,
    "width": 344,
    "height": 175,
-   "bytes": 8536
+   "bytes": 8844
   },
   {
    "id": "lab-fade-in",

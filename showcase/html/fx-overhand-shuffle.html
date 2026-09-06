@@ -25,18 +25,19 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
 .dk-c { position: absolute; width: 44px; height: 62px; border-radius: 6px; background: linear-gradient(160deg,var(--panel2),var(--panel)); border: 1px solid var(--line); box-shadow: rgba(0, 0, 0, 0.5) 0px 3px 9px; transform-origin: center center; backface-visibility: hidden; }
 .dk-c::after { content: ""; position: absolute; inset: 5px; border-radius: 3px; border: 1px solid rgba(var(--accent-rgb),.35); background: repeating-linear-gradient(45deg,rgba(var(--info-rgb),.18) 0 3px,transparent 3px 7px); }
 .dk-c.up::after { border-color: rgba(var(--pos-rgb),.45); background: radial-gradient(120% 90% at 50% 25%,rgba(var(--info-rgb),.55),rgba(var(--crit-rgb),.3) 60%,var(--bg)); }
-.dk-overhand .dk-ch { animation-duration: 3.2s; animation-timing-function: ease-in-out; animation-iteration-count: infinite; animation-direction: normal; animation-fill-mode: none; animation-play-state: running; animation-name: dkOver; animation-timeline: auto; animation-range: normal; animation-delay: var(--d); }
+.dk-overhand .dk-ch { animation-duration: 3.6s; animation-timing-function: ease-in-out; animation-iteration-count: infinite; animation-direction: normal; animation-fill-mode: none; animation-play-state: running; animation-name: dkOver; animation-timeline: auto; animation-range: normal; animation-delay: var(--d); border-color: rgba(var(--warn-rgb),.55); z-index: 5; box-shadow: rgba(0, 0, 0, 0.6) 0px 5px 13px; }
 @keyframes dkOver { 
-  0%, 10% { transform: translate(0px, 0px); }
-  28% { transform: translate(6px, -26px); }
-  52% { transform: translate(-52px, -26px); }
-  72%, 100% { transform: translate(-52px, 0px); }
+  0%, 8% { transform: translate(0px, 0px) rotate(0deg); }
+  22% { transform: translate(4px, -30px) rotate(-4deg); }
+  46% { transform: translate(-64px, -22px) rotate(-6deg); }
+  62%, 74% { transform: translate(-64px, 4px) rotate(0deg); }
+  100% { transform: translate(0px, 0px) rotate(0deg); }
 }
 </style>
 </head>
 <body>
-<div class="tile"><div class="stage" id="stage"><div class="dk dk-overhand" role="img" aria-label="Overhand Shuffle"><span class="dk-c " style="left:128.0px;top:44.0px;"></span><span class="dk-c " style="left:128.7px;top:43.3px;"></span><span class="dk-c " style="left:129.4px;top:42.6px;"></span><span class="dk-c " style="left:130.1px;top:41.9px;"></span><span class="dk-c " style="left:130.8px;top:41.2px;"></span><span class="dk-c dk-ch" style="left:128px;top:40px;--d:0.00s"></span><span class="dk-c dk-ch" style="left:128px;top:40px;--d:0.08s"></span><span class="dk-c dk-ch" style="left:128px;top:40px;--d:0.16s"></span></div></div></div>
-<div class="meta"><b>Overhand Shuffle</b> · <code>fx-overhand-shuffle</code><br>FX Store · DECK &amp; HAND<p>A packet is drawn off the top and dropped to the front over and over, the overhand or side shuffle.</p></div>
+<div class="tile"><div class="stage" id="stage"><div class="dk dk-overhand" role="img" aria-label="Overhand Shuffle"><span class="dk-c " style="left:86.0px;top:46.0px;"></span><span class="dk-c " style="left:86.7px;top:45.3px;"></span><span class="dk-c " style="left:87.4px;top:44.6px;"></span><span class="dk-c " style="left:150.0px;top:44.0px;"></span><span class="dk-c " style="left:150.7px;top:43.3px;"></span><span class="dk-c " style="left:151.4px;top:42.6px;"></span><span class="dk-c " style="left:152.1px;top:41.9px;"></span><span class="dk-c " style="left:152.8px;top:41.2px;"></span><span class="dk-c dk-ch" style="left:150px;top:40px;--d:0.00s"></span><span class="dk-c dk-ch" style="left:150px;top:40px;--d:0.05s"></span><span class="dk-c dk-ch" style="left:150px;top:40px;--d:0.10s"></span></div></div></div>
+<div class="meta"><b>Overhand Shuffle</b> · <code>fx-overhand-shuffle</code><br>FX Store · DECK &amp; HAND<p>A packet is pulled off the top of the right stack and dropped onto the front of the left stack, over and over, the overhand or side shuffle.</p></div>
 
 </body>
 </html>
