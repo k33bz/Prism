@@ -1,14 +1,14 @@
 {
  "name": "Prism GIF showcase",
- "generated": "2026-09-06T18:55:00.355Z",
+ "generated": "2026-09-06T19:04:01.662Z",
  "source": "Prism.html",
  "browser": {
   "engine": "Firefox (WebDriver BiDi)",
   "version": "155.0.1"
  },
- "count": 3440,
- "animated": 3183,
- "gifBytes": 90039635,
+ "count": 3436,
+ "animated": 3179,
+ "gifBytes": 90005890,
  "settings": {
   "fps": 10,
   "minSeconds": 1.6,
@@ -7353,21 +7353,6 @@
    "bytes": 109789
   },
   {
-   "id": "fx-linear-foil",
-   "name": "Linear Foil",
-   "gallery": "fx",
-   "category": "CARD MOTION & FOIL",
-   "spectrum": null,
-   "gif": "gif/fx-linear-foil.gif",
-   "html": "html/fx-linear-foil.html",
-   "animated": true,
-   "duration": 4,
-   "frames": 40,
-   "width": 344,
-   "height": 175,
-   "bytes": 7769
-  },
-  {
    "id": "fx-reverse-holo",
    "name": "Reverse Holo",
    "gallery": "fx",
@@ -7593,21 +7578,6 @@
    "bytes": 9410
   },
   {
-   "id": "fx-tinsel",
-   "name": "Tinsel",
-   "gallery": "fx",
-   "category": "TCG FOIL STYLES",
-   "spectrum": null,
-   "gif": "gif/fx-tinsel.gif",
-   "html": "html/fx-tinsel.html",
-   "animated": true,
-   "duration": 4,
-   "frames": 40,
-   "width": 344,
-   "height": 175,
-   "bytes": 9303
-  },
-  {
    "id": "fx-water-web",
    "name": "Water Web",
    "gallery": "fx",
@@ -7683,21 +7653,6 @@
    "bytes": 174940
   },
   {
-   "id": "fx-halo-foil",
-   "name": "Halo Foil",
-   "gallery": "fx",
-   "category": "TCG FOIL STYLES",
-   "spectrum": null,
-   "gif": "gif/fx-halo-foil.gif",
-   "html": "html/fx-halo-foil.html",
-   "animated": true,
-   "duration": 4,
-   "frames": 40,
-   "width": 344,
-   "height": 175,
-   "bytes": 7829
-  },
-  {
    "id": "fx-confetti-foil",
    "name": "Confetti Foil",
    "gallery": "fx",
@@ -7771,21 +7726,6 @@
    "width": 344,
    "height": 175,
    "bytes": 7836
-  },
-  {
-   "id": "fx-enchanted",
-   "name": "Enchanted",
-   "gallery": "fx",
-   "category": "TCG FOIL STYLES",
-   "spectrum": null,
-   "gif": "gif/fx-enchanted.gif",
-   "html": "html/fx-enchanted.html",
-   "animated": true,
-   "duration": 4,
-   "frames": 40,
-   "width": 344,
-   "height": 175,
-   "bytes": 8844
   },
   {
    "id": "lab-fade-in",

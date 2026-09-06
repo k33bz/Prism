@@ -46,7 +46,6 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
 .dgm .spin { transform-box: fill-box; transform-origin: center center; animation: 12s linear 0s infinite normal none running dgmSpin; }
 .dgm-state .st { fill: var(--panel2); stroke: var(--line); stroke-width: 1.2; }
 .dgm-state .st.seqst { animation-name: dgmStateOn; animation-duration: calc(var(--n,4)*1.2s); animation-timing-function: ease-in-out; animation-iteration-count: infinite; animation-delay: calc(var(--i,0)*1.2s); }
-.dgm-sankey .band.c { fill: rgba(var(--pos-rgb),.35); }
 @keyframes dgmDraw { 
   0% { stroke-dashoffset: 400; }
   30%, 88% { stroke-dashoffset: 0; }

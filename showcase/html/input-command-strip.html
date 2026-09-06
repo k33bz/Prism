@@ -24,9 +24,9 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
 .in-scf { position: relative; width: 100%; max-width: 300px; height: 150px; border-radius: 12px; overflow: hidden; background: var(--bg); padding: 8px; font: 800 8px ui-sans-serif, system-ui, sans-serif; letter-spacing: 0.1em; color: var(--bg); text-transform: uppercase; }
 .in-scf-dial .seg { fill: none; stroke-width: 12; opacity: 0.3; animation: 3.6s ease-in-out 0s infinite normal none running inScfSeg; }
 .in-scf-strip { display: flex; align-items: center; gap: 0px; height: 100%; justify-content: center; }
-.in-scf-strip .cap { width: 26px; height: 34px; background: var(--accent); }
-.in-scf-strip .cap.l { border-radius: 17px 0px 0px 17px; }
-.in-scf-strip .cap.r { border-radius: 0px 17px 17px 0px; background: var(--crit); }
+.in-scf-strip .in-scf-cap { width: 26px; height: 34px; background: var(--accent); }
+.in-scf-strip .in-scf-cap.l { border-radius: 17px 0px 0px 17px; }
+.in-scf-strip .in-scf-cap.r { border-radius: 0px 17px 17px 0px; background: var(--crit); }
 .in-scf-strip .seg { flex: 1 1 0%; max-width: 180px; display: flex; gap: 4px; padding: 0px 6px; }
 .in-scf-strip .seg b { flex: 1 1 0%; height: 34px; border-radius: 4px; background: var(--panel2); animation: 3s steps(1) 0s infinite normal none running inScfSegLit; }
 .in-scf-strip .seg b:nth-child(1) { animation-delay: 0s; }
@@ -46,11 +46,11 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
 </head>
 <body>
 <div class="tile"><div class="stage" id="stage"><div class="in-scf in-scf-strip" role="img" aria-label="Command strip with elbow end caps and a running highlight">
-      <span class="cap l"></span>
+      <span class="in-scf-cap l"></span>
       <span class="seg"><b></b><b></b><b></b><b></b><b></b></span>
-      <span class="cap r"></span>
+      <span class="in-scf-cap r"></span>
     </div></div></div>
-<div class="meta"><b>Command Strip</b> · <code>input-command-strip</code><br>Input Methods · RETRO SCIFI CONTROL PANELS</div>
+<div class="meta"><b>Command Strip</b> · <code>input-command-strip</code><br>Input Methods · RETRO SCIFI CONTROL PANELS<p>A horizontal bar with rounded elbow end caps and a run of segments that light one after another, the console command rail.</p></div>
 
 </body>
 </html>

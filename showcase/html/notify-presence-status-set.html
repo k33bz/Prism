@@ -67,6 +67,11 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
 .ns-avstack-live .ns-a.ns-st-busy, .ns-avstack-live .ns-a.ns-st-dnd { --ns-st: var(--neg); --ns-st-rgb: var(--neg-rgb); }
 .ns-avstack-live .ns-a.ns-st-ooo { --ns-st: var(--crit); --ns-st-rgb: var(--crit-rgb); }
 .ns-avstack-live .ns-a.ns-st-offline { --ns-st: var(--dim); --ns-st-rgb: var(--dim-rgb,128,128,128); filter: saturate(0.4); }
+.ns-shp.ns-st-away { --ns-st: var(--warn); --ns-st-rgb: var(--warn-rgb); }
+.ns-shp.ns-st-busy, .ns-shp.ns-st-dnd { --ns-st: var(--neg); --ns-st-rgb: var(--neg-rgb); }
+.ns-shp.ns-st-ooo { --ns-st: var(--crit); --ns-st-rgb: var(--crit-rgb); }
+.ns-shp.ns-st-offline { --ns-st: var(--dim); --ns-st-rgb: var(--dim-rgb,128,128,128); }
+.ns-avstack-live.ns-avstack-shapes .ns-shp.ns-st-available { animation: 2.4s ease-in-out 0s infinite normal none running nsShpBreathe; }
 @keyframes nsStCycle { 
   0%, 16.6% { background: var(--pos); box-shadow: none; }
   16.7%, 33.3% { background: var(--warn); box-shadow: none; }
@@ -86,6 +91,10 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
 @keyframes nsRingGlow { 
   0%, 100% { box-shadow: 0 0 0 2px var(--panel),0 0 0 4px var(--ns-st),0 0 8px rgba(var(--ns-st-rgb),.4); }
   50% { box-shadow: 0 0 0 2px var(--panel),0 0 0 4px var(--ns-st),0 0 16px rgba(var(--ns-st-rgb),.8); }
+}
+@keyframes nsShpBreathe { 
+  0%, 100% { filter: drop-shadow(0 0 3px rgba(var(--ns-st-rgb),.45)); }
+  50% { filter: drop-shadow(0 0 9px rgba(var(--ns-st-rgb),.9)); }
 }
 </style>
 </head>

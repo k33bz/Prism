@@ -29,6 +29,7 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
 .lab-ld-hexmeter { position: absolute; inset: 0px; display: grid; place-items: center; z-index: 2; font: 800 12px ui-sans-serif, system-ui, sans-serif; color: var(--ink); counter-reset: labLdHp var(--lab-ld-hp); }
 .lab-ld-hexmeter::after { content: counter(labLdHp) "%"; }
 .lab-ld-hexfilltile { animation: 3.4s ease-in-out 0s infinite normal none running labLdHexFill; }
+.lab-ld-hexorbit .lab-ld-hexo { transform-style: preserve-3d; backface-visibility: hidden; transform-origin: var(--ox) var(--oy); animation-name: labLdHexEdge; animation-duration: 2.8s; animation-timing-function: ease-in-out; animation-iteration-count: infinite; animation-delay: calc(var(--i,0)*.42s); }
 @keyframes labLdHexFlip { 
   0%, 58%, 100% { transform: rotateY(0deg); background: var(--panel2); }
   20%, 40% { transform: rotateY(180deg); background: var(--info); }
@@ -37,6 +38,10 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
   0%, 6% { --lab-ld-hp: 0; }
   84%, 92% { --lab-ld-hp: 100; }
   100% { --lab-ld-hp: 0; }
+}
+@keyframes labLdHexEdge { 
+  0%, 52%, 100% { transform: rotate3d(var(--ax,1),var(--ay,0),0,0deg); background: var(--panel2); }
+  20%, 38% { transform: rotate3d(var(--ax,1),var(--ay,0),0,180deg); background: var(--info); }
 }
 @property --lab-ld-hp { syntax: "<integer>"; inherits: true; initial-value: 0; }
 </style>

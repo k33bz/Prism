@@ -62,6 +62,7 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
 .dgm-fish .cross { stroke: var(--neg); stroke-width: 2.5; stroke-linecap: round; }
 .dgm-tl .dgm-card.fi { animation-name: dgmFade; }
 .dgm-gd .dep.dr { stroke-dasharray: 200; stroke-dashoffset: 200; }
+.dgm-fw text.hd { font-size: 8.5px; letter-spacing: 0.04em; }
 @keyframes dgmDraw { 
   0% { stroke-dashoffset: 400; }
   30%, 88% { stroke-dashoffset: 0; }
@@ -117,7 +118,7 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
 </style>
 </head>
 <body>
-<div class="tile"><div class="stage" id="stage"><svg class="dgm dgm-fish" viewBox="0 0 320 160" aria-label="Healthcare fishbone diagram">
+<div class="tile"><div class="stage" id="stage"><svg class="dgm dgm-fish dgm-fish-clin" viewBox="0 0 320 160" aria-label="Healthcare fishbone diagram">
       <path class="tail dr" style="--i:0" d="M8 66 L22 80 L8 94"></path><path class="spine dr" style="--i:0" d="M22 80 H250"></path>
       <path class="bone dr" style="--i:1" d="M90 80 L56 36"></path><path class="bone dr" style="--i:2" d="M160 80 L126 36"></path><path class="bone dr" style="--i:3" d="M230 80 L196 36"></path>
       <path class="bone dr" style="--i:4" d="M90 80 L56 124"></path><path class="bone dr" style="--i:5" d="M160 80 L126 124"></path><path class="bone dr" style="--i:6" d="M230 80 L196 124"></path>

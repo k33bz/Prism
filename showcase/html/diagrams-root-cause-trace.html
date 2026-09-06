@@ -60,6 +60,7 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
 .dgm-fish .why { fill: rgba(var(--neg-rgb),.18); stroke: var(--neg); stroke-width: 1.2; animation: 4s ease-in-out 0s infinite normal none running dgmWhy; }
 .dgm-fish .pkt { fill: var(--info); animation: 5s linear 0s infinite normal none running dgmPkt; }
 .dgm-fish .cross { stroke: var(--neg); stroke-width: 2.5; stroke-linecap: round; }
+.dgm-fw text.hd { font-size: 8.5px; letter-spacing: 0.04em; }
 @keyframes dgmDraw { 
   0% { stroke-dashoffset: 400; }
   30%, 88% { stroke-dashoffset: 0; }
@@ -115,7 +116,7 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
 </style>
 </head>
 <body>
-<div class="tile"><div class="stage" id="stage"><svg class="dgm dgm-fish" viewBox="0 0 320 160" aria-label="Root cause trace on a fishbone">
+<div class="tile"><div class="stage" id="stage"><svg class="dgm dgm-fish dgm-fish-trace" viewBox="0 0 320 160" aria-label="Root cause trace on a fishbone">
       <path class="tail" d="M8 66 L22 80 L8 94"></path><path class="spine" d="M22 80 H250"></path>
       <path class="bone" d="M90 80 L56 36"></path><path class="bone" d="M160 80 L126 36"></path><path class="bone" d="M230 80 L196 36"></path>
       <path class="bone" d="M90 80 L56 124"></path><path class="bone" d="M160 80 L126 124"></path><path class="bone" d="M230 80 L196 124"></path>

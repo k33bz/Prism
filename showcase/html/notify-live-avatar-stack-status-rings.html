@@ -54,6 +54,13 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
 .ns-avstack-live .ns-more i + i { animation-name: nsLvN3; }
 .ns-lv-cap { margin-top: 12px; font: 600 9.5px ui-monospace, Menlo, monospace; color: var(--dim); letter-spacing: 0.03em; display: flex; gap: 10px; }
 .ns-lv-cap b { color: var(--muted); font-weight: 600; }
+.ns-avstack-live.ns-avstack-shapes .ns-shp { width: 34px; height: 34px; margin-left: -8px; }
+.ns-avstack-live.ns-avstack-shapes .ns-shp:first-child { margin-left: 0px; }
+.ns-avstack-live.ns-avstack-shapes .ns-shp .ns-shp-face { font-size: 10px; }
+.ns-avstack-live.ns-avstack-shapes .ns-shp.ns-st-available { animation: 2.4s ease-in-out 0s infinite normal none running nsShpBreathe; }
+.ns-avstack-live.ns-avstack-shapes .ns-more i { animation-name: none; opacity: 1; }
+.ns-avstack-live.ns-avstack-shapes .ns-more::before { animation-name: none; opacity: 1; background: conic-gradient(var(--warn) 0 50%,var(--dim) 50% 100%); }
+.ns-avstack-live.ns-avstack-shapes .ns-more::after { animation-name: none; opacity: 0; }
 @keyframes nsRingGlow { 
   0%, 100% { box-shadow: 0 0 0 2px var(--panel),0 0 0 4px var(--ns-st),0 0 8px rgba(var(--ns-st-rgb),.4); }
   50% { box-shadow: 0 0 0 2px var(--panel),0 0 0 4px var(--ns-st),0 0 16px rgba(var(--ns-st-rgb),.8); }
@@ -89,6 +96,10 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
   0%, 39% { opacity: 0; }
   40%, 75% { opacity: 1; }
   76%, 100% { opacity: 0; }
+}
+@keyframes nsShpBreathe { 
+  0%, 100% { filter: drop-shadow(0 0 3px rgba(var(--ns-st-rgb),.45)); }
+  50% { filter: drop-shadow(0 0 9px rgba(var(--ns-st-rgb),.9)); }
 }
 </style>
 </head>

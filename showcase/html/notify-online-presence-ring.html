@@ -29,6 +29,36 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
   0% { box-shadow: 0 0 0 0 rgba(var(--cr,63,185,80),.55); }
   70%, 100% { box-shadow: 0 0 0 8px rgba(var(--cr,63,185,80),0); }
 }
+.ns-presence { --ns-st: var(--pos); --ns-st-rgb: var(--pos-rgb); }
+.ns-presence.ns-st-away { --ns-st: var(--warn); --ns-st-rgb: var(--warn-rgb); }
+.ns-presence.ns-st-busy, .ns-presence.ns-st-dnd { --ns-st: var(--neg); --ns-st-rgb: var(--neg-rgb); }
+.ns-presence.ns-st-ooo { --ns-st: var(--crit); --ns-st-rgb: var(--crit-rgb); }
+.ns-presence.ns-st-offline { --ns-st: var(--dim); --ns-st-rgb: var(--dim-rgb,128,128,128); }
+.ns-presence[class*="ns-st-"] .ns-on { background: var(--ns-st); }
+.ns-presence[class*="ns-st-"]:not(.ns-st-available) .ns-on::after { display: none; }
+.ns-presence[class*="ns-st-"] .ns-on::before { content: ""; position: absolute; inset: 0px; border-radius: 50%; }
+.ns-presence.ns-st-away .ns-on::before { inset: 2px; background: radial-gradient(circle at 62% 38%,var(--panel) 0 2.2px,transparent 2.6px),linear-gradient(90deg,transparent 45%,var(--panel) 45% 55%,transparent 55%); opacity: 0.9; }
+.ns-presence.ns-st-dnd .ns-on::before { inset: calc(50% - 1px) 2px; border-radius: 1px; background: var(--panel); }
+.ns-presence.ns-st-ooo .ns-on { background: var(--panel); box-shadow: inset 0 0 0 2.5px var(--ns-st); }
+.ns-presence.ns-st-ooo .ns-on::before { inset: 0px; background: linear-gradient(45deg,transparent 42%,var(--ns-st) 42% 58%,transparent 58%); clip-path: polygon(28% 72%, 72% 28%, 72% 72%); }
+.ns-presence.ns-st-offline .ns-on { background: var(--panel); box-shadow: inset 0 0 0 2px var(--ns-st); }
+.ns-presence.ns-st-live .ns-on { animation: 4.8s steps(1) 0s infinite normal none running nsStCycle; }
+.ns-presence.ns-st-live .ns-on::after { animation: 2s ease-out 0s infinite normal none running nsPing, 4.8s steps(1) 0s infinite normal none running nsStCyclePing; }
+.ns-st-row .ns-presence { width: 38px; height: 38px; }
+.ns-st-row .ns-presence .ns-av { font-size: 12px; }
+.ns-st-row .ns-presence .ns-on { width: 13px; height: 13px; }
+@keyframes nsStCycle { 
+  0%, 16.6% { background: var(--pos); box-shadow: none; }
+  16.7%, 33.3% { background: var(--warn); box-shadow: none; }
+  33.4%, 50% { background: var(--neg); box-shadow: none; }
+  50.1%, 66.6% { background: var(--neg); box-shadow: inset 0 3px 0 -1px var(--panel),inset 0 -3px 0 -1px var(--panel); }
+  66.7%, 83.3% { background: var(--panel); box-shadow: inset 0 0 0 2.5px var(--crit); }
+  83.4%, 100% { background: var(--panel); box-shadow: inset 0 0 0 2px var(--dim); }
+}
+@keyframes nsStCyclePing { 
+  0%, 16.6% { opacity: 1; }
+  16.7%, 100% { opacity: 0; }
+}
 </style>
 </head>
 <body>

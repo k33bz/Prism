@@ -40,6 +40,18 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
   0%, 60% { content: "Saving…"; color: var(--muted); }
   60.01%, 100% { content: "Saved"; color: var(--pos); }
 }
+.ns-st-row .ns-st-livewrap .ns-lbl { position: relative; min-width: 44px; height: 12px; text-align: center; }
+.ns-st-row .ns-st-livewrap .ns-lbl span { position: absolute; left: 0px; right: 0px; opacity: 0; animation: 4.8s steps(1) 0s infinite normal none running nsStLblShow; }
+.ns-st-row .ns-st-livewrap .ns-lbl span:nth-child(1) { animation-delay: 0s; }
+.ns-st-row .ns-st-livewrap .ns-lbl span:nth-child(2) { animation-delay: 0.8s; }
+.ns-st-row .ns-st-livewrap .ns-lbl span:nth-child(3) { animation-delay: 1.6s; }
+.ns-st-row .ns-st-livewrap .ns-lbl span:nth-child(4) { animation-delay: 2.4s; }
+.ns-st-row .ns-st-livewrap .ns-lbl span:nth-child(5) { animation-delay: 3.2s; }
+.ns-st-row .ns-st-livewrap .ns-lbl span:nth-child(6) { animation-delay: 4s; }
+@keyframes nsStLblShow { 
+  0%, 16.6% { opacity: 1; }
+  16.7%, 100% { opacity: 0; }
+}
 </style>
 </head>
 <body>

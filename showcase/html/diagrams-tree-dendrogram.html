@@ -46,7 +46,6 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
 .dgm .spin { transform-box: fill-box; transform-origin: center center; animation: 12s linear 0s infinite normal none running dgmSpin; }
 .dgm-tl .dgm-card.fi { animation-name: dgmFade; }
 .dgm-gd .dep.dr { stroke-dasharray: 200; stroke-dashoffset: 200; }
-.dgm-sankey .band.c { fill: rgba(var(--pos-rgb),.35); }
 @keyframes dgmDraw { 
   0% { stroke-dashoffset: 400; }
   30%, 88% { stroke-dashoffset: 0; }
@@ -85,7 +84,7 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
 </style>
 </head>
 <body>
-<div class="tile"><div class="stage" id="stage"><svg class="dgm" viewBox="0 0 320 160" aria-label="Tree diagram">
+<div class="tile"><div class="stage" id="stage"><svg class="dgm dgm-dendro" viewBox="0 0 320 160" aria-label="Tree diagram">
       <rect class="bx c pop" style="--i:0" x="128" y="8" width="64" height="22" rx="4"></rect><text class="fi" style="--i:0" x="160" y="19">Root</text>
       <path class="ln dr" style="--i:1" d="M160 30 V44 H80 V56"></path><path class="ln dr" style="--i:1" d="M160 44 H240 V56"></path><path class="ln dr" style="--i:1" d="M160 44 V56"></path>
       <rect class="bx pop" style="--i:2" x="52" y="56" width="56" height="20" rx="4"></rect><text class="fi" style="--i:2" x="80" y="66">Branch A</text>

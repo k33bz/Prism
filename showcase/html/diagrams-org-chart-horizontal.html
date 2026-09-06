@@ -46,7 +46,6 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
 .dgm .spin { transform-box: fill-box; transform-origin: center center; animation: 12s linear 0s infinite normal none running dgmSpin; }
 .dgm-tl .dgm-card.fi { animation-name: dgmFade; }
 .dgm-gd .dep.dr { stroke-dasharray: 200; stroke-dashoffset: 200; }
-.dgm-sankey .band.c { fill: rgba(var(--pos-rgb),.35); }
 @keyframes dgmDraw { 
   0% { stroke-dashoffset: 400; }
   30%, 88% { stroke-dashoffset: 0; }
@@ -85,7 +84,7 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
 </style>
 </head>
 <body>
-<div class="tile"><div class="stage" id="stage"><svg class="dgm" viewBox="0 0 320 160" aria-label="Horizontal org chart">
+<div class="tile"><div class="stage" id="stage"><svg class="dgm dgm-orgchart" viewBox="0 0 320 160" aria-label="Horizontal org chart">
       <rect class="bx c pop" style="--i:0" x="8" y="66" width="62" height="28" rx="5"></rect><text class="fi" style="--i:0" x="39" y="76">Director</text><text class="dim fi" style="--i:0" x="39" y="87">Platform</text>
       <path class="ln dr" style="--i:1" d="M70 80 H96 V30 H120"></path><path class="ln dr" style="--i:1" d="M96 80 H120"></path><path class="ln dr" style="--i:1" d="M96 80 V130 H120"></path>
       <rect class="bx pop" style="--i:2" x="120" y="16" width="62" height="28" rx="5"></rect><text class="fi" style="--i:2" x="151" y="26">Manager</text><text class="dim fi" style="--i:2" x="151" y="37">Infra</text>

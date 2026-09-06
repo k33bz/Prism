@@ -64,6 +64,7 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
 .dgm-journey .dgm-stage { fill: rgba(255, 255, 255, 0.03); stroke: var(--line); }
 .dgm-tl .dgm-card.fi { animation-name: dgmFade; }
 .dgm-gd .dep.dr { stroke-dasharray: 200; stroke-dashoffset: 200; }
+.dgm-fw text.hd { font-size: 8.5px; letter-spacing: 0.04em; }
 @keyframes dgmDraw { 
   0% { stroke-dashoffset: 400; }
   30%, 88% { stroke-dashoffset: 0; }
@@ -119,7 +120,7 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
 </style>
 </head>
 <body>
-<div class="tile"><div class="stage" id="stage"><svg class="dgm dgm-fish" viewBox="0 0 320 160" aria-label="Process fishbone diagram">
+<div class="tile"><div class="stage" id="stage"><svg class="dgm dgm-fish dgm-fish-proc" viewBox="0 0 320 160" aria-label="Process fishbone diagram">
       <path class="tail dr" style="--i:0" d="M8 66 L22 80 L8 94"></path><path class="spine dr" style="--i:0" d="M22 80 H250"></path>
       <path class="bone dgm-stage dr" style="--i:1" d="M60 80 L34 40"></path><path class="bone dgm-stage dr" style="--i:2" d="M108 80 L82 120"></path><path class="bone dgm-stage dr" style="--i:3" d="M156 80 L130 40"></path><path class="bone dgm-stage dr" style="--i:4" d="M204 80 L178 120"></path><path class="bone dgm-stage dr" style="--i:5" d="M246 80 L220 40"></path>
       <text class="cat dgm-stage fi" style="--i:2" x="34" y="31">1 Order</text><text class="cat dgm-stage fi" style="--i:3" x="82" y="130">2 Inventory</text><text class="cat dgm-stage fi" style="--i:4" x="130" y="31">3 Pack</text><text class="cat dgm-stage fi" style="--i:5" x="178" y="130">4 Ship</text><text class="cat dgm-stage fi" style="--i:6" x="220" y="31">5 Deliver</text>

@@ -33,6 +33,9 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
 .mnu-ham-panel a { color: var(--ink); font-size: 12.5px; font-weight: 600; text-decoration: none; padding: 7px 8px; border-radius: 7px; transition: background 0.15s; }
 .mnu-ham-panel a:hover { background: rgba(var(--info-rgb),.14); }
 .mnu-ham-hint { position: absolute; left: 12px; bottom: 10px; color: var(--dim); font-size: 10.5px; }
+.mnu-ham-left .mnu-ham-btn { left: auto; right: 10px; }
+.mnu-ham-left .mnu-ham-panel { right: auto; left: 0px; border-left: 0px; border-right: 1px solid var(--line); padding: 52px 14px 14px; transform: translateX(-100%); }
+.mnu-ham-left .mnu-ham-input:checked ~ .mnu-ham-panel { transform: translateX(0px); }
 </style>
 </head>
 <body>
