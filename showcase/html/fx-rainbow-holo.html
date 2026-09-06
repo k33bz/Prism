@@ -21,6 +21,49 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
 .meta p{margin:6px 0 0}
 </style>
 <style id="effect-css">
+.fxc-f-crackedice .fxc-foil { background: repeating-linear-gradient(58deg, transparent 0px, transparent 13px, rgba(255, 255, 255, 0.14) 13px, rgba(255, 255, 255, 0.14) 14px), repeating-linear-gradient(-24deg, transparent 0px, transparent 17px, rgba(255, 255, 255, 0.12) 17px, rgba(255, 255, 255, 0.12) 18px), repeating-linear-gradient(112deg, transparent 0px, transparent 21px, rgba(255, 255, 255, 0.1) 21px, rgba(255, 255, 255, 0.1) 22px); mix-blend-mode: screen; opacity: 0.7; }
+.fxc-f-crackedice .fxc-foil::after { content: ""; position: absolute; inset: 0px; background-image: ; background-position-x: ; background-position-y: ; background-repeat: ; background-attachment: ; background-origin: ; background-clip: ; background-color: ; background-size: 260% 260%; mix-blend-mode: color-dodge; animation: 3.4s ease-in-out 0s infinite normal none running fxcSweep; }
+.fxc-f-tinsel .fxc-foil { background: repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.16) 0px, rgba(255, 255, 255, 0.16) 1px, transparent 1px, transparent 3px); mix-blend-mode: overlay; opacity: 0.8; }
+.fxc-f-tinsel .fxc-foil::after { content: ""; position: absolute; inset: 0px; background: linear-gradient(100deg, transparent 40%, rgba(255, 255, 255, 0.6) 50%, transparent 60%) 0% 0% / 240% 240%; mix-blend-mode: color-dodge; animation: 2.6s ease-in-out 0s infinite normal none running fxcSweep; }
+.fxc-f-waterweb .fxc-foil { background-image: ; background-position-x: ; background-position-y: ; background-repeat: ; background-attachment: ; background-origin: ; background-clip: ; background-color: ; background-size: 180% 180%, 200% 200%; mix-blend-mode: screen; opacity: 0.6; animation: 5s ease-in-out 0s infinite normal none running fxcFlow; }
+.fxc-f-starlight .fxc-foil { background: radial-gradient(circle,rgba(255,255,255,.9) 0 .6px,transparent 1.4px) 4px 6px/17px 15px,
+    radial-gradient(circle,rgba(var(--accent-rgb),.85) 0 .6px,transparent 1.4px) 11px 12px/21px 19px; mix-blend-mode: screen; opacity: 0.85; animation: 2.4s ease-in-out 0s infinite normal none running fxcTwinkle; }
+.fxc-f-orbs .fxc-foil { background: radial-gradient(circle, transparent 0px, transparent 3px, rgba(255, 255, 255, 0.22) 3px, rgba(255, 255, 255, 0.22) 3.8px, transparent 3.8px) 0px 0px / 13px 13px, radial-gradient(circle, rgba(255, 255, 255, 0.24) 0px, rgba(255, 255, 255, 0.24) 1px, transparent 1.6px) 0px 0px / 13px 13px; mix-blend-mode: overlay; opacity: 0.75; }
+.fxc-f-orbs .fxc-foil::after { content: ""; position: absolute; inset: 0px; background-image: ; background-position-x: ; background-position-y: ; background-repeat: ; background-attachment: ; background-origin: ; background-clip: ; background-color: ; background-size: 220% 220%; mix-blend-mode: color-dodge; opacity: 0.4; animation: 3.4s ease-in-out 0s infinite normal none running fxcSweep; }
+.fxc-f-honeycomb .fxc-foil { background: repeating-linear-gradient(30deg, rgba(255, 255, 255, 0.14) 0px, rgba(255, 255, 255, 0.14) 1px, transparent 1px, transparent 16px), repeating-linear-gradient(-30deg, rgba(255, 255, 255, 0.14) 0px, rgba(255, 255, 255, 0.14) 1px, transparent 1px, transparent 16px), repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.1) 0px, rgba(255, 255, 255, 0.1) 1px, transparent 1px, transparent 28px); mix-blend-mode: overlay; opacity: 0.7; }
+.fxc-f-honeycomb .fxc-foil::after { content: ""; position: absolute; inset: 0px; background-image: ; background-position-x: ; background-position-y: ; background-repeat: ; background-attachment: ; background-origin: ; background-clip: ; background-color: ; background-size: 260% 260%; mix-blend-mode: color-dodge; animation: 3.6s ease-in-out 0s infinite normal none running fxcSweep; }
+.fxc-f-surge .fxc-foil { background: radial-gradient(circle at 50% 0%,rgba(255,255,255,.16) 0 6px,transparent 7px) 0 0/18px 10px,
+    radial-gradient(circle at 50% 0%,rgba(var(--info-rgb),.22) 0 6px,transparent 7px) 9px 5px/18px 10px; mix-blend-mode: screen; opacity: 0.7; animation: 4s ease-in-out 0s infinite normal none running fxcFlow; }
+.fxc-f-halo .fxc-foil { background: repeating-radial-gradient(circle at 50% 130%, transparent 0px, transparent 9px, rgba(255, 255, 255, 0.14) 9px, rgba(255, 255, 255, 0.14) 11px, transparent 11px, transparent 20px); mix-blend-mode: screen; opacity: 0.6; overflow: hidden; }
+.fxc-f-halo .fxc-foil::after { content: ""; position: absolute; inset: 0px; background: repeating-radial-gradient(circle at 50% 130%,transparent 0 9px,rgba(var(--crit-rgb),.4) 9px 11px,transparent 11px 20px); mix-blend-mode: color-dodge; animation: 4s ease-in-out 0s infinite normal none running fxcArc; }
+.fxc-f-confetti .fxc-foil { background: radial-gradient(circle,var(--accent) 0 1.4px,transparent 2px) 3px 5px/23px 21px,
+    radial-gradient(circle,var(--info) 0 1.4px,transparent 2px) 14px 12px/27px 25px,
+    radial-gradient(circle,var(--crit) 0 1.4px,transparent 2px) 8px 18px/25px 23px,
+    radial-gradient(circle,var(--pos) 0 1.4px,transparent 2px) 19px 3px/29px 26px; mix-blend-mode: screen; opacity: 0.85; animation: 2.6s ease-in-out 0s infinite normal none running fxcTwinkle; }
+.fxc-f-oilslick .fxc-foil { background: radial-gradient(120% 90% at 50% 30%, transparent 40%, rgba(0, 0, 0, 0.5)); mix-blend-mode: multiply; opacity: 0.85; }
+.fxc-f-oilslick .fxc-foil::after { content: ""; position: absolute; inset: -40%; background: conic-gradient(from 0deg,rgba(var(--accent-rgb),.5),rgba(var(--info-rgb),.5),rgba(var(--pos-rgb),.5),rgba(var(--warn-rgb),.5),rgba(var(--crit-rgb),.5),rgba(var(--accent-rgb),.5)); mix-blend-mode: color-dodge; animation: 7s linear 0s infinite normal none running fxcSpin; }
+.fxc-f-glyphstamp .fxc-foil { background: linear-gradient(90deg, transparent 46%, rgba(255, 255, 255, 0.2) 46%, rgba(255, 255, 255, 0.2) 54%, transparent 54%) 0% 0% / 15px 15px, linear-gradient(0deg, transparent 46%, rgba(255, 255, 255, 0.2) 46%, rgba(255, 255, 255, 0.2) 54%, transparent 54%); mix-blend-mode: overlay; opacity: 0.7; }
+.fxc-f-glyphstamp .fxc-foil::after { content: ""; position: absolute; inset: 0px; background-image: ; background-position-x: ; background-position-y: ; background-repeat: ; background-attachment: ; background-origin: ; background-clip: ; background-color: ; background-size: 260% 260%; mix-blend-mode: color-dodge; animation: 3.2s ease-in-out 0s infinite normal none running fxcSweep; }
+.fxc-f-scales .fxc-foil { background: radial-gradient(circle at 50% 100%, rgba(255, 255, 255, 0.14) 0px, rgba(255, 255, 255, 0.14) 6px, transparent 7px) 0px 0px / 16px 8px, radial-gradient(circle at 50% 100%, rgba(255, 255, 255, 0.14) 0px, rgba(255, 255, 255, 0.14) 6px, transparent 7px) 8px 4px / 16px 8px; mix-blend-mode: overlay; opacity: 0.7; }
+.fxc-f-scales .fxc-foil::after { content: ""; position: absolute; inset: 0px; background-image: ; background-position-x: ; background-position-y: ; background-repeat: ; background-attachment: ; background-origin: ; background-clip: ; background-color: ; background-size: 220% 220%; mix-blend-mode: color-dodge; opacity: 0.35; animation: 3.6s ease-in-out 0s infinite normal none running fxcSweep; }
+.fxc-f-coldfoil .fxc-foil { background-image: ; background-position-x: ; background-position-y: ; background-repeat: ; background-attachment: ; background-origin: ; background-clip: ; background-color: ; background-size: 250% 250%; mix-blend-mode: overlay; animation: 3.4s ease-in-out 0s infinite normal none running fxcSweep; }
+.fxc-f-enchanted .fxc-foil { background-image: ; background-position-x: ; background-position-y: ; background-repeat: ; background-attachment: ; background-origin: ; background-clip: ; background-color: ; background-size: 200% 200%; mix-blend-mode: color-dodge; opacity: 0.45; animation: 3.6s ease-in-out 0s infinite normal none running fxcSweep; }
+.fxc-f-enchanted .fxc-foil::after { content: ""; position: absolute; inset: 3px; border-radius: 7px; border: 2px solid rgba(255, 255, 255, 0.5); box-shadow: 0 0 8px rgba(var(--accent-rgb),.6),inset 0 0 8px rgba(var(--info-rgb),.5); mix-blend-mode: screen; }
+@keyframes fxcFlow { 
+  0%, 100% { background-position: 0% 0%, 100% 100%; }
+  50% { background-position: 22% 30%, 72% 62%; }
+}
+@keyframes fxcTwinkle { 
+  0%, 100% { opacity: 0.35; }
+  50% { opacity: 0.9; }
+}
+@keyframes fxcArc { 
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+@keyframes fxcSpin { 
+  100% { transform: rotate(360deg); }
+}
 .fxc { position: relative; width: 100%; max-width: 300px; height: 150px; display: grid; place-items: center; perspective: 640px; --fxc-w: 90px; --fxc-h: 126px; }
 .fxc-card { position: relative; width: var(--fxc-w); height: var(--fxc-h); transform-style: preserve-3d; border-radius: 9px; }
 .fxc-face { position: absolute; inset: 0px; border-radius: 9px; overflow: hidden; backface-visibility: hidden; background: linear-gradient(160deg,var(--panel),var(--panel2)); border: 1px solid var(--line); box-shadow: rgba(0, 0, 0, 0.45) 0px 6px 14px; }
@@ -114,53 +157,10 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
   0%, 100% { background-position: 12% 78%; }
   50% { background-position: 88% 22%; }
 }
-.fxc-f-crackedice .fxc-foil { background: repeating-linear-gradient(58deg, transparent 0px, transparent 13px, rgba(255, 255, 255, 0.14) 13px, rgba(255, 255, 255, 0.14) 14px), repeating-linear-gradient(-24deg, transparent 0px, transparent 17px, rgba(255, 255, 255, 0.12) 17px, rgba(255, 255, 255, 0.12) 18px), repeating-linear-gradient(112deg, transparent 0px, transparent 21px, rgba(255, 255, 255, 0.1) 21px, rgba(255, 255, 255, 0.1) 22px); mix-blend-mode: screen; opacity: 0.7; }
-.fxc-f-crackedice .fxc-foil::after { content: ""; position: absolute; inset: 0px; background-image: ; background-position-x: ; background-position-y: ; background-repeat: ; background-attachment: ; background-origin: ; background-clip: ; background-color: ; background-size: 260% 260%; mix-blend-mode: color-dodge; animation: 3.4s ease-in-out 0s infinite normal none running fxcSweep; }
-.fxc-f-tinsel .fxc-foil { background: repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.16) 0px, rgba(255, 255, 255, 0.16) 1px, transparent 1px, transparent 3px); mix-blend-mode: overlay; opacity: 0.8; }
-.fxc-f-tinsel .fxc-foil::after { content: ""; position: absolute; inset: 0px; background: linear-gradient(100deg, transparent 40%, rgba(255, 255, 255, 0.6) 50%, transparent 60%) 0% 0% / 240% 240%; mix-blend-mode: color-dodge; animation: 2.6s ease-in-out 0s infinite normal none running fxcSweep; }
-.fxc-f-waterweb .fxc-foil { background-image: ; background-position-x: ; background-position-y: ; background-repeat: ; background-attachment: ; background-origin: ; background-clip: ; background-color: ; background-size: 180% 180%, 200% 200%; mix-blend-mode: screen; opacity: 0.6; animation: 5s ease-in-out 0s infinite normal none running fxcFlow; }
-.fxc-f-starlight .fxc-foil { background: radial-gradient(circle,rgba(255,255,255,.9) 0 .6px,transparent 1.4px) 4px 6px/17px 15px,
-    radial-gradient(circle,rgba(var(--accent-rgb),.85) 0 .6px,transparent 1.4px) 11px 12px/21px 19px; mix-blend-mode: screen; opacity: 0.85; animation: 2.4s ease-in-out 0s infinite normal none running fxcTwinkle; }
-.fxc-f-orbs .fxc-foil { background: radial-gradient(circle, transparent 0px, transparent 3px, rgba(255, 255, 255, 0.22) 3px, rgba(255, 255, 255, 0.22) 3.8px, transparent 3.8px) 0px 0px / 13px 13px, radial-gradient(circle, rgba(255, 255, 255, 0.24) 0px, rgba(255, 255, 255, 0.24) 1px, transparent 1.6px) 0px 0px / 13px 13px; mix-blend-mode: overlay; opacity: 0.75; }
-.fxc-f-orbs .fxc-foil::after { content: ""; position: absolute; inset: 0px; background-image: ; background-position-x: ; background-position-y: ; background-repeat: ; background-attachment: ; background-origin: ; background-clip: ; background-color: ; background-size: 220% 220%; mix-blend-mode: color-dodge; opacity: 0.4; animation: 3.4s ease-in-out 0s infinite normal none running fxcSweep; }
-.fxc-f-honeycomb .fxc-foil { background: repeating-linear-gradient(30deg, rgba(255, 255, 255, 0.14) 0px, rgba(255, 255, 255, 0.14) 1px, transparent 1px, transparent 16px), repeating-linear-gradient(-30deg, rgba(255, 255, 255, 0.14) 0px, rgba(255, 255, 255, 0.14) 1px, transparent 1px, transparent 16px), repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.1) 0px, rgba(255, 255, 255, 0.1) 1px, transparent 1px, transparent 28px); mix-blend-mode: overlay; opacity: 0.7; }
-.fxc-f-honeycomb .fxc-foil::after { content: ""; position: absolute; inset: 0px; background-image: ; background-position-x: ; background-position-y: ; background-repeat: ; background-attachment: ; background-origin: ; background-clip: ; background-color: ; background-size: 260% 260%; mix-blend-mode: color-dodge; animation: 3.6s ease-in-out 0s infinite normal none running fxcSweep; }
-.fxc-f-surge .fxc-foil { background: radial-gradient(circle at 50% 0%,rgba(255,255,255,.16) 0 6px,transparent 7px) 0 0/18px 10px,
-    radial-gradient(circle at 50% 0%,rgba(var(--info-rgb),.22) 0 6px,transparent 7px) 9px 5px/18px 10px; mix-blend-mode: screen; opacity: 0.7; animation: 4s ease-in-out 0s infinite normal none running fxcFlow; }
-.fxc-f-halo .fxc-foil { background: repeating-radial-gradient(circle at 50% 130%, transparent 0px, transparent 9px, rgba(255, 255, 255, 0.14) 9px, rgba(255, 255, 255, 0.14) 11px, transparent 11px, transparent 20px); mix-blend-mode: screen; opacity: 0.6; overflow: hidden; }
-.fxc-f-halo .fxc-foil::after { content: ""; position: absolute; inset: 0px; background: repeating-radial-gradient(circle at 50% 130%,transparent 0 9px,rgba(var(--crit-rgb),.4) 9px 11px,transparent 11px 20px); mix-blend-mode: color-dodge; animation: 4s ease-in-out 0s infinite normal none running fxcArc; }
-.fxc-f-confetti .fxc-foil { background: radial-gradient(circle,var(--accent) 0 1.4px,transparent 2px) 3px 5px/23px 21px,
-    radial-gradient(circle,var(--info) 0 1.4px,transparent 2px) 14px 12px/27px 25px,
-    radial-gradient(circle,var(--crit) 0 1.4px,transparent 2px) 8px 18px/25px 23px,
-    radial-gradient(circle,var(--pos) 0 1.4px,transparent 2px) 19px 3px/29px 26px; mix-blend-mode: screen; opacity: 0.85; animation: 2.6s ease-in-out 0s infinite normal none running fxcTwinkle; }
-.fxc-f-oilslick .fxc-foil { background: radial-gradient(120% 90% at 50% 30%, transparent 40%, rgba(0, 0, 0, 0.5)); mix-blend-mode: multiply; opacity: 0.85; }
-.fxc-f-oilslick .fxc-foil::after { content: ""; position: absolute; inset: -40%; background: conic-gradient(from 0deg,rgba(var(--accent-rgb),.5),rgba(var(--info-rgb),.5),rgba(var(--pos-rgb),.5),rgba(var(--warn-rgb),.5),rgba(var(--crit-rgb),.5),rgba(var(--accent-rgb),.5)); mix-blend-mode: color-dodge; animation: 7s linear 0s infinite normal none running fxcSpin; }
-.fxc-f-glyphstamp .fxc-foil { background: linear-gradient(90deg, transparent 46%, rgba(255, 255, 255, 0.2) 46%, rgba(255, 255, 255, 0.2) 54%, transparent 54%) 0% 0% / 15px 15px, linear-gradient(0deg, transparent 46%, rgba(255, 255, 255, 0.2) 46%, rgba(255, 255, 255, 0.2) 54%, transparent 54%); mix-blend-mode: overlay; opacity: 0.7; }
-.fxc-f-glyphstamp .fxc-foil::after { content: ""; position: absolute; inset: 0px; background-image: ; background-position-x: ; background-position-y: ; background-repeat: ; background-attachment: ; background-origin: ; background-clip: ; background-color: ; background-size: 260% 260%; mix-blend-mode: color-dodge; animation: 3.2s ease-in-out 0s infinite normal none running fxcSweep; }
-.fxc-f-scales .fxc-foil { background: radial-gradient(circle at 50% 100%, rgba(255, 255, 255, 0.14) 0px, rgba(255, 255, 255, 0.14) 6px, transparent 7px) 0px 0px / 16px 8px, radial-gradient(circle at 50% 100%, rgba(255, 255, 255, 0.14) 0px, rgba(255, 255, 255, 0.14) 6px, transparent 7px) 8px 4px / 16px 8px; mix-blend-mode: overlay; opacity: 0.7; }
-.fxc-f-scales .fxc-foil::after { content: ""; position: absolute; inset: 0px; background-image: ; background-position-x: ; background-position-y: ; background-repeat: ; background-attachment: ; background-origin: ; background-clip: ; background-color: ; background-size: 220% 220%; mix-blend-mode: color-dodge; opacity: 0.35; animation: 3.6s ease-in-out 0s infinite normal none running fxcSweep; }
-.fxc-f-coldfoil .fxc-foil { background-image: ; background-position-x: ; background-position-y: ; background-repeat: ; background-attachment: ; background-origin: ; background-clip: ; background-color: ; background-size: 250% 250%; mix-blend-mode: overlay; animation: 3.4s ease-in-out 0s infinite normal none running fxcSweep; }
-.fxc-f-enchanted .fxc-foil { background-image: ; background-position-x: ; background-position-y: ; background-repeat: ; background-attachment: ; background-origin: ; background-clip: ; background-color: ; background-size: 200% 200%; mix-blend-mode: color-dodge; opacity: 0.45; animation: 3.6s ease-in-out 0s infinite normal none running fxcSweep; }
-.fxc-f-enchanted .fxc-foil::after { content: ""; position: absolute; inset: 3px; border-radius: 7px; border: 2px solid rgba(255, 255, 255, 0.5); box-shadow: 0 0 8px rgba(var(--accent-rgb),.6),inset 0 0 8px rgba(var(--info-rgb),.5); mix-blend-mode: screen; }
-@keyframes fxcFlow { 
-  0%, 100% { background-position: 0% 0%, 100% 100%; }
-  50% { background-position: 22% 30%, 72% 62%; }
-}
-@keyframes fxcTwinkle { 
-  0%, 100% { opacity: 0.35; }
-  50% { opacity: 0.9; }
-}
-@keyframes fxcArc { 
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-8px); }
-}
-@keyframes fxcSpin { 
-  100% { transform: rotate(360deg); }
-}
 </style>
 </head>
 <body>
-<div class="tile"><div class="stage" id="stage"><div class="fxc" role="img" aria-label="Card foil: holographic rainbow shine sweeping across a card"><div class="fxc-card fxc-rainbow"><div class="fxc-face fxc-front"><div class="fxc-hd"><span class="fxc-name">ATLAS</span><span class="fxc-cost"></span></div><div class="fxc-art"></div><div class="fxc-type">CONSTRUCT</div><div class="fxc-txt"><i></i><i></i><i></i></div><div class="fxc-stat">7</div><span class="fxc-foil"></span></div><div class="fxc-face fxc-back"></div></div></div></div></div>
+<div class="tile"><div class="stage" id="stage"><div class="fxc fxc-f-holo" role="img" aria-label="Card foil: holographic rainbow shine sweeping across a card"><div class="fxc-card fxc-rainbow"><div class="fxc-face fxc-front"><div class="fxc-hd"><span class="fxc-name">ATLAS</span><span class="fxc-cost"></span></div><div class="fxc-art"></div><div class="fxc-type">CONSTRUCT</div><div class="fxc-txt"><i></i><i></i><i></i></div><div class="fxc-stat">7</div><span class="fxc-foil"></span></div><div class="fxc-face fxc-back"></div></div></div></div></div>
 <div class="meta"><b>Rainbow Holo</b> · <code>fx-rainbow-holo</code><br>FX Store · CARD MOTION &amp; FOIL<p>A rainbow of the six theme accents sweeps across the card as a colour-dodge sheen with a white glare over it, the classic holographic look. Add the class to any card; drop your own art in the slot.</p></div>
 
 </body>
