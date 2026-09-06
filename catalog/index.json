@@ -1,5 +1,5 @@
 {
-  "count": 3440,
+  "count": 3436,
   "effects": [
     {
       "id": "charts-big-metric-count-up",
@@ -1896,10 +1896,11 @@
         "sl",
         "ts",
         "lv",
-        "warn",
+        "info",
         "m",
         "ok",
-        "info",
+        "warn",
+        "err",
         "cursor"
       ],
       "params": [],
@@ -15183,46 +15184,6 @@
       "description": "A single soft glare rakes across the card face, the everyday non-rainbow foil. The lightest of the surfaces, good under any of the motions."
     },
     {
-      "id": "fx-linear-foil",
-      "name": "Linear Foil",
-      "gallery": "fx",
-      "category": "CARD MOTION & FOIL",
-      "ref": ".fxc-f-linear",
-      "classes": [
-        "fxc",
-        "fxc-f-linear",
-        "fxc-card",
-        "fxc-face",
-        "fxc-front",
-        "fxc-hd",
-        "fxc-name",
-        "fxc-cost",
-        "fxc-art",
-        "fxc-type",
-        "fxc-txt",
-        "fxc-stat",
-        "fxc-foil",
-        "fxc-back"
-      ],
-      "params": [],
-      "tags": [
-        "fx",
-        "animated",
-        "new"
-      ],
-      "componentType": "fx-card",
-      "interaction": "auto-play",
-      "spectrum": null,
-      "usableAsBackground": false,
-      "needsJs": null,
-      "isNew": true,
-      "isFixed": false,
-      "addedOn": "2026-09-06",
-      "updatedOn": null,
-      "author": "k33bz",
-      "description": "Bright brushed-metal lines flare into a sharp directional sheen as the light passes, the line-foil finish. Stronger and more metallic than the quiet version."
-    },
-    {
       "id": "fx-reverse-holo",
       "name": "Reverse Holo",
       "gallery": "fx",
@@ -15824,46 +15785,6 @@
       "description": "Large angular reflective shards like shattered glass, the cracked-ice reverse holo of the Pokemon EX era."
     },
     {
-      "id": "fx-tinsel",
-      "name": "Tinsel",
-      "gallery": "fx",
-      "category": "TCG FOIL STYLES",
-      "ref": ".fxc-f-tinsel",
-      "classes": [
-        "fxc",
-        "fxc-f-tinsel",
-        "fxc-card",
-        "fxc-face",
-        "fxc-front",
-        "fxc-hd",
-        "fxc-name",
-        "fxc-cost",
-        "fxc-art",
-        "fxc-type",
-        "fxc-txt",
-        "fxc-stat",
-        "fxc-foil",
-        "fxc-back"
-      ],
-      "params": [],
-      "tags": [
-        "fx",
-        "animated",
-        "new"
-      ],
-      "componentType": "fx-card",
-      "interaction": "auto-play",
-      "spectrum": null,
-      "usableAsBackground": false,
-      "needsJs": null,
-      "isNew": true,
-      "isFixed": false,
-      "addedOn": "2026-09-06",
-      "updatedOn": null,
-      "author": "k33bz",
-      "description": "A tight, fast vertical shimmer with a coloured sparkle band, the tinsel reverse holo. Faster and brighter than the brushed Linear foil."
-    },
-    {
       "id": "fx-water-web",
       "name": "Water Web",
       "gallery": "fx",
@@ -16065,46 +15986,6 @@
       "description": "A rippling scale pattern that makes the whole card look like it is vibrating with light, Magic's surge foil."
     },
     {
-      "id": "fx-halo-foil",
-      "name": "Halo Foil",
-      "gallery": "fx",
-      "category": "TCG FOIL STYLES",
-      "ref": ".fxc-f-halo",
-      "classes": [
-        "fxc",
-        "fxc-f-halo",
-        "fxc-card",
-        "fxc-face",
-        "fxc-front",
-        "fxc-hd",
-        "fxc-name",
-        "fxc-cost",
-        "fxc-art",
-        "fxc-type",
-        "fxc-txt",
-        "fxc-stat",
-        "fxc-foil",
-        "fxc-back"
-      ],
-      "params": [],
-      "tags": [
-        "fx",
-        "animated",
-        "new"
-      ],
-      "componentType": "fx-card",
-      "interaction": "auto-play",
-      "spectrum": null,
-      "usableAsBackground": false,
-      "needsJs": null,
-      "isNew": true,
-      "isFixed": false,
-      "addedOn": "2026-09-06",
-      "updatedOn": null,
-      "author": "k33bz",
-      "description": "Swooping curved arcs of shine layered over the art, Magic's halo foil."
-    },
-    {
       "id": "fx-confetti-foil",
       "name": "Confetti Foil",
       "gallery": "fx",
@@ -16304,47 +16185,6 @@
       "updatedOn": null,
       "author": "k33bz",
       "description": "A smooth, cool metallic sheen sweeping the whole face, Disney Lorcana's cold foil."
-    },
-    {
-      "id": "fx-enchanted",
-      "name": "Enchanted",
-      "gallery": "fx",
-      "category": "TCG FOIL STYLES",
-      "ref": ".fxc-f-enchanted",
-      "classes": [
-        "fxc",
-        "fxc-f-enchanted",
-        "fxc-card",
-        "fxc-rainbow",
-        "fxc-face",
-        "fxc-front",
-        "fxc-hd",
-        "fxc-name",
-        "fxc-cost",
-        "fxc-art",
-        "fxc-type",
-        "fxc-txt",
-        "fxc-stat",
-        "fxc-foil",
-        "fxc-back"
-      ],
-      "params": [],
-      "tags": [
-        "fx",
-        "animated",
-        "new"
-      ],
-      "componentType": "fx-card",
-      "interaction": "auto-play",
-      "spectrum": null,
-      "usableAsBackground": false,
-      "needsJs": null,
-      "isNew": true,
-      "isFixed": false,
-      "addedOn": "2026-09-06",
-      "updatedOn": null,
-      "author": "k33bz",
-      "description": "Whole-face rainbow cold foil inside an ornate glowing border, a Lorcana Enchanted card."
     },
     {
       "id": "lab-fade-in",
