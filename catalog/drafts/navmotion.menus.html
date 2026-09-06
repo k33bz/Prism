@@ -1,0 +1,117 @@
+<h3 class="sec">NAVIGATION MOTION</h3>
+<style id="navmotion-styles">
+/* ===== Navigation motion (k33bz fork). The animated navs the gallery was missing, in the
+   house style: a sliding indicator, hover magnify, staggered reveals and the shared
+   mnuPulseGlow active glow. Pure CSS (hover / focus / the checkbox toggle), tokens only,
+   self-contained demos. mnu- prefix. ===== */
+/* fullscreen overlay menu */
+.mnu-overlay{position:relative;width:240px;height:162px;border-radius:12px;overflow:hidden;background:var(--card);border:1px solid var(--line)}
+.mnu-ov-top{position:absolute;top:0;left:0;right:0;height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 13px;z-index:4}
+.mnu-ov-logo{font:800 13px ui-sans-serif,system-ui,sans-serif;color:var(--ink);display:flex;align-items:center;gap:7px}
+.mnu-ov-logo::before{content:"";width:15px;height:15px;border-radius:5px;background:linear-gradient(135deg,var(--accent),rgba(var(--accent-rgb),.5))}
+.mnu-ov-logo{transition:opacity .2s}
+.mnu-ov-input:checked ~ .mnu-ov-top .mnu-ov-logo{opacity:0}
+.mnu-ov-input{position:absolute;opacity:0;width:0;height:0}
+.mnu-ov-btn{width:30px;height:30px;border-radius:8px;background:var(--panel2);border:1px solid var(--line);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;cursor:pointer}
+.mnu-ov-btn span{display:block;width:16px;height:2px;border-radius:2px;background:var(--ink);transition:transform .3s cubic-bezier(.3,1,.4,1),opacity .2s}
+.mnu-ov-input:checked ~ .mnu-ov-top .mnu-ov-btn span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.mnu-ov-input:checked ~ .mnu-ov-top .mnu-ov-btn span:nth-child(2){opacity:0}
+.mnu-ov-input:checked ~ .mnu-ov-top .mnu-ov-btn span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.mnu-ov-panel{position:absolute;inset:0;background:linear-gradient(155deg,var(--panel2),var(--panel));display:flex;flex-direction:column;justify-content:center;gap:6px;padding:0 24px;opacity:0;visibility:hidden;transform:scale(1.05);transition:opacity .3s,transform .38s cubic-bezier(.25,1,.35,1),visibility .3s;z-index:2}
+.mnu-ov-input:checked ~ .mnu-ov-panel{opacity:1;visibility:visible;transform:scale(1)}
+.mnu-ov-panel a{font:800 21px ui-sans-serif,system-ui,sans-serif;color:var(--ink);text-decoration:none;opacity:0;transform:translateY(12px);transition:opacity .3s,transform .3s,color .15s}
+.mnu-ov-panel a:hover{color:var(--accent)}
+.mnu-ov-input:checked ~ .mnu-ov-panel a{opacity:1;transform:none}
+.mnu-ov-input:checked ~ .mnu-ov-panel a:nth-child(1){transition-delay:.1s}
+.mnu-ov-input:checked ~ .mnu-ov-panel a:nth-child(2){transition-delay:.17s}
+.mnu-ov-input:checked ~ .mnu-ov-panel a:nth-child(3){transition-delay:.24s}
+.mnu-ov-input:checked ~ .mnu-ov-panel a:nth-child(4){transition-delay:.31s}
+/* dock nav (magnify on hover) */
+.mnu-dock{display:flex;align-items:flex-end;gap:6px;padding:9px 13px;border-radius:16px;background:var(--panel2);border:1px solid var(--line);box-shadow:0 14px 32px rgba(0,0,0,.42)}
+.mnu-dock a{position:relative;width:38px;height:38px;border-radius:11px;display:grid;place-items:center;font-size:17px;background:var(--card);border:1px solid var(--line);color:var(--muted);text-decoration:none;transform-origin:bottom;transition:transform .22s cubic-bezier(.34,1.5,.5,1),background .18s,color .18s}
+.mnu-dock a:hover{transform:scale(1.36) translateY(-6px);background:rgba(var(--accent-rgb),.16);color:var(--accent);z-index:2}
+.mnu-dock a::after{content:attr(data-tip);position:absolute;bottom:calc(100% + 9px);left:50%;transform:translateX(-50%) translateY(4px);background:var(--panel);border:1px solid var(--line);color:var(--ink);font:600 10px ui-sans-serif,system-ui,sans-serif;padding:3px 8px;border-radius:6px;white-space:nowrap;opacity:0;pointer-events:none;transition:.18s}
+.mnu-dock a:hover::after{opacity:1;transform:translateX(-50%) translateY(0)}
+/* collapsible sidebar rail */
+.mnu-rail{width:52px;overflow:hidden;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:6px;display:flex;flex-direction:column;gap:3px;transition:width .32s cubic-bezier(.25,1,.35,1)}
+.mnu-rail:hover{width:174px}
+.mnu-rail a{display:flex;align-items:center;gap:11px;padding:9px;border-radius:8px;color:var(--muted);text-decoration:none;font:600 12px ui-sans-serif,system-ui,sans-serif;white-space:nowrap;transition:background .16s,color .16s}
+.mnu-rail-ic{flex:0 0 22px;text-align:center;font-size:15px}
+.mnu-rail-lbl{opacity:0;transform:translateX(-6px);transition:opacity .22s,transform .22s}
+.mnu-rail:hover .mnu-rail-lbl{opacity:1;transform:none}
+.mnu-rail a:hover{background:rgba(var(--info-rgb),.1);color:var(--ink)}
+.mnu-rail a.is-active{background:rgba(var(--accent-rgb),.16);color:var(--accent);box-shadow:0 0 0 1px rgba(var(--accent-rgb),.3);animation:mnuPulseGlow 2.6s ease-in-out infinite}
+/* bottom tab bar (sliding ink) */
+.mnu-tabbar{position:relative;display:flex;width:262px;background:var(--panel2);border:1px solid var(--line);border-radius:15px;padding:6px}
+.mnu-tabbar a{position:relative;flex:1 1 0;display:flex;flex-direction:column;align-items:center;gap:3px;padding:7px 0;color:var(--muted);text-decoration:none;font:700 9px ui-sans-serif,system-ui,sans-serif;letter-spacing:.03em;z-index:1;transition:color .2s}
+.mnu-tb-ic{font-size:16px;transition:transform .26s cubic-bezier(.34,1.4,.5,1)}
+.mnu-tabbar a.is-active,.mnu-tabbar a:hover{color:var(--accent)}
+.mnu-tabbar a.is-active .mnu-tb-ic,.mnu-tabbar a:hover .mnu-tb-ic{transform:translateY(-2px) scale(1.14)}
+.mnu-tb-ink{position:absolute;top:6px;bottom:6px;left:6px;width:calc(25% - 3px);border-radius:11px;background:rgba(var(--accent-rgb),.15);box-shadow:inset 0 0 0 1px rgba(var(--accent-rgb),.3);transition:transform .34s cubic-bezier(.25,1,.35,1);z-index:0}
+.mnu-tabbar a:nth-child(1).is-active ~ .mnu-tb-ink,.mnu-tabbar a:nth-child(1):hover ~ .mnu-tb-ink{transform:translateX(0)}
+.mnu-tabbar a:nth-child(2).is-active ~ .mnu-tb-ink,.mnu-tabbar a:nth-child(2):hover ~ .mnu-tb-ink{transform:translateX(100%)}
+.mnu-tabbar a:nth-child(3).is-active ~ .mnu-tb-ink,.mnu-tabbar a:nth-child(3):hover ~ .mnu-tb-ink{transform:translateX(200%)}
+.mnu-tabbar a:nth-child(4).is-active ~ .mnu-tb-ink,.mnu-tabbar a:nth-child(4):hover ~ .mnu-tb-ink{transform:translateX(300%)}
+/* hamburger icon morphs */
+.mnu-hamicons{display:flex;gap:16px}
+.mnu-hi{display:flex;flex-direction:column;align-items:center;gap:8px}
+.mnu-hi input{position:absolute;opacity:0;width:0;height:0}
+.mnu-hi label{width:38px;height:38px;border-radius:10px;background:var(--panel2);border:1px solid var(--line);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;cursor:pointer}
+.mnu-hi label span{display:block;width:18px;height:2px;border-radius:2px;background:var(--ink);transition:transform .3s cubic-bezier(.3,1,.4,1),opacity .2s,width .3s}
+.mnu-hi small{font:600 9px ui-sans-serif,system-ui,sans-serif;letter-spacing:.04em;color:var(--dim)}
+.mnu-hi-x input:checked ~ label span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.mnu-hi-x input:checked ~ label span:nth-child(2){opacity:0}
+.mnu-hi-x input:checked ~ label span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.mnu-hi-arrow label span{width:18px}
+.mnu-hi-arrow input:checked ~ label span:nth-child(1){width:11px;transform:translate(-5px,7px) rotate(-45deg)}
+.mnu-hi-arrow input:checked ~ label span:nth-child(2){width:18px}
+.mnu-hi-arrow input:checked ~ label span:nth-child(3){width:11px;transform:translate(-5px,-7px) rotate(45deg)}
+.mnu-hi-plus label{gap:0}
+.mnu-hi-plus label span:nth-child(2){width:0;height:0}
+.mnu-hi-plus label span:nth-child(1){transform:translateY(1px)}
+.mnu-hi-plus label span:nth-child(3){width:2px;height:18px;position:absolute;transform:rotate(0)}
+.mnu-hi-plus input:checked ~ label span:nth-child(1){transform:rotate(45deg)}
+.mnu-hi-plus input:checked ~ label span:nth-child(3){transform:rotate(45deg)}
+/* vertical dot nav */
+.mnu-dotnav{display:flex;flex-direction:column;gap:15px;padding:13px 11px;background:var(--card);border:1px solid var(--line);border-radius:22px;width:max-content}
+.mnu-dotnav a{position:relative;width:11px;height:11px;border-radius:50%;background:var(--line);cursor:pointer;transition:transform .2s,background .2s}
+.mnu-dotnav a:hover{background:var(--muted);transform:scale(1.25)}
+.mnu-dotnav a.is-active{background:var(--accent);box-shadow:0 0 0 4px rgba(var(--accent-rgb),.2);transform:scale(1.15)}
+.mnu-dotnav a::after{content:attr(data-tip);position:absolute;left:calc(100% + 13px);top:50%;transform:translateY(-50%) translateX(-4px);background:var(--panel);border:1px solid var(--line);color:var(--ink);font:600 10px ui-sans-serif,system-ui,sans-serif;padding:3px 8px;border-radius:6px;white-space:nowrap;opacity:0;pointer-events:none;transition:.18s}
+.mnu-dotnav a:hover::after{opacity:1;transform:translateY(-50%) translateX(0)}
+</style>
+<div class="gallery">
+
+  <div class="tile is-new" data-ctype="menu" data-interact="toggle" data-c="accent"><div class="stage">
+    <div class="mnu-overlay">
+      <input type="checkbox" id="mnu-ov-demo" class="mnu-ov-input">
+      <div class="mnu-ov-top"><span class="mnu-ov-logo">Horizon</span><label for="mnu-ov-demo" class="mnu-ov-btn"><span></span><span></span><span></span></label></div>
+      <nav class="mnu-ov-panel"><a href="#">Work</a><a href="#">Studio</a><a href="#">Journal</a><a href="#">Contact</a></nav>
+    </div>
+  </div><div class="meta"><div class="nm">Fullscreen Overlay</div><span class="ref">.mnu-overlay</span><div class="desc">The hamburger opens a full-screen panel that scales in while the big links rise in one after another, the immersive mobile menu. Click the icon; the bars morph to a close.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="menu" data-interact="hover" data-c="info"><div class="stage">
+    <nav class="mnu-dock"><a href="#" data-tip="Home">&#127968;</a><a href="#" data-tip="Search">&#128269;</a><a href="#" data-tip="Create">&#10133;</a><a href="#" data-tip="Inbox">&#128236;</a><a href="#" data-tip="Profile">&#128100;</a></nav>
+  </div><div class="meta"><div class="nm">Dock Nav</div><span class="ref">.mnu-dock</span><div class="desc">Hover an icon and it springs up and enlarges with a label above it, the macOS dock. A bouncy cubic-bezier gives the magnify its life.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="menu" data-interact="hover" data-c="accent"><div class="stage">
+    <nav class="mnu-rail"><a href="#" class="is-active"><span class="mnu-rail-ic">&#9632;</span><span class="mnu-rail-lbl">Dashboard</span></a><a href="#"><span class="mnu-rail-ic">&#9635;</span><span class="mnu-rail-lbl">Projects</span></a><a href="#"><span class="mnu-rail-ic">&#9711;</span><span class="mnu-rail-lbl">Team</span></a><a href="#"><span class="mnu-rail-ic">&#9881;</span><span class="mnu-rail-lbl">Settings</span></a></nav>
+  </div><div class="meta"><div class="nm">Collapsible Rail</div><span class="ref">.mnu-rail</span><div class="desc">A slim icon rail that widens on hover, sliding the labels in beside each icon, the app sidebar. The active item keeps the shared accent pulse. Hover the rail.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="menu" data-interact="hover" data-c="crit"><div class="stage">
+    <nav class="mnu-tabbar"><a href="#" class="is-active"><span class="mnu-tb-ic">&#127968;</span>Home</a><a href="#"><span class="mnu-tb-ic">&#128269;</span>Search</a><a href="#"><span class="mnu-tb-ic">&#128236;</span>Inbox</a><a href="#"><span class="mnu-tb-ic">&#128100;</span>You</a><span class="mnu-tb-ink"></span></nav>
+  </div><div class="meta"><div class="nm">Bottom Tab Bar</div><span class="ref">.mnu-tabbar</span><div class="desc">The mobile bottom nav: an accent ink pad slides under the active tab while its icon lifts and scales, the app tab bar. Hover a tab to move the ink.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="menu" data-interact="toggle" data-c="pos"><div class="stage">
+    <div class="mnu-hamicons">
+      <div class="mnu-hi mnu-hi-x"><input type="checkbox" id="mnu-hi-x"><label for="mnu-hi-x"><span></span><span></span><span></span></label><small>to close</small></div>
+      <div class="mnu-hi mnu-hi-arrow"><input type="checkbox" id="mnu-hi-arrow"><label for="mnu-hi-arrow"><span></span><span></span><span></span></label><small>to back</small></div>
+      <div class="mnu-hi mnu-hi-plus"><input type="checkbox" id="mnu-hi-plus"><label for="mnu-hi-plus"><span></span><span></span><span></span></label><small>plus to x</small></div>
+    </div>
+  </div><div class="meta"><div class="nm">Hamburger Morphs</div><span class="ref">.mnu-hamicons</span><div class="desc">The menu button micro-animations: the three bars morph into a close cross, a back arrow, or a plus that spins to an x. Click each to toggle.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="menu" data-interact="hover" data-c="info"><div class="stage">
+    <nav class="mnu-dotnav"><a href="#" data-tip="Intro"></a><a href="#" class="is-active" data-tip="Features"></a><a href="#" data-tip="Pricing"></a><a href="#" data-tip="Reviews"></a><a href="#" data-tip="Contact"></a></nav>
+  </div><div class="meta"><div class="nm">Dot Nav</div><span class="ref">.mnu-dotnav</span><div class="desc">The scrollytelling side rail: one dot glows as the active section while each reveals its label on hover, the long-page navigator. The active dot wears an accent halo.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+</div>
