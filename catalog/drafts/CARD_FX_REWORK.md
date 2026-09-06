@@ -17,9 +17,16 @@ re-run the pipeline and recapture the GIF for each as it is reworked, then tick 
 - **Gold Foil** `.fxc-f-gold` (2026-09-06) - embossed gold frame (::after) + a brighter warm specular.
 - **Tinsel** `.fxc-f-tinsel` (2026-09-06) - tight, fast vertical shimmer with a coloured sparkle band, distinct from the brushed Linear.
 
+## Cut (2026-09-06)
+
+After the reworks, a re-vote still passed four, so they were removed from the fork (source,
+catalog, GIFs) rather than reworked again: **Enchanted** `.fxc-f-enchanted`, **Halo**
+`.fxc-f-halo`, **Linear Foil** `.fxc-f-linear`, **Tinsel** `.fxc-f-tinsel`. Card FX set is now
+28 facets. The rework history above is kept for reference if any are revisited.
+
 ## To rework (remaining)
 
-None - the full vote backlog (9/9) is reworked. Re-vote on the Prism Foil Picker to see if the reworks changed your mind; new passes get logged here.
+None.
 
 ## Loved (30) — keep as-is
 
