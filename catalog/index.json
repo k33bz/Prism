@@ -1,5 +1,5 @@
 {
-  "count": 3305,
+  "count": 3320,
   "effects": [
     {
       "id": "charts-big-metric-count-up",
@@ -30646,9 +30646,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "The classic 80s scene: a slit sun ramping magenta to orange bobs over a cyan neon grid that streams toward you, under a twinkling starfield with a glowing horizon line."
     },
     {
@@ -30684,9 +30684,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A first-person run down the grid: the floor streams fast toward the sun on the horizon while dashed centre-line markers rush up the road. A driving-game backdrop."
     },
     {
@@ -30720,9 +30720,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "The sun rises from below the horizon and sinks again on a loop, cresting the neon grid at the top of its arc. A slow, cinematic version of the outrun scene."
     },
     {
@@ -30759,9 +30759,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Two palm silhouettes flank the slit sun over the neon grid, the vaporwave postcard. Stars twinkle above and the horizon line pulses cyan."
     },
     {
@@ -30796,9 +30796,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A jagged neon mountain range sits on the horizon in front of the slit sun, the grid streaming below it. The synthwave album-cover framing."
     },
     {
@@ -30834,9 +30834,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Neon grid walls and floor rush past toward a small glowing sun at the vanishing point, a corridor of light. Faster and more immersive than the flat scenes."
     },
     {
@@ -33749,6 +33749,432 @@
       "updatedOn": "2026-07-28",
       "author": "crazy54",
       "description": "A timeline rail with tick marks you drag a wide handle across; the readout updates live. For scrubbing a range or time offset."
+    },
+    {
+      "id": "input-rainbow-border-sweep",
+      "name": "Rainbow Border Sweep",
+      "gallery": "input",
+      "category": "BUTTON HOVER EFFECTS",
+      "ref": ".in-bfx-border",
+      "classes": [
+        "in-bfx-btn",
+        "in-bfx-border",
+        "in-bfx-rainbow"
+      ],
+      "params": [],
+      "tags": [
+        "input",
+        "animated",
+        "new"
+      ],
+      "componentType": "button",
+      "interaction": "hover",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A gradient ring built from the six theme accents fades in around the button and slides on hover. The idle loop previews it, and the rainbow retints with the theme."
+    },
+    {
+      "id": "input-conic-rainbow-ring",
+      "name": "Conic Rainbow Ring",
+      "gallery": "input",
+      "category": "BUTTON HOVER EFFECTS",
+      "ref": ".in-bfx-conic",
+      "classes": [
+        "in-bfx-btn",
+        "in-bfx-conic"
+      ],
+      "params": [],
+      "tags": [
+        "input",
+        "animated",
+        "new"
+      ],
+      "componentType": "button",
+      "interaction": "hover",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A conic gradient of the theme accents rotates behind the button, showing only as a bright spinning rim. It reveals on hover and previews on the idle loop."
+    },
+    {
+      "id": "input-fill-from-center",
+      "name": "Fill From Center",
+      "gallery": "input",
+      "category": "BUTTON HOVER EFFECTS",
+      "ref": ".in-bfx-center",
+      "classes": [
+        "in-bfx-btn",
+        "in-bfx-center",
+        "in-bfx-rainbow"
+      ],
+      "params": [],
+      "tags": [
+        "input",
+        "animated",
+        "new"
+      ],
+      "componentType": "button",
+      "interaction": "hover",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A gradient disc grows from the centre to flood the button on hover. The classic radial call-to-action fill; the loop demonstrates it."
+    },
+    {
+      "id": "input-fill-from-left",
+      "name": "Fill From Left",
+      "gallery": "input",
+      "category": "BUTTON HOVER EFFECTS",
+      "ref": ".in-bfx-left",
+      "classes": [
+        "in-bfx-btn",
+        "in-bfx-left"
+      ],
+      "params": [],
+      "tags": [
+        "input",
+        "animated",
+        "new"
+      ],
+      "componentType": "button",
+      "interaction": "hover",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A gradient wipes in from the left edge to fill the button on hover, the classic sliding-fill call to action. Idle loop included."
+    },
+    {
+      "id": "input-fill-from-bottom",
+      "name": "Fill From Bottom",
+      "gallery": "input",
+      "category": "BUTTON HOVER EFFECTS",
+      "ref": ".in-bfx-up",
+      "classes": [
+        "in-bfx-btn",
+        "in-bfx-up"
+      ],
+      "params": [],
+      "tags": [
+        "input",
+        "animated",
+        "new"
+      ],
+      "componentType": "button",
+      "interaction": "hover",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "The fill rises from the bottom edge to cover the button on hover, a rising-liquid take on the fill button."
+    },
+    {
+      "id": "input-diagonal-fill",
+      "name": "Diagonal Fill",
+      "gallery": "input",
+      "category": "BUTTON HOVER EFFECTS",
+      "ref": ".in-bfx-diag",
+      "classes": [
+        "in-bfx-btn",
+        "in-bfx-diag"
+      ],
+      "params": [],
+      "tags": [
+        "input",
+        "animated",
+        "new"
+      ],
+      "componentType": "button",
+      "interaction": "hover",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A slanted gradient sweeps across from the lower left to fill the button on hover. The angled cut gives it momentum."
+    },
+    {
+      "id": "input-split-fill",
+      "name": "Split Fill",
+      "gallery": "input",
+      "category": "BUTTON HOVER EFFECTS",
+      "ref": ".in-bfx-split",
+      "classes": [
+        "in-bfx-btn",
+        "in-bfx-split"
+      ],
+      "params": [],
+      "tags": [
+        "input",
+        "animated",
+        "new"
+      ],
+      "componentType": "button",
+      "interaction": "hover",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Two halves fill inward from the left and right edges and meet in the middle on hover, a shutter-style reveal."
+    },
+    {
+      "id": "input-glow-pulse",
+      "name": "Glow Pulse",
+      "gallery": "input",
+      "category": "BUTTON HOVER EFFECTS",
+      "ref": ".in-bfx-glow",
+      "classes": [
+        "in-bfx-btn",
+        "in-bfx-glow"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "input",
+        "animated",
+        "new"
+      ],
+      "componentType": "button",
+      "interaction": "hover",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "The border and label light up and a layered glow blooms around the button on hover. Colour follows the role, so it re-tints. Idle loop previews it."
+    },
+    {
+      "id": "input-shine-sweep",
+      "name": "Shine Sweep",
+      "gallery": "input",
+      "category": "BUTTON HOVER EFFECTS",
+      "ref": ".in-bfx-shine",
+      "classes": [
+        "in-bfx-btn",
+        "in-bfx-shine"
+      ],
+      "params": [],
+      "tags": [
+        "input",
+        "animated",
+        "new"
+      ],
+      "componentType": "button",
+      "interaction": "hover",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A diagonal band of light sweeps across the face of the button on hover, the glossy product-button gleam."
+    },
+    {
+      "id": "input-gradient-text",
+      "name": "Gradient Text",
+      "gallery": "input",
+      "category": "BUTTON HOVER EFFECTS",
+      "ref": ".in-bfx-gtext",
+      "classes": [
+        "in-bfx-btn",
+        "in-bfx-gtext",
+        "in-bfx-rainbow"
+      ],
+      "params": [],
+      "tags": [
+        "input",
+        "animated",
+        "new"
+      ],
+      "componentType": "button",
+      "interaction": "hover",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "On hover the label takes a scrolling gradient of the theme accents while the button stays quiet, a subtle premium cue."
+    },
+    {
+      "id": "input-neon-outline",
+      "name": "Neon Outline",
+      "gallery": "input",
+      "category": "BUTTON HOVER EFFECTS",
+      "ref": ".in-bfx-neon",
+      "classes": [
+        "in-bfx-btn",
+        "in-bfx-neon"
+      ],
+      "params": [],
+      "tags": [
+        "input",
+        "animated",
+        "new"
+      ],
+      "componentType": "button",
+      "interaction": "hover",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "The button goes transparent with a glowing outline and text shadow on hover, the arcade-sign look. Colour from the info role."
+    },
+    {
+      "id": "input-lift-and-glow",
+      "name": "Lift and Glow",
+      "gallery": "input",
+      "category": "BUTTON HOVER EFFECTS",
+      "ref": ".in-bfx-lift",
+      "classes": [
+        "in-bfx-btn",
+        "in-bfx-lift"
+      ],
+      "params": [],
+      "tags": [
+        "input",
+        "animated",
+        "new"
+      ],
+      "componentType": "button",
+      "interaction": "hover",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "The button rises a few pixels and pools a soft accent glow beneath it on hover, a tactile raise. Idle loop nudges it."
+    },
+    {
+      "id": "input-cta-arrow-slide",
+      "name": "CTA Arrow Slide",
+      "gallery": "input",
+      "category": "BUTTON HOVER EFFECTS",
+      "ref": ".in-bfx-cta",
+      "classes": [
+        "in-bfx-btn",
+        "in-bfx-cta"
+      ],
+      "params": [],
+      "tags": [
+        "input",
+        "animated",
+        "new"
+      ],
+      "componentType": "button",
+      "interaction": "hover",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "An arrow slides out from behind the label and the button tints on hover, the forward call to action. The loop shows the arrow appearing."
+    },
+    {
+      "id": "input-gradient-shift",
+      "name": "Gradient Shift",
+      "gallery": "input",
+      "category": "BUTTON HOVER EFFECTS",
+      "ref": ".in-bfx-shift",
+      "classes": [
+        "in-bfx-btn",
+        "in-bfx-shift",
+        "in-bfx-rainbow"
+      ],
+      "params": [],
+      "tags": [
+        "input",
+        "animated",
+        "new"
+      ],
+      "componentType": "button",
+      "interaction": "hover",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "The button wears a theme-accent gradient that scrolls; on hover it scrolls faster and lifts a coloured shadow, a living primary button."
+    },
+    {
+      "id": "input-ripple-expand",
+      "name": "Ripple Expand",
+      "gallery": "input",
+      "category": "BUTTON HOVER EFFECTS",
+      "ref": ".in-bfx-ripple",
+      "classes": [
+        "in-bfx-btn",
+        "in-bfx-ripple"
+      ],
+      "params": [],
+      "tags": [
+        "input",
+        "animated",
+        "new"
+      ],
+      "componentType": "button",
+      "interaction": "hover",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A ring expands from the centre and the button tints on hover, the material-style ripple. The loop fires it periodically."
     },
     {
       "id": "text-gradient-flow-staple",

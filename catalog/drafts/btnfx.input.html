@@ -1,0 +1,152 @@
+<h3 class="sec">BUTTON HOVER EFFECTS</h3>
+<style id="in-bfx-styles">
+/* ===== Button hover effects (k33bz fork). Gradient, rainbow, glow and fill-in reveals on
+   hover, the kind a call-to-action grid uses. The "rainbow" is the six semantic tokens
+   (--accent orange, --pos green, --info blue, --crit purple, --neg red, --warn amber), so it
+   retints with the theme. One registered driver --bfx (0 at rest, 1 hovered) powers every
+   effect through calc(); the idle loop sweeps --bfx 0->1->0 so the GIF shows the hover, and a
+   real pointer pins it to 1 (:hover sets animation-name:none). in-bfx- prefix, tokens only. ===== */
+@property --bfx{syntax:"<number>";inherits:true;initial-value:0}
+.in-bfx-btn{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:6px;
+  min-width:132px;height:40px;padding:0 20px;border-radius:9px;border:1px solid var(--line);background:var(--panel2);
+  color:var(--ink);font:700 12.5px ui-sans-serif,system-ui,sans-serif;letter-spacing:.01em;cursor:pointer;
+  overflow:hidden;isolation:isolate;user-select:none;-webkit-user-select:none;outline:none;--bfx:0;
+  transition:--bfx .32s ease,color .3s,border-color .3s,box-shadow .3s,transform .2s,background-position .3s}
+.in-bfx-btn > span{position:relative;z-index:2}
+.in-bfx-btn:not(:hover){animation:inBfxDrive 3.2s ease-in-out infinite}
+.in-bfx-btn:hover{--bfx:1;animation-name:none}
+@keyframes inBfxDrive{0%,16%{--bfx:0}46%,62%{--bfx:1}92%,100%{--bfx:0}}
+.in-bfx-rainbow{--bfx-rain:linear-gradient(90deg,var(--accent),var(--pos),var(--info),var(--crit),var(--neg),var(--warn),var(--accent))}
+
+/* (1) rainbow border sweep */
+.in-bfx-border::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1.6px;background:var(--bfx-rain);background-size:220% 100%;
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0);
+  opacity:var(--bfx);animation:inBfxSlide 2s linear infinite}
+@keyframes inBfxSlide{to{background-position:220% 0}}
+
+/* (2) conic rainbow ring */
+.in-bfx-conic::before{content:"";position:absolute;inset:-45%;z-index:0;opacity:var(--bfx);animation:inBfxSpin 3s linear infinite;
+  background:conic-gradient(from 0deg,var(--accent),var(--pos),var(--info),var(--crit),var(--neg),var(--warn),var(--accent))}
+.in-bfx-conic::after{content:"";position:absolute;inset:1.6px;border-radius:inherit;background:var(--panel2);z-index:1}
+@keyframes inBfxSpin{to{transform:rotate(1turn)}}
+
+/* (3) fill from center */
+.in-bfx-center::before{content:"";position:absolute;inset:0;z-index:0;border-radius:inherit;background:var(--bfx-rain);transform:scale(calc(var(--bfx)*1.7))}
+
+/* (4) fill from left */
+.in-bfx-left::before{content:"";position:absolute;inset:0;z-index:0;background:linear-gradient(90deg,var(--accent),var(--crit));transform:scaleX(var(--bfx));transform-origin:left}
+
+/* (5) fill from bottom */
+.in-bfx-up::before{content:"";position:absolute;inset:0;z-index:0;background:linear-gradient(0deg,var(--info),var(--crit));transform:scaleY(var(--bfx));transform-origin:bottom}
+
+/* (6) diagonal fill */
+.in-bfx-diag::before{content:"";position:absolute;top:0;bottom:0;left:0;width:150%;z-index:0;background:linear-gradient(120deg,var(--pos),var(--info));transform:skewX(-14deg) translateX(calc((var(--bfx) - 1)*115%))}
+
+/* (7) split fill */
+.in-bfx-split::before,.in-bfx-split::after{content:"";position:absolute;top:0;bottom:0;width:52%;z-index:0;background:linear-gradient(90deg,var(--crit),var(--info));transform:scaleX(var(--bfx))}
+.in-bfx-split::before{left:0;transform-origin:left}.in-bfx-split::after{right:0;transform-origin:right}
+
+/* (8) glow pulse */
+.in-bfx-glow{--bfx-c:var(--c,var(--accent));--bfx-rgb:var(--c-rgb,var(--accent-rgb));
+  border-color:color-mix(in srgb,var(--bfx-c) calc(var(--bfx)*100%),var(--line));
+  box-shadow:0 0 calc(var(--bfx)*16px) calc(var(--bfx)*2px) rgba(var(--bfx-rgb),calc(var(--bfx)*.6)),0 0 calc(var(--bfx)*32px) calc(var(--bfx)*6px) rgba(var(--bfx-rgb),calc(var(--bfx)*.3))}
+
+/* (9) shine sweep */
+.in-bfx-shine::after{content:"";position:absolute;top:0;bottom:0;width:42%;z-index:3;left:calc(-60% + var(--bfx)*200%);
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.5),transparent);transform:skewX(-18deg)}
+
+/* (10) gradient text */
+.in-bfx-gtext > span{background:var(--bfx-rain);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  color:transparent;opacity:calc(.35 + var(--bfx)*.65);animation:inBfxSlide 2.4s linear infinite}
+
+/* (11) neon outline */
+.in-bfx-neon{background:color-mix(in srgb,var(--panel2) calc(100% - var(--bfx)*100%),transparent);
+  border-color:color-mix(in srgb,var(--info) calc(var(--bfx)*100%),var(--line));
+  color:color-mix(in srgb,var(--info) calc(var(--bfx)*100%),var(--ink));
+  box-shadow:inset 0 0 calc(var(--bfx)*8px) rgba(var(--info-rgb),calc(var(--bfx)*.5)),0 0 calc(var(--bfx)*10px) rgba(var(--info-rgb),calc(var(--bfx)*.6))}
+
+/* (12) lift and glow */
+.in-bfx-lift{transform:translateY(calc(var(--bfx)*-3px));
+  border-color:color-mix(in srgb,var(--accent) calc(var(--bfx)*100%),var(--line));
+  box-shadow:0 calc(var(--bfx)*9px) calc(var(--bfx)*20px) rgba(var(--accent-rgb),calc(var(--bfx)*.4))}
+
+/* (13) CTA arrow slide */
+.in-bfx-cta{border-color:color-mix(in srgb,var(--pos) calc(var(--bfx)*100%),var(--line));color:color-mix(in srgb,var(--pos) calc(var(--bfx)*100%),var(--ink))}
+.in-bfx-cta > i{position:relative;z-index:2;overflow:hidden;font-style:normal;width:calc(var(--bfx)*13px);opacity:var(--bfx)}
+
+/* (14) gradient shift (always tinted, scrolls faster on hover) */
+.in-bfx-shift{color:var(--bg);border-color:transparent;background:var(--bfx-rain);background-size:300% 100%;
+  animation:inBfxShiftBg calc(3s - var(--bfx)*1.7s) linear infinite;box-shadow:0 calc(var(--bfx)*4px) calc(var(--bfx)*16px) rgba(var(--crit-rgb),calc(var(--bfx)*.4))}
+.in-bfx-shift:hover{animation:inBfxShiftBg 1.3s linear infinite}
+@keyframes inBfxShiftBg{to{background-position:300% 0}}
+
+/* (15) ripple expand */
+.in-bfx-ripple{border-color:color-mix(in srgb,var(--accent) calc(var(--bfx)*100%),var(--line));color:color-mix(in srgb,var(--accent) calc(var(--bfx)*100%),var(--ink))}
+.in-bfx-ripple::after{content:"";position:absolute;left:50%;top:50%;width:14px;height:14px;margin:-7px;border-radius:50%;z-index:3;border:2px solid var(--accent);
+  transform:scale(calc(var(--bfx)*8));opacity:calc((1 - var(--bfx))*.7)}
+
+@media (prefers-reduced-motion:reduce){ .in-bfx-btn,.in-bfx-btn *,.in-bfx-btn::before,.in-bfx-btn::after{animation:none!important} .in-bfx-btn{--bfx:1} .in-bfx-shift{--bfx:0} }
+</style>
+<div class="gallery">
+
+  <div class="tile is-new" data-ctype="button" data-interact="hover" data-c="accent"><div class="stage">
+    <button type="button" class="in-bfx-btn in-bfx-border in-bfx-rainbow"><span>Get started</span></button>
+  </div><div class="meta"><div class="nm">Rainbow Border Sweep</div><span class="ref">.in-bfx-border</span><div class="desc">A gradient ring built from the six theme accents fades in around the button and slides on hover. The idle loop previews it, and the rainbow retints with the theme.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="button" data-interact="hover" data-c="accent"><div class="stage">
+    <button type="button" class="in-bfx-btn in-bfx-conic"><span>Explore</span></button>
+  </div><div class="meta"><div class="nm">Conic Rainbow Ring</div><span class="ref">.in-bfx-conic</span><div class="desc">A conic gradient of the theme accents rotates behind the button, showing only as a bright spinning rim. It reveals on hover and previews on the idle loop.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="button" data-interact="hover" data-c="crit"><div class="stage">
+    <button type="button" class="in-bfx-btn in-bfx-center in-bfx-rainbow"><span>Download</span></button>
+  </div><div class="meta"><div class="nm">Fill From Center</div><span class="ref">.in-bfx-center</span><div class="desc">A gradient disc grows from the centre to flood the button on hover. The classic radial call-to-action fill; the loop demonstrates it.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="button" data-interact="hover" data-c="crit"><div class="stage">
+    <button type="button" class="in-bfx-btn in-bfx-left"><span>Continue</span></button>
+  </div><div class="meta"><div class="nm">Fill From Left</div><span class="ref">.in-bfx-left</span><div class="desc">A gradient wipes in from the left edge to fill the button on hover, the classic sliding-fill call to action. Idle loop included.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="button" data-interact="hover" data-c="info"><div class="stage">
+    <button type="button" class="in-bfx-btn in-bfx-up"><span>Upload</span></button>
+  </div><div class="meta"><div class="nm">Fill From Bottom</div><span class="ref">.in-bfx-up</span><div class="desc">The fill rises from the bottom edge to cover the button on hover, a rising-liquid take on the fill button.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="button" data-interact="hover" data-c="pos"><div class="stage">
+    <button type="button" class="in-bfx-btn in-bfx-diag"><span>Deploy</span></button>
+  </div><div class="meta"><div class="nm">Diagonal Fill</div><span class="ref">.in-bfx-diag</span><div class="desc">A slanted gradient sweeps across from the lower left to fill the button on hover. The angled cut gives it momentum.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="button" data-interact="hover" data-c="crit"><div class="stage">
+    <button type="button" class="in-bfx-btn in-bfx-split"><span>Confirm</span></button>
+  </div><div class="meta"><div class="nm">Split Fill</div><span class="ref">.in-bfx-split</span><div class="desc">Two halves fill inward from the left and right edges and meet in the middle on hover, a shutter-style reveal.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="button" data-interact="hover" data-c="accent"><div class="stage">
+    <button type="button" class="in-bfx-btn in-bfx-glow"><span>Launch</span></button>
+  </div><div class="meta"><div class="nm">Glow Pulse</div><span class="ref">.in-bfx-glow</span><div class="desc">The border and label light up and a layered glow blooms around the button on hover. Colour follows the role, so it re-tints. Idle loop previews it.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="button" data-interact="hover" data-c="accent"><div class="stage">
+    <button type="button" class="in-bfx-btn in-bfx-shine"><span>Buy now</span></button>
+  </div><div class="meta"><div class="nm">Shine Sweep</div><span class="ref">.in-bfx-shine</span><div class="desc">A diagonal band of light sweeps across the face of the button on hover, the glossy product-button gleam.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="button" data-interact="hover" data-c="crit"><div class="stage">
+    <button type="button" class="in-bfx-btn in-bfx-gtext in-bfx-rainbow"><span>Upgrade</span></button>
+  </div><div class="meta"><div class="nm">Gradient Text</div><span class="ref">.in-bfx-gtext</span><div class="desc">On hover the label takes a scrolling gradient of the theme accents while the button stays quiet, a subtle premium cue.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="button" data-interact="hover" data-c="info"><div class="stage">
+    <button type="button" class="in-bfx-btn in-bfx-neon"><span>Connect</span></button>
+  </div><div class="meta"><div class="nm">Neon Outline</div><span class="ref">.in-bfx-neon</span><div class="desc">The button goes transparent with a glowing outline and text shadow on hover, the arcade-sign look. Colour from the info role.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="button" data-interact="hover" data-c="accent"><div class="stage">
+    <button type="button" class="in-bfx-btn in-bfx-lift"><span>Save</span></button>
+  </div><div class="meta"><div class="nm">Lift and Glow</div><span class="ref">.in-bfx-lift</span><div class="desc">The button rises a few pixels and pools a soft accent glow beneath it on hover, a tactile raise. Idle loop nudges it.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="button" data-interact="hover" data-c="pos"><div class="stage">
+    <button type="button" class="in-bfx-btn in-bfx-cta"><span>Next</span><i>&rarr;</i></button>
+  </div><div class="meta"><div class="nm">CTA Arrow Slide</div><span class="ref">.in-bfx-cta</span><div class="desc">An arrow slides out from behind the label and the button tints on hover, the forward call to action. The loop shows the arrow appearing.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="button" data-interact="hover" data-c="crit"><div class="stage">
+    <button type="button" class="in-bfx-btn in-bfx-shift in-bfx-rainbow"><span>Subscribe</span></button>
+  </div><div class="meta"><div class="nm">Gradient Shift</div><span class="ref">.in-bfx-shift</span><div class="desc">The button wears a theme-accent gradient that scrolls; on hover it scrolls faster and lifts a coloured shadow, a living primary button.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="button" data-interact="hover" data-c="accent"><div class="stage">
+    <button type="button" class="in-bfx-btn in-bfx-ripple"><span>Add</span></button>
+  </div><div class="meta"><div class="nm">Ripple Expand</div><span class="ref">.in-bfx-ripple</span><div class="desc">A ring expands from the centre and the button tints on hover, the material-style ripple. The loop fires it periodically.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+</div>
