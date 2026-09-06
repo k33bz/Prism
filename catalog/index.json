@@ -1896,10 +1896,9 @@
         "sl",
         "ts",
         "lv",
-        "ok",
-        "m",
-        "err",
         "info",
+        "m",
+        "ok",
         "warn",
         "cursor"
       ],
@@ -15752,7 +15751,7 @@
       "addedOn": "2026-09-06",
       "updatedOn": null,
       "author": "k33bz",
-      "description": "A packet is drawn off the top and dropped to the front over and over, the overhand or side shuffle."
+      "description": "A packet is pulled off the top of the right stack and dropped onto the front of the left stack, over and over, the overhand or side shuffle."
     },
     {
       "id": "fx-table-wash",
