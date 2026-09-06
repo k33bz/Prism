@@ -55,7 +55,7 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
 .fxc-m-invert .fxc-card { animation: 4s ease-in-out 0s infinite normal none running fxcInvert; }
 .fxc-m-deal .fxc-card { animation: 3.2s cubic-bezier(0.2, 0.8, 0.3, 1) 0s infinite normal none running fxcDeal; }
 .fxc-m-toss .fxc-card { animation: 3.4s cubic-bezier(0.3, 0, 0.5, 1) 0s infinite normal none running fxcToss; }
-.fxc-m-peek .fxc-card { transform-origin: left center; animation: 3.2s ease-in-out 0s infinite normal none running fxcPeek; }
+.fxc-m-peek .fxc-card { position: absolute; inset: 0px; transform-origin: left center; animation: 3.2s ease-in-out 0s infinite normal none running fxcPeek; z-index: 2; }
 .fxc-live .fxc-card { transition: transform 0.12s ease-out; transform: rotateX(calc((var(--fxc-my) - .5)*-26deg)) rotateY(calc((var(--fxc-mx) - .5)*26deg)); }
 .fxc-live .fxc-foil { background-image: ; background-repeat: ; background-attachment: ; background-origin: ; background-clip: ; background-color: ; background-size: 200% 200%; background-position: calc(var(--fxc-mx)*100%) calc(var(--fxc-my)*100%); mix-blend-mode: color-dodge; opacity: 0.55; }
 .fxc-live .fxc-foil::after { content: ""; position: absolute; inset: 0px; background: radial-gradient(120px 120px at calc(var(--fxc-mx)*100%) calc(var(--fxc-my)*100%),rgba(255,255,255,.55),transparent 60%); mix-blend-mode: overlay; }
@@ -102,8 +102,8 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
   100% { transform: translateX(130px) rotate(320deg) scale(0.9); opacity: 0; }
 }
 @keyframes fxcPeek { 
-  0%, 20%, 100% { transform: rotateY(0deg); }
-  50%, 70% { transform: rotateY(-46deg); }
+  0%, 16%, 100% { transform: rotateY(0deg); }
+  48%, 74% { transform: rotateY(-64deg); }
 }
 @keyframes fxcOrbitCard { 
   0%, 100% { transform: rotateX(12deg) rotateY(-16deg); }
@@ -118,8 +118,10 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
 .fxc-f-tinsel .fxc-foil { background: repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.16) 0px, rgba(255, 255, 255, 0.16) 1px, transparent 1px, transparent 3px); mix-blend-mode: overlay; opacity: 0.8; }
 .fxc-f-tinsel .fxc-foil::after { content: ""; position: absolute; inset: 0px; background: linear-gradient(100deg, transparent 40%, rgba(255, 255, 255, 0.6) 50%, transparent 60%) 0% 0% / 240% 240%; mix-blend-mode: color-dodge; animation: 2.6s ease-in-out 0s infinite normal none running fxcSweep; }
 .fxc-f-waterweb .fxc-foil { background-image: ; background-position-x: ; background-position-y: ; background-repeat: ; background-attachment: ; background-origin: ; background-clip: ; background-color: ; background-size: 180% 180%, 200% 200%; mix-blend-mode: screen; opacity: 0.6; animation: 5s ease-in-out 0s infinite normal none running fxcFlow; }
-.fxc-f-starlight .fxc-foil { background: radial-gradient(circle,rgba(255,255,255,.9) 0 .6px,transparent 1.4px) 4px 6px/17px 15px,
-    radial-gradient(circle,rgba(var(--accent-rgb),.85) 0 .6px,transparent 1.4px) 11px 12px/21px 19px; mix-blend-mode: screen; opacity: 0.85; animation: 2.4s ease-in-out 0s infinite normal none running fxcTwinkle; }
+.fxc-f-starlight .fxc-foil { background: radial-gradient(circle,rgba(255,255,255,.95) 0 .9px,transparent 1.7px) 0 0/24px 22px,
+    radial-gradient(circle,rgba(var(--info-rgb),.8) 0 .6px,transparent 1.3px) 0 0/18px 16px,
+    radial-gradient(circle,rgba(var(--accent-rgb),.65) 0 .4px,transparent 1px) 0 0/12px 11px; mix-blend-mode: screen; opacity: 0.9; animation: 7s linear 0s infinite normal none running fxcParallax; }
+.fxc-f-starlight .fxc-foil::after { content: ""; position: absolute; inset: 0px; background: radial-gradient(circle, rgba(255, 255, 255, 0.95) 0px, rgba(255, 255, 255, 0.95) 1px, transparent 2px) 6px 8px / 31px 28px; mix-blend-mode: screen; animation: 2.2s ease-in-out 0s infinite normal none running fxcTwinkle; }
 .fxc-f-orbs .fxc-foil { background: radial-gradient(circle, transparent 0px, transparent 3px, rgba(255, 255, 255, 0.22) 3px, rgba(255, 255, 255, 0.22) 3.8px, transparent 3.8px) 0px 0px / 13px 13px, radial-gradient(circle, rgba(255, 255, 255, 0.24) 0px, rgba(255, 255, 255, 0.24) 1px, transparent 1.6px) 0px 0px / 13px 13px; mix-blend-mode: overlay; opacity: 0.75; }
 .fxc-f-orbs .fxc-foil::after { content: ""; position: absolute; inset: 0px; background-image: ; background-position-x: ; background-position-y: ; background-repeat: ; background-attachment: ; background-origin: ; background-clip: ; background-color: ; background-size: 220% 220%; mix-blend-mode: color-dodge; opacity: 0.4; animation: 3.4s ease-in-out 0s infinite normal none running fxcSweep; }
 .fxc-f-honeycomb .fxc-foil { background: repeating-linear-gradient(30deg, rgba(255, 255, 255, 0.14) 0px, rgba(255, 255, 255, 0.14) 1px, transparent 1px, transparent 16px), repeating-linear-gradient(-30deg, rgba(255, 255, 255, 0.14) 0px, rgba(255, 255, 255, 0.14) 1px, transparent 1px, transparent 16px), repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.1) 0px, rgba(255, 255, 255, 0.1) 1px, transparent 1px, transparent 28px); mix-blend-mode: overlay; opacity: 0.7; }
@@ -149,6 +151,10 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
   0%, 100% { opacity: 0.35; }
   50% { opacity: 0.9; }
 }
+@keyframes fxcParallax { 
+  0% { background-position: 0px 0px, 0px 0px, 0px 0px; }
+  100% { background-position: -48px -44px, -18px -16px, -12px -11px; }
+}
 @keyframes fxcArc { 
   0%, 100% { transform: translateY(0px); }
   50% { transform: translateY(-8px); }
@@ -160,7 +166,7 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
 </head>
 <body>
 <div class="tile"><div class="stage" id="stage"><div class="fxc fxc-f-starlight" role="img" aria-label="Card foil: Starlight"><div class="fxc-card"><div class="fxc-face fxc-front"><div class="fxc-hd"><span class="fxc-name">ATLAS</span><span class="fxc-cost"></span></div><div class="fxc-art"></div><div class="fxc-type">SPELL</div><div class="fxc-txt"><i></i><i></i><i></i></div><div class="fxc-stat">3</div><span class="fxc-foil"></span></div><div class="fxc-face fxc-back"></div></div></div></div></div>
-<div class="meta"><b>Starlight</b> · <code>fx-starlight</code><br>FX Store · TCG FOIL STYLES<p>Scattered twinkling points and star bursts, the starlight or galaxy-star holo of the vintage sets.</p></div>
+<div class="meta"><b>Starlight</b> · <code>fx-starlight</code><br>FX Store · TCG FOIL STYLES<p>A parallax starfield: three layers of stars drift at different speeds for real depth, with a few brighter ones twinkling on top. The starlight or galaxy-star holo.</p></div>
 
 </body>
 </html>
