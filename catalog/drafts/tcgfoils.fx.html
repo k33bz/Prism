@@ -12,8 +12,6 @@
     repeating-linear-gradient(112deg,transparent 0 21px,rgba(255,255,255,.1) 21px 22px);
   mix-blend-mode:screen;opacity:.7}
 .fxc-f-crackedice .fxc-foil::after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 38%,rgba(var(--info-rgb),.5) 50%,transparent 62%);background-size:260% 260%;mix-blend-mode:color-dodge;animation:fxcSweep 3.4s ease-in-out infinite}
-.fxc-f-tinsel .fxc-foil{background:repeating-linear-gradient(90deg,rgba(255,255,255,.28) 0 1px,transparent 1px 2.5px);mix-blend-mode:overlay;opacity:.85}
-.fxc-f-tinsel .fxc-foil::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 6px,rgba(var(--info-rgb),.5) 7px 8px,transparent 9px 14px),linear-gradient(100deg,transparent 42%,rgba(255,255,255,.8) 50%,transparent 58%);background-size:auto,200% 200%;mix-blend-mode:color-dodge;animation:fxcSweep 1.8s ease-in-out infinite}
 .fxc-f-waterweb .fxc-foil{background:
     repeating-radial-gradient(circle at 28% 30%,rgba(255,255,255,.12) 0 5px,transparent 5px 13px),
     repeating-radial-gradient(circle at 74% 66%,rgba(var(--info-rgb),.16) 0 6px,transparent 6px 16px);
@@ -40,8 +38,6 @@
     radial-gradient(circle at 50% 0%,rgba(255,255,255,.16) 0 6px,transparent 7px) 0 0/18px 10px,
     radial-gradient(circle at 50% 0%,rgba(var(--info-rgb),.22) 0 6px,transparent 7px) 9px 5px/18px 10px;
   mix-blend-mode:screen;opacity:.7;animation:fxcFlow 4s ease-in-out infinite}
-.fxc-f-halo .fxc-foil{background:repeating-radial-gradient(circle at 50% 140%,transparent 0 8px,rgba(255,255,255,.32) 8px 11px,transparent 11px 19px);mix-blend-mode:screen;opacity:.85;overflow:hidden}
-.fxc-f-halo .fxc-foil::after{content:"";position:absolute;inset:0;background:repeating-radial-gradient(circle at 50% 140%,transparent 0 8px,rgba(var(--info-rgb),.6) 8px 10px,rgba(var(--crit-rgb),.5) 10px 12px,transparent 12px 19px),linear-gradient(118deg,transparent 42%,rgba(255,255,255,.5) 50%,transparent 58%);background-size:auto,260% 260%;mix-blend-mode:color-dodge;animation:fxcArc 3.4s ease-in-out infinite,fxcSweep 3.4s ease-in-out infinite}
 .fxc-f-confetti .fxc-foil{background:
     radial-gradient(circle,var(--accent) 0 1.4px,transparent 2px) 3px 5px/23px 21px,
     radial-gradient(circle,var(--info) 0 1.4px,transparent 2px) 14px 12px/27px 25px,
@@ -62,8 +58,6 @@
 .fxc-f-scales .fxc-foil::after{content:"";position:absolute;inset:0;background:var(--fxc-rain);background-size:220% 220%;mix-blend-mode:color-dodge;opacity:.35;animation:fxcSweep 3.6s ease-in-out infinite}
 /* Disney Lorcana -------------------------------------------------------------- */
 .fxc-f-coldfoil .fxc-foil{background:linear-gradient(105deg,transparent 20%,rgba(255,255,255,.5) 44%,rgba(var(--info-rgb),.35) 52%,transparent 64%);background-size:250% 250%;mix-blend-mode:overlay;animation:fxcSweep 3.4s ease-in-out infinite}
-.fxc-f-enchanted .fxc-foil{background:linear-gradient(115deg,transparent 38%,rgba(255,255,255,.4) 50%,transparent 62%),var(--fxc-rain);background-size:260% 260%,200% 200%;mix-blend-mode:color-dodge;opacity:.55;animation:fxcSweep 3.6s ease-in-out infinite}
-.fxc-f-enchanted .fxc-foil::after{content:"";position:absolute;inset:3px;border-radius:7px;border:1.5px solid rgba(255,255,255,.6);box-shadow:0 0 10px rgba(var(--accent-rgb),.7),inset 0 0 10px rgba(var(--info-rgb),.6),inset 0 0 0 3px rgba(var(--crit-rgb),.22);background:radial-gradient(circle at 0 0,rgba(255,255,255,.7),transparent 15px),radial-gradient(circle at 100% 0,rgba(255,255,255,.7),transparent 15px),radial-gradient(circle at 0 100%,rgba(255,255,255,.7),transparent 15px),radial-gradient(circle at 100% 100%,rgba(255,255,255,.7),transparent 15px);mix-blend-mode:screen}
 /* keyframes new to this section (fxcSweep lives in the CARD MOTION & FOIL section) */
 @keyframes fxcFlow{0%,100%{background-position:0% 0%,100% 100%}50%{background-position:22% 30%,72% 62%}}
 @keyframes fxcTwinkle{0%,100%{opacity:.35}50%{opacity:.9}}
@@ -77,10 +71,6 @@
   <div class="tile is-new" data-ctype="fx-card" data-interact="auto-play" data-c="info"><div class="stage">
     <div class="fxc fxc-f-crackedice" role="img" aria-label="Card foil: Cracked Ice"><div class="fxc-card"><div class="fxc-face fxc-front"><div class="fxc-hd"><span class="fxc-name">NOVA</span><span class="fxc-cost"></span></div><div class="fxc-art"></div><div class="fxc-type">UNIT</div><div class="fxc-txt"><i></i><i></i><i></i></div><div class="fxc-stat">6</div><span class="fxc-foil"></span></div><div class="fxc-face fxc-back"></div></div></div>
   </div><div class="meta"><div class="nm">Cracked Ice</div><span class="ref">.fxc-f-crackedice</span><div class="desc">Large angular reflective shards like shattered glass, the cracked-ice reverse holo of the Pokemon EX era.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
-
-  <div class="tile is-new" data-ctype="fx-card" data-interact="auto-play" data-c="accent"><div class="stage">
-    <div class="fxc fxc-f-tinsel" role="img" aria-label="Card foil: Tinsel"><div class="fxc-card"><div class="fxc-face fxc-front"><div class="fxc-hd"><span class="fxc-name">EMBER</span><span class="fxc-cost"></span></div><div class="fxc-art"></div><div class="fxc-type">SPELL</div><div class="fxc-txt"><i></i><i></i><i></i></div><div class="fxc-stat">4</div><span class="fxc-foil"></span></div><div class="fxc-face fxc-back"></div></div></div>
-  </div><div class="meta"><div class="nm">Tinsel</div><span class="ref">.fxc-f-tinsel</span><div class="desc">A tight, fast vertical shimmer with a coloured sparkle band, the tinsel reverse holo. Faster and brighter than the brushed Linear foil.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
   <div class="tile is-new" data-ctype="fx-card" data-interact="auto-play" data-c="info"><div class="stage">
     <div class="fxc fxc-f-waterweb" role="img" aria-label="Card foil: Water Web"><div class="fxc-card"><div class="fxc-face fxc-front"><div class="fxc-hd"><span class="fxc-name">COMET</span><span class="fxc-cost"></span></div><div class="fxc-art"></div><div class="fxc-type">UNIT</div><div class="fxc-txt"><i></i><i></i><i></i></div><div class="fxc-stat">5</div><span class="fxc-foil"></span></div><div class="fxc-face fxc-back"></div></div></div>
@@ -102,10 +92,6 @@
     <div class="fxc fxc-f-surge" role="img" aria-label="Card foil: Surge Foil"><div class="fxc-card"><div class="fxc-face fxc-front"><div class="fxc-hd"><span class="fxc-name">COMET</span><span class="fxc-cost"></span></div><div class="fxc-art"></div><div class="fxc-type">ARTIFACT</div><div class="fxc-txt"><i></i><i></i><i></i></div><div class="fxc-stat">5</div><span class="fxc-foil"></span></div><div class="fxc-face fxc-back"></div></div></div>
   </div><div class="meta"><div class="nm">Surge Foil</div><span class="ref">.fxc-f-surge</span><div class="desc">A rippling scale pattern that makes the whole card look like it is vibrating with light, Magic's surge foil.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new" data-ctype="fx-card" data-interact="auto-play" data-c="crit"><div class="stage">
-    <div class="fxc fxc-f-halo" role="img" aria-label="Card foil: Halo Foil"><div class="fxc-card"><div class="fxc-face fxc-front"><div class="fxc-hd"><span class="fxc-name">NOVA</span><span class="fxc-cost"></span></div><div class="fxc-art"></div><div class="fxc-type">SPELL</div><div class="fxc-txt"><i></i><i></i><i></i></div><div class="fxc-stat">6</div><span class="fxc-foil"></span></div><div class="fxc-face fxc-back"></div></div></div>
-  </div><div class="meta"><div class="nm">Halo Foil</div><span class="ref">.fxc-f-halo</span><div class="desc">Swooping curved arcs of shine layered over the art, Magic's halo foil.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
-
   <div class="tile is-new" data-ctype="fx-card" data-interact="auto-play" data-c="pos"><div class="stage">
     <div class="fxc fxc-f-confetti" role="img" aria-label="Card foil: Confetti Foil"><div class="fxc-card"><div class="fxc-face fxc-front"><div class="fxc-hd"><span class="fxc-name">EMBER</span><span class="fxc-cost"></span></div><div class="fxc-art"></div><div class="fxc-type">UNIT</div><div class="fxc-txt"><i></i><i></i><i></i></div><div class="fxc-stat">4</div><span class="fxc-foil"></span></div><div class="fxc-face fxc-back"></div></div></div>
   </div><div class="meta"><div class="nm">Confetti Foil</div><span class="ref">.fxc-f-confetti</span><div class="desc">Tiny speckles of coloured foil scattered like thrown glitter, Magic's confetti foil, a descendant of galaxy foil.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
@@ -125,9 +111,3 @@
   <div class="tile is-new" data-ctype="fx-card" data-interact="auto-play" data-c="info"><div class="stage">
     <div class="fxc fxc-f-coldfoil" role="img" aria-label="Card foil: Cold Foil"><div class="fxc-card"><div class="fxc-face fxc-front"><div class="fxc-hd"><span class="fxc-name">COMET</span><span class="fxc-cost"></span></div><div class="fxc-art"></div><div class="fxc-type">UNIT</div><div class="fxc-txt"><i></i><i></i><i></i></div><div class="fxc-stat">5</div><span class="fxc-foil"></span></div><div class="fxc-face fxc-back"></div></div></div>
   </div><div class="meta"><div class="nm">Cold Foil</div><span class="ref">.fxc-f-coldfoil</span><div class="desc">A smooth, cool metallic sheen sweeping the whole face, Disney Lorcana's cold foil.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
-
-  <div class="tile is-new" data-ctype="fx-card" data-interact="auto-play" data-c="accent"><div class="stage">
-    <div class="fxc fxc-f-enchanted" role="img" aria-label="Card foil: Enchanted"><div class="fxc-card fxc-rainbow"><div class="fxc-face fxc-front"><div class="fxc-hd"><span class="fxc-name">ATLAS</span><span class="fxc-cost"></span></div><div class="fxc-art"></div><div class="fxc-type">MYTHIC</div><div class="fxc-txt"><i></i><i></i><i></i></div><div class="fxc-stat">X</div><span class="fxc-foil"></span></div><div class="fxc-face fxc-back"></div></div></div>
-  </div><div class="meta"><div class="nm">Enchanted</div><span class="ref">.fxc-f-enchanted</span><div class="desc">Whole-face rainbow cold foil inside an ornate glowing border, a Lorcana Enchanted card.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
-
-</div>
