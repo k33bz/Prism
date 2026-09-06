@@ -168486,6 +168486,15 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
 
 </div>
 
+
+
+
+
+
+
+
+
+
 <!-- prism-section:live.menus -->
 <h3 class="sec">LIVE RADIAL &amp; GESTURE MENUS</h3>
 <style id="mnu-live-styles">
@@ -168622,6 +168631,228 @@ function copyVizJs(btn){
 <\/script>
 <!-- /prism-section:live.menus -->
 
+<!-- prism-section:navs.menus -->
+<h3 class="sec">HEADER NAVIGATION</h3>
+<style id="navs-styles">
+/* ===== Header & footer navigation (k33bz fork). Full top-of-page app bars and site footers,
+   each a self-contained demo so nothing overflows the tile. Pure CSS: hover, focus-within and
+   the checkbox toggle drive every state, no JS. mnu- prefix, tokens only. The mobile header
+   reuses the base .mnu-ham* drawer with a .mnu-ham-left modifier (button right, drawer opens
+   from the left). ===== */
+.mnu-hdr{width:300px;box-sizing:border-box}
+.mnu-hdr-bar{display:flex;align-items:center;gap:10px;height:46px;padding:0 12px;background:var(--panel2);border:1px solid var(--line);border-radius:11px}
+.mnu-hdr-logo{display:flex;align-items:center;gap:7px;font:800 13px ui-sans-serif,system-ui,sans-serif;color:var(--ink);white-space:nowrap}
+.mnu-hdr-logo::before{content:"";width:16px;height:16px;border-radius:5px;background:linear-gradient(135deg,var(--accent),rgba(var(--accent-rgb),.5))}
+.mnu-hdr-links{display:flex;gap:2px;align-items:center}
+.mnu-hdr-links a{padding:6px 9px;border-radius:7px;color:var(--muted);font:600 12px ui-sans-serif,system-ui,sans-serif;text-decoration:none;transition:color .15s,background .15s;white-space:nowrap}
+.mnu-hdr-links a:hover{color:var(--ink);background:rgba(var(--info-rgb),.12)}
+.mnu-hdr-links a.is-active{color:var(--accent)}
+.mnu-hdr-sp{flex:1 1 auto}
+.mnu-hdr-act{display:flex;gap:5px;align-items:center}
+.mnu-hdr-ic{width:30px;height:30px;border-radius:8px;display:grid;place-items:center;color:var(--muted);font-size:14px;cursor:pointer;transition:.15s;background:transparent;border:0}
+.mnu-hdr-ic:hover{color:var(--info);background:rgba(var(--info-rgb),.12)}
+.mnu-hdr-av{width:28px;height:28px;border-radius:50%;background:radial-gradient(circle at 35% 30%,rgba(var(--info-rgb),.9),rgba(var(--crit-rgb),.7));border:1px solid var(--line)}
+.mnu-hdr-btn{padding:7px 13px;border-radius:8px;font:700 12px ui-sans-serif,system-ui,sans-serif;cursor:pointer;text-decoration:none;white-space:nowrap;transition:.15s}
+.mnu-hdr-btn.ghost{color:var(--muted);background:transparent;border:1px solid transparent}
+.mnu-hdr-btn.ghost:hover{color:var(--ink);border-color:var(--line)}
+.mnu-hdr-btn.solid{color:var(--bg);background:linear-gradient(135deg,var(--accent),rgba(var(--accent-rgb),.75));border:0;box-shadow:0 4px 12px rgba(var(--accent-rgb),.3)}
+.mnu-hdr-btn.solid:hover{filter:brightness(1.08)}
+.mnu-hdr-cta .mnu-hdr-bar{padding:0 9px;gap:5px}
+.mnu-hdr-cta .mnu-hdr-links a{padding:6px 6px}
+.mnu-hdr-cta .mnu-hdr-btn{padding:7px 10px}
+/* split header (centered logo) */
+.mnu-hdr-split .mnu-hdr-bar{justify-content:space-between}
+.mnu-hdr-split .mnu-hdr-links{flex:1 1 0}
+.mnu-hdr-split .mnu-hdr-links.r{justify-content:flex-end}
+.mnu-hdr-split .mnu-hdr-logo{position:static}
+/* mega header (hover a trigger to open a panel, contained in a tall box) */
+.mnu-hdr-mega{position:relative;height:176px}
+.mnu-hdr-mega .mnu-hdr-trigger{padding:6px 9px;border-radius:7px;color:var(--muted);font:600 12px ui-sans-serif,system-ui,sans-serif;cursor:pointer;display:flex;align-items:center;gap:5px}
+.mnu-hdr-mega .mnu-hdr-trigger::after{content:"▾";font-size:9px;transition:transform .2s}
+.mnu-hdr-mega .mnu-hdr-mitem:hover .mnu-hdr-trigger{color:var(--ink);background:rgba(var(--info-rgb),.12)}
+.mnu-hdr-mega .mnu-hdr-mitem:hover .mnu-hdr-trigger::after{transform:rotate(180deg)}
+.mnu-hdr-mitem{position:static}
+.mnu-hdr-mpanel{position:absolute;left:12px;top:52px;width:276px;padding:10px;background:var(--panel2);border:1px solid var(--line);border-radius:11px;box-shadow:0 18px 38px rgba(0,0,0,.45);display:grid;grid-template-columns:1fr 1fr;gap:4px;opacity:0;visibility:hidden;transform:translateY(-6px);transition:opacity .18s,transform .18s,visibility .18s;z-index:5}
+.mnu-hdr-mitem:hover .mnu-hdr-mpanel{opacity:1;visibility:visible;transform:translateY(0)}
+.mnu-hdr-mcol a{display:flex;flex-direction:column;padding:8px;border-radius:8px;text-decoration:none;transition:background .15s}
+.mnu-hdr-mcol a:hover{background:rgba(var(--info-rgb),.12)}
+.mnu-hdr-mcol a b{color:var(--ink);font:700 12px ui-sans-serif,system-ui,sans-serif}
+.mnu-hdr-mcol a span{color:var(--dim);font:500 10.5px ui-sans-serif,system-ui,sans-serif;margin-top:1px}
+/* search header (expands on hover/focus) */
+.mnu-hdr-searchbox{display:flex;align-items:center;gap:7px;height:30px;width:34px;padding:0 8px;border-radius:8px;background:var(--card);border:1px solid var(--line);overflow:hidden;transition:width .28s cubic-bezier(.25,1,.35,1);cursor:text}
+.mnu-hdr-searchbox::before{content:"\1F50D";font-size:12px;filter:grayscale(1);opacity:.7;flex:0 0 auto}
+.mnu-hdr-searchbox input{border:0;background:transparent;color:var(--ink);font:inherit;font-size:12px;width:100%;outline:none}
+.mnu-hdr-searchbox input::placeholder{color:var(--dim)}
+.mnu-hdr-search:hover .mnu-hdr-searchbox,.mnu-hdr-searchbox:focus-within{width:150px}
+/* mobile header + LEFT drawer (variant of the base .mnu-hamwrap: button right, drawer from left) */
+.mnu-ham-left .mnu-ham-btn{left:auto;right:10px}
+.mnu-ham-left .mnu-ham-panel{right:auto;left:0;border-left:0;border-right:1px solid var(--line);padding:52px 14px 14px;transform:translateX(-100%)}
+.mnu-ham-left .mnu-ham-input:checked ~ .mnu-ham-panel{transform:translateX(0)}
+.mnu-ham-brand{position:absolute;top:0;left:0;right:0;height:52px;display:flex;align-items:center;justify-content:center;gap:7px;font:800 13px ui-sans-serif,system-ui,sans-serif;color:var(--ink);border-bottom:1px solid var(--line);pointer-events:none}
+.mnu-ham-brand::before{content:"";width:15px;height:15px;border-radius:5px;background:linear-gradient(135deg,var(--accent),rgba(var(--accent-rgb),.5))}
+</style>
+<div class="gallery">
+
+  <div class="tile is-new" data-ctype="menu" data-interact="hover" data-c="accent"><div class="stage">
+    <div class="mnu-hdr mnu-hdr-appbar"><div class="mnu-hdr-bar">
+      <span class="mnu-hdr-logo">Northwind</span>
+      <nav class="mnu-hdr-links"><a href="#" class="is-active">Home</a><a href="#">Work</a><a href="#">About</a></nav>
+      <span class="mnu-hdr-sp"></span>
+      <div class="mnu-hdr-act"><button class="mnu-hdr-ic" aria-label="Search">&#128269;</button><button class="mnu-hdr-ic" aria-label="Notifications">&#128276;</button><span class="mnu-hdr-av"></span></div>
+    </div></div>
+  </div><div class="meta"><div class="nm">App Bar</div><span class="ref">.mnu-hdr-appbar</span><div class="desc">The classic product header: logo, primary nav with an active accent, a spacer, then search, notifications and an avatar. Links light up on hover.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="menu" data-interact="hover" data-c="info"><div class="stage">
+    <div class="mnu-hdr mnu-hdr-split"><div class="mnu-hdr-bar">
+      <nav class="mnu-hdr-links"><a href="#" class="is-active">Shop</a><a href="#">Story</a></nav>
+      <span class="mnu-hdr-logo">Atelier</span>
+      <nav class="mnu-hdr-links r"><a href="#">Journal</a><a href="#">Cart</a></nav>
+    </div></div>
+  </div><div class="meta"><div class="nm">Split Header</div><span class="ref">.mnu-hdr-split</span><div class="desc">A centred wordmark with the navigation split to either side, the boutique or editorial layout. Two equal link groups flank the logo.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="menu" data-interact="hover" data-c="crit"><div class="stage">
+    <div class="mnu-hdr mnu-hdr-mega"><div class="mnu-hdr-bar">
+      <span class="mnu-hdr-logo">Vertex</span>
+      <nav class="mnu-hdr-links"><span class="mnu-hdr-mitem"><span class="mnu-hdr-trigger">Products</span>
+        <div class="mnu-hdr-mpanel">
+          <div class="mnu-hdr-mcol"><a href="#"><b>Analytics</b><span>Dashboards &amp; reports</span></a><a href="#"><b>Automation</b><span>Flows &amp; rules</span></a></div>
+          <div class="mnu-hdr-mcol"><a href="#"><b>Data Lake</b><span>Store everything</span></a><a href="#"><b>Alerts</b><span>Know first</span></a></div>
+        </div></span><a href="#">Pricing</a><a href="#">Docs</a></nav>
+    </div></div>
+  </div><div class="meta"><div class="nm">Mega Menu Header</div><span class="ref">.mnu-hdr-mega</span><div class="desc">Hover Products and a two-column mega panel drops open with titled, described links, the marketing-site header. Pure CSS hover, contained in the tile.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="menu" data-interact="hover" data-c="info"><div class="stage">
+    <div class="mnu-hdr mnu-hdr-search"><div class="mnu-hdr-bar">
+      <span class="mnu-hdr-logo">Beacon</span>
+      <nav class="mnu-hdr-links"><a href="#" class="is-active">Feed</a><a href="#">Saved</a></nav>
+      <span class="mnu-hdr-sp"></span>
+      <label class="mnu-hdr-searchbox"><input type="text" placeholder="Search everything"></label>
+    </div></div>
+  </div><div class="meta"><div class="nm">Search Header</div><span class="ref">.mnu-hdr-search</span><div class="desc">The search field sits collapsed to an icon and expands as the pointer nears or it takes focus, reclaiming the space when idle. Hover the bar or click the field.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="menu" data-interact="hover" data-c="accent"><div class="stage">
+    <div class="mnu-hdr mnu-hdr-cta"><div class="mnu-hdr-bar">
+      <span class="mnu-hdr-logo">Loop</span>
+      <nav class="mnu-hdr-links"><a href="#" class="is-active">Product</a><a href="#">Pricing</a></nav>
+      <span class="mnu-hdr-sp"></span>
+      <div class="mnu-hdr-act"><a href="#" class="mnu-hdr-btn ghost">Log in</a><a href="#" class="mnu-hdr-btn solid">Start</a></div>
+    </div></div>
+  </div><div class="meta"><div class="nm">CTA Header</div><span class="ref">.mnu-hdr-cta</span><div class="desc">Nav on the left, a ghost Log in and a filled Start call to action on the right, the SaaS landing header. The solid button carries an accent glow.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="menu" data-interact="toggle" data-c="pos"><div class="stage">
+    <div class="mnu-hamwrap mnu-ham-left" style="width:230px;height:132px">
+      <span class="mnu-ham-brand">Meridian</span>
+      <input type="checkbox" id="mnu-haml-demo" class="mnu-ham-input">
+      <label for="mnu-haml-demo" class="mnu-ham-btn"><span></span><span></span><span></span></label>
+      <div class="mnu-ham-panel"><a href="#">Home</a><a href="#">Features</a><a href="#">Pricing</a><a href="#">Contact</a></div>
+      <span class="mnu-ham-hint">click the icon</span>
+    </div>
+  </div><div class="meta"><div class="nm">Mobile Header, Left Drawer</div><span class="ref">.mnu-hamwrap.mnu-ham-left</span><div class="desc">The right-aligned variant of the hamburger drawer: the icon sits on the right and the panel slides in from the left, with a centred brand across the top. Add .mnu-ham-left to any .mnu-hamwrap.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+</div>
+
+<h3 class="sec">FOOTER NAVIGATION</h3>
+<style id="navs-ftr-styles">
+.mnu-ftr{width:300px;box-sizing:border-box;background:var(--panel2);border:1px solid var(--line);border-radius:12px;color:var(--muted);font-family:ui-sans-serif,system-ui,sans-serif}
+.mnu-ftr a{color:var(--muted);text-decoration:none;transition:color .15s}
+.mnu-ftr a:hover{color:var(--ink)}
+.mnu-ftr-brand{display:flex;align-items:center;gap:7px;font:800 13px ui-sans-serif,system-ui,sans-serif;color:var(--ink)}
+.mnu-ftr-brand::before{content:"";width:15px;height:15px;border-radius:5px;background:linear-gradient(135deg,var(--accent),rgba(var(--accent-rgb),.5))}
+/* columns footer */
+.mnu-ftr-columns{padding:16px}
+.mnu-ftr-cols{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:14px;margin-top:12px}
+.mnu-ftr-col h5{margin:0 0 7px;font:800 9.5px ui-sans-serif,system-ui,sans-serif;letter-spacing:.09em;text-transform:uppercase;color:var(--dim)}
+.mnu-ftr-col a{display:block;font-size:11.5px;padding:3px 0}
+.mnu-ftr-col p{margin:6px 0 0;font-size:11px;line-height:1.5;color:var(--dim)}
+.mnu-ftr-base{display:flex;align-items:center;justify-content:space-between;margin-top:14px;padding-top:12px;border-top:1px solid var(--line);font-size:10.5px;color:var(--dim)}
+.mnu-ftr-soc{display:flex;gap:6px}
+.mnu-ftr-soc span{width:22px;height:22px;border-radius:6px;background:var(--card);border:1px solid var(--line);display:grid;place-items:center;font-size:11px;color:var(--muted);cursor:pointer;transition:.15s}
+.mnu-ftr-soc span:hover{color:var(--info);border-color:rgba(var(--info-rgb),.5)}
+/* slim bar footer */
+.mnu-ftr-bar{display:flex;align-items:center;gap:12px;padding:11px 14px;flex-wrap:wrap}
+.mnu-ftr-bar .mnu-ftr-links{display:flex;gap:12px;flex:1 1 auto;justify-content:center;font-size:11.5px}
+.mnu-ftr-bar .cprt{font-size:10.5px;color:var(--dim);white-space:nowrap}
+/* newsletter footer */
+.mnu-ftr-news{padding:16px}
+.mnu-ftr-news .row{display:flex;gap:16px;align-items:flex-start}
+.mnu-ftr-news .col{flex:1 1 0}
+.mnu-ftr-news h5{margin:0 0 7px;font:800 9.5px ui-sans-serif,system-ui,sans-serif;letter-spacing:.09em;text-transform:uppercase;color:var(--dim)}
+.mnu-ftr-news a{display:block;font-size:11.5px;padding:3px 0}
+.mnu-ftr-news p{margin:0 0 8px;font-size:11px;line-height:1.5;color:var(--dim)}
+.mnu-ftr-sub{display:flex;gap:6px}
+.mnu-ftr-sub input{flex:1 1 auto;min-width:0;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;padding:8px 10px;font:inherit;font-size:11.5px;outline:none}
+.mnu-ftr-sub input:focus{border-color:rgba(var(--info-rgb),.6)}
+.mnu-ftr-sub input::placeholder{color:var(--dim)}
+.mnu-ftr-sub button{flex:0 0 auto;border:0;border-radius:8px;padding:8px 12px;font:700 11.5px ui-sans-serif,system-ui,sans-serif;color:var(--bg);background:linear-gradient(135deg,var(--accent),rgba(var(--accent-rgb),.75));cursor:pointer;transition:.15s}
+.mnu-ftr-sub button:hover{filter:brightness(1.08)}
+/* CTA footer */
+.mnu-ftr-cta .band{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:15px 16px;background:linear-gradient(120deg,rgba(var(--accent-rgb),.16),rgba(var(--crit-rgb),.12));border-bottom:1px solid var(--line);border-radius:12px 12px 0 0}
+.mnu-ftr-cta .band b{color:var(--ink);font:800 14px ui-sans-serif,system-ui,sans-serif;display:block}
+.mnu-ftr-cta .band small{color:var(--dim);font-size:11px}
+.mnu-ftr-cta .band a{flex:0 0 auto;border-radius:8px;padding:9px 14px;font:700 12px ui-sans-serif,system-ui,sans-serif;color:var(--bg);background:linear-gradient(135deg,var(--accent),rgba(var(--accent-rgb),.75));box-shadow:0 4px 12px rgba(var(--accent-rgb),.3)}
+.mnu-ftr-cta .row{display:flex;align-items:center;justify-content:space-between;padding:11px 16px;font-size:11px;color:var(--dim)}
+.mnu-ftr-cta .row .mnu-ftr-links{display:flex;gap:12px}
+/* accordion footer (mobile, checkbox-driven) */
+.mnu-ftr-acc{padding:6px 8px}
+.mnu-ftr-acc .sec{border-bottom:1px solid var(--line)}
+.mnu-ftr-acc .sec:last-child{border-bottom:0}
+.mnu-ftr-acc input{position:absolute;opacity:0;width:0;height:0}
+.mnu-ftr-acc label{display:flex;align-items:center;justify-content:space-between;padding:11px 8px;font:700 12px ui-sans-serif,system-ui,sans-serif;color:var(--ink);cursor:pointer}
+.mnu-ftr-acc label::after{content:"+";color:var(--muted);font-size:15px;transition:transform .25s}
+.mnu-ftr-acc .body{max-height:0;overflow:hidden;transition:max-height .3s cubic-bezier(.25,1,.35,1)}
+.mnu-ftr-acc .body a{display:block;padding:6px 8px 6px 16px;font-size:11.5px}
+.mnu-ftr-acc input:checked ~ label::after{transform:rotate(45deg)}
+.mnu-ftr-acc input:checked ~ .body{max-height:130px}
+</style>
+<div class="gallery">
+
+  <div class="tile is-new" data-ctype="menu" data-interact="hover" data-c="info"><div class="stage">
+    <div class="mnu-ftr mnu-ftr-columns">
+      <div class="mnu-ftr-brand">Northwind</div>
+      <div class="mnu-ftr-cols">
+        <div class="mnu-ftr-col"><p>Ship faster with one calm workspace for your whole team.</p></div>
+        <div class="mnu-ftr-col"><h5>Product</h5><a href="#">Features</a><a href="#">Pricing</a><a href="#">Changelog</a></div>
+        <div class="mnu-ftr-col"><h5>Company</h5><a href="#">About</a><a href="#">Careers</a><a href="#">Blog</a></div>
+      </div>
+      <div class="mnu-ftr-base"><span>&copy; 2026 Northwind</span><div class="mnu-ftr-soc"><span>&#120143;</span><span>in</span><span>&#9993;</span></div></div>
+    </div>
+  </div><div class="meta"><div class="nm">Columns Footer</div><span class="ref">.mnu-ftr-columns</span><div class="desc">A brand blurb beside two link columns, with a copyright and social row across the base, the standard site footer. Links brighten on hover.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="menu" data-interact="hover" data-c="accent"><div class="stage">
+    <div class="mnu-ftr mnu-ftr-bar">
+      <span class="cprt">&copy; 2026 Loop</span>
+      <nav class="mnu-ftr-links"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Status</a><a href="#">Contact</a></nav>
+      <div class="mnu-ftr-soc"><span>&#120143;</span><span>in</span><span>gh</span></div>
+    </div>
+  </div><div class="meta"><div class="nm">Slim Bar Footer</div><span class="ref">.mnu-ftr-bar</span><div class="desc">A single-row footer: copyright at the left, inline legal links centred, social icons at the right, the minimal app footer. Wraps gracefully when narrow.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="menu" data-interact="hover" data-c="pos"><div class="stage">
+    <div class="mnu-ftr mnu-ftr-news">
+      <div class="row">
+        <div class="col"><h5>Company</h5><a href="#">About</a><a href="#">Careers</a><a href="#">Press</a></div>
+        <div class="col"><h5>Stay in the loop</h5><p>Product news, once a month. No spam.</p>
+          <form class="mnu-ftr-sub" onsubmit="return false"><input type="email" placeholder="you@email.com"><button>Subscribe</button></form></div>
+      </div>
+    </div>
+  </div><div class="meta"><div class="nm">Newsletter Footer</div><span class="ref">.mnu-ftr-news</span><div class="desc">A link column alongside a newsletter signup, email field plus an accent Subscribe button, the growth footer. The field highlights on focus.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="menu" data-interact="hover" data-c="crit"><div class="stage">
+    <div class="mnu-ftr mnu-ftr-cta">
+      <div class="band"><span><b>Ready to start?</b><small>Free for 14 days.</small></span><a href="#">Get started</a></div>
+      <div class="row"><span>&copy; 2026 Vertex</span><nav class="mnu-ftr-links"><a href="#">Privacy</a><a href="#">Terms</a></nav></div>
+    </div>
+  </div><div class="meta"><div class="nm">CTA Footer</div><span class="ref">.mnu-ftr-cta</span><div class="desc">A tinted call-to-action band sits above a slim legal row, the conversion footer. The band pairs a headline and subline with an accent button.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="menu" data-interact="toggle" data-c="warn"><div class="stage">
+    <div class="mnu-ftr mnu-ftr-acc" style="width:230px">
+      <div class="sec"><input type="checkbox" id="mnu-acc1" checked><label for="mnu-acc1">Product</label><div class="body"><a href="#">Features</a><a href="#">Pricing</a><a href="#">Integrations</a></div></div>
+      <div class="sec"><input type="checkbox" id="mnu-acc2"><label for="mnu-acc2">Company</label><div class="body"><a href="#">About</a><a href="#">Careers</a><a href="#">Blog</a></div></div>
+      <div class="sec"><input type="checkbox" id="mnu-acc3"><label for="mnu-acc3">Support</label><div class="body"><a href="#">Help center</a><a href="#">Status</a><a href="#">Contact</a></div></div>
+    </div>
+  </div><div class="meta"><div class="nm">Accordion Footer</div><span class="ref">.mnu-ftr-acc</span><div class="desc">The mobile footer: each link group collapses behind a heading and expands when tapped, so a long footer fits a small screen. Checkbox-driven, the plus turns to a cross.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+</div>
+<!-- /prism-section:navs.menus -->
 </div>
 <script>
 function copyViz(btn){
