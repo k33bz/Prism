@@ -1,5 +1,5 @@
 {
-  "count": 3442,
+  "count": 3448,
   "effects": [
     {
       "id": "charts-big-metric-count-up",
@@ -1896,10 +1896,9 @@
         "sl",
         "ts",
         "lv",
-        "ok",
-        "m",
         "info",
-        "warn",
+        "m",
+        "ok",
         "err",
         "cursor"
       ],
@@ -25244,9 +25243,9 @@
         "gate",
         "experts",
         "expert",
-        "on",
         "ed",
         "ew",
+        "on",
         "cap",
         "pr-playbtn"
       ],
@@ -55143,6 +55142,186 @@
       "updatedOn": null,
       "author": "k33bz",
       "description": "The scrollytelling side rail: one dot glows as the active section while each reveals its label on hover, the long-page navigator. The active dot wears an accent halo."
+    },
+    {
+      "id": "menus-scroll-progress-bar",
+      "name": "Scroll Progress Bar",
+      "gallery": "menus",
+      "category": "WAYFINDING & PROGRESS",
+      "ref": ".mnu-progress",
+      "classes": [
+        "mnu-progress",
+        "mnu-prog-track",
+        "mnu-prog-fill",
+        "mnu-prog-doc"
+      ],
+      "params": [],
+      "tags": [
+        "menus",
+        "animated",
+        "new"
+      ],
+      "componentType": "menu",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": "2026-09-06",
+      "updatedOn": null,
+      "author": "k33bz",
+      "description": "A thin accent bar across the top fills as the reader moves down the page, the reading indicator. Shown on a loop; in use its width maps to scroll position."
+    },
+    {
+      "id": "menus-progress-ring",
+      "name": "Progress Ring",
+      "gallery": "menus",
+      "category": "WAYFINDING & PROGRESS",
+      "ref": ".mnu-progring",
+      "classes": [
+        "mnu-progring",
+        "mnu-pr-track",
+        "mnu-pr-bar",
+        "mnu-pr-ic"
+      ],
+      "params": [],
+      "tags": [
+        "menus",
+        "animated",
+        "new"
+      ],
+      "componentType": "menu",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": "2026-09-06",
+      "updatedOn": null,
+      "author": "k33bz",
+      "description": "A circular reading indicator that sweeps clockwise to full, the floating scroll ring. An SVG stroke-dashoffset does the fill; drop it in a corner of the page."
+    },
+    {
+      "id": "menus-stepper",
+      "name": "Stepper",
+      "gallery": "menus",
+      "category": "WAYFINDING & PROGRESS",
+      "ref": ".mnu-stepper",
+      "classes": [
+        "mnu-stepper",
+        "mnu-step-track",
+        "mnu-step-fill",
+        "mnu-step-marker",
+        "mnu-step-labels"
+      ],
+      "params": [],
+      "tags": [
+        "menus",
+        "animated",
+        "new"
+      ],
+      "componentType": "menu",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": "2026-09-06",
+      "updatedOn": null,
+      "author": "k33bz",
+      "description": "A wizard progress track: the fill and its glowing marker advance from step to step, the checkout or onboarding flow. Labels sit beneath each stop."
+    },
+    {
+      "id": "menus-collapsing-breadcrumb",
+      "name": "Collapsing Breadcrumb",
+      "gallery": "menus",
+      "category": "WAYFINDING & PROGRESS",
+      "ref": ".mnu-crumbs",
+      "classes": [
+        "mnu-crumbs",
+        "mnu-cr-sep",
+        "mnu-cr-more",
+        "mnu-cr-hidden",
+        "is-here"
+      ],
+      "params": [],
+      "tags": [
+        "menus",
+        "new"
+      ],
+      "componentType": "menu",
+      "interaction": "hover",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": "2026-09-06",
+      "updatedOn": null,
+      "author": "k33bz",
+      "description": "A long trail folds its middle into an ellipsis that expands to reveal the hidden crumbs on hover, so a deep path fits one line. Hover the trail."
+    },
+    {
+      "id": "menus-sticky-shrink-header",
+      "name": "Sticky Shrink Header",
+      "gallery": "menus",
+      "category": "WAYFINDING & PROGRESS",
+      "ref": ".mnu-condense",
+      "classes": [
+        "mnu-condense",
+        "mnu-cond-bar",
+        "mnu-cond-logo",
+        "mnu-cond-tt",
+        "mnu-cond-doc"
+      ],
+      "params": [],
+      "tags": [
+        "menus",
+        "animated",
+        "new"
+      ],
+      "componentType": "menu",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": "2026-09-06",
+      "updatedOn": null,
+      "author": "k33bz",
+      "description": "On scroll the header condenses: it loses height, the logo shrinks, the subtitle collapses away and a shadow lifts it off the page. Shown looping between the two states."
+    },
+    {
+      "id": "menus-back-to-top",
+      "name": "Back to Top",
+      "gallery": "menus",
+      "category": "WAYFINDING & PROGRESS",
+      "ref": ".mnu-totop",
+      "classes": [
+        "mnu-totop",
+        "mnu-tt-btn"
+      ],
+      "params": [],
+      "tags": [
+        "menus",
+        "animated",
+        "new"
+      ],
+      "componentType": "menu",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": "2026-09-06",
+      "updatedOn": null,
+      "author": "k33bz",
+      "description": "A floating round button fades and springs in once the reader scrolls past the fold, then lifts on hover, the return-to-top control. Shown appearing on a loop."
     },
     {
       "id": "tables-zebra-table-scan",
