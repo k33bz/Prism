@@ -1,0 +1,206 @@
+<h3 class="sec">RUN CHARTS &amp; SPC RULES</h3>
+<style id="chx-rc-styles">
+/* ===== Family: run charts and statistical process control. Every point, line, band and ring
+   is drawn by the inline initializer "chx-rc" from data-* on the root; chips toggle overlays.
+   Prefix chx-rc- (classes) / chxRc (keyframes). data-c on the tile is the gallery FILTER KEY
+   ("trend"), not a colour role: colour comes from tokens applied through the classes below.
+   Data role = --info, median = --muted, least squares fit = --accent, shift band = --warn,
+   trend arrow = --pos, runs verdict = --warn/--pos, astronomical + control limits = --neg. ===== */
+.chx-rc,.chx-rc-legend{width:100%;max-width:300px;height:150px;margin:0 auto;position:relative;font-family:ui-sans-serif,system-ui,sans-serif}
+.chx-rc>svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+.chx-rc-bar{position:absolute;top:4px;left:6px;right:6px;z-index:2;display:flex;flex-wrap:wrap;gap:4px}
+.chx-rc-chip{font:600 8px/1 ui-sans-serif,system-ui,sans-serif;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:999px;padding:2px 6px;cursor:pointer;transition:color .2s,border-color .2s,background .2s}
+.chx-rc-chip:hover{color:var(--ink);border-color:var(--muted)}
+.chx-rc-chip.chx-rc-on{color:var(--ink);border-color:rgba(var(--accent-rgb),.7);background:rgba(var(--accent-rgb),.12)}
+.chx-rc-line{fill:none;stroke:var(--info);stroke-width:1.4;stroke-linejoin:round;stroke-linecap:round}
+.chx-rc-pt{fill:var(--info);stroke:var(--panel);stroke-width:1}
+.chx-rc-med{stroke:var(--muted);stroke-width:1;stroke-dasharray:4 3;fill:none}
+.chx-rc-base{stroke:var(--dim);stroke-width:1;stroke-dasharray:1 3;fill:none}
+.chx-rc-fit{stroke:var(--accent);stroke-width:1.4;stroke-dasharray:5 3;fill:none}
+.chx-rc-band{fill:rgba(var(--warn-rgb),.16)}
+.chx-rc-arrow{stroke:var(--pos);stroke-width:6;stroke-linecap:round;opacity:.3}
+.chx-rc-arrowln{stroke:var(--pos);stroke-width:1.4;fill:none;marker-end:none}
+.chx-rc-ring{fill:none;stroke:var(--neg);stroke-width:1.6}
+.chx-rc-cl{stroke:var(--pos);stroke-width:1;fill:none}
+.chx-rc-ucl{stroke:var(--neg);stroke-width:1;stroke-dasharray:4 3;fill:none}
+.chx-rc-mrbar{fill:rgba(var(--info-rgb),.5)}
+.chx-rc-mrlim{stroke:var(--neg);stroke-width:1;stroke-dasharray:3 2;fill:none}
+.chx-rc-lbl{font:600 7px ui-sans-serif,system-ui,sans-serif;fill:var(--muted)}
+.chx-rc-lbl.chx-rc-w{fill:var(--warn)}.chx-rc-lbl.chx-rc-g{fill:var(--pos)}.chx-rc-lbl.chx-rc-n{fill:var(--neg)}.chx-rc-lbl.chx-rc-a{fill:var(--accent)}
+.chx-rc-ov{animation-name:chxRcFade;animation-duration:.26s;animation-timing-function:ease}
+@keyframes chxRcFade{from{opacity:0}to{opacity:1}}
+/* static explainer legend, four rule signatures, CSS only */
+.chx-rc-legend{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:5px}
+.chx-rc-cell{position:relative;border:1px solid var(--line);border-radius:6px;background:var(--card);overflow:hidden}
+.chx-rc-cell svg{position:absolute;inset:0;width:100%;height:100%}
+.chx-rc-cap{position:absolute;left:5px;top:3px;font:700 7px ui-sans-serif,system-ui,sans-serif;letter-spacing:.04em;text-transform:uppercase;z-index:1}
+.chx-rc-cap.chx-rc-w{color:var(--warn)}.chx-rc-cap.chx-rc-g{color:var(--pos)}.chx-rc-cap.chx-rc-i{color:var(--info)}.chx-rc-cap.chx-rc-n{color:var(--neg)}
+.chx-rc-sig{stroke-linecap:round;stroke-linejoin:round}
+.chx-rc-draw{stroke-dasharray:120;stroke-dashoffset:120;animation-name:chxRcDraw;animation-duration:3.2s;animation-timing-function:ease-in-out;animation-iteration-count:infinite;animation-delay:var(--d,0s)}
+@keyframes chxRcDraw{0%{stroke-dashoffset:120}40%{stroke-dashoffset:0}80%{stroke-dashoffset:0}100%{stroke-dashoffset:0}}
+.chx-rc-blip{transform-box:fill-box;transform-origin:center;animation-name:chxRcBlip;animation-duration:3.2s;animation-timing-function:ease-in-out;animation-iteration-count:infinite;animation-delay:var(--d,0s)}
+@keyframes chxRcBlip{0%,30%{opacity:0;transform:scale(.2)}50%{opacity:1;transform:scale(1)}80%,100%{opacity:1;transform:scale(1)}}
+@media (prefers-reduced-motion:reduce){
+  .chx-rc-ov{animation-name:none}
+  .chx-rc-draw{animation-name:none;stroke-dashoffset:0}
+  .chx-rc-blip{animation-name:none;opacity:1;transform:none}
+}
+</style>
+<div class="gallery">
+
+  <div class="tile is-new" data-ctype="chart-line" data-interact="click" data-c="trend" data-needs-js="chx-rc"><div class="stage">
+    <div class="chx-rc chx-rc-rules" data-mode="run" data-demo="1" data-baseline="22" data-chips="median,shift,runs,astro,fit" data-points="21,19,20,18,17,19,24,26,25,27,26,41">
+      <div class="chx-rc-bar"><button class="chx-rc-chip" data-chip="median">median</button><button class="chx-rc-chip" data-chip="shift">shift</button><button class="chx-rc-chip" data-chip="runs">runs</button><button class="chx-rc-chip" data-chip="astro">astro</button><button class="chx-rc-chip" data-chip="fit">fit</button></div>
+      <svg viewBox="0 0 300 150" preserveAspectRatio="none" aria-label="Run chart with SPC rules"></svg>
+    </div>
+  </div><div class="meta"><div class="nm">Run Chart with Rules</div><span class="ref">.chx-rc-rules</span><div class="desc">A run chart that checks all four signals: the median splits the series, a shift band and an astronomical ring light up on the data that trips them. Toggle each rule to teach the test.</div><button class="copy" onclick="copyVizJs(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="chart-line" data-interact="click" data-c="trend" data-needs-js="chx-rc"><div class="stage">
+    <div class="chx-rc chx-rc-climb" data-mode="run" data-demo="1" data-baseline="20" data-chips="median,trend,fit" data-points="18,17,19,18,20,22,24,26,28,30,29,31">
+      <div class="chx-rc-bar"><button class="chx-rc-chip" data-chip="median">median</button><button class="chx-rc-chip" data-chip="trend">trend</button><button class="chx-rc-chip" data-chip="fit">fit</button></div>
+      <svg viewBox="0 0 300 150" preserveAspectRatio="none" aria-label="Run chart trend detector"></svg>
+    </div>
+  </div><div class="meta"><div class="nm">Run Chart Trend Detector</div><span class="ref">.chx-rc-climb</span><div class="desc">A seven point climb trips the trend rule: five or more points moving one way. The arrow marks the run and the least squares fit shows the slope. Use it to catch drift early.</div><button class="copy" onclick="copyVizJs(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="chart-line" data-interact="click" data-c="trend" data-needs-js="chx-rc"><div class="stage">
+    <div class="chx-rc chx-rc-few" data-mode="run" data-demo="1" data-chips="median,runs,shift" data-points="12,13,12,14,13,15,26,27,25,28,27,29">
+      <div class="chx-rc-bar"><button class="chx-rc-chip" data-chip="median">median</button><button class="chx-rc-chip" data-chip="runs">runs</button><button class="chx-rc-chip" data-chip="shift">shift</button></div>
+      <svg viewBox="0 0 300 150" preserveAspectRatio="none" aria-label="Run chart runs test, too few runs"></svg>
+    </div>
+  </div><div class="meta"><div class="nm">Run Chart Runs Test</div><span class="ref">.chx-rc-few</span><div class="desc">Two clusters cross the median only once, so the runs chip reports too few runs against the expected range. Non random step change in the process signalled by clustering.</div><button class="copy" onclick="copyVizJs(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="chart-line" data-interact="click" data-c="trend" data-needs-js="chx-rc"><div class="stage">
+    <div class="chx-rc chx-rc-many" data-mode="run" data-demo="1" data-chips="median,runs,shift" data-points="20,26,19,27,18,28,17,29,18,27,19,26">
+      <div class="chx-rc-bar"><button class="chx-rc-chip" data-chip="median">median</button><button class="chx-rc-chip" data-chip="runs">runs</button><button class="chx-rc-chip" data-chip="shift">shift</button></div>
+      <svg viewBox="0 0 300 150" preserveAspectRatio="none" aria-label="Run chart, too many runs"></svg>
+    </div>
+  </div><div class="meta"><div class="nm">Run Chart Too Many Runs</div><span class="ref">.chx-rc-many</span><div class="desc">A saw tooth series crosses the median on almost every point, so the runs chip reports too many runs: a sign of over adjustment or oscillation. Compare observed against expected.</div><button class="copy" onclick="copyVizJs(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="chart-line" data-interact="click" data-c="trend" data-needs-js="chx-rc"><div class="stage">
+    <div class="chx-rc chx-rc-imr" data-mode="imr" data-demo="1" data-chips="limits,mean,range" data-points="14,15,13,16,15,14,16,15,29,14,15,13">
+      <div class="chx-rc-bar"><button class="chx-rc-chip" data-chip="limits">limits</button><button class="chx-rc-chip" data-chip="mean">mean</button><button class="chx-rc-chip" data-chip="range">range</button></div>
+      <svg viewBox="0 0 300 150" preserveAspectRatio="none" aria-label="I-MR control chart"></svg>
+    </div>
+  </div><div class="meta"><div class="nm">I-MR Control Chart</div><span class="ref">.chx-rc-imr</span><div class="desc">An individuals chart with the mean, and control limits at plus or minus 2.66 mean moving range. Points beyond a limit are ringed and a moving range strip sits beneath.</div><button class="copy" onclick="copyVizJs(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="chart-line" data-interact="auto-play" data-c="trend"><div class="stage">
+    <div class="chx-rc-legend" aria-label="SPC rule signatures legend">
+      <div class="chx-rc-cell"><span class="chx-rc-cap chx-rc-w">shift</span><svg viewBox="0 0 120 60" preserveAspectRatio="none">
+        <line class="chx-rc-sig" x1="6" y1="30" x2="114" y2="30" stroke="var(--muted)" stroke-width="1" stroke-dasharray="3 3"/>
+        <rect class="chx-rc-blip" x="18" y="34" width="80" height="20" rx="2" fill="rgba(var(--warn-rgb),.16)" style="--d:0s"/>
+        <g fill="var(--info)"><circle class="chx-rc-blip" cx="22" cy="42" r="3" style="--d:0s"/><circle class="chx-rc-blip" cx="40" cy="45" r="3" style="--d:.1s"/><circle class="chx-rc-blip" cx="58" cy="41" r="3" style="--d:.2s"/><circle class="chx-rc-blip" cx="76" cy="46" r="3" style="--d:.3s"/><circle class="chx-rc-blip" cx="94" cy="43" r="3" style="--d:.4s"/></g>
+      </svg></div>
+      <div class="chx-rc-cell"><span class="chx-rc-cap chx-rc-g">trend</span><svg viewBox="0 0 120 60" preserveAspectRatio="none">
+        <line class="chx-rc-sig" x1="6" y1="30" x2="114" y2="30" stroke="var(--muted)" stroke-width="1" stroke-dasharray="3 3"/>
+        <polyline class="chx-rc-sig chx-rc-draw" points="20,50 40,44 58,38 76,30 94,20" fill="none" stroke="var(--pos)" stroke-width="1.6" style="--d:.1s"/>
+        <g fill="var(--info)"><circle cx="20" cy="50" r="2.6"/><circle cx="40" cy="44" r="2.6"/><circle cx="58" cy="38" r="2.6"/><circle cx="76" cy="30" r="2.6"/><circle cx="94" cy="20" r="2.6"/></g>
+      </svg></div>
+      <div class="chx-rc-cell"><span class="chx-rc-cap chx-rc-i">runs</span><svg viewBox="0 0 120 60" preserveAspectRatio="none">
+        <line class="chx-rc-sig" x1="6" y1="30" x2="114" y2="30" stroke="var(--muted)" stroke-width="1" stroke-dasharray="3 3"/>
+        <polyline class="chx-rc-sig chx-rc-draw" points="18,20 34,42 50,20 66,42 82,20 98,42" fill="none" stroke="var(--info)" stroke-width="1.6" style="--d:0s"/>
+      </svg></div>
+      <div class="chx-rc-cell"><span class="chx-rc-cap chx-rc-n">astro</span><svg viewBox="0 0 120 60" preserveAspectRatio="none">
+        <line class="chx-rc-sig" x1="6" y1="38" x2="114" y2="38" stroke="var(--muted)" stroke-width="1" stroke-dasharray="3 3"/>
+        <polyline class="chx-rc-sig" points="18,40 36,37 54,41 90,39 108,40" fill="none" stroke="var(--info)" stroke-width="1.4"/>
+        <g fill="var(--info)"><circle cx="18" cy="40" r="2.4"/><circle cx="36" cy="37" r="2.4"/><circle cx="54" cy="41" r="2.4"/><circle cx="90" cy="39" r="2.4"/><circle cx="108" cy="40" r="2.4"/></g>
+        <circle class="chx-rc-blip" cx="72" cy="12" r="3.2" fill="var(--neg)" style="--d:.3s"/>
+        <circle class="chx-rc-blip" cx="72" cy="12" r="6.5" fill="none" stroke="var(--neg)" stroke-width="1.4" style="--d:.3s"/>
+      </svg></div>
+    </div>
+  </div><div class="meta"><div class="nm">SPC Rule Legend</div><span class="ref">.chx-rc-legend</span><div class="desc">A static explainer: four mini panels sketch the signature of each run chart signal, shift, trend, runs and astronomical point, so the rules are readable at a glance.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+</div>
+<script data-prism-init="chx-rc">
+/* Prism initializer "chx-rc": draws run charts and I-MR control charts into every .chx-rc root
+   from its data-* attributes, and toggles rule overlays from the chip bar. Idempotent, no deps,
+   delegates from document so later inserted copies work. Never touches anything outside a root. */
+(function(){
+  if(window.__prismChxRc) return; window.__prismChxRc=true;
+  var RM=window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  function med(a){var b=a.slice().sort(function(x,y){return x-y;}),n=b.length,m=n>>1;return n%2?b[m]:(b[m-1]+b[m])/2;}
+  function r2(n){return Math.round(n*100)/100;}
+  function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');}
+  function compute(p){
+    var M=med(p),i,s,side=0,run=[],best=null,cnt;
+    for(i=0;i<p.length;i++){s=p[i]>M?1:p[i]<M?-1:0;if(s===0){if(run.length)run.push(i);continue;}if(s===side)run.push(i);else{side=s;run=[i];}cnt=run.filter(function(j){return p[j]!==M;}).length;if(cnt>=6&&(!best||run.length>best.run.length))best={run:run.slice(),side:side};}
+    var shift=best?{a:best.run[0],b:best.run[best.run.length-1],side:best.side,c:best.run.filter(function(j){return p[j]!==M;}).length}:null;
+    var dir=0,ts=0,tl=1,tb=null,pv=p[0],d;
+    for(i=1;i<p.length;i++){d=p[i]>pv?1:p[i]<pv?-1:0;if(d===0)continue;if(d===dir)tl++;else{dir=d;ts=i-1;tl=2;}if(tl>=5&&(!tb||tl>tb.len))tb={a:ts,b:i,dir:dir,len:tl};pv=p[i];}
+    var sg=[];for(i=0;i<p.length;i++)if(p[i]!==M)sg.push(p[i]>M?1:-1);
+    var n=sg.length,n1=0,n2=0;sg.forEach(function(x){x>0?n1++:n2++;});
+    var ro=n?1:0;for(i=1;i<sg.length;i++)if(sg[i]!==sg[i-1])ro++;
+    var TL={10:3,11:3,12:3,13:4,14:4,15:5,16:5,17:5,18:6,19:6,20:6,21:7,22:7,23:7,24:8,25:8,26:9,27:9,28:10,29:10,30:11};
+    var TU={10:8,11:9,12:10,13:10,14:11,15:11,16:12,17:13,18:13,19:14,20:15,21:15,22:16,23:17,24:17,25:18,26:18,27:19,28:19,29:20,30:20};
+    var lo,hi,mu,sig;
+    if(n>=10&&n<=30){lo=TL[n];hi=TU[n];}
+    else{mu=2*n1*n2/n+1;sig=Math.sqrt(2*n1*n2*(2*n1*n2-n)/(n*n*(n-1)))||0;lo=Math.max(2,Math.round(mu-1.96*sig));hi=Math.round(mu+1.96*sig);}
+    var verd=ro<lo?'too few':ro>hi?'too many':'ok';
+    var dev=p.map(function(x){return Math.abs(x-M);}),ma=med(dev),thr,fl=[],mn;
+    if(ma>0)thr=3.5*ma;else{mn=p.reduce(function(a,b){return a+b;},0)/p.length;thr=3*Math.sqrt(p.reduce(function(a,b){return a+(b-mn)*(b-mn);},0)/p.length);}
+    for(i=0;i<p.length;i++)if(Math.abs(p[i]-M)>thr)fl.push(i);
+    return {med:M,shift:shift,trend:tb,runs:{obs:ro,lo:lo,hi:hi,verd:verd},astro:{idx:fl,thr:r2(thr)}};
+  }
+  function fit(p){var n=p.length,sx=0,sy=0,sxx=0,sxy=0,i;for(i=0;i<n;i++){sx+=i;sy+=p[i];sxx+=i*i;sxy+=i*p[i];}var b=(n*sxy-sx*sy)/(n*sxx-sx*sx),a=(sy-b*sx)/n;return {a:a,b:b};}
+  var L=26,R=10,T=32,W=300-26-10;
+  function drawRun(root,p,on){
+    var m=compute(p),n=p.length,i,lo=Math.min.apply(0,p),hi=Math.max.apply(0,p),base=parseFloat(root.getAttribute('data-baseline'));
+    if(!isNaN(base)){lo=Math.min(lo,base);hi=Math.max(hi,base);}
+    var pad=(hi-lo)*0.12||1;lo-=pad;hi+=pad;var pt=T,pb=128,ph=pb-pt;
+    var X=function(i){return L+i*(W/(n-1));},Y=function(v){return pb-(v-lo)/(hi-lo)*ph;};
+    var g='';
+    if(on.shift&&m.shift){var x0=X(m.shift.a),x1=X(m.shift.b),ym=Y(m.med);g+='<rect class="chx-rc-band chx-rc-ov" x="'+r2(x0-3)+'" y="'+r2(m.shift.side<0?ym:pt)+'" width="'+r2(x1-x0+6)+'" height="'+r2(m.shift.side<0?pb-ym:ym-pt)+'"/><text class="chx-rc-lbl chx-rc-w chx-rc-ov" x="'+r2(x0)+'" y="'+r2(m.shift.side<0?pb-3:pt+8)+'">shift x'+m.shift.c+'</text>';}
+    if(on.median!==false){var ym2=Y(m.med);g+='<line class="chx-rc-med" x1="'+L+'" y1="'+r2(ym2)+'" x2="'+(L+W)+'" y2="'+r2(ym2)+'"/>';g+='<text class="chx-rc-lbl" x="2" y="'+r2(ym2-2)+'">md '+r2(m.med)+'</text>';}
+    if(!isNaN(base)){var yb=Y(base);g+='<line class="chx-rc-base" x1="'+L+'" y1="'+r2(yb)+'" x2="'+(L+W)+'" y2="'+r2(yb)+'"/>';}
+    if(on.trend&&m.trend){var ax=X(m.trend.a),ay=Y(p[m.trend.a]),bx=X(m.trend.b),by=Y(p[m.trend.b]);g+='<line class="chx-rc-arrow chx-rc-ov" x1="'+r2(ax)+'" y1="'+r2(ay)+'" x2="'+r2(bx)+'" y2="'+r2(by)+'"/><text class="chx-rc-lbl chx-rc-g chx-rc-ov" x="'+r2(ax)+'" y="'+r2(Math.min(ay,by)-3)+'">trend '+(m.trend.dir>0?'up':'dn')+' x'+m.trend.len+'</text>';}
+    if(on.fit){var f=fit(p);g+='<line class="chx-rc-fit chx-rc-ov" x1="'+r2(X(0))+'" y1="'+r2(Y(f.a))+'" x2="'+r2(X(n-1))+'" y2="'+r2(Y(f.a+f.b*(n-1)))+'"/>';}
+    var pl='';for(i=0;i<n;i++)pl+=r2(X(i))+','+r2(Y(p[i]))+' ';
+    g+='<polyline class="chx-rc-line" points="'+pl+'"/>';
+    for(i=0;i<n;i++)g+='<circle class="chx-rc-pt" cx="'+r2(X(i))+'" cy="'+r2(Y(p[i]))+'" r="2.4"/>';
+    if(on.astro&&m.astro.idx.length)m.astro.idx.forEach(function(i){g+='<circle class="chx-rc-ring chx-rc-ov" cx="'+r2(X(i))+'" cy="'+r2(Y(p[i]))+'" r="6"/><text class="chx-rc-lbl chx-rc-n chx-rc-ov" x="'+r2(X(i)-14)+'" y="'+r2(Y(p[i])-8)+'">astro</text>';});
+    if(on.runs){var rr=m.runs,cl=rr.verd==='ok'?'chx-rc-g':'chx-rc-w';g+='<text class="chx-rc-lbl '+cl+' chx-rc-ov" x="'+L+'" y="'+(T-4)+'">runs '+rr.obs+' exp '+rr.lo+'-'+rr.hi+' '+rr.verd+'</text>';}
+    return g;
+  }
+  function drawImr(root,p,on){
+    var n=p.length,i,mn=p.reduce(function(a,b){return a+b;},0)/n,mr=[];
+    for(i=1;i<n;i++)mr.push(Math.abs(p[i]-p[i-1]));
+    var mb=mr.reduce(function(a,b){return a+b;},0)/mr.length,ucl=mn+2.66*mb,lcl=mn-2.66*mb,mrl=3.267*mb;
+    var lo=Math.min(lcl,Math.min.apply(0,p)),hi=Math.max(ucl,Math.max.apply(0,p)),pad=(hi-lo)*0.1||1;lo-=pad;hi+=pad;
+    var it=30,ib=96,ih=ib-it,X=function(i){return L+i*(W/(n-1));},Y=function(v){return ib-(v-lo)/(hi-lo)*ih;};
+    var g='';
+    if(on.limits!==false){g+='<line class="chx-rc-ucl" x1="'+L+'" y1="'+r2(Y(ucl))+'" x2="'+(L+W)+'" y2="'+r2(Y(ucl))+'"/><line class="chx-rc-ucl" x1="'+L+'" y1="'+r2(Y(lcl))+'" x2="'+(L+W)+'" y2="'+r2(Y(lcl))+'"/><text class="chx-rc-lbl chx-rc-n" x="2" y="'+r2(Y(ucl)+2)+'">UCL '+r2(ucl)+'</text><text class="chx-rc-lbl chx-rc-n" x="2" y="'+r2(Y(lcl)+2)+'">LCL '+r2(lcl)+'</text>';}
+    if(on.mean!==false){g+='<line class="chx-rc-cl" x1="'+L+'" y1="'+r2(Y(mn))+'" x2="'+(L+W)+'" y2="'+r2(Y(mn))+'"/><text class="chx-rc-lbl chx-rc-g" x="2" y="'+r2(Y(mn)-2)+'">x '+r2(mn)+'</text>';}
+    var pl='';for(i=0;i<n;i++)pl+=r2(X(i))+','+r2(Y(p[i]))+' ';g+='<polyline class="chx-rc-line" points="'+pl+'"/>';
+    for(i=0;i<n;i++){g+='<circle class="chx-rc-pt" cx="'+r2(X(i))+'" cy="'+r2(Y(p[i]))+'" r="2.4"/>';if(p[i]>ucl||p[i]<lcl)g+='<circle class="chx-rc-ring chx-rc-ov" cx="'+r2(X(i))+'" cy="'+r2(Y(p[i]))+'" r="6"/>';}
+    if(on.range!==false){var rt=108,rb=140,rh=rb-rt,mx=Math.max(mrl,Math.max.apply(0,mr))*1.1,RY=function(v){return rb-v/mx*rh;};
+      g+='<line class="chx-rc-med" x1="'+L+'" y1="'+rb+'" x2="'+(L+W)+'" y2="'+rb+'"/><text class="chx-rc-lbl" x="2" y="'+(rt+2)+'">MR</text>';
+      g+='<line class="chx-rc-mrlim" x1="'+L+'" y1="'+r2(RY(mrl))+'" x2="'+(L+W)+'" y2="'+r2(RY(mrl))+'"/>';
+      var bw=W/(n-1)*0.5;for(i=0;i<mr.length;i++){var bx=X(i+1)-bw/2,by=RY(mr[i]);g+='<rect class="chx-rc-mrbar" x="'+r2(bx)+'" y="'+r2(by)+'" width="'+r2(bw)+'" height="'+r2(rb-by)+'"/>';if(mr[i]>mrl)g+='<rect class="chx-rc-ring chx-rc-ov" x="'+r2(bx)+'" y="'+r2(by)+'" width="'+r2(bw)+'" height="'+r2(rb-by)+'" rx="1"/>';}
+    }
+    return g;
+  }
+  function chipsOf(root){var d=root.getAttribute('data-chips');return d?d.split(','):[];}
+  function render(root){
+    var p=root.getAttribute('data-points').split(',').map(Number),svg=root.querySelector('svg'),on=root.__on||{};
+    svg.innerHTML=root.getAttribute('data-mode')==='imr'?drawImr(root,p,on):drawRun(root,p,on);
+    var chips=root.querySelectorAll('.chx-rc-chip');for(var i=0;i<chips.length;i++){var k=chips[i].getAttribute('data-chip');chips[i].classList.toggle('chx-rc-on',!!on[k]);}
+  }
+  function startDemo(root){
+    var list=chipsOf(root);if(!list.length)return;var i=0;
+    root.__demoT=setInterval(function(){var o={};o[list[i%list.length]]=true;root.__on=o;render(root);i++;},800);
+  }
+  function init(){
+    var roots=document.querySelectorAll('.chx-rc');for(var i=0;i<roots.length;i++){var root=roots[i];if(root.__drawn)continue;root.__drawn=true;
+      if(RM){var o={};chipsOf(root).forEach(function(k){o[k]=true;});root.__on=o;render(root);}
+      else{root.__on={};render(root);if(root.getAttribute('data-demo')==='1')startDemo(root);}
+    }
+  }
+  document.addEventListener('click',function(e){
+    var chip=e.target.closest?e.target.closest('.chx-rc-chip'):null;if(!chip)return;
+    var root=chip.closest('.chx-rc');if(!root)return;
+    if(root.__demoT){clearInterval(root.__demoT);root.__demoT=null;root.__on={};}
+    var k=chip.getAttribute('data-chip');root.__on[k]=!root.__on[k];render(root);
+  });
+  if(document.readyState!=='loading')init();else document.addEventListener('DOMContentLoaded',init);
+  if(window.MutationObserver){new MutationObserver(init).observe(document.documentElement,{childList:true,subtree:true});}
+})();
+</script>

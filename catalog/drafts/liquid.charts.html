@@ -1,0 +1,342 @@
+<h3 class="sec">LIQUID GAUGES &amp; VARIANCE BANDS</h3>
+<style id="chx-lq-styles">
+/* ===== Liquid gauges and variance bands (Charts & Metrics). Prefix chx-lq- / keyframes chxLq*.
+   Two families: fluid-level gauges (a pipe cross-section, tank, ring, pipe run, drop, battery,
+   dual-tank compare, thermometer) built from SVG wave paths that translateX inside a per-tile
+   clipPath, with the liquid group translateY to raise the level; and variance charts on a
+   0 0 300 150 viewBox (range band, fan, sigma band with outliers, error bars, deviation area,
+   variance to plan, bollinger envelope, control limits). Colour contract: liquid body and band
+   fills are rgba(var(--c-rgb,var(--accent-rgb)),x) with a lighter white crest; semantic breaches
+   use --neg, over/under plan use --pos/--neg, axes use --line. Every ambient loop tells its whole
+   story inside 4s. Registered property --chx-lq-pct (integer) drives the counting label. ===== */
+
+@property --chx-lq-pct{syntax:'<integer>';inherits:false;initial-value:0}
+
+.chx-lq-fig{width:100%;max-width:300px;height:150px;display:flex;align-items:center;justify-content:center;gap:14px;box-sizing:border-box}
+.chx-lq-svg{display:block;height:100%;overflow:visible}
+.chx-lq-body{fill:rgba(var(--c-rgb,var(--accent-rgb)),.34)}
+.chx-lq-body2{fill:rgba(var(--c-rgb,var(--accent-rgb)),.22)}
+.chx-lq-crest{fill:none;stroke:rgba(255,255,255,.5);stroke-width:1}
+.chx-lq-shell{fill:rgba(var(--c-rgb,var(--accent-rgb)),.05);stroke:rgba(var(--c-rgb,var(--accent-rgb)),.55);stroke-width:2}
+.chx-lq-val{fill:var(--ink);font:600 13px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.chx-lq-cap{fill:var(--muted);font:500 7px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.chx-lq-tick{stroke:rgba(var(--c-rgb,var(--accent-rgb)),.4);stroke-width:1}
+.chx-lq-target{stroke:var(--warn);stroke-width:1.2;stroke-dasharray:3 2}
+
+/* wave motion: two crests move at different speeds */
+.chx-lq-w1{animation-name:chxLqWave;animation-duration:2.4s;animation-timing-function:linear;animation-iteration-count:infinite}
+.chx-lq-w2{animation-name:chxLqWave;animation-duration:3.6s;animation-timing-function:linear;animation-iteration-count:infinite}
+@keyframes chxLqWave{to{transform:translateX(-40px)}}
+
+/* ---- 1. pipe cross-section (headline) ---- */
+.chx-lq-pipe-lvl{transform:translateY(30px);animation-name:chxLqPipeFill;animation-duration:4s;animation-timing-function:ease-in-out;animation-iteration-count:infinite}
+@keyframes chxLqPipeFill{0%{transform:translateY(92px)}45%{transform:translateY(30px)}72%{transform:translateY(30px)}100%{transform:translateY(92px)}}
+.chx-lq-pipe-wrap{position:relative;height:100%;display:flex;align-items:center}
+.chx-lq-pipe-pct{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;--chx-lq-pct:78;color:var(--ink);font:700 20px ui-sans-serif,system-ui,sans-serif;animation-name:chxLqCount;animation-duration:4s;animation-timing-function:ease-in-out;animation-iteration-count:infinite}
+.chx-lq-pipe-pct::after{content:counter(chxpct) '%';counter-reset:chxpct var(--chx-lq-pct)}
+@keyframes chxLqCount{0%{--chx-lq-pct:6}45%{--chx-lq-pct:78}72%{--chx-lq-pct:78}100%{--chx-lq-pct:6}}
+.chx-lq-menisc{fill:rgba(255,255,255,.14)}
+
+/* ---- 2. tank ---- */
+.chx-lq-tank-lvl{transform:translateY(34px);animation-name:chxLqTankFill;animation-duration:4s;animation-timing-function:ease-in-out;animation-iteration-count:infinite}
+@keyframes chxLqTankFill{0%{transform:translateY(96px)}50%{transform:translateY(34px)}80%{transform:translateY(40px)}100%{transform:translateY(96px)}}
+
+/* ---- 3. ring ---- */
+.chx-lq-ring-flow{fill:none;stroke:rgba(var(--c-rgb,var(--accent-rgb)),.5);stroke-width:13;stroke-linecap:round;stroke-dasharray:20 12;animation-name:chxLqRingFlow;animation-duration:1.4s;animation-timing-function:linear;animation-iteration-count:infinite}
+@keyframes chxLqRingFlow{to{stroke-dashoffset:-32}}
+.chx-lq-ring-track{fill:none;stroke:rgba(var(--c-rgb,var(--accent-rgb)),.13);stroke-width:13}
+.chx-lq-ring-bub{transform-origin:60px 60px;animation-name:chxLqSpin;animation-duration:3.2s;animation-timing-function:linear;animation-iteration-count:infinite}
+.chx-lq-ring-bub2{transform-origin:60px 60px;transform:rotate(140deg);animation-name:chxLqSpin;animation-duration:4s;animation-timing-function:linear;animation-iteration-count:infinite}
+@keyframes chxLqSpin{to{transform:rotate(360deg)}}
+.chx-lq-bub{fill:rgba(255,255,255,.55)}
+
+/* ---- 4. pipe run ---- */
+.chx-lq-run-fill{fill:rgba(var(--c-rgb,var(--accent-rgb)),.3)}
+.chx-lq-run-flow{animation-name:chxLqRunFlow;animation-duration:1s;animation-timing-function:linear;animation-iteration-count:infinite}
+@keyframes chxLqRunFlow{to{transform:translateX(26px)}}
+.chx-lq-run-dash{stroke:rgba(255,255,255,.4);stroke-width:5;stroke-dasharray:8 18;stroke-linecap:round}
+.chx-lq-valve-h{stroke:var(--ink);stroke-width:2.4;stroke-linecap:round;animation-name:chxLqValve;animation-duration:4s;animation-timing-function:ease-in-out;animation-iteration-count:infinite;transform-origin:center;transform-box:fill-box}
+.chx-lq-drop-val{font-size:11px}
+@keyframes chxLqValve{0%,100%{transform:rotate(-12deg)}50%{transform:rotate(12deg)}}
+
+/* ---- 5. drop ---- */
+.chx-lq-drop-lvl{transform:translateY(26px);animation-name:chxLqDropFill;animation-duration:4s;animation-timing-function:ease-in-out;animation-iteration-count:infinite}
+@keyframes chxLqDropFill{0%{transform:translateY(80px)}55%{transform:translateY(26px)}82%{transform:translateY(26px)}100%{transform:translateY(80px)}}
+
+/* ---- 6. battery ---- */
+.chx-lq-cell-lvl{transform:translateY(0);animation-name:chxLqCellFill;animation-duration:4s;animation-timing-function:ease-in-out;animation-iteration-count:infinite}
+@keyframes chxLqCellFill{0%{transform:translateY(46px)}30%{transform:translateY(4px)}85%{transform:translateY(4px)}100%{transform:translateY(46px)}}
+.chx-lq-c2{animation-delay:.5s}
+.chx-lq-c3{animation-delay:1s}
+
+/* ---- 7. dual tank ---- */
+.chx-lq-da{transform:translateY(30px);animation-name:chxLqDualA;animation-duration:4s;animation-timing-function:cubic-bezier(.5,1.5,.5,1);animation-iteration-count:infinite}
+@keyframes chxLqDualA{0%{transform:translateY(78px)}55%{transform:translateY(30px)}100%{transform:translateY(30px)}}
+.chx-lq-db{transform:translateY(48px);animation-name:chxLqDualB;animation-duration:4s;animation-timing-function:cubic-bezier(.5,1.5,.5,1);animation-iteration-count:infinite}
+@keyframes chxLqDualB{0%{transform:translateY(78px)}55%{transform:translateY(48px)}100%{transform:translateY(48px)}}
+
+/* ---- 8. thermometer ---- */
+.chx-lq-therm-lvl{transform:translateY(18px);animation-name:chxLqThermFill;animation-duration:4s;animation-timing-function:ease-in-out;animation-iteration-count:infinite}
+@keyframes chxLqThermFill{0%{transform:translateY(74px)}50%{transform:translateY(18px)}80%{transform:translateY(24px)}100%{transform:translateY(74px)}}
+.chx-lq-therm-bulb{fill:rgba(var(--c-rgb,var(--accent-rgb)),.6)}
+
+/* ================= variance charts (0 0 300 150) ================= */
+.chx-lq-chart{width:100%;max-width:300px;height:150px;display:block}
+.chx-lq-ax{stroke:var(--line);stroke-width:1}
+.chx-lq-grid{stroke:var(--line);stroke-width:1;opacity:.4;stroke-dasharray:2 3}
+.chx-lq-lbl{fill:var(--muted);font:400 8px ui-sans-serif,system-ui,sans-serif}
+.chx-lq-band{fill:rgba(var(--c-rgb,var(--accent-rgb)),.2);opacity:0;animation-name:chxLqBandIn;animation-duration:4s;animation-timing-function:ease-out;animation-iteration-count:infinite}
+@keyframes chxLqBandIn{0%{opacity:0}25%{opacity:1}85%{opacity:1}100%{opacity:0}}
+.chx-lq-line{fill:none;stroke:var(--c,var(--accent));stroke-width:2;stroke-dasharray:320;stroke-dashoffset:320;animation-name:chxLqDraw;animation-duration:4s;animation-timing-function:ease-in-out;animation-iteration-count:infinite}
+@keyframes chxLqDraw{0%{stroke-dashoffset:320}22%{stroke-dashoffset:320}70%{stroke-dashoffset:0}100%{stroke-dashoffset:0}}
+
+/* fan */
+.chx-lq-fan1{fill:rgba(var(--c-rgb,var(--accent-rgb)),.28)}
+.chx-lq-fan2{fill:rgba(var(--c-rgb,var(--accent-rgb)),.18)}
+.chx-lq-fan3{fill:rgba(var(--c-rgb,var(--accent-rgb)),.1)}
+.chx-lq-fanwrap{transform-origin:70px 78px;animation-name:chxLqFanOpen;animation-duration:4s;animation-timing-function:ease-out;animation-iteration-count:infinite}
+@keyframes chxLqFanOpen{0%{transform:scaleX(.04);opacity:.2}30%{transform:scaleX(1);opacity:1}88%{transform:scaleX(1);opacity:1}100%{transform:scaleX(.04);opacity:.2}}
+
+/* sigma band + outliers */
+.chx-lq-sig{fill:rgba(var(--c-rgb,var(--accent-rgb)),.18)}
+.chx-lq-mean{stroke:var(--c,var(--accent));stroke-width:1.5;stroke-dasharray:4 3}
+.chx-lq-pt{fill:var(--c,var(--accent))}
+.chx-lq-out{fill:var(--neg);animation-name:chxLqOut;animation-duration:1.4s;animation-timing-function:ease-in-out;animation-iteration-count:infinite}
+@keyframes chxLqOut{0%,100%{r:2.5;opacity:.6}50%{r:5;opacity:1}}
+
+/* error bars */
+.chx-lq-col{fill:rgba(var(--c-rgb,var(--accent-rgb)),.55);transform-origin:bottom;transform:scaleY(0);animation-name:chxLqCol;animation-duration:4s;animation-timing-function:cubic-bezier(.2,1,.3,1);animation-iteration-count:infinite}
+@keyframes chxLqCol{0%{transform:scaleY(0)}35%{transform:scaleY(1)}90%{transform:scaleY(1)}100%{transform:scaleY(0)}}
+.chx-lq-whisk{stroke:var(--ink);stroke-width:1.2;opacity:0;animation-name:chxLqWhisk;animation-duration:4s;animation-timing-function:ease-out;animation-iteration-count:infinite}
+@keyframes chxLqWhisk{0%{opacity:0}40%{opacity:0}55%{opacity:1}90%{opacity:1}100%{opacity:0}}
+
+/* deviation area */
+.chx-lq-devpos{fill:rgba(var(--pos-rgb),.35)}
+.chx-lq-devneg{fill:rgba(var(--neg-rgb),.35)}
+.chx-lq-devclip{animation-name:chxLqWipe;animation-duration:4s;animation-timing-function:ease-in-out;animation-iteration-count:infinite;transform-origin:left;transform:scaleX(0)}
+@keyframes chxLqWipe{0%{transform:scaleX(0)}60%{transform:scaleX(1)}90%{transform:scaleX(1)}100%{transform:scaleX(0)}}
+.chx-lq-base{stroke:var(--muted);stroke-width:1}
+
+/* variance to plan */
+.chx-lq-planline{stroke:var(--ink);stroke-width:1.5;stroke-dasharray:5 3}
+.chx-lq-over{fill:rgba(var(--pos-rgb),.6)}
+.chx-lq-under{fill:rgba(var(--neg-rgb),.6)}
+.chx-lq-vcol{transform-origin:bottom;transform:scaleY(0);animation-name:chxLqCol;animation-duration:4s;animation-timing-function:cubic-bezier(.2,1,.3,1);animation-iteration-count:infinite;animation-delay:var(--chx-lq-d,0s)}
+.chx-lq-strip{opacity:0;animation-name:chxLqFade;animation-duration:4s;animation-timing-function:ease-out;animation-iteration-count:infinite}
+@keyframes chxLqFade{0%{opacity:0}45%{opacity:0}60%{opacity:1}92%{opacity:1}100%{opacity:0}}
+
+/* bollinger */
+.chx-lq-boll{fill:rgba(var(--c-rgb,var(--accent-rgb)),.16)}
+.chx-lq-ma{fill:none;stroke:var(--warn);stroke-width:1.3}
+.chx-lq-price{fill:none;stroke:var(--c,var(--accent));stroke-width:1.5;stroke-dasharray:340;stroke-dashoffset:340;animation-name:chxLqDrawL;animation-duration:4s;animation-timing-function:linear;animation-iteration-count:infinite}
+@keyframes chxLqDrawL{0%{stroke-dashoffset:340}18%{stroke-dashoffset:340}82%{stroke-dashoffset:0}100%{stroke-dashoffset:0}}
+
+/* control limits */
+.chx-lq-cl{stroke:var(--neg);stroke-width:1;stroke-dasharray:4 3}
+.chx-lq-center{stroke:var(--c,var(--accent));stroke-width:1}
+.chx-lq-spc{fill:none;stroke:var(--c,var(--accent));stroke-width:1.5}
+.chx-lq-breach{fill:var(--neg);animation-name:chxLqFlash;animation-duration:1s;animation-timing-function:ease-in-out;animation-iteration-count:infinite}
+@keyframes chxLqFlash{0%,100%{r:2.5;opacity:.5}50%{r:6;opacity:1}}
+.chx-lq-spcpt{fill:var(--c,var(--accent))}
+
+@media (prefers-reduced-motion:reduce){
+  #chx-lq-styles ~ .gallery *{animation-name:none!important}
+  .chx-lq-band,.chx-lq-strip{opacity:1}
+  .chx-lq-line,.chx-lq-price{stroke-dashoffset:0}
+  .chx-lq-col,.chx-lq-vcol,.chx-lq-devclip,.chx-lq-fanwrap{transform:none}
+  .chx-lq-whisk{opacity:1}
+  .chx-lq-fanwrap{transform:scaleX(1)}
+}
+</style>
+<div class="gallery">
+
+  <div class="tile is-new" data-ctype="chart-gauge" data-interact="auto-play" data-c="gauge"><div class="stage">
+    <div class="chx-lq-fig"><div class="chx-lq-pipe-wrap"><svg class="chx-lq-svg" viewBox="0 0 120 120"><defs><clipPath id="chxLqClipPipe"><circle cx="60" cy="60" r="50"/></clipPath></defs>
+      <circle class="chx-lq-shell" cx="60" cy="60" r="50"/>
+      <g clip-path="url(#chxLqClipPipe)">
+        <g class="chx-lq-pipe-lvl">
+          <path class="chx-lq-body2 chx-lq-w2" d="M-160 0q10 -6 20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0V260H-160Z"/>
+          <path class="chx-lq-body chx-lq-w1" d="M-160 2q10 -6 20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0V260H-160Z"/>
+          <path class="chx-lq-crest chx-lq-w1" d="M-160 2q10 -6 20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0"/>
+        </g>
+        <ellipse class="chx-lq-menisc" cx="60" cy="8" rx="60" ry="10"/>
+      </g>
+      <circle class="chx-lq-shell" cx="60" cy="60" r="50" fill="none"/>
+    </svg><div class="chx-lq-pipe-pct"></div></div></div>
+  </div><div class="meta"><div class="nm">Pipe Cross Section</div><span class="ref">.chx-lq-pipe-lvl</span><div class="desc">A pipe seen end on with a sloshing two layer surface and a percent that counts up as the level rises. Use for a fill or capacity reading.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="chart-gauge" data-interact="auto-play" data-c="gauge"><div class="stage">
+    <div class="chx-lq-fig"><svg class="chx-lq-svg" viewBox="0 0 130 120"><defs><clipPath id="chxLqClipTank"><rect x="24" y="14" width="82" height="92" rx="12"/></clipPath></defs>
+      <rect class="chx-lq-shell" x="24" y="14" width="82" height="92" rx="12"/>
+      <g clip-path="url(#chxLqClipTank)">
+        <g class="chx-lq-tank-lvl">
+          <path class="chx-lq-body2 chx-lq-w2" d="M-160 0q10 -5 20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0V220H-160Z"/>
+          <path class="chx-lq-body chx-lq-w1" d="M-160 2q10 -5 20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0V220H-160Z"/>
+        </g>
+      </g>
+      <line class="chx-lq-tick" x1="24" y1="34" x2="34" y2="34"/><line class="chx-lq-tick" x1="24" y1="54" x2="34" y2="54"/><line class="chx-lq-tick" x1="24" y1="74" x2="34" y2="74"/><line class="chx-lq-tick" x1="24" y1="94" x2="34" y2="94"/>
+      <line class="chx-lq-target" x1="24" y1="44" x2="106" y2="44"/>
+      <text class="chx-lq-cap" x="65" y="119">Atlas tank</text>
+    </svg></div>
+  </div><div class="meta"><div class="nm">Liquid Tank</div><span class="ref">.chx-lq-tank-lvl</span><div class="desc">A rounded tank whose level rises with a wave surface past graduated ticks and a dashed target line. Use for a level against a goal.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="chart-gauge" data-interact="auto-play" data-c="gauge"><div class="stage">
+    <div class="chx-lq-fig"><svg class="chx-lq-svg" viewBox="0 0 120 120">
+      <circle class="chx-lq-ring-track" cx="60" cy="60" r="42"/>
+      <circle class="chx-lq-ring-flow" cx="60" cy="60" r="42"/>
+      <g class="chx-lq-ring-bub"><circle class="chx-lq-bub" cx="60" cy="18" r="2.4"/><circle class="chx-lq-bub" cx="52" cy="19" r="1.6"/></g>
+      <g class="chx-lq-ring-bub2"><circle class="chx-lq-bub" cx="60" cy="18" r="2"/></g>
+      <text class="chx-lq-val" x="60" y="64">64%</text>
+    </svg></div>
+  </div><div class="meta"><div class="nm">Liquid Ring</div><span class="ref">.chx-lq-ring-flow</span><div class="desc">A torus channel where fluid streams around the loop with bubbles carried along at two speeds. Use for a circulating or throughput reading.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="chart-gauge" data-interact="auto-play" data-c="gauge"><div class="stage">
+    <div class="chx-lq-fig"><svg class="chx-lq-svg" viewBox="0 0 200 96"><defs><clipPath id="chxLqClipRun"><rect x="40" y="34" width="150" height="28" rx="14"/></clipPath></defs>
+      <rect class="chx-lq-shell" x="40" y="34" width="150" height="28" rx="14"/>
+      <g clip-path="url(#chxLqClipRun)">
+        <rect class="chx-lq-run-fill" x="40" y="34" width="150" height="28"/>
+        <g class="chx-lq-run-flow"><line class="chx-lq-run-dash" x1="30" y1="48" x2="205" y2="48"/><circle class="chx-lq-bub" cx="70" cy="44" r="2"/><circle class="chx-lq-bub" cx="120" cy="52" r="1.6"/><circle class="chx-lq-bub" cx="160" cy="45" r="2.2"/></g>
+      </g>
+      <circle class="chx-lq-shell" cx="30" cy="48" r="13"/>
+      <line class="chx-lq-valve-h" x1="30" y1="40" x2="30" y2="56" style="transform-box:fill-box"/>
+      <text class="chx-lq-cap" x="115" y="80">flow 1,284 L/min</text>
+    </svg></div>
+  </div><div class="meta"><div class="nm">Liquid Pipe Run</div><span class="ref">.chx-lq-run-flow</span><div class="desc">A horizontal pipe with fluid streaming left to right past a turning valve, speed reading the value. Use for a flow rate or pipeline stage.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="chart-gauge" data-interact="auto-play" data-c="gauge"><div class="stage">
+    <div class="chx-lq-fig"><svg class="chx-lq-svg" viewBox="0 0 110 120"><defs><clipPath id="chxLqClipDrop"><path d="M55 12C55 12 88 54 88 78a33 33 0 0 1-66 0C22 54 55 12 55 12Z"/></clipPath></defs>
+      <path class="chx-lq-shell" d="M55 12C55 12 88 54 88 78a33 33 0 0 1-66 0C22 54 55 12 55 12Z"/>
+      <g clip-path="url(#chxLqClipDrop)">
+        <g class="chx-lq-drop-lvl">
+          <path class="chx-lq-body2 chx-lq-w2" d="M-160 0q10 -5 20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0V220H-160Z"/>
+          <path class="chx-lq-body chx-lq-w1" d="M-160 2q10 -5 20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0V220H-160Z"/>
+        </g>
+      </g>
+      <text class="chx-lq-val chx-lq-drop-val" x="55" y="86">72%</text>
+    </svg></div>
+  </div><div class="meta"><div class="nm">Liquid Drop Gauge</div><span class="ref">.chx-lq-drop-lvl</span><div class="desc">A teardrop vessel filling from the base with a wave surface inside the drop outline. Use for a humidity, moisture or fill reading.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="chart-gauge" data-interact="auto-play" data-c="gauge"><div class="stage">
+    <div class="chx-lq-fig"><svg class="chx-lq-svg" viewBox="0 0 150 100"><defs><clipPath id="chxLqClipB1"><rect x="16" y="30" width="34" height="52" rx="5"/></clipPath><clipPath id="chxLqClipB2"><rect x="58" y="30" width="34" height="52" rx="5"/></clipPath><clipPath id="chxLqClipB3"><rect x="100" y="30" width="34" height="52" rx="5"/></clipPath></defs>
+      <rect x="27" y="24" width="12" height="6" rx="2" fill="rgba(var(--c-rgb,var(--accent-rgb)),.55)"/><rect x="69" y="24" width="12" height="6" rx="2" fill="rgba(var(--c-rgb,var(--accent-rgb)),.55)"/><rect x="111" y="24" width="12" height="6" rx="2" fill="rgba(var(--c-rgb,var(--accent-rgb)),.55)"/>
+      <rect class="chx-lq-shell" x="16" y="30" width="34" height="52" rx="5"/><rect class="chx-lq-shell" x="58" y="30" width="34" height="52" rx="5"/><rect class="chx-lq-shell" x="100" y="30" width="34" height="52" rx="5"/>
+      <g clip-path="url(#chxLqClipB1)"><g class="chx-lq-cell-lvl"><path class="chx-lq-body chx-lq-w1" d="M-160 2q10 -4 20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0V160H-160Z"/></g></g>
+      <g clip-path="url(#chxLqClipB2)"><g class="chx-lq-cell-lvl chx-lq-c2"><path class="chx-lq-body chx-lq-w2" d="M-160 2q10 -4 20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0V160H-160Z"/></g></g>
+      <g clip-path="url(#chxLqClipB3)"><g class="chx-lq-cell-lvl chx-lq-c3"><path class="chx-lq-body chx-lq-w1" d="M-160 2q10 -4 20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0V160H-160Z"/></g></g>
+      <text class="chx-lq-cap" x="75" y="96">3 cells charging</text>
+    </svg></div>
+  </div><div class="meta"><div class="nm">Liquid Battery</div><span class="ref">.chx-lq-cell-lvl</span><div class="desc">Three cells that flood with fluid one after another in a staged sequence. Use for a battery, capacity or multi stage fill.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="chart-gauge" data-interact="auto-play" data-c="gauge"><div class="stage">
+    <div class="chx-lq-fig"><svg class="chx-lq-svg" viewBox="0 0 150 110"><defs><clipPath id="chxLqClipDA"><rect x="22" y="20" width="42" height="80" rx="8"/></clipPath><clipPath id="chxLqClipDB"><rect x="86" y="20" width="42" height="80" rx="8"/></clipPath></defs>
+      <rect class="chx-lq-shell" x="22" y="20" width="42" height="80" rx="8"/><rect class="chx-lq-shell" x="86" y="20" width="42" height="80" rx="8"/>
+      <g clip-path="url(#chxLqClipDA)"><g class="chx-lq-da"><path class="chx-lq-body2 chx-lq-w2" d="M-160 0q10 -5 20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0V200H-160Z"/><path class="chx-lq-body chx-lq-w1" d="M-160 2q10 -5 20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0V200H-160Z"/></g></g>
+      <g clip-path="url(#chxLqClipDB)"><g class="chx-lq-db"><path class="chx-lq-body2 chx-lq-w2" d="M-160 0q10 -5 20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0V200H-160Z"/><path class="chx-lq-body chx-lq-w1" d="M-160 2q10 -5 20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0V200H-160Z"/></g></g>
+      <text class="chx-lq-cap" x="43" y="108">actual</text><text class="chx-lq-cap" x="107" y="108">target</text>
+    </svg></div>
+  </div><div class="meta"><div class="nm">Dual Tank Compare</div><span class="ref">.chx-lq-da</span><div class="desc">Two tanks whose levels settle to actual and target so the shortfall shows as the gap. Use to compare a value against its plan.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="chart-gauge" data-interact="auto-play" data-c="gauge"><div class="stage">
+    <div class="chx-lq-fig"><svg class="chx-lq-svg" viewBox="0 0 90 120"><defs><clipPath id="chxLqClipTherm"><path d="M45 14a10 10 0 0 1 10 10v54a18 18 0 1 1-20 0V24a10 10 0 0 1 10-10Z"/></clipPath></defs>
+      <path class="chx-lq-shell" d="M45 14a10 10 0 0 1 10 10v54a18 18 0 1 1-20 0V24a10 10 0 0 1 10-10Z"/>
+      <circle class="chx-lq-therm-bulb" cx="45" cy="96" r="16"/>
+      <g clip-path="url(#chxLqClipTherm)">
+        <g class="chx-lq-therm-lvl">
+          <path class="chx-lq-body2 chx-lq-w2" d="M-160 0q8 -5 16 0t16 0t16 0t16 0t16 0t16 0t16 0t16 0t16 0t16 0t16 0t16 0t16 0t16 0t16 0t16 0t16 0t16 0t16 0t16 0V200H-160Z"/>
+          <path class="chx-lq-body chx-lq-w1" d="M-160 2q8 -5 16 0t16 0t16 0t16 0t16 0t16 0t16 0t16 0t16 0t16 0t16 0t16 0t16 0t16 0t16 0t16 0t16 0t16 0t16 0t16 0V200H-160Z"/>
+        </g>
+      </g>
+      <line class="chx-lq-tick" x1="55" y1="34" x2="61" y2="34"/><line class="chx-lq-tick" x1="55" y1="50" x2="61" y2="50"/><line class="chx-lq-tick" x1="55" y1="66" x2="61" y2="66"/>
+      <text class="chx-lq-cap" x="45" y="119">38 C</text>
+    </svg></div>
+  </div><div class="meta"><div class="nm">Liquid Thermometer</div><span class="ref">.chx-lq-therm-lvl</span><div class="desc">A bulb and column where the fluid rises with a rippling top surface against a small scale. Use for a temperature or intensity reading.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="chart-line" data-interact="auto-play" data-c="trend"><div class="stage">
+    <svg class="chx-lq-chart" viewBox="0 0 300 150">
+      <line class="chx-lq-ax" x1="30" y1="18" x2="30" y2="126"/><line class="chx-lq-ax" x1="30" y1="126" x2="286" y2="126"/>
+      <path class="chx-lq-band" d="M30 40 60 34 90 46 120 30 150 38 180 26 210 42 240 32 270 30 270 78 240 74 210 82 180 66 150 76 120 68 90 86 60 74 30 84Z"/>
+      <polyline class="chx-lq-line" points="30 62 60 54 90 66 120 49 150 57 180 46 210 62 240 53 270 50"/>
+      <text class="chx-lq-lbl" x="30" y="138">Q1</text><text class="chx-lq-lbl" x="150" y="138">Q3</text><text class="chx-lq-lbl" x="260" y="138">Q6</text><text class="chx-lq-lbl" x="4" y="42">max</text>
+    </svg>
+  </div><div class="meta"><div class="nm">Range Area Band</div><span class="ref">.chx-lq-band</span><div class="desc">A shaded min to max band fades in, then a median line draws through the middle. Use to show a spread with its central trend.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="chart-line" data-interact="auto-play" data-c="trend"><div class="stage">
+    <svg class="chx-lq-chart" viewBox="0 0 300 150">
+      <line class="chx-lq-ax" x1="30" y1="18" x2="30" y2="126"/><line class="chx-lq-ax" x1="30" y1="126" x2="286" y2="126"/>
+      <line class="chx-lq-grid" x1="70" y1="18" x2="70" y2="126"/>
+      <g class="chx-lq-fanwrap">
+        <path class="chx-lq-fan3" d="M70 78 270 30 270 122 70 78Z"/>
+        <path class="chx-lq-fan2" d="M70 78 270 46 270 106 70 78Z"/>
+        <path class="chx-lq-fan1" d="M70 78 270 60 270 92 70 78Z"/>
+      </g>
+      <polyline class="chx-lq-line" points="30 92 50 84 70 78 130 74 200 70 270 66"/>
+      <text class="chx-lq-lbl" x="46" y="138">now</text><text class="chx-lq-lbl" x="248" y="138">+6m</text><text class="chx-lq-lbl" x="150" y="14">forecast</text>
+    </svg>
+  </div><div class="meta"><div class="nm">Fan Chart</div><span class="ref">.chx-lq-fanwrap</span><div class="desc">A forecast band opens from the present and widens into three confidence tiers over time. Use for a projection with uncertainty.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="chart-line" data-interact="auto-play" data-c="trend"><div class="stage">
+    <svg class="chx-lq-chart" viewBox="0 0 300 150">
+      <line class="chx-lq-ax" x1="30" y1="18" x2="30" y2="126"/><line class="chx-lq-ax" x1="30" y1="126" x2="286" y2="126"/>
+      <rect class="chx-lq-sig" x="30" y="56" width="256" height="34"/>
+      <line class="chx-lq-mean" x1="30" y1="73" x2="286" y2="73"/>
+      <circle class="chx-lq-pt" cx="52" cy="66" r="2.5"/><circle class="chx-lq-pt" cx="80" cy="78" r="2.5"/><circle class="chx-lq-out" cx="108" cy="34"/><circle class="chx-lq-pt" cx="136" cy="70" r="2.5"/><circle class="chx-lq-pt" cx="164" cy="82" r="2.5"/><circle class="chx-lq-pt" cx="192" cy="64" r="2.5"/><circle class="chx-lq-out" cx="220" cy="112"/><circle class="chx-lq-pt" cx="248" cy="76" r="2.5"/><circle class="chx-lq-pt" cx="270" cy="68" r="2.5"/>
+      <text class="chx-lq-lbl" x="4" y="76">mean</text><text class="chx-lq-lbl" x="234" y="138">1 sigma</text>
+    </svg>
+  </div><div class="meta"><div class="nm">Sigma Band Outliers</div><span class="ref">.chx-lq-out</span><div class="desc">A mean line inside a one sigma band, with points outside the band pulsing red. Use to flag readings beyond normal variation.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="chart-line" data-interact="auto-play" data-c="trend"><div class="stage">
+    <svg class="chx-lq-chart" viewBox="0 0 300 150">
+      <line class="chx-lq-ax" x1="30" y1="18" x2="30" y2="126"/><line class="chx-lq-ax" x1="30" y1="126" x2="286" y2="126"/>
+      <rect class="chx-lq-col" x="52" y="70" width="26" height="56"/><rect class="chx-lq-col" x="112" y="54" width="26" height="72"/><rect class="chx-lq-col" x="172" y="82" width="26" height="44"/><rect class="chx-lq-col" x="232" y="48" width="26" height="78"/>
+      <g class="chx-lq-whisk"><line x1="65" y1="60" x2="65" y2="82"/><line x1="60" y1="60" x2="70" y2="60"/><line x1="60" y1="82" x2="70" y2="82"/><line x1="125" y1="44" x2="125" y2="66"/><line x1="120" y1="44" x2="130" y2="44"/><line x1="120" y1="66" x2="130" y2="66"/><line x1="185" y1="72" x2="185" y2="94"/><line x1="180" y1="72" x2="190" y2="72"/><line x1="180" y1="94" x2="190" y2="94"/><line x1="245" y1="38" x2="245" y2="60"/><line x1="240" y1="38" x2="250" y2="38"/><line x1="240" y1="60" x2="250" y2="60"/></g>
+      <text class="chx-lq-lbl" x="56" y="138">Atlas</text><text class="chx-lq-lbl" x="116" y="138">Comet</text><text class="chx-lq-lbl" x="178" y="138">Ember</text><text class="chx-lq-lbl" x="238" y="138">Nova</text>
+    </svg>
+  </div><div class="meta"><div class="nm">Error Bars On Columns</div><span class="ref">.chx-lq-whisk</span><div class="desc">Columns grow to their value, then whiskers extend above and below to show the margin. Use for measured values with uncertainty.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="chart-line" data-interact="auto-play" data-c="trend"><div class="stage">
+    <svg class="chx-lq-chart" viewBox="0 0 300 150"><defs><clipPath id="chxLqClipDev"><rect class="chx-lq-devclip" x="30" y="18" width="256" height="108"/></clipPath></defs>
+      <line class="chx-lq-ax" x1="30" y1="18" x2="30" y2="126"/><line class="chx-lq-ax" x1="30" y1="126" x2="286" y2="126"/>
+      <g clip-path="url(#chxLqClipDev)">
+        <path class="chx-lq-devpos" d="M30 72 66 72 66 54 102 44 138 60 138 72Z"/>
+        <path class="chx-lq-devneg" d="M138 72 138 72 174 90 210 100 246 84 270 96 270 72Z"/>
+        <path class="chx-lq-devpos" d="M246 72 246 84 270 72Z"/>
+      </g>
+      <line class="chx-lq-base" x1="30" y1="72" x2="286" y2="72"/>
+      <polyline class="chx-lq-line" points="30 72 66 54 102 44 138 66 174 90 210 100 246 84 270 74"/>
+      <text class="chx-lq-lbl" x="4" y="60">+</text><text class="chx-lq-lbl" x="6" y="90">-</text><text class="chx-lq-lbl" x="150" y="138">baseline</text>
+    </svg>
+  </div><div class="meta"><div class="nm">Deviation Area</div><span class="ref">.chx-lq-devpos</span><div class="desc">A series wipes in against a baseline, tinting green above and red below the zero line. Use to show gains and shortfalls versus a norm.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="chart-line" data-interact="auto-play" data-c="trend"><div class="stage">
+    <svg class="chx-lq-chart" viewBox="0 0 300 150">
+      <line class="chx-lq-ax" x1="30" y1="14" x2="30" y2="104"/><line class="chx-lq-ax" x1="30" y1="104" x2="286" y2="104"/>
+      <rect class="chx-lq-over chx-lq-vcol" x="46" y="60" width="22" height="44"/><rect class="chx-lq-under chx-lq-vcol" x="98" y="48" width="22" height="56" style="--chx-lq-d:.1s"/><rect class="chx-lq-over chx-lq-vcol" x="150" y="66" width="22" height="38" style="--chx-lq-d:.2s"/><rect class="chx-lq-over chx-lq-vcol" x="202" y="54" width="22" height="50" style="--chx-lq-d:.3s"/><rect class="chx-lq-under chx-lq-vcol" x="254" y="44" width="22" height="60" style="--chx-lq-d:.4s"/>
+      <line class="chx-lq-planline" x1="30" y1="58" x2="286" y2="58"/>
+      <g class="chx-lq-strip"><rect x="30" y="116" width="52" height="12" class="chx-lq-over"/><rect x="82" y="116" width="52" height="12" class="chx-lq-under"/><rect x="134" y="116" width="52" height="12" class="chx-lq-over"/><rect x="186" y="116" width="52" height="12" class="chx-lq-over"/><rect x="238" y="116" width="48" height="12" class="chx-lq-under"/></g>
+      <text class="chx-lq-lbl" x="4" y="60">plan</text><text class="chx-lq-lbl" x="30" y="140">variance strip</text>
+    </svg>
+  </div><div class="meta"><div class="nm">Variance To Plan</div><span class="ref">.chx-lq-vcol</span><div class="desc">Actual columns rise against a plan line, coloured over or under, with a running variance strip below. Use for budget or target tracking.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="chart-line" data-interact="auto-play" data-c="trend"><div class="stage">
+    <svg class="chx-lq-chart" viewBox="0 0 300 150">
+      <line class="chx-lq-ax" x1="30" y1="18" x2="30" y2="126"/><line class="chx-lq-ax" x1="30" y1="126" x2="286" y2="126"/>
+      <path class="chx-lq-boll" d="M30 48 66 42 102 50 138 40 174 46 210 36 246 44 270 40 270 96 246 88 210 96 174 86 138 92 102 82 66 90 30 84Z"/>
+      <polyline class="chx-lq-ma" points="30 66 66 66 102 66 138 63 174 66 210 66 246 66 270 64"/>
+      <polyline class="chx-lq-price" points="30 70 48 58 66 74 84 60 102 76 120 54 138 72 156 62 174 78 192 56 210 70 228 60 246 74 264 58 270 66"/>
+      <text class="chx-lq-lbl" x="4" y="46">upper</text><text class="chx-lq-lbl" x="236" y="138">lower</text>
+    </svg>
+  </div><div class="meta"><div class="nm">Bollinger Envelope</div><span class="ref">.chx-lq-boll</span><div class="desc">A moving average with upper and lower bands hugging a jittery price line as it draws in. Use for volatility or range tracking.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="chart-line" data-interact="auto-play" data-c="trend"><div class="stage">
+    <svg class="chx-lq-chart" viewBox="0 0 300 150">
+      <line class="chx-lq-ax" x1="30" y1="18" x2="30" y2="126"/><line class="chx-lq-ax" x1="30" y1="126" x2="286" y2="126"/>
+      <line class="chx-lq-cl" x1="30" y1="34" x2="286" y2="34"/>
+      <line class="chx-lq-center" x1="30" y1="72" x2="286" y2="72"/>
+      <line class="chx-lq-cl" x1="30" y1="110" x2="286" y2="110"/>
+      <polyline class="chx-lq-spc" points="52 70 80 64 108 78 136 60 164 74 192 26 220 68 248 76 270 70"/>
+      <circle class="chx-lq-spcpt" cx="52" cy="70" r="2.5"/><circle class="chx-lq-spcpt" cx="80" cy="64" r="2.5"/><circle class="chx-lq-spcpt" cx="108" cy="78" r="2.5"/><circle class="chx-lq-spcpt" cx="136" cy="60" r="2.5"/><circle class="chx-lq-spcpt" cx="164" cy="74" r="2.5"/><circle class="chx-lq-breach" cx="192" cy="26"/><circle class="chx-lq-spcpt" cx="220" cy="68" r="2.5"/><circle class="chx-lq-spcpt" cx="248" cy="76" r="2.5"/>
+      <text class="chx-lq-lbl" x="4" y="37">UCL</text><text class="chx-lq-lbl" x="6" y="113">LCL</text>
+    </svg>
+  </div><div class="meta"><div class="nm">Control Limits Band</div><span class="ref">.chx-lq-breach</span><div class="desc">A centre line between upper and lower control limits, with a point beyond a limit flashing red. Use for process control monitoring.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+</div>

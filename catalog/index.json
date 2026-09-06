@@ -1,5 +1,5 @@
 {
-  "count": 3260,
+  "count": 3277,
   "effects": [
     {
       "id": "charts-big-metric-count-up",
@@ -1896,11 +1896,10 @@
         "sl",
         "ts",
         "lv",
-        "info",
-        "m",
-        "warn",
-        "err",
         "ok",
+        "m",
+        "info",
+        "warn",
         "cursor"
       ],
       "params": [],
@@ -5782,9 +5781,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Five vertical axes with one polyline per record drawing across them, one series highlighted. Use it to compare several metrics per item at once."
     },
     {
@@ -5814,9 +5813,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Two axes split the plane into four labelled zones, points settle in one by one and the target quadrant is tinted. Use it for effort against impact triage."
     },
     {
@@ -5849,9 +5848,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Points joined in time order with the path drawing forward and an arrowhead at the latest quarter. Use it to show how two measures moved together."
     },
     {
@@ -5880,9 +5879,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A honeycomb of cells, each shaded by how many points fell inside it, filling in across the plane. Use it when a scatter plot has too many points to read."
     },
     {
@@ -5913,9 +5912,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Nested level lines drawing outward from two density peaks, inner rings strongest. Use it to show where a two dimensional distribution concentrates."
     },
     {
@@ -5946,9 +5945,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Dense vertical ticks per category, one per observation, drawing left to right with a band marking the middle range. Use it for compact distribution rows."
     },
     {
@@ -5977,9 +5976,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Ranked ribbons stacked by position each week, with ribbon thickness carrying the value, crossing when the order changes. Use it for share and rank in one view."
     },
     {
@@ -6009,9 +6008,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Twenty four bins around a clock face, each bar growing outward from the ring in turn. Use it for counts by hour or by heading, where the axis wraps around."
     },
     {
@@ -6042,9 +6041,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A single row of hour cells shaded by value with a window frame sliding along it. Use it for a compact daily profile or a rolling window explainer."
     },
     {
@@ -6072,9 +6071,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Terms sized by frequency drifting into their slots, the largest one pulsing. Use it as a quick read of what dominates a corpus of tickets, tags or logs."
     },
     {
@@ -6105,9 +6104,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "One row per item with a bar spanning its minimum to maximum and a marker for the current value dropping in. Use it to show where today sits inside history."
     },
     {
@@ -6138,9 +6137,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Categories across against categories down, with symbol size and shade carrying each pair value. Use it for overlap or co occurrence."
     },
     {
@@ -6172,9 +6171,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Six mini line panels on a shared scale, each trace drawing in sequence with its own delta. Use it to compare the shape of several series without overlap."
     },
     {
@@ -6205,9 +6204,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Each observation as a dot dropped into its category column with sideways jitter so points do not stack, plus a median bar. Use it instead of bars of averages."
     },
     {
@@ -6237,9 +6236,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Open high low close ticks: a vertical range with open tick left and close tick right, drawing day by day. Use it for price or cost ranges per period."
     },
     {
@@ -6273,9 +6272,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "The same eight points joined two ways, straight segments and a smoothed curve, emphasis alternating between them. Use it to show what smoothing adds or hides."
     },
     {
@@ -6305,9 +6304,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A grid of equal region tiles, each labelled and shaded by value, filling in with a legend ramp beside it. Use it when real geography would distort the read."
     },
     {
@@ -6340,10 +6339,580 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
+      "addedOn": "2026-09-05",
+      "updatedOn": null,
+      "author": "k33bz",
+      "description": "A horizontal ridge of thin bars rising left to right, each coloured on a ramp by its own height so peaks glow hot. Use it for event density across a day."
+    },
+    {
+      "id": "charts-circle-packing",
+      "name": "Circle Packing",
+      "gallery": "charts",
+      "category": "TREEMAPS & HIERARCHIES",
+      "ref": ".chx-tm-pack",
+      "classes": [
+        "chx-tm-svg",
+        "chx-tm-pack",
+        "chx-tm-fi",
+        "chx-tm-c1",
+        "chx-tm-c2",
+        "chx-tm-fa",
+        "chx-tm-c3",
+        "chx-tm-fp",
+        "chx-tm-fw",
+        "chx-tm-fc",
+        "chx-tm-lb",
+        "chx-tm-ld"
+      ],
+      "params": [],
+      "tags": [
+        "charts",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-treemap",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
       "addedOn": null,
       "updatedOn": null,
       "author": null,
-      "description": "A horizontal ridge of thin bars rising left to right, each coloured on a ramp by its own height so peaks glow hot. Use it for event density across a day."
+      "description": "Nested bubbles size children inside parents and grow in on a loop. Use it for hierarchy where each node is a count."
+    },
+    {
+      "id": "charts-voronoi-treemap",
+      "name": "Voronoi Treemap",
+      "gallery": "charts",
+      "category": "TREEMAPS & HIERARCHIES",
+      "ref": ".chx-tm-voro",
+      "classes": [
+        "chx-tm-svg",
+        "chx-tm-voro",
+        "chx-tm-fi",
+        "chx-tm-hl",
+        "chx-tm-fa",
+        "chx-tm-fp",
+        "chx-tm-fw",
+        "chx-tm-fc",
+        "chx-tm-lb"
+      ],
+      "params": [],
+      "tags": [
+        "charts",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-treemap",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Polygonal cells partition the frame by area, fade in, and a highlight walks between them. Use it for organic part to whole."
+    },
+    {
+      "id": "charts-icicle-chart",
+      "name": "Icicle Chart",
+      "gallery": "charts",
+      "category": "TREEMAPS & HIERARCHIES",
+      "ref": ".chx-tm-icicle",
+      "classes": [
+        "chx-tm-svg",
+        "chx-tm-icicle",
+        "chx-tm-fi",
+        "chx-tm-fa",
+        "chx-tm-fp",
+        "chx-tm-fw",
+        "chx-tm-fc",
+        "chx-tm-fn",
+        "chx-tm-lb"
+      ],
+      "params": [],
+      "tags": [
+        "charts",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-hierarchy",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Layered rectangles draw outward level by level, each row a tier of the tree. Use it to read depth and breadth at once."
+    },
+    {
+      "id": "charts-radial-icicle",
+      "name": "Radial Icicle",
+      "gallery": "charts",
+      "category": "TREEMAPS & HIERARCHIES",
+      "ref": ".chx-tm-radicicle",
+      "classes": [
+        "chx-tm-svg",
+        "chx-tm-radicicle",
+        "chx-tm-fa",
+        "chx-tm-arc",
+        "chx-tm-fi",
+        "chx-tm-fp",
+        "chx-tm-fw",
+        "chx-tm-fc",
+        "chx-tm-fn",
+        "chx-tm-lb",
+        "chx-tm-lm",
+        "chx-tm-ld"
+      ],
+      "params": [],
+      "tags": [
+        "charts",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-hierarchy",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Rings of arcs fan out from a labelled core with a drill highlight sweeping each tier. Use it for compact deep hierarchy."
+    },
+    {
+      "id": "charts-treemap-drill-in",
+      "name": "Treemap Drill-In",
+      "gallery": "charts",
+      "category": "TREEMAPS & HIERARCHIES",
+      "ref": ".chx-tm-drill",
+      "classes": [
+        "chx-tm-drill",
+        "chx-tm-cellset",
+        "chx-tm-cell",
+        "chx-tm-fi",
+        "chx-tm-fa",
+        "chx-tm-kids"
+      ],
+      "params": [],
+      "tags": [
+        "charts",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-treemap",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Hover or wait: one cell zooms to fill the frame and its children appear, then zooms back. Use it to navigate a treemap."
+    },
+    {
+      "id": "charts-treemap-delta",
+      "name": "Treemap Delta",
+      "gallery": "charts",
+      "category": "TREEMAPS & HIERARCHIES",
+      "ref": ".chx-tm-delta",
+      "classes": [
+        "chx-tm-delta",
+        "chx-tm-dc",
+        "chx-tm-now",
+        "chx-tm-dv",
+        "chx-tm-next"
+      ],
+      "params": [],
+      "tags": [
+        "charts",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-treemap",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Cells resize between last period and this one while their values update. Hover to hold the new state. Use it to show shift."
+    },
+    {
+      "id": "charts-treemap-heat",
+      "name": "Treemap Heat",
+      "gallery": "charts",
+      "category": "TREEMAPS & HIERARCHIES",
+      "ref": ".chx-tm-heat",
+      "classes": [
+        "chx-tm-svg",
+        "chx-tm-heat",
+        "chx-tm-lb",
+        "chx-tm-key",
+        "chx-tm-ld"
+      ],
+      "params": [],
+      "tags": [
+        "charts",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-treemap",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Cell size carries one metric while colour intensity carries a second, with a legend strip. Use it for size against pressure."
+    },
+    {
+      "id": "charts-treemap-sparklines",
+      "name": "Treemap Sparklines",
+      "gallery": "charts",
+      "category": "TREEMAPS & HIERARCHIES",
+      "ref": ".chx-tm-spark",
+      "classes": [
+        "chx-tm-svg",
+        "chx-tm-spark",
+        "chx-tm-fi",
+        "chx-tm-fa",
+        "chx-tm-fp",
+        "chx-tm-fw",
+        "chx-tm-lb"
+      ],
+      "params": [],
+      "tags": [
+        "charts",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-treemap",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Each cell holds a small trend line that redraws in place. Use it when a treemap slice also needs its recent trajectory."
+    },
+    {
+      "id": "charts-hierarchical-bar",
+      "name": "Hierarchical Bar",
+      "gallery": "charts",
+      "category": "TREEMAPS & HIERARCHIES",
+      "ref": ".chx-tm-hbar",
+      "classes": [
+        "chx-tm-svg",
+        "chx-tm-hbar",
+        "chx-tm-par",
+        "chx-tm-fi",
+        "chx-tm-fa",
+        "chx-tm-fp",
+        "chx-tm-fw",
+        "chx-tm-lm",
+        "chx-tm-kid",
+        "chx-tm-ld"
+      ],
+      "params": [],
+      "tags": [
+        "charts",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-hierarchy",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Parent bars give way to their child bars, which grow into place, then collapse back. Use it to drill a ranked breakdown."
+    },
+    {
+      "id": "charts-dendrogram-to-bar",
+      "name": "Dendrogram to Bar",
+      "gallery": "charts",
+      "category": "TREEMAPS & HIERARCHIES",
+      "ref": ".chx-tm-dend",
+      "classes": [
+        "chx-tm-svg",
+        "chx-tm-dend",
+        "chx-tm-fa",
+        "chx-tm-fi",
+        "chx-tm-fp",
+        "chx-tm-fw",
+        "chx-tm-ld"
+      ],
+      "params": [],
+      "tags": [
+        "charts",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-hierarchy",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Tree links draw from the root, then resolve into a ranked bar list on the right. Use it to turn a cluster into an order."
+    },
+    {
+      "id": "charts-euler-diagram",
+      "name": "Euler Diagram",
+      "gallery": "charts",
+      "category": "TREEMAPS & HIERARCHIES",
+      "ref": ".chx-tm-euler",
+      "classes": [
+        "chx-tm-svg",
+        "chx-tm-euler",
+        "chx-tm-fi",
+        "chx-tm-fa",
+        "chx-tm-fp",
+        "chx-tm-lb",
+        "chx-tm-ld"
+      ],
+      "params": [],
+      "tags": [
+        "charts",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-hierarchy",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Three sets overlap by proportional area and breathe gently so shared regions read. Use it for membership across groups."
+    },
+    {
+      "id": "charts-icon-array",
+      "name": "Icon Array",
+      "gallery": "charts",
+      "category": "TREEMAPS & HIERARCHIES",
+      "ref": ".chx-tm-iconarr",
+      "classes": [
+        "chx-tm-iconarr",
+        "chx-tm-grid",
+        "chx-tm-fillgrid"
+      ],
+      "params": [],
+      "tags": [
+        "charts",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-hierarchy",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A ten by ten dot grid fills left to right to a share, here 63 in 100. Use it to make a percentage feel concrete."
+    },
+    {
+      "id": "charts-diverging-likert-bar",
+      "name": "Diverging Likert Bar",
+      "gallery": "charts",
+      "category": "TREEMAPS & HIERARCHIES",
+      "ref": ".chx-tm-likert",
+      "classes": [
+        "chx-tm-svg",
+        "chx-tm-likert",
+        "chx-tm-zero",
+        "chx-tm-left",
+        "chx-tm-fn",
+        "chx-tm-fw",
+        "chx-tm-right",
+        "chx-tm-fp",
+        "chx-tm-fi",
+        "chx-tm-ld",
+        "chx-tm-lm"
+      ],
+      "params": [],
+      "tags": [
+        "charts",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-hierarchy",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Five point responses stack out from a zero line, disagree left and agree right. Use it for survey sentiment per item."
+    },
+    {
+      "id": "charts-semi-donut-needle",
+      "name": "Semi Donut Needle",
+      "gallery": "charts",
+      "category": "TREEMAPS & HIERARCHIES",
+      "ref": ".chx-tm-needle",
+      "classes": [
+        "chx-tm-svg",
+        "chx-tm-needle",
+        "chx-tm-band",
+        "chx-tm-pin",
+        "chx-tm-fa",
+        "chx-tm-lb",
+        "chx-tm-ld"
+      ],
+      "params": [],
+      "tags": [
+        "charts",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-hierarchy",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A half donut split into zones with a needle that swings to the reading and settles. Use it for a single rate against bands."
+    },
+    {
+      "id": "charts-tree-ring-chart",
+      "name": "Tree Ring Chart",
+      "gallery": "charts",
+      "category": "TREEMAPS & HIERARCHIES",
+      "ref": ".chx-tm-treering",
+      "classes": [
+        "chx-tm-svg",
+        "chx-tm-treering",
+        "chx-tm-fi",
+        "chx-tm-fa",
+        "chx-tm-fp",
+        "chx-tm-fw",
+        "chx-tm-fc",
+        "chx-tm-fn",
+        "chx-tm-ld"
+      ],
+      "params": [],
+      "tags": [
+        "charts",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-hierarchy",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Concentric rings hold one tree level each and segments light in turn from the core outward. Use it for layered share."
+    },
+    {
+      "id": "charts-nested-donuts",
+      "name": "Nested Donuts",
+      "gallery": "charts",
+      "category": "TREEMAPS & HIERARCHIES",
+      "ref": ".chx-tm-nesteddonut",
+      "classes": [
+        "chx-tm-svg",
+        "chx-tm-nesteddonut",
+        "chx-tm-trk",
+        "chx-tm-seg",
+        "chx-tm-lb",
+        "chx-tm-ld"
+      ],
+      "params": [],
+      "tags": [
+        "charts",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-hierarchy",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "An inner ring draws first, then the outer ring, so a parent breaks into its children. Use it for two level composition."
+    },
+    {
+      "id": "charts-pyramid-stack",
+      "name": "Pyramid Stack",
+      "gallery": "charts",
+      "category": "TREEMAPS & HIERARCHIES",
+      "ref": ".chx-tm-pyra",
+      "classes": [
+        "chx-tm-pyra",
+        "chx-tm-lyr",
+        "chx-tm-num"
+      ],
+      "params": [],
+      "tags": [
+        "charts",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-hierarchy",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Widening layers slide in from the side while each value rolls up into place. Use it for a funnel or a ranked staged total."
     },
     {
       "id": "fx-pulse-glow-winner",
