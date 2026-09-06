@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CTA Footer · Prism</title>
+<!-- Prism showcase sample: menus-cta-footer (gallery: menus). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.tile .row { display: flex; gap: 8px; margin-top: 10px; }
+.mnu-ftr { width: 300px; box-sizing: border-box; background: var(--panel2); border: 1px solid var(--line); border-radius: 12px; color: var(--muted); font-family: ui-sans-serif, system-ui, sans-serif; }
+.mnu-ftr a { color: var(--muted); text-decoration: none; transition: color 0.15s; }
+.mnu-ftr a:hover { color: var(--ink); }
+.mnu-ftr-bar .mnu-ftr-links { display: flex; gap: 12px; flex: 1 1 auto; justify-content: center; font-size: 11.5px; }
+.mnu-ftr-news .row { display: flex; gap: 16px; align-items: flex-start; }
+.mnu-ftr-cta .band { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 15px 16px; background: linear-gradient(120deg,rgba(var(--accent-rgb),.16),rgba(var(--crit-rgb),.12)); border-bottom: 1px solid var(--line); border-radius: 12px 12px 0px 0px; }
+.mnu-ftr-cta .band b { color: var(--ink); font: 800 14px ui-sans-serif, system-ui, sans-serif; display: block; }
+.mnu-ftr-cta .band small { color: var(--dim); font-size: 11px; }
+.mnu-ftr-cta .band a { flex: 0 0 auto; border-radius: 8px; padding: 9px 14px; font: 700 12px ui-sans-serif, system-ui, sans-serif; color: var(--bg); background: linear-gradient(135deg,var(--accent),rgba(var(--accent-rgb),.75)); box-shadow: 0 4px 12px rgba(var(--accent-rgb),.3); }
+.mnu-ftr-cta .row { display: flex; align-items: center; justify-content: space-between; padding: 11px 16px; font-size: 11px; color: var(--dim); }
+.mnu-ftr-cta .row .mnu-ftr-links { display: flex; gap: 12px; }
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="mnu-ftr mnu-ftr-cta">
+      <div class="band"><span><b>Ready to start?</b><small>Free for 14 days.</small></span><a href="#">Get started</a></div>
+      <div class="row"><span>© 2026 Vertex</span><nav class="mnu-ftr-links"><a href="#">Privacy</a><a href="#">Terms</a></nav></div>
+    </div></div></div>
+<div class="meta"><b>CTA Footer</b> · <code>menus-cta-footer</code><br>Menus &amp; Actions · FOOTER NAVIGATION<p>A tinted call-to-action band sits above a slim legal row, the conversion footer. The band pairs a headline and subline with an accent button.</p></div>
+
+</body>
+</html>

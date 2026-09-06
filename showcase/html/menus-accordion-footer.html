@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Accordion Footer · Prism</title>
+<!-- Prism showcase sample: menus-accordion-footer (gallery: menus). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+h3.sec { font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--dim); font-weight: 800; margin: 26px 0px 12px; padding-bottom: 7px; border-bottom: 1px solid var(--line); }
+h3.sec { color: var(--muted) !important; border-bottom: var(--bd,1px) solid var(--line) !important; }
+[data-ds="mailchimp"] h3.sec { font-style: italic !important; }
+[data-ds="heroku"] h3.sec { text-transform: uppercase !important; letter-spacing: 0.08em !important; }
+h3.sec .sec-count, .wrap h3 .sec-count { display: inline-flex; align-items: center; justify-content: center; min-width: 20px; height: 18px; padding: 0px 6px; margin-left: 9px; border-radius: 9px; background: rgba(255, 153, 0, 0.14); border: 1px solid rgba(255, 153, 0, 0.4); color: rgb(255, 153, 0); font-size: 10.5px; font-weight: 800; font-variant-numeric: tabular-nums; vertical-align: middle; letter-spacing: 0px; line-height: 1; }
+.mnu-ftr { width: 300px; box-sizing: border-box; background: var(--panel2); border: 1px solid var(--line); border-radius: 12px; color: var(--muted); font-family: ui-sans-serif, system-ui, sans-serif; }
+.mnu-ftr a { color: var(--muted); text-decoration: none; transition: color 0.15s; }
+.mnu-ftr a:hover { color: var(--ink); }
+.mnu-ftr-acc { padding: 6px 8px; }
+.mnu-ftr-acc .sec { border-bottom: 1px solid var(--line); }
+.mnu-ftr-acc .sec:last-child { border-bottom: 0px; }
+.mnu-ftr-acc input { position: absolute; opacity: 0; width: 0px; height: 0px; }
+.mnu-ftr-acc label { display: flex; align-items: center; justify-content: space-between; padding: 11px 8px; font: 700 12px ui-sans-serif, system-ui, sans-serif; color: var(--ink); cursor: pointer; }
+.mnu-ftr-acc label::after { content: "+"; color: var(--muted); font-size: 15px; transition: transform 0.25s; }
+.mnu-ftr-acc .body { max-height: 0px; overflow: hidden; transition: max-height 0.3s cubic-bezier(0.25, 1, 0.35, 1); }
+.mnu-ftr-acc .body a { display: block; padding: 6px 8px 6px 16px; font-size: 11.5px; }
+.mnu-ftr-acc input:checked ~ label::after { transform: rotate(45deg); }
+.mnu-ftr-acc input:checked ~ .body { max-height: 130px; }
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="mnu-ftr mnu-ftr-acc" style="width:230px">
+      <div class="sec"><input type="checkbox" id="mnu-acc1" checked=""><label for="mnu-acc1">Product</label><div class="body"><a href="#">Features</a><a href="#">Pricing</a><a href="#">Integrations</a></div></div>
+      <div class="sec"><input type="checkbox" id="mnu-acc2"><label for="mnu-acc2">Company</label><div class="body"><a href="#">About</a><a href="#">Careers</a><a href="#">Blog</a></div></div>
+      <div class="sec"><input type="checkbox" id="mnu-acc3"><label for="mnu-acc3">Support</label><div class="body"><a href="#">Help center</a><a href="#">Status</a><a href="#">Contact</a></div></div>
+    </div></div></div>
+<div class="meta"><b>Accordion Footer</b> · <code>menus-accordion-footer</code><br>Menus &amp; Actions · FOOTER NAVIGATION<p>The mobile footer: each link group collapses behind a heading and expands when tapped, so a long footer fits a small screen. Checkbox-driven, the plus turns to a cross.</p></div>
+
+</body>
+</html>

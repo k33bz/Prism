@@ -2,11 +2,11 @@
 
 Every effect in Prism's **Menus & Actions** gallery, recorded as a looping GIF.
 
-**39 effects** · 38 animated · 509 KB of GIF · click any GIF to open its standalone HTML sample (raw file; open it locally, GitHub shows source).
+**50 effects** · 49 animated · 560 KB of GIF · click any GIF to open its standalone HTML sample (raw file; open it locally, GitHub shows source).
 
 [← Showcase index](../README.md)
 
-**Sections:** [DROPDOWN MENUS](#dropdown-menus) · [CONTEXT MENUS](#context-menus) · [NAVIGATION MENUS](#navigation-menus) · [COMMAND PALETTES](#command-palettes) · [ACTION BARS, TOOLBARS & FABs](#action-bars-toolbars-fabs) · [TAB BARS & SEGMENTED CONTROLS](#tab-bars-segmented-controls) · [RADIAL & GESTURE MENUS](#radial-gesture-menus) · [STATIC MENU REFERENCES](#static-menu-references) · [LIVE RADIAL & GESTURE MENUS](#live-radial-gesture-menus)
+**Sections:** [DROPDOWN MENUS](#dropdown-menus) · [CONTEXT MENUS](#context-menus) · [NAVIGATION MENUS](#navigation-menus) · [COMMAND PALETTES](#command-palettes) · [ACTION BARS, TOOLBARS & FABs](#action-bars-toolbars-fabs) · [TAB BARS & SEGMENTED CONTROLS](#tab-bars-segmented-controls) · [RADIAL & GESTURE MENUS](#radial-gesture-menus) · [STATIC MENU REFERENCES](#static-menu-references) · [LIVE RADIAL & GESTURE MENUS](#live-radial-gesture-menus) · [HEADER NAVIGATION](#header-navigation) · [FOOTER NAVIGATION](#footer-navigation)
 
 ## DROPDOWN MENUS
 
@@ -67,4 +67,18 @@ Every effect in Prism's **Menus & Actions** gallery, recorded as a looping GIF.
 
 <table>
 <tr><td align="center" valign="top" width="33%"><a href="../html/menus-long-press-menu-live.html"><img src="../gif/menus-long-press-menu-live.gif" width="300" alt="Long Press Menu (Live)"></a><br><b>Long Press Menu (Live)</b><br><sub><code>menus-long-press-menu-live</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/menus-draggable-dial-menu-live.html"><img src="../gif/menus-draggable-dial-menu-live.gif" width="300" alt="Draggable Dial Menu (Live)"></a><br><b>Draggable Dial Menu (Live)</b><br><sub><code>menus-draggable-dial-menu-live</code></sub></td></tr>
+</table>
+
+## HEADER NAVIGATION
+
+<table>
+<tr><td align="center" valign="top" width="33%"><a href="../html/menus-app-bar.html"><img src="../gif/menus-app-bar.gif" width="300" alt="App Bar"></a><br><b>App Bar</b><br><sub><code>menus-app-bar</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/menus-split-header.html"><img src="../gif/menus-split-header.gif" width="300" alt="Split Header"></a><br><b>Split Header</b><br><sub><code>menus-split-header</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/menus-mega-menu-header.html"><img src="../gif/menus-mega-menu-header.gif" width="300" alt="Mega Menu Header"></a><br><b>Mega Menu Header</b><br><sub><code>menus-mega-menu-header</code></sub></td></tr>
+<tr><td align="center" valign="top" width="33%"><a href="../html/menus-search-header.html"><img src="../gif/menus-search-header.gif" width="300" alt="Search Header"></a><br><b>Search Header</b><br><sub><code>menus-search-header</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/menus-cta-header.html"><img src="../gif/menus-cta-header.gif" width="300" alt="CTA Header"></a><br><b>CTA Header</b><br><sub><code>menus-cta-header</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/menus-mobile-header-left-drawer.html"><img src="../gif/menus-mobile-header-left-drawer.gif" width="300" alt="Mobile Header, Left Drawer"></a><br><b>Mobile Header, Left Drawer</b><br><sub><code>menus-mobile-header-left-drawer</code></sub></td></tr>
+</table>
+
+## FOOTER NAVIGATION
+
+<table>
+<tr><td align="center" valign="top" width="33%"><a href="../html/menus-columns-footer.html"><img src="../gif/menus-columns-footer.gif" width="300" alt="Columns Footer"></a><br><b>Columns Footer</b><br><sub><code>menus-columns-footer</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/menus-slim-bar-footer.html"><img src="../gif/menus-slim-bar-footer.gif" width="300" alt="Slim Bar Footer"></a><br><b>Slim Bar Footer</b><br><sub><code>menus-slim-bar-footer</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/menus-newsletter-footer.html"><img src="../gif/menus-newsletter-footer.gif" width="300" alt="Newsletter Footer"></a><br><b>Newsletter Footer</b><br><sub><code>menus-newsletter-footer</code></sub></td></tr>
+<tr><td align="center" valign="top" width="33%"><a href="../html/menus-cta-footer.html"><img src="../gif/menus-cta-footer.gif" width="300" alt="CTA Footer"></a><br><b>CTA Footer</b><br><sub><code>menus-cta-footer</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/menus-accordion-footer.html"><img src="../gif/menus-accordion-footer.gif" width="300" alt="Accordion Footer"></a><br><b>Accordion Footer</b><br><sub><code>menus-accordion-footer</code></sub></td></tr>
 </table>

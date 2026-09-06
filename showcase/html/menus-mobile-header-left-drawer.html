@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mobile Header, Left Drawer · Prism</title>
+<!-- Prism showcase sample: menus-mobile-header-left-drawer (gallery: menus). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.mnu-hamwrap { position: relative; width: 230px; height: 132px; overflow: hidden; border-radius: 10px; background: var(--card); border: 1px solid var(--line); }
+.mnu-ham-input { position: absolute; opacity: 0; width: 0px; height: 0px; }
+.mnu-ham-btn { position: absolute; top: 10px; left: 10px; z-index: 3; width: 32px; height: 32px; border-radius: 8px; background: var(--panel2); border: 1px solid var(--line); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; cursor: pointer; }
+.mnu-ham-btn span { display: block; width: 16px; height: 2px; border-radius: 2px; background: var(--ink); transition: transform 0.3s cubic-bezier(0.3, 1, 0.4, 1), opacity 0.2s; }
+.mnu-ham-input:checked ~ .mnu-ham-btn span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.mnu-ham-input:checked ~ .mnu-ham-btn span:nth-child(2) { opacity: 0; }
+.mnu-ham-input:checked ~ .mnu-ham-btn span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+.mnu-ham-panel { position: absolute; top: 0px; right: 0px; bottom: 0px; width: 74%; background: var(--panel2); border-left: 1px solid var(--line); padding: 52px 14px 14px; display: flex; flex-direction: column; gap: 4px; transform: translateX(100%); transition: transform 0.32s cubic-bezier(0.25, 1, 0.35, 1); z-index: 2; }
+.mnu-ham-input:checked ~ .mnu-ham-panel { transform: translateX(0px); }
+.mnu-ham-panel a { color: var(--ink); font-size: 12.5px; font-weight: 600; text-decoration: none; padding: 7px 8px; border-radius: 7px; transition: background 0.15s; }
+.mnu-ham-panel a:hover { background: rgba(var(--info-rgb),.14); }
+.mnu-ham-hint { position: absolute; left: 12px; bottom: 10px; color: var(--dim); font-size: 10.5px; }
+.mnu-ham-left .mnu-ham-btn { left: auto; right: 10px; }
+.mnu-ham-left .mnu-ham-panel { right: auto; left: 0px; border-left: 0px; border-right: 1px solid var(--line); padding: 52px 14px 14px; transform: translateX(-100%); }
+.mnu-ham-left .mnu-ham-input:checked ~ .mnu-ham-panel { transform: translateX(0px); }
+.mnu-ham-brand { position: absolute; top: 0px; left: 0px; right: 0px; height: 52px; display: flex; align-items: center; justify-content: center; gap: 7px; font: 800 13px ui-sans-serif, system-ui, sans-serif; color: var(--ink); border-bottom: 1px solid var(--line); pointer-events: none; }
+.mnu-ham-brand::before { content: ""; width: 15px; height: 15px; border-radius: 5px; background: linear-gradient(135deg,var(--accent),rgba(var(--accent-rgb),.5)); }
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="mnu-hamwrap mnu-ham-left" style="width:230px;height:132px">
+      <span class="mnu-ham-brand">Meridian</span>
+      <input type="checkbox" id="mnu-haml-demo" class="mnu-ham-input">
+      <label for="mnu-haml-demo" class="mnu-ham-btn"><span></span><span></span><span></span></label>
+      <div class="mnu-ham-panel"><a href="#">Home</a><a href="#">Features</a><a href="#">Pricing</a><a href="#">Contact</a></div>
+      <span class="mnu-ham-hint">click the icon</span>
+    </div></div></div>
+<div class="meta"><b>Mobile Header, Left Drawer</b> · <code>menus-mobile-header-left-drawer</code><br>Menus &amp; Actions · HEADER NAVIGATION<p>The right-aligned variant of the hamburger drawer: the icon sits on the right and the panel slides in from the left, with a centred brand across the top. Add .mnu-ham-left to any .mnu-hamwrap.</p></div>
+
+</body>
+</html>
