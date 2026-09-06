@@ -42,7 +42,7 @@
 
 /* 5 bubble column: small bubbles stream up a tube and coalesce near the top */
 .amb-lava-bub-b{transform-box:fill-box;transform-origin:center;animation-name:ambLavaBubble;animation-duration:4s;animation-timing-function:cubic-bezier(.4,0,.7,1);animation-iteration-count:infinite;animation-delay:var(--d,0s)}
-@keyframes ambLavaBubble{0%{transform:translateY(12px) scale(.4);opacity:0}12%{opacity:1}80%{transform:translateY(-104px) scale(1.1);opacity:1}100%{transform:translateY(-118px) scale(1.4);opacity:0}}
+@keyframes ambLavaBubble{0%{transform:translateY(12px) scale(.7);opacity:0}14%{opacity:1}80%{transform:translateY(-104px) scale(1.15);opacity:1}100%{transform:translateY(-120px) scale(1.4);opacity:0}}
 
 /* 6 wax drip: blobs swell at the ceiling then drop */
 .amb-lava-drp-b{transform-box:fill-box;transform-origin:center top;animation-name:ambLavaDrip;animation-duration:4s;animation-timing-function:ease-in;animation-iteration-count:infinite;animation-delay:var(--d,0s)}
@@ -55,8 +55,8 @@
 /* 8 liquid blob morph: one mass stretches and pinches */
 .amb-lava-mrf-a{transform-box:fill-box;transform-origin:center;animation-name:ambLavaMorphA;animation-duration:4s;animation-timing-function:ease-in-out;animation-iteration-count:infinite}
 .amb-lava-mrf-b{transform-box:fill-box;transform-origin:center;animation-name:ambLavaMorphB;animation-duration:4s;animation-timing-function:ease-in-out;animation-iteration-count:infinite}
-@keyframes ambLavaMorphA{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-26px,0) scale(.8,1.25)}}
-@keyframes ambLavaMorphB{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(26px,0) scale(.8,1.25)}}
+@keyframes ambLavaMorphA{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-15px,4px) scale(.82,1.22)}}
+@keyframes ambLavaMorphB{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(15px,-4px) scale(.82,1.22)}}
 
 /* 9 rising heat plume: blobs merge upward from a hot base */
 .amb-lava-plm-b{transform-box:fill-box;transform-origin:center;animation-name:ambLavaPlume;animation-duration:4s;animation-timing-function:cubic-bezier(.5,0,.6,1);animation-iteration-count:infinite;animation-delay:var(--d,0s)}
@@ -174,12 +174,12 @@
         <rect x="126" y="14" width="48" height="124" rx="10" fill="url(#ambLavaLamp5)"/>
         <rect x="126" y="14" width="48" height="124" rx="10" class="amb-lava-glass"/>
         <g filter="url(#ambLavaGoo5)">
-          <ellipse cx="150" cy="122" rx="20" ry="10" class="amb-lava-b"/>
-          <circle class="amb-lava-b amb-lava-bub-b" cx="144" cy="122" r="7" style="--d:0s"/>
-          <circle class="amb-lava-b amb-lava-bub-b" cx="156" cy="122" r="6" style="--d:-1s"/>
-          <circle class="amb-lava-b amb-lava-bub-b" cx="150" cy="122" r="8" style="--d:-2s"/>
-          <circle class="amb-lava-b amb-lava-bub-b" cx="148" cy="122" r="5" style="--d:-3s"/>
-          <circle class="amb-lava-b amb-lava-bub-b" cx="158" cy="122" r="5" style="--d:-2.5s"/>
+          <ellipse cx="150" cy="124" rx="20" ry="11" class="amb-lava-b"/>
+          <circle class="amb-lava-b amb-lava-bub-b" cx="144" cy="122" r="10" style="--d:0s"/>
+          <circle class="amb-lava-b amb-lava-bub-b" cx="157" cy="122" r="8" style="--d:-.9s"/>
+          <circle class="amb-lava-b amb-lava-bub-b" cx="150" cy="122" r="11" style="--d:-1.8s"/>
+          <circle class="amb-lava-b amb-lava-bub-b" cx="146" cy="122" r="7" style="--d:-2.6s"/>
+          <circle class="amb-lava-b amb-lava-bub-b" cx="158" cy="122" r="8" style="--d:-3.3s"/>
         </g>
       </svg>
       <span class="amb-lava-tag">Pixel · rise</span>
@@ -209,10 +209,10 @@
         <filter id="ambLavaGoo7" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur in="SourceGraphic" stdDeviation="6" result="b"/><feColorMatrix in="b" type="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 20 -9"/></filter>
       </defs>
         <g filter="url(#ambLavaGoo7)">
-          <circle class="amb-lava-b" cx="150" cy="75" r="16"/>
-          <g class="amb-lava-orb-g" style="--d:0s"><circle class="amb-lava-b" cx="204" cy="75" r="13"/></g>
-          <g class="amb-lava-orb-g" style="--d:-1.3s"><circle class="amb-lava-bc" cx="192" cy="75" r="11"/></g>
-          <g class="amb-lava-orb-g" style="--d:-2.6s"><circle class="amb-lava-b" cx="210" cy="75" r="10"/></g>
+          <circle class="amb-lava-b" cx="150" cy="75" r="15"/>
+          <g class="amb-lava-orb-g" style="--d:0s"><circle class="amb-lava-b" cx="178" cy="75" r="13"/></g>
+          <g class="amb-lava-orb-g" style="--d:-1.3s"><circle class="amb-lava-bc" cx="174" cy="75" r="12"/></g>
+          <g class="amb-lava-orb-g" style="--d:-2.6s"><circle class="amb-lava-b" cx="182" cy="75" r="12"/></g>
         </g>
       </svg>
       <span class="amb-lava-tag">Nova · orbit</span>
