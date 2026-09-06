@@ -2,11 +2,11 @@
 
 Every effect in Prism's **Menus & Actions** gallery, recorded as a looping GIF.
 
-**56 effects** · 55 animated · 601 KB of GIF · click any GIF to open its standalone HTML sample (raw file; open it locally, GitHub shows source).
+**62 effects** · 61 animated · 686 KB of GIF · click any GIF to open its standalone HTML sample (raw file; open it locally, GitHub shows source).
 
 [← Showcase index](../README.md)
 
-**Sections:** [DROPDOWN MENUS](#dropdown-menus) · [CONTEXT MENUS](#context-menus) · [NAVIGATION MENUS](#navigation-menus) · [COMMAND PALETTES](#command-palettes) · [ACTION BARS, TOOLBARS & FABs](#action-bars-toolbars-fabs) · [TAB BARS & SEGMENTED CONTROLS](#tab-bars-segmented-controls) · [RADIAL & GESTURE MENUS](#radial-gesture-menus) · [STATIC MENU REFERENCES](#static-menu-references) · [LIVE RADIAL & GESTURE MENUS](#live-radial-gesture-menus) · [HEADER NAVIGATION](#header-navigation) · [FOOTER NAVIGATION](#footer-navigation) · [NAVIGATION MOTION](#navigation-motion)
+**Sections:** [DROPDOWN MENUS](#dropdown-menus) · [CONTEXT MENUS](#context-menus) · [NAVIGATION MENUS](#navigation-menus) · [COMMAND PALETTES](#command-palettes) · [ACTION BARS, TOOLBARS & FABs](#action-bars-toolbars-fabs) · [TAB BARS & SEGMENTED CONTROLS](#tab-bars-segmented-controls) · [RADIAL & GESTURE MENUS](#radial-gesture-menus) · [STATIC MENU REFERENCES](#static-menu-references) · [LIVE RADIAL & GESTURE MENUS](#live-radial-gesture-menus) · [HEADER NAVIGATION](#header-navigation) · [FOOTER NAVIGATION](#footer-navigation) · [NAVIGATION MOTION](#navigation-motion) · [WAYFINDING & PROGRESS](#wayfinding-progress)
 
 ## DROPDOWN MENUS
 
@@ -88,4 +88,11 @@ Every effect in Prism's **Menus & Actions** gallery, recorded as a looping GIF.
 <table>
 <tr><td align="center" valign="top" width="33%"><a href="../html/menus-fullscreen-overlay.html"><img src="../gif/menus-fullscreen-overlay.gif" width="300" alt="Fullscreen Overlay"></a><br><b>Fullscreen Overlay</b><br><sub><code>menus-fullscreen-overlay</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/menus-dock-nav.html"><img src="../gif/menus-dock-nav.gif" width="300" alt="Dock Nav"></a><br><b>Dock Nav</b><br><sub><code>menus-dock-nav</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/menus-collapsible-rail.html"><img src="../gif/menus-collapsible-rail.gif" width="300" alt="Collapsible Rail"></a><br><b>Collapsible Rail</b><br><sub><code>menus-collapsible-rail</code></sub></td></tr>
 <tr><td align="center" valign="top" width="33%"><a href="../html/menus-bottom-tab-bar.html"><img src="../gif/menus-bottom-tab-bar.gif" width="300" alt="Bottom Tab Bar"></a><br><b>Bottom Tab Bar</b><br><sub><code>menus-bottom-tab-bar</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/menus-hamburger-morphs.html"><img src="../gif/menus-hamburger-morphs.gif" width="300" alt="Hamburger Morphs"></a><br><b>Hamburger Morphs</b><br><sub><code>menus-hamburger-morphs</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/menus-dot-nav.html"><img src="../gif/menus-dot-nav.gif" width="300" alt="Dot Nav"></a><br><b>Dot Nav</b><br><sub><code>menus-dot-nav</code></sub></td></tr>
+</table>
+
+## WAYFINDING & PROGRESS
+
+<table>
+<tr><td align="center" valign="top" width="33%"><a href="../html/menus-scroll-progress-bar.html"><img src="../gif/menus-scroll-progress-bar.gif" width="300" alt="Scroll Progress Bar"></a><br><b>Scroll Progress Bar</b><br><sub><code>menus-scroll-progress-bar</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/menus-progress-ring.html"><img src="../gif/menus-progress-ring.gif" width="300" alt="Progress Ring"></a><br><b>Progress Ring</b><br><sub><code>menus-progress-ring</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/menus-stepper.html"><img src="../gif/menus-stepper.gif" width="300" alt="Stepper"></a><br><b>Stepper</b><br><sub><code>menus-stepper</code></sub></td></tr>
+<tr><td align="center" valign="top" width="33%"><a href="../html/menus-collapsing-breadcrumb.html"><img src="../gif/menus-collapsing-breadcrumb.gif" width="300" alt="Collapsing Breadcrumb"></a><br><b>Collapsing Breadcrumb</b><br><sub><code>menus-collapsing-breadcrumb</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/menus-sticky-shrink-header.html"><img src="../gif/menus-sticky-shrink-header.gif" width="300" alt="Sticky Shrink Header"></a><br><b>Sticky Shrink Header</b><br><sub><code>menus-sticky-shrink-header</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/menus-back-to-top.html"><img src="../gif/menus-back-to-top.gif" width="300" alt="Back to Top"></a><br><b>Back to Top</b><br><sub><code>menus-back-to-top</code></sub></td></tr>
 </table>
