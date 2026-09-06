@@ -134,11 +134,17 @@ function animDuration(e) {
 
 const esc = s => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
+const SAMPLE_INITS = catalog.initializers || {};   // initializer sources shipped in the catalog island
 function sampleHtml(e) {
   const gal = galleryTitle[e.gallery] || e.gallery;
   const fam = e.spectrum ? ` · ${esc(spectrumTitle(e.spectrum))}` : '';
   const bg = e.usableAsBackground ? ' bg' : '';
-  const js = e.needsJs === 'time-widgets' ? `<script>${TIME_WIDGETS_JS}</script>` : '';
+  // Initializer: the bundled time-widgets shim, or the initializer the catalog ships for this
+  // key (catalog.initializers[<needsJs>].js, declared on the page with data-prism-init).
+  const init = e.needsJs && SAMPLE_INITS[e.needsJs];
+  const js = e.needsJs === 'time-widgets' ? `<script>${TIME_WIDGETS_JS}</script>` : (init && init.js ? `<script>
+${init.js}
+</script>` : '');
   return `<!DOCTYPE html>
 <html lang="en">
 <head>

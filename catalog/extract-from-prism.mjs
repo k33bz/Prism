@@ -127,9 +127,14 @@ const EXTRACT_FN = `function extractInPage(gallery, d){
     var id=node.getAttribute('data-fx-id') || (gallery+'-'+slug(name));
     if(seen[id]){seen[id]++;id+='-'+seen[id];}else seen[id]=1;
     var r=cssFor(html);
-    var needsJs=null;
-    if(/data-weather=/.test(html)) needsJs='amb-particles';
-    else if(/data-countdown=|data-timer=|data-stopwatch/.test(html)) needsJs='time-widgets';
+    // A tile may declare its initializer explicitly (fork convention: data-needs-js="<key>",
+    // with the code in a <script data-prism-init="<key>"> on the same page); otherwise the
+    // upstream heuristics apply.
+    var needsJs=node.getAttribute('data-needs-js')||null;
+    if(!needsJs){
+      if(/data-weather=/.test(html)) needsJs='amb-particles';
+      else if(/data-countdown=|data-timer=|data-stopwatch/.test(html)) needsJs='time-widgets';
+    }
     var isBackground=r.classes.some(function(c){return c.indexOf('amb')===0;});
     var selfContained=!r.css.trim();
     var isNew=node.classList.contains('is-new');
@@ -158,7 +163,12 @@ const EXTRACT_FN = `function extractInPage(gallery, d){
       html:html, dataSnip:dataSnip, css:r.css,
     });
   });
-  return records;
+  // Initializer sources declared on the page: <script data-prism-init="key">...</script>.
+  var initializers={};
+  d.querySelectorAll('script[data-prism-init]').forEach(function(s){
+    initializers[s.getAttribute('data-prism-init')]={ js:s.textContent.trim(), page:gallery };
+  });
+  return { records:records, initializers:initializers };
 }`;
 
 let ws, id = 0; const pending = new Map();
@@ -186,6 +196,12 @@ try {
   await sleep(2600);
 
   const all = []; const byGallery = {}; const failures = [];
+  // needsJs key -> { js, page }. Upstream's two initializers live in their page tail scripts
+  // and are not declared with data-prism-init, so they are recorded as pointers only.
+  const initializers = {
+    'amb-particles': { js: null, page: 'objects', note: 'Ambient weather backdrop initializer in the Animated Objects page tail script.' },
+    'time-widgets': { js: null, page: 'lab', note: 'Countdown ring, MM:SS and stopwatch initializer in the Animation Lab page tail script.' },
+  };
   // Signature of the previously-extracted gallery. If a navigation silently fails the
   // iframe still holds the PREVIOUS gallery, and extractInPage happily relabels those
   // tiles with the requested gallery's id prefix. That is exactly how one run wrote 37
@@ -240,6 +256,7 @@ try {
     const r = await send('Runtime.evaluate', { expression: expr, returnByValue: true });
     let recs; try { recs = JSON.parse(r.result.value); } catch { recs = { err: 'parse ' + r.result.value?.slice(0, 120) }; }
     if (recs.err) { console.log(g.gallery.padEnd(9), 'ERROR:', recs.err); failures.push(g.gallery); continue; }
+    if (recs.records) { Object.assign(initializers, recs.initializers || {}); recs = recs.records; }
     if (!recs.length) { console.log(g.gallery.padEnd(9), 'ERROR: 0 effects extracted'); failures.push(g.gallery); continue; }
     const sig = sigOf(recs);
     if (sig === prevSig) {
@@ -296,6 +313,7 @@ try {
       markers: 'tags include "new" for latest-release facets and "updated"/"fixed" for repaired/refreshed facets (blue UPDATED badge in the UI).',
     },
     count: all.length,
+    initializers,
     effects: all,
   };
   // Last line of defence before overwriting the catalog. The #prism-catalog island in

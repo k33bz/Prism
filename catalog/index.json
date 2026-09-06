@@ -1,5 +1,5 @@
 {
-  "count": 3240,
+  "count": 3242,
   "effects": [
     {
       "id": "charts-big-metric-count-up",
@@ -1896,8 +1896,9 @@
         "sl",
         "ts",
         "lv",
-        "info",
+        "ok",
         "m",
+        "info",
         "warn",
         "err",
         "cursor"
@@ -20756,6 +20757,9 @@
         "chat",
         "cmsg",
         "user",
+        "ai",
+        "typing-msg",
+        "mt",
         "cap",
         "pr-playbtn"
       ],
@@ -27967,9 +27971,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A two faced card turns on its Y axis to show the value on its back. Hover holds the flip. Use for KPI reveals and spec sheets."
     },
     {
@@ -28002,9 +28006,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A coin springs up, tumbles end over end and lands as its shadow shrinks and grows. Hover keeps it spinning. Payments, rewards, decisions."
     },
     {
@@ -28035,9 +28039,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Eight translucent tiles stand around a tilted axis and rotate as one drum. Use for step pickers, galleries or a rotating list of options."
     },
     {
@@ -28070,9 +28074,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Two side leaves hinge over a centre panel like a brochure closing, then open again. Use for onboarding steps, spec sheets or collapsible side panels."
     },
     {
@@ -28103,9 +28107,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A stack of cards lies on a tilted table and the top card lifts, slides aside and is dealt. Use for queues, review piles and one at a time flows."
     },
     {
@@ -28142,9 +28146,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Three isometric crates drop from above and land on each other in turn, then lift away to repeat. Use for builds, layered stacks and storage."
     },
     {
@@ -28177,9 +28181,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A hard cover swings open on its spine and a page turns behind it before both close. Use for docs, guides, changelogs and reading states."
     },
     {
@@ -28209,9 +28213,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A four by four floor of tiles flips over in a diagonal wave, showing the coloured backs. Use for loading floors, map reveals and grid refreshes."
     },
     {
@@ -28244,9 +28248,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Six translucent walls and a hexagon cap turn as one prism, tilted so the top face shows. Use for crystals, tokens, modules and abstract compute."
     },
     {
@@ -28277,9 +28281,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Stacked copies of a word sit behind the front face along Z to build a solid extrusion that swings left and right. Use for logos and hero titles."
     },
     {
@@ -28313,9 +28317,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A phone with stacked back plates rocks in perspective while a feed scrolls up its screen. Use for app previews, mobile mockups and store cards."
     },
     {
@@ -28351,9 +28355,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A cross shaped net lies flat, then its four walls and lid hinge up into a closed cube and unfold again. Use for packaging, assembly and deploy steps."
     },
     {
@@ -28383,9 +28387,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Three plates of a card separate along Z into an exploded view and settle back. Use for architecture layers, stack diagrams and component anatomy."
     },
     {
@@ -28419,9 +28423,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Three nested rings spin on different axes around a glowing core, like a gimbal. Use for sync, calibration, orbit and thinking states."
     },
     {
@@ -28454,9 +28458,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A banded dial lies in perspective with a thick rim and a raised needle that sweeps from green through amber to red and back. Use for load or health."
     },
     {
@@ -28490,9 +28494,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Five isometric steps grow up from the floor one after another, then sink away and rebuild. Use for growth, level ups, milestones and progress ladders."
     },
     {
@@ -28527,9 +28531,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Three slab tiles hover above an isometric plane, bobbing out of phase while their shadows shrink and grow. Use for regions, zones and microservices."
     },
     {
@@ -28564,9 +28568,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A departures board digit: the top half hinges down and the next bottom half swings in to tick the count over. Use for counters, clocks and totals."
     },
     {
@@ -28599,9 +28603,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A panelled door swings open on its hinge to reveal a lit doorway, pauses, then closes. Use for logins, onboarding entry points and access granted states."
     },
     {
@@ -28633,9 +28637,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Eight labelled slats form a horizontal drum that ticks one notch at a time past a highlight window. Use for option pickers, tickers and cycling names."
     },
     {
@@ -48086,6 +48090,74 @@
       "updatedOn": null,
       "author": "crazy54",
       "description": "A frozen, non-interactive context-menu layout — useful as a clean component reference."
+    },
+    {
+      "id": "menus-long-press-menu-live",
+      "name": "Long Press Menu (Live)",
+      "gallery": "menus",
+      "category": "LIVE RADIAL & GESTURE MENUS",
+      "ref": ".mnu-lpl",
+      "classes": [
+        "mnu-lpl",
+        "mnu-lpl-press",
+        "mnu-lpl-item",
+        "mnu-lpl-hint"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "menus",
+        "animated",
+        "new"
+      ],
+      "componentType": "menu-radial",
+      "interaction": "touch",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Press and hold the centre: a ring fills for half a second, then six actions fan out and stay while you hold; release and they fold away. Pure CSS: an active state plus a transition delay. The idle loop previews the gesture. Hold the centre."
+    },
+    {
+      "id": "menus-draggable-dial-menu-live",
+      "name": "Draggable Dial Menu (Live)",
+      "gallery": "menus",
+      "category": "LIVE RADIAL & GESTURE MENUS",
+      "ref": ".mnu-rdl",
+      "classes": [
+        "mnu-rdl",
+        "c-info",
+        "mnu-rdl-track",
+        "mnu-rdl-opt",
+        "mnu-rdl-center",
+        "mnu-rdl-val",
+        "mnu-rdl-handle"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "menus",
+        "needs-js",
+        "animated",
+        "new"
+      ],
+      "componentType": "menu-radial",
+      "interaction": "drag",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": "mnu-drag",
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Grab the handle and drag it around the track: the nearest option lights as you pass and the handle snaps to it on release; arrow keys step it too. Needs the small inline initializer, which Copy includes. Drag the handle."
     },
     {
       "id": "tables-zebra-table-scan",
