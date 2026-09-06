@@ -1,0 +1,133 @@
+<h3 class="sec">LIVE RADIAL &amp; GESTURE MENUS</h3>
+<style id="mnu-live-styles">
+/* ===== Live gesture menus (k33bz fork). Upstream's radial and gesture menus are animated
+   illustrations; these two respond to the pointer. Long press is pure CSS (:active plus a
+   transition delay). The dial needs a small inline initializer (data-needs-js="mnu-drag"),
+   which Copy includes and the catalog ships under initializers["mnu-drag"]. ===== */
+.mnu-lpl{position:relative;width:170px;height:150px;--mnu-lpl-c:var(--c,var(--accent));--mnu-lpl-rgb:var(--c-rgb,var(--accent-rgb))}
+.mnu-lpl-press{position:absolute;left:50%;top:50%;width:54px;height:54px;margin:-27px;border-radius:50%;border:2px solid var(--line);background:var(--panel2);color:var(--muted);
+  font:700 10px ui-sans-serif,system-ui,sans-serif;letter-spacing:.04em;cursor:pointer;z-index:2;padding:0;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;touch-action:none;outline:none}
+.mnu-lpl-press::after{content:"";position:absolute;inset:-2px;border-radius:50%;border:2px solid var(--mnu-lpl-c);transform:scale(.6);opacity:0;transition:transform .45s linear,opacity .1s}
+.mnu-lpl-press:active,.mnu-lpl.mnu-lpl-demo .mnu-lpl-press{border-color:var(--mnu-lpl-c);color:var(--ink)}
+.mnu-lpl-press:active::after{transform:scale(1);opacity:1}
+.mnu-lpl-item{position:absolute;left:50%;top:50%;width:36px;height:36px;margin:-18px;border-radius:50%;display:grid;place-items:center;font-size:14px;
+  background:var(--panel2);border:1px solid var(--line);color:var(--ink);opacity:0;transform:translate(0,0) scale(.4);pointer-events:none;
+  transition:transform .28s cubic-bezier(.2,.8,.3,1.2),opacity .2s;transition-delay:0s}
+.mnu-lpl-press:active ~ .mnu-lpl-item{opacity:1;pointer-events:auto;transition-delay:.45s;border-color:rgba(var(--mnu-lpl-rgb),.6);box-shadow:0 0 10px rgba(var(--mnu-lpl-rgb),.35)}
+.mnu-lpl-press:active ~ .mnu-lpl-item:nth-of-type(1){transform:translate(0,-58px) scale(1)}
+.mnu-lpl-press:active ~ .mnu-lpl-item:nth-of-type(2){transform:translate(50px,-29px) scale(1)}
+.mnu-lpl-press:active ~ .mnu-lpl-item:nth-of-type(3){transform:translate(50px,29px) scale(1)}
+.mnu-lpl-press:active ~ .mnu-lpl-item:nth-of-type(4){transform:translate(0,58px) scale(1)}
+.mnu-lpl-press:active ~ .mnu-lpl-item:nth-of-type(5){transform:translate(-50px,29px) scale(1)}
+.mnu-lpl-press:active ~ .mnu-lpl-item:nth-of-type(6){transform:translate(-50px,-29px) scale(1)}
+.mnu-lpl-hint{position:absolute;left:0;right:0;bottom:2px;text-align:center;font:600 9px ui-sans-serif,system-ui,sans-serif;color:var(--dim);letter-spacing:.04em}
+/* ambient preview: a simulated press every 4s. Any real pointer over the menu stops it. */
+.mnu-lpl:not(:hover) .mnu-lpl-press::after{animation:mnuLplRing 4s linear infinite}
+.mnu-lpl:not(:hover) .mnu-lpl-item{animation-name:mnuLplItem;animation-duration:4s;animation-timing-function:cubic-bezier(.2,.8,.3,1.2);animation-iteration-count:infinite}
+.mnu-lpl:not(:hover) .mnu-lpl-item:nth-of-type(1){--mnu-lpl-x:0px;--mnu-lpl-y:-58px}
+.mnu-lpl:not(:hover) .mnu-lpl-item:nth-of-type(2){--mnu-lpl-x:50px;--mnu-lpl-y:-29px}
+.mnu-lpl:not(:hover) .mnu-lpl-item:nth-of-type(3){--mnu-lpl-x:50px;--mnu-lpl-y:29px}
+.mnu-lpl:not(:hover) .mnu-lpl-item:nth-of-type(4){--mnu-lpl-x:0px;--mnu-lpl-y:58px}
+.mnu-lpl:not(:hover) .mnu-lpl-item:nth-of-type(5){--mnu-lpl-x:-50px;--mnu-lpl-y:29px}
+.mnu-lpl:not(:hover) .mnu-lpl-item:nth-of-type(6){--mnu-lpl-x:-50px;--mnu-lpl-y:-29px}
+@keyframes mnuLplRing{0%,10%{transform:scale(.6);opacity:0}12%{opacity:1}24%{transform:scale(1);opacity:1}60%{transform:scale(1);opacity:1}66%,100%{transform:scale(.6);opacity:0}}
+@keyframes mnuLplItem{0%,24%{opacity:0;transform:translate(0,0) scale(.4)}32%,60%{opacity:1;transform:translate(var(--mnu-lpl-x),var(--mnu-lpl-y)) scale(1)}68%,100%{opacity:0;transform:translate(0,0) scale(.4)}}
+
+.mnu-rdl{position:relative;width:170px;height:150px;--mnu-rdl-a:0deg;--mnu-rdl-c:var(--c,var(--accent));--mnu-rdl-rgb:var(--c-rgb,var(--accent-rgb));user-select:none;-webkit-user-select:none;touch-action:none}
+.mnu-rdl-track{position:absolute;left:50%;top:50%;width:112px;height:112px;margin:-56px;border-radius:50%;border:2px dashed var(--line)}
+.mnu-rdl-opt{position:absolute;left:50%;top:50%;width:30px;height:30px;margin:-15px;border-radius:50%;display:grid;place-items:center;font:700 9px ui-sans-serif,system-ui,sans-serif;
+  background:var(--panel2);border:1px solid var(--line);color:var(--muted);transform:rotate(calc(var(--mnu-rdl-i)*60deg)) translateY(-56px) rotate(calc(var(--mnu-rdl-i)*-60deg));transition:background .2s,color .2s,border-color .2s,box-shadow .2s}
+.mnu-rdl-opt.mnu-rdl-on{background:rgba(var(--mnu-rdl-rgb),.2);border-color:var(--mnu-rdl-c);color:var(--ink);box-shadow:0 0 10px rgba(var(--mnu-rdl-rgb),.45)}
+.mnu-rdl-handle{position:absolute;left:50%;top:50%;width:26px;height:26px;margin:-13px;border-radius:50%;background:var(--mnu-rdl-c);color:var(--bg);display:grid;place-items:center;font-size:14px;line-height:1;
+  cursor:grab;z-index:2;box-shadow:0 2px 8px rgba(0,0,0,.35);transform:rotate(var(--mnu-rdl-a)) translateY(-56px) rotate(calc(var(--mnu-rdl-a)*-1))}
+.mnu-rdl.mnu-rdl-snap .mnu-rdl-handle{transition:transform .25s cubic-bezier(.2,.8,.3,1.2)}
+.mnu-rdl.mnu-rdl-drag .mnu-rdl-handle{cursor:grabbing;transform:rotate(var(--mnu-rdl-a)) translateY(-56px) rotate(calc(var(--mnu-rdl-a)*-1)) scale(1.15)}
+.mnu-rdl-center{position:absolute;left:50%;top:50%;width:48px;height:48px;margin:-24px;border-radius:50%;background:var(--panel2);border:1px solid var(--line);display:grid;place-items:center;text-align:center;
+  font:700 9.5px ui-sans-serif,system-ui,sans-serif;color:var(--ink);line-height:1.15}
+.mnu-rdl-center small{display:block;font-size:7.5px;font-weight:600;color:var(--dim);letter-spacing:.04em}
+/* ambient preview: the handle orbits and each option lights as it passes, until the first grab */
+.mnu-rdl:not(.mnu-rdl-manual) .mnu-rdl-handle{animation:mnuRdlOrbit 6s linear infinite}
+.mnu-rdl:not(.mnu-rdl-manual) .mnu-rdl-opt{animation-name:mnuRdlPass;animation-duration:6s;animation-timing-function:steps(1);animation-iteration-count:infinite;animation-delay:calc(var(--mnu-rdl-i)*1s)}
+@keyframes mnuRdlOrbit{from{transform:rotate(0deg) translateY(-56px) rotate(0deg)}to{transform:rotate(360deg) translateY(-56px) rotate(-360deg)}}
+@keyframes mnuRdlPass{0%,14%{background:rgba(var(--mnu-rdl-rgb),.2);border-color:var(--mnu-rdl-c);color:var(--ink)}16%,100%{background:var(--panel2);border-color:var(--line);color:var(--muted)}}
+@media (prefers-reduced-motion:reduce){
+  .mnu-lpl-press::after,.mnu-lpl-item,.mnu-rdl-handle,.mnu-rdl-opt{animation:none!important}
+  .mnu-rdl-opt[style*="--mnu-rdl-i:0"]{background:rgba(var(--mnu-rdl-rgb),.2);border-color:var(--mnu-rdl-c);color:var(--ink)}
+}
+</style>
+<div class="gallery">
+
+  <div class="tile is-new" data-ctype="menu-radial" data-interact="touch" data-c="accent"><div class="stage">
+    <div class="mnu-lpl" role="group" aria-label="Long press menu: hold the centre to open six actions">
+      <button class="mnu-lpl-press" type="button" aria-label="Hold to open">HOLD</button>
+      <div class="mnu-lpl-item" title="Cut">✂</div><div class="mnu-lpl-item" title="Copy">📋</div><div class="mnu-lpl-item" title="Pin">📌</div><div class="mnu-lpl-item" title="Delete">🗑</div><div class="mnu-lpl-item" title="Share">↗</div><div class="mnu-lpl-item" title="Star">⭐</div>
+      <div class="mnu-lpl-hint">press and hold the centre</div>
+    </div>
+  </div><div class="meta"><div class="nm">Long Press Menu (Live)</div><span class="ref">.mnu-lpl</span><div class="desc">Press and hold the centre: a ring fills for half a second, then six actions fan out and stay while you hold; release and they fold away. Pure CSS: an active state plus a transition delay. The idle loop previews the gesture. <b>Hold the centre.</b></div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="menu-radial" data-interact="drag" data-c="info" data-needs-js="mnu-drag"><div class="stage">
+    <div class="mnu-rdl c-info" role="group" aria-label="Draggable dial menu: drag the handle around the track to choose an option">
+      <div class="mnu-rdl-track"></div>
+      <div class="mnu-rdl-opt" style="--mnu-rdl-i:0">Atlas</div><div class="mnu-rdl-opt" style="--mnu-rdl-i:1">Comet</div><div class="mnu-rdl-opt" style="--mnu-rdl-i:2">Ember</div><div class="mnu-rdl-opt" style="--mnu-rdl-i:3">Pixel</div><div class="mnu-rdl-opt" style="--mnu-rdl-i:4">Nova</div><div class="mnu-rdl-opt" style="--mnu-rdl-i:5">Orbit</div>
+      <div class="mnu-rdl-center"><span class="mnu-rdl-val">drag</span><small>to select</small></div>
+      <div class="mnu-rdl-handle" tabindex="0" role="slider" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" aria-label="Dial handle">⠿</div>
+    </div>
+  </div><div class="meta"><div class="nm">Draggable Dial Menu (Live)</div><span class="ref">.mnu-rdl</span><div class="desc">Grab the handle and drag it around the track: the nearest option lights as you pass and the handle snaps to it on release; arrow keys step it too. Needs the small inline initializer, which Copy includes. <b>Drag the handle.</b></div><button class="copy" onclick="copyVizJs(this)">Copy</button></div></div>
+
+</div>
+<script data-prism-init="mnu-drag">
+/* Prism initializer "mnu-drag": makes every .mnu-rdl dial draggable. Idempotent, no dependencies.
+   Run once after the markup is in the DOM (it delegates, so later-inserted dials work too). */
+(function(){
+  if(window.__prismMnuDrag) return; window.__prismMnuDrag=true;
+  var STEP=60, active=null;
+  function norm(a){ a=a%360; return a<0?a+360:a; }
+  function paint(root,a,snap){
+    var n=root.querySelectorAll('.mnu-rdl-opt').length||6, step=360/n;
+    if(snap){ a=norm(Math.round(a/step)*step); root.classList.add('mnu-rdl-snap'); } else root.classList.remove('mnu-rdl-snap');
+    root.style.setProperty('--mnu-rdl-a', a+'deg');
+    var idx=Math.round(norm(a)/step)%n, opts=root.querySelectorAll('.mnu-rdl-opt');
+    opts.forEach(function(o,i){ o.classList.toggle('mnu-rdl-on', i===idx); });
+    var val=root.querySelector('.mnu-rdl-val'); if(val && opts[idx]) val.textContent=opts[idx].textContent;
+    var h=root.querySelector('.mnu-rdl-handle'); if(h) h.setAttribute('aria-valuenow', idx);
+    root.dataset.angle=a;
+  }
+  function angleAt(root,x,y){ var r=root.getBoundingClientRect(); return norm(Math.atan2(x-(r.left+r.width/2), -(y-(r.top+r.height/2)))*180/Math.PI); }
+  document.addEventListener('pointerdown',function(e){
+    var root=e.target.closest('.mnu-rdl'); if(!root) return;   // handle, track or an option: all grab the dial
+    e.preventDefault(); root.classList.add('mnu-rdl-manual','mnu-rdl-drag'); active=root;
+    try{ root.setPointerCapture(e.pointerId); }catch(err){}
+    paint(root, angleAt(root,e.clientX,e.clientY), false);
+  });
+  document.addEventListener('pointermove',function(e){ if(!active) return; paint(active, angleAt(active,e.clientX,e.clientY), false); });
+  function release(e){ if(!active) return; var root=active; active=null; root.classList.remove('mnu-rdl-drag'); paint(root, parseFloat(root.dataset.angle)||0, true); }
+  document.addEventListener('pointerup',release); document.addEventListener('pointercancel',release);
+  document.addEventListener('keydown',function(e){
+    var h=e.target.closest && e.target.closest('.mnu-rdl-handle'); if(!h) return;
+    var d=e.key==='ArrowRight'||e.key==='ArrowUp'?1:e.key==='ArrowLeft'||e.key==='ArrowDown'?-1:0; if(!d) return;
+    e.preventDefault(); var root=h.closest('.mnu-rdl'); root.classList.add('mnu-rdl-manual');
+    var n=root.querySelectorAll('.mnu-rdl-opt').length||6; paint(root,(parseFloat(root.dataset.angle)||0)+d*(360/n),true);
+  });
+})();
+</script>
+<script>
+/* Copy for tiles that need an initializer: the usual markup + matched CSS, plus the inline script
+   named by the tile's data-needs-js, so the paste works on its own. */
+function copyVizJs(btn){
+  var tile=btn.closest('.tile'), stage=tile.querySelector('.stage');
+  var html=stage.innerHTML.replace(/\s+$/,'').trim();
+  var used=new Set(); (html.match(/class="[^"]*"/g)||[]).forEach(function(m){ m.replace(/class="/,'').replace(/"/,'').split(/\s+/).forEach(function(c){ if(c) used.add(c); }); });
+  var rules=[];
+  try{ var sheets=document.styleSheets; for(var s=0;s<sheets.length;s++){ var rs=sheets[s].cssRules; for(var r=0;r<rs.length;r++){ var rule=rs[r];
+    if(rule.type===7 && html.indexOf(rule.name)!==-1){ rules.push(rule.cssText); continue; }
+    if(rule.type===1 && rule.selectorText){ var hit=false; used.forEach(function(c){ if(!hit && new RegExp('\\.'+c+'(?![\\w-])').test(rule.selectorText)) hit=true; }); if(hit) rules.push(rule.cssText); } } } }catch(e){}
+  rules=[...new Set(rules)];
+  var key=tile.getAttribute('data-needs-js'); var init=key?document.querySelector('script[data-prism-init="'+key+'"]'):null;
+  var out='<!-- Prism Component'+(key?' (needs JS: '+key+')':'')+' -->\n'+html;
+  if(rules.length) out+='\n\n<style>\n'+rules.join('\n')+'\n</style>';
+  if(init) out+='\n\n<script>\n'+init.textContent.trim()+'\n</'+'script>';
+  var done=function(){ var o=btn.dataset.lbl||btn.textContent; btn.dataset.lbl=o; btn.textContent='✓ Copied'; btn.classList.add('ok'); setTimeout(function(){ btn.textContent=o; btn.classList.remove('ok'); },1300); };
+  var fb=function(){ var ta=document.createElement('textarea'); ta.value=out; ta.style.cssText='position:fixed;opacity:0'; document.body.appendChild(ta); ta.select(); try{ document.execCommand('copy'); }catch(e){} document.body.removeChild(ta); done(); };
+  (navigator.clipboard&&navigator.clipboard.writeText?navigator.clipboard.writeText(out).then(done).catch(fb):fb());
+}
+</script>
