@@ -179742,15 +179742,20 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
   function indexCatalog(list){
     list.forEach(function(e){
       e._interactions=normInteractions(e.interaction);
+      var _name=(e.name||'').toLowerCase(),_id=(e.id||'').toLowerCase(),_desc=(e.description||'').toLowerCase(),_tags=(e.tags||[]).join(' ').toLowerCase(),_cat=(e.category||'').toLowerCase();
       e._hay={
-        name:(e.name||'').toLowerCase(),
-        id:(e.id||'').toLowerCase(),
-        desc:(e.description||'').toLowerCase(),
-        tags:(e.tags||[]).join(' ').toLowerCase(),
+        name:_name,
+        id:_id,
+        desc:_desc,
+        tags:_tags,
         gallery:(e.gallery||'').toLowerCase(),
         ctype:(e.componentType||'').toLowerCase(),
         spectrum:(e.spectrum||'').toLowerCase(),
-        author:(e.author||'').toLowerCase()
+        author:(e.author||'').toLowerCase(),
+        cat:_cat,
+        // space/punctuation-stripped concat, used only as a fallback so compound queries
+        // ("pokeball"→"poke ball", "tabbar"→"tab bar") and section names still match.
+        flat:(_name+' '+_id+' '+_desc+' '+_tags+' '+_cat).replace(/[\s\-_.]/g,'')
       };
     });
   }
@@ -179781,6 +179786,11 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
       if(h.gallery.indexOf(t)!==-1){ score+=1; hit=true; }
       if(h.author && h.author.indexOf(t)!==-1){ score+=1.5; hit=true; }
       if(h.desc.indexOf(t)!==-1){ score+=1; hit=true; }
+      if(h.cat && h.cat.indexOf(t)!==-1){ score+=1; hit=true; }
+      // fallback: only if no field matched this term, try the de-spaced haystack so a
+      // compound query ("pokeball", "tabbar") still finds a two-word facet. Gated to
+      // 4+ chars so short tokens can't create noise; a low weight keeps ranking intact.
+      if(!hit && t.length>=4 && h.flat.indexOf(t)!==-1){ score+=0.5; hit=true; }
       if(!hit) matchedAll=false;
     });
     if(!matchedAll) return 0; // every term must appear somewhere (AND)
