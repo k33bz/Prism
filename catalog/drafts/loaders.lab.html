@@ -203,6 +203,21 @@
   .lab-ld-fliptiles-t:nth-child(odd){transform:rotateX(180deg)}
   .lab-ld-roll-q{transform:translateX(88px) rotate(180deg)}
 }
+
+/* Hex Map: six outer hexes flip on the ring in a chase while the central hex fills 0->100% */
+@property --lab-ld-hp{syntax:"<integer>";inherits:true;initial-value:0}
+.lab-ld-hexmap{position:relative;width:128px;height:114px;margin:0 auto;perspective:420px}
+.lab-ld-hexmap .lab-ld-hx{position:absolute;width:44px;height:39px;clip-path:polygon(25% 0,75% 0,100% 50%,75% 100%,25% 100%,0 50%)}
+.lab-ld-hexo{background:var(--panel2);transform-style:preserve-3d;backface-visibility:hidden;transform-origin:center;
+  animation-name:labLdHexFlip;animation-duration:2.6s;animation-timing-function:cubic-bezier(.5,0,.5,1);animation-iteration-count:infinite;animation-delay:calc(var(--i,0)*.28s)}
+.lab-ld-hexc{background:var(--panel2);overflow:hidden;box-shadow:0 0 0 1px rgba(var(--info-rgb),.35)}
+.lab-ld-hexfill{position:absolute;left:0;right:0;bottom:0;height:calc(var(--lab-ld-hp)*1%);background:linear-gradient(0deg,var(--info),var(--crit));z-index:1}
+.lab-ld-hexmeter{position:absolute;inset:0;display:grid;place-items:center;z-index:2;font:800 12px ui-sans-serif,system-ui,sans-serif;color:var(--ink);counter-reset:labLdHp var(--lab-ld-hp)}
+.lab-ld-hexmeter::after{content:counter(labLdHp) "%"}
+.lab-ld-hexfilltile{animation:labLdHexFill 3.4s ease-in-out infinite}
+@keyframes labLdHexFlip{0%,58%,100%{transform:rotateY(0);background:var(--panel2)}20%,40%{transform:rotateY(180deg);background:var(--info)}}
+@keyframes labLdHexFill{0%,6%{--lab-ld-hp:0}84%,92%{--lab-ld-hp:100}100%{--lab-ld-hp:0}}
+@media (prefers-reduced-motion:reduce){ .lab-ld-hexo{animation:none!important} .lab-ld-hexfilltile{animation:none!important} .lab-ld-hexmap{--lab-ld-hp:66} }
 </style>
 <div class="gallery">
 
@@ -296,5 +311,17 @@
     <div class="lab-ld-pills"><i class="lab-ld-pills-p" style="--i:0"></i><i class="lab-ld-pills-p" style="--i:1"></i><i class="lab-ld-pills-p" style="--i:2"></i><i class="lab-ld-pills-p" style="--i:3"></i></div>
   </div><div class="meta"><div class="nm">Caterpillar Pills</div><span class="ref">.lab-ld-pills</span><div class="desc">Four pills stretch wide and shrink back in sequence so the row crawls like a caterpillar. Use as a friendly inline loader inside buttons and chips.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
+
+  <div class="tile is-new" data-ctype="loader" data-interact="auto-play" data-c="info"><div class="stage">
+    <div class="lab-ld-hexmap lab-ld-hexfilltile" role="img" aria-label="Hex map loader: outer hexes flip around a central hex that fills to 100%">
+      <span class="lab-ld-hx lab-ld-hexo" style="left:42px;top:0;--i:0"></span>
+      <span class="lab-ld-hx lab-ld-hexo" style="left:75px;top:19px;--i:1"></span>
+      <span class="lab-ld-hx lab-ld-hexo" style="left:75px;top:57px;--i:2"></span>
+      <span class="lab-ld-hx lab-ld-hexo" style="left:42px;top:76px;--i:3"></span>
+      <span class="lab-ld-hx lab-ld-hexo" style="left:9px;top:57px;--i:4"></span>
+      <span class="lab-ld-hx lab-ld-hexo" style="left:9px;top:19px;--i:5"></span>
+      <span class="lab-ld-hx lab-ld-hexc" style="left:42px;top:38px"><i class="lab-ld-hexfill"></i><b class="lab-ld-hexmeter"></b></span>
+    </div>
+  </div><div class="meta"><div class="nm">Hex Map</div><span class="ref">.lab-ld-hexmap</span><div class="desc">Six outer hexes flip on their edges in a chase around a central hex, which fills from cyan to violet as the count climbs to 100%. A honeycomb progress loader.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
 </div>

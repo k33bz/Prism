@@ -1,5 +1,5 @@
 {
-  "count": 3332,
+  "count": 3333,
   "effects": [
     {
       "id": "charts-big-metric-count-up",
@@ -1896,11 +1896,10 @@
         "sl",
         "ts",
         "lv",
-        "info",
-        "m",
-        "err",
         "ok",
+        "m",
         "warn",
+        "info",
         "cursor"
       ],
       "params": [],
@@ -18608,6 +18607,657 @@
       "description": ""
     },
     {
+      "id": "lab-skeleton-card",
+      "name": "Skeleton Card",
+      "gallery": "lab",
+      "category": "LOADERS & WAITING STATES",
+      "ref": ".lab-ld-skcard",
+      "classes": [
+        "lab-ld-skcard",
+        "lab-ld-skcard-img",
+        "lab-ld-skcard-ln",
+        "lab-ld-w60",
+        "lab-ld-w90",
+        "lab-ld-w40"
+      ],
+      "params": [],
+      "tags": [
+        "lab",
+        "animated",
+        "new"
+      ],
+      "componentType": "loader",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": "2026-09-05",
+      "updatedOn": null,
+      "author": "k33bz",
+      "description": "A card placeholder with an image block and three text lines under a diagonal sheen sweep. Use in place of a card while its data loads."
+    },
+    {
+      "id": "lab-skeleton-list-resolve",
+      "name": "Skeleton List Resolve",
+      "gallery": "lab",
+      "category": "LOADERS & WAITING STATES",
+      "ref": ".lab-ld-sklist",
+      "classes": [
+        "lab-ld-sklist",
+        "lab-ld-sklist-row",
+        "lab-ld-sklist-av",
+        "lab-ld-sklist-tx",
+        "lab-ld-sklist-ph",
+        "lab-ld-sklist-nm",
+        "lab-ld-sklist-sub"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "lab",
+        "animated",
+        "new"
+      ],
+      "componentType": "loader",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": "2026-09-05",
+      "updatedOn": null,
+      "author": "k33bz",
+      "description": "Three avatar rows shimmer, then each resolves into real name and role in order as its data arrives. Use for member and contact lists that stream in."
+    },
+    {
+      "id": "lab-skeleton-table",
+      "name": "Skeleton Table",
+      "gallery": "lab",
+      "category": "LOADERS & WAITING STATES",
+      "ref": ".lab-ld-sktable",
+      "classes": [
+        "lab-ld-sktable",
+        "lab-ld-sktable-r",
+        "lab-ld-sktable-c"
+      ],
+      "params": [],
+      "tags": [
+        "lab",
+        "animated",
+        "new"
+      ],
+      "componentType": "loader",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": "2026-09-05",
+      "updatedOn": null,
+      "author": "k33bz",
+      "description": "A header row and four body rows of cell bars that pulse in a diagonal wave, set by the per-cell delay index. Use while a data grid fetches its first page."
+    },
+    {
+      "id": "lab-skeleton-profile-scan",
+      "name": "Skeleton Profile Scan",
+      "gallery": "lab",
+      "category": "LOADERS & WAITING STATES",
+      "ref": ".lab-ld-skprof",
+      "classes": [
+        "lab-ld-skprof",
+        "lab-ld-skprof-av",
+        "lab-ld-skprof-nm",
+        "lab-ld-skprof-st"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "lab",
+        "animated",
+        "new"
+      ],
+      "componentType": "loader",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": "2026-09-05",
+      "updatedOn": null,
+      "author": "k33bz",
+      "description": "A profile header placeholder: ringed avatar, name bar and three stat blocks with a soft light band scanning top to bottom. Use for account and user pages."
+    },
+    {
+      "id": "lab-ellipsis-loader",
+      "name": "Ellipsis Loader",
+      "gallery": "lab",
+      "category": "LOADERS & WAITING STATES",
+      "ref": ".lab-ld-ellipsis",
+      "classes": [
+        "lab-ld-ellipsis",
+        "lab-ld-ellipsis-dots"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "lab",
+        "animated",
+        "new"
+      ],
+      "componentType": "loader",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": "2026-09-05",
+      "updatedOn": null,
+      "author": "k33bz",
+      "description": "The word Loading with dots that step from none to three and wrap, driven by an animated content string. Use for inline text-only waiting states."
+    },
+    {
+      "id": "lab-segmented-ring-count",
+      "name": "Segmented Ring Count",
+      "gallery": "lab",
+      "category": "LOADERS & WAITING STATES",
+      "ref": ".lab-ld-segring",
+      "classes": [
+        "lab-ld-segring",
+        "lab-ld-segring-s"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "lab",
+        "animated",
+        "new"
+      ],
+      "componentType": "loader",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": "2026-09-05",
+      "updatedOn": null,
+      "author": "k33bz",
+      "description": "Twelve ticks light up clockwise while the center counts n of 12, both driven by one registered property on the parent. Use for stepwise jobs with a known count."
+    },
+    {
+      "id": "lab-dots-to-check",
+      "name": "Dots to Check",
+      "gallery": "lab",
+      "category": "LOADERS & WAITING STATES",
+      "ref": ".lab-ld-dotcheck",
+      "classes": [
+        "lab-ld-dotcheck",
+        "lab-ld-dotcheck-d",
+        "lab-ld-dotcheck-b"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "lab",
+        "animated",
+        "new"
+      ],
+      "componentType": "loader",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": "2026-09-05",
+      "updatedOn": null,
+      "author": "k33bz",
+      "description": "Three hopping dots converge and merge, then a green check pops out of the merge point inside a ring. Use where a wait ends in a visible success."
+    },
+    {
+      "id": "lab-chasing-squares",
+      "name": "Chasing Squares",
+      "gallery": "lab",
+      "category": "LOADERS & WAITING STATES",
+      "ref": ".lab-ld-chase",
+      "classes": [
+        "lab-ld-chase",
+        "lab-ld-chase-q"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "lab",
+        "animated",
+        "new"
+      ],
+      "componentType": "loader",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": "2026-09-05",
+      "updatedOn": null,
+      "author": "k33bz",
+      "description": "Four squares of fading opacity hop clockwise around a two by two grid, each one step behind the last. Use as a compact indeterminate loader for panels."
+    },
+    {
+      "id": "lab-striped-progress-bar",
+      "name": "Striped Progress Bar",
+      "gallery": "lab",
+      "category": "LOADERS & WAITING STATES",
+      "ref": ".lab-ld-stripes",
+      "classes": [
+        "lab-ld-stripes",
+        "lab-ld-stripes-f"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "lab",
+        "animated",
+        "new"
+      ],
+      "componentType": "loader",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": "2026-09-05",
+      "updatedOn": null,
+      "author": "k33bz",
+      "description": "A determinate bar fills to full while a barber pole stripe keeps moving across the fill. Use for installs and copies where progress is known but slow."
+    },
+    {
+      "id": "lab-card-stack-shuffle",
+      "name": "Card Stack Shuffle",
+      "gallery": "lab",
+      "category": "LOADERS & WAITING STATES",
+      "ref": ".lab-ld-shuffle",
+      "classes": [
+        "lab-ld-shuffle",
+        "lab-ld-shuffle-c"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "lab",
+        "animated",
+        "new"
+      ],
+      "componentType": "loader",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": "2026-09-05",
+      "updatedOn": null,
+      "author": "k33bz",
+      "description": "The front card slides out to the right and tucks in at the back of the stack while the rest step forward. Use while a deck, feed or queue is being prepared."
+    },
+    {
+      "id": "lab-staged-progress",
+      "name": "Staged Progress",
+      "gallery": "lab",
+      "category": "LOADERS & WAITING STATES",
+      "ref": ".lab-ld-stages",
+      "classes": [
+        "lab-ld-stages",
+        "lab-ld-stages-lb",
+        "lab-ld-stages-pc",
+        "lab-ld-stages-tr",
+        "lab-ld-stages-f"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "lab",
+        "animated",
+        "new"
+      ],
+      "componentType": "loader",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": "2026-09-05",
+      "updatedOn": null,
+      "author": "k33bz",
+      "description": "A progress bar with a live percent and a stage label that steps from Uploading through Processing to Done, turning green at the end. Use for multi step jobs."
+    },
+    {
+      "id": "lab-rolling-square",
+      "name": "Rolling Square",
+      "gallery": "lab",
+      "category": "LOADERS & WAITING STATES",
+      "ref": ".lab-ld-roll",
+      "classes": [
+        "lab-ld-roll",
+        "lab-ld-roll-q"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "lab",
+        "animated",
+        "new"
+      ],
+      "componentType": "loader",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": "2026-09-05",
+      "updatedOn": null,
+      "author": "k33bz",
+      "description": "A square rolls along a rail, a quarter turn per hop, reaches the end and rolls back. Use for playful waits on a wide, short strip such as a footer."
+    },
+    {
+      "id": "lab-log-tail-loader",
+      "name": "Log Tail Loader",
+      "gallery": "lab",
+      "category": "LOADERS & WAITING STATES",
+      "ref": ".lab-ld-log",
+      "classes": [
+        "lab-ld-log",
+        "lab-ld-log-l",
+        "lab-ld-log-ok",
+        "lab-ld-log-cur"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "lab",
+        "animated",
+        "new"
+      ],
+      "componentType": "loader",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": "2026-09-05",
+      "updatedOn": null,
+      "author": "k33bz",
+      "description": "A terminal panel where log lines arrive one after another and end on a green ok line with a blinking cursor. Use for CLI style installs and deploy consoles."
+    },
+    {
+      "id": "lab-text-fill-loader",
+      "name": "Text Fill Loader",
+      "gallery": "lab",
+      "category": "LOADERS & WAITING STATES",
+      "ref": ".lab-ld-textfill",
+      "classes": [
+        "lab-ld-textfill"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "lab",
+        "animated",
+        "new"
+      ],
+      "componentType": "loader",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": "2026-09-05",
+      "updatedOn": null,
+      "author": "k33bz",
+      "description": "An outlined word fills with colour from the bottom up through a background clipped to the glyphs. Use as a hero loader where text is the only element on screen."
+    },
+    {
+      "id": "lab-flip-tiles",
+      "name": "Flip Tiles",
+      "gallery": "lab",
+      "category": "LOADERS & WAITING STATES",
+      "ref": ".lab-ld-fliptiles",
+      "classes": [
+        "lab-ld-fliptiles",
+        "lab-ld-fliptiles-t"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "lab",
+        "animated",
+        "new"
+      ],
+      "componentType": "loader",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": "2026-09-05",
+      "updatedOn": null,
+      "author": "k33bz",
+      "description": "Five tiles flip on their horizontal axis in sequence to a coloured back face, then flip on to the plain front. Use for board or grid views that are refreshing."
+    },
+    {
+      "id": "lab-diamond-ripple",
+      "name": "Diamond Ripple",
+      "gallery": "lab",
+      "category": "LOADERS & WAITING STATES",
+      "ref": ".lab-ld-diamond",
+      "classes": [
+        "lab-ld-diamond",
+        "lab-ld-diamond-r"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "lab",
+        "animated",
+        "new"
+      ],
+      "componentType": "loader",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": "2026-09-05",
+      "updatedOn": null,
+      "author": "k33bz",
+      "description": "Rotated square outlines expand from a solid centre gem and fade as they grow, three in flight at once. Use for search or scan states that radiate from a point."
+    },
+    {
+      "id": "lab-chomp-loader",
+      "name": "Chomp Loader",
+      "gallery": "lab",
+      "category": "LOADERS & WAITING STATES",
+      "ref": ".lab-ld-chomp",
+      "classes": [
+        "lab-ld-chomp",
+        "lab-ld-chomp-m",
+        "lab-ld-chomp-j",
+        "lab-ld-chomp-d"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "lab",
+        "animated",
+        "new"
+      ],
+      "componentType": "loader",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": "2026-09-05",
+      "updatedOn": null,
+      "author": "k33bz",
+      "description": "A round mouth opens and closes while a train of dots glides in from the right and vanishes at the jaws. Use for queue draining or batch consumption states."
+    },
+    {
+      "id": "lab-upload-cloud",
+      "name": "Upload Cloud",
+      "gallery": "lab",
+      "category": "LOADERS & WAITING STATES",
+      "ref": ".lab-ld-upload",
+      "classes": [
+        "lab-ld-upload",
+        "lab-ld-upload-c",
+        "lab-ld-upload-a"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "lab",
+        "animated",
+        "new"
+      ],
+      "componentType": "loader",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": "2026-09-05",
+      "updatedOn": null,
+      "author": "k33bz",
+      "description": "An arrow rises out of the base and fades into a gently bobbing cloud, again and again. Use for uploads and sync in progress toward remote storage."
+    },
+    {
+      "id": "lab-counting-percent",
+      "name": "Counting Percent",
+      "gallery": "lab",
+      "category": "LOADERS & WAITING STATES",
+      "ref": ".lab-ld-count",
+      "classes": [
+        "lab-ld-count",
+        "lab-ld-count-n",
+        "lab-ld-count-tr",
+        "lab-ld-count-f"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "lab",
+        "animated",
+        "new"
+      ],
+      "componentType": "loader",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": "2026-09-05",
+      "updatedOn": null,
+      "author": "k33bz",
+      "description": "A large number counts from 0 to 100 through an integer property and a CSS counter while a hairline bar fills in step. Use when the number is the whole message."
+    },
+    {
+      "id": "lab-caterpillar-pills",
+      "name": "Caterpillar Pills",
+      "gallery": "lab",
+      "category": "LOADERS & WAITING STATES",
+      "ref": ".lab-ld-pills",
+      "classes": [
+        "lab-ld-pills",
+        "lab-ld-pills-p"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "lab",
+        "animated",
+        "new"
+      ],
+      "componentType": "loader",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": "2026-09-05",
+      "updatedOn": null,
+      "author": "k33bz",
+      "description": "Four pills stretch wide and shrink back in sequence so the row crawls like a caterpillar. Use as a friendly inline loader inside buttons and chips."
+    },
+    {
+      "id": "lab-hex-map",
+      "name": "Hex Map",
+      "gallery": "lab",
+      "category": "LOADERS & WAITING STATES",
+      "ref": ".lab-ld-hexmap",
+      "classes": [
+        "lab-ld-hexmap",
+        "lab-ld-hexfilltile",
+        "lab-ld-hx",
+        "lab-ld-hexo",
+        "lab-ld-hexc",
+        "lab-ld-hexfill",
+        "lab-ld-hexmeter"
+      ],
+      "params": [],
+      "tags": [
+        "lab",
+        "animated",
+        "new"
+      ],
+      "componentType": "loader",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Six outer hexes flip on their edges in a chase around a central hex, which fills from cyan to violet as the count climbs to 100%. A honeycomb progress loader."
+    },
+    {
       "id": "lab-liquid-loader",
       "name": "Liquid Loader",
       "gallery": "lab",
@@ -20316,624 +20966,6 @@
       "updatedOn": "2026-07-28",
       "author": "crazy54",
       "description": "Double-thump scale pulse mimicking a heartbeat — good for likes, health, or live-status cues."
-    },
-    {
-      "id": "lab-skeleton-card",
-      "name": "Skeleton Card",
-      "gallery": "lab",
-      "category": "LOADERS & WAITING STATES",
-      "ref": ".lab-ld-skcard",
-      "classes": [
-        "lab-ld-skcard",
-        "lab-ld-skcard-img",
-        "lab-ld-skcard-ln",
-        "lab-ld-w60",
-        "lab-ld-w90",
-        "lab-ld-w40"
-      ],
-      "params": [],
-      "tags": [
-        "lab",
-        "animated",
-        "new"
-      ],
-      "componentType": "loader",
-      "interaction": "auto-play",
-      "spectrum": null,
-      "usableAsBackground": false,
-      "needsJs": null,
-      "isNew": true,
-      "isFixed": false,
-      "addedOn": "2026-09-05",
-      "updatedOn": null,
-      "author": "k33bz",
-      "description": "A card placeholder with an image block and three text lines under a diagonal sheen sweep. Use in place of a card while its data loads."
-    },
-    {
-      "id": "lab-skeleton-list-resolve",
-      "name": "Skeleton List Resolve",
-      "gallery": "lab",
-      "category": "LOADERS & WAITING STATES",
-      "ref": ".lab-ld-sklist",
-      "classes": [
-        "lab-ld-sklist",
-        "lab-ld-sklist-row",
-        "lab-ld-sklist-av",
-        "lab-ld-sklist-tx",
-        "lab-ld-sklist-ph",
-        "lab-ld-sklist-nm",
-        "lab-ld-sklist-sub"
-      ],
-      "params": [
-        "color"
-      ],
-      "tags": [
-        "lab",
-        "animated",
-        "new"
-      ],
-      "componentType": "loader",
-      "interaction": "auto-play",
-      "spectrum": null,
-      "usableAsBackground": false,
-      "needsJs": null,
-      "isNew": true,
-      "isFixed": false,
-      "addedOn": "2026-09-05",
-      "updatedOn": null,
-      "author": "k33bz",
-      "description": "Three avatar rows shimmer, then each resolves into real name and role in order as its data arrives. Use for member and contact lists that stream in."
-    },
-    {
-      "id": "lab-skeleton-table",
-      "name": "Skeleton Table",
-      "gallery": "lab",
-      "category": "LOADERS & WAITING STATES",
-      "ref": ".lab-ld-sktable",
-      "classes": [
-        "lab-ld-sktable",
-        "lab-ld-sktable-r",
-        "lab-ld-sktable-c"
-      ],
-      "params": [],
-      "tags": [
-        "lab",
-        "animated",
-        "new"
-      ],
-      "componentType": "loader",
-      "interaction": "auto-play",
-      "spectrum": null,
-      "usableAsBackground": false,
-      "needsJs": null,
-      "isNew": true,
-      "isFixed": false,
-      "addedOn": "2026-09-05",
-      "updatedOn": null,
-      "author": "k33bz",
-      "description": "A header row and four body rows of cell bars that pulse in a diagonal wave, set by the per-cell delay index. Use while a data grid fetches its first page."
-    },
-    {
-      "id": "lab-skeleton-profile-scan",
-      "name": "Skeleton Profile Scan",
-      "gallery": "lab",
-      "category": "LOADERS & WAITING STATES",
-      "ref": ".lab-ld-skprof",
-      "classes": [
-        "lab-ld-skprof",
-        "lab-ld-skprof-av",
-        "lab-ld-skprof-nm",
-        "lab-ld-skprof-st"
-      ],
-      "params": [
-        "color"
-      ],
-      "tags": [
-        "lab",
-        "animated",
-        "new"
-      ],
-      "componentType": "loader",
-      "interaction": "auto-play",
-      "spectrum": null,
-      "usableAsBackground": false,
-      "needsJs": null,
-      "isNew": true,
-      "isFixed": false,
-      "addedOn": "2026-09-05",
-      "updatedOn": null,
-      "author": "k33bz",
-      "description": "A profile header placeholder: ringed avatar, name bar and three stat blocks with a soft light band scanning top to bottom. Use for account and user pages."
-    },
-    {
-      "id": "lab-ellipsis-loader",
-      "name": "Ellipsis Loader",
-      "gallery": "lab",
-      "category": "LOADERS & WAITING STATES",
-      "ref": ".lab-ld-ellipsis",
-      "classes": [
-        "lab-ld-ellipsis",
-        "lab-ld-ellipsis-dots"
-      ],
-      "params": [
-        "color"
-      ],
-      "tags": [
-        "lab",
-        "animated",
-        "new"
-      ],
-      "componentType": "loader",
-      "interaction": "auto-play",
-      "spectrum": null,
-      "usableAsBackground": false,
-      "needsJs": null,
-      "isNew": true,
-      "isFixed": false,
-      "addedOn": "2026-09-05",
-      "updatedOn": null,
-      "author": "k33bz",
-      "description": "The word Loading with dots that step from none to three and wrap, driven by an animated content string. Use for inline text-only waiting states."
-    },
-    {
-      "id": "lab-segmented-ring-count",
-      "name": "Segmented Ring Count",
-      "gallery": "lab",
-      "category": "LOADERS & WAITING STATES",
-      "ref": ".lab-ld-segring",
-      "classes": [
-        "lab-ld-segring",
-        "lab-ld-segring-s"
-      ],
-      "params": [
-        "color"
-      ],
-      "tags": [
-        "lab",
-        "animated",
-        "new"
-      ],
-      "componentType": "loader",
-      "interaction": "auto-play",
-      "spectrum": null,
-      "usableAsBackground": false,
-      "needsJs": null,
-      "isNew": true,
-      "isFixed": false,
-      "addedOn": "2026-09-05",
-      "updatedOn": null,
-      "author": "k33bz",
-      "description": "Twelve ticks light up clockwise while the center counts n of 12, both driven by one registered property on the parent. Use for stepwise jobs with a known count."
-    },
-    {
-      "id": "lab-dots-to-check",
-      "name": "Dots to Check",
-      "gallery": "lab",
-      "category": "LOADERS & WAITING STATES",
-      "ref": ".lab-ld-dotcheck",
-      "classes": [
-        "lab-ld-dotcheck",
-        "lab-ld-dotcheck-d",
-        "lab-ld-dotcheck-b"
-      ],
-      "params": [
-        "color"
-      ],
-      "tags": [
-        "lab",
-        "animated",
-        "new"
-      ],
-      "componentType": "loader",
-      "interaction": "auto-play",
-      "spectrum": null,
-      "usableAsBackground": false,
-      "needsJs": null,
-      "isNew": true,
-      "isFixed": false,
-      "addedOn": "2026-09-05",
-      "updatedOn": null,
-      "author": "k33bz",
-      "description": "Three hopping dots converge and merge, then a green check pops out of the merge point inside a ring. Use where a wait ends in a visible success."
-    },
-    {
-      "id": "lab-chasing-squares",
-      "name": "Chasing Squares",
-      "gallery": "lab",
-      "category": "LOADERS & WAITING STATES",
-      "ref": ".lab-ld-chase",
-      "classes": [
-        "lab-ld-chase",
-        "lab-ld-chase-q"
-      ],
-      "params": [
-        "color"
-      ],
-      "tags": [
-        "lab",
-        "animated",
-        "new"
-      ],
-      "componentType": "loader",
-      "interaction": "auto-play",
-      "spectrum": null,
-      "usableAsBackground": false,
-      "needsJs": null,
-      "isNew": true,
-      "isFixed": false,
-      "addedOn": "2026-09-05",
-      "updatedOn": null,
-      "author": "k33bz",
-      "description": "Four squares of fading opacity hop clockwise around a two by two grid, each one step behind the last. Use as a compact indeterminate loader for panels."
-    },
-    {
-      "id": "lab-striped-progress-bar",
-      "name": "Striped Progress Bar",
-      "gallery": "lab",
-      "category": "LOADERS & WAITING STATES",
-      "ref": ".lab-ld-stripes",
-      "classes": [
-        "lab-ld-stripes",
-        "lab-ld-stripes-f"
-      ],
-      "params": [
-        "color"
-      ],
-      "tags": [
-        "lab",
-        "animated",
-        "new"
-      ],
-      "componentType": "loader",
-      "interaction": "auto-play",
-      "spectrum": null,
-      "usableAsBackground": false,
-      "needsJs": null,
-      "isNew": true,
-      "isFixed": false,
-      "addedOn": "2026-09-05",
-      "updatedOn": null,
-      "author": "k33bz",
-      "description": "A determinate bar fills to full while a barber pole stripe keeps moving across the fill. Use for installs and copies where progress is known but slow."
-    },
-    {
-      "id": "lab-card-stack-shuffle",
-      "name": "Card Stack Shuffle",
-      "gallery": "lab",
-      "category": "LOADERS & WAITING STATES",
-      "ref": ".lab-ld-shuffle",
-      "classes": [
-        "lab-ld-shuffle",
-        "lab-ld-shuffle-c"
-      ],
-      "params": [
-        "color"
-      ],
-      "tags": [
-        "lab",
-        "animated",
-        "new"
-      ],
-      "componentType": "loader",
-      "interaction": "auto-play",
-      "spectrum": null,
-      "usableAsBackground": false,
-      "needsJs": null,
-      "isNew": true,
-      "isFixed": false,
-      "addedOn": "2026-09-05",
-      "updatedOn": null,
-      "author": "k33bz",
-      "description": "The front card slides out to the right and tucks in at the back of the stack while the rest step forward. Use while a deck, feed or queue is being prepared."
-    },
-    {
-      "id": "lab-staged-progress",
-      "name": "Staged Progress",
-      "gallery": "lab",
-      "category": "LOADERS & WAITING STATES",
-      "ref": ".lab-ld-stages",
-      "classes": [
-        "lab-ld-stages",
-        "lab-ld-stages-lb",
-        "lab-ld-stages-pc",
-        "lab-ld-stages-tr",
-        "lab-ld-stages-f"
-      ],
-      "params": [
-        "color"
-      ],
-      "tags": [
-        "lab",
-        "animated",
-        "new"
-      ],
-      "componentType": "loader",
-      "interaction": "auto-play",
-      "spectrum": null,
-      "usableAsBackground": false,
-      "needsJs": null,
-      "isNew": true,
-      "isFixed": false,
-      "addedOn": "2026-09-05",
-      "updatedOn": null,
-      "author": "k33bz",
-      "description": "A progress bar with a live percent and a stage label that steps from Uploading through Processing to Done, turning green at the end. Use for multi step jobs."
-    },
-    {
-      "id": "lab-rolling-square",
-      "name": "Rolling Square",
-      "gallery": "lab",
-      "category": "LOADERS & WAITING STATES",
-      "ref": ".lab-ld-roll",
-      "classes": [
-        "lab-ld-roll",
-        "lab-ld-roll-q"
-      ],
-      "params": [
-        "color"
-      ],
-      "tags": [
-        "lab",
-        "animated",
-        "new"
-      ],
-      "componentType": "loader",
-      "interaction": "auto-play",
-      "spectrum": null,
-      "usableAsBackground": false,
-      "needsJs": null,
-      "isNew": true,
-      "isFixed": false,
-      "addedOn": "2026-09-05",
-      "updatedOn": null,
-      "author": "k33bz",
-      "description": "A square rolls along a rail, a quarter turn per hop, reaches the end and rolls back. Use for playful waits on a wide, short strip such as a footer."
-    },
-    {
-      "id": "lab-log-tail-loader",
-      "name": "Log Tail Loader",
-      "gallery": "lab",
-      "category": "LOADERS & WAITING STATES",
-      "ref": ".lab-ld-log",
-      "classes": [
-        "lab-ld-log",
-        "lab-ld-log-l",
-        "lab-ld-log-ok",
-        "lab-ld-log-cur"
-      ],
-      "params": [
-        "color"
-      ],
-      "tags": [
-        "lab",
-        "animated",
-        "new"
-      ],
-      "componentType": "loader",
-      "interaction": "auto-play",
-      "spectrum": null,
-      "usableAsBackground": false,
-      "needsJs": null,
-      "isNew": true,
-      "isFixed": false,
-      "addedOn": "2026-09-05",
-      "updatedOn": null,
-      "author": "k33bz",
-      "description": "A terminal panel where log lines arrive one after another and end on a green ok line with a blinking cursor. Use for CLI style installs and deploy consoles."
-    },
-    {
-      "id": "lab-text-fill-loader",
-      "name": "Text Fill Loader",
-      "gallery": "lab",
-      "category": "LOADERS & WAITING STATES",
-      "ref": ".lab-ld-textfill",
-      "classes": [
-        "lab-ld-textfill"
-      ],
-      "params": [
-        "color"
-      ],
-      "tags": [
-        "lab",
-        "animated",
-        "new"
-      ],
-      "componentType": "loader",
-      "interaction": "auto-play",
-      "spectrum": null,
-      "usableAsBackground": false,
-      "needsJs": null,
-      "isNew": true,
-      "isFixed": false,
-      "addedOn": "2026-09-05",
-      "updatedOn": null,
-      "author": "k33bz",
-      "description": "An outlined word fills with colour from the bottom up through a background clipped to the glyphs. Use as a hero loader where text is the only element on screen."
-    },
-    {
-      "id": "lab-flip-tiles",
-      "name": "Flip Tiles",
-      "gallery": "lab",
-      "category": "LOADERS & WAITING STATES",
-      "ref": ".lab-ld-fliptiles",
-      "classes": [
-        "lab-ld-fliptiles",
-        "lab-ld-fliptiles-t"
-      ],
-      "params": [
-        "color"
-      ],
-      "tags": [
-        "lab",
-        "animated",
-        "new"
-      ],
-      "componentType": "loader",
-      "interaction": "auto-play",
-      "spectrum": null,
-      "usableAsBackground": false,
-      "needsJs": null,
-      "isNew": true,
-      "isFixed": false,
-      "addedOn": "2026-09-05",
-      "updatedOn": null,
-      "author": "k33bz",
-      "description": "Five tiles flip on their horizontal axis in sequence to a coloured back face, then flip on to the plain front. Use for board or grid views that are refreshing."
-    },
-    {
-      "id": "lab-diamond-ripple",
-      "name": "Diamond Ripple",
-      "gallery": "lab",
-      "category": "LOADERS & WAITING STATES",
-      "ref": ".lab-ld-diamond",
-      "classes": [
-        "lab-ld-diamond",
-        "lab-ld-diamond-r"
-      ],
-      "params": [
-        "color"
-      ],
-      "tags": [
-        "lab",
-        "animated",
-        "new"
-      ],
-      "componentType": "loader",
-      "interaction": "auto-play",
-      "spectrum": null,
-      "usableAsBackground": false,
-      "needsJs": null,
-      "isNew": true,
-      "isFixed": false,
-      "addedOn": "2026-09-05",
-      "updatedOn": null,
-      "author": "k33bz",
-      "description": "Rotated square outlines expand from a solid centre gem and fade as they grow, three in flight at once. Use for search or scan states that radiate from a point."
-    },
-    {
-      "id": "lab-chomp-loader",
-      "name": "Chomp Loader",
-      "gallery": "lab",
-      "category": "LOADERS & WAITING STATES",
-      "ref": ".lab-ld-chomp",
-      "classes": [
-        "lab-ld-chomp",
-        "lab-ld-chomp-m",
-        "lab-ld-chomp-j",
-        "lab-ld-chomp-d"
-      ],
-      "params": [
-        "color"
-      ],
-      "tags": [
-        "lab",
-        "animated",
-        "new"
-      ],
-      "componentType": "loader",
-      "interaction": "auto-play",
-      "spectrum": null,
-      "usableAsBackground": false,
-      "needsJs": null,
-      "isNew": true,
-      "isFixed": false,
-      "addedOn": "2026-09-05",
-      "updatedOn": null,
-      "author": "k33bz",
-      "description": "A round mouth opens and closes while a train of dots glides in from the right and vanishes at the jaws. Use for queue draining or batch consumption states."
-    },
-    {
-      "id": "lab-upload-cloud",
-      "name": "Upload Cloud",
-      "gallery": "lab",
-      "category": "LOADERS & WAITING STATES",
-      "ref": ".lab-ld-upload",
-      "classes": [
-        "lab-ld-upload",
-        "lab-ld-upload-c",
-        "lab-ld-upload-a"
-      ],
-      "params": [
-        "color"
-      ],
-      "tags": [
-        "lab",
-        "animated",
-        "new"
-      ],
-      "componentType": "loader",
-      "interaction": "auto-play",
-      "spectrum": null,
-      "usableAsBackground": false,
-      "needsJs": null,
-      "isNew": true,
-      "isFixed": false,
-      "addedOn": "2026-09-05",
-      "updatedOn": null,
-      "author": "k33bz",
-      "description": "An arrow rises out of the base and fades into a gently bobbing cloud, again and again. Use for uploads and sync in progress toward remote storage."
-    },
-    {
-      "id": "lab-counting-percent",
-      "name": "Counting Percent",
-      "gallery": "lab",
-      "category": "LOADERS & WAITING STATES",
-      "ref": ".lab-ld-count",
-      "classes": [
-        "lab-ld-count",
-        "lab-ld-count-n",
-        "lab-ld-count-tr",
-        "lab-ld-count-f"
-      ],
-      "params": [
-        "color"
-      ],
-      "tags": [
-        "lab",
-        "animated",
-        "new"
-      ],
-      "componentType": "loader",
-      "interaction": "auto-play",
-      "spectrum": null,
-      "usableAsBackground": false,
-      "needsJs": null,
-      "isNew": true,
-      "isFixed": false,
-      "addedOn": "2026-09-05",
-      "updatedOn": null,
-      "author": "k33bz",
-      "description": "A large number counts from 0 to 100 through an integer property and a CSS counter while a hairline bar fills in step. Use when the number is the whole message."
-    },
-    {
-      "id": "lab-caterpillar-pills",
-      "name": "Caterpillar Pills",
-      "gallery": "lab",
-      "category": "LOADERS & WAITING STATES",
-      "ref": ".lab-ld-pills",
-      "classes": [
-        "lab-ld-pills",
-        "lab-ld-pills-p"
-      ],
-      "params": [
-        "color"
-      ],
-      "tags": [
-        "lab",
-        "animated",
-        "new"
-      ],
-      "componentType": "loader",
-      "interaction": "auto-play",
-      "spectrum": null,
-      "usableAsBackground": false,
-      "needsJs": null,
-      "isNew": true,
-      "isFixed": false,
-      "addedOn": "2026-09-05",
-      "updatedOn": null,
-      "author": "k33bz",
-      "description": "Four pills stretch wide and shrink back in sequence so the row crawls like a caterpillar. Use as a friendly inline loader inside buttons and chips."
     },
     {
       "id": "lab-alternate-slide-list",
@@ -22730,6 +22762,9 @@
         "chat",
         "cmsg",
         "user",
+        "ai",
+        "typing-msg",
+        "mt",
         "cap",
         "pr-playbtn"
       ],
@@ -23833,9 +23868,9 @@
         "gate",
         "experts",
         "expert",
+        "on",
         "ed",
         "ew",
-        "on",
         "cap",
         "pr-playbtn"
       ],
@@ -43824,9 +43859,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Classic scalable web stack: Route 53 to CloudFront to ALB to an EC2 Auto Scaling group and Multi-AZ RDS, with S3 for static assets."
     },
     {
@@ -43860,9 +43895,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A fully managed API path: client to API Gateway to Lambda to DynamoDB, with Cognito guarding the edge and S3 for object storage."
     },
     {
@@ -43897,9 +43932,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A cron-style pipeline: EventBridge fires Lambda, which buffers work in SQS for a second Lambda that writes results to S3."
     },
     {
@@ -43934,9 +43969,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Public, app and data subnets stacked across two Availability Zones: ALB in front of EC2 with RDS beneath, all inside one VPC."
     },
     {
@@ -43972,9 +44007,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Routing within a VPC: an Internet Gateway feeds the public subnet, and a NAT Gateway gives private-subnet EC2 outbound access."
     },
     {
@@ -44010,9 +44045,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Two Availability Zones behind one ELB, EC2 in each, and a primary RDS that fails over to a standby replica in the second AZ."
     },
     {
@@ -44046,9 +44081,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "An S3 event triggers Lambda that publishes to SNS, fanning out to two SQS queues each drained by its own consumer Lambda."
     },
     {
@@ -44082,9 +44117,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A left-to-right analytics pipeline: Kinesis lands raw data in S3, Glue catalogs it, Athena queries it, QuickSight charts it."
     },
     {
@@ -44120,9 +44155,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "An ALB routes to three ECS services in a cluster that share a common RDS datastore and an ElastiCache layer below."
     },
     {
@@ -44158,9 +44193,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "CodePipeline drives CodeCommit to CodeBuild to CodeDeploy onto ECS or EC2, with a highlight stepping through the active stage."
     },
     {
@@ -44196,9 +44231,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Route 53 failover routes users to an active region and, on outage, to a warm standby that receives cross-region replication."
     },
     {
@@ -44233,9 +44268,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "An on-prem datacentre reaches private-subnet EC2 through a VPN Gateway into the VPC, the pattern for hybrid connectivity."
     },
     {
