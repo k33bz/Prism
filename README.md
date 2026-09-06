@@ -282,7 +282,7 @@ Seventeen authored galleries, plus special views. Every element carries a name, 
 | 🔔 **Notifications & Status** | Toasts, snackbars, banners, live indicators, presence status set, live avatar stack, empty states, skeletons, geometric and 3D avatar shapes | 55 |
 | 🗺 **Architecture Diagrams** | Service nodes, animated connectors, VPC containers, sequence & flow diagrams | 50 |
 | ⭐ **Callouts & Annotations** | Admonitions, badges & pills, timelines, dividers, tooltips, key-value meta | 50 |
-| 🧭 **Menus & Actions** | Dropdowns, context menus, command palettes, action bars, radial menus | 37 |
+| 🧭 **Menus & Actions** | Dropdowns, context menus, command palettes, action bars, radial menus, live long-press and drag dial menus | 39 |
 | 📋 **Tables & Data Layouts** | Data tables, status cells, matrices, key-value blocks, lists & trees, grids & schedules, ledgers, toolbars | 55 |
 | 📐 **Diagrams & Frameworks** | Fishbone variants, flowcharts & loops, trees & funnels, Venn & SWOT, roadmaps & Gantt, networks, Sankey sub-styles, OKR / RACI / canvas, flywheels | 58 |
 
@@ -295,7 +295,7 @@ Seventeen authored galleries, plus special views. Every element carries a name, 
 <!-- showcase:start -->
 ## 🎞 GIF showcase
 
-Every one of the **3240 facets** is recorded as a looping GIF from its own standalone HTML sample, so you can browse the whole library without opening Prism.html — see [**showcase/**](showcase/README.md) (78.3 MB of GIFs, rendered by Firefox (WebDriver BiDi) 155.0.1). Click a gallery below to open its page; click any GIF there to get to the effect's self-contained HTML.
+Every one of the **3242 facets** is recorded as a looping GIF from its own standalone HTML sample, so you can browse the whole library without opening Prism.html — see [**showcase/**](showcase/README.md) (78.3 MB of GIFs, rendered by Firefox (WebDriver BiDi) 155.0.1). Click a gallery below to open its page; click any GIF there to get to the effect's self-contained HTML.
 
 <table>
 <tr><td align="center" valign="top" width="33%"><a href="showcase/galleries/charts.md"><img src="showcase/gif/charts-gauge-cluster.gif" width="300" alt="Charts &amp; Metrics"></a><br><b><a href="showcase/galleries/charts.md">Charts &amp; Metrics</a></b><br><sub>209 effects</sub></td><td align="center" valign="top" width="33%"><a href="showcase/galleries/fx.md"><img src="showcase/gif/fx-pulse-glow-winner.gif" width="300" alt="FX Store"></a><br><b><a href="showcase/galleries/fx.md">FX Store</a></b><br><sub>213 effects</sub></td><td align="center" valign="top" width="33%"><a href="showcase/galleries/lab.md"><img src="showcase/gif/lab-countdown-ring.gif" width="300" alt="Animation Lab"></a><br><b><a href="showcase/galleries/lab.md">Animation Lab</a></b><br><sub>258 effects</sub></td></tr>
@@ -303,7 +303,7 @@ Every one of the **3240 facets** is recorded as a looping GIF from its own stand
 <tr><td align="center" valign="top" width="33%"><a href="showcase/galleries/text.md"><img src="showcase/gif/text-neon-sign.gif" width="300" alt="Text Effects"></a><br><b><a href="showcase/galleries/text.md">Text Effects</a></b><br><sub>102 effects</sub></td><td align="center" valign="top" width="33%"><a href="showcase/galleries/shapes.md"><img src="showcase/gif/shapes-ring-spin.gif" width="300" alt="Text Shapes"></a><br><b><a href="showcase/galleries/shapes.md">Text Shapes</a></b><br><sub>53 effects</sub></td><td align="center" valign="top" width="33%"><a href="showcase/galleries/maps.md"><img src="showcase/gif/maps-world-pulse-map.gif" width="300" alt="Maps &amp; Geo"></a><br><b><a href="showcase/galleries/maps.md">Maps &amp; Geo</a></b><br><sub>50 effects</sub></td></tr>
 <tr><td align="center" valign="top" width="33%"><a href="showcase/galleries/notify.md"><img src="showcase/gif/notify-stacking-toast-group.gif" width="300" alt="Notifications &amp; Status"></a><br><b><a href="showcase/galleries/notify.md">Notifications &amp; Status</a></b><br><sub>55 effects</sub></td><td align="center" valign="top" width="33%"><a href="showcase/galleries/arch.md"><img src="showcase/gif/arch-flowing-connector.gif" width="300" alt="Architecture Diagrams"></a><br><b><a href="showcase/galleries/arch.md">Architecture Diagrams</a></b><br><sub>50 effects</sub></td><td align="center" valign="top" width="33%"><a href="showcase/galleries/callouts.md"><img src="showcase/gif/callouts-progress-stepper.gif" width="300" alt="Callouts &amp; Annotations"></a><br><b><a href="showcase/galleries/callouts.md">Callouts &amp; Annotations</a></b><br><sub>50 effects</sub></td></tr>
 <tr><td align="center" valign="top" width="33%"><a href="showcase/galleries/obsidian.md"><img src="showcase/gif/obsidian-knowledge-constellation.gif" width="300" alt="Obsidian Facets"></a><br><b><a href="showcase/galleries/obsidian.md">Obsidian Facets</a></b><br><sub>130 effects</sub></td><td align="center" valign="top" width="33%"><a href="showcase/galleries/menus.md"><img src="showcase/gif/menus-compact-cmd-k-palette.gif" width="300" alt="Menus &amp; Actions"></a><br><b><a href="showcase/galleries/menus.md">Menus &amp; Actions</a></b><br><sub>39 effects</sub></td><td align="center" valign="top" width="33%"><a href="showcase/galleries/tables.md"><img src="showcase/gif/tables-zebra-table-scan.gif" width="300" alt="Tables &amp; Data Layouts"></a><br><b><a href="showcase/galleries/tables.md">Tables &amp; Data Layouts</a></b><br><sub>55 effects</sub></td></tr>
-<tr><td align="center" valign="top" width="33%"><a href="showcase/galleries/diagrams.md"><img src="showcase/gif/diagrams-simple-fishbone.gif" width="300" alt="Diagrams &amp; Frameworks"></a><br><b><a href="showcase/galleries/diagrams.md">Diagrams &amp; Frameworks</a></b><br><sub>58 effects</sub></td><td align="center" valign="top" width="33%"><a href="showcase/galleries/spectrums.md"><img src="showcase/gif/spectrums-filled-ripple-button.gif" width="300" alt="Spectrums"></a><br><b><a href="showcase/galleries/spectrums.md">Spectrums</a></b><br><sub>1,566 effects</sub></td></tr>
+<tr><td align="center" valign="top" width="33%"><a href="showcase/galleries/diagrams.md"><img src="showcase/gif/diagrams-simple-fishbone.gif" width="300" alt="Diagrams &amp; Frameworks"></a><br><b><a href="showcase/galleries/diagrams.md">Diagrams &amp; Frameworks</a></b><br><sub>58 effects</sub></td><td align="center" valign="top" width="33%"><a href="showcase/galleries/spectrums.md"><img src="showcase/gif/spectrums-filled-ripple-button.gif" width="300" alt="Spectrums"></a><br><b><a href="showcase/galleries/spectrums.md">Spectrums</a></b><br><sub>1566 effects</sub></td></tr>
 </table>
 
 Regenerate with `node showcase/build.mjs` (Node 18+, Firefox or Chromium, ffmpeg) — the GIFs are display-only and never part of the catalog or MCP server.
@@ -351,7 +351,7 @@ The island is purpose-built to back an MCP server because everything a tool need
   "params": { "color": { "var": "--c", "rgbVar": "--c-rgb", … } },
   "tags": ["charts", "animated", "updated"],
   "usableAsBackground": false,      // full-bleed layer meant to sit behind content?
-  "needsJs": null,                  // key into an initializer, or null
+  "needsJs": null,                  // key into initializers[] (top level), or null. Fork tiles declare it with data-needs-js; the shell shows a "needs JS" pill and Copy includes the script
   "selfContained": false,           // true = renders from html alone (inline styles)
   "isNew": false, "isFixed": true,  // release markers (green NEW / blue UPDATED)
   "addedOn": "2026-07-13",          // git-derived: first commit the facet appeared in
@@ -363,7 +363,7 @@ The island is purpose-built to back an MCP server because everything a tool need
 }
 ```
 
-Top-level also carries `tokens.css` (the `:root` design tokens + `.c-*` color classes — include once globally), `usage` (composition rules), and `galleries` / `categories` for browsing.
+Top-level also carries `tokens.css` (the `:root` design tokens + `.c-*` color classes — include once globally), `usage` (composition rules), `initializers` (needsJs key → `{ js, page }`; fork facets ship the inline initializer source, upstream's two keys are pointers to their page scripts), and `galleries` / `categories` for browsing. The fork allows a facet to need a small dependency-free inline script: such tiles carry `data-needs-js`, show a **needs JS** pill next to Copy, and Copy includes the script. A pull request upstream should exclude every facet tagged `needs-js`.
 
 ### Composing an effect
 

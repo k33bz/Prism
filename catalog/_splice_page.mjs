@@ -7,12 +7,19 @@
 
      node catalog/_splice_page.mjs <draftFile> <page>
 
-   Idempotent: if the draft's first line (its <h3 class="sec">) is already present in
-   the page, the old block (from that h3 to the end of its gallery div) is removed first,
-   then the draft is inserted AFTER the last gallery's closing </div> and BEFORE the wrap's
-   closing </div>. Escapes raw </script> closers inside the draft. Honors PRISM_HTML. Zero deps. */
+   Every spliced section is wrapped in <!-- prism-section:<name> --> … <!-- /prism-section:<name> -->
+   markers (name = the draft's file name). Re-splicing replaces the marked block wholesale, so a
+   draft may end with <script> blocks (initializers, copy helpers) and still be replaced cleanly.
+   Sections spliced before markers existed are recognised by their <h3 class="sec"> line and
+   removed up to their gallery's closing </div> (legacy path).
+
+   Insertion point: AFTER the last gallery's closing </div> and BEFORE the wrap's closing </div>
+   + the page's trailing <script>, computed on the template with every marked section lifted
+   out (so a section ending in scripts cannot confuse the tail match); marked sections are put
+   back in their original order, then the new one. Drafts are normalised to LF. Escapes raw
+   </script> closers. Honors PRISM_HTML. Zero deps. */
 import { readFileSync, writeFileSync } from 'node:fs';
-import { resolve, dirname } from 'node:path';
+import { resolve, dirname, basename } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
@@ -20,11 +27,11 @@ const HTML = process.env.PRISM_HTML ? resolve(process.env.PRISM_HTML) : resolve(
 const [, , draftFile, page] = process.argv;
 if (!draftFile || !page) { console.error('usage: node catalog/_splice_page.mjs <draftFile> <page>'); process.exit(1); }
 
-// Drafts are normalised to LF: a CRLF draft would leave \r inside the template and break the
-// tail match (and every later splice) on this page.
+const name = basename(draftFile).replace(/\.html$/, '');
 let draft = readFileSync(resolve(HERE, draftFile), 'utf8').replace(/\r\n?/g, '\n').replace(/\n$/, '').replace(/<\/script\s*>/gi, '<\\/script>');
 const firstLine = draft.split('\n')[0].trim();
 if (!/^<h3 class="sec">/.test(firstLine)) { console.error('draft must start with its <h3 class="sec"> line'); process.exit(1); }
+const marked = `<!-- prism-section:${name} -->\n${draft}\n<!-- /prism-section:${name} -->`;
 
 let html = readFileSync(HTML, 'utf8');
 const open = `<script type="text/html" id="pg-${page}">`;
@@ -32,19 +39,29 @@ const a = html.indexOf(open); if (a < 0) { console.error('no template for page',
 const b = html.indexOf('\n</script>', a);
 let tpl = html.slice(a, b);
 
-const at = tpl.indexOf(firstLine);
+// 1. Lift out every marked section (keeping the others, in order); drop this section's old copy.
+const others = [];
 let action = 'Spliced';
+tpl = tpl.replace(/\r?\n?<!-- prism-section:([^ ]+) -->[\s\S]*?<!-- \/prism-section:\1 -->/g, (m, n) => {
+  if (n === name) { action = 'Re-spliced'; return ''; }
+  others.push(m.replace(/^\r?\n/, ''));
+  return '';
+});
+// 2. Legacy unmarked copy of this section: h3 … through its gallery's closing </div>.
+const at = tpl.indexOf(firstLine);
 if (at >= 0) {
   const gal = tpl.indexOf('<div class="gallery"', at);
   const end = tpl.indexOf('\n</div>', gal) + '\n</div>'.length;
   tpl = tpl.slice(0, at).replace(/\n+$/, '\n') + tpl.slice(end).replace(/^\n+/, '\n');
   action = 'Re-spliced';
 }
+// 3. Tail: last "gallery close, wrap close, <script>" run in the stripped template.
 const re = /(\r?\n[ \t]*<\/div>)([ \t]*\r?\n(?:[ \t]*\r?\n)*[ \t]*<\/div>[ \t]*(?:\r?\n)+<script>)/g;
 let m, cut = -1;
 while ((m = re.exec(tpl))) cut = m.index + m[1].length;
 if (cut < 0) { console.error('page tail not found'); process.exit(1); }
-tpl = tpl.slice(0, cut) + '\n\n' + draft + '\n' + tpl.slice(cut);
-console.log(`${action} section into pg-${page} (${draft.length} bytes)`);
+const block = others.concat([marked]).join('\n\n');
+tpl = tpl.slice(0, cut) + '\n\n' + block + '\n' + tpl.slice(cut);
+console.log(`${action} section "${name}" into pg-${page} (${draft.length} bytes${others.length ? `, ${others.length} other marked section(s) kept` : ''})`);
 html = html.slice(0, a) + tpl + html.slice(b);
 writeFileSync(HTML, html);

@@ -2,11 +2,11 @@
 
 Every effect in Prism's **Menus & Actions** gallery, recorded as a looping GIF.
 
-**37 effects** · 36 animated · 447 KB of GIF · click any GIF to open its standalone HTML sample (raw file; open it locally, GitHub shows source).
+**39 effects** · 38 animated · 509 KB of GIF · click any GIF to open its standalone HTML sample (raw file; open it locally, GitHub shows source).
 
 [← Showcase index](../README.md)
 
-**Sections:** [DROPDOWN MENUS](#dropdown-menus) · [CONTEXT MENUS](#context-menus) · [NAVIGATION MENUS](#navigation-menus) · [COMMAND PALETTES](#command-palettes) · [ACTION BARS, TOOLBARS & FABs](#action-bars-toolbars-fabs) · [TAB BARS & SEGMENTED CONTROLS](#tab-bars-segmented-controls) · [RADIAL & GESTURE MENUS](#radial-gesture-menus) · [STATIC MENU REFERENCES](#static-menu-references)
+**Sections:** [DROPDOWN MENUS](#dropdown-menus) · [CONTEXT MENUS](#context-menus) · [NAVIGATION MENUS](#navigation-menus) · [COMMAND PALETTES](#command-palettes) · [ACTION BARS, TOOLBARS & FABs](#action-bars-toolbars-fabs) · [TAB BARS & SEGMENTED CONTROLS](#tab-bars-segmented-controls) · [RADIAL & GESTURE MENUS](#radial-gesture-menus) · [STATIC MENU REFERENCES](#static-menu-references) · [LIVE RADIAL & GESTURE MENUS](#live-radial-gesture-menus)
 
 ## DROPDOWN MENUS
 
@@ -61,4 +61,10 @@ Every effect in Prism's **Menus & Actions** gallery, recorded as a looping GIF.
 
 <table>
 <tr><td align="center" valign="top" width="33%"><a href="../html/menus-plain-static-dropdown.html"><img src="../gif/menus-plain-static-dropdown.gif" width="300" alt="Plain Static Dropdown"></a><br><b>Plain Static Dropdown</b><br><sub><code>menus-plain-static-dropdown</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/menus-plain-static-context-menu.html"><img src="../gif/menus-plain-static-context-menu.gif" width="300" alt="Plain Static Context Menu"></a><br><b>Plain Static Context Menu</b><br><sub><code>menus-plain-static-context-menu</code></sub></td></tr>
+</table>
+
+## LIVE RADIAL & GESTURE MENUS
+
+<table>
+<tr><td align="center" valign="top" width="33%"><a href="../html/menus-long-press-menu-live.html"><img src="../gif/menus-long-press-menu-live.gif" width="300" alt="Long Press Menu (Live)"></a><br><b>Long Press Menu (Live)</b><br><sub><code>menus-long-press-menu-live</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/menus-draggable-dial-menu-live.html"><img src="../gif/menus-draggable-dial-menu-live.gif" width="300" alt="Draggable Dial Menu (Live)"></a><br><b>Draggable Dial Menu (Live)</b><br><sub><code>menus-draggable-dial-menu-live</code></sub></td></tr>
 </table>

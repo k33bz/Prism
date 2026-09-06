@@ -1,14 +1,14 @@
 {
  "name": "Prism GIF showcase",
- "generated": "2026-09-05T23:09:20.924Z",
+ "generated": "2026-09-06T00:38:02.776Z",
  "source": "Prism.html",
  "browser": {
   "engine": "Firefox (WebDriver BiDi)",
   "version": "155.0.1"
  },
- "count": 3240,
- "animated": 2983,
- "gifBytes": 82066291,
+ "count": 3242,
+ "animated": 2985,
+ "gifBytes": 82129161,
  "settings": {
   "fps": 10,
   "minSeconds": 1.6,
@@ -23431,6 +23431,36 @@
    "width": 344,
    "height": 157,
    "bytes": 7079
+  },
+  {
+   "id": "menus-long-press-menu-live",
+   "name": "Long Press Menu (Live)",
+   "gallery": "menus",
+   "category": "LIVE RADIAL & GESTURE MENUS",
+   "spectrum": null,
+   "gif": "gif/menus-long-press-menu-live.gif",
+   "html": "html/menus-long-press-menu-live.html",
+   "animated": true,
+   "duration": 4,
+   "frames": 40,
+   "width": 344,
+   "height": 175,
+   "bytes": 21498
+  },
+  {
+   "id": "menus-draggable-dial-menu-live",
+   "name": "Draggable Dial Menu (Live)",
+   "gallery": "menus",
+   "category": "LIVE RADIAL & GESTURE MENUS",
+   "spectrum": null,
+   "gif": "gif/menus-draggable-dial-menu-live.gif",
+   "html": "html/menus-draggable-dial-menu-live.html",
+   "animated": true,
+   "duration": 4,
+   "frames": 40,
+   "width": 344,
+   "height": 175,
+   "bytes": 41372
   },
   {
    "id": "tables-zebra-table-scan",

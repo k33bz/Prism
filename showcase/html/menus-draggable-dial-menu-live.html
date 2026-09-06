@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Draggable Dial Menu (Live) · Prism</title>
+<!-- Prism showcase sample: menus-draggable-dial-menu-live (gallery: menus). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.c-info { --c: var(--info); --c-rgb: 68,147,248; }
+.mnu-rdl { position: relative; width: 170px; height: 150px; --mnu-rdl-a: 0deg; --mnu-rdl-c: var(--c,var(--accent)); --mnu-rdl-rgb: var(--c-rgb,var(--accent-rgb)); user-select: none; touch-action: none; }
+.mnu-rdl-track { position: absolute; left: 50%; top: 50%; width: 112px; height: 112px; margin: -56px; border-radius: 50%; border: 2px dashed var(--line); }
+.mnu-rdl-opt { position: absolute; left: 50%; top: 50%; width: 30px; height: 30px; margin: -15px; border-radius: 50%; display: grid; place-items: center; font: 700 9px ui-sans-serif, system-ui, sans-serif; background: var(--panel2); border: 1px solid var(--line); color: var(--muted); transform: rotate(calc(var(--mnu-rdl-i)*60deg)) translateY(-56px) rotate(calc(var(--mnu-rdl-i)*-60deg)); transition: background 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s; }
+.mnu-rdl-opt.mnu-rdl-on { background: rgba(var(--mnu-rdl-rgb),.2); border-color: var(--mnu-rdl-c); color: var(--ink); box-shadow: 0 0 10px rgba(var(--mnu-rdl-rgb),.45); }
+.mnu-rdl-handle { position: absolute; left: 50%; top: 50%; width: 26px; height: 26px; margin: -13px; border-radius: 50%; background: var(--mnu-rdl-c); color: var(--bg); display: grid; place-items: center; font-size: 14px; line-height: 1; cursor: grab; z-index: 2; box-shadow: rgba(0, 0, 0, 0.35) 0px 2px 8px; transform: rotate(var(--mnu-rdl-a)) translateY(-56px) rotate(calc(var(--mnu-rdl-a)*-1)); }
+.mnu-rdl.mnu-rdl-snap .mnu-rdl-handle { transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.3, 1.2); }
+.mnu-rdl.mnu-rdl-drag .mnu-rdl-handle { cursor: grabbing; transform: rotate(var(--mnu-rdl-a)) translateY(-56px) rotate(calc(var(--mnu-rdl-a)*-1)) scale(1.15); }
+.mnu-rdl-center { position: absolute; left: 50%; top: 50%; width: 48px; height: 48px; margin: -24px; border-radius: 50%; background: var(--panel2); border: 1px solid var(--line); display: grid; place-items: center; text-align: center; font: 700 9.5px / 1.15 ui-sans-serif, system-ui, sans-serif; color: var(--ink); }
+.mnu-rdl-center small { display: block; font-size: 7.5px; font-weight: 600; color: var(--dim); letter-spacing: 0.04em; }
+.mnu-rdl:not(.mnu-rdl-manual) .mnu-rdl-handle { animation: 6s linear 0s infinite normal none running mnuRdlOrbit; }
+.mnu-rdl:not(.mnu-rdl-manual) .mnu-rdl-opt { animation-name: mnuRdlPass; animation-duration: 6s; animation-timing-function: steps(1); animation-iteration-count: infinite; animation-delay: calc(var(--mnu-rdl-i)*1s); }
+@keyframes mnuRdlOrbit { 
+  0% { transform: rotate(0deg) translateY(-56px) rotate(0deg); }
+  100% { transform: rotate(360deg) translateY(-56px) rotate(-360deg); }
+}
+@keyframes mnuRdlPass { 
+  0%, 14% { background: rgba(var(--mnu-rdl-rgb),.2); border-color: var(--mnu-rdl-c); color: var(--ink); }
+  16%, 100% { background: var(--panel2); border-color: var(--line); color: var(--muted); }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="mnu-rdl c-info" role="group" aria-label="Draggable dial menu: drag the handle around the track to choose an option">
+      <div class="mnu-rdl-track"></div>
+      <div class="mnu-rdl-opt" style="--mnu-rdl-i:0">Atlas</div><div class="mnu-rdl-opt" style="--mnu-rdl-i:1">Comet</div><div class="mnu-rdl-opt" style="--mnu-rdl-i:2">Ember</div><div class="mnu-rdl-opt" style="--mnu-rdl-i:3">Pixel</div><div class="mnu-rdl-opt" style="--mnu-rdl-i:4">Nova</div><div class="mnu-rdl-opt" style="--mnu-rdl-i:5">Orbit</div>
+      <div class="mnu-rdl-center"><span class="mnu-rdl-val">drag</span><small>to select</small></div>
+      <div class="mnu-rdl-handle" tabindex="0" role="slider" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" aria-label="Dial handle">⠿</div>
+    </div></div></div>
+<div class="meta"><b>Draggable Dial Menu (Live)</b> · <code>menus-draggable-dial-menu-live</code><br>Menus &amp; Actions · LIVE RADIAL &amp; GESTURE MENUS<p>Grab the handle and drag it around the track: the nearest option lights as you pass and the handle snaps to it on release; arrow keys step it too. Needs the small inline initializer, which Copy includes. Drag the handle.</p></div>
+<script>
+/* Prism initializer "mnu-drag": makes every .mnu-rdl dial draggable. Idempotent, no dependencies.
+   Run once after the markup is in the DOM (it delegates, so later-inserted dials work too). */
+(function(){
+  if(window.__prismMnuDrag) return; window.__prismMnuDrag=true;
+  var STEP=60, active=null;
+  function norm(a){ a=a%360; return a<0?a+360:a; }
+  function paint(root,a,snap){
+    var n=root.querySelectorAll('.mnu-rdl-opt').length||6, step=360/n;
+    if(snap){ a=norm(Math.round(a/step)*step); root.classList.add('mnu-rdl-snap'); } else root.classList.remove('mnu-rdl-snap');
+    root.style.setProperty('--mnu-rdl-a', a+'deg');
+    var idx=Math.round(norm(a)/step)%n, opts=root.querySelectorAll('.mnu-rdl-opt');
+    opts.forEach(function(o,i){ o.classList.toggle('mnu-rdl-on', i===idx); });
+    var val=root.querySelector('.mnu-rdl-val'); if(val && opts[idx]) val.textContent=opts[idx].textContent;
+    var h=root.querySelector('.mnu-rdl-handle'); if(h) h.setAttribute('aria-valuenow', idx);
+    root.dataset.angle=a;
+  }
+  function angleAt(root,x,y){ var r=root.getBoundingClientRect(); return norm(Math.atan2(x-(r.left+r.width/2), -(y-(r.top+r.height/2)))*180/Math.PI); }
+  document.addEventListener('pointerdown',function(e){
+    var root=e.target.closest('.mnu-rdl'); if(!root) return;   // handle, track or an option: all grab the dial
+    e.preventDefault(); root.classList.add('mnu-rdl-manual','mnu-rdl-drag'); active=root;
+    try{ root.setPointerCapture(e.pointerId); }catch(err){}
+    paint(root, angleAt(root,e.clientX,e.clientY), false);
+  });
+  document.addEventListener('pointermove',function(e){ if(!active) return; paint(active, angleAt(active,e.clientX,e.clientY), false); });
+  function release(e){ if(!active) return; var root=active; active=null; root.classList.remove('mnu-rdl-drag'); paint(root, parseFloat(root.dataset.angle)||0, true); }
+  document.addEventListener('pointerup',release); document.addEventListener('pointercancel',release);
+  document.addEventListener('keydown',function(e){
+    var h=e.target.closest && e.target.closest('.mnu-rdl-handle'); if(!h) return;
+    var d=e.key==='ArrowRight'||e.key==='ArrowUp'?1:e.key==='ArrowLeft'||e.key==='ArrowDown'?-1:0; if(!d) return;
+    e.preventDefault(); var root=h.closest('.mnu-rdl'); root.classList.add('mnu-rdl-manual');
+    var n=root.querySelectorAll('.mnu-rdl-opt').length||6; paint(root,(parseFloat(root.dataset.angle)||0)+d*(360/n),true);
+  });
+})();
+</script>
+</body>
+</html>
