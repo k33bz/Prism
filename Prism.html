@@ -168871,6 +168871,10 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
 
 
 
+
+
+
+
 <!-- prism-section:live.menus -->
 <h3 class="sec">LIVE RADIAL &amp; GESTURE MENUS</h3>
 <style id="mnu-live-styles">
@@ -169349,6 +169353,102 @@ function copyVizJs(btn){
 
 </div>
 <!-- /prism-section:navmotion.menus -->
+
+<!-- prism-section:wayfind.menus -->
+<h3 class="sec">WAYFINDING &amp; PROGRESS</h3>
+<style id="wayfind-styles">
+/* ===== Wayfinding & progress (k33bz fork). Page-level navigation chrome: scroll progress,
+   steppers, breadcrumbs and the sticky header condense. The scroll-driven pieces play on an
+   ambient loop so the tile demonstrates the full sweep; in use they map to scroll position.
+   Pure CSS, tokens, mnu- prefix, self-contained. ===== */
+/* scroll progress bar */
+.mnu-progress{position:relative;width:240px;height:150px;border-radius:12px;overflow:hidden;background:var(--card);border:1px solid var(--line);padding:18px 14px 14px}
+.mnu-prog-track{position:absolute;top:0;left:0;right:0;height:3px;background:rgba(var(--info-rgb),.12)}
+.mnu-prog-fill{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--warn));box-shadow:0 0 8px rgba(var(--accent-rgb),.55);animation:mnuProg 4s cubic-bezier(.45,0,.2,1) infinite}
+@keyframes mnuProg{0%,10%{width:0}88%,100%{width:100%}}
+.mnu-prog-doc b{display:block;height:9px;width:60%;border-radius:3px;background:var(--muted);opacity:.7;margin-bottom:11px}
+.mnu-prog-doc i{display:block;height:5px;border-radius:3px;background:var(--line);margin-bottom:7px}
+.mnu-prog-doc i:nth-child(3){width:92%}.mnu-prog-doc i:nth-child(4){width:80%}.mnu-prog-doc i:nth-child(5){width:88%}.mnu-prog-doc i:nth-child(6){width:64%}
+/* reading progress ring */
+.mnu-progring{position:relative;width:60px;height:60px;display:grid;place-items:center}
+.mnu-progring svg{width:60px;height:60px;transform:rotate(-90deg)}
+.mnu-progring circle{fill:none;stroke-width:4}
+.mnu-pr-track{stroke:rgba(var(--info-rgb),.16)}
+.mnu-pr-bar{stroke:var(--accent);stroke-linecap:round;stroke-dasharray:119;filter:drop-shadow(0 0 3px rgba(var(--accent-rgb),.6));animation:mnuRing 4s cubic-bezier(.45,0,.2,1) infinite}
+@keyframes mnuRing{0%,10%{stroke-dashoffset:119}88%,100%{stroke-dashoffset:0}}
+.mnu-pr-ic{position:absolute;font-size:15px;color:var(--accent)}
+/* stepper / wizard progress */
+.mnu-stepper{width:252px}
+.mnu-step-track{position:relative;height:3px;background:rgba(var(--info-rgb),.16);border-radius:3px;margin:8px 14px}
+.mnu-step-fill{position:absolute;left:0;top:0;height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--warn));border-radius:3px;animation:mnuStep 4.6s cubic-bezier(.65,0,.35,1) infinite}
+.mnu-step-marker{position:absolute;top:50%;left:0;width:13px;height:13px;margin:-6.5px 0 0 -6.5px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px rgba(var(--accent-rgb),.25);animation:mnuStepM 4.6s cubic-bezier(.65,0,.35,1) infinite}
+@keyframes mnuStep{0%,8%{width:0}90%,100%{width:100%}}
+@keyframes mnuStepM{0%,8%{left:0}90%,100%{left:100%}}
+.mnu-step-labels{display:flex;justify-content:space-between;margin:9px 8px 0}
+.mnu-step-labels span{font:700 10px ui-sans-serif,system-ui,sans-serif;color:var(--muted)}
+.mnu-step-labels span:first-child{color:var(--accent)}
+/* collapsing breadcrumb */
+.mnu-crumbs{display:flex;align-items:center;gap:5px;padding:8px 12px;border-radius:10px;background:var(--card);border:1px solid var(--line);font:600 12px ui-sans-serif,system-ui,sans-serif}
+.mnu-crumbs a{color:var(--muted);text-decoration:none;padding:2px 5px;border-radius:6px;transition:color .15s,background .15s;white-space:nowrap}
+.mnu-crumbs a:hover{color:var(--ink);background:rgba(var(--info-rgb),.12)}
+.mnu-crumbs a.is-here{color:var(--ink)}
+.mnu-cr-sep{color:var(--dim);opacity:.7}
+.mnu-cr-more{color:var(--muted);cursor:pointer;padding:2px 7px;border-radius:6px;background:var(--panel2);border:1px solid var(--line);transition:opacity .2s}
+.mnu-cr-hidden{display:inline-flex;align-items:center;gap:5px;max-width:0;overflow:hidden;opacity:0;transition:max-width .35s cubic-bezier(.25,1,.35,1),opacity .3s}
+.mnu-crumbs:hover .mnu-cr-hidden{max-width:220px;opacity:1}
+.mnu-crumbs:hover .mnu-cr-more{display:none}
+/* sticky shrink header (condense loop) */
+.mnu-condense{width:240px;height:150px;border-radius:12px;overflow:hidden;background:var(--card);border:1px solid var(--line);position:relative}
+.mnu-cond-bar{position:absolute;top:0;left:0;right:0;display:flex;align-items:center;gap:9px;height:64px;padding:0 14px;background:var(--panel2);border-bottom:1px solid transparent;animation:mnuCondBar 4.4s ease-in-out infinite;z-index:2}
+.mnu-cond-logo{width:26px;height:26px;border-radius:8px;background:linear-gradient(135deg,var(--accent),rgba(var(--accent-rgb),.5));flex:0 0 auto;animation:mnuCondLogo 4.4s ease-in-out infinite}
+.mnu-cond-tt b{display:block;font:800 13px ui-sans-serif,system-ui,sans-serif;color:var(--ink)}
+.mnu-cond-tt small{display:block;font-size:10px;color:var(--dim);overflow:hidden;animation:mnuCondSub 4.4s ease-in-out infinite}
+.mnu-cond-doc{position:absolute;top:64px;left:0;right:0;padding:12px 14px}
+.mnu-cond-doc i{display:block;height:5px;border-radius:3px;background:var(--line);margin-bottom:7px}
+.mnu-cond-doc i:nth-child(2){width:88%}.mnu-cond-doc i:nth-child(3){width:74%}
+@keyframes mnuCondBar{0%,28%{height:64px;box-shadow:none;border-bottom-color:transparent}52%,90%{height:40px;box-shadow:0 8px 18px rgba(0,0,0,.4);border-bottom-color:var(--line)}100%{height:64px}}
+@keyframes mnuCondLogo{0%,28%{width:26px;height:26px}52%,90%{width:20px;height:20px}100%{width:26px;height:26px}}
+@keyframes mnuCondSub{0%,28%{max-height:14px;opacity:.9}52%,90%{max-height:0;opacity:0}100%{max-height:14px;opacity:.9}}
+/* back to top */
+.mnu-totop{position:relative;width:240px;height:150px;border-radius:12px;overflow:hidden;background:var(--card);border:1px solid var(--line);padding:16px 14px}
+.mnu-totop i{display:block;height:5px;border-radius:3px;background:var(--line);margin-bottom:8px}
+.mnu-totop i:nth-child(1){width:70%}.mnu-totop i:nth-child(2){width:92%}.mnu-totop i:nth-child(3){width:84%}.mnu-totop i:nth-child(4){width:90%}.mnu-totop i:nth-child(5){width:76%}
+.mnu-tt-btn{position:absolute;bottom:12px;right:12px;width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--accent),rgba(var(--accent-rgb),.75));color:var(--bg);display:grid;place-items:center;font-size:16px;cursor:pointer;box-shadow:0 8px 18px rgba(var(--accent-rgb),.4);animation:mnuTotop 4s ease-in-out infinite;transition:transform .18s}
+.mnu-tt-btn:hover{transform:translateY(-3px)}
+@keyframes mnuTotop{0%,12%{opacity:0;transform:translateY(12px) scale(.8)}28%,82%{opacity:1;transform:none}96%,100%{opacity:0;transform:translateY(12px) scale(.8)}}
+@media (prefers-reduced-motion:reduce){.mnu-prog-fill,.mnu-pr-bar,.mnu-step-fill,.mnu-step-marker,.mnu-cond-bar,.mnu-cond-logo,.mnu-cond-tt small,.mnu-tt-btn{animation:none!important}.mnu-prog-fill{width:66%}.mnu-pr-bar{stroke-dashoffset:40}}
+</style>
+<div class="gallery">
+
+  <div class="tile is-new" data-ctype="menu" data-interact="auto-play" data-c="accent"><div class="stage">
+    <div class="mnu-progress"><div class="mnu-prog-track"><div class="mnu-prog-fill"></div></div>
+      <div class="mnu-prog-doc"><b></b><i></i><i></i><i></i><i></i><i></i></div></div>
+  </div><div class="meta"><div class="nm">Scroll Progress Bar</div><span class="ref">.mnu-progress</span><div class="desc">A thin accent bar across the top fills as the reader moves down the page, the reading indicator. Shown on a loop; in use its width maps to scroll position.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="menu" data-interact="auto-play" data-c="accent"><div class="stage">
+    <div class="mnu-progring"><svg viewBox="0 0 60 60"><circle class="mnu-pr-track" cx="30" cy="30" r="19"></circle><circle class="mnu-pr-bar" cx="30" cy="30" r="19"></circle></svg><span class="mnu-pr-ic">&#8593;</span></div>
+  </div><div class="meta"><div class="nm">Progress Ring</div><span class="ref">.mnu-progring</span><div class="desc">A circular reading indicator that sweeps clockwise to full, the floating scroll ring. An SVG stroke-dashoffset does the fill; drop it in a corner of the page.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="menu" data-interact="auto-play" data-c="info"><div class="stage">
+    <div class="mnu-stepper"><div class="mnu-step-track"><div class="mnu-step-fill"></div><div class="mnu-step-marker"></div></div>
+      <div class="mnu-step-labels"><span>Cart</span><span>Shipping</span><span>Payment</span><span>Done</span></div></div>
+  </div><div class="meta"><div class="nm">Stepper</div><span class="ref">.mnu-stepper</span><div class="desc">A wizard progress track: the fill and its glowing marker advance from step to step, the checkout or onboarding flow. Labels sit beneath each stop.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="menu" data-interact="hover" data-c="pos"><div class="stage">
+    <nav class="mnu-crumbs"><a href="#">Home</a><span class="mnu-cr-sep">/</span><span class="mnu-cr-more">&#8230;</span><span class="mnu-cr-hidden"><a href="#">Projects</a><span class="mnu-cr-sep">/</span><a href="#">Analytics</a><span class="mnu-cr-sep">/</span></span><a href="#">Reports</a><span class="mnu-cr-sep">/</span><a href="#" class="is-here">Q4</a></nav>
+  </div><div class="meta"><div class="nm">Collapsing Breadcrumb</div><span class="ref">.mnu-crumbs</span><div class="desc">A long trail folds its middle into an ellipsis that expands to reveal the hidden crumbs on hover, so a deep path fits one line. Hover the trail.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="menu" data-interact="auto-play" data-c="crit"><div class="stage">
+    <div class="mnu-condense"><div class="mnu-cond-bar"><span class="mnu-cond-logo"></span><span class="mnu-cond-tt"><b>Meridian</b><small>Design systems studio</small></span></div>
+      <div class="mnu-cond-doc"><i></i><i></i><i></i></div></div>
+  </div><div class="meta"><div class="nm">Sticky Shrink Header</div><span class="ref">.mnu-condense</span><div class="desc">On scroll the header condenses: it loses height, the logo shrinks, the subtitle collapses away and a shadow lifts it off the page. Shown looping between the two states.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="menu" data-interact="auto-play" data-c="accent"><div class="stage">
+    <div class="mnu-totop"><i></i><i></i><i></i><i></i><i></i><button class="mnu-tt-btn" aria-label="Back to top">&#8593;</button></div>
+  </div><div class="meta"><div class="nm">Back to Top</div><span class="ref">.mnu-totop</span><div class="desc">A floating round button fades and springs in once the reader scrolls past the fold, then lifts on hover, the return-to-top control. Shown appearing on a loop.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+</div>
+<!-- /prism-section:wayfind.menus -->
 </div>
 <script>
 function copyViz(btn){
