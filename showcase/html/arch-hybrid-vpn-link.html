@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hybrid VPN Link · Prism</title>
+<!-- Prism showcase sample: arch-hybrid-vpn-link (gallery: arch). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.arch-aws-svg { width: 100%; max-width: 300px; height: auto; display: block; }
+.arch-aws-tok { fill: rgba(var(--cr,var(--accent-rgb)),.16); stroke: rgba(var(--cr,var(--accent-rgb)),.9); stroke-width: 1; }
+.arch-aws-mo { fill: none; stroke: var(--c,var(--accent)); stroke-width: 1.2; stroke-linecap: round; stroke-linejoin: round; }
+.arch-aws-nl { fill: var(--muted); font-size: 7px; text-anchor: middle; font-family: ui-sans-serif, system-ui, sans-serif; }
+.arch-aws-bl { fill: var(--dim); font-size: 6px; letter-spacing: 0.3px; font-family: ui-monospace, Menlo, monospace; }
+.arch-aws-bd { fill: rgba(var(--cr,var(--accent-rgb)),.05); stroke: rgba(var(--cr,var(--accent-rgb)),.5); stroke-width: 0.8; stroke-dasharray: 3, 3; }
+.arch-aws-conn { fill: none; stroke: var(--line); stroke-width: 1; }
+.arch-aws-flow { fill: none; stroke: var(--c,var(--accent)); stroke-width: 1.5; stroke-linecap: round; stroke-dasharray: 5, 41; animation-name: archAwsFlow; animation-duration: 3s; animation-timing-function: linear; animation-iteration-count: infinite; animation-delay: var(--fd,0s); }
+@keyframes archAwsFlow { 
+  100% { stroke-dashoffset: -46; }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><svg class="arch-aws-svg arch-aws-hybrid" viewBox="0 0 300 150" role="img" aria-label="Hybrid VPN architecture">
+      <rect class="arch-aws-bd" x="6" y="40" width="96" height="80" rx="5" style="--cr:var(--muted)"></rect>
+      <text class="arch-aws-bl" x="10" y="49" style="fill:var(--muted)">ON-PREM</text>
+      <rect class="arch-aws-bd" x="168" y="30" width="126" height="98" rx="6" style="--cr:var(--info-rgb)"></rect>
+      <text class="arch-aws-bl" x="172" y="39">VPC</text>
+      <rect class="arch-aws-bd" x="178" y="48" width="108" height="70" rx="4" style="--cr:var(--pos-rgb)"></rect>
+      <text class="arch-aws-bl" x="182" y="57" style="fill:var(--pos)">PRIVATE SUBNET</text>
+      <path class="arch-aws-conn" d="M56 79h68M150 79h58"></path>
+      <path class="arch-aws-flow" style="--fd:0s" d="M56 79h68"></path>
+      <path class="arch-aws-flow" style="--fd:.8s" d="M150 79h58"></path>
+      <g transform="translate(30,68)"><rect class="arch-aws-tok" width="26" height="22" rx="4" style="--cr:var(--info-rgb);--c:var(--muted)"></rect><rect class="arch-aws-mo" x="7" y="4" width="12" height="12" rx="1"></rect><path class="arch-aws-mo" d="M7 10h12M13 4v12"></path><text class="arch-aws-nl" x="13" y="31">Servers</text></g>
+      <g transform="translate(124,68)"><rect class="arch-aws-tok" width="26" height="22" rx="4" style="--cr:var(--info-rgb);--c:var(--info)"></rect><rect class="arch-aws-mo" x="7" y="8" width="7" height="5" rx="2.5"></rect><rect class="arch-aws-mo" x="12" y="8" width="7" height="5" rx="2.5"></rect><text class="arch-aws-nl" x="13" y="31">VPN Gateway</text></g>
+      <g transform="translate(212,68)"><rect class="arch-aws-tok" width="26" height="22" rx="4" style="--cr:var(--pos-rgb);--c:var(--pos)"></rect><rect class="arch-aws-mo" x="7" y="4" width="12" height="12" rx="1"></rect><path class="arch-aws-mo" d="M7 10h12M13 4v12"></path><text class="arch-aws-nl" x="13" y="31">EC2</text></g>
+    </svg></div></div>
+<div class="meta"><b>Hybrid VPN Link</b> · <code>arch-hybrid-vpn-link</code><br>Architecture Diagrams · AWS REFERENCE ARCHITECTURES<p>An on-prem datacentre reaches private-subnet EC2 through a VPN Gateway into the VPC, the pattern for hybrid connectivity.</p></div>
+
+</body>
+</html>

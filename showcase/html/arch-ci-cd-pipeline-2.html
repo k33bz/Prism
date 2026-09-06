@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CI/CD Pipeline · Prism</title>
+<!-- Prism showcase sample: arch-ci-cd-pipeline-2 (gallery: arch). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.arch-aws-svg { width: 100%; max-width: 300px; height: auto; display: block; }
+.arch-aws-tok { fill: rgba(var(--cr,var(--accent-rgb)),.16); stroke: rgba(var(--cr,var(--accent-rgb)),.9); stroke-width: 1; }
+.arch-aws-mo { fill: none; stroke: var(--c,var(--accent)); stroke-width: 1.2; stroke-linecap: round; stroke-linejoin: round; }
+.arch-aws-nl { fill: var(--muted); font-size: 7px; text-anchor: middle; font-family: ui-sans-serif, system-ui, sans-serif; }
+.arch-aws-bl { fill: var(--dim); font-size: 6px; letter-spacing: 0.3px; font-family: ui-monospace, Menlo, monospace; }
+.arch-aws-bd { fill: rgba(var(--cr,var(--accent-rgb)),.05); stroke: rgba(var(--cr,var(--accent-rgb)),.5); stroke-width: 0.8; stroke-dasharray: 3, 3; }
+.arch-aws-conn { fill: none; stroke: var(--line); stroke-width: 1; }
+.arch-aws-flow { fill: none; stroke: var(--c,var(--accent)); stroke-width: 1.5; stroke-linecap: round; stroke-dasharray: 5, 41; animation-name: archAwsFlow; animation-duration: 3s; animation-timing-function: linear; animation-iteration-count: infinite; animation-delay: var(--fd,0s); }
+.arch-aws-hl { fill: rgba(var(--accent-rgb),.16); stroke: rgba(var(--accent-rgb),.7); stroke-width: 1; animation-name: archAwsHl; animation-duration: 4s; animation-timing-function: steps(1); animation-iteration-count: infinite; }
+@keyframes archAwsFlow { 
+  100% { stroke-dashoffset: -46; }
+}
+@keyframes archAwsHl { 
+  0% { transform: translateX(0px); }
+  25% { transform: translateX(72px); }
+  50% { transform: translateX(144px); }
+  75% { transform: translateX(216px); }
+  100% { transform: translateX(0px); }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><svg class="arch-aws-svg arch-aws-cicd" viewBox="0 0 300 150" role="img" aria-label="CI CD pipeline architecture">
+      <rect class="arch-aws-bd" x="6" y="40" width="288" height="70" rx="6" style="--cr:var(--accent-rgb)"></rect>
+      <text class="arch-aws-bl" x="10" y="49" style="fill:var(--accent)">CODEPIPELINE</text>
+      <rect class="arch-aws-hl" x="10" y="56" width="34" height="34" rx="5"></rect>
+      <path class="arch-aws-conn" d="M40 75h32M112 75h32M184 75h32"></path>
+      <path class="arch-aws-flow" style="--fd:0s" d="M40 75h32"></path>
+      <path class="arch-aws-flow" style="--fd:1s" d="M112 75h32"></path>
+      <path class="arch-aws-flow" style="--fd:2s" d="M184 75h32"></path>
+      <g transform="translate(14,64)"><rect class="arch-aws-tok" width="26" height="22" rx="4" style="--cr:var(--info-rgb);--c:var(--info)"></rect><path class="arch-aws-mo" d="M10 5v12M10 5a2 2 0 1 0 .1 0M17 8a2 2 0 1 0 .1 0M17 9c0 4-7 2-7 6"></path><text class="arch-aws-nl" x="13" y="31">CodeCommit</text></g>
+      <g transform="translate(86,64)"><rect class="arch-aws-tok" width="26" height="22" rx="4" style="--cr:var(--warn-rgb);--c:var(--warn)"></rect><circle class="arch-aws-mo" cx="11" cy="10" r="3.2"></circle><circle class="arch-aws-mo" cx="16" cy="12" r="2.4"></circle><text class="arch-aws-nl" x="13" y="31">CodeBuild</text></g>
+      <g transform="translate(158,64)"><rect class="arch-aws-tok" width="26" height="22" rx="4" style="--cr:var(--pos-rgb);--c:var(--pos)"></rect><path class="arch-aws-mo" d="M13 4l4 9h-8z"></path><path class="arch-aws-mo" d="M11 15l2 3l2-3"></path><text class="arch-aws-nl" x="13" y="31">CodeDeploy</text></g>
+      <g transform="translate(230,64)"><rect class="arch-aws-tok" width="26" height="22" rx="4" style="--cr:var(--accent-rgb);--c:var(--accent)"></rect><rect class="arch-aws-mo" x="7" y="4" width="12" height="12" rx="1"></rect><path class="arch-aws-mo" d="M7 10h12M13 4v12"></path><text class="arch-aws-nl" x="13" y="31">ECS / EC2</text></g>
+    </svg></div></div>
+<div class="meta"><b>CI/CD Pipeline</b> · <code>arch-ci-cd-pipeline-2</code><br>Architecture Diagrams · AWS REFERENCE ARCHITECTURES<p>CodePipeline drives CodeCommit to CodeBuild to CodeDeploy onto ECS or EC2, with a highlight stepping through the active stage.</p></div>
+
+</body>
+</html>

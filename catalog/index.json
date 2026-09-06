@@ -1,5 +1,5 @@
 {
-  "count": 3320,
+  "count": 3332,
   "effects": [
     {
       "id": "charts-big-metric-count-up",
@@ -1896,11 +1896,11 @@
         "sl",
         "ts",
         "lv",
-        "warn",
-        "m",
-        "ok",
-        "err",
         "info",
+        "m",
+        "err",
+        "ok",
+        "warn",
         "cursor"
       ],
       "params": [],
@@ -22730,9 +22730,6 @@
         "chat",
         "cmsg",
         "user",
-        "ai",
-        "typing-msg",
-        "mt",
         "cap",
         "pr-playbtn"
       ],
@@ -23836,9 +23833,9 @@
         "gate",
         "experts",
         "expert",
-        "on",
         "ed",
         "ew",
+        "on",
         "cap",
         "pr-playbtn"
       ],
@@ -33774,9 +33771,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A gradient ring built from the six theme accents fades in around the button and slides on hover. The idle loop previews it, and the rainbow retints with the theme."
     },
     {
@@ -33802,9 +33799,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A conic gradient of the theme accents rotates behind the button, showing only as a bright spinning rim. It reveals on hover and previews on the idle loop."
     },
     {
@@ -33831,9 +33828,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A gradient disc grows from the centre to flood the button on hover. The classic radial call-to-action fill; the loop demonstrates it."
     },
     {
@@ -33859,9 +33856,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A gradient wipes in from the left edge to fill the button on hover, the classic sliding-fill call to action. Idle loop included."
     },
     {
@@ -33887,9 +33884,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "The fill rises from the bottom edge to cover the button on hover, a rising-liquid take on the fill button."
     },
     {
@@ -33915,9 +33912,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A slanted gradient sweeps across from the lower left to fill the button on hover. The angled cut gives it momentum."
     },
     {
@@ -33943,9 +33940,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Two halves fill inward from the left and right edges and meet in the middle on hover, a shutter-style reveal."
     },
     {
@@ -33973,9 +33970,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "The border and label light up and a layered glow blooms around the button on hover. Colour follows the role, so it re-tints. Idle loop previews it."
     },
     {
@@ -34001,9 +33998,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A diagonal band of light sweeps across the face of the button on hover, the glossy product-button gleam."
     },
     {
@@ -34030,9 +34027,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "On hover the label takes a scrolling gradient of the theme accents while the button stays quiet, a subtle premium cue."
     },
     {
@@ -34058,9 +34055,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "The button goes transparent with a glowing outline and text shadow on hover, the arcade-sign look. Colour from the info role."
     },
     {
@@ -34086,9 +34083,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "The button rises a few pixels and pools a soft accent glow beneath it on hover, a tactile raise. Idle loop nudges it."
     },
     {
@@ -34114,9 +34111,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "An arrow slides out from behind the label and the button tints on hover, the forward call to action. The loop shows the arrow appearing."
     },
     {
@@ -34143,9 +34140,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "The button wears a theme-accent gradient that scrolls; on hover it scrolls faster and lifts a coloured shadow, a living primary button."
     },
     {
@@ -34171,9 +34168,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A ring expands from the centre and the button tints on hover, the material-style ripple. The loop fires it periodically."
     },
     {
@@ -43793,6 +43790,453 @@
       "updatedOn": "2026-07-28",
       "author": "crazy54",
       "description": "A gateway routing into segmented zones tinted by role — a network partition or transit routing view."
+    },
+    {
+      "id": "arch-web-hosting",
+      "name": "Web Hosting",
+      "gallery": "arch",
+      "category": "AWS REFERENCE ARCHITECTURES",
+      "ref": ".arch-aws-web",
+      "classes": [
+        "arch-aws-svg",
+        "arch-aws-web",
+        "arch-aws-bd",
+        "arch-aws-bl",
+        "arch-aws-conn",
+        "arch-aws-flow",
+        "arch-aws-tok",
+        "arch-aws-mo",
+        "arch-aws-nl",
+        "arch-aws-ghost"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "arch",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-flow",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Classic scalable web stack: Route 53 to CloudFront to ALB to an EC2 Auto Scaling group and Multi-AZ RDS, with S3 for static assets."
+    },
+    {
+      "id": "arch-serverless-api",
+      "name": "Serverless API",
+      "gallery": "arch",
+      "category": "AWS REFERENCE ARCHITECTURES",
+      "ref": ".arch-aws-api",
+      "classes": [
+        "arch-aws-svg",
+        "arch-aws-api",
+        "arch-aws-conn",
+        "arch-aws-flow",
+        "arch-aws-tok",
+        "arch-aws-mo",
+        "arch-aws-nl",
+        "arch-aws-mof"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "arch",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-flow",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A fully managed API path: client to API Gateway to Lambda to DynamoDB, with Cognito guarding the edge and S3 for object storage."
+    },
+    {
+      "id": "arch-scheduled-job",
+      "name": "Scheduled Job",
+      "gallery": "arch",
+      "category": "AWS REFERENCE ARCHITECTURES",
+      "ref": ".arch-aws-sched",
+      "classes": [
+        "arch-aws-svg",
+        "arch-aws-sched",
+        "arch-aws-conn",
+        "arch-aws-flow",
+        "arch-aws-pulse",
+        "arch-aws-tok",
+        "arch-aws-mo",
+        "arch-aws-nl",
+        "arch-aws-mof"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "arch",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-flow",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A cron-style pipeline: EventBridge fires Lambda, which buffers work in SQS for a second Lambda that writes results to S3."
+    },
+    {
+      "id": "arch-3-tier-in-a-vpc",
+      "name": "3-Tier in a VPC",
+      "gallery": "arch",
+      "category": "AWS REFERENCE ARCHITECTURES",
+      "ref": ".arch-aws-tier3",
+      "classes": [
+        "arch-aws-svg",
+        "arch-aws-tier3",
+        "arch-aws-bd",
+        "arch-aws-bl",
+        "arch-aws-conn",
+        "arch-aws-flow",
+        "arch-aws-tok",
+        "arch-aws-mo",
+        "arch-aws-nls"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "arch",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-flow",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Public, app and data subnets stacked across two Availability Zones: ALB in front of EC2 with RDS beneath, all inside one VPC."
+    },
+    {
+      "id": "arch-public-and-private-subnets",
+      "name": "Public and Private Subnets",
+      "gallery": "arch",
+      "category": "AWS REFERENCE ARCHITECTURES",
+      "ref": ".arch-aws-subnets",
+      "classes": [
+        "arch-aws-svg",
+        "arch-aws-subnets",
+        "arch-aws-bd",
+        "arch-aws-bl",
+        "arch-aws-conn",
+        "arch-aws-flow",
+        "arch-aws-arw",
+        "arch-aws-tok",
+        "arch-aws-mo",
+        "arch-aws-nl"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "arch",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-flow",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Routing within a VPC: an Internet Gateway feeds the public subnet, and a NAT Gateway gives private-subnet EC2 outbound access."
+    },
+    {
+      "id": "arch-high-availability-multi-az",
+      "name": "High Availability Multi-AZ",
+      "gallery": "arch",
+      "category": "AWS REFERENCE ARCHITECTURES",
+      "ref": ".arch-aws-ha",
+      "classes": [
+        "arch-aws-svg",
+        "arch-aws-ha",
+        "arch-aws-bd",
+        "arch-aws-bl",
+        "arch-aws-conn",
+        "arch-aws-flow",
+        "arch-aws-fail",
+        "arch-aws-tok",
+        "arch-aws-mo",
+        "arch-aws-nl"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "arch",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-flow",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Two Availability Zones behind one ELB, EC2 in each, and a primary RDS that fails over to a standby replica in the second AZ."
+    },
+    {
+      "id": "arch-event-driven-fan-out",
+      "name": "Event-Driven Fan-Out",
+      "gallery": "arch",
+      "category": "AWS REFERENCE ARCHITECTURES",
+      "ref": ".arch-aws-event",
+      "classes": [
+        "arch-aws-svg",
+        "arch-aws-event",
+        "arch-aws-conn",
+        "arch-aws-flow",
+        "arch-aws-tok",
+        "arch-aws-mo",
+        "arch-aws-nl",
+        "arch-aws-mof"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "arch",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-flow",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "An S3 event triggers Lambda that publishes to SNS, fanning out to two SQS queues each drained by its own consumer Lambda."
+    },
+    {
+      "id": "arch-data-lake-analytics",
+      "name": "Data Lake Analytics",
+      "gallery": "arch",
+      "category": "AWS REFERENCE ARCHITECTURES",
+      "ref": ".arch-aws-lake",
+      "classes": [
+        "arch-aws-svg",
+        "arch-aws-lake",
+        "arch-aws-conn",
+        "arch-aws-flow",
+        "arch-aws-tok",
+        "arch-aws-mo",
+        "arch-aws-nl",
+        "arch-aws-mof"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "arch",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-flow",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A left-to-right analytics pipeline: Kinesis lands raw data in S3, Glue catalogs it, Athena queries it, QuickSight charts it."
+    },
+    {
+      "id": "arch-microservices-on-ecs",
+      "name": "Microservices on ECS",
+      "gallery": "arch",
+      "category": "AWS REFERENCE ARCHITECTURES",
+      "ref": ".arch-aws-micro",
+      "classes": [
+        "arch-aws-svg",
+        "arch-aws-micro",
+        "arch-aws-bd",
+        "arch-aws-bl",
+        "arch-aws-conn",
+        "arch-aws-flow",
+        "arch-aws-tok",
+        "arch-aws-mo",
+        "arch-aws-nl",
+        "arch-aws-mof"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "arch",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-flow",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "An ALB routes to three ECS services in a cluster that share a common RDS datastore and an ElastiCache layer below."
+    },
+    {
+      "id": "arch-ci-cd-pipeline-2",
+      "name": "CI/CD Pipeline",
+      "gallery": "arch",
+      "category": "AWS REFERENCE ARCHITECTURES",
+      "ref": ".arch-aws-cicd",
+      "classes": [
+        "arch-aws-svg",
+        "arch-aws-cicd",
+        "arch-aws-bd",
+        "arch-aws-bl",
+        "arch-aws-hl",
+        "arch-aws-conn",
+        "arch-aws-flow",
+        "arch-aws-tok",
+        "arch-aws-mo",
+        "arch-aws-nl"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "arch",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-flow",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "CodePipeline drives CodeCommit to CodeBuild to CodeDeploy onto ECS or EC2, with a highlight stepping through the active stage."
+    },
+    {
+      "id": "arch-multi-region-dr",
+      "name": "Multi-Region DR",
+      "gallery": "arch",
+      "category": "AWS REFERENCE ARCHITECTURES",
+      "ref": ".arch-aws-dr",
+      "classes": [
+        "arch-aws-svg",
+        "arch-aws-dr",
+        "arch-aws-bd",
+        "arch-aws-bl",
+        "arch-aws-conn",
+        "arch-aws-flow",
+        "arch-aws-fail",
+        "arch-aws-tok",
+        "arch-aws-mo",
+        "arch-aws-nl"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "arch",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-flow",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Route 53 failover routes users to an active region and, on outage, to a warm standby that receives cross-region replication."
+    },
+    {
+      "id": "arch-hybrid-vpn-link",
+      "name": "Hybrid VPN Link",
+      "gallery": "arch",
+      "category": "AWS REFERENCE ARCHITECTURES",
+      "ref": ".arch-aws-hybrid",
+      "classes": [
+        "arch-aws-svg",
+        "arch-aws-hybrid",
+        "arch-aws-bd",
+        "arch-aws-bl",
+        "arch-aws-conn",
+        "arch-aws-flow",
+        "arch-aws-tok",
+        "arch-aws-mo",
+        "arch-aws-nl"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "arch",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-flow",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "An on-prem datacentre reaches private-subnet EC2 through a VPN Gateway into the VPC, the pattern for hybrid connectivity."
     },
     {
       "id": "callouts-note-callout",

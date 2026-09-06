@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Web Hosting · Prism</title>
+<!-- Prism showcase sample: arch-web-hosting (gallery: arch). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.arch-aws-svg { width: 100%; max-width: 300px; height: auto; display: block; }
+.arch-aws-tok { fill: rgba(var(--cr,var(--accent-rgb)),.16); stroke: rgba(var(--cr,var(--accent-rgb)),.9); stroke-width: 1; }
+.arch-aws-ghost { fill: rgba(var(--cr,var(--accent-rgb)),.07); stroke: rgba(var(--cr,var(--accent-rgb)),.4); stroke-width: 0.8; stroke-dasharray: 2, 2; }
+.arch-aws-mo { fill: none; stroke: var(--c,var(--accent)); stroke-width: 1.2; stroke-linecap: round; stroke-linejoin: round; }
+.arch-aws-nl { fill: var(--muted); font-size: 7px; text-anchor: middle; font-family: ui-sans-serif, system-ui, sans-serif; }
+.arch-aws-bl { fill: var(--dim); font-size: 6px; letter-spacing: 0.3px; font-family: ui-monospace, Menlo, monospace; }
+.arch-aws-bd { fill: rgba(var(--cr,var(--accent-rgb)),.05); stroke: rgba(var(--cr,var(--accent-rgb)),.5); stroke-width: 0.8; stroke-dasharray: 3, 3; }
+.arch-aws-conn { fill: none; stroke: var(--line); stroke-width: 1; }
+.arch-aws-flow { fill: none; stroke: var(--c,var(--accent)); stroke-width: 1.5; stroke-linecap: round; stroke-dasharray: 5, 41; animation-name: archAwsFlow; animation-duration: 3s; animation-timing-function: linear; animation-iteration-count: infinite; animation-delay: var(--fd,0s); }
+@keyframes archAwsFlow { 
+  100% { stroke-dashoffset: -46; }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><svg class="arch-aws-svg arch-aws-web" viewBox="0 0 300 150" role="img" aria-label="Web hosting reference architecture">
+      <rect class="arch-aws-bd" x="140" y="38" width="150" height="58" rx="5" style="--cr:var(--info-rgb)"></rect>
+      <text class="arch-aws-bl" x="144" y="47">VPC</text>
+      <path class="arch-aws-conn" d="M30 61h22M78 61h22M126 61h22M174 61h22M222 61h22"></path>
+      <path class="arch-aws-conn" d="M113 72v34"></path>
+      <path class="arch-aws-flow" style="--fd:0s" d="M30 61h22"></path>
+      <path class="arch-aws-flow" style="--fd:.4s" d="M78 61h22"></path>
+      <path class="arch-aws-flow" style="--fd:.8s" d="M126 61h22"></path>
+      <path class="arch-aws-flow" style="--fd:1.2s" d="M174 61h22"></path>
+      <path class="arch-aws-flow" style="--fd:1.6s" d="M222 61h22"></path>
+      <path class="arch-aws-flow" style="--fd:1s" d="M113 72v34"></path>
+      <g transform="translate(4,50)"><rect class="arch-aws-tok" width="26" height="22" rx="4" style="--cr:var(--info-rgb);--c:var(--muted)"></rect><circle class="arch-aws-mo" cx="13" cy="8" r="3"></circle><path class="arch-aws-mo" d="M7 17c0-4 12-4 12 0"></path><text class="arch-aws-nl" x="13" y="31">User</text></g>
+      <g transform="translate(52,50)"><rect class="arch-aws-tok" width="26" height="22" rx="4" style="--cr:var(--info-rgb);--c:var(--info)"></rect><circle class="arch-aws-mo" cx="13" cy="10" r="6"></circle><path class="arch-aws-mo" d="M7 10h12"></path><path class="arch-aws-mo" d="M13 4c-4 2-4 10 0 12c4-2 4-10 0-12"></path><text class="arch-aws-nl" x="13" y="31">Route 53</text></g>
+      <g transform="translate(100,50)"><rect class="arch-aws-tok" width="26" height="22" rx="4" style="--cr:var(--info-rgb);--c:var(--info)"></rect><circle class="arch-aws-mo" cx="13" cy="10" r="6"></circle><path class="arch-aws-mo" d="M7 10h12"></path><path class="arch-aws-mo" d="M13 4c-4 2-4 10 0 12c4-2 4-10 0-12"></path><text class="arch-aws-nl" x="13" y="31">CloudFront</text></g>
+      <g transform="translate(148,50)"><rect class="arch-aws-tok" width="26" height="22" rx="4" style="--cr:var(--warn-rgb);--c:var(--warn)"></rect><path class="arch-aws-mo" d="M6 5h14l-5 6v5h-4v-5z"></path><text class="arch-aws-nl" x="13" y="31">ALB</text></g>
+      <g transform="translate(196,50)"><rect class="arch-aws-ghost" x="4" y="4" width="26" height="22" rx="4" style="--cr:var(--pos-rgb)"></rect><rect class="arch-aws-tok" width="26" height="22" rx="4" style="--cr:var(--pos-rgb);--c:var(--pos)"></rect><rect class="arch-aws-mo" x="7" y="4" width="12" height="12" rx="1"></rect><path class="arch-aws-mo" d="M7 10h12M13 4v12"></path><text class="arch-aws-nl" x="13" y="31">EC2 (ASG)</text></g>
+      <g transform="translate(244,50)"><rect class="arch-aws-ghost" x="4" y="4" width="26" height="22" rx="4" style="--cr:var(--crit-rgb)"></rect><rect class="arch-aws-tok" width="26" height="22" rx="4" style="--cr:var(--crit-rgb);--c:var(--crit)"></rect><path class="arch-aws-mo" d="M8 6c0-2 10-2 10 0v9c0 2-10 2-10 0z"></path><path class="arch-aws-mo" d="M8 6c0 2 10 2 10 0"></path><text class="arch-aws-nl" x="13" y="31">RDS</text></g>
+      <g transform="translate(100,106)"><rect class="arch-aws-tok" width="26" height="22" rx="4" style="--cr:var(--pos-rgb);--c:var(--pos)"></rect><path class="arch-aws-mo" d="M7 6h12l-2 10h-8z"></path><path class="arch-aws-mo" d="M7 6c0-1.5 12-1.5 12 0"></path><text class="arch-aws-nl" x="13" y="31">S3 assets</text></g>
+    </svg></div></div>
+<div class="meta"><b>Web Hosting</b> · <code>arch-web-hosting</code><br>Architecture Diagrams · AWS REFERENCE ARCHITECTURES<p>Classic scalable web stack: Route 53 to CloudFront to ALB to an EC2 Auto Scaling group and Multi-AZ RDS, with S3 for static assets.</p></div>
+
+</body>
+</html>

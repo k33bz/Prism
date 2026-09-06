@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Event-Driven Fan-Out · Prism</title>
+<!-- Prism showcase sample: arch-event-driven-fan-out (gallery: arch). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.arch-aws-svg { width: 100%; max-width: 300px; height: auto; display: block; }
+.arch-aws-tok { fill: rgba(var(--cr,var(--accent-rgb)),.16); stroke: rgba(var(--cr,var(--accent-rgb)),.9); stroke-width: 1; }
+.arch-aws-mo { fill: none; stroke: var(--c,var(--accent)); stroke-width: 1.2; stroke-linecap: round; stroke-linejoin: round; }
+.arch-aws-mof { fill: rgba(var(--cr,var(--accent-rgb)),.95); stroke: none; }
+.arch-aws-nl { fill: var(--muted); font-size: 7px; text-anchor: middle; font-family: ui-sans-serif, system-ui, sans-serif; }
+.arch-aws-conn { fill: none; stroke: var(--line); stroke-width: 1; }
+.arch-aws-flow { fill: none; stroke: var(--c,var(--accent)); stroke-width: 1.5; stroke-linecap: round; stroke-dasharray: 5, 41; animation-name: archAwsFlow; animation-duration: 3s; animation-timing-function: linear; animation-iteration-count: infinite; animation-delay: var(--fd,0s); }
+@keyframes archAwsFlow { 
+  100% { stroke-dashoffset: -46; }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><svg class="arch-aws-svg arch-aws-event" viewBox="0 0 300 150" role="img" aria-label="Event driven fan out architecture">
+      <path class="arch-aws-conn" d="M32 71h28M86 71h30M142 71h20v-32h18M142 71h20v32h18M206 39h34M206 103h34"></path>
+      <path class="arch-aws-flow" style="--fd:0s" d="M32 71h28"></path>
+      <path class="arch-aws-flow" style="--fd:.4s" d="M86 71h30"></path>
+      <path class="arch-aws-flow" style="--fd:.9s" d="M142 71h20v-32h18"></path>
+      <path class="arch-aws-flow" style="--fd:.9s" d="M142 71h20v32h18"></path>
+      <path class="arch-aws-flow" style="--fd:1.4s" d="M206 39h34"></path>
+      <path class="arch-aws-flow" style="--fd:1.4s" d="M206 103h34"></path>
+      <g transform="translate(6,60)"><rect class="arch-aws-tok" width="26" height="22" rx="4" style="--cr:var(--pos-rgb);--c:var(--pos)"></rect><path class="arch-aws-mo" d="M7 6h12l-2 10h-8z"></path><path class="arch-aws-mo" d="M7 6c0-1.5 12-1.5 12 0"></path><text class="arch-aws-nl" x="13" y="31">S3 event</text></g>
+      <g transform="translate(60,60)"><rect class="arch-aws-tok" width="26" height="22" rx="4" style="--cr:var(--accent-rgb);--c:var(--accent)"></rect><path class="arch-aws-mo" d="M9 17L14 5l4 12M14 5l-3 5"></path><text class="arch-aws-nl" x="13" y="31">Lambda</text></g>
+      <g transform="translate(116,60)"><rect class="arch-aws-tok" width="26" height="22" rx="4" style="--cr:var(--crit-rgb);--c:var(--crit)"></rect><circle class="arch-aws-mof" cx="13" cy="10" r="2"></circle><path class="arch-aws-mo" d="M9 6a6 6 0 0 0 0 8M17 6a6 6 0 0 1 0 8"></path><text class="arch-aws-nl" x="13" y="31">SNS</text></g>
+      <g transform="translate(180,28)"><rect class="arch-aws-tok" width="26" height="22" rx="4" style="--cr:var(--warn-rgb);--c:var(--warn)"></rect><rect class="arch-aws-mof" x="7" y="6" width="12" height="2.4" rx="1"></rect><rect class="arch-aws-mof" x="7" y="10" width="12" height="2.4" rx="1"></rect><rect class="arch-aws-mof" x="7" y="14" width="12" height="2.4" rx="1"></rect><text class="arch-aws-nl" x="13" y="31">SQS</text></g>
+      <g transform="translate(180,92)"><rect class="arch-aws-tok" width="26" height="22" rx="4" style="--cr:var(--warn-rgb);--c:var(--warn)"></rect><rect class="arch-aws-mof" x="7" y="6" width="12" height="2.4" rx="1"></rect><rect class="arch-aws-mof" x="7" y="10" width="12" height="2.4" rx="1"></rect><rect class="arch-aws-mof" x="7" y="14" width="12" height="2.4" rx="1"></rect><text class="arch-aws-nl" x="13" y="31">SQS</text></g>
+      <g transform="translate(240,28)"><rect class="arch-aws-tok" width="26" height="22" rx="4" style="--cr:var(--accent-rgb);--c:var(--accent)"></rect><path class="arch-aws-mo" d="M9 17L14 5l4 12M14 5l-3 5"></path><text class="arch-aws-nl" x="13" y="31">Lambda</text></g>
+      <g transform="translate(240,92)"><rect class="arch-aws-tok" width="26" height="22" rx="4" style="--cr:var(--accent-rgb);--c:var(--accent)"></rect><path class="arch-aws-mo" d="M9 17L14 5l4 12M14 5l-3 5"></path><text class="arch-aws-nl" x="13" y="31">Lambda</text></g>
+    </svg></div></div>
+<div class="meta"><b>Event-Driven Fan-Out</b> · <code>arch-event-driven-fan-out</code><br>Architecture Diagrams · AWS REFERENCE ARCHITECTURES<p>An S3 event triggers Lambda that publishes to SNS, fanning out to two SQS queues each drained by its own consumer Lambda.</p></div>
+
+</body>
+</html>
