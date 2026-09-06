@@ -18,7 +18,7 @@ catalog and showcase). Per-batch idea lists are the remaining work; strike ideas
 | 7 | Treemaps and hierarchies (Datylon set) | Charts & Metrics | `chx-tm-` / `chxTm` | `treemaps.charts.html` | landed (17) |
 | 8 | Correlation, time and distribution plots (Datylon set) | Charts & Metrics | `chx-pl-` / `chxPl` | `plots.charts.html` | landed (18) |
 | 9 | Liquid gauges and variance bands | Charts & Metrics | `chx-lq-` / `chxLq` | `liquid.charts.html` | landed (16) |
-| 10 | Run charts and SPC rules (needs JS) | Charts & Metrics | `chx-rc-` / `chxRc` | `runcharts.charts.html` | todo |
+| 10 | Run charts and SPC rules (needs JS) | Charts & Metrics | `chx-rc-` / `chxRc` | `runcharts.charts.html` | landed (6, needs JS) |
 
 ## Batch 1: hover effects
 Landed (20): tilt gloss, perimeter draw, bracket snap, zoom caption, diagonal wipe, split reveal, icon
@@ -91,7 +91,10 @@ error bars on columns, deviation area, variance to plan, bollinger envelope, con
 Remaining: none.
 
 ## Batch 10: run charts and SPC rules (needs JS)
-Ideas: run chart with rules (median, trend line, rule 1 shift, rule 2 trend, rule 3 too few / too
-many runs, rule 4 astronomical point, all as toggles), trend detector, runs test (too few), too many
-runs, I-MR control chart, SPC rule legend.
+Landed (6): run chart with all four rules, trend detector, runs test (too few), too many runs, I-MR
+control chart, SPC rule legend (static). The initializer (chx-rc) computes the median, a least-squares
+trend line, rule 1 shift, rule 2 trend, rule 3 runs vs the critical-value table, rule 4 astronomical
+point (median absolute deviation), and the I-MR limits. Rule detection verified independently against
+recomputed ground truth. Remaining: none.
 
+All four Datylon chart batches (7-10) landed: 57 chart facets total.
