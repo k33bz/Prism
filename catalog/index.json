@@ -1896,10 +1896,9 @@
         "sl",
         "ts",
         "lv",
-        "ok",
-        "m",
         "info",
-        "warn",
+        "m",
+        "ok",
         "err",
         "cursor"
       ],
@@ -21863,9 +21862,9 @@
         "gate",
         "experts",
         "expert",
+        "on",
         "ed",
         "ew",
-        "on",
         "cap",
         "pr-playbtn"
       ],
@@ -48118,9 +48117,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Press and hold the centre: a ring fills for half a second, then six actions fan out and stay while you hold; release and they fold away. Pure CSS: an active state plus a transition delay. The idle loop previews the gesture. Hold the centre."
     },
     {
@@ -48154,9 +48153,9 @@
       "needsJs": "mnu-drag",
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Grab the handle and drag it around the track: the nearest option lights as you pass and the handle snaps to it on release; arrow keys step it too. Needs the small inline initializer, which Copy includes. Drag the handle."
     },
     {
