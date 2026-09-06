@@ -1898,8 +1898,9 @@
         "lv",
         "ok",
         "m",
-        "info",
+        "warn",
         "err",
+        "info",
         "cursor"
       ],
       "params": [],
@@ -15973,6 +15974,8 @@
       "classes": [
         "fxc",
         "fxc-m-peek",
+        "fxc-peek",
+        "fxc-under",
         "fxc-card",
         "fxc-face",
         "fxc-front",
@@ -16001,7 +16004,7 @@
       "addedOn": "2026-09-06",
       "updatedOn": null,
       "author": "k33bz",
-      "description": "The card swings open from its left edge to reveal a sliver of the back, then closes. The peek at your hand."
+      "description": "The top card lifts open from its left edge to reveal the card underneath it, then lowers again. The peek at your hand. Add a sibling .fxc-under behind the .fxc-card for the card being revealed."
     },
     {
       "id": "fx-flip-holo",
@@ -25186,9 +25189,9 @@
         "gate",
         "experts",
         "expert",
-        "on",
         "ed",
         "ew",
+        "on",
         "cap",
         "pr-playbtn"
       ],

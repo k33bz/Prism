@@ -1,14 +1,14 @@
 {
  "name": "Prism GIF showcase",
- "generated": "2026-09-06T14:05:15.370Z",
+ "generated": "2026-09-06T14:15:56.584Z",
  "source": "Prism.html",
  "browser": {
-  "engine": "Chromium (CDP)",
-  "version": "Edg/152.0.4191.66"
+  "engine": "Firefox (WebDriver BiDi)",
+  "version": "155.0.1"
  },
  "count": 3422,
  "animated": 3165,
- "gifBytes": 89180780,
+ "gifBytes": 89160580,
  "settings": {
   "fps": 10,
   "minSeconds": 1.6,
@@ -7635,7 +7635,7 @@
    "frames": 40,
    "width": 344,
    "height": 175,
-   "bytes": 89836
+   "bytes": 69636
   },
   {
    "id": "fx-flip-holo",

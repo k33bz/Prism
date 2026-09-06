@@ -44,7 +44,11 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
 .fxc-m-invert .fxc-card { animation: 4s ease-in-out 0s infinite normal none running fxcInvert; }
 .fxc-m-deal .fxc-card { animation: 3.2s cubic-bezier(0.2, 0.8, 0.3, 1) 0s infinite normal none running fxcDeal; }
 .fxc-m-toss .fxc-card { animation: 3.4s cubic-bezier(0.3, 0, 0.5, 1) 0s infinite normal none running fxcToss; }
-.fxc-m-peek .fxc-card { transform-origin: left center; animation: 3.2s ease-in-out 0s infinite normal none running fxcPeek; }
+.fxc-m-peek .fxc-peek { position: relative; width: var(--fxc-w); height: var(--fxc-h); }
+.fxc-m-peek .fxc-under { position: absolute; inset: 0px; border-radius: 9px; overflow: hidden; transform: translate(7px, 5px) scale(0.98); background: linear-gradient(160deg,var(--panel),var(--panel2)); border: 1px solid var(--line); box-shadow: rgba(0, 0, 0, 0.4) 0px 6px 14px; }
+.fxc-m-peek .fxc-under::before { content: ""; position: absolute; left: 5px; right: 5px; top: 5px; height: 13px; border-radius: 4px; background: rgba(var(--pos-rgb),.85); }
+.fxc-m-peek .fxc-under::after { content: ""; position: absolute; left: 5px; right: 5px; top: 21px; height: 48px; border-radius: 4px; background: radial-gradient(120% 90% at 50% 20%,rgba(var(--pos-rgb),.6),rgba(var(--info-rgb),.35) 60%,var(--bg)); }
+.fxc-m-peek .fxc-card { position: absolute; inset: 0px; transform-origin: left center; animation: 3.2s ease-in-out 0s infinite normal none running fxcPeek; z-index: 2; }
 .fxc-live .fxc-card { transition: transform 0.12s ease-out; transform: rotateX(calc((var(--fxc-my) - .5)*-26deg)) rotateY(calc((var(--fxc-mx) - .5)*26deg)); }
 .fxc-live:not(.fxc-hot) .fxc-card { animation: 4s ease-in-out 0s infinite normal none running fxcOrbitCard; }
 @keyframes fxcFlipY { 
@@ -80,8 +84,8 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
   100% { transform: translateX(130px) rotate(320deg) scale(0.9); opacity: 0; }
 }
 @keyframes fxcPeek { 
-  0%, 20%, 100% { transform: rotateY(0deg); }
-  50%, 70% { transform: rotateY(-46deg); }
+  0%, 16%, 100% { transform: rotateY(0deg); }
+  48%, 74% { transform: rotateY(-64deg); }
 }
 @keyframes fxcOrbitCard { 
   0%, 100% { transform: rotateX(12deg) rotateY(-16deg); }
@@ -90,8 +94,8 @@ body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-
 </style>
 </head>
 <body>
-<div class="tile"><div class="stage" id="stage"><div class="fxc fxc-m-peek" role="img" aria-label="Card motion: peek a corner"><div class="fxc-card"><div class="fxc-face fxc-front"><div class="fxc-hd"><span class="fxc-name">ATLAS</span><span class="fxc-cost"></span></div><div class="fxc-art"></div><div class="fxc-type">UNIT</div><div class="fxc-txt"><i></i><i></i><i></i></div><div class="fxc-stat">7</div></div><div class="fxc-face fxc-back"></div></div></div></div></div>
-<div class="meta"><b>Peek</b> · <code>fx-peek</code><br>FX Store · CARD MOTION &amp; FOIL<p>The card swings open from its left edge to reveal a sliver of the back, then closes. The peek at your hand.</p></div>
+<div class="tile"><div class="stage" id="stage"><div class="fxc fxc-m-peek" role="img" aria-label="Card motion: lift the top card to reveal the card underneath"><div class="fxc-peek"><div class="fxc-under"></div><div class="fxc-card"><div class="fxc-face fxc-front"><div class="fxc-hd"><span class="fxc-name">ATLAS</span><span class="fxc-cost"></span></div><div class="fxc-art"></div><div class="fxc-type">UNIT</div><div class="fxc-txt"><i></i><i></i><i></i></div><div class="fxc-stat">7</div></div><div class="fxc-face fxc-back"></div></div></div></div></div></div>
+<div class="meta"><b>Peek</b> · <code>fx-peek</code><br>FX Store · CARD MOTION &amp; FOIL<p>The top card lifts open from its left edge to reveal the card underneath it, then lowers again. The peek at your hand. Add a sibling .fxc-under behind the .fxc-card for the card being revealed.</p></div>
 
 </body>
 </html>
