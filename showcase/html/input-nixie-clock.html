@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nixie Clock · Prism</title>
+<!-- Prism showcase sample: input-nixie-clock (gallery: input). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.in-nix { display: flex; align-items: center; justify-content: center; gap: 5px; height: 100%; --nx: var(--c,var(--accent)); --nx-rgb: var(--c-rgb,var(--accent-rgb)); }
+.in-nix-tube { position: relative; width: 32px; height: 58px; border-radius: 13px 13px 5px 5px; overflow: hidden; flex: 0 0 auto; background: radial-gradient(70% 55% at 50% 38%,rgba(var(--nx-rgb),.10),rgba(255,255,255,0) 72%),linear-gradient(180deg,rgba(255,255,255,.06),rgba(0,0,0,.28)); border: 1px solid var(--line); box-shadow: rgba(255, 255, 255, 0.05) 0px 6px 10px inset, rgba(0, 0, 0, 0.4) 0px -8px 10px inset; }
+.in-nix-tube::before { content: ""; position: absolute; inset: 3px; border-radius: 11px 11px 4px 4px; pointer-events: none; background: repeating-linear-gradient(90deg,rgba(var(--nx-rgb),.12) 0 1px,transparent 1px 4px); opacity: 0.35; }
+.in-nix-tube::after { content: ""; position: absolute; left: 16%; top: 8%; width: 20%; height: 46%; border-radius: 50%; background: linear-gradient(rgba(255, 255, 255, 0.22), transparent); pointer-events: none; }
+.in-nix-num { position: absolute; inset: 0px; display: grid; place-items: center; }
+.in-nix-num b { position: absolute; font: 800 30px / 1 ui-sans-serif, system-ui, sans-serif; color: rgba(var(--nx-rgb),.09); }
+.in-nix-base { position: absolute; left: 6px; right: 6px; bottom: 0px; height: 6px; background: var(--panel2); border-radius: 0px 0px 5px 5px; box-shadow: rgba(255, 255, 255, 0.08) 0px 1px 0px inset; }
+.in-nix-colon { color: var(--nx); font: 800 24px ui-sans-serif, system-ui, sans-serif; text-shadow: 0 0 5px rgba(var(--nx-rgb),.9); animation: 1s steps(1) 0s infinite normal none running inNixColon; }
+.in-nix-cyc b { animation-name: inNixLit; animation-timing-function: steps(1); animation-iteration-count: infinite; }
+@keyframes inNixColon { 
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0.15; }
+}
+@keyframes inNixLit { 
+  0%, 9% { color: var(--nx); text-shadow: 0 0 4px rgba(var(--nx-rgb),.95),0 0 10px rgba(var(--nx-rgb),.7),0 0 22px rgba(var(--nx-rgb),.4); }
+  9.5%, 100% { color: rgba(var(--nx-rgb),.09); text-shadow: none; }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="in-nix" role="img" aria-label="Nixie clock showing hours minutes seconds">
+      <div class="in-nix-tube"><div class="in-nix-num in-nix-cyc"><b style="animation-duration:12s;animation-delay:-1.2s;color:var(--nx);text-shadow:0 0 6px rgba(var(--nx-rgb),.8)">1</b></div><span class="in-nix-base"></span></div>
+      <div class="in-nix-tube"><div class="in-nix-num in-nix-cyc"><b style="animation-duration:12s;animation-delay:0s">0</b><b style="animation-duration:12s;animation-delay:-6s">4</b></div><span class="in-nix-base"></span></div>
+      <span class="in-nix-colon">:</span>
+      <div class="in-nix-tube"><div class="in-nix-num in-nix-cyc"><b style="animation-duration:6s;animation-delay:0s">2</b><b style="animation-duration:6s;animation-delay:-3s">5</b></div><span class="in-nix-base"></span></div>
+      <div class="in-nix-tube"><div class="in-nix-num in-nix-cyc"><b style="animation-duration:2.4s;animation-delay:0s">0</b><b style="animation-duration:2.4s;animation-delay:-.8s">3</b><b style="animation-duration:2.4s;animation-delay:-1.6s">8</b></div><span class="in-nix-base"></span></div>
+      <span class="in-nix-colon" style="animation-duration:1s">:</span>
+      <div class="in-nix-tube"><div class="in-nix-num in-nix-cyc"><b style="animation-duration:.6s;animation-delay:0s">0</b><b style="animation-duration:.6s;animation-delay:-.06s">1</b><b style="animation-duration:.6s;animation-delay:-.12s">2</b><b style="animation-duration:.6s;animation-delay:-.18s">3</b><b style="animation-duration:.6s;animation-delay:-.24s">4</b><b style="animation-duration:.6s;animation-delay:-.3s">5</b><b style="animation-duration:.6s;animation-delay:-.36s">6</b><b style="animation-duration:.6s;animation-delay:-.42s">7</b><b style="animation-duration:.6s;animation-delay:-.48s">8</b><b style="animation-duration:.6s;animation-delay:-.54s">9</b></div><span class="in-nix-base"></span></div>
+    </div></div></div>
+<div class="meta"><b>Nixie Clock</b> · <code>input-nixie-clock</code><br>Input Methods · NIXIE TUBES<p>Six tubes showing hours, minutes and seconds with glowing colon separators; the seconds tube races through its digits while the minutes and hours tick slowly. A nixie desk clock.</p></div>
+
+</body>
+</html>
