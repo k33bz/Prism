@@ -55,10 +55,21 @@ if (at >= 0) {
   tpl = tpl.slice(0, at).replace(/\n+$/, '\n') + tpl.slice(end).replace(/^\n+/, '\n');
   action = 'Re-spliced';
 }
-// 3. Tail: last "gallery close, wrap close, <script>" run in the stripped template.
-const re = /(\r?\n[ \t]*<\/div>)([ \t]*\r?\n(?:[ \t]*\r?\n)*[ \t]*<\/div>[ \t]*(?:\r?\n)+<script>)/g;
-let m, cut = -1;
-while ((m = re.exec(tpl))) cut = m.index + m[1].length;
+// 3. Insertion point = just before the closing </div> of the page's main <div class="wrap">
+// container (the sections live inside it), found by depth-counting so it is robust to whatever
+// closing-div / whitespace shape the page's tail happens to have. Falls back to the old
+// "gallery close, wrap close, <script>" tail regex for any page without a .wrap.
+let cut = -1;
+const wrapOpen = tpl.indexOf('<div class="wrap">');
+if (wrapOpen >= 0) {
+  const tok = /<div\b|<\/div>/g; tok.lastIndex = wrapOpen;
+  let depth = 0, mt;
+  while ((mt = tok.exec(tpl))) { depth += mt[0] === '</div>' ? -1 : 1; if (depth === 0) { cut = mt.index; break; } }
+}
+if (cut < 0) {
+  const re = /(\r?\n[ \t]*<\/div>)([ \t]*\r?\n(?:[ \t]*\r?\n)*[ \t]*<\/div>[ \t]*(?:\r?\n)+<script>)/g;
+  let m; while ((m = re.exec(tpl))) cut = m.index + m[1].length;
+}
 if (cut < 0) { console.error('page tail not found'); process.exit(1); }
 const block = others.concat([marked]).join('\n\n');
 tpl = tpl.slice(0, cut) + '\n\n' + block + '\n' + tpl.slice(cut);

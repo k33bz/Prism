@@ -1,0 +1,266 @@
+<h3 class="sec">AWS REFERENCE ARCHITECTURES</h3>
+<style id="arch-aws-styles">
+/* ===== arch-aws-*: labelled cloud reference architectures. Each tile is an inline SVG
+   (viewBox 0 0 300 150) with generic hand-drawn service glyphs (NOT vendor icons),
+   dashed boundary rectangles for VPC/subnet/AZ/region, and animated dash-offset packets
+   flowing along the connectors in request order. Prefix: arch-aws / archAws.
+   Colour: var(--c,var(--accent)) accent flows; per-node roles via inline --c/--cr from
+   theme tokens (--info/--pos/--warn/--neg/--crit/--muted); text --ink/--muted/--dim. ===== */
+.arch-aws-svg{width:100%;max-width:300px;height:auto;display:block}
+.arch-aws-tok{fill:rgba(var(--cr,var(--accent-rgb)),.16);stroke:rgba(var(--cr,var(--accent-rgb)),.9);stroke-width:1}
+.arch-aws-ghost{fill:rgba(var(--cr,var(--accent-rgb)),.07);stroke:rgba(var(--cr,var(--accent-rgb)),.4);stroke-width:.8;stroke-dasharray:2 2}
+.arch-aws-mo{fill:none;stroke:var(--c,var(--accent));stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round}
+.arch-aws-mof{fill:rgba(var(--cr,var(--accent-rgb)),.95);stroke:none}
+.arch-aws-nl{fill:var(--muted);font-size:7px;text-anchor:middle;font-family:ui-sans-serif,system-ui,sans-serif}
+.arch-aws-nls{fill:var(--muted);font-size:6.5px;text-anchor:start;font-family:ui-sans-serif,system-ui,sans-serif}
+.arch-aws-bl{fill:var(--dim);font-size:6px;letter-spacing:.3px;font-family:ui-monospace,Menlo,monospace}
+.arch-aws-bd{fill:rgba(var(--cr,var(--accent-rgb)),.05);stroke:rgba(var(--cr,var(--accent-rgb)),.5);stroke-width:.8;stroke-dasharray:3 3}
+.arch-aws-conn{fill:none;stroke:var(--line);stroke-width:1}
+.arch-aws-arw{fill:var(--muted)}
+.arch-aws-flow{fill:none;stroke:var(--c,var(--accent));stroke-width:1.5;stroke-linecap:round;stroke-dasharray:5 41;animation-name:archAwsFlow;animation-duration:3s;animation-timing-function:linear;animation-iteration-count:infinite;animation-delay:var(--fd,0s)}
+@keyframes archAwsFlow{to{stroke-dashoffset:-46}}
+.arch-aws-fail{fill:none;stroke:var(--neg);stroke-width:1.2;stroke-dasharray:3 3;animation-name:archAwsFail;animation-duration:2s;animation-timing-function:ease-in-out;animation-iteration-count:infinite}
+@keyframes archAwsFail{0%,100%{opacity:.25}50%{opacity:1}}
+.arch-aws-pulse{transform-origin:center;animation-name:archAwsPulse;animation-duration:2.4s;animation-timing-function:ease-in-out;animation-iteration-count:infinite}
+@keyframes archAwsPulse{0%,100%{opacity:.4}50%{opacity:1}}
+.arch-aws-hl{fill:rgba(var(--accent-rgb),.16);stroke:rgba(var(--accent-rgb),.7);stroke-width:1;animation-name:archAwsHl;animation-duration:4s;animation-timing-function:steps(1);animation-iteration-count:infinite}
+@keyframes archAwsHl{0%{transform:translateX(0)}25%{transform:translateX(72px)}50%{transform:translateX(144px)}75%{transform:translateX(216px)}100%{transform:translateX(0)}}
+@media (prefers-reduced-motion:reduce){
+  .arch-aws-flow{animation-name:none;stroke-dasharray:none;opacity:.85}
+  .arch-aws-fail{animation-name:none;opacity:.7}
+  .arch-aws-pulse{animation-name:none;opacity:.9}
+  .arch-aws-hl{animation-name:none}
+}
+</style>
+<div class="gallery">
+
+  <div class="tile is-new" data-ctype="chart-flow" data-interact="auto-play" data-c="accent"><div class="stage">
+    <svg class="arch-aws-svg arch-aws-web" viewBox="0 0 300 150" role="img" aria-label="Web hosting reference architecture">
+      <rect class="arch-aws-bd" x="140" y="38" width="150" height="58" rx="5" style="--cr:var(--info-rgb)"/>
+      <text class="arch-aws-bl" x="144" y="47">VPC</text>
+      <path class="arch-aws-conn" d="M30 61h22M78 61h22M126 61h22M174 61h22M222 61h22"/>
+      <path class="arch-aws-conn" d="M113 72v34"/>
+      <path class="arch-aws-flow" style="--fd:0s" d="M30 61h22"/>
+      <path class="arch-aws-flow" style="--fd:.4s" d="M78 61h22"/>
+      <path class="arch-aws-flow" style="--fd:.8s" d="M126 61h22"/>
+      <path class="arch-aws-flow" style="--fd:1.2s" d="M174 61h22"/>
+      <path class="arch-aws-flow" style="--fd:1.6s" d="M222 61h22"/>
+      <path class="arch-aws-flow" style="--fd:1s" d="M113 72v34"/>
+      <g transform="translate(4,50)"><rect class="arch-aws-tok" width="26" height="22" rx="4" style="--cr:var(--info-rgb);--c:var(--muted)"/><circle class="arch-aws-mo" cx="13" cy="8" r="3"/><path class="arch-aws-mo" d="M7 17c0-4 12-4 12 0"/><text class="arch-aws-nl" x="13" y="31">User</text></g>
+      <g transform="translate(52,50)"><rect class="arch-aws-tok" width="26" height="22" rx="4" style="--cr:var(--info-rgb);--c:var(--info)"/><circle class="arch-aws-mo" cx="13" cy="10" r="6"/><path class="arch-aws-mo" d="M7 10h12"/><path class="arch-aws-mo" d="M13 4c-4 2-4 10 0 12c4-2 4-10 0-12"/><text class="arch-aws-nl" x="13" y="31">Route 53</text></g>
+      <g transform="translate(100,50)"><rect class="arch-aws-tok" width="26" height="22" rx="4" style="--cr:var(--info-rgb);--c:var(--info)"/><circle class="arch-aws-mo" cx="13" cy="10" r="6"/><path class="arch-aws-mo" d="M7 10h12"/><path class="arch-aws-mo" d="M13 4c-4 2-4 10 0 12c4-2 4-10 0-12"/><text class="arch-aws-nl" x="13" y="31">CloudFront</text></g>
+      <g transform="translate(148,50)"><rect class="arch-aws-tok" width="26" height="22" rx="4" style="--cr:var(--warn-rgb);--c:var(--warn)"/><path class="arch-aws-mo" d="M6 5h14l-5 6v5h-4v-5z"/><text class="arch-aws-nl" x="13" y="31">ALB</text></g>
+      <g transform="translate(196,50)"><rect class="arch-aws-ghost" x="4" y="4" width="26" height="22" rx="4" style="--cr:var(--pos-rgb)"/><rect class="arch-aws-tok" width="26" height="22" rx="4" style="--cr:var(--pos-rgb);--c:var(--pos)"/><rect class="arch-aws-mo" x="7" y="4" width="12" height="12" rx="1"/><path class="arch-aws-mo" d="M7 10h12M13 4v12"/><text class="arch-aws-nl" x="13" y="31">EC2 (ASG)</text></g>
+      <g transform="translate(244,50)"><rect class="arch-aws-ghost" x="4" y="4" width="26" height="22" rx="4" style="--cr:var(--crit-rgb)"/><rect class="arch-aws-tok" width="26" height="22" rx="4" style="--cr:var(--crit-rgb);--c:var(--crit)"/><path class="arch-aws-mo" d="M8 6c0-2 10-2 10 0v9c0 2-10 2-10 0z"/><path class="arch-aws-mo" d="M8 6c0 2 10 2 10 0"/><text class="arch-aws-nl" x="13" y="31">RDS</text></g>
+      <g transform="translate(100,106)"><rect class="arch-aws-tok" width="26" height="22" rx="4" style="--cr:var(--pos-rgb);--c:var(--pos)"/><path class="arch-aws-mo" d="M7 6h12l-2 10h-8z"/><path class="arch-aws-mo" d="M7 6c0-1.5 12-1.5 12 0"/><text class="arch-aws-nl" x="13" y="31">S3 assets</text></g>
+    </svg>
+  </div><div class="meta"><div class="nm">Web Hosting</div><span class="ref">.arch-aws-web</span><div class="desc">Classic scalable web stack: Route 53 to CloudFront to ALB to an EC2 Auto Scaling group and Multi-AZ RDS, with S3 for static assets.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="chart-flow" data-interact="auto-play" data-c="accent"><div class="stage">
+    <svg class="arch-aws-svg arch-aws-api" viewBox="0 0 300 150" role="img" aria-label="Serverless API reference architecture">
+      <path class="arch-aws-conn" d="M34 79h32M104 79h32M174 79h32"/>
+      <path class="arch-aws-conn" d="M91 40v25M161 90v18"/>
+      <path class="arch-aws-flow" style="--fd:0s" d="M34 79h32"/>
+      <path class="arch-aws-flow" style="--fd:.5s" d="M104 79h32"/>
+      <path class="arch-aws-flow" style="--fd:1s" d="M174 79h32"/>
+      <path class="arch-aws-flow" style="--fd:.3s" d="M91 40v25"/>
+      <path class="arch-aws-flow" style="--fd:1.3s" d="M161 90v18"/>
+      <g transform="translate(8,68)"><rect class="arch-aws-tok" width="26" height="22" rx="4" style="--cr:var(--info-rgb);--c:var(--muted)"/><circle class="arch-aws-mo" cx="13" cy="8" r="3"/><path class="arch-aws-mo" d="M7 17c0-4 12-4 12 0"/><text class="arch-aws-nl" x="13" y="31">Client</text></g>
+      <g transform="translate(78,18)"><rect class="arch-aws-tok" width="26" height="22" rx="4" style="--cr:var(--neg-rgb);--c:var(--neg)"/><path class="arch-aws-mo" d="M13 4l5 2v5c0 3-3 5-5 6c-2-1-5-3-5-6V6z"/><text class="arch-aws-nl" x="13" y="31">Cognito</text></g>
+      <g transform="translate(66,68)"><rect class="arch-aws-tok" width="26" height="22" rx="4" style="--cr:var(--info-rgb);--c:var(--info)"/><path class="arch-aws-mo" d="M11 5c-3 0-3 12 0 12M15 5c3 0 3 12 0 12"/><circle class="arch-aws-mof" cx="13" cy="11" r="1.4"/><text class="arch-aws-nl" x="13" y="31">API Gateway</text></g>
+      <g transform="translate(136,68)"><rect class="arch-aws-tok" width="26" height="22" rx="4" style="--cr:var(--accent-rgb);--c:var(--accent)"/><path class="arch-aws-mo" d="M9 17L14 5l4 12M14 5l-3 5"/><text class="arch-aws-nl" x="13" y="31">Lambda</text></g>
+      <g transform="translate(206,68)"><rect class="arch-aws-tok" width="26" height="22" rx="4" style="--cr:var(--crit-rgb);--c:var(--crit)"/><path class="arch-aws-mo" d="M8 6c0-2 10-2 10 0v9c0 2-10 2-10 0z"/><path class="arch-aws-mo" d="M8 6c0 2 10 2 10 0"/><text class="arch-aws-nl" x="13" y="31">DynamoDB</text></g>
+      <g transform="translate(148,108)"><rect class="arch-aws-tok" width="26" height="22" rx="4" style="--cr:var(--pos-rgb);--c:var(--pos)"/><path class="arch-aws-mo" d="M7 6h12l-2 10h-8z"/><path class="arch-aws-mo" d="M7 6c0-1.5 12-1.5 12 0"/><text class="arch-aws-nl" x="13" y="31">S3</text></g>
+    </svg>
+  </div><div class="meta"><div class="nm">Serverless API</div><span class="ref">.arch-aws-api</span><div class="desc">A fully managed API path: client to API Gateway to Lambda to DynamoDB, with Cognito guarding the edge and S3 for object storage.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="chart-flow" data-interact="auto-play" data-c="accent"><div class="stage">
+    <svg class="arch-aws-svg arch-aws-sched" viewBox="0 0 300 150" role="img" aria-label="Scheduled serverless job architecture">
+      <path class="arch-aws-conn" d="M30 65h33M89 65h33M148 65h33M207 65h33"/>
+      <path class="arch-aws-flow" style="--fd:0s" d="M30 65h33"/>
+      <path class="arch-aws-flow" style="--fd:.5s" d="M89 65h33"/>
+      <path class="arch-aws-flow" style="--fd:1s" d="M148 65h33"/>
+      <path class="arch-aws-flow" style="--fd:1.5s" d="M207 65h33"/>
+      <g transform="translate(4,54)"><circle class="arch-aws-pulse" cx="13" cy="11" r="15" fill="none" stroke="rgba(var(--accent-rgb),.5)" stroke-width="1"/><rect class="arch-aws-tok" width="26" height="22" rx="4" style="--cr:var(--accent-rgb);--c:var(--accent)"/><circle class="arch-aws-mo" cx="13" cy="10" r="5.5"/><path class="arch-aws-mo" d="M13 10V6.5M13 10l3 1.5"/><text class="arch-aws-nl" x="13" y="31">EventBridge</text></g>
+      <g transform="translate(63,54)"><rect class="arch-aws-tok" width="26" height="22" rx="4" style="--cr:var(--accent-rgb);--c:var(--accent)"/><path class="arch-aws-mo" d="M9 17L14 5l4 12M14 5l-3 5"/><text class="arch-aws-nl" x="13" y="31">Lambda</text></g>
+      <g transform="translate(122,54)"><rect class="arch-aws-tok" width="26" height="22" rx="4" style="--cr:var(--warn-rgb);--c:var(--warn)"/><rect class="arch-aws-mof" x="7" y="6" width="12" height="2.4" rx="1"/><rect class="arch-aws-mof" x="7" y="10" width="12" height="2.4" rx="1"/><rect class="arch-aws-mof" x="7" y="14" width="12" height="2.4" rx="1"/><text class="arch-aws-nl" x="13" y="31">SQS</text></g>
+      <g transform="translate(181,54)"><rect class="arch-aws-tok" width="26" height="22" rx="4" style="--cr:var(--accent-rgb);--c:var(--accent)"/><path class="arch-aws-mo" d="M9 17L14 5l4 12M14 5l-3 5"/><text class="arch-aws-nl" x="13" y="31">Lambda</text></g>
+      <g transform="translate(240,54)"><rect class="arch-aws-tok" width="26" height="22" rx="4" style="--cr:var(--pos-rgb);--c:var(--pos)"/><path class="arch-aws-mo" d="M7 6h12l-2 10h-8z"/><path class="arch-aws-mo" d="M7 6c0-1.5 12-1.5 12 0"/><text class="arch-aws-nl" x="13" y="31">S3</text></g>
+    </svg>
+  </div><div class="meta"><div class="nm">Scheduled Job</div><span class="ref">.arch-aws-sched</span><div class="desc">A cron-style pipeline: EventBridge fires Lambda, which buffers work in SQS for a second Lambda that writes results to S3.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="chart-flow" data-interact="auto-play" data-c="accent"><div class="stage">
+    <svg class="arch-aws-svg arch-aws-tier3" viewBox="0 0 300 150" role="img" aria-label="Three tier VPC architecture">
+      <rect class="arch-aws-bd" x="6" y="16" width="288" height="128" rx="6" style="--cr:var(--info-rgb)"/>
+      <text class="arch-aws-bl" x="10" y="25">VPC</text>
+      <rect class="arch-aws-bd" x="16" y="30" width="132" height="108" rx="4" style="--cr:var(--muted)"/>
+      <text class="arch-aws-bl" x="20" y="39" style="fill:var(--muted)">AZ-1</text>
+      <rect class="arch-aws-bd" x="152" y="30" width="132" height="108" rx="4" style="--cr:var(--muted)"/>
+      <text class="arch-aws-bl" x="156" y="39" style="fill:var(--muted)">AZ-2</text>
+      <rect class="arch-aws-bd" x="22" y="43" width="256" height="27" rx="3" style="--cr:var(--warn-rgb)"/>
+      <text class="arch-aws-bl" x="26" y="52" style="fill:var(--warn)">PUBLIC</text>
+      <rect class="arch-aws-bd" x="22" y="76" width="256" height="27" rx="3" style="--cr:var(--pos-rgb)"/>
+      <text class="arch-aws-bl" x="26" y="85" style="fill:var(--pos)">APP</text>
+      <rect class="arch-aws-bd" x="22" y="109" width="256" height="26" rx="3" style="--cr:var(--crit-rgb)"/>
+      <text class="arch-aws-bl" x="26" y="118" style="fill:var(--crit)">DATA</text>
+      <path class="arch-aws-conn" d="M150 68v10h-70v0M150 68v10h70v0M80 68v10M220 68v10M80 91v14M220 91v14"/>
+      <path class="arch-aws-flow" style="--fd:0s" d="M150 68v10h-70"/>
+      <path class="arch-aws-flow" style="--fd:.3s" d="M150 68v10h70"/>
+      <path class="arch-aws-flow" style="--fd:.7s" d="M80 91v14"/>
+      <path class="arch-aws-flow" style="--fd:.9s" d="M220 91v14"/>
+      <g transform="translate(137,46)"><rect class="arch-aws-tok" width="26" height="22" rx="4" style="--cr:var(--warn-rgb);--c:var(--warn)"/><path class="arch-aws-mo" d="M6 5h14l-5 6v5h-4v-5z"/></g><text class="arch-aws-nls" x="166" y="60">ALB</text>
+      <g transform="translate(67,79)"><rect class="arch-aws-tok" width="26" height="22" rx="4" style="--cr:var(--pos-rgb);--c:var(--pos)"/><rect class="arch-aws-mo" x="7" y="4" width="12" height="12" rx="1"/><path class="arch-aws-mo" d="M7 10h12M13 4v12"/></g><text class="arch-aws-nls" x="96" y="93">EC2</text>
+      <g transform="translate(207,79)"><rect class="arch-aws-tok" width="26" height="22" rx="4" style="--cr:var(--pos-rgb);--c:var(--pos)"/><rect class="arch-aws-mo" x="7" y="4" width="12" height="12" rx="1"/><path class="arch-aws-mo" d="M7 10h12M13 4v12"/></g><text class="arch-aws-nls" x="236" y="93">EC2</text>
+      <g transform="translate(67,111)"><rect class="arch-aws-tok" width="26" height="20" rx="4" style="--cr:var(--crit-rgb);--c:var(--crit)"/><path class="arch-aws-mo" d="M8 5c0-2 10-2 10 0v8c0 2-10 2-10 0z"/><path class="arch-aws-mo" d="M8 5c0 2 10 2 10 0"/></g><text class="arch-aws-nls" x="96" y="125">RDS</text>
+      <g transform="translate(207,111)"><rect class="arch-aws-tok" width="26" height="20" rx="4" style="--cr:var(--crit-rgb);--c:var(--crit)"/><path class="arch-aws-mo" d="M8 5c0-2 10-2 10 0v8c0 2-10 2-10 0z"/><path class="arch-aws-mo" d="M8 5c0 2 10 2 10 0"/></g><text class="arch-aws-nls" x="236" y="125">RDS</text>
+    </svg>
+  </div><div class="meta"><div class="nm">3-Tier in a VPC</div><span class="ref">.arch-aws-tier3</span><div class="desc">Public, app and data subnets stacked across two Availability Zones: ALB in front of EC2 with RDS beneath, all inside one VPC.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="chart-flow" data-interact="auto-play" data-c="accent"><div class="stage">
+    <svg class="arch-aws-svg arch-aws-subnets" viewBox="0 0 300 150" role="img" aria-label="VPC public and private subnets">
+      <rect class="arch-aws-bd" x="70" y="22" width="224" height="112" rx="6" style="--cr:var(--info-rgb)"/>
+      <text class="arch-aws-bl" x="74" y="31">VPC</text>
+      <rect class="arch-aws-bd" x="80" y="40" width="94" height="86" rx="4" style="--cr:var(--warn-rgb)"/>
+      <text class="arch-aws-bl" x="84" y="49" style="fill:var(--warn)">PUBLIC SUBNET</text>
+      <rect class="arch-aws-bd" x="190" y="40" width="96" height="86" rx="4" style="--cr:var(--pos-rgb)"/>
+      <text class="arch-aws-bl" x="194" y="49" style="fill:var(--pos)">PRIVATE SUBNET</text>
+      <path class="arch-aws-conn" d="M34 79h6M66 79h32M124 79h64"/>
+      <path class="arch-aws-flow" style="--fd:0s" d="M34 79h32"/>
+      <path class="arch-aws-flow" style="--fd:.6s" d="M66 79h58"/>
+      <path class="arch-aws-flow" style="--fd:1.2s" d="M124 79h64"/>
+      <path class="arch-aws-arw" d="M186 76l6 3-6 3z"/>
+      <g transform="translate(8,68)"><rect class="arch-aws-tok" width="26" height="22" rx="4" style="--cr:var(--info-rgb);--c:var(--muted)"/><circle class="arch-aws-mo" cx="13" cy="8" r="3"/><path class="arch-aws-mo" d="M7 17c0-4 12-4 12 0"/><text class="arch-aws-nl" x="13" y="31">User</text></g>
+      <g transform="translate(40,68)"><rect class="arch-aws-tok" width="26" height="22" rx="4" style="--cr:var(--info-rgb);--c:var(--info)"/><path class="arch-aws-mo" d="M13 4l6 6-6 6-6-6z"/><text class="arch-aws-nl" x="13" y="31">IGW</text></g>
+      <g transform="translate(98,68)"><rect class="arch-aws-tok" width="26" height="22" rx="4" style="--cr:var(--warn-rgb);--c:var(--warn)"/><path class="arch-aws-mo" d="M13 4l6 6-6 6-6-6z"/><path class="arch-aws-mo" d="M10 10h6M14 8l2 2-2 2"/><text class="arch-aws-nl" x="13" y="31">NAT Gateway</text></g>
+      <g transform="translate(214,68)"><rect class="arch-aws-tok" width="26" height="22" rx="4" style="--cr:var(--pos-rgb);--c:var(--pos)"/><rect class="arch-aws-mo" x="7" y="4" width="12" height="12" rx="1"/><path class="arch-aws-mo" d="M7 10h12M13 4v12"/><text class="arch-aws-nl" x="13" y="31">EC2</text></g>
+    </svg>
+  </div><div class="meta"><div class="nm">Public and Private Subnets</div><span class="ref">.arch-aws-subnets</span><div class="desc">Routing within a VPC: an Internet Gateway feeds the public subnet, and a NAT Gateway gives private-subnet EC2 outbound access.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="chart-flow" data-interact="auto-play" data-c="accent"><div class="stage">
+    <svg class="arch-aws-svg arch-aws-ha" viewBox="0 0 300 150" role="img" aria-label="High availability multi AZ architecture">
+      <rect class="arch-aws-bd" x="8" y="44" width="134" height="98" rx="5" style="--cr:var(--info-rgb)"/>
+      <text class="arch-aws-bl" x="12" y="53">AZ-1</text>
+      <rect class="arch-aws-bd" x="158" y="44" width="134" height="98" rx="5" style="--cr:var(--info-rgb)"/>
+      <text class="arch-aws-bl" x="162" y="53">AZ-2</text>
+      <path class="arch-aws-conn" d="M137 42v8h-84v6M163 42v8h84v6M53 78v22M247 78v22"/>
+      <path class="arch-aws-flow" style="--fd:0s" d="M137 42v8h-84v6"/>
+      <path class="arch-aws-flow" style="--fd:.3s" d="M163 42v8h84v6"/>
+      <path class="arch-aws-flow" style="--fd:.7s" d="M53 78v22"/>
+      <path class="arch-aws-flow" style="--fd:.9s" d="M247 78v22"/>
+      <path class="arch-aws-fail" d="M66 116h168"/>
+      <text class="arch-aws-bl" x="120" y="112" style="fill:var(--neg)">failover</text>
+      <g transform="translate(124,16)"><rect class="arch-aws-tok" width="26" height="22" rx="4" style="--cr:var(--warn-rgb);--c:var(--warn)"/><path class="arch-aws-mo" d="M6 5h14l-5 6v5h-4v-5z"/><text class="arch-aws-nl" x="13" y="31">ELB</text></g>
+      <g transform="translate(40,56)"><rect class="arch-aws-tok" width="26" height="22" rx="4" style="--cr:var(--pos-rgb);--c:var(--pos)"/><rect class="arch-aws-mo" x="7" y="4" width="12" height="12" rx="1"/><path class="arch-aws-mo" d="M7 10h12M13 4v12"/><text class="arch-aws-nl" x="13" y="31">EC2</text></g>
+      <g transform="translate(234,56)"><rect class="arch-aws-tok" width="26" height="22" rx="4" style="--cr:var(--pos-rgb);--c:var(--pos)"/><rect class="arch-aws-mo" x="7" y="4" width="12" height="12" rx="1"/><path class="arch-aws-mo" d="M7 10h12M13 4v12"/><text class="arch-aws-nl" x="13" y="31">EC2</text></g>
+      <g transform="translate(40,100)"><rect class="arch-aws-tok" width="26" height="22" rx="4" style="--cr:var(--crit-rgb);--c:var(--crit)"/><path class="arch-aws-mo" d="M8 6c0-2 10-2 10 0v9c0 2-10 2-10 0z"/><path class="arch-aws-mo" d="M8 6c0 2 10 2 10 0"/><text class="arch-aws-nl" x="13" y="31">RDS primary</text></g>
+      <g transform="translate(234,100)"><rect class="arch-aws-tok" width="26" height="22" rx="4" style="--cr:var(--crit-rgb);--c:var(--muted)"/><path class="arch-aws-mo" d="M8 6c0-2 10-2 10 0v9c0 2-10 2-10 0z"/><path class="arch-aws-mo" d="M8 6c0 2 10 2 10 0"/><text class="arch-aws-nl" x="13" y="31">RDS standby</text></g>
+    </svg>
+  </div><div class="meta"><div class="nm">High Availability Multi-AZ</div><span class="ref">.arch-aws-ha</span><div class="desc">Two Availability Zones behind one ELB, EC2 in each, and a primary RDS that fails over to a standby replica in the second AZ.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="chart-flow" data-interact="auto-play" data-c="accent"><div class="stage">
+    <svg class="arch-aws-svg arch-aws-event" viewBox="0 0 300 150" role="img" aria-label="Event driven fan out architecture">
+      <path class="arch-aws-conn" d="M32 71h28M86 71h30M142 71h20v-32h18M142 71h20v32h18M206 39h34M206 103h34"/>
+      <path class="arch-aws-flow" style="--fd:0s" d="M32 71h28"/>
+      <path class="arch-aws-flow" style="--fd:.4s" d="M86 71h30"/>
+      <path class="arch-aws-flow" style="--fd:.9s" d="M142 71h20v-32h18"/>
+      <path class="arch-aws-flow" style="--fd:.9s" d="M142 71h20v32h18"/>
+      <path class="arch-aws-flow" style="--fd:1.4s" d="M206 39h34"/>
+      <path class="arch-aws-flow" style="--fd:1.4s" d="M206 103h34"/>
+      <g transform="translate(6,60)"><rect class="arch-aws-tok" width="26" height="22" rx="4" style="--cr:var(--pos-rgb);--c:var(--pos)"/><path class="arch-aws-mo" d="M7 6h12l-2 10h-8z"/><path class="arch-aws-mo" d="M7 6c0-1.5 12-1.5 12 0"/><text class="arch-aws-nl" x="13" y="31">S3 event</text></g>
+      <g transform="translate(60,60)"><rect class="arch-aws-tok" width="26" height="22" rx="4" style="--cr:var(--accent-rgb);--c:var(--accent)"/><path class="arch-aws-mo" d="M9 17L14 5l4 12M14 5l-3 5"/><text class="arch-aws-nl" x="13" y="31">Lambda</text></g>
+      <g transform="translate(116,60)"><rect class="arch-aws-tok" width="26" height="22" rx="4" style="--cr:var(--crit-rgb);--c:var(--crit)"/><circle class="arch-aws-mof" cx="13" cy="10" r="2"/><path class="arch-aws-mo" d="M9 6a6 6 0 0 0 0 8M17 6a6 6 0 0 1 0 8"/><text class="arch-aws-nl" x="13" y="31">SNS</text></g>
+      <g transform="translate(180,28)"><rect class="arch-aws-tok" width="26" height="22" rx="4" style="--cr:var(--warn-rgb);--c:var(--warn)"/><rect class="arch-aws-mof" x="7" y="6" width="12" height="2.4" rx="1"/><rect class="arch-aws-mof" x="7" y="10" width="12" height="2.4" rx="1"/><rect class="arch-aws-mof" x="7" y="14" width="12" height="2.4" rx="1"/><text class="arch-aws-nl" x="13" y="31">SQS</text></g>
+      <g transform="translate(180,92)"><rect class="arch-aws-tok" width="26" height="22" rx="4" style="--cr:var(--warn-rgb);--c:var(--warn)"/><rect class="arch-aws-mof" x="7" y="6" width="12" height="2.4" rx="1"/><rect class="arch-aws-mof" x="7" y="10" width="12" height="2.4" rx="1"/><rect class="arch-aws-mof" x="7" y="14" width="12" height="2.4" rx="1"/><text class="arch-aws-nl" x="13" y="31">SQS</text></g>
+      <g transform="translate(240,28)"><rect class="arch-aws-tok" width="26" height="22" rx="4" style="--cr:var(--accent-rgb);--c:var(--accent)"/><path class="arch-aws-mo" d="M9 17L14 5l4 12M14 5l-3 5"/><text class="arch-aws-nl" x="13" y="31">Lambda</text></g>
+      <g transform="translate(240,92)"><rect class="arch-aws-tok" width="26" height="22" rx="4" style="--cr:var(--accent-rgb);--c:var(--accent)"/><path class="arch-aws-mo" d="M9 17L14 5l4 12M14 5l-3 5"/><text class="arch-aws-nl" x="13" y="31">Lambda</text></g>
+    </svg>
+  </div><div class="meta"><div class="nm">Event-Driven Fan-Out</div><span class="ref">.arch-aws-event</span><div class="desc">An S3 event triggers Lambda that publishes to SNS, fanning out to two SQS queues each drained by its own consumer Lambda.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="chart-flow" data-interact="auto-play" data-c="accent"><div class="stage">
+    <svg class="arch-aws-svg arch-aws-lake" viewBox="0 0 300 150" role="img" aria-label="Data lake analytics pipeline">
+      <path class="arch-aws-conn" d="M30 67h33M89 67h33M148 67h33M207 67h33"/>
+      <path class="arch-aws-flow" style="--fd:0s" d="M30 67h33"/>
+      <path class="arch-aws-flow" style="--fd:.5s" d="M89 67h33"/>
+      <path class="arch-aws-flow" style="--fd:1s" d="M148 67h33"/>
+      <path class="arch-aws-flow" style="--fd:1.5s" d="M207 67h33"/>
+      <g transform="translate(4,56)"><rect class="arch-aws-tok" width="26" height="22" rx="4" style="--cr:var(--info-rgb);--c:var(--info)"/><path class="arch-aws-mo" d="M6 8q3-3 6 0t6 0M6 12q3-3 6 0t6 0"/><text class="arch-aws-nl" x="13" y="31">Kinesis</text></g>
+      <g transform="translate(63,56)"><rect class="arch-aws-tok" width="26" height="22" rx="4" style="--cr:var(--pos-rgb);--c:var(--pos)"/><path class="arch-aws-mo" d="M7 6h12l-2 10h-8z"/><path class="arch-aws-mo" d="M7 6c0-1.5 12-1.5 12 0"/><text class="arch-aws-nl" x="13" y="31">S3 raw</text></g>
+      <g transform="translate(122,56)"><rect class="arch-aws-tok" width="26" height="22" rx="4" style="--cr:var(--accent-rgb);--c:var(--accent)"/><circle class="arch-aws-mo" cx="11" cy="10" r="3.2"/><circle class="arch-aws-mo" cx="16" cy="12" r="2.4"/><text class="arch-aws-nl" x="13" y="31">Glue</text></g>
+      <g transform="translate(181,56)"><rect class="arch-aws-tok" width="26" height="22" rx="4" style="--cr:var(--warn-rgb);--c:var(--warn)"/><circle class="arch-aws-mo" cx="11" cy="9" r="3.4"/><path class="arch-aws-mo" d="M14 12l3 3"/><text class="arch-aws-nl" x="13" y="31">Athena</text></g>
+      <g transform="translate(240,56)"><rect class="arch-aws-tok" width="26" height="22" rx="4" style="--cr:var(--pos-rgb);--c:var(--pos)"/><rect class="arch-aws-mof" x="8" y="11" width="2.4" height="5"/><rect class="arch-aws-mof" x="12" y="8" width="2.4" height="8"/><rect class="arch-aws-mof" x="16" y="6" width="2.4" height="10"/><text class="arch-aws-nl" x="13" y="31">QuickSight</text></g>
+    </svg>
+  </div><div class="meta"><div class="nm">Data Lake Analytics</div><span class="ref">.arch-aws-lake</span><div class="desc">A left-to-right analytics pipeline: Kinesis lands raw data in S3, Glue catalogs it, Athena queries it, QuickSight charts it.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="chart-flow" data-interact="auto-play" data-c="accent"><div class="stage">
+    <svg class="arch-aws-svg arch-aws-micro" viewBox="0 0 300 150" role="img" aria-label="Microservices on ECS architecture">
+      <rect class="arch-aws-bd" x="8" y="46" width="284" height="42" rx="5" style="--cr:var(--pos-rgb)"/>
+      <text class="arch-aws-bl" x="12" y="55" style="fill:var(--pos)">ECS CLUSTER</text>
+      <path class="arch-aws-conn" d="M150 38v4h-107v14M150 38v4h0v14M150 38v4h107v14M43 80v14h48v14M150 80v14M257 80v14h-48v14"/>
+      <path class="arch-aws-flow" style="--fd:0s" d="M150 38v4h-107v14"/>
+      <path class="arch-aws-flow" style="--fd:.25s" d="M150 42v14"/>
+      <path class="arch-aws-flow" style="--fd:.5s" d="M150 38v4h107v14"/>
+      <path class="arch-aws-flow" style="--fd:1s" d="M43 80v14h48v14"/>
+      <path class="arch-aws-flow" style="--fd:1.2s" d="M257 80v14h-48v14"/>
+      <g transform="translate(137,16)"><rect class="arch-aws-tok" width="26" height="22" rx="4" style="--cr:var(--warn-rgb);--c:var(--warn)"/><path class="arch-aws-mo" d="M6 5h14l-5 6v5h-4v-5z"/><text class="arch-aws-nl" x="13" y="31">ALB</text></g>
+      <g transform="translate(30,58)"><rect class="arch-aws-tok" width="26" height="20" rx="4" style="--cr:var(--pos-rgb);--c:var(--pos)"/><rect class="arch-aws-mo" x="7" y="3" width="12" height="12" rx="1"/><path class="arch-aws-mo" d="M7 9h12M13 3v12"/></g><text class="arch-aws-nl" x="43" y="85">ECS svc</text>
+      <g transform="translate(137,58)"><rect class="arch-aws-tok" width="26" height="20" rx="4" style="--cr:var(--pos-rgb);--c:var(--pos)"/><rect class="arch-aws-mo" x="7" y="3" width="12" height="12" rx="1"/><path class="arch-aws-mo" d="M7 9h12M13 3v12"/></g><text class="arch-aws-nl" x="150" y="85">ECS svc</text>
+      <g transform="translate(244,58)"><rect class="arch-aws-tok" width="26" height="20" rx="4" style="--cr:var(--pos-rgb);--c:var(--pos)"/><rect class="arch-aws-mo" x="7" y="3" width="12" height="12" rx="1"/><path class="arch-aws-mo" d="M7 9h12M13 3v12"/></g><text class="arch-aws-nl" x="257" y="85">ECS svc</text>
+      <g transform="translate(78,108)"><rect class="arch-aws-tok" width="26" height="22" rx="4" style="--cr:var(--crit-rgb);--c:var(--crit)"/><path class="arch-aws-mo" d="M8 6c0-2 10-2 10 0v9c0 2-10 2-10 0z"/><path class="arch-aws-mo" d="M8 6c0 2 10 2 10 0"/><text class="arch-aws-nl" x="13" y="31">RDS</text></g>
+      <g transform="translate(196,108)"><rect class="arch-aws-tok" width="26" height="22" rx="4" style="--cr:var(--crit-rgb);--c:var(--crit)"/><path class="arch-aws-mof" d="M14 4l-6 8h4l-1 6 6-9h-4z"/><text class="arch-aws-nl" x="13" y="31">ElastiCache</text></g>
+    </svg>
+  </div><div class="meta"><div class="nm">Microservices on ECS</div><span class="ref">.arch-aws-micro</span><div class="desc">An ALB routes to three ECS services in a cluster that share a common RDS datastore and an ElastiCache layer below.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="chart-flow" data-interact="auto-play" data-c="accent"><div class="stage">
+    <svg class="arch-aws-svg arch-aws-cicd" viewBox="0 0 300 150" role="img" aria-label="CI CD pipeline architecture">
+      <rect class="arch-aws-bd" x="6" y="40" width="288" height="70" rx="6" style="--cr:var(--accent-rgb)"/>
+      <text class="arch-aws-bl" x="10" y="49" style="fill:var(--accent)">CODEPIPELINE</text>
+      <rect class="arch-aws-hl" x="10" y="56" width="34" height="34" rx="5"/>
+      <path class="arch-aws-conn" d="M40 75h32M112 75h32M184 75h32"/>
+      <path class="arch-aws-flow" style="--fd:0s" d="M40 75h32"/>
+      <path class="arch-aws-flow" style="--fd:1s" d="M112 75h32"/>
+      <path class="arch-aws-flow" style="--fd:2s" d="M184 75h32"/>
+      <g transform="translate(14,64)"><rect class="arch-aws-tok" width="26" height="22" rx="4" style="--cr:var(--info-rgb);--c:var(--info)"/><path class="arch-aws-mo" d="M10 5v12M10 5a2 2 0 1 0 .1 0M17 8a2 2 0 1 0 .1 0M17 9c0 4-7 2-7 6"/><text class="arch-aws-nl" x="13" y="31">CodeCommit</text></g>
+      <g transform="translate(86,64)"><rect class="arch-aws-tok" width="26" height="22" rx="4" style="--cr:var(--warn-rgb);--c:var(--warn)"/><circle class="arch-aws-mo" cx="11" cy="10" r="3.2"/><circle class="arch-aws-mo" cx="16" cy="12" r="2.4"/><text class="arch-aws-nl" x="13" y="31">CodeBuild</text></g>
+      <g transform="translate(158,64)"><rect class="arch-aws-tok" width="26" height="22" rx="4" style="--cr:var(--pos-rgb);--c:var(--pos)"/><path class="arch-aws-mo" d="M13 4l4 9h-8z"/><path class="arch-aws-mo" d="M11 15l2 3l2-3"/><text class="arch-aws-nl" x="13" y="31">CodeDeploy</text></g>
+      <g transform="translate(230,64)"><rect class="arch-aws-tok" width="26" height="22" rx="4" style="--cr:var(--accent-rgb);--c:var(--accent)"/><rect class="arch-aws-mo" x="7" y="4" width="12" height="12" rx="1"/><path class="arch-aws-mo" d="M7 10h12M13 4v12"/><text class="arch-aws-nl" x="13" y="31">ECS / EC2</text></g>
+    </svg>
+  </div><div class="meta"><div class="nm">CI/CD Pipeline</div><span class="ref">.arch-aws-cicd</span><div class="desc">CodePipeline drives CodeCommit to CodeBuild to CodeDeploy onto ECS or EC2, with a highlight stepping through the active stage.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="chart-flow" data-interact="auto-play" data-c="accent"><div class="stage">
+    <svg class="arch-aws-svg arch-aws-dr" viewBox="0 0 300 150" role="img" aria-label="Multi region disaster recovery">
+      <rect class="arch-aws-bd" x="8" y="46" width="134" height="96" rx="5" style="--cr:var(--pos-rgb)"/>
+      <text class="arch-aws-bl" x="12" y="55" style="fill:var(--pos)">us-east-1</text>
+      <rect class="arch-aws-bd" x="158" y="46" width="134" height="96" rx="5" style="--cr:var(--muted)"/>
+      <text class="arch-aws-bl" x="162" y="55" style="fill:var(--muted)">us-west-2</text>
+      <path class="arch-aws-conn" d="M137 32v6h-80v18M163 32v6h80v18"/>
+      <path class="arch-aws-conn" d="M57 80v20M243 80v20"/>
+      <path class="arch-aws-flow" style="--fd:0s" d="M137 32v6h-80v18"/>
+      <path class="arch-aws-flow" style="--fd:.4s" d="M57 80v20"/>
+      <path class="arch-aws-fail" d="M83 111h134"/>
+      <text class="arch-aws-bl" x="120" y="107" style="fill:var(--neg)">replication</text>
+      <g transform="translate(124,10)"><rect class="arch-aws-tok" width="26" height="22" rx="4" style="--cr:var(--info-rgb);--c:var(--info)"/><circle class="arch-aws-mo" cx="13" cy="10" r="6"/><path class="arch-aws-mo" d="M7 10h12"/><path class="arch-aws-mo" d="M13 4c-4 2-4 10 0 12c4-2 4-10 0-12"/><text class="arch-aws-nl" x="13" y="31">Route 53</text></g>
+      <g transform="translate(44,58)"><rect class="arch-aws-tok" width="26" height="22" rx="4" style="--cr:var(--pos-rgb);--c:var(--pos)"/><rect class="arch-aws-mo" x="7" y="4" width="12" height="12" rx="1"/><path class="arch-aws-mo" d="M7 10h12M13 4v12"/><text class="arch-aws-nl" x="13" y="31">EC2</text></g>
+      <g transform="translate(230,58)"><rect class="arch-aws-tok" width="26" height="22" rx="4" style="--cr:var(--pos-rgb);--c:var(--muted)"/><rect class="arch-aws-mo" x="7" y="4" width="12" height="12" rx="1"/><path class="arch-aws-mo" d="M7 10h12M13 4v12"/><text class="arch-aws-nl" x="13" y="31">EC2</text></g>
+      <g transform="translate(44,100)"><rect class="arch-aws-tok" width="26" height="22" rx="4" style="--cr:var(--crit-rgb);--c:var(--crit)"/><path class="arch-aws-mo" d="M8 6c0-2 10-2 10 0v9c0 2-10 2-10 0z"/><path class="arch-aws-mo" d="M8 6c0 2 10 2 10 0"/><text class="arch-aws-nl" x="13" y="31">RDS</text></g>
+      <g transform="translate(230,100)"><rect class="arch-aws-tok" width="26" height="22" rx="4" style="--cr:var(--crit-rgb);--c:var(--muted)"/><path class="arch-aws-mo" d="M8 6c0-2 10-2 10 0v9c0 2-10 2-10 0z"/><path class="arch-aws-mo" d="M8 6c0 2 10 2 10 0"/><text class="arch-aws-nl" x="13" y="31">RDS</text></g>
+    </svg>
+  </div><div class="meta"><div class="nm">Multi-Region DR</div><span class="ref">.arch-aws-dr</span><div class="desc">Route 53 failover routes users to an active region and, on outage, to a warm standby that receives cross-region replication.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="chart-flow" data-interact="auto-play" data-c="accent"><div class="stage">
+    <svg class="arch-aws-svg arch-aws-hybrid" viewBox="0 0 300 150" role="img" aria-label="Hybrid VPN architecture">
+      <rect class="arch-aws-bd" x="6" y="40" width="96" height="80" rx="5" style="--cr:var(--muted)"/>
+      <text class="arch-aws-bl" x="10" y="49" style="fill:var(--muted)">ON-PREM</text>
+      <rect class="arch-aws-bd" x="168" y="30" width="126" height="98" rx="6" style="--cr:var(--info-rgb)"/>
+      <text class="arch-aws-bl" x="172" y="39">VPC</text>
+      <rect class="arch-aws-bd" x="178" y="48" width="108" height="70" rx="4" style="--cr:var(--pos-rgb)"/>
+      <text class="arch-aws-bl" x="182" y="57" style="fill:var(--pos)">PRIVATE SUBNET</text>
+      <path class="arch-aws-conn" d="M56 79h68M150 79h58"/>
+      <path class="arch-aws-flow" style="--fd:0s" d="M56 79h68"/>
+      <path class="arch-aws-flow" style="--fd:.8s" d="M150 79h58"/>
+      <g transform="translate(30,68)"><rect class="arch-aws-tok" width="26" height="22" rx="4" style="--cr:var(--info-rgb);--c:var(--muted)"/><rect class="arch-aws-mo" x="7" y="4" width="12" height="12" rx="1"/><path class="arch-aws-mo" d="M7 10h12M13 4v12"/><text class="arch-aws-nl" x="13" y="31">Servers</text></g>
+      <g transform="translate(124,68)"><rect class="arch-aws-tok" width="26" height="22" rx="4" style="--cr:var(--info-rgb);--c:var(--info)"/><rect class="arch-aws-mo" x="7" y="8" width="7" height="5" rx="2.5"/><rect class="arch-aws-mo" x="12" y="8" width="7" height="5" rx="2.5"/><text class="arch-aws-nl" x="13" y="31">VPN Gateway</text></g>
+      <g transform="translate(212,68)"><rect class="arch-aws-tok" width="26" height="22" rx="4" style="--cr:var(--pos-rgb);--c:var(--pos)"/><rect class="arch-aws-mo" x="7" y="4" width="12" height="12" rx="1"/><path class="arch-aws-mo" d="M7 10h12M13 4v12"/><text class="arch-aws-nl" x="13" y="31">EC2</text></g>
+    </svg>
+  </div><div class="meta"><div class="nm">Hybrid VPN Link</div><span class="ref">.arch-aws-hybrid</span><div class="desc">An on-prem datacentre reaches private-subnet EC2 through a VPN Gateway into the VPC, the pattern for hybrid connectivity.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+</div>
