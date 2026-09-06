@@ -1,0 +1,130 @@
+<h3 class="sec">TCG FOIL STYLES</h3>
+<style id="tcgfoils-styles">
+/* ===== TCG foil styles (k33bz fork). Fourteen named foil treatments from Pokemon, Disney
+   Lorcana and Magic: The Gathering, replicated as pure-CSS surfaces that reuse the .fxc card
+   from the CARD MOTION & FOIL section, so each one composes with any .fxc-m-* motion. The
+   effects are replicated from public descriptions; every motif is a generic primitive (grids,
+   rings, crosses, scales), not a game's logo, symbol or trade dress. Tokens only. ===== */
+/* Pokemon -------------------------------------------------------------------- */
+.fxc-f-crackedice .fxc-foil{background:
+    repeating-linear-gradient(58deg,transparent 0 13px,rgba(255,255,255,.14) 13px 14px),
+    repeating-linear-gradient(-24deg,transparent 0 17px,rgba(255,255,255,.12) 17px 18px),
+    repeating-linear-gradient(112deg,transparent 0 21px,rgba(255,255,255,.1) 21px 22px);
+  mix-blend-mode:screen;opacity:.7}
+.fxc-f-crackedice .fxc-foil::after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 38%,rgba(var(--info-rgb),.5) 50%,transparent 62%);background-size:260% 260%;mix-blend-mode:color-dodge;animation:fxcSweep 3.4s ease-in-out infinite}
+.fxc-f-tinsel .fxc-foil{background:repeating-linear-gradient(90deg,rgba(255,255,255,.16) 0 1px,transparent 1px 3px);mix-blend-mode:overlay;opacity:.8}
+.fxc-f-tinsel .fxc-foil::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent 40%,rgba(255,255,255,.6) 50%,transparent 60%);background-size:240% 240%;mix-blend-mode:color-dodge;animation:fxcSweep 2.6s ease-in-out infinite}
+.fxc-f-waterweb .fxc-foil{background:
+    repeating-radial-gradient(circle at 28% 30%,rgba(255,255,255,.12) 0 5px,transparent 5px 13px),
+    repeating-radial-gradient(circle at 74% 66%,rgba(var(--info-rgb),.16) 0 6px,transparent 6px 16px);
+  background-size:180% 180%,200% 200%;mix-blend-mode:screen;opacity:.6;animation:fxcFlow 5s ease-in-out infinite}
+.fxc-f-starlight .fxc-foil{background:
+    radial-gradient(circle,rgba(255,255,255,.9) 0 .6px,transparent 1.4px) 4px 6px/17px 15px,
+    radial-gradient(circle,rgba(var(--accent-rgb),.85) 0 .6px,transparent 1.4px) 11px 12px/21px 19px;
+  mix-blend-mode:screen;opacity:.85;animation:fxcTwinkle 2.4s ease-in-out infinite}
+.fxc-f-orbs .fxc-foil{background:
+    radial-gradient(circle,transparent 0 3px,rgba(255,255,255,.22) 3px 3.8px,transparent 3.8px) 0 0/13px 13px,
+    radial-gradient(circle,rgba(255,255,255,.24) 0 1px,transparent 1.6px) 0 0/13px 13px;
+  mix-blend-mode:overlay;opacity:.75}
+.fxc-f-orbs .fxc-foil::after{content:"";position:absolute;inset:0;background:var(--fxc-rain);background-size:220% 220%;mix-blend-mode:color-dodge;opacity:.4;animation:fxcSweep 3.4s ease-in-out infinite}
+.fxc-f-honeycomb .fxc-foil{background:
+    repeating-linear-gradient(30deg,rgba(255,255,255,.14) 0 1px,transparent 1px 16px),
+    repeating-linear-gradient(-30deg,rgba(255,255,255,.14) 0 1px,transparent 1px 16px),
+    repeating-linear-gradient(90deg,rgba(255,255,255,.1) 0 1px,transparent 1px 28px);
+  mix-blend-mode:overlay;opacity:.7}
+.fxc-f-honeycomb .fxc-foil::after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 40%,rgba(var(--pos-rgb),.45) 50%,transparent 60%);background-size:260% 260%;mix-blend-mode:color-dodge;animation:fxcSweep 3.6s ease-in-out infinite}
+/* Magic: The Gathering -------------------------------------------------------- */
+.fxc-f-surge .fxc-foil{background:
+    radial-gradient(circle at 50% 0%,rgba(255,255,255,.16) 0 6px,transparent 7px) 0 0/18px 10px,
+    radial-gradient(circle at 50% 0%,rgba(var(--info-rgb),.22) 0 6px,transparent 7px) 9px 5px/18px 10px;
+  mix-blend-mode:screen;opacity:.7;animation:fxcFlow 4s ease-in-out infinite}
+.fxc-f-halo .fxc-foil{background:repeating-radial-gradient(circle at 50% 130%,transparent 0 9px,rgba(255,255,255,.14) 9px 11px,transparent 11px 20px);mix-blend-mode:screen;opacity:.6;overflow:hidden}
+.fxc-f-halo .fxc-foil::after{content:"";position:absolute;inset:0;background:repeating-radial-gradient(circle at 50% 130%,transparent 0 9px,rgba(var(--crit-rgb),.4) 9px 11px,transparent 11px 20px);mix-blend-mode:color-dodge;animation:fxcArc 4s ease-in-out infinite}
+.fxc-f-confetti .fxc-foil{background:
+    radial-gradient(circle,var(--accent) 0 1.4px,transparent 2px) 3px 5px/23px 21px,
+    radial-gradient(circle,var(--info) 0 1.4px,transparent 2px) 14px 12px/27px 25px,
+    radial-gradient(circle,var(--crit) 0 1.4px,transparent 2px) 8px 18px/25px 23px,
+    radial-gradient(circle,var(--pos) 0 1.4px,transparent 2px) 19px 3px/29px 26px;
+  mix-blend-mode:screen;opacity:.85;animation:fxcTwinkle 2.6s ease-in-out infinite}
+.fxc-f-oilslick .fxc-foil{background:radial-gradient(120% 90% at 50% 30%,transparent 40%,rgba(0,0,0,.5));mix-blend-mode:multiply;opacity:.85}
+.fxc-f-oilslick .fxc-foil::after{content:"";position:absolute;inset:-40%;background:conic-gradient(from 0deg,rgba(var(--accent-rgb),.5),rgba(var(--info-rgb),.5),rgba(var(--pos-rgb),.5),rgba(var(--warn-rgb),.5),rgba(var(--crit-rgb),.5),rgba(var(--accent-rgb),.5));mix-blend-mode:color-dodge;animation:fxcSpin 7s linear infinite}
+.fxc-f-glyphstamp .fxc-foil{background:
+    linear-gradient(90deg,transparent 46%,rgba(255,255,255,.2) 46% 54%,transparent 54%),
+    linear-gradient(0deg,transparent 46%,rgba(255,255,255,.2) 46% 54%,transparent 54%);
+  background-size:15px 15px;mix-blend-mode:overlay;opacity:.7}
+.fxc-f-glyphstamp .fxc-foil::after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 40%,rgba(var(--warn-rgb),.5) 50%,transparent 60%);background-size:260% 260%;mix-blend-mode:color-dodge;animation:fxcSweep 3.2s ease-in-out infinite}
+.fxc-f-scales .fxc-foil{background:
+    radial-gradient(circle at 50% 100%,rgba(255,255,255,.14) 0 6px,transparent 7px) 0 0/16px 8px,
+    radial-gradient(circle at 50% 100%,rgba(255,255,255,.14) 0 6px,transparent 7px) 8px 4px/16px 8px;
+  mix-blend-mode:overlay;opacity:.7}
+.fxc-f-scales .fxc-foil::after{content:"";position:absolute;inset:0;background:var(--fxc-rain);background-size:220% 220%;mix-blend-mode:color-dodge;opacity:.35;animation:fxcSweep 3.6s ease-in-out infinite}
+/* Disney Lorcana -------------------------------------------------------------- */
+.fxc-f-coldfoil .fxc-foil{background:linear-gradient(105deg,transparent 20%,rgba(255,255,255,.5) 44%,rgba(var(--info-rgb),.35) 52%,transparent 64%);background-size:250% 250%;mix-blend-mode:overlay;animation:fxcSweep 3.4s ease-in-out infinite}
+.fxc-f-enchanted .fxc-foil{background:var(--fxc-rain);background-size:200% 200%;mix-blend-mode:color-dodge;opacity:.45;animation:fxcSweep 3.6s ease-in-out infinite}
+.fxc-f-enchanted .fxc-foil::after{content:"";position:absolute;inset:3px;border-radius:7px;border:2px solid rgba(255,255,255,.5);box-shadow:0 0 8px rgba(var(--accent-rgb),.6),inset 0 0 8px rgba(var(--info-rgb),.5);mix-blend-mode:screen}
+/* keyframes new to this section (fxcSweep lives in the CARD MOTION & FOIL section) */
+@keyframes fxcFlow{0%,100%{background-position:0% 0%,100% 100%}50%{background-position:22% 30%,72% 62%}}
+@keyframes fxcTwinkle{0%,100%{opacity:.35}50%{opacity:.9}}
+@keyframes fxcArc{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes fxcSpin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){ .fxc-foil,.fxc-foil::after{animation:none!important} }
+</style>
+<div class="gallery">
+
+  <div class="tile is-new" data-ctype="fx-card" data-interact="auto-play" data-c="info"><div class="stage">
+    <div class="fxc fxc-f-crackedice" role="img" aria-label="Card foil: Cracked Ice"><div class="fxc-card"><div class="fxc-face fxc-front"><div class="fxc-hd"><span class="fxc-name">NOVA</span><span class="fxc-cost"></span></div><div class="fxc-art"></div><div class="fxc-type">UNIT</div><div class="fxc-txt"><i></i><i></i><i></i></div><div class="fxc-stat">6</div><span class="fxc-foil"></span></div><div class="fxc-face fxc-back"></div></div></div>
+  </div><div class="meta"><div class="nm">Cracked Ice</div><span class="ref">.fxc-f-crackedice</span><div class="desc">Large angular reflective shards like shattered glass, the cracked-ice reverse holo of the Pokemon EX era.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="fx-card" data-interact="auto-play" data-c="accent"><div class="stage">
+    <div class="fxc fxc-f-tinsel" role="img" aria-label="Card foil: Tinsel"><div class="fxc-card"><div class="fxc-face fxc-front"><div class="fxc-hd"><span class="fxc-name">EMBER</span><span class="fxc-cost"></span></div><div class="fxc-art"></div><div class="fxc-type">SPELL</div><div class="fxc-txt"><i></i><i></i><i></i></div><div class="fxc-stat">4</div><span class="fxc-foil"></span></div><div class="fxc-face fxc-back"></div></div></div>
+  </div><div class="meta"><div class="nm">Tinsel</div><span class="ref">.fxc-f-tinsel</span><div class="desc">Tight fine vertical lines under a fast sheen, the modern tinsel reverse holo.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="fx-card" data-interact="auto-play" data-c="info"><div class="stage">
+    <div class="fxc fxc-f-waterweb" role="img" aria-label="Card foil: Water Web"><div class="fxc-card"><div class="fxc-face fxc-front"><div class="fxc-hd"><span class="fxc-name">COMET</span><span class="fxc-cost"></span></div><div class="fxc-art"></div><div class="fxc-type">UNIT</div><div class="fxc-txt"><i></i><i></i><i></i></div><div class="fxc-stat">5</div><span class="fxc-foil"></span></div><div class="fxc-face fxc-back"></div></div></div>
+  </div><div class="meta"><div class="nm">Water Web</div><span class="ref">.fxc-f-waterweb</span><div class="desc">A wavy, flowing web of light, the Sun and Moon era default reverse holo collectors call water web.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="fx-card" data-interact="auto-play" data-c="accent"><div class="stage">
+    <div class="fxc fxc-f-starlight" role="img" aria-label="Card foil: Starlight"><div class="fxc-card"><div class="fxc-face fxc-front"><div class="fxc-hd"><span class="fxc-name">ATLAS</span><span class="fxc-cost"></span></div><div class="fxc-art"></div><div class="fxc-type">SPELL</div><div class="fxc-txt"><i></i><i></i><i></i></div><div class="fxc-stat">3</div><span class="fxc-foil"></span></div><div class="fxc-face fxc-back"></div></div></div>
+  </div><div class="meta"><div class="nm">Starlight</div><span class="ref">.fxc-f-starlight</span><div class="desc">Scattered twinkling points and star bursts, the starlight or galaxy-star holo of the vintage sets.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="fx-card" data-interact="auto-play" data-c="crit"><div class="stage">
+    <div class="fxc fxc-f-orbs" role="img" aria-label="Card foil: Stamped Orbs"><div class="fxc-card fxc-rainbow"><div class="fxc-face fxc-front"><div class="fxc-hd"><span class="fxc-name">PIXEL</span><span class="fxc-cost"></span></div><div class="fxc-art"></div><div class="fxc-type">LEGEND</div><div class="fxc-txt"><i></i><i></i><i></i></div><div class="fxc-stat">9</div><span class="fxc-foil"></span></div><div class="fxc-face fxc-back"></div></div></div>
+  </div><div class="meta"><div class="nm">Stamped Orbs</div><span class="ref">.fxc-f-orbs</span><div class="desc">A grid of stamped roundels catching the light, the pattern-foil reverse style Pokemon uses for its Poke Ball and Master Ball reverses. A generic roundel; swap in your own icon.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="fx-card" data-interact="auto-play" data-c="pos"><div class="stage">
+    <div class="fxc fxc-f-honeycomb" role="img" aria-label="Card foil: Honeycomb"><div class="fxc-card"><div class="fxc-face fxc-front"><div class="fxc-hd"><span class="fxc-name">ORBIT</span><span class="fxc-cost"></span></div><div class="fxc-art"></div><div class="fxc-type">RELIC</div><div class="fxc-txt"><i></i><i></i><i></i></div><div class="fxc-stat">7</div><span class="fxc-foil"></span></div><div class="fxc-face fxc-back"></div></div></div>
+  </div><div class="meta"><div class="nm">Honeycomb</div><span class="ref">.fxc-f-honeycomb</span><div class="desc">A hexagonal lattice that shimmers as the light passes, the honeycomb reverse pattern.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="fx-card" data-interact="auto-play" data-c="info"><div class="stage">
+    <div class="fxc fxc-f-surge" role="img" aria-label="Card foil: Surge Foil"><div class="fxc-card"><div class="fxc-face fxc-front"><div class="fxc-hd"><span class="fxc-name">COMET</span><span class="fxc-cost"></span></div><div class="fxc-art"></div><div class="fxc-type">ARTIFACT</div><div class="fxc-txt"><i></i><i></i><i></i></div><div class="fxc-stat">5</div><span class="fxc-foil"></span></div><div class="fxc-face fxc-back"></div></div></div>
+  </div><div class="meta"><div class="nm">Surge Foil</div><span class="ref">.fxc-f-surge</span><div class="desc">A rippling scale pattern that makes the whole card look like it is vibrating with light, Magic's surge foil.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="fx-card" data-interact="auto-play" data-c="crit"><div class="stage">
+    <div class="fxc fxc-f-halo" role="img" aria-label="Card foil: Halo Foil"><div class="fxc-card"><div class="fxc-face fxc-front"><div class="fxc-hd"><span class="fxc-name">NOVA</span><span class="fxc-cost"></span></div><div class="fxc-art"></div><div class="fxc-type">SPELL</div><div class="fxc-txt"><i></i><i></i><i></i></div><div class="fxc-stat">6</div><span class="fxc-foil"></span></div><div class="fxc-face fxc-back"></div></div></div>
+  </div><div class="meta"><div class="nm">Halo Foil</div><span class="ref">.fxc-f-halo</span><div class="desc">Swooping curved arcs of shine layered over the art, Magic's halo foil.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="fx-card" data-interact="auto-play" data-c="pos"><div class="stage">
+    <div class="fxc fxc-f-confetti" role="img" aria-label="Card foil: Confetti Foil"><div class="fxc-card"><div class="fxc-face fxc-front"><div class="fxc-hd"><span class="fxc-name">EMBER</span><span class="fxc-cost"></span></div><div class="fxc-art"></div><div class="fxc-type">UNIT</div><div class="fxc-txt"><i></i><i></i><i></i></div><div class="fxc-stat">4</div><span class="fxc-foil"></span></div><div class="fxc-face fxc-back"></div></div></div>
+  </div><div class="meta"><div class="nm">Confetti Foil</div><span class="ref">.fxc-f-confetti</span><div class="desc">Tiny speckles of coloured foil scattered like thrown glitter, Magic's confetti foil, a descendant of galaxy foil.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="fx-card" data-interact="auto-play" data-c="neg"><div class="stage">
+    <div class="fxc fxc-f-oilslick" role="img" aria-label="Card foil: Oil Slick"><div class="fxc-card"><div class="fxc-face fxc-front"><div class="fxc-hd"><span class="fxc-name">PIXEL</span><span class="fxc-cost"></span></div><div class="fxc-art"></div><div class="fxc-type">CURSE</div><div class="fxc-txt"><i></i><i></i><i></i></div><div class="fxc-stat">8</div><span class="fxc-foil"></span></div><div class="fxc-face fxc-back"></div></div></div>
+  </div><div class="meta"><div class="nm">Oil Slick</div><span class="ref">.fxc-f-oilslick</span><div class="desc">A dark, petroleum rainbow that shifts as the card turns, Magic's oil-slick raised foil.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="fx-card" data-interact="auto-play" data-c="warn"><div class="stage">
+    <div class="fxc fxc-f-glyphstamp" role="img" aria-label="Card foil: Glyph Stamp"><div class="fxc-card"><div class="fxc-face fxc-front"><div class="fxc-hd"><span class="fxc-name">ATLAS</span><span class="fxc-cost"></span></div><div class="fxc-art"></div><div class="fxc-type">RELIC</div><div class="fxc-txt"><i></i><i></i><i></i></div><div class="fxc-stat">2</div><span class="fxc-foil"></span></div><div class="fxc-face fxc-back"></div></div></div>
+  </div><div class="meta"><div class="nm">Glyph Stamp</div><span class="ref">.fxc-f-glyphstamp</span><div class="desc">A repeating sigil stamped across the whole card in foil, the step-and-compleat treatment style. A generic glyph, not a real game mark.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="fx-card" data-interact="auto-play" data-c="crit"><div class="stage">
+    <div class="fxc fxc-f-scales" role="img" aria-label="Card foil: Dragon-Scale"><div class="fxc-card fxc-rainbow"><div class="fxc-face fxc-front"><div class="fxc-hd"><span class="fxc-name">ORBIT</span><span class="fxc-cost"></span></div><div class="fxc-art"></div><div class="fxc-type">LEGEND</div><div class="fxc-txt"><i></i><i></i><i></i></div><div class="fxc-stat">9</div><span class="fxc-foil"></span></div><div class="fxc-face fxc-back"></div></div></div>
+  </div><div class="meta"><div class="nm">Dragon-Scale</div><span class="ref">.fxc-f-scales</span><div class="desc">A fine embossed scale grain with a shifting holographic depth you can almost feel, Magic's textured foil.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="fx-card" data-interact="auto-play" data-c="info"><div class="stage">
+    <div class="fxc fxc-f-coldfoil" role="img" aria-label="Card foil: Cold Foil"><div class="fxc-card"><div class="fxc-face fxc-front"><div class="fxc-hd"><span class="fxc-name">COMET</span><span class="fxc-cost"></span></div><div class="fxc-art"></div><div class="fxc-type">UNIT</div><div class="fxc-txt"><i></i><i></i><i></i></div><div class="fxc-stat">5</div><span class="fxc-foil"></span></div><div class="fxc-face fxc-back"></div></div></div>
+  </div><div class="meta"><div class="nm">Cold Foil</div><span class="ref">.fxc-f-coldfoil</span><div class="desc">A smooth, cool metallic sheen sweeping the whole face, Disney Lorcana's cold foil.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="fx-card" data-interact="auto-play" data-c="accent"><div class="stage">
+    <div class="fxc fxc-f-enchanted" role="img" aria-label="Card foil: Enchanted"><div class="fxc-card fxc-rainbow"><div class="fxc-face fxc-front"><div class="fxc-hd"><span class="fxc-name">ATLAS</span><span class="fxc-cost"></span></div><div class="fxc-art"></div><div class="fxc-type">MYTHIC</div><div class="fxc-txt"><i></i><i></i><i></i></div><div class="fxc-stat">X</div><span class="fxc-foil"></span></div><div class="fxc-face fxc-back"></div></div></div>
+  </div><div class="meta"><div class="nm">Enchanted</div><span class="ref">.fxc-f-enchanted</span><div class="desc">Whole-face rainbow cold foil inside an ornate glowing border, a Lorcana Enchanted card.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+</div>
