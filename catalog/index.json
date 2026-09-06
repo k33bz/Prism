@@ -1896,9 +1896,9 @@
         "sl",
         "ts",
         "lv",
-        "info",
-        "m",
         "warn",
+        "m",
+        "info",
         "ok",
         "cursor"
       ],
@@ -35445,9 +35445,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A single glow-discharge tube counting zero through nine, one warm cathode lit at a time with a warm-up flicker and the ghost numerals faint behind it. The vintage nixie readout."
     },
     {
@@ -35479,9 +35479,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Six tubes showing hours, minutes and seconds with glowing colon separators; the seconds tube races through its digits while the minutes and hours tick slowly. A nixie desk clock."
     },
     {
@@ -35512,9 +35512,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A four-tube counter whose last digit spins while the higher tubes carry slowly, an odometer of glowing tubes. Fake figures only."
     },
     {
@@ -35549,9 +35549,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A tube flanked by up and down buttons; the up button pulses as the digit steps upward on the idle loop. A retro numeric input control. Wire the buttons to set the lit cathode."
     },
     {
@@ -35582,9 +35582,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Two digit tubes and a fixed percent-symbol tube; the ones digit races while the tens climbs, a glowing progress readout. Symbol tube stays lit like an IN-15."
     },
     {
@@ -35617,9 +35617,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A four-tube reading with a decimal point and a unit tube, the last digits flickering like a live measurement. Colour from the warn role for a lab-instrument feel."
     },
     {
@@ -35650,9 +35650,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A wide symbol tube cycling through plus, minus, percent, micro, pi, ohm and more, the way the old IN-15 symbol nixies worked. One symbol lit at a time."
     },
     {
@@ -35683,9 +35683,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Two tubes spinning rapidly through their digits like a slot reel, a glow-tube waiting state. Set the tubes to the real value when the work is done."
     },
     {
