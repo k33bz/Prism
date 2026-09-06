@@ -1,0 +1,300 @@
+<h3 class="sec">NETWORK FLOW MAPS</h3>
+<style id="arch-net-styles">
+/* ===== arch-net-*: animated network topology and flow maps. Each tile is an inline SVG
+   (viewBox 0 0 300 150) of original geometric node glyphs (circles, rounded squares,
+   diamonds) joined by wires. Packets ride the wires as travelling dash-dots, nodes light
+   as signals arrive, and connectors carry dash-offset flow. Prefix: arch-net / archNet.
+   Colour: primary var(--c,var(--accent)) with per-element roles set via inline --c/--cr
+   from theme tokens (--info/--pos/--warn/--neg/--crit/--muted); wires var(--line);
+   node names var(--ink), captions var(--muted). Only white/black rgba literals. ===== */
+.arch-net-svg{width:100%;max-width:300px;height:auto;display:block}
+.arch-net-box{fill:rgba(var(--cr,var(--accent-rgb)),.15);stroke:rgba(var(--cr,var(--accent-rgb)),.85);stroke-width:1}
+.arch-net-cir{fill:rgba(var(--cr,var(--accent-rgb)),.15);stroke:rgba(var(--cr,var(--accent-rgb)),.85);stroke-width:1}
+.arch-net-dia{fill:rgba(var(--cr,var(--accent-rgb)),.15);stroke:rgba(var(--cr,var(--accent-rgb)),.85);stroke-width:1}
+.arch-net-neu{fill:rgba(255,255,255,.06);stroke:var(--muted);stroke-width:1}
+.arch-net-gl{fill:none;stroke:rgba(var(--cr,var(--accent-rgb)),.9);stroke-width:.9;stroke-linecap:round;stroke-linejoin:round}
+.arch-net-nm{fill:var(--ink);font-size:6.5px;text-anchor:middle;font-family:ui-sans-serif,system-ui,sans-serif}
+.arch-net-lbl{fill:var(--muted);font-size:6px;text-anchor:middle;font-family:ui-sans-serif,system-ui,sans-serif}
+.arch-net-cap{fill:var(--muted);font-size:6px;font-family:ui-monospace,Menlo,monospace}
+.arch-net-wire{fill:none;stroke:var(--line);stroke-width:1}
+.arch-net-wired{fill:none;stroke:var(--line);stroke-width:1;stroke-dasharray:2.5 2.5}
+/* travelling packet-dots via seamless dash period 15 */
+.arch-net-flow{fill:none;stroke:var(--c,var(--accent));stroke-width:1.7;stroke-linecap:round;stroke-dasharray:2.5 12.5;animation-name:archNetFlow;animation-duration:1s;animation-timing-function:linear;animation-iteration-count:infinite;animation-delay:var(--fd,0s)}
+@keyframes archNetFlow{to{stroke-dashoffset:-15}}
+.arch-net-slow{animation-duration:1.6s}
+.arch-net-fast{animation-duration:.7s}
+/* TCP head-of-line: flows, then stalls, seamless one-period wrap */
+.arch-net-stall{fill:none;stroke:var(--c,var(--accent));stroke-width:1.7;stroke-linecap:round;stroke-dasharray:2.5 12.5;animation-name:archNetStall;animation-duration:2s;animation-timing-function:linear;animation-iteration-count:infinite}
+@keyframes archNetStall{0%{stroke-dashoffset:0}40%{stroke-dashoffset:-15}100%{stroke-dashoffset:-15}}
+/* single token circulating a ring path */
+.arch-net-token{fill:none;stroke:var(--c,var(--accent));stroke-width:2.4;stroke-linecap:round;stroke-dasharray:4 260;animation-name:archNetToken;animation-duration:4s;animation-timing-function:linear;animation-iteration-count:infinite}
+@keyframes archNetToken{to{stroke-dashoffset:-264}}
+/* node arrival light */
+.arch-net-lit{transform-box:fill-box;transform-origin:center;animation-name:archNetLit;animation-duration:3s;animation-timing-function:ease-out;animation-iteration-count:infinite;animation-delay:var(--ld,0s)}
+@keyframes archNetLit{0%,55%,100%{opacity:0;transform:scale(.5)}16%{opacity:.75;transform:scale(1)}40%{opacity:0;transform:scale(1.6)}}
+.arch-net-lit4{animation-duration:4s}
+/* throughput bar */
+.arch-net-bar{fill:var(--c,var(--accent));transform-box:fill-box;transform-origin:center bottom;animation-name:archNetBar;animation-duration:2.2s;animation-timing-function:ease-in-out;animation-iteration-count:infinite;animation-delay:var(--bd,0s)}
+@keyframes archNetBar{0%,100%{transform:scaleY(.28)}50%{transform:scaleY(1)}}
+/* reroute pair: primary carries first half then congests, alternate carries second half */
+.arch-net-r1{fill:none;stroke:var(--c,var(--accent));stroke-width:1.7;stroke-linecap:round;stroke-dasharray:2.5 12.5;animation-name:archNetR1;animation-duration:4s;animation-timing-function:linear;animation-iteration-count:infinite}
+@keyframes archNetR1{0%{stroke-dashoffset:0;opacity:1}42%{stroke-dashoffset:-45;opacity:1}48%{opacity:0}100%{stroke-dashoffset:-45;opacity:0}}
+.arch-net-r2{fill:none;stroke:var(--pos);stroke-width:1.7;stroke-linecap:round;stroke-dasharray:2.5 12.5;animation-name:archNetR2;animation-duration:4s;animation-timing-function:linear;animation-iteration-count:infinite}
+@keyframes archNetR2{0%{stroke-dashoffset:0;opacity:0}48%{opacity:0}55%{stroke-dashoffset:0;opacity:1}100%{stroke-dashoffset:-45;opacity:1}}
+.arch-net-hot{stroke:var(--neg);stroke-width:1.6;stroke-linecap:round;animation-name:archNetHot;animation-duration:4s;animation-timing-function:ease-in-out;animation-iteration-count:infinite}
+@keyframes archNetHot{0%,38%{opacity:0}50%,92%{opacity:1}100%{opacity:0}}
+@media (prefers-reduced-motion:reduce){
+  .arch-net-flow,.arch-net-slow,.arch-net-fast,.arch-net-stall,.arch-net-token,.arch-net-r1{animation-name:none;stroke-dashoffset:0;opacity:1}
+  .arch-net-r2{animation-name:none;stroke-dashoffset:0;opacity:0}
+  .arch-net-lit{animation-name:none;opacity:.6;transform:scale(1)}
+  .arch-net-bar{animation-name:none;transform:scaleY(.7)}
+  .arch-net-hot{animation-name:none;opacity:0}
+}
+</style>
+<div class="gallery">
+
+  <div class="tile is-new" data-ctype="chart-flow" data-interact="auto-play" data-c="accent"><div class="stage">
+    <svg class="arch-net-svg arch-net-spine" viewBox="0 0 300 150" role="img" aria-label="Spine and leaf datacenter fabric">
+      <path class="arch-net-wire" d="M100 29 48 58M100 29 116 58M100 29 184 58M100 29 252 58M200 29 48 58M200 29 116 58M200 29 184 58M200 29 252 58"/>
+      <path class="arch-net-wire" d="M48 71 40 112M48 71 56 112M116 71 108 112M116 71 124 112M184 71 176 112M184 71 192 112M252 71 244 112M252 71 260 112"/>
+      <path class="arch-net-flow" style="--fd:0s" d="M100 29 48 58"/>
+      <path class="arch-net-flow" style="--fd:.25s" d="M100 29 184 58"/>
+      <path class="arch-net-flow" style="--fd:.5s" d="M200 29 116 58"/>
+      <path class="arch-net-flow" style="--fd:.75s" d="M200 29 252 58"/>
+      <path class="arch-net-flow arch-net-fast" style="--fd:.1s" d="M116 71 124 112"/>
+      <path class="arch-net-flow arch-net-fast" style="--fd:.4s" d="M252 71 244 112"/>
+      <g style="--cr:var(--info-rgb)"><rect class="arch-net-box" x="90" y="16" width="20" height="13" rx="3"/><path class="arch-net-gl" d="M95 22h10"/><rect class="arch-net-box" x="190" y="16" width="20" height="13" rx="3"/><path class="arch-net-gl" d="M195 22h10"/></g>
+      <text class="arch-net-lbl" x="100" y="13">spine 1</text><text class="arch-net-lbl" x="200" y="13">spine 2</text>
+      <g style="--cr:var(--pos-rgb)"><rect class="arch-net-box" x="38" y="58" width="20" height="13" rx="3"/><rect class="arch-net-box" x="106" y="58" width="20" height="13" rx="3"/><rect class="arch-net-box" x="174" y="58" width="20" height="13" rx="3"/><rect class="arch-net-box" x="242" y="58" width="20" height="13" rx="3"/></g>
+      <text class="arch-net-lbl" x="150" y="82">leaf switches</text>
+      <g><circle class="arch-net-neu" cx="40" cy="116" r="4.5"/><circle class="arch-net-neu" cx="56" cy="116" r="4.5"/><circle class="arch-net-neu" cx="108" cy="116" r="4.5"/><circle class="arch-net-neu" cx="124" cy="116" r="4.5"/><circle class="arch-net-neu" cx="176" cy="116" r="4.5"/><circle class="arch-net-neu" cx="192" cy="116" r="4.5"/><circle class="arch-net-neu" cx="244" cy="116" r="4.5"/><circle class="arch-net-neu" cx="260" cy="116" r="4.5"/></g>
+      <text class="arch-net-lbl" x="150" y="132">servers</text>
+    </svg>
+  </div><div class="meta"><div class="nm">Spine Leaf Fabric</div><span class="ref">.arch-net-spine</span><div class="desc">A two spine, four leaf datacenter fabric with server rows, packets fanning across every spine to leaf uplink. Use for clos network diagrams.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="chart-flow" data-interact="auto-play" data-c="accent"><div class="stage">
+    <svg class="arch-net-svg arch-net-mesh" viewBox="0 0 300 150" role="img" aria-label="Fully connected mesh network">
+      <path class="arch-net-wire" d="M150 26 199 59M150 26 100 59M150 26 181 117M150 26 119 117M199 59 181 117M199 59 119 117M199 59 100 59M100 59 119 117M100 59 181 117M181 117 119 117"/>
+      <path class="arch-net-flow" style="--fd:0s" d="M150 26 199 59"/>
+      <path class="arch-net-flow" style="--fd:.3s" d="M199 59 181 117"/>
+      <path class="arch-net-flow" style="--fd:.6s" d="M181 117 119 117"/>
+      <path class="arch-net-flow" style="--fd:.9s" d="M119 117 100 59"/>
+      <path class="arch-net-flow" style="--fd:1.2s" d="M100 59 150 26"/>
+      <path class="arch-net-flow arch-net-slow" style="--fd:.2s" d="M199 59 119 117"/>
+      <path class="arch-net-flow arch-net-slow" style="--fd:.7s" d="M100 59 181 117"/>
+      <g style="--cr:var(--accent-rgb)"><circle class="arch-net-cir" cx="150" cy="26" r="8"/><circle class="arch-net-cir" cx="199" cy="59" r="8"/><circle class="arch-net-cir" cx="181" cy="117" r="8"/><circle class="arch-net-cir" cx="119" cy="117" r="8"/><circle class="arch-net-cir" cx="100" cy="59" r="8"/></g>
+      <text class="arch-net-nm" x="150" y="28.5">A</text><text class="arch-net-nm" x="199" y="61.5">B</text><text class="arch-net-nm" x="181" y="119.5">C</text><text class="arch-net-nm" x="119" y="119.5">D</text><text class="arch-net-nm" x="100" y="61.5">E</text>
+    </svg>
+  </div><div class="meta"><div class="nm">Mesh Network</div><span class="ref">.arch-net-mesh</span><div class="desc">Five fully connected peers with packets hopping edge to edge around the mesh. Use for peer to peer or full mesh overlay diagrams.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="chart-flow" data-interact="auto-play" data-c="info"><div class="stage">
+    <svg class="arch-net-svg arch-net-neural" viewBox="0 0 300 150" style="--c:var(--info);--cr:var(--info-rgb)" role="img" aria-label="Neural network layers with signal propagation">
+      <g class="arch-net-wire" style="opacity:.5"><path d="M46 35 150 25M46 35 150 58M46 35 150 92M46 35 150 125M46 75 150 25M46 75 150 58M46 75 150 92M46 75 150 125M46 115 150 25M46 115 150 58M46 115 150 92M46 115 150 125"/></g>
+      <g class="arch-net-wire" style="opacity:.5"><path d="M150 25 254 55M150 25 254 95M150 58 254 55M150 58 254 95M150 92 254 55M150 92 254 95M150 125 254 55M150 125 254 95"/></g>
+      <path class="arch-net-flow arch-net-slow" style="--fd:0s" d="M46 35 150 58"/>
+      <path class="arch-net-flow arch-net-slow" style="--fd:.15s" d="M46 75 150 92"/>
+      <path class="arch-net-flow arch-net-slow" style="--fd:.3s" d="M46 115 150 25"/>
+      <path class="arch-net-flow arch-net-slow" style="--fd:1.2s" d="M150 58 254 55"/>
+      <path class="arch-net-flow arch-net-slow" style="--fd:1.4s" d="M150 92 254 95"/>
+      <g style="--cr:var(--info-rgb)">
+        <circle class="arch-net-cir" cx="46" cy="35" r="7"/><circle class="arch-net-cir" cx="46" cy="75" r="7"/><circle class="arch-net-cir" cx="46" cy="115" r="7"/>
+        <circle class="arch-net-cir" cx="150" cy="25" r="7"/><circle class="arch-net-cir" cx="150" cy="58" r="7"/><circle class="arch-net-cir" cx="150" cy="92" r="7"/><circle class="arch-net-cir" cx="150" cy="125" r="7"/>
+        <circle class="arch-net-cir" cx="254" cy="55" r="7"/><circle class="arch-net-cir" cx="254" cy="95" r="7"/>
+      </g>
+      <g fill="var(--info)">
+        <circle class="arch-net-lit arch-net-lit4" style="--ld:0s" cx="46" cy="35" r="7"/><circle class="arch-net-lit arch-net-lit4" style="--ld:0s" cx="46" cy="75" r="7"/><circle class="arch-net-lit arch-net-lit4" style="--ld:0s" cx="46" cy="115" r="7"/>
+        <circle class="arch-net-lit arch-net-lit4" style="--ld:1.2s" cx="150" cy="25" r="7"/><circle class="arch-net-lit arch-net-lit4" style="--ld:1.2s" cx="150" cy="58" r="7"/><circle class="arch-net-lit arch-net-lit4" style="--ld:1.2s" cx="150" cy="92" r="7"/><circle class="arch-net-lit arch-net-lit4" style="--ld:1.2s" cx="150" cy="125" r="7"/>
+        <circle class="arch-net-lit arch-net-lit4" style="--ld:2.4s" cx="254" cy="55" r="7"/><circle class="arch-net-lit arch-net-lit4" style="--ld:2.4s" cx="254" cy="95" r="7"/>
+      </g>
+      <text class="arch-net-lbl" x="46" y="140">input</text><text class="arch-net-lbl" x="150" y="145">hidden</text><text class="arch-net-lbl" x="254" y="120">output</text>
+    </svg>
+  </div><div class="meta"><div class="nm">Neural Network Map</div><span class="ref">.arch-net-neural</span><div class="desc">Three node layers with weighted edges and a signal wave that lights each layer left to right. Use for model or inference flow visuals.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="chart-flow" data-interact="auto-play" data-c="info"><div class="stage">
+    <svg class="arch-net-svg arch-net-quic" viewBox="0 0 300 150" style="--c:var(--info);--cr:var(--info-rgb)" role="img" aria-label="QUIC multiplexed streams versus stalling TCP">
+      <path class="arch-net-wire" d="M46 42h208M46 60h208M46 78h208M46 96h208M46 128h208"/>
+      <path class="arch-net-flow" style="--fd:0s;--c:var(--info)" d="M46 42h208"/>
+      <path class="arch-net-flow" style="--fd:.2s;--c:var(--pos)" d="M46 60h208"/>
+      <path class="arch-net-flow" style="--fd:.4s;--c:var(--warn)" d="M46 78h208"/>
+      <path class="arch-net-flow" style="--fd:.6s;--c:var(--crit)" d="M46 96h208"/>
+      <path class="arch-net-stall" style="--c:var(--neg)" d="M46 128h208"/>
+      <g style="--cr:var(--info-rgb)"><rect class="arch-net-box" x="22" y="40" width="22" height="58" rx="4"/><rect class="arch-net-box" x="256" y="40" width="22" height="58" rx="4"/></g>
+      <text class="arch-net-lbl" x="33" y="112">client</text><text class="arch-net-lbl" x="267" y="112">server</text>
+      <text class="arch-net-cap" x="60" y="36" style="fill:var(--info)">QUIC: 4 streams, 1 connection</text>
+      <text class="arch-net-cap" x="60" y="123" style="fill:var(--neg)">TCP: head of line stall</text>
+    </svg>
+  </div><div class="meta"><div class="nm">QUIC Multiplexed Streams</div><span class="ref">.arch-net-quic</span><div class="desc">One connection carries four independent streams that keep flowing while a single TCP lane stalls. Use to explain head of line blocking.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="chart-flow" data-interact="auto-play" data-c="accent"><div class="stage">
+    <svg class="arch-net-svg arch-net-route" viewBox="0 0 300 150" role="img" aria-label="Packet routing with congestion reroute">
+      <path class="arch-net-wire" d="M34 75 90 45M34 75 90 110M90 45 180 45M90 110 180 110M180 45 266 75M180 110 266 75"/>
+      <path class="arch-net-r1" d="M34 75 90 45"/>
+      <path class="arch-net-r1" d="M90 45 180 45"/>
+      <path class="arch-net-r2" d="M34 75 90 110"/>
+      <path class="arch-net-r2" d="M90 110 180 110"/>
+      <path class="arch-net-r2" d="M180 110 266 75"/>
+      <path class="arch-net-hot" d="M90 45 180 45"/>
+      <g style="--cr:var(--pos-rgb)"><circle class="arch-net-cir" cx="34" cy="75" r="8"/></g>
+      <g style="--cr:var(--info-rgb)"><circle class="arch-net-cir" cx="266" cy="75" r="8"/></g>
+      <g style="--cr:var(--accent-rgb)">
+        <path class="arch-net-dia" d="M90 37 98 45 90 53 82 45Z"/><path class="arch-net-dia" d="M90 102 98 110 90 118 82 110Z"/>
+        <path class="arch-net-dia" d="M180 37 188 45 180 53 172 45Z"/><path class="arch-net-dia" d="M180 102 188 110 180 118 172 110Z"/>
+      </g>
+      <text class="arch-net-nm" x="34" y="77.5">S</text><text class="arch-net-nm" x="266" y="77.5">D</text>
+      <text class="arch-net-cap" x="118" y="38" style="fill:var(--neg)">congested</text>
+      <text class="arch-net-lbl" x="150" y="132">alternate route on congestion</text>
+    </svg>
+  </div><div class="meta"><div class="nm">Packet Routing</div><span class="ref">.arch-net-route</span><div class="desc">A packet crosses a router graph, meets congestion on the top path, then reroutes along the lower path. Use for routing and failover visuals.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="chart-flow" data-interact="auto-play" data-c="info"><div class="stage">
+    <svg class="arch-net-svg arch-net-cdn" viewBox="0 0 300 150" style="--c:var(--info);--cr:var(--info-rgb)" role="img" aria-label="CDN edge map with cache hit">
+      <path class="arch-net-wired" d="M52 74 150 30M52 74 240 42M52 74 268 82M52 74 235 118M52 74 150 116"/>
+      <path class="arch-net-wire" d="M150 78 268 82"/>
+      <path class="arch-net-flow arch-net-fast" style="--fd:0s" d="M150 78 268 82"/>
+      <g fill="var(--pos)"><circle class="arch-net-lit" style="--ld:.7s;--cr:var(--pos-rgb)" cx="268" cy="82" r="8"/></g>
+      <g style="--cr:var(--info-rgb)"><rect class="arch-net-box" x="28" y="62" width="24" height="20" rx="4"/><path class="arch-net-gl" d="M33 68h14M33 72h14M33 76h14"/></g>
+      <text class="arch-net-lbl" x="40" y="92">origin</text>
+      <g style="--cr:var(--info-rgb)"><circle class="arch-net-cir" cx="150" cy="30" r="6.5"/><circle class="arch-net-cir" cx="240" cy="42" r="6.5"/><circle class="arch-net-cir" cx="235" cy="118" r="6.5"/><circle class="arch-net-cir" cx="150" cy="116" r="6.5"/></g>
+      <g style="--cr:var(--pos-rgb)"><circle class="arch-net-cir" cx="268" cy="82" r="7.5"/></g>
+      <g style="--cr:var(--accent-rgb)"><circle class="arch-net-cir" cx="150" cy="78" r="6"/></g>
+      <text class="arch-net-nm" x="150" y="80.5" style="font-size:6px">req</text>
+      <text class="arch-net-lbl" x="150" y="94">user</text>
+      <text class="arch-net-cap" x="238" y="72" style="fill:var(--pos)">cache hit</text>
+      <text class="arch-net-lbl" x="200" y="30">edge PoP</text>
+    </svg>
+  </div><div class="meta"><div class="nm">CDN Edge Map</div><span class="ref">.arch-net-cdn</span><div class="desc">An origin plus edge points of presence, with a request routed to the nearest edge and a cache hit glow. Use for content delivery diagrams.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="chart-flow" data-interact="auto-play" data-c="accent"><div class="stage">
+    <svg class="arch-net-svg arch-net-bgp" viewBox="0 0 300 150" role="img" aria-label="BGP peering between autonomous systems">
+      <path class="arch-net-wire" d="M84 52 216 52M74 68 140 108M226 68 160 108"/>
+      <path class="arch-net-flow" style="--fd:0s" d="M84 52 216 52"/>
+      <path class="arch-net-flow" style="--fd:.5s" d="M216 52 84 52"/>
+      <path class="arch-net-flow" style="--fd:.2s" d="M74 68 140 108"/>
+      <path class="arch-net-flow" style="--fd:.35s" d="M226 68 160 108"/>
+      <g style="--cr:var(--info-rgb)"><rect class="arch-net-box" x="26" y="34" width="60" height="34" rx="16"/></g>
+      <g style="--cr:var(--warn-rgb)"><rect class="arch-net-box" x="214" y="34" width="60" height="34" rx="16"/></g>
+      <g style="--cr:var(--pos-rgb)"><rect class="arch-net-box" x="120" y="96" width="60" height="34" rx="16"/></g>
+      <text class="arch-net-nm" x="56" y="49">AS 64500</text><text class="arch-net-lbl" x="56" y="60">edge</text>
+      <text class="arch-net-nm" x="244" y="49">AS 64501</text><text class="arch-net-lbl" x="244" y="60">transit</text>
+      <text class="arch-net-nm" x="150" y="111">AS 64502</text><text class="arch-net-lbl" x="150" y="122">peer</text>
+      <text class="arch-net-cap" x="128" y="46" style="fill:var(--accent)">routes</text>
+    </svg>
+  </div><div class="meta"><div class="nm">BGP Peering</div><span class="ref">.arch-net-bgp</span><div class="desc">Three autonomous system clouds exchange route advertisements across bidirectional peering links. Use for interdomain and BGP diagrams.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="chart-flow" data-interact="auto-play" data-c="accent"><div class="stage">
+    <svg class="arch-net-svg arch-net-lb" viewBox="0 0 300 150" role="img" aria-label="Load balanced fan out with throughput bars">
+      <path class="arch-net-wire" d="M14 75 44 75M78 60 200 27M78 68 200 63M78 82 200 99M78 90 200 135"/>
+      <path class="arch-net-flow" style="--fd:0s" d="M14 75 44 75"/>
+      <path class="arch-net-flow arch-net-fast" style="--fd:0s" d="M78 60 200 27"/>
+      <path class="arch-net-flow arch-net-fast" style="--fd:.18s" d="M78 68 200 63"/>
+      <path class="arch-net-flow arch-net-fast" style="--fd:.36s" d="M78 82 200 99"/>
+      <path class="arch-net-flow arch-net-fast" style="--fd:.54s" d="M78 90 200 135"/>
+      <g style="--cr:var(--accent-rgb)"><path class="arch-net-dia" d="M61 58 78 75 61 92 44 75Z"/></g>
+      <text class="arch-net-nm" x="61" y="78">LB</text>
+      <g style="--cr:var(--pos-rgb)"><rect class="arch-net-box" x="200" y="20" width="28" height="14" rx="3"/><rect class="arch-net-box" x="200" y="56" width="28" height="14" rx="3"/><rect class="arch-net-box" x="200" y="92" width="28" height="14" rx="3"/><rect class="arch-net-box" x="200" y="128" width="28" height="14" rx="3"/></g>
+      <g style="--c:var(--pos)"><rect class="arch-net-bar" style="--bd:0s" x="234" y="22" width="4" height="10"/><rect class="arch-net-bar" style="--bd:.4s" x="234" y="58" width="4" height="10"/><rect class="arch-net-bar" style="--bd:.8s" x="234" y="94" width="4" height="10"/><rect class="arch-net-bar" style="--bd:1.2s" x="234" y="130" width="4" height="10"/></g>
+      <text class="arch-net-lbl" x="248" y="80" style="writing-mode:tb;font-size:5.5px">throughput</text>
+    </svg>
+  </div><div class="meta"><div class="nm">Load Balanced Fan Out</div><span class="ref">.arch-net-lb</span><div class="desc">A balancer sprays requests to a server pool with per node throughput bars pulsing. Use for load balancer and autoscaling visuals.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="chart-flow" data-interact="auto-play" data-c="info"><div class="stage">
+    <svg class="arch-net-svg arch-net-pubsub" viewBox="0 0 300 150" style="--c:var(--info);--cr:var(--info-rgb)" role="img" aria-label="Publish subscribe broker fabric">
+      <path class="arch-net-wire" d="M40 45 122 68M40 105 122 82M168 62 224 32M168 75 224 72M168 88 224 112"/>
+      <path class="arch-net-flow" style="--fd:0s" d="M40 45 122 68"/>
+      <path class="arch-net-flow" style="--fd:.4s" d="M40 105 122 82"/>
+      <path class="arch-net-flow" style="--fd:.1s;--c:var(--pos)" d="M168 62 224 32"/>
+      <path class="arch-net-flow" style="--fd:.3s;--c:var(--warn)" d="M168 75 224 72"/>
+      <path class="arch-net-flow" style="--fd:.5s;--c:var(--crit)" d="M168 88 224 112"/>
+      <g style="--cr:var(--accent-rgb)"><circle class="arch-net-cir" cx="32" cy="45" r="7"/><circle class="arch-net-cir" cx="32" cy="105" r="7"/></g>
+      <text class="arch-net-lbl" x="32" y="30">pub A</text><text class="arch-net-lbl" x="32" y="122">pub B</text>
+      <g style="--cr:var(--info-rgb)"><rect class="arch-net-box" x="122" y="60" width="46" height="30" rx="5"/><path class="arch-net-gl" d="M130 70h30M130 75h30M130 80h20"/></g>
+      <text class="arch-net-nm" x="145" y="102">broker</text>
+      <g style="--cr:var(--pos-rgb)"><rect class="arch-net-box" x="224" y="20" width="46" height="24" rx="5"/></g>
+      <g style="--cr:var(--warn-rgb)"><rect class="arch-net-box" x="224" y="60" width="46" height="24" rx="5"/></g>
+      <g style="--cr:var(--crit-rgb)"><rect class="arch-net-box" x="224" y="100" width="46" height="24" rx="5"/></g>
+      <g fill="rgba(255,255,255,.55)"><circle cx="234" cy="32" r="2"/><circle cx="244" cy="32" r="2"/><circle cx="234" cy="72" r="2"/><circle cx="244" cy="72" r="2"/><circle cx="234" cy="112" r="2"/><circle cx="244" cy="112" r="2"/></g>
+      <text class="arch-net-lbl" x="258" y="34">group 1</text><text class="arch-net-lbl" x="258" y="74">group 2</text><text class="arch-net-lbl" x="258" y="114">group 3</text>
+    </svg>
+  </div><div class="meta"><div class="nm">Pub Sub Fabric</div><span class="ref">.arch-net-pubsub</span><div class="desc">A broker takes messages from publishers and flows them outward to subscriber groups. Use for event bus and messaging topology diagrams.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="chart-flow" data-interact="auto-play" data-c="pos"><div class="stage">
+    <svg class="arch-net-svg arch-net-svcmesh" viewBox="0 0 300 150" style="--c:var(--pos);--cr:var(--pos-rgb)" role="img" aria-label="Service mesh with mTLS links">
+      <path class="arch-net-wired" d="M72 55 138 55M162 55 228 55M72 105 138 105M162 105 228 105M60 66 60 94M150 66 150 94M240 66 240 94"/>
+      <path class="arch-net-flow" style="--fd:0s" d="M72 55 138 55"/>
+      <path class="arch-net-flow" style="--fd:.3s" d="M162 55 228 55"/>
+      <path class="arch-net-flow" style="--fd:.15s" d="M150 66 150 94"/>
+      <path class="arch-net-flow" style="--fd:.45s" d="M72 105 138 105"/>
+      <path class="arch-net-flow" style="--fd:.6s" d="M162 105 228 105"/>
+      <g style="--cr:var(--pos-rgb)">
+        <rect class="arch-net-box" x="48" y="43" width="24" height="18" rx="3"/><rect class="arch-net-box" x="138" y="43" width="24" height="18" rx="3"/><rect class="arch-net-box" x="228" y="43" width="24" height="18" rx="3"/>
+        <rect class="arch-net-box" x="48" y="93" width="24" height="18" rx="3"/><rect class="arch-net-box" x="138" y="93" width="24" height="18" rx="3"/><rect class="arch-net-box" x="228" y="93" width="24" height="18" rx="3"/>
+      </g>
+      <g style="--cr:var(--info-rgb)"><circle class="arch-net-cir" cx="70" cy="43" r="3.5"/><circle class="arch-net-cir" cx="160" cy="43" r="3.5"/><circle class="arch-net-cir" cx="250" cy="43" r="3.5"/><circle class="arch-net-cir" cx="70" cy="93" r="3.5"/><circle class="arch-net-cir" cx="160" cy="93" r="3.5"/><circle class="arch-net-cir" cx="250" cy="93" r="3.5"/></g>
+      <g fill="var(--pos)"><circle class="arch-net-lit" style="--ld:0s" cx="105" cy="55" r="3"/><circle class="arch-net-lit" style="--ld:.3s" cx="195" cy="55" r="3"/><circle class="arch-net-lit" style="--ld:.45s" cx="105" cy="105" r="3"/></g>
+      <text class="arch-net-lbl" x="60" y="70">svc</text><text class="arch-net-lbl" x="150" y="70">svc</text><text class="arch-net-lbl" x="240" y="70">svc</text>
+      <text class="arch-net-cap" x="88" y="130" style="fill:var(--pos)">mTLS sidecars</text>
+    </svg>
+  </div><div class="meta"><div class="nm">Service Mesh</div><span class="ref">.arch-net-svcmesh</span><div class="desc">A grid of services with sidecar dots and mutual TLS links pulsing between them. Use for service mesh and zero trust topology diagrams.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="chart-flow" data-interact="auto-play" data-c="accent"><div class="stage">
+    <svg class="arch-net-svg arch-net-ring" viewBox="0 0 300 150" role="img" aria-label="Ring topology with circulating token">
+      <circle class="arch-net-wire" cx="150" cy="72" r="42"/>
+      <circle class="arch-net-token" cx="150" cy="72" r="42"/>
+      <g style="--cr:var(--accent-rgb)"><circle class="arch-net-cir" cx="150" cy="30" r="7"/><circle class="arch-net-cir" cx="186" cy="51" r="7"/><circle class="arch-net-cir" cx="186" cy="93" r="7"/><circle class="arch-net-cir" cx="150" cy="114" r="7"/><circle class="arch-net-cir" cx="114" cy="93" r="7"/><circle class="arch-net-cir" cx="114" cy="51" r="7"/></g>
+      <g fill="var(--accent)"><circle class="arch-net-lit arch-net-lit4" style="--ld:0s" cx="150" cy="30" r="7"/><circle class="arch-net-lit arch-net-lit4" style="--ld:.66s" cx="186" cy="51" r="7"/><circle class="arch-net-lit arch-net-lit4" style="--ld:1.33s" cx="186" cy="93" r="7"/><circle class="arch-net-lit arch-net-lit4" style="--ld:2s" cx="150" cy="114" r="7"/><circle class="arch-net-lit arch-net-lit4" style="--ld:2.66s" cx="114" cy="93" r="7"/><circle class="arch-net-lit arch-net-lit4" style="--ld:3.33s" cx="114" cy="51" r="7"/></g>
+      <text class="arch-net-lbl" x="150" y="74">token ring</text>
+    </svg>
+  </div><div class="meta"><div class="nm">Ring Topology</div><span class="ref">.arch-net-ring</span><div class="desc">A token circulates a ring of six nodes, lighting each as it passes. Use for token ring, loop and circular bus network visuals.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="chart-flow" data-interact="auto-play" data-c="info"><div class="stage">
+    <svg class="arch-net-svg arch-net-star" viewBox="0 0 300 150" style="--c:var(--info);--cr:var(--info-rgb)" role="img" aria-label="Star topology with radiating traffic">
+      <path class="arch-net-wire" d="M150 75 150 22M150 75 208 33M150 75 232 75M150 75 208 117M150 75 150 128M150 75 92 117M150 75 68 75M150 75 92 33"/>
+      <path class="arch-net-flow" style="--fd:0s" d="M150 75 150 22"/>
+      <path class="arch-net-flow" style="--fd:.12s" d="M150 75 208 33"/>
+      <path class="arch-net-flow" style="--fd:.24s" d="M150 75 232 75"/>
+      <path class="arch-net-flow" style="--fd:.36s" d="M150 75 208 117"/>
+      <path class="arch-net-flow" style="--fd:.48s" d="M150 75 150 128"/>
+      <path class="arch-net-flow" style="--fd:.6s" d="M150 75 92 117"/>
+      <path class="arch-net-flow" style="--fd:.72s" d="M150 75 68 75"/>
+      <path class="arch-net-flow" style="--fd:.84s" d="M150 75 92 33"/>
+      <g style="--cr:var(--pos-rgb)"><circle class="arch-net-cir" cx="150" cy="22" r="6"/><circle class="arch-net-cir" cx="208" cy="33" r="6"/><circle class="arch-net-cir" cx="232" cy="75" r="6"/><circle class="arch-net-cir" cx="208" cy="117" r="6"/><circle class="arch-net-cir" cx="150" cy="128" r="6"/><circle class="arch-net-cir" cx="92" cy="117" r="6"/><circle class="arch-net-cir" cx="68" cy="75" r="6"/><circle class="arch-net-cir" cx="92" cy="33" r="6"/></g>
+      <g style="--cr:var(--info-rgb)"><rect class="arch-net-box" x="138" y="65" width="24" height="20" rx="4"/><path class="arch-net-gl" d="M144 71h12M144 79h12"/></g>
+      <text class="arch-net-nm" x="150" y="98">hub</text>
+    </svg>
+  </div><div class="meta"><div class="nm">Star Topology</div><span class="ref">.arch-net-star</span><div class="desc">A central hub with eight spokes and traffic radiating outward to each leaf node. Use for hub and spoke or central switch diagrams.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="chart-flow" data-interact="auto-play" data-c="crit"><div class="stage">
+    <svg class="arch-net-svg arch-net-overlay" viewBox="0 0 300 150" style="--c:var(--crit);--cr:var(--crit-rgb)" role="img" aria-label="Overlay tunnel above physical underlay">
+      <path class="arch-net-wire" d="M40 112 120 112M120 112 200 112M200 112 280 112M120 112 160 78M200 112 160 78"/>
+      <path class="arch-net-flow" style="--fd:0s;--c:var(--muted)" d="M40 112 120 112"/>
+      <path class="arch-net-flow" style="--fd:.4s;--c:var(--muted)" d="M200 112 280 112"/>
+      <path class="arch-net-wired" style="stroke:rgba(var(--crit-rgb),.6)" d="M40 96 Q160 20 280 96"/>
+      <path class="arch-net-flow arch-net-slow" style="--fd:0s;--c:var(--crit)" d="M40 96 Q160 20 280 96"/>
+      <g><rect class="arch-net-neu" x="30" y="104" width="20" height="16" rx="3"/><rect class="arch-net-neu" x="110" y="104" width="20" height="16" rx="3"/><rect class="arch-net-neu" x="150" y="70" width="20" height="16" rx="3"/><rect class="arch-net-neu" x="190" y="104" width="20" height="16" rx="3"/><rect class="arch-net-neu" x="270" y="104" width="20" height="16" rx="3"/></g>
+      <g style="--cr:var(--crit-rgb)"><path class="arch-net-dia" d="M40 88 48 96 40 104 32 96Z"/><path class="arch-net-dia" d="M280 88 288 96 280 104 272 96Z"/></g>
+      <text class="arch-net-cap" x="118" y="40" style="fill:var(--crit)">logical overlay tunnel</text>
+      <text class="arch-net-cap" x="118" y="135" style="fill:var(--muted)">physical underlay fabric</text>
+    </svg>
+  </div><div class="meta"><div class="nm">Overlay Underlay</div><span class="ref">.arch-net-overlay</span><div class="desc">A physical underlay fabric carries a dashed logical tunnel arcing above between two endpoints. Use for VPN, VXLAN and SD WAN diagrams.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="chart-flow" data-interact="auto-play" data-c="warn"><div class="stage">
+    <svg class="arch-net-svg arch-net-heat" viewBox="0 0 300 150" style="--c:var(--warn);--cr:var(--warn-rgb)" role="img" aria-label="Latency heat links with reroute">
+      <path class="arch-net-wire" style="stroke:rgba(var(--pos-rgb),.85)" d="M40 40 150 75M40 110 150 75"/>
+      <path class="arch-net-wire" style="stroke:rgba(var(--pos-rgb),.85)" d="M150 75 262 110"/>
+      <path class="arch-net-wire" style="stroke:rgba(var(--warn-rgb),.85)" d="M150 75 262 40"/>
+      <path class="arch-net-flow" style="--fd:0s;--c:var(--pos)" d="M40 40 150 75"/>
+      <path class="arch-net-r1" style="--c:var(--warn)" d="M150 75 262 40"/>
+      <path class="arch-net-hot" d="M150 75 262 40"/>
+      <path class="arch-net-r2" d="M150 75 262 110"/>
+      <g style="--cr:var(--pos-rgb)"><circle class="arch-net-cir" cx="40" cy="40" r="7"/><circle class="arch-net-cir" cx="40" cy="110" r="7"/></g>
+      <g style="--cr:var(--info-rgb)"><circle class="arch-net-cir" cx="150" cy="75" r="8"/></g>
+      <g style="--cr:var(--warn-rgb)"><circle class="arch-net-cir" cx="262" cy="40" r="7"/></g>
+      <g style="--cr:var(--pos-rgb)"><circle class="arch-net-cir" cx="262" cy="110" r="7"/></g>
+      <text class="arch-net-nm" x="150" y="77.5">R</text>
+      <text class="arch-net-cap" x="88" y="52" style="fill:var(--pos)">8ms</text>
+      <text class="arch-net-cap" x="205" y="50" style="fill:var(--neg)">40ms hot</text>
+      <text class="arch-net-cap" x="200" y="98" style="fill:var(--pos)">reroute</text>
+    </svg>
+  </div><div class="meta"><div class="nm">Latency Heat Links</div><span class="ref">.arch-net-heat</span><div class="desc">Edges coloured by latency, with one link heating to red and traffic rerouting to a faster path. Use for SLA and latency aware routing visuals.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+</div>

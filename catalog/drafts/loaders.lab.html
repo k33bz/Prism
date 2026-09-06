@@ -217,6 +217,9 @@
 .lab-ld-hexfilltile{animation:labLdHexFill 3.4s ease-in-out infinite}
 @keyframes labLdHexFlip{0%,58%,100%{transform:rotateY(0);background:var(--panel2)}20%,40%{transform:rotateY(180deg);background:var(--info)}}
 @keyframes labLdHexFill{0%,6%{--lab-ld-hp:0}84%,92%{--lab-ld-hp:100}100%{--lab-ld-hp:0}}
+.lab-ld-hexorbit .lab-ld-hexo{transform-style:preserve-3d;backface-visibility:hidden;transform-origin:var(--ox) var(--oy);
+  animation-name:labLdHexEdge;animation-duration:2.8s;animation-timing-function:ease-in-out;animation-iteration-count:infinite;animation-delay:calc(var(--i,0)*.42s)}
+@keyframes labLdHexEdge{0%,52%,100%{transform:rotate3d(var(--ax,1),var(--ay,0),0,0deg);background:var(--panel2)}20%,38%{transform:rotate3d(var(--ax,1),var(--ay,0),0,180deg);background:var(--info)}}
 @media (prefers-reduced-motion:reduce){ .lab-ld-hexo{animation:none!important} .lab-ld-hexfilltile{animation:none!important} .lab-ld-hexmap{--lab-ld-hp:66} }
 </style>
 <div class="gallery">
@@ -323,5 +326,17 @@
       <span class="lab-ld-hx lab-ld-hexc" style="left:42px;top:38px"><i class="lab-ld-hexfill"></i><b class="lab-ld-hexmeter"></b></span>
     </div>
   </div><div class="meta"><div class="nm">Hex Map</div><span class="ref">.lab-ld-hexmap</span><div class="desc">Six outer hexes flip on their edges in a chase around a central hex, which fills from cyan to violet as the count climbs to 100%. A honeycomb progress loader.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="loader" data-interact="auto-play" data-c="info"><div class="stage">
+    <div class="lab-ld-hexmap lab-ld-hexorbit lab-ld-hexfilltile" role="img" aria-label="Hex orbit loader: outer hexes flip on their inner edges around a filling central hex">
+      <span class="lab-ld-hx lab-ld-hexo" style="left:42px;top:0;--i:0;--ax:-1;--ay:0;--ox:50%;--oy:100%"></span>
+      <span class="lab-ld-hx lab-ld-hexo" style="left:75px;top:19px;--i:1;--ax:-.51;--ay:-.86;--ox:7%;--oy:76%"></span>
+      <span class="lab-ld-hx lab-ld-hexo" style="left:75px;top:57px;--i:2;--ax:.49;--ay:-.87;--ox:7%;--oy:25%"></span>
+      <span class="lab-ld-hx lab-ld-hexo" style="left:42px;top:76px;--i:3;--ax:1;--ay:0;--ox:50%;--oy:0%"></span>
+      <span class="lab-ld-hx lab-ld-hexo" style="left:9px;top:57px;--i:4;--ax:.49;--ay:.87;--ox:93%;--oy:25%"></span>
+      <span class="lab-ld-hx lab-ld-hexo" style="left:9px;top:19px;--i:5;--ax:-.51;--ay:.86;--ox:93%;--oy:76%"></span>
+      <span class="lab-ld-hx lab-ld-hexc" style="left:42px;top:38px"><i class="lab-ld-hexfill"></i><b class="lab-ld-hexmeter"></b></span>
+    </div>
+  </div><div class="meta"><div class="nm">Hex Orbit</div><span class="ref">.lab-ld-hexorbit</span><div class="desc">The hex map, but each outer hex flips on the edge that touches the central hex, so the ring rolls around it almost like a wheel while the centre fills to 100%.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
 </div>

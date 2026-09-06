@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Twin Race · Prism</title>
+<!-- Prism showcase sample: objects-twin-race (gallery: objects). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.obj-sand-root { position: relative; width: 100%; max-width: 300px; height: 150px; border-radius: 10px; overflow: hidden; background: linear-gradient(160deg,var(--panel2),var(--panel)); display: grid; place-items: center; isolation: isolate; }
+.obj-sand-tag { position: absolute; left: 12px; bottom: 9px; z-index: 8; font: 500 10px / 1 ui-monospace, Menlo, monospace; letter-spacing: 0.06em; color: var(--muted); opacity: 0.9; pointer-events: none; text-shadow: rgba(0, 0, 0, 0.5) 0px 1px 4px; }
+.obj-sand-race { position: relative; width: 150px; height: 118px; display: flex; gap: 18px; justify-content: center; align-items: center; }
+.obj-sand-race-u { position: relative; width: 52px; height: 100px; }
+.obj-sand-race-b { position: absolute; left: 0px; right: 0px; height: 42px; overflow: hidden; border: 1.5px solid var(--muted); }
+.obj-sand-race-t { top: 4px; border-radius: 24px 24px 5px 5px; border-bottom-width: medium; border-bottom-style: none; border-bottom-color: currentcolor; }
+.obj-sand-race-bt { bottom: 4px; border-radius: 5px 5px 24px 24px; border-top-width: medium; border-top-style: none; border-top-color: currentcolor; }
+.obj-sand-race-ts { position: absolute; inset: 0px; transform-origin: center top; }
+.obj-sand-race-bs { position: absolute; inset: 0px; clip-path: polygon(50% 40%, 100% 100%, 0px 100%); transform: scaleY(0); transform-origin: center bottom; }
+.obj-sand-race-u:nth-child(1) .obj-sand-race-ts { background: var(--warn); animation: 4s cubic-bezier(0.4, 0, 0.6, 1) 0s infinite normal none running objSandRaceAt; }
+.obj-sand-race-u:nth-child(1) .obj-sand-race-bs { background: rgba(var(--warn-rgb),.85); animation: 4s cubic-bezier(0.4, 0, 0.6, 1) 0s infinite normal none running objSandRaceAb; }
+.obj-sand-race-u:nth-child(2) .obj-sand-race-ts { background: var(--info); animation: 4s ease-in 0s infinite normal none running objSandRaceBt; }
+.obj-sand-race-u:nth-child(2) .obj-sand-race-bs { background: rgba(var(--info-rgb),.85); animation: 4s ease-in 0s infinite normal none running objSandRaceBb; }
+.obj-sand-race-fr { position: absolute; left: 2px; right: 2px; height: 4px; background: var(--panel2); border-radius: 2px; }
+.obj-sand-race-fr.obj-sand-race-frt { top: -2px; }
+.obj-sand-race-fr.obj-sand-race-frb { bottom: -2px; }
+@keyframes objSandRaceAt { 
+  0% { transform: scaleY(1); }
+  75%, 100% { transform: scaleY(0.05); }
+}
+@keyframes objSandRaceAb { 
+  0% { transform: scaleY(0.05); }
+  75%, 100% { transform: scaleY(1); }
+}
+@keyframes objSandRaceBt { 
+  0% { transform: scaleY(1); }
+  96%, 100% { transform: scaleY(0.05); }
+}
+@keyframes objSandRaceBb { 
+  0% { transform: scaleY(0.05); }
+  96%, 100% { transform: scaleY(1); }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="obj-sand-root"><div class="obj-sand-race"><div class="obj-sand-race-u"><span class="obj-sand-race-fr obj-sand-race-frt"></span><span class="obj-sand-race-b obj-sand-race-t"><span class="obj-sand-race-ts"></span></span><span class="obj-sand-race-b obj-sand-race-bt"><span class="obj-sand-race-bs"></span></span><span class="obj-sand-race-fr obj-sand-race-frb"></span></div><div class="obj-sand-race-u"><span class="obj-sand-race-fr obj-sand-race-frt"></span><span class="obj-sand-race-b obj-sand-race-t"><span class="obj-sand-race-ts"></span></span><span class="obj-sand-race-b obj-sand-race-bt"><span class="obj-sand-race-bs"></span></span><span class="obj-sand-race-fr obj-sand-race-frb"></span></div></div><span class="obj-sand-tag">Atlas vs Comet</span></div></div></div>
+<div class="meta"><b>Twin Race</b> · <code>objects-twin-race</code><br>Animated Objects · HOURGLASS &amp; SAND<p>Two hourglasses drain at different rates so one finishes well before the other. Comparisons, A vs B, and split timers.</p></div>
+
+</body>
+</html>

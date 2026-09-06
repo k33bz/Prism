@@ -2,7 +2,7 @@
 
 Every effect in Prism's **Animation Lab** gallery, recorded as a looping GIF.
 
-**259 effects** · 247 animated · 3.1 MB of GIF · click any GIF to open its standalone HTML sample (raw file; open it locally, GitHub shows source).
+**260 effects** · 248 animated · 3.1 MB of GIF · click any GIF to open its standalone HTML sample (raw file; open it locally, GitHub shows source).
 
 [← Showcase index](../README.md)
 
@@ -159,6 +159,7 @@ Every effect in Prism's **Animation Lab** gallery, recorded as a looping GIF.
 <tr><td align="center" valign="top" width="33%"><a href="../html/lab-log-tail-loader.html"><img src="../gif/lab-log-tail-loader.gif" width="300" alt="Log Tail Loader"></a><br><b>Log Tail Loader</b><br><sub><code>lab-log-tail-loader</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/lab-text-fill-loader.html"><img src="../gif/lab-text-fill-loader.gif" width="300" alt="Text Fill Loader"></a><br><b>Text Fill Loader</b><br><sub><code>lab-text-fill-loader</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/lab-flip-tiles.html"><img src="../gif/lab-flip-tiles.gif" width="300" alt="Flip Tiles"></a><br><b>Flip Tiles</b><br><sub><code>lab-flip-tiles</code></sub></td></tr>
 <tr><td align="center" valign="top" width="33%"><a href="../html/lab-diamond-ripple.html"><img src="../gif/lab-diamond-ripple.gif" width="300" alt="Diamond Ripple"></a><br><b>Diamond Ripple</b><br><sub><code>lab-diamond-ripple</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/lab-chomp-loader.html"><img src="../gif/lab-chomp-loader.gif" width="300" alt="Chomp Loader"></a><br><b>Chomp Loader</b><br><sub><code>lab-chomp-loader</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/lab-upload-cloud.html"><img src="../gif/lab-upload-cloud.gif" width="300" alt="Upload Cloud"></a><br><b>Upload Cloud</b><br><sub><code>lab-upload-cloud</code></sub></td></tr>
 <tr><td align="center" valign="top" width="33%"><a href="../html/lab-counting-percent.html"><img src="../gif/lab-counting-percent.gif" width="300" alt="Counting Percent"></a><br><b>Counting Percent</b><br><sub><code>lab-counting-percent</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/lab-caterpillar-pills.html"><img src="../gif/lab-caterpillar-pills.gif" width="300" alt="Caterpillar Pills"></a><br><b>Caterpillar Pills</b><br><sub><code>lab-caterpillar-pills</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/lab-hex-map.html"><img src="../gif/lab-hex-map.gif" width="300" alt="Hex Map"></a><br><b>Hex Map</b><br><sub><code>lab-hex-map</code></sub></td></tr>
+<tr><td align="center" valign="top" width="33%"><a href="../html/lab-hex-orbit.html"><img src="../gif/lab-hex-orbit.gif" width="300" alt="Hex Orbit"></a><br><b>Hex Orbit</b><br><sub><code>lab-hex-orbit</code></sub></td></tr>
 </table>
 
 ## Liquid & Fluid

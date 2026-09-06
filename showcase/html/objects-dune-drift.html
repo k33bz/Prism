@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dune Drift · Prism</title>
+<!-- Prism showcase sample: objects-dune-drift (gallery: objects). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.obj-sand-root { position: relative; width: 100%; max-width: 300px; height: 150px; border-radius: 10px; overflow: hidden; background: linear-gradient(160deg,var(--panel2),var(--panel)); display: grid; place-items: center; isolation: isolate; }
+.obj-sand-tag { position: absolute; left: 12px; bottom: 9px; z-index: 8; font: 500 10px / 1 ui-monospace, Menlo, monospace; letter-spacing: 0.06em; color: var(--muted); opacity: 0.9; pointer-events: none; text-shadow: rgba(0, 0, 0, 0.5) 0px 1px 4px; }
+.obj-sand-dune { background: linear-gradient(180deg,var(--panel),var(--panel2)); }
+.obj-sand-dune-l { position: absolute; left: -20%; width: 140%; height: 60px; background: linear-gradient(180deg,rgba(var(--warn-rgb),.5),rgba(var(--warn-rgb),.15)); border-radius: 50% 50% 0px 0px / 100% 100% 0px 0px; animation-name: objSandDune; animation-duration: 4s; animation-timing-function: ease-in-out; animation-iteration-count: infinite; animation-delay: var(--d,0s); }
+.obj-sand-dune-l:nth-child(1) { bottom: -16px; opacity: 0.9; }
+.obj-sand-dune-l:nth-child(2) { bottom: 2px; opacity: 0.7; background: linear-gradient(180deg,rgba(var(--warn-rgb),.4),rgba(var(--warn-rgb),.1)); }
+.obj-sand-dune-l:nth-child(3) { bottom: 22px; opacity: 0.5; height: 44px; background: linear-gradient(180deg,rgba(var(--warn-rgb),.3),transparent); }
+.obj-sand-dune-wind { position: absolute; top: 14px; left: -40%; width: 60%; height: 2px; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent); animation: 4s linear 0s infinite normal none running objSandDuneWind; }
+@keyframes objSandDune { 
+  0%, 100% { transform: translateX(0px); }
+  50% { transform: translateX(18px); }
+}
+@keyframes objSandDuneWind { 
+  0% { transform: translateX(0px); }
+  100% { transform: translateX(240px); }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="obj-sand-root obj-sand-dune"><span class="obj-sand-dune-l" style="--d:0s"></span><span class="obj-sand-dune-l" style="--d:.6s"></span><span class="obj-sand-dune-l" style="--d:1.2s"></span><span class="obj-sand-dune-wind"></span><span class="obj-sand-tag">Nova · drift</span></div></div></div>
+<div class="meta"><b>Dune Drift</b> · <code>objects-dune-drift</code><br>Animated Objects · HOURGLASS &amp; SAND<p>Layered wind-blown sand ridges slide back and forth while a gust streaks across the top. A warm ambient backdrop.</p></div>
+
+</body>
+</html>

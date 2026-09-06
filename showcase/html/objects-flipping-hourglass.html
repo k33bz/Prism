@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Flipping Hourglass · Prism</title>
+<!-- Prism showcase sample: objects-flipping-hourglass (gallery: objects). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.obj-sand-root { position: relative; width: 100%; max-width: 300px; height: 150px; border-radius: 10px; overflow: hidden; background: linear-gradient(160deg,var(--panel2),var(--panel)); display: grid; place-items: center; isolation: isolate; }
+.obj-sand-tag { position: absolute; left: 12px; bottom: 9px; z-index: 8; font: 500 10px / 1 ui-monospace, Menlo, monospace; letter-spacing: 0.06em; color: var(--muted); opacity: 0.9; pointer-events: none; text-shadow: rgba(0, 0, 0, 0.5) 0px 1px 4px; }
+.obj-sand-flip { position: relative; width: 70px; height: 114px; animation: 4s cubic-bezier(0.7, 0, 0.3, 1) 0s infinite normal none running objSandFlipSpin; }
+.obj-sand-flip-fr { position: absolute; left: 4px; right: 4px; height: 6px; background: var(--panel2); border-radius: 3px; }
+.obj-sand-flip-fr.obj-sand-flip-ft { top: 0px; }
+.obj-sand-flip-fr.obj-sand-flip-fb { bottom: 0px; }
+.obj-sand-flip-b { position: absolute; left: 0px; right: 0px; height: 48px; overflow: hidden; }
+.obj-sand-flip-t { top: 8px; border-top-color: ; border-top-style: ; border-top-width: ; border-right-color: ; border-right-style: ; border-right-width: ; border-left-color: ; border-left-style: ; border-left-width: ; border-image-source: ; border-image-slice: ; border-image-width: ; border-image-outset: ; border-image-repeat: ; border-bottom-width: medium; border-bottom-style: none; border-bottom-color: currentcolor; clip-path: polygon(0px 0px, 100% 0px, 55% 100%, 45% 100%); }
+.obj-sand-flip-bt { bottom: 8px; border-right-color: ; border-right-style: ; border-right-width: ; border-bottom-color: ; border-bottom-style: ; border-bottom-width: ; border-left-color: ; border-left-style: ; border-left-width: ; border-image-source: ; border-image-slice: ; border-image-width: ; border-image-outset: ; border-image-repeat: ; border-top-width: medium; border-top-style: none; border-top-color: currentcolor; clip-path: polygon(45% 0px, 55% 0px, 100% 100%, 0px 100%); }
+.obj-sand-flip-ts { position: absolute; inset: 0px; background: var(--warn); clip-path: polygon(0px 0px, 100% 0px, 55% 100%, 45% 100%); transform-origin: center top; animation: 4s ease-in-out 0s infinite normal none running objSandFlipTop; }
+.obj-sand-flip-bs { position: absolute; inset: 0px; background: rgba(var(--warn-rgb),.85); clip-path: polygon(50% 45%, 100% 100%, 0px 100%); transform: scaleY(0); transform-origin: center bottom; animation: 4s ease-in-out 0s infinite normal none running objSandFlipBot; }
+@keyframes objSandFlipSpin { 
+  0%, 72% { transform: rotate(0deg); }
+  86%, 100% { transform: rotate(180deg); }
+}
+@keyframes objSandFlipTop { 
+  0% { transform: scaleY(1); }
+  70%, 100% { transform: scaleY(0.06); }
+}
+@keyframes objSandFlipBot { 
+  0% { transform: scaleY(0.06); }
+  70%, 100% { transform: scaleY(1); }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="obj-sand-root"><div class="obj-sand-flip"><span class="obj-sand-flip-fr obj-sand-flip-ft"></span><span class="obj-sand-flip-b obj-sand-flip-t"><span class="obj-sand-flip-ts"></span></span><span class="obj-sand-flip-b obj-sand-flip-bt"><span class="obj-sand-flip-bs"></span></span><span class="obj-sand-flip-fr obj-sand-flip-fb"></span></div><span class="obj-sand-tag">Comet · flip</span></div></div></div>
+<div class="meta"><b>Flipping Hourglass</b> · <code>objects-flipping-hourglass</code><br>Animated Objects · HOURGLASS &amp; SAND<p>The sand drains, then the whole glass rotates 180 degrees to reset and start again. A self-restarting timer motif.</p></div>
+
+</body>
+</html>
