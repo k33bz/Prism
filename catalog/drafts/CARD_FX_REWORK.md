@@ -5,7 +5,13 @@ Prism Foil Picker voting page (2026-09-06): **30 loved, 9 passed**. Decision: ke
 published and **rework** the 9 rather than cut them. Nothing is removed. Iterate in place;
 re-run the pipeline and recapture the GIF for each as it is reworked, then tick it off here.
 
-## To rework (the 9 that did not land yet)
+## Reworked (done)
+
+- **Overhand Shuffle** `.dk-overhand` (2026-09-06) - rebuilt as a clear two-stack pull-and-drop: a highlighted (warn-bordered) 3-card packet lifts off the right stack, arcs over the gap and drops onto the left stack, then returns.
+- **Halo Foil** `.fxc-f-halo` (2026-09-06) - bolder, higher-contrast swooping arcs (info+crit bands) with a raking white sheen; fxcArc travel bumped to -13px.
+- **Enchanted** `.fxc-f-enchanted` (2026-09-06) - ornate glowing corner filigree + double inset border, richer whole-face cold-foil (rainbow + diagonal sheen).
+
+## To rework (remaining)
 
 | Facet | Ref | Why it fell short | Rework direction |
 |---|---|---|---|
@@ -15,9 +21,6 @@ re-run the pipeline and recapture the GIF for each as it is reworked, then tick 
 | Linear Foil | `.fxc-f-linear` | Too subtle | Stronger brushed-metal grain + a sharper directional sheen sweep |
 | Gold Foil | `.fxc-f-gold` | Reads flat | Engraved gold frame (masked to the border) + warmer specular highlight |
 | Tinsel | `.fxc-f-tinsel` | Too close to Linear | Tighter, brighter shimmer with a faster travel, or fold into Linear |
-| Halo Foil | `.fxc-f-halo` | Arcs are faint | Bolder swooping curves, higher contrast, arcs that rake with the tilt |
-| Enchanted | `.fxc-f-enchanted` | Border reads generic | More ornate corner filigree + a richer whole-face cold-foil shimmer |
-| Overhand Shuffle | `.dk-overhand` | Least legible shuffle | Fewer cards, a bigger packet pull-and-drop with clear top->front travel |
 
 ## Loved (30) — keep as-is
 
