@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bottom Tab Bar · Prism</title>
+<!-- Prism showcase sample: menus-bottom-tab-bar (gallery: menus). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.mnu-item.is-active { color: var(--accent); }
+.mnu-item.is-active .mnu-check { opacity: 1; }
+.mnu-nav-underline a.is-active { color: var(--ink); }
+.mnu-nav-underline a:nth-child(1).is-active ~ .mnu-nu-bar, .mnu-nav-underline a:nth-child(1):hover ~ .mnu-nu-bar { transform: translateX(0px); }
+.mnu-nav-underline a:nth-child(2).is-active ~ .mnu-nu-bar, .mnu-nav-underline a:nth-child(2):hover ~ .mnu-nu-bar { transform: translateX(100%); }
+.mnu-nav-underline a:nth-child(3).is-active ~ .mnu-nu-bar, .mnu-nav-underline a:nth-child(3):hover ~ .mnu-nu-bar { transform: translateX(200%); }
+.mnu-nav-underline a:nth-child(4).is-active ~ .mnu-nu-bar, .mnu-nav-underline a:nth-child(4):hover ~ .mnu-nu-bar { transform: translateX(300%); }
+.mnu-sidebar a.is-active { background: rgba(var(--accent-rgb),.16); color: var(--accent); box-shadow: 0 0 0 1px rgba(var(--accent-rgb),.3); animation: 2.6s ease-in-out 0s infinite normal none running mnuPulseGlow; }
+.mnu-pillnav a.is-active, .mnu-pillnav a:hover { color: var(--ink); }
+.mnu-pillnav a:nth-child(1).is-active ~ .mnu-pn-pill, .mnu-pillnav a:nth-child(1):hover ~ .mnu-pn-pill { transform: translateX(0px); }
+.mnu-pillnav a:nth-child(2).is-active ~ .mnu-pn-pill, .mnu-pillnav a:nth-child(2):hover ~ .mnu-pn-pill { transform: translateX(68px); }
+.mnu-pillnav a:nth-child(3).is-active ~ .mnu-pn-pill, .mnu-pillnav a:nth-child(3):hover ~ .mnu-pn-pill { transform: translateX(146px); }
+.mnu-actionbar button.is-active { color: var(--accent); background: rgba(var(--accent-rgb),.14); }
+.mnu-ts-track a.is-active { background: rgba(var(--info-rgb),.18); border-color: rgba(var(--info-rgb),.5); color: var(--info); }
+@keyframes mnuPulseGlow { 
+  0%, 100% { box-shadow: 0 0 0 rgba(var(--accent-rgb),0); }
+  50% { box-shadow: 0 0 14px rgba(var(--accent-rgb),.45); }
+}
+.mnu-hdr-links a.is-active { color: var(--accent); }
+.mnu-rail a.is-active { background: rgba(var(--accent-rgb),.16); color: var(--accent); box-shadow: 0 0 0 1px rgba(var(--accent-rgb),.3); animation: 2.6s ease-in-out 0s infinite normal none running mnuPulseGlow; }
+.mnu-tabbar { position: relative; display: flex; width: 262px; background: var(--panel2); border: 1px solid var(--line); border-radius: 15px; padding: 6px; }
+.mnu-tabbar a { position: relative; flex: 1 1 0px; display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 7px 0px; color: var(--muted); text-decoration: none; font: 700 9px ui-sans-serif, system-ui, sans-serif; letter-spacing: 0.03em; z-index: 1; transition: color 0.2s; }
+.mnu-tb-ic { font-size: 16px; transition: transform 0.26s cubic-bezier(0.34, 1.4, 0.5, 1); }
+.mnu-tabbar a.is-active, .mnu-tabbar a:hover { color: var(--accent); }
+.mnu-tabbar a.is-active .mnu-tb-ic, .mnu-tabbar a:hover .mnu-tb-ic { transform: translateY(-2px) scale(1.14); }
+.mnu-tb-ink { position: absolute; top: 6px; bottom: 6px; left: 6px; width: calc(25% - 3px); border-radius: 11px; background: rgba(var(--accent-rgb),.15); box-shadow: inset 0 0 0 1px rgba(var(--accent-rgb),.3); transition: transform 0.34s cubic-bezier(0.25, 1, 0.35, 1); z-index: 0; }
+.mnu-tabbar a:nth-child(1).is-active ~ .mnu-tb-ink, .mnu-tabbar a:nth-child(1):hover ~ .mnu-tb-ink { transform: translateX(0px); }
+.mnu-tabbar a:nth-child(2).is-active ~ .mnu-tb-ink, .mnu-tabbar a:nth-child(2):hover ~ .mnu-tb-ink { transform: translateX(100%); }
+.mnu-tabbar a:nth-child(3).is-active ~ .mnu-tb-ink, .mnu-tabbar a:nth-child(3):hover ~ .mnu-tb-ink { transform: translateX(200%); }
+.mnu-tabbar a:nth-child(4).is-active ~ .mnu-tb-ink, .mnu-tabbar a:nth-child(4):hover ~ .mnu-tb-ink { transform: translateX(300%); }
+.mnu-dotnav a.is-active { background: var(--accent); box-shadow: 0 0 0 4px rgba(var(--accent-rgb),.2); transform: scale(1.15); }
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><nav class="mnu-tabbar"><a href="#" class="is-active"><span class="mnu-tb-ic">🏠</span>Home</a><a href="#"><span class="mnu-tb-ic">🔍</span>Search</a><a href="#"><span class="mnu-tb-ic">📬</span>Inbox</a><a href="#"><span class="mnu-tb-ic">👤</span>You</a><span class="mnu-tb-ink"></span></nav></div></div>
+<div class="meta"><b>Bottom Tab Bar</b> · <code>menus-bottom-tab-bar</code><br>Menus &amp; Actions · NAVIGATION MOTION<p>The mobile bottom nav: an accent ink pad slides under the active tab while its icon lifts and scales, the app tab bar. Hover a tab to move the ink.</p></div>
+
+</body>
+</html>

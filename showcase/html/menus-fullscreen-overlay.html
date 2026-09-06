@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fullscreen Overlay · Prism</title>
+<!-- Prism showcase sample: menus-fullscreen-overlay (gallery: menus). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.mnu-overlay { position: relative; width: 240px; height: 162px; border-radius: 12px; overflow: hidden; background: var(--card); border: 1px solid var(--line); }
+.mnu-ov-top { position: absolute; top: 0px; left: 0px; right: 0px; height: 44px; display: flex; align-items: center; justify-content: space-between; padding: 0px 13px; z-index: 4; }
+.mnu-ov-logo { font: 800 13px ui-sans-serif, system-ui, sans-serif; color: var(--ink); display: flex; align-items: center; gap: 7px; }
+.mnu-ov-logo::before { content: ""; width: 15px; height: 15px; border-radius: 5px; background: linear-gradient(135deg,var(--accent),rgba(var(--accent-rgb),.5)); }
+.mnu-ov-logo { transition: opacity 0.2s; }
+.mnu-ov-input:checked ~ .mnu-ov-top .mnu-ov-logo { opacity: 0; }
+.mnu-ov-input { position: absolute; opacity: 0; width: 0px; height: 0px; }
+.mnu-ov-btn { width: 30px; height: 30px; border-radius: 8px; background: var(--panel2); border: 1px solid var(--line); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; cursor: pointer; }
+.mnu-ov-btn span { display: block; width: 16px; height: 2px; border-radius: 2px; background: var(--ink); transition: transform 0.3s cubic-bezier(0.3, 1, 0.4, 1), opacity 0.2s; }
+.mnu-ov-input:checked ~ .mnu-ov-top .mnu-ov-btn span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.mnu-ov-input:checked ~ .mnu-ov-top .mnu-ov-btn span:nth-child(2) { opacity: 0; }
+.mnu-ov-input:checked ~ .mnu-ov-top .mnu-ov-btn span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+.mnu-ov-panel { position: absolute; inset: 0px; background: linear-gradient(155deg,var(--panel2),var(--panel)); display: flex; flex-direction: column; justify-content: center; gap: 6px; padding: 0px 24px; opacity: 0; visibility: hidden; transform: scale(1.05); transition: opacity 0.3s, transform 0.38s cubic-bezier(0.25, 1, 0.35, 1), visibility 0.3s; z-index: 2; }
+.mnu-ov-input:checked ~ .mnu-ov-panel { opacity: 1; visibility: visible; transform: scale(1); }
+.mnu-ov-panel a { font: 800 21px ui-sans-serif, system-ui, sans-serif; color: var(--ink); text-decoration: none; opacity: 0; transform: translateY(12px); transition: opacity 0.3s, transform 0.3s, color 0.15s; }
+.mnu-ov-panel a:hover { color: var(--accent); }
+.mnu-ov-input:checked ~ .mnu-ov-panel a { opacity: 1; transform: none; }
+.mnu-ov-input:checked ~ .mnu-ov-panel a:nth-child(1) { transition-delay: 0.1s; }
+.mnu-ov-input:checked ~ .mnu-ov-panel a:nth-child(2) { transition-delay: 0.17s; }
+.mnu-ov-input:checked ~ .mnu-ov-panel a:nth-child(3) { transition-delay: 0.24s; }
+.mnu-ov-input:checked ~ .mnu-ov-panel a:nth-child(4) { transition-delay: 0.31s; }
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="mnu-overlay">
+      <input type="checkbox" id="mnu-ov-demo" class="mnu-ov-input">
+      <div class="mnu-ov-top"><span class="mnu-ov-logo">Horizon</span><label for="mnu-ov-demo" class="mnu-ov-btn"><span></span><span></span><span></span></label></div>
+      <nav class="mnu-ov-panel"><a href="#">Work</a><a href="#">Studio</a><a href="#">Journal</a><a href="#">Contact</a></nav>
+    </div></div></div>
+<div class="meta"><b>Fullscreen Overlay</b> · <code>menus-fullscreen-overlay</code><br>Menus &amp; Actions · NAVIGATION MOTION<p>The hamburger opens a full-screen panel that scales in while the big links rise in one after another, the immersive mobile menu. Click the icon; the bars morph to a close.</p></div>
+
+</body>
+</html>

@@ -1,5 +1,5 @@
 {
-  "count": 3436,
+  "count": 3442,
   "effects": [
     {
       "id": "charts-big-metric-count-up",
@@ -1896,9 +1896,9 @@
         "sl",
         "ts",
         "lv",
-        "info",
-        "m",
         "ok",
+        "m",
+        "info",
         "warn",
         "err",
         "cursor"
@@ -25244,9 +25244,9 @@
         "gate",
         "experts",
         "expert",
+        "on",
         "ed",
         "ew",
-        "on",
         "cap",
         "pr-playbtn"
       ],
@@ -54964,6 +54964,185 @@
       "updatedOn": null,
       "author": "k33bz",
       "description": "The mobile footer: each link group collapses behind a heading and expands when tapped, so a long footer fits a small screen. Checkbox-driven, the plus turns to a cross."
+    },
+    {
+      "id": "menus-fullscreen-overlay",
+      "name": "Fullscreen Overlay",
+      "gallery": "menus",
+      "category": "NAVIGATION MOTION",
+      "ref": ".mnu-overlay",
+      "classes": [
+        "mnu-overlay",
+        "mnu-ov-input",
+        "mnu-ov-top",
+        "mnu-ov-logo",
+        "mnu-ov-btn",
+        "mnu-ov-panel"
+      ],
+      "params": [],
+      "tags": [
+        "menus",
+        "new"
+      ],
+      "componentType": "menu",
+      "interaction": "toggle",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": "2026-09-06",
+      "updatedOn": null,
+      "author": "k33bz",
+      "description": "The hamburger opens a full-screen panel that scales in while the big links rise in one after another, the immersive mobile menu. Click the icon; the bars morph to a close."
+    },
+    {
+      "id": "menus-dock-nav",
+      "name": "Dock Nav",
+      "gallery": "menus",
+      "category": "NAVIGATION MOTION",
+      "ref": ".mnu-dock",
+      "classes": [
+        "mnu-dock"
+      ],
+      "params": [
+        "dataAttributes"
+      ],
+      "tags": [
+        "menus",
+        "new"
+      ],
+      "componentType": "menu",
+      "interaction": "hover",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": "2026-09-06",
+      "updatedOn": null,
+      "author": "k33bz",
+      "description": "Hover an icon and it springs up and enlarges with a label above it, the macOS dock. A bouncy cubic-bezier gives the magnify its life."
+    },
+    {
+      "id": "menus-collapsible-rail",
+      "name": "Collapsible Rail",
+      "gallery": "menus",
+      "category": "NAVIGATION MOTION",
+      "ref": ".mnu-rail",
+      "classes": [
+        "mnu-rail",
+        "is-active",
+        "mnu-rail-ic",
+        "mnu-rail-lbl"
+      ],
+      "params": [],
+      "tags": [
+        "menus",
+        "animated",
+        "new"
+      ],
+      "componentType": "menu",
+      "interaction": "hover",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": "2026-09-06",
+      "updatedOn": null,
+      "author": "k33bz",
+      "description": "A slim icon rail that widens on hover, sliding the labels in beside each icon, the app sidebar. The active item keeps the shared accent pulse. Hover the rail."
+    },
+    {
+      "id": "menus-bottom-tab-bar",
+      "name": "Bottom Tab Bar",
+      "gallery": "menus",
+      "category": "NAVIGATION MOTION",
+      "ref": ".mnu-tabbar",
+      "classes": [
+        "mnu-tabbar",
+        "is-active",
+        "mnu-tb-ic",
+        "mnu-tb-ink"
+      ],
+      "params": [],
+      "tags": [
+        "menus",
+        "animated",
+        "new"
+      ],
+      "componentType": "menu",
+      "interaction": "hover",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": "2026-09-06",
+      "updatedOn": null,
+      "author": "k33bz",
+      "description": "The mobile bottom nav: an accent ink pad slides under the active tab while its icon lifts and scales, the app tab bar. Hover a tab to move the ink."
+    },
+    {
+      "id": "menus-hamburger-morphs",
+      "name": "Hamburger Morphs",
+      "gallery": "menus",
+      "category": "NAVIGATION MOTION",
+      "ref": ".mnu-hamicons",
+      "classes": [
+        "mnu-hamicons",
+        "mnu-hi",
+        "mnu-hi-x",
+        "mnu-hi-arrow",
+        "mnu-hi-plus"
+      ],
+      "params": [],
+      "tags": [
+        "menus",
+        "new"
+      ],
+      "componentType": "menu",
+      "interaction": "toggle",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": "2026-09-06",
+      "updatedOn": null,
+      "author": "k33bz",
+      "description": "The menu button micro-animations: the three bars morph into a close cross, a back arrow, or a plus that spins to an x. Click each to toggle."
+    },
+    {
+      "id": "menus-dot-nav",
+      "name": "Dot Nav",
+      "gallery": "menus",
+      "category": "NAVIGATION MOTION",
+      "ref": ".mnu-dotnav",
+      "classes": [
+        "mnu-dotnav",
+        "is-active"
+      ],
+      "params": [
+        "dataAttributes"
+      ],
+      "tags": [
+        "menus",
+        "animated",
+        "new"
+      ],
+      "componentType": "menu",
+      "interaction": "hover",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": "2026-09-06",
+      "updatedOn": null,
+      "author": "k33bz",
+      "description": "The scrollytelling side rail: one dot glows as the active section while each reveals its label on hover, the long-page navigator. The active dot wears an accent halo."
     },
     {
       "id": "tables-zebra-table-scan",

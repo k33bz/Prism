@@ -2,11 +2,11 @@
 
 Every effect in Prism's **Menus & Actions** gallery, recorded as a looping GIF.
 
-**50 effects** · 49 animated · 560 KB of GIF · click any GIF to open its standalone HTML sample (raw file; open it locally, GitHub shows source).
+**56 effects** · 55 animated · 601 KB of GIF · click any GIF to open its standalone HTML sample (raw file; open it locally, GitHub shows source).
 
 [← Showcase index](../README.md)
 
-**Sections:** [DROPDOWN MENUS](#dropdown-menus) · [CONTEXT MENUS](#context-menus) · [NAVIGATION MENUS](#navigation-menus) · [COMMAND PALETTES](#command-palettes) · [ACTION BARS, TOOLBARS & FABs](#action-bars-toolbars-fabs) · [TAB BARS & SEGMENTED CONTROLS](#tab-bars-segmented-controls) · [RADIAL & GESTURE MENUS](#radial-gesture-menus) · [STATIC MENU REFERENCES](#static-menu-references) · [LIVE RADIAL & GESTURE MENUS](#live-radial-gesture-menus) · [HEADER NAVIGATION](#header-navigation) · [FOOTER NAVIGATION](#footer-navigation)
+**Sections:** [DROPDOWN MENUS](#dropdown-menus) · [CONTEXT MENUS](#context-menus) · [NAVIGATION MENUS](#navigation-menus) · [COMMAND PALETTES](#command-palettes) · [ACTION BARS, TOOLBARS & FABs](#action-bars-toolbars-fabs) · [TAB BARS & SEGMENTED CONTROLS](#tab-bars-segmented-controls) · [RADIAL & GESTURE MENUS](#radial-gesture-menus) · [STATIC MENU REFERENCES](#static-menu-references) · [LIVE RADIAL & GESTURE MENUS](#live-radial-gesture-menus) · [HEADER NAVIGATION](#header-navigation) · [FOOTER NAVIGATION](#footer-navigation) · [NAVIGATION MOTION](#navigation-motion)
 
 ## DROPDOWN MENUS
 
@@ -81,4 +81,11 @@ Every effect in Prism's **Menus & Actions** gallery, recorded as a looping GIF.
 <table>
 <tr><td align="center" valign="top" width="33%"><a href="../html/menus-columns-footer.html"><img src="../gif/menus-columns-footer.gif" width="300" alt="Columns Footer"></a><br><b>Columns Footer</b><br><sub><code>menus-columns-footer</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/menus-slim-bar-footer.html"><img src="../gif/menus-slim-bar-footer.gif" width="300" alt="Slim Bar Footer"></a><br><b>Slim Bar Footer</b><br><sub><code>menus-slim-bar-footer</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/menus-newsletter-footer.html"><img src="../gif/menus-newsletter-footer.gif" width="300" alt="Newsletter Footer"></a><br><b>Newsletter Footer</b><br><sub><code>menus-newsletter-footer</code></sub></td></tr>
 <tr><td align="center" valign="top" width="33%"><a href="../html/menus-cta-footer.html"><img src="../gif/menus-cta-footer.gif" width="300" alt="CTA Footer"></a><br><b>CTA Footer</b><br><sub><code>menus-cta-footer</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/menus-accordion-footer.html"><img src="../gif/menus-accordion-footer.gif" width="300" alt="Accordion Footer"></a><br><b>Accordion Footer</b><br><sub><code>menus-accordion-footer</code></sub></td></tr>
+</table>
+
+## NAVIGATION MOTION
+
+<table>
+<tr><td align="center" valign="top" width="33%"><a href="../html/menus-fullscreen-overlay.html"><img src="../gif/menus-fullscreen-overlay.gif" width="300" alt="Fullscreen Overlay"></a><br><b>Fullscreen Overlay</b><br><sub><code>menus-fullscreen-overlay</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/menus-dock-nav.html"><img src="../gif/menus-dock-nav.gif" width="300" alt="Dock Nav"></a><br><b>Dock Nav</b><br><sub><code>menus-dock-nav</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/menus-collapsible-rail.html"><img src="../gif/menus-collapsible-rail.gif" width="300" alt="Collapsible Rail"></a><br><b>Collapsible Rail</b><br><sub><code>menus-collapsible-rail</code></sub></td></tr>
+<tr><td align="center" valign="top" width="33%"><a href="../html/menus-bottom-tab-bar.html"><img src="../gif/menus-bottom-tab-bar.gif" width="300" alt="Bottom Tab Bar"></a><br><b>Bottom Tab Bar</b><br><sub><code>menus-bottom-tab-bar</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/menus-hamburger-morphs.html"><img src="../gif/menus-hamburger-morphs.gif" width="300" alt="Hamburger Morphs"></a><br><b>Hamburger Morphs</b><br><sub><code>menus-hamburger-morphs</code></sub></td><td align="center" valign="top" width="33%"><a href="../html/menus-dot-nav.html"><img src="../gif/menus-dot-nav.gif" width="300" alt="Dot Nav"></a><br><b>Dot Nav</b><br><sub><code>menus-dot-nav</code></sub></td></tr>
 </table>
