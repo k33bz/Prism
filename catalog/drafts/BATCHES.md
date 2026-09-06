@@ -15,6 +15,10 @@ catalog and showcase). Per-batch idea lists are the remaining work; strike ideas
 | 4 | Glow as a system | FX Store | `fx-gl-` / `fxGl` | `glow.fx.html` | landed (20) |
 | 5 | Scroll and reveal choreography | Animation Lab | `lab-rv-` / `labRv` | `reveal.lab.html` | landed (21) |
 | 6 | 3D CSS | Animated Objects | `ob3d-` / `ob3d` | `threed.objects.html` | landed (20) |
+| 7 | Treemaps and hierarchies (Datylon set) | Charts & Metrics | `chx-tm-` / `chxTm` | `treemaps.charts.html` | todo |
+| 8 | Correlation, time and distribution plots (Datylon set) | Charts & Metrics | `chx-pl-` / `chxPl` | `plots.charts.html` | landed (18) |
+| 9 | Liquid gauges and variance bands | Charts & Metrics | `chx-lq-` / `chxLq` | `liquid.charts.html` | todo |
+| 10 | Run charts and SPC rules (needs JS) | Charts & Metrics | `chx-rc-` / `chxRc` | `runcharts.charts.html` | todo |
 
 ## Batch 1: hover effects
 Landed (20): tilt gloss, perimeter draw, bracket snap, zoom caption, diagonal wipe, split reveal, icon
@@ -68,3 +72,27 @@ planets, plain Y-axis coin. Remaining: none.
 All six batches landed. Next candidates from the same source, if wanted: buttons beyond what Input
 Methods has (ripple, morph, split), tooltips and popovers, modals and drawers, checkbox and radio
 sets, image galleries and sliders, 404 and empty-state art, cursors and pointer effects.
+
+## Batch 7: treemaps and hierarchies
+Ideas: circle packing, convex/voronoi-style treemap, icicle, radial icicle, treemap drill-in, treemap
+delta, treemap heat, treemap with cell sparklines, hierarchical bar, dendrogram-to-bar, Euler diagram,
+icon array, diverging stacked bar (Likert), semi-circle donut with needle, tree ring chart, nested
+donuts, pyramid stack with values.
+
+## Batch 8: correlation, time and distribution plots
+Landed (18): parallel coordinates, quadrant chart, connected scatter, hexagonal binning, contour plot,
+barcode chart, bump area chart, radial histogram, one-dimensional heatmap strip, word cloud, range
+plot, matrix chart, small multiples, jittered categorical scatter, OHLC, spline vs straight, tile map,
+density heat strip. Remaining: none.
+
+## Batch 9: liquid gauges and variance bands
+Ideas: pipe cross-section liquid gauge (the headline), liquid tank, liquid ring, liquid pipe run,
+liquid drop, liquid battery, dual-tank comparison, liquid thermometer; range area chart, fan chart,
+band with mean and outliers, error bars on columns, deviation area, variance to plan, envelope bands,
+control limits band.
+
+## Batch 10: run charts and SPC rules (needs JS)
+Ideas: run chart with rules (median, trend line, rule 1 shift, rule 2 trend, rule 3 too few / too
+many runs, rule 4 astronomical point, all as toggles), trend detector, runs test (too few), too many
+runs, I-MR control chart, SPC rule legend.
+
