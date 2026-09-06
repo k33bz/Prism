@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Run Chart with Rules · Prism</title>
+<!-- Prism showcase sample: charts-run-chart-with-rules (gallery: charts). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.chx-rc, .chx-rc-legend { width: 100%; max-width: 300px; height: 150px; margin: 0px auto; position: relative; font-family: ui-sans-serif, system-ui, sans-serif; }
+.chx-rc > svg { position: absolute; inset: 0px; width: 100%; height: 100%; display: block; }
+.chx-rc-bar { position: absolute; top: 4px; left: 6px; right: 6px; z-index: 2; display: flex; flex-wrap: wrap; gap: 4px; }
+.chx-rc-chip { font: 600 8px / 1 ui-sans-serif, system-ui, sans-serif; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); background: rgba(255, 255, 255, 0.04); border: 1px solid var(--line); border-radius: 999px; padding: 2px 6px; cursor: pointer; transition: color 0.2s, border-color 0.2s, background 0.2s; }
+.chx-rc-chip:hover { color: var(--ink); border-color: var(--muted); }
+.chx-rc-chip.chx-rc-on { color: var(--ink); border-color: rgba(var(--accent-rgb),.7); background: rgba(var(--accent-rgb),.12); }
+.chx-rc-line { fill: none; stroke: var(--info); stroke-width: 1.4; stroke-linejoin: round; stroke-linecap: round; }
+.chx-rc-pt { fill: var(--info); stroke: var(--panel); stroke-width: 1; }
+.chx-rc-med { stroke: var(--muted); stroke-width: 1; stroke-dasharray: 4, 3; fill: none; }
+.chx-rc-base { stroke: var(--dim); stroke-width: 1; stroke-dasharray: 1, 3; fill: none; }
+.chx-rc-lbl { font: 600 7px ui-sans-serif, system-ui, sans-serif; fill: var(--muted); }
+.chx-rc-lbl.chx-rc-w { fill: var(--warn); }
+.chx-rc-lbl.chx-rc-g { fill: var(--pos); }
+.chx-rc-lbl.chx-rc-n { fill: var(--neg); }
+.chx-rc-lbl.chx-rc-a { fill: var(--accent); }
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="chx-rc chx-rc-rules" data-mode="run" data-demo="1" data-baseline="22" data-chips="median,shift,runs,astro,fit" data-points="21,19,20,18,17,19,24,26,25,27,26,41">
+      <div class="chx-rc-bar"><button class="chx-rc-chip chx-rc-on" data-chip="median">median</button><button class="chx-rc-chip" data-chip="shift">shift</button><button class="chx-rc-chip" data-chip="runs">runs</button><button class="chx-rc-chip" data-chip="astro">astro</button><button class="chx-rc-chip" data-chip="fit">fit</button></div>
+      <svg viewBox="0 0 300 150" preserveAspectRatio="none" aria-label="Run chart with SPC rules"><line class="chx-rc-med" x1="26" y1="100.97" x2="290" y2="100.97"></line><text class="chx-rc-lbl" x="2" y="98.97">md 22.5</text><line class="chx-rc-base" x1="26" y1="102.58" x2="290" y2="102.58"></line><polyline class="chx-rc-line" points="26,105.81 50,112.26 74,109.03 98,115.48 122,118.71 146,112.26 170,96.13 194,89.68 218,92.9 242,86.45 266,89.68 290,41.29 "></polyline><circle class="chx-rc-pt" cx="26" cy="105.81" r="2.4"></circle><circle class="chx-rc-pt" cx="50" cy="112.26" r="2.4"></circle><circle class="chx-rc-pt" cx="74" cy="109.03" r="2.4"></circle><circle class="chx-rc-pt" cx="98" cy="115.48" r="2.4"></circle><circle class="chx-rc-pt" cx="122" cy="118.71" r="2.4"></circle><circle class="chx-rc-pt" cx="146" cy="112.26" r="2.4"></circle><circle class="chx-rc-pt" cx="170" cy="96.13" r="2.4"></circle><circle class="chx-rc-pt" cx="194" cy="89.68" r="2.4"></circle><circle class="chx-rc-pt" cx="218" cy="92.9" r="2.4"></circle><circle class="chx-rc-pt" cx="242" cy="86.45" r="2.4"></circle><circle class="chx-rc-pt" cx="266" cy="89.68" r="2.4"></circle><circle class="chx-rc-pt" cx="290" cy="41.29" r="2.4"></circle></svg>
+    </div></div></div>
+<div class="meta"><b>Run Chart with Rules</b> · <code>charts-run-chart-with-rules</code><br>Charts &amp; Metrics · RUN CHARTS &amp; SPC RULES<p>A run chart that checks all four signals: a shift band and an astronomical ring light up on the data that trips them. Toggle each rule to see it fire.</p></div>
+<script>
+/* Prism "chx-rc": draws run charts + I-MR control charts into every .chx-rc root from its data-*,
+   chips toggle overlays. Idempotent, no deps, delegates from document, stays inside its roots. */
+(function(){
+  if(window.__prismChxRc) return; window.__prismChxRc=true;
+  var RM=window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var L=26,W=264,RX=290,Q=String.fromCharCode(34);
+  var LL='3,3,3,4,4,5,5,5,6,6,6,7,7,7,8,8,9,9,10,10,11'.split(',');
+  var UU='8,9,10,10,11,11,12,13,13,14,15,15,16,17,17,18,18,19,19,20,20'.split(',');
+  function med(a){var b=a.slice().sort(function(x,y){return x-y;}),n=b.length,m=n>>1;return n%2?b[m]:(b[m-1]+b[m])/2;}
+  function r2(n){return Math.round(n*100)/100;}
+  function hl(c,y){return '<line class='+Q+c+Q+' x1='+Q+L+Q+' y1='+Q+r2(y)+Q+' x2='+Q+RX+Q+' y2='+Q+r2(y)+Q+'/>';}
+  function ln(c,x1,y1,x2,y2){return '<line class='+Q+c+Q+' x1='+Q+r2(x1)+Q+' y1='+Q+r2(y1)+Q+' x2='+Q+r2(x2)+Q+' y2='+Q+r2(y2)+Q+'/>';}
+  function tx(c,x,y,t){return '<text class='+Q+'chx-rc-lbl'+(c?' '+c:'')+Q+' x='+Q+r2(x)+Q+' y='+Q+r2(y)+Q+'>'+t+'</text>';}
+  function ser(p,X,Y){var pl='',d='',i;for(i=0;i<p.length;i++){pl+=r2(X(i))+','+r2(Y(p[i]))+' ';d+='<circle class='+Q+'chx-rc-pt'+Q+' cx='+Q+r2(X(i))+Q+' cy='+Q+r2(Y(p[i]))+Q+' r='+Q+'2.4'+Q+'/>';}return '<polyline class='+Q+'chx-rc-line'+Q+' points='+Q+pl+Q+'/>'+d;}
+  function ring(x,y){return '<circle class='+Q+'chx-rc-ring chx-rc-ov'+Q+' cx='+Q+r2(x)+Q+' cy='+Q+r2(y)+Q+' r='+Q+'6'+Q+'/>';}
+  function compute(p){
+    var M=med(p),i,s,side=0,run=[],best=null,cnt;
+    for(i=0;i<p.length;i++){s=p[i]>M?1:p[i]<M?-1:0;if(s===0){if(run.length)run.push(i);continue;}if(s===side)run.push(i);else{side=s;run=[i];}cnt=run.filter(function(j){return p[j]!==M;}).length;if(cnt>=6&&(!best||run.length>best.run.length))best={run:run.slice(),side:side,c:cnt};}
+    var shift=best?{a:best.run[0],b:best.run[best.run.length-1],side:best.side,c:best.c}:null;
+    var dir=0,ts=0,tl=1,tb=null,pv=p[0],d;
+    for(i=1;i<p.length;i++){d=p[i]>pv?1:p[i]<pv?-1:0;if(d===0)continue;if(d===dir)tl++;else{dir=d;ts=i-1;tl=2;}if(tl>=5&&(!tb||tl>tb.len))tb={a:ts,b:i,dir:dir,len:tl};pv=p[i];}
+    var sg=[];for(i=0;i<p.length;i++)if(p[i]!==M)sg.push(p[i]>M?1:-1);
+    var n=sg.length,n1=0,n2=0;sg.forEach(function(x){x>0?n1++:n2++;});
+    var ro=n?1:0;for(i=1;i<sg.length;i++)if(sg[i]!==sg[i-1])ro++;
+    var lo,hi,mu,sig;
+    if(n>=10&&n<=30){lo=+LL[n-10];hi=+UU[n-10];}
+    else{mu=2*n1*n2/n+1;sig=Math.sqrt(2*n1*n2*(2*n1*n2-n)/(n*n*(n-1)))||0;lo=Math.max(2,Math.round(mu-1.96*sig));hi=Math.round(mu+1.96*sig);}
+    var verd=ro<lo?'too few':ro>hi?'too many':'ok';
+    var dev=p.map(function(x){return Math.abs(x-M);}),ma=med(dev),thr,fl=[],mn;
+    if(ma>0)thr=3.5*ma;else{mn=p.reduce(function(a,b){return a+b;},0)/p.length;thr=3*Math.sqrt(p.reduce(function(a,b){return a+(b-mn)*(b-mn);},0)/p.length);}
+    for(i=0;i<p.length;i++)if(Math.abs(p[i]-M)>thr)fl.push(i);
+    return {med:M,shift:shift,trend:tb,runs:{obs:ro,lo:lo,hi:hi,verd:verd},astro:fl};
+  }
+  function fit(p){var n=p.length,sx=0,sy=0,sxx=0,sxy=0,i;for(i=0;i<n;i++){sx+=i;sy+=p[i];sxx+=i*i;sxy+=i*p[i];}var b=(n*sxy-sx*sy)/(n*sxx-sx*sx),a=(sy-b*sx)/n;return {a:a,b:b};}
+  function drawRun(root,p,on){
+    var m=compute(p),n=p.length,i,lo=Math.min.apply(0,p),hi=Math.max.apply(0,p),base=parseFloat(root.getAttribute('data-baseline'));
+    if(!isNaN(base)){if(base<lo)lo=base;if(base>hi)hi=base;}
+    var pad=(hi-lo)*0.12||1;lo-=pad;hi+=pad;var pt=32,pb=128,ph=96;
+    var X=function(i){return L+i*(W/(n-1));},Y=function(v){return pb-(v-lo)/(hi-lo)*ph;};
+    var g='';
+    if(on.shift&&m.shift){var x0=X(m.shift.a),x1=X(m.shift.b),ym=Y(m.med),bl=m.shift.side<0;g+='<rect class='+Q+'chx-rc-band chx-rc-ov'+Q+' x='+Q+r2(x0-3)+Q+' y='+Q+r2(bl?ym:pt)+Q+' width='+Q+r2(x1-x0+6)+Q+' height='+Q+r2(bl?pb-ym:ym-pt)+Q+'/>'+tx('chx-rc-w chx-rc-ov',x0,bl?pb-3:pt+8,'shift x'+m.shift.c);}
+    if(on.median){var ym2=Y(m.med);g+=hl('chx-rc-med',ym2)+tx('',2,ym2-2,'md '+r2(m.med));}
+    if(!isNaN(base))g+=hl('chx-rc-base',Y(base));
+    if(on.trend&&m.trend){var ax=X(m.trend.a),ay=Y(p[m.trend.a]),bx=X(m.trend.b),by=Y(p[m.trend.b]);g+=ln('chx-rc-arrow chx-rc-ov',ax,ay,bx,by)+tx('chx-rc-g chx-rc-ov',ax,Math.min(ay,by)-3,'trend '+(m.trend.dir>0?'up':'dn')+' x'+m.trend.len);}
+    if(on.fit){var f=fit(p);g+=ln('chx-rc-fit chx-rc-ov',X(0),Y(f.a),X(n-1),Y(f.a+f.b*(n-1)));}
+    g+=ser(p,X,Y);
+    if(on.astro&&m.astro.length)m.astro.forEach(function(i){g+=ring(X(i),Y(p[i]))+tx('chx-rc-n chx-rc-ov',X(i)-14,Y(p[i])-8,'astro');});
+    if(on.runs){var rr=m.runs;g+=tx((rr.verd==='ok'?'chx-rc-g':'chx-rc-w')+' chx-rc-ov',L,28,'runs '+rr.obs+' exp '+rr.lo+'-'+rr.hi+' '+rr.verd);}
+    return g;
+  }
+  function drawImr(root,p,on){
+    var n=p.length,i,mn=p.reduce(function(a,b){return a+b;},0)/n,mr=[];
+    for(i=1;i<n;i++)mr.push(Math.abs(p[i]-p[i-1]));
+    var mb=mr.reduce(function(a,b){return a+b;},0)/mr.length,ucl=mn+2.66*mb,lcl=mn-2.66*mb,mrl=3.267*mb;
+    var lo=Math.min(lcl,Math.min.apply(0,p)),hi=Math.max(ucl,Math.max.apply(0,p)),pad=(hi-lo)*0.1||1;lo-=pad;hi+=pad;
+    var ib=96,ih=66,X=function(i){return L+i*(W/(n-1));},Y=function(v){return ib-(v-lo)/(hi-lo)*ih;};
+    var g='';
+    if(on.limits){g+=hl('chx-rc-ucl',Y(ucl))+hl('chx-rc-ucl',Y(lcl))+tx('chx-rc-n',2,Y(ucl)+2,'UCL '+r2(ucl))+tx('chx-rc-n',2,Y(lcl)+2,'LCL '+r2(lcl));}
+    if(on.mean){g+=hl('chx-rc-cl',Y(mn))+tx('chx-rc-g',2,Y(mn)-2,'x '+r2(mn));}
+    g+=ser(p,X,Y);
+    if(on.limits)for(i=0;i<n;i++)if(p[i]>ucl||p[i]<lcl)g+=ring(X(i),Y(p[i]));
+    if(on.range){var rt=108,rb=140,rh=32,mx=Math.max(mrl,Math.max.apply(0,mr))*1.1,RY=function(v){return rb-v/mx*rh;};
+      g+=hl('chx-rc-med',rb)+tx('',2,rt+2,'MR')+hl('chx-rc-mrlim',RY(mrl));
+      var bw=W/(n-1)*0.5;for(i=0;i<mr.length;i++){var bx=X(i+1)-bw/2,by=RY(mr[i]);g+='<rect class='+Q+'chx-rc-mrbar'+(mr[i]>mrl?' chx-rc-mrhot':'')+Q+' x='+Q+r2(bx)+Q+' y='+Q+r2(by)+Q+' width='+Q+r2(bw)+Q+' height='+Q+r2(rb-by)+Q+'/>';}
+    }
+    return g;
+  }
+  function chipsOf(root){var d=root.getAttribute('data-chips');return d?d.split(','):[];}
+  function render(root){
+    var p=root.getAttribute('data-points').split(',').map(Number),svg=root.querySelector('svg'),on=root.__on||{};
+    svg.innerHTML=root.getAttribute('data-mode')==='imr'?drawImr(root,p,on):drawRun(root,p,on);
+    var chips=root.querySelectorAll('.chx-rc-chip');for(var i=0;i<chips.length;i++){var k=chips[i].getAttribute('data-chip');chips[i].classList.toggle('chx-rc-on',!!on[k]);}
+  }
+  function startDemo(root){var list=chipsOf(root);if(!list.length)return;var i=0;root.__demoT=setInterval(function(){var o={};o[list[i%list.length]]=true;root.__on=o;render(root);i++;},800);}
+  function init(){
+    var roots=document.querySelectorAll('.chx-rc');for(var i=0;i<roots.length;i++){var root=roots[i];if(root.__drawn)continue;root.__drawn=true;
+      if(RM){var o={};chipsOf(root).forEach(function(k){o[k]=true;});root.__on=o;render(root);}
+      else{root.__on={};render(root);if(root.getAttribute('data-demo')==='1')startDemo(root);}
+    }
+  }
+  document.addEventListener('click',function(e){
+    var chip=e.target.closest?e.target.closest('.chx-rc-chip'):null;if(!chip)return;
+    var root=chip.closest('.chx-rc');if(!root)return;
+    if(root.__demoT){clearInterval(root.__demoT);root.__demoT=null;root.__on={};}
+    var k=chip.getAttribute('data-chip');root.__on[k]=!root.__on[k];render(root);
+  });
+  if(document.readyState!=='loading')init();else document.addEventListener('DOMContentLoaded',init);
+  if(window.MutationObserver){new MutationObserver(init).observe(document.documentElement,{childList:true,subtree:true});}
+})();
+</script>
+</body>
+</html>

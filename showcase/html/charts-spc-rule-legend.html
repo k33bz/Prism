@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SPC Rule Legend · Prism</title>
+<!-- Prism showcase sample: charts-spc-rule-legend (gallery: charts). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.chx-rc, .chx-rc-legend { width: 100%; max-width: 300px; height: 150px; margin: 0px auto; position: relative; font-family: ui-sans-serif, system-ui, sans-serif; }
+.chx-rc-lbl.chx-rc-w { fill: var(--warn); }
+.chx-rc-lbl.chx-rc-g { fill: var(--pos); }
+.chx-rc-lbl.chx-rc-n { fill: var(--neg); }
+.chx-rc-legend { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 5px; }
+.chx-rc-cell { position: relative; border: 1px solid var(--line); border-radius: 6px; background: var(--card); overflow: hidden; }
+.chx-rc-cell svg { position: absolute; inset: 0px; width: 100%; height: 100%; }
+.chx-rc-cap { position: absolute; left: 5px; top: 3px; font: 700 7px ui-sans-serif, system-ui, sans-serif; letter-spacing: 0.04em; text-transform: uppercase; z-index: 1; }
+.chx-rc-cap.chx-rc-w { color: var(--warn); }
+.chx-rc-cap.chx-rc-g { color: var(--pos); }
+.chx-rc-cap.chx-rc-i { color: var(--info); }
+.chx-rc-cap.chx-rc-n { color: var(--neg); }
+.chx-rc-sig { stroke-linecap: round; stroke-linejoin: round; }
+.chx-rc-draw { animation-name: chxRcPulse; animation-duration: 3.2s; animation-timing-function: ease-in-out; animation-iteration-count: infinite; animation-delay: var(--d,0s); }
+.chx-rc-blip { transform-box: fill-box; transform-origin: center center; animation-name: chxRcBlip; animation-duration: 3.2s; animation-timing-function: ease-in-out; animation-iteration-count: infinite; animation-delay: var(--d,0s); }
+@keyframes chxRcPulse { 
+  0%, 100% { opacity: 0.55; }
+  50% { opacity: 1; }
+}
+@keyframes chxRcBlip { 
+  0%, 100% { opacity: 0.5; transform: scale(0.82); }
+  50% { opacity: 1; transform: scale(1); }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="chx-rc-legend" aria-label="SPC rule signatures legend">
+      <div class="chx-rc-cell"><span class="chx-rc-cap chx-rc-w">shift</span><svg viewBox="0 0 120 60" preserveAspectRatio="none">
+        <line class="chx-rc-sig" x1="6" y1="30" x2="114" y2="30" stroke="var(--muted)" stroke-width="1" stroke-dasharray="3 3"></line>
+        <rect class="chx-rc-blip" x="18" y="34" width="80" height="20" rx="2" fill="rgba(var(--warn-rgb),.16)" style="--d:0s"></rect>
+        <g fill="var(--info)"><circle class="chx-rc-blip" cx="22" cy="42" r="3" style="--d:0s"></circle><circle class="chx-rc-blip" cx="40" cy="45" r="3" style="--d:.1s"></circle><circle class="chx-rc-blip" cx="58" cy="41" r="3" style="--d:.2s"></circle><circle class="chx-rc-blip" cx="76" cy="46" r="3" style="--d:.3s"></circle><circle class="chx-rc-blip" cx="94" cy="43" r="3" style="--d:.4s"></circle></g>
+      </svg></div>
+      <div class="chx-rc-cell"><span class="chx-rc-cap chx-rc-g">trend</span><svg viewBox="0 0 120 60" preserveAspectRatio="none">
+        <line class="chx-rc-sig" x1="6" y1="30" x2="114" y2="30" stroke="var(--muted)" stroke-width="1" stroke-dasharray="3 3"></line>
+        <polyline class="chx-rc-sig chx-rc-draw" points="20,50 40,44 58,38 76,30 94,20" fill="none" stroke="var(--pos)" stroke-width="1.6" style="--d:.1s"></polyline>
+        <g fill="var(--info)"><circle cx="20" cy="50" r="2.6"></circle><circle cx="40" cy="44" r="2.6"></circle><circle cx="58" cy="38" r="2.6"></circle><circle cx="76" cy="30" r="2.6"></circle><circle cx="94" cy="20" r="2.6"></circle></g>
+      </svg></div>
+      <div class="chx-rc-cell"><span class="chx-rc-cap chx-rc-i">runs</span><svg viewBox="0 0 120 60" preserveAspectRatio="none">
+        <line class="chx-rc-sig" x1="6" y1="30" x2="114" y2="30" stroke="var(--muted)" stroke-width="1" stroke-dasharray="3 3"></line>
+        <polyline class="chx-rc-sig chx-rc-draw" points="18,20 34,42 50,20 66,42 82,20 98,42" fill="none" stroke="var(--info)" stroke-width="1.6" style="--d:0s"></polyline>
+      </svg></div>
+      <div class="chx-rc-cell"><span class="chx-rc-cap chx-rc-n">astro</span><svg viewBox="0 0 120 60" preserveAspectRatio="none">
+        <line class="chx-rc-sig" x1="6" y1="38" x2="114" y2="38" stroke="var(--muted)" stroke-width="1" stroke-dasharray="3 3"></line>
+        <polyline class="chx-rc-sig" points="18,40 36,37 54,41 90,39 108,40" fill="none" stroke="var(--info)" stroke-width="1.4"></polyline>
+        <g fill="var(--info)"><circle cx="18" cy="40" r="2.4"></circle><circle cx="36" cy="37" r="2.4"></circle><circle cx="54" cy="41" r="2.4"></circle><circle cx="90" cy="39" r="2.4"></circle><circle cx="108" cy="40" r="2.4"></circle></g>
+        <circle class="chx-rc-blip" cx="72" cy="12" r="3.2" fill="var(--neg)" style="--d:.3s"></circle>
+        <circle class="chx-rc-blip" cx="72" cy="12" r="6.5" fill="none" stroke="var(--neg)" stroke-width="1.4" style="--d:.3s"></circle>
+      </svg></div>
+    </div></div></div>
+<div class="meta"><b>SPC Rule Legend</b> · <code>charts-spc-rule-legend</code><br>Charts &amp; Metrics · RUN CHARTS &amp; SPC RULES<p>A static explainer: four mini panels sketch the signature of each run chart signal, shift, trend, runs and astronomical point, all readable at a glance.</p></div>
+
+</body>
+</html>

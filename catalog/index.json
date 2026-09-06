@@ -1,5 +1,5 @@
 {
-  "count": 3293,
+  "count": 3299,
   "effects": [
     {
       "id": "charts-big-metric-count-up",
@@ -6951,9 +6951,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A pipe seen end on with a sloshing two layer surface and a percent that counts up as the level rises. Use for a fill or capacity reading."
     },
     {
@@ -6990,9 +6990,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A rounded tank whose level rises with a wave surface past graduated ticks and a dashed target line. Use for a level against a goal."
     },
     {
@@ -7026,9 +7026,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A torus channel where fluid streams around the loop with bubbles carried along at two speeds. Use for a circulating or throughput reading."
     },
     {
@@ -7063,9 +7063,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A horizontal pipe with fluid streaming left to right past a turning valve, speed reading the value. Use for a flow rate or pipeline stage."
     },
     {
@@ -7101,9 +7101,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A teardrop vessel filling from the base with a wave surface inside the drop outline. Use for a humidity, moisture or fill reading."
     },
     {
@@ -7139,9 +7139,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Three cells that flood with fluid one after another in a staged sequence. Use for a battery, capacity or multi stage fill."
     },
     {
@@ -7177,9 +7177,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Two tanks whose levels settle to actual and target so the shortfall shows as the gap. Use to compare a value against its plan."
     },
     {
@@ -7216,9 +7216,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A bulb and column where the fluid rises with a rippling top surface against a small scale. Use for a temperature or intensity reading."
     },
     {
@@ -7249,9 +7249,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A shaded min to max band fades in, then a median line draws through the middle. Use to show a spread with its central trend."
     },
     {
@@ -7286,9 +7286,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A forecast band opens from the present and widens into three confidence tiers over time. Use for a projection with uncertainty."
     },
     {
@@ -7321,9 +7321,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A mean line inside a one sigma band, with points outside the band pulsing red. Use to flag readings beyond normal variation."
     },
     {
@@ -7354,9 +7354,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Columns grow to their value, then whiskers extend above and below to show the margin. Use for measured values with uncertainty."
     },
     {
@@ -7390,9 +7390,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A series wipes in against a baseline, tinting green above and red below the zero line. Use to show gains and shortfalls versus a norm."
     },
     {
@@ -7424,9 +7424,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "Actual columns rise against a plan line, coloured over or under, with a running variance strip below. Use for budget or target tracking."
     },
     {
@@ -7458,9 +7458,9 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
-      "addedOn": null,
+      "addedOn": "2026-09-05",
       "updatedOn": null,
-      "author": null,
+      "author": "k33bz",
       "description": "A moving average with upper and lower bands hugging a jittery price line as it draws in. Use for volatility or range tracking."
     },
     {
@@ -7494,10 +7494,237 @@
       "needsJs": null,
       "isNew": true,
       "isFixed": false,
+      "addedOn": "2026-09-05",
+      "updatedOn": null,
+      "author": "k33bz",
+      "description": "A centre line between upper and lower control limits, with a point beyond a limit flashing red. Use for process control monitoring."
+    },
+    {
+      "id": "charts-run-chart-with-rules",
+      "name": "Run Chart with Rules",
+      "gallery": "charts",
+      "category": "RUN CHARTS & SPC RULES",
+      "ref": ".chx-rc-rules",
+      "classes": [
+        "chx-rc",
+        "chx-rc-rules",
+        "chx-rc-bar",
+        "chx-rc-chip",
+        "chx-rc-on",
+        "chx-rc-med",
+        "chx-rc-lbl",
+        "chx-rc-base",
+        "chx-rc-line",
+        "chx-rc-pt"
+      ],
+      "params": [
+        "dataAttributes"
+      ],
+      "tags": [
+        "charts",
+        "needs-js",
+        "new"
+      ],
+      "componentType": "chart-line",
+      "interaction": "click",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": "chx-rc",
+      "isNew": true,
+      "isFixed": false,
       "addedOn": null,
       "updatedOn": null,
       "author": null,
-      "description": "A centre line between upper and lower control limits, with a point beyond a limit flashing red. Use for process control monitoring."
+      "description": "A run chart that checks all four signals: a shift band and an astronomical ring light up on the data that trips them. Toggle each rule to see it fire."
+    },
+    {
+      "id": "charts-run-chart-trend-detector",
+      "name": "Run Chart Trend Detector",
+      "gallery": "charts",
+      "category": "RUN CHARTS & SPC RULES",
+      "ref": ".chx-rc-climb",
+      "classes": [
+        "chx-rc",
+        "chx-rc-climb",
+        "chx-rc-bar",
+        "chx-rc-chip",
+        "chx-rc-on",
+        "chx-rc-med",
+        "chx-rc-lbl",
+        "chx-rc-base",
+        "chx-rc-line",
+        "chx-rc-pt"
+      ],
+      "params": [
+        "dataAttributes"
+      ],
+      "tags": [
+        "charts",
+        "needs-js",
+        "new"
+      ],
+      "componentType": "chart-line",
+      "interaction": "click",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": "chx-rc",
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A seven point climb trips the trend rule of five or more points moving one way. The arrow marks the run and the least squares fit shows the slope."
+    },
+    {
+      "id": "charts-run-chart-runs-test",
+      "name": "Run Chart Runs Test",
+      "gallery": "charts",
+      "category": "RUN CHARTS & SPC RULES",
+      "ref": ".chx-rc-few",
+      "classes": [
+        "chx-rc",
+        "chx-rc-few",
+        "chx-rc-bar",
+        "chx-rc-chip",
+        "chx-rc-on",
+        "chx-rc-med",
+        "chx-rc-lbl",
+        "chx-rc-line",
+        "chx-rc-pt"
+      ],
+      "params": [
+        "dataAttributes"
+      ],
+      "tags": [
+        "charts",
+        "needs-js",
+        "new"
+      ],
+      "componentType": "chart-line",
+      "interaction": "click",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": "chx-rc",
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Two clusters cross the median just once, so the runs chip reports too few runs against the expected range: a step change signalled by clustering."
+    },
+    {
+      "id": "charts-run-chart-too-many-runs",
+      "name": "Run Chart Too Many Runs",
+      "gallery": "charts",
+      "category": "RUN CHARTS & SPC RULES",
+      "ref": ".chx-rc-many",
+      "classes": [
+        "chx-rc",
+        "chx-rc-many",
+        "chx-rc-bar",
+        "chx-rc-chip",
+        "chx-rc-on",
+        "chx-rc-med",
+        "chx-rc-lbl",
+        "chx-rc-line",
+        "chx-rc-pt"
+      ],
+      "params": [
+        "dataAttributes"
+      ],
+      "tags": [
+        "charts",
+        "needs-js",
+        "new"
+      ],
+      "componentType": "chart-line",
+      "interaction": "click",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": "chx-rc",
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A saw tooth series crosses the median on almost every point, so the runs chip reports too many runs, a sign of over adjustment or oscillation."
+    },
+    {
+      "id": "charts-i-mr-control-chart",
+      "name": "I-MR Control Chart",
+      "gallery": "charts",
+      "category": "RUN CHARTS & SPC RULES",
+      "ref": ".chx-rc-imr",
+      "classes": [
+        "chx-rc",
+        "chx-rc-imr",
+        "chx-rc-bar",
+        "chx-rc-chip",
+        "chx-rc-on",
+        "chx-rc-ucl",
+        "chx-rc-lbl",
+        "chx-rc-n",
+        "chx-rc-line",
+        "chx-rc-pt",
+        "chx-rc-ring",
+        "chx-rc-ov"
+      ],
+      "params": [
+        "dataAttributes"
+      ],
+      "tags": [
+        "charts",
+        "needs-js",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-line",
+      "interaction": "click",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": "chx-rc",
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "An individuals chart with mean and limits at plus or minus 2.66 mean moving range. Points beyond a limit are ringed, a moving range strip sits beneath."
+    },
+    {
+      "id": "charts-spc-rule-legend",
+      "name": "SPC Rule Legend",
+      "gallery": "charts",
+      "category": "RUN CHARTS & SPC RULES",
+      "ref": ".chx-rc-legend",
+      "classes": [
+        "chx-rc-legend",
+        "chx-rc-cell",
+        "chx-rc-cap",
+        "chx-rc-w",
+        "chx-rc-sig",
+        "chx-rc-blip",
+        "chx-rc-g",
+        "chx-rc-draw",
+        "chx-rc-i",
+        "chx-rc-n"
+      ],
+      "params": [],
+      "tags": [
+        "charts",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-line",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A static explainer: four mini panels sketch the signature of each run chart signal, shift, trend, runs and astronomical point, all readable at a glance."
     },
     {
       "id": "fx-pulse-glow-winner",
@@ -23608,9 +23835,9 @@
         "gate",
         "experts",
         "expert",
+        "on",
         "ed",
         "ew",
-        "on",
         "cap",
         "pr-playbtn"
       ],
