@@ -1,0 +1,132 @@
+<h3 class="sec">SYNTHWAVE &amp; OUTRUN</h3>
+<style id="amb-sw-styles">
+/* ===== Synthwave / outrun scenes (k33bz fork). Full-bleed 80s backdrops: a slit sun over a
+   neon perspective grid under a starfield. amb- prefix marks them usable-as-background. Colour
+   from tokens: the sun ramps --crit (magenta) to --accent (orange), the grid and glow are
+   --info (cyan), stars are white. Retints per theme; reads as outrun in the default dark. ===== */
+.amb-sw{position:relative;width:100%;max-width:300px;height:150px;border-radius:10px;overflow:hidden;
+  --sw-sun:var(--accent);--sw-sun-rgb:var(--accent-rgb);--sw-hi:var(--crit);--sw-hi-rgb:var(--crit-rgb);--sw-grid:var(--info);--sw-grid-rgb:var(--info-rgb);
+  background:linear-gradient(180deg,#05010f 0%,#140a2e 42%,#2a1140 54%,#05010f 54%,#0a0420 100%)}
+.amb-sw-lbl{position:absolute;left:8px;top:7px;z-index:6;font:700 8px ui-sans-serif,system-ui,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.55)}
+/* stars */
+.amb-sw-stars{position:absolute;left:0;right:0;top:0;height:56%;overflow:hidden}
+.amb-sw-stars i{position:absolute;width:2px;height:2px;border-radius:50%;background:#fff;opacity:.85;animation:ambSwTwinkle 3s ease-in-out infinite;animation-delay:var(--d,0s)}
+@keyframes ambSwTwinkle{0%,100%{opacity:.25}50%{opacity:.95}}
+/* sun */
+.amb-sw-sun{position:absolute;left:50%;bottom:46%;width:104px;height:104px;margin-left:-52px;border-radius:50%;overflow:hidden;z-index:2;
+  background:linear-gradient(180deg,var(--sw-sun) 0%,rgba(var(--sw-sun-rgb),.95) 30%,var(--sw-hi) 62%,#ff2f7e 100%);
+  box-shadow:0 0 34px 6px rgba(var(--sw-hi-rgb),.55),0 0 70px 18px rgba(var(--sw-sun-rgb),.25);animation:ambSwBob 6s ease-in-out infinite}
+.amb-sw-sun::after{content:"";position:absolute;left:-2px;right:-2px;bottom:0;height:52%;
+  background:repeating-linear-gradient(180deg,transparent 0 2px,rgba(0,0,0,.82) 2px 4px,transparent 4px 7px,rgba(0,0,0,.82) 7px 10px,transparent 10px 14px,rgba(0,0,0,.82) 14px 18px,transparent 18px 24px,rgba(0,0,0,.82) 24px 30px)}
+@keyframes ambSwBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+/* horizon glow line */
+.amb-sw-horizon{position:absolute;left:0;right:0;top:54%;height:2px;z-index:3;background:var(--sw-grid);
+  box-shadow:0 0 8px 2px rgba(var(--sw-grid-rgb),.9),0 0 20px 6px rgba(var(--sw-grid-rgb),.5);animation:ambSwPulseLine 3.5s ease-in-out infinite}
+@keyframes ambSwPulseLine{0%,100%{opacity:.75}50%{opacity:1}}
+/* perspective grid floor */
+.amb-sw-floor{position:absolute;left:50%;bottom:0;width:360%;height:52%;margin-left:-180%;z-index:1;transform-origin:bottom center;
+  transform:perspective(150px) rotateX(66deg);
+  background-image:repeating-linear-gradient(90deg,transparent 0 23px,rgba(var(--sw-grid-rgb),.85) 23px 24px),repeating-linear-gradient(180deg,transparent 0 23px,rgba(var(--sw-grid-rgb),.85) 23px 24px);
+  background-size:24px 24px;animation:ambSwFloor 1.1s linear infinite}
+.amb-sw-floor::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(5,1,15,0) 0%,rgba(5,1,15,.85) 82%)}
+@keyframes ambSwFloor{to{background-position-y:24px}}
+.amb-sw-fast .amb-sw-floor{animation-duration:.5s}
+/* mountains */
+.amb-sw-mtn{position:absolute;left:0;right:0;top:40%;height:14%;z-index:2;
+  background:linear-gradient(180deg,rgba(var(--sw-hi-rgb),.55),rgba(var(--sw-hi-rgb),.15));clip-path:polygon(0 100%,8% 30%,16% 70%,26% 10%,36% 62%,46% 24%,54% 66%,64% 8%,74% 58%,84% 28%,92% 68%,100% 34%,100% 100%)}
+/* road (drive variant) */
+.amb-sw-road{position:absolute;left:50%;bottom:0;width:80%;height:46%;margin-left:-40%;z-index:2;transform-origin:bottom center;transform:perspective(150px) rotateX(66deg);
+  background:linear-gradient(90deg,transparent 44%,rgba(var(--sw-hi-rgb),.9) 44% 46%,transparent 46% 54%,rgba(var(--sw-hi-rgb),.9) 54% 56%,transparent 56%);
+  -webkit-mask:linear-gradient(90deg,transparent 30%,#000 50%,transparent 70%);mask:linear-gradient(90deg,transparent 30%,#000 50%,transparent 70%)}
+.amb-sw-road i{position:absolute;left:50%;width:3px;margin-left:-1.5px;background:#fff;top:0;height:8px;
+  animation:ambSwDash 0.6s linear infinite}
+.amb-sw-road i:nth-child(2){animation-delay:.2s}.amb-sw-road i:nth-child(3){animation-delay:.4s}
+@keyframes ambSwDash{0%{top:0;opacity:0;transform:scaleY(.6)}20%{opacity:1}100%{top:100%;opacity:.2;transform:scaleY(1.6)}}
+/* palms */
+.amb-sw-palm{position:absolute;bottom:42%;width:34px;height:46px;z-index:2}
+.amb-sw-palm.l{left:11%}.amb-sw-palm.r{right:11%;transform:scaleX(-1)}
+.amb-sw-palm b{position:absolute;left:50%;bottom:0;width:4px;height:36px;margin-left:-2px;background:rgba(0,0,0,.92);border-radius:2px}
+.amb-sw-palm s{position:absolute;left:50%;top:0;width:24px;height:13px;margin-left:-12px;background:rgba(0,0,0,.92);border-radius:50% 50% 0 0;clip-path:polygon(50% 100%,0 40%,18% 55%,30% 8%,50% 42%,70% 8%,82% 55%,100% 40%)}
+/* sunrise cycle: sun climbs and slits widen */
+.amb-sw-rise .amb-sw-sun{animation:ambSwRise 5s ease-in-out infinite}
+@keyframes ambSwRise{0%{transform:translateY(38px)}45%,60%{transform:translateY(-6px)}100%{transform:translateY(38px)}}
+/* tunnel variant: side walls of grid */
+.amb-sw-wall{position:absolute;top:0;bottom:0;width:40%;z-index:1;
+  background-image:repeating-linear-gradient(0deg,transparent 0 17px,rgba(var(--sw-grid-rgb),.8) 17px 18px),repeating-linear-gradient(90deg,transparent 0 17px,rgba(var(--sw-grid-rgb),.55) 17px 18px);
+  background-size:18px 18px;animation:ambSwWall 1s linear infinite}
+.amb-sw-wall.l{left:0;transform-origin:left center;transform:perspective(120px) rotateY(52deg)}
+.amb-sw-wall.r{right:0;transform-origin:right center;transform:perspective(120px) rotateY(-52deg)}
+@keyframes ambSwWall{to{background-position-x:18px}}
+.amb-sw-tunnel{background:radial-gradient(circle at 50% 50%,rgba(var(--sw-hi-rgb),.35),#05010f 60%)}
+.amb-sw-tunnel .amb-sw-sun{bottom:50%;width:60px;height:60px;margin-left:-30px}
+@media (prefers-reduced-motion:reduce){
+  .amb-sw *,.amb-sw-floor,.amb-sw-sun,.amb-sw-wall,.amb-sw-road i{animation:none!important}
+}
+</style>
+<div class="gallery">
+
+  <div class="tile is-new" data-ctype="object-backdrop" data-interact="auto-play" data-c="crit"><div class="stage">
+    <div class="amb-sw amb-sw-outrun" role="img" aria-label="Outrun sunset: a slit sun over a neon grid under a starfield">
+      <span class="amb-sw-stars"><i style="left:8%;top:14%;--d:0s"></i><i style="left:20%;top:30%;--d:.6s"></i><i style="left:31%;top:8%;--d:1.2s"></i><i style="left:44%;top:22%;--d:.3s"></i><i style="left:58%;top:12%;--d:1.6s"></i><i style="left:68%;top:32%;--d:.9s"></i><i style="left:79%;top:16%;--d:2.1s"></i><i style="left:90%;top:26%;--d:.4s"></i><i style="left:14%;top:40%;--d:1.9s"></i><i style="left:86%;top:42%;--d:1.1s"></i></span>
+      <span class="amb-sw-sun"></span>
+      <span class="amb-sw-horizon"></span>
+      <span class="amb-sw-floor"></span>
+      <span class="amb-sw-lbl">Atlas · outrun</span>
+    </div>
+  </div><div class="meta"><div class="nm">Outrun Sunset</div><span class="ref">.amb-sw-outrun</span><div class="desc">The classic 80s scene: a slit sun ramping magenta to orange bobs over a cyan neon grid that streams toward you, under a twinkling starfield with a glowing horizon line.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="object-backdrop" data-interact="auto-play" data-c="crit"><div class="stage">
+    <div class="amb-sw amb-sw-drive amb-sw-fast" role="img" aria-label="Neon grid drive: a road runs down the grid toward the sun">
+      <span class="amb-sw-stars"><i style="left:12%;top:18%;--d:.2s"></i><i style="left:28%;top:10%;--d:1.1s"></i><i style="left:50%;top:20%;--d:.7s"></i><i style="left:66%;top:9%;--d:1.7s"></i><i style="left:82%;top:24%;--d:.5s"></i><i style="left:92%;top:14%;--d:1.3s"></i></span>
+      <span class="amb-sw-sun"></span>
+      <span class="amb-sw-horizon"></span>
+      <span class="amb-sw-floor"></span>
+      <span class="amb-sw-road"><i></i><i></i><i></i></span>
+      <span class="amb-sw-lbl">Comet · drive</span>
+    </div>
+  </div><div class="meta"><div class="nm">Neon Grid Drive</div><span class="ref">.amb-sw-drive</span><div class="desc">A first-person run down the grid: the floor streams fast toward the sun on the horizon while dashed centre-line markers rush up the road. A driving-game backdrop.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="object-backdrop" data-interact="auto-play" data-c="crit"><div class="stage">
+    <div class="amb-sw amb-sw-rise" role="img" aria-label="Retro sunrise: the sun climbs from below the horizon">
+      <span class="amb-sw-stars"><i style="left:10%;top:12%;--d:0s"></i><i style="left:26%;top:26%;--d:.8s"></i><i style="left:40%;top:9%;--d:1.5s"></i><i style="left:60%;top:18%;--d:.4s"></i><i style="left:74%;top:28%;--d:1.9s"></i><i style="left:88%;top:14%;--d:1s"></i></span>
+      <span class="amb-sw-sun"></span>
+      <span class="amb-sw-horizon"></span>
+      <span class="amb-sw-floor"></span>
+      <span class="amb-sw-lbl">Ember · sunrise</span>
+    </div>
+  </div><div class="meta"><div class="nm">Retro Sunrise</div><span class="ref">.amb-sw-rise</span><div class="desc">The sun rises from below the horizon and sinks again on a loop, cresting the neon grid at the top of its arc. A slow, cinematic version of the outrun scene.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="object-backdrop" data-interact="auto-play" data-c="crit"><div class="stage">
+    <div class="amb-sw amb-sw-palms" role="img" aria-label="Palm sunset: palm silhouettes flank the slit sun">
+      <span class="amb-sw-stars"><i style="left:16%;top:12%;--d:.5s"></i><i style="left:36%;top:22%;--d:1.3s"></i><i style="left:52%;top:8%;--d:.9s"></i><i style="left:70%;top:20%;--d:1.7s"></i><i style="left:84%;top:12%;--d:.2s"></i></span>
+      <span class="amb-sw-sun"></span>
+      <span class="amb-sw-horizon"></span>
+      <span class="amb-sw-floor"></span>
+      <span class="amb-sw-palm l"><b></b><s></s></span>
+      <span class="amb-sw-palm r"><b></b><s></s></span>
+      <span class="amb-sw-lbl">Pixel · sunset</span>
+    </div>
+  </div><div class="meta"><div class="nm">Palm Sunset</div><span class="ref">.amb-sw-palms</span><div class="desc">Two palm silhouettes flank the slit sun over the neon grid, the vaporwave postcard. Stars twinkle above and the horizon line pulses cyan.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="object-backdrop" data-interact="auto-play" data-c="crit"><div class="stage">
+    <div class="amb-sw amb-sw-peaks" role="img" aria-label="Wireframe peaks: a jagged mountain silhouette against the sun">
+      <span class="amb-sw-stars"><i style="left:12%;top:10%;--d:.3s"></i><i style="left:30%;top:24%;--d:1s"></i><i style="left:48%;top:8%;--d:1.6s"></i><i style="left:64%;top:22%;--d:.6s"></i><i style="left:80%;top:12%;--d:1.9s"></i><i style="left:90%;top:30%;--d:.9s"></i></span>
+      <span class="amb-sw-sun"></span>
+      <span class="amb-sw-mtn"></span>
+      <span class="amb-sw-horizon"></span>
+      <span class="amb-sw-floor"></span>
+      <span class="amb-sw-lbl">Nova · peaks</span>
+    </div>
+  </div><div class="meta"><div class="nm">Wireframe Peaks</div><span class="ref">.amb-sw-peaks</span><div class="desc">A jagged neon mountain range sits on the horizon in front of the slit sun, the grid streaming below it. The synthwave album-cover framing.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="object-backdrop" data-interact="auto-play" data-c="info"><div class="stage">
+    <div class="amb-sw amb-sw-tunnel amb-sw-fast" role="img" aria-label="Grid tunnel: neon walls and floor recede toward a distant sun">
+      <span class="amb-sw-wall l"></span>
+      <span class="amb-sw-wall r"></span>
+      <span class="amb-sw-floor"></span>
+      <span class="amb-sw-sun"></span>
+      <span class="amb-sw-lbl">Orbit · tunnel</span>
+    </div>
+  </div><div class="meta"><div class="nm">Grid Tunnel</div><span class="ref">.amb-sw-tunnel</span><div class="desc">Neon grid walls and floor rush past toward a small glowing sun at the vanishing point, a corridor of light. Faster and more immersive than the flat scenes.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+</div>

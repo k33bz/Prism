@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Grid Tunnel · Prism</title>
+<!-- Prism showcase sample: objects-grid-tunnel (gallery: objects). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.amb-sw { position: relative; width: 100%; max-width: 300px; height: 150px; border-radius: 10px; overflow: hidden; --sw-sun: var(--accent); --sw-sun-rgb: var(--accent-rgb); --sw-hi: var(--crit); --sw-hi-rgb: var(--crit-rgb); --sw-grid: var(--info); --sw-grid-rgb: var(--info-rgb); background: linear-gradient(rgb(5, 1, 15) 0%, rgb(20, 10, 46) 42%, rgb(42, 17, 64) 54%, rgb(5, 1, 15) 54%, rgb(10, 4, 32) 100%); }
+.amb-sw-lbl { position: absolute; left: 8px; top: 7px; z-index: 6; font: 700 8px ui-sans-serif, system-ui, sans-serif; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255, 255, 255, 0.55); }
+.amb-sw-sun { position: absolute; left: 50%; bottom: 46%; width: 104px; height: 104px; margin-left: -52px; border-radius: 50%; overflow: hidden; z-index: 2; background: linear-gradient(180deg,var(--sw-sun) 0%,rgba(var(--sw-sun-rgb),.95) 30%,var(--sw-hi) 62%,#ff2f7e 100%); box-shadow: 0 0 34px 6px rgba(var(--sw-hi-rgb),.55),0 0 70px 18px rgba(var(--sw-sun-rgb),.25); animation: 6s ease-in-out 0s infinite normal none running ambSwBob; }
+.amb-sw-sun::after { content: ""; position: absolute; left: -2px; right: -2px; bottom: 0px; height: 52%; background: repeating-linear-gradient(transparent 0px, transparent 2px, rgba(0, 0, 0, 0.82) 2px, rgba(0, 0, 0, 0.82) 4px, transparent 4px, transparent 7px, rgba(0, 0, 0, 0.82) 7px, rgba(0, 0, 0, 0.82) 10px, transparent 10px, transparent 14px, rgba(0, 0, 0, 0.82) 14px, rgba(0, 0, 0, 0.82) 18px, transparent 18px, transparent 24px, rgba(0, 0, 0, 0.82) 24px, rgba(0, 0, 0, 0.82) 30px); }
+.amb-sw-floor { position: absolute; left: 50%; bottom: 0px; width: 360%; height: 52%; margin-left: -180%; z-index: 1; transform-origin: center bottom; transform: perspective(150px) rotateX(66deg); background-image: repeating-linear-gradient(90deg,transparent 0 23px,rgba(var(--sw-grid-rgb),.85) 23px 24px),repeating-linear-gradient(180deg,transparent 0 23px,rgba(var(--sw-grid-rgb),.85) 23px 24px); background-size: 24px 24px; animation: 1.1s linear 0s infinite normal none running ambSwFloor; }
+.amb-sw-floor::before { content: ""; position: absolute; inset: 0px; background: linear-gradient(rgba(5, 1, 15, 0) 0%, rgba(5, 1, 15, 0.85) 82%); }
+.amb-sw-fast .amb-sw-floor { animation-duration: 0.5s; }
+.amb-sw-palm.l { left: 11%; }
+.amb-sw-palm.r { right: 11%; transform: scaleX(-1); }
+.amb-sw-rise .amb-sw-sun { animation: 5s ease-in-out 0s infinite normal none running ambSwRise; }
+.amb-sw-wall { position: absolute; top: 0px; bottom: 0px; width: 40%; z-index: 1; background-image: repeating-linear-gradient(0deg,transparent 0 17px,rgba(var(--sw-grid-rgb),.8) 17px 18px),repeating-linear-gradient(90deg,transparent 0 17px,rgba(var(--sw-grid-rgb),.55) 17px 18px); background-size: 18px 18px; animation: 1s linear 0s infinite normal none running ambSwWall; }
+.amb-sw-wall.l { left: 0px; transform-origin: left center; transform: perspective(120px) rotateY(52deg); }
+.amb-sw-wall.r { right: 0px; transform-origin: right center; transform: perspective(120px) rotateY(-52deg); }
+.amb-sw-tunnel { background: radial-gradient(circle at 50% 50%,rgba(var(--sw-hi-rgb),.35),#05010f 60%); }
+.amb-sw-tunnel .amb-sw-sun { bottom: 50%; width: 60px; height: 60px; margin-left: -30px; }
+@keyframes ambSwBob { 
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-4px); }
+}
+@keyframes ambSwFloor { 
+  100% { background-position-y: 24px; }
+}
+@keyframes ambSwRise { 
+  0% { transform: translateY(38px); }
+  45%, 60% { transform: translateY(-6px); }
+  100% { transform: translateY(38px); }
+}
+@keyframes ambSwWall { 
+  100% { background-position-x: 18px; }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage bg" id="stage"><div class="amb-sw amb-sw-tunnel amb-sw-fast" role="img" aria-label="Grid tunnel: neon walls and floor recede toward a distant sun">
+      <span class="amb-sw-wall l"></span>
+      <span class="amb-sw-wall r"></span>
+      <span class="amb-sw-floor"></span>
+      <span class="amb-sw-sun"></span>
+      <span class="amb-sw-lbl">Orbit · tunnel</span>
+    </div></div></div>
+<div class="meta"><b>Grid Tunnel</b> · <code>objects-grid-tunnel</code><br>Animated Objects · SYNTHWAVE &amp; OUTRUN<p>Neon grid walls and floor rush past toward a small glowing sun at the vanishing point, a corridor of light. Faster and more immersive than the flat scenes.</p></div>
+
+</body>
+</html>
