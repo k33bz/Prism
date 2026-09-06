@@ -10,17 +10,16 @@ re-run the pipeline and recapture the GIF for each as it is reworked, then tick 
 - **Overhand Shuffle** `.dk-overhand` (2026-09-06) - rebuilt as a clear two-stack pull-and-drop: a highlighted (warn-bordered) 3-card packet lifts off the right stack, arcs over the gap and drops onto the left stack, then returns.
 - **Halo Foil** `.fxc-f-halo` (2026-09-06) - bolder, higher-contrast swooping arcs (info+crit bands) with a raking white sheen; fxcArc travel bumped to -13px.
 - **Enchanted** `.fxc-f-enchanted` (2026-09-06) - ornate glowing corner filigree + double inset border, richer whole-face cold-foil (rainbow + diagonal sheen).
+- **Flip Up** `.fxc-m-flipx` (2026-09-06) - now a bottom-edge hinge (stand-up flip), distinct from Flip Over's in-place spin.
+- **Toss Spin** `.fxc-m-toss` (2026-09-06) - slower single spin with a flat landing beat; no longer a blur.
+- **Cosmos Holo** `.fxc-f-cosmos` (2026-09-06) - parallax starfield (3 layers) over a faint rainbow nebula; clearly a galaxy, distinct from the flat Rainbow Holo.
+- **Linear Foil** `.fxc-f-linear` (2026-09-06) - brighter brushed-metal grain + a sharp directional sheen (info-tinted).
+- **Gold Foil** `.fxc-f-gold` (2026-09-06) - embossed gold frame (::after) + a brighter warm specular.
+- **Tinsel** `.fxc-f-tinsel` (2026-09-06) - tight, fast vertical shimmer with a coloured sparkle band, distinct from the brushed Linear.
 
 ## To rework (remaining)
 
-| Facet | Ref | Why it fell short | Rework direction |
-|---|---|---|---|
-| Flip Up | `.fxc-m-flipx` | Redundant with the stronger Flip Over | Give it a distinct hinge (top-edge lift with a hand-shadow), or retire if it stays a near-dupe |
-| Toss Spin | `.fxc-m-toss` | Reads as a blur in motion | Slow the spin, clearer arc and a definite landing pose before it exits |
-| Cosmos Holo | `.fxc-f-cosmos` | Overlaps Rainbow Holo | Push the galaxy read: denser starfield + parallax (borrow from the reworked Starlight), less flat rainbow |
-| Linear Foil | `.fxc-f-linear` | Too subtle | Stronger brushed-metal grain + a sharper directional sheen sweep |
-| Gold Foil | `.fxc-f-gold` | Reads flat | Engraved gold frame (masked to the border) + warmer specular highlight |
-| Tinsel | `.fxc-f-tinsel` | Too close to Linear | Tighter, brighter shimmer with a faster travel, or fold into Linear |
+None - the full vote backlog (9/9) is reworked. Re-vote on the Prism Foil Picker to see if the reworks changed your mind; new passes get logged here.
 
 ## Loved (30) — keep as-is
 
