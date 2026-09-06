@@ -17,7 +17,7 @@ catalog and showcase). Per-batch idea lists are the remaining work; strike ideas
 | 6 | 3D CSS | Animated Objects | `ob3d-` / `ob3d` | `threed.objects.html` | landed (20) |
 | 7 | Treemaps and hierarchies (Datylon set) | Charts & Metrics | `chx-tm-` / `chxTm` | `treemaps.charts.html` | landed (17) |
 | 8 | Correlation, time and distribution plots (Datylon set) | Charts & Metrics | `chx-pl-` / `chxPl` | `plots.charts.html` | landed (18) |
-| 9 | Liquid gauges and variance bands | Charts & Metrics | `chx-lq-` / `chxLq` | `liquid.charts.html` | todo |
+| 9 | Liquid gauges and variance bands | Charts & Metrics | `chx-lq-` / `chxLq` | `liquid.charts.html` | landed (16) |
 | 10 | Run charts and SPC rules (needs JS) | Charts & Metrics | `chx-rc-` / `chxRc` | `runcharts.charts.html` | todo |
 
 ## Batch 1: hover effects
@@ -85,10 +85,10 @@ plot, matrix chart, small multiples, jittered categorical scatter, OHLC, spline 
 density heat strip. Remaining: none.
 
 ## Batch 9: liquid gauges and variance bands
-Ideas: pipe cross-section liquid gauge (the headline), liquid tank, liquid ring, liquid pipe run,
-liquid drop, liquid battery, dual-tank comparison, liquid thermometer; range area chart, fan chart,
-band with mean and outliers, error bars on columns, deviation area, variance to plan, envelope bands,
-control limits band.
+Landed (16): pipe cross-section, liquid tank, liquid ring, liquid pipe run, liquid drop, liquid
+battery, dual-tank compare, liquid thermometer; range area band, fan chart, sigma band with outliers,
+error bars on columns, deviation area, variance to plan, bollinger envelope, control limits band.
+Remaining: none.
 
 ## Batch 10: run charts and SPC rules (needs JS)
 Ideas: run chart with rules (median, trend line, rule 1 shift, rule 2 trend, rule 3 too few / too
