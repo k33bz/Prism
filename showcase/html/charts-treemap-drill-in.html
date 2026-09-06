@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Treemap Drill-In · Prism</title>
+<!-- Prism showcase sample: charts-treemap-drill-in (gallery: charts). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.chx-tm-fa { fill: rgba(var(--accent-rgb),.6); }
+.chx-tm-fi { fill: rgba(var(--info-rgb),.58); }
+.chx-tm-drill { position: relative; width: 100%; max-width: 300px; height: 140px; }
+.chx-tm-drill .chx-tm-cellset, .chx-tm-drill .chx-tm-kids { position: absolute; inset: 0px; }
+.chx-tm-drill .chx-tm-cellset { transform-origin: 22% 30%; animation: 4s ease-in-out 0s infinite normal none running chxTmDrillOut; }
+.chx-tm-drill .chx-tm-kids { opacity: 0; animation: 4s ease-in-out 0s infinite normal none running chxTmDrillIn; }
+.chx-tm-drill:hover .chx-tm-cellset { animation-name: none; opacity: 0; transform: scale(1.6); }
+.chx-tm-drill:hover .chx-tm-kids { animation-name: none; opacity: 1; }
+.chx-tm-cell { position: absolute; border: 1px solid var(--bg); border-radius: 2px; display: flex; align-items: flex-end; padding: 2px; font: 600 8px ui-sans-serif, system-ui, sans-serif; color: var(--ink); }
+@keyframes chxTmDrillOut { 
+  0%, 12% { opacity: 1; transform: scale(1); }
+  40%, 78% { opacity: 0; transform: scale(1.6); }
+  100% { opacity: 1; transform: scale(1); }
+}
+@keyframes chxTmDrillIn { 
+  0%, 20% { opacity: 0; }
+  44%, 74% { opacity: 1; }
+  96%, 100% { opacity: 0; }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><div class="chx-tm-drill">
+      <div class="chx-tm-cellset">
+        <div class="chx-tm-cell chx-tm-fi" style="left:0;top:0;width:44%;height:60%;background:rgba(var(--info-rgb),.5)">Atlas</div>
+        <div class="chx-tm-cell chx-tm-fa" style="left:45%;top:0;width:55%;height:36%;background:rgba(var(--accent-rgb),.5)">Comet</div>
+        <div class="chx-tm-cell" style="left:45%;top:37%;width:28%;height:23%;background:rgba(var(--pos-rgb),.5)">Ember</div>
+        <div class="chx-tm-cell" style="left:74%;top:37%;width:26%;height:23%;background:rgba(var(--warn-rgb),.5)">Nova</div>
+        <div class="chx-tm-cell" style="left:0;top:61%;width:100%;height:39%;background:rgba(var(--crit-rgb),.4)">Orbit 1,284</div>
+      </div>
+      <div class="chx-tm-kids">
+        <div class="chx-tm-cell" style="left:0;top:0;width:50%;height:52%;background:rgba(var(--info-rgb),.6)">A1</div>
+        <div class="chx-tm-cell" style="left:51%;top:0;width:49%;height:30%;background:rgba(var(--info-rgb),.42)">A2</div>
+        <div class="chx-tm-cell" style="left:51%;top:31%;width:49%;height:21%;background:rgba(var(--info-rgb),.3)">A3</div>
+        <div class="chx-tm-cell" style="left:0;top:53%;width:60%;height:47%;background:rgba(var(--info-rgb),.5)">A4</div>
+        <div class="chx-tm-cell" style="left:61%;top:53%;width:39%;height:47%;background:rgba(var(--info-rgb),.36)">A5</div>
+      </div>
+    </div></div></div>
+<div class="meta"><b>Treemap Drill-In</b> · <code>charts-treemap-drill-in</code><br>Charts &amp; Metrics · TREEMAPS &amp; HIERARCHIES<p>Hover or wait: one cell zooms to fill the frame and its children appear, then zooms back. Use it to navigate a treemap.</p></div>
+
+</body>
+</html>

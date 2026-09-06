@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Circle Packing · Prism</title>
+<!-- Prism showcase sample: charts-circle-packing (gallery: charts). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.chx-tm-svg { width: 100%; max-width: 300px; height: auto; display: block; font-family: ui-sans-serif, system-ui, sans-serif; }
+.chx-tm-lb { fill: var(--ink); font: 600 8px ui-sans-serif, system-ui, sans-serif; }
+.chx-tm-ld { fill: var(--dim); font: 7px ui-sans-serif, system-ui, sans-serif; }
+.chx-tm-fa { fill: rgba(var(--accent-rgb),.6); }
+.chx-tm-fi { fill: rgba(var(--info-rgb),.58); }
+.chx-tm-fp { fill: rgba(var(--pos-rgb),.55); }
+.chx-tm-fw { fill: rgba(var(--warn-rgb),.55); }
+.chx-tm-fc { fill: rgba(var(--crit-rgb),.55); }
+.chx-tm-pack circle { transform-box: fill-box; transform-origin: center center; stroke: rgba(var(--accent-rgb),.5); stroke-width: 0.6; }
+.chx-tm-pack .chx-tm-c1 { animation: 3.6s ease-in-out 0s infinite normal none running chxTmPack; }
+.chx-tm-pack .chx-tm-c2 { animation: 3.6s ease-in-out 0.2s infinite normal none running chxTmPack; }
+.chx-tm-pack .chx-tm-c3 { animation: 3.6s ease-in-out 0.4s infinite normal none running chxTmPack; }
+@keyframes chxTmPack { 
+  0% { transform: scale(0.2); opacity: 0; }
+  18% { opacity: 1; }
+  55% { transform: scale(1); }
+  88% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><svg class="chx-tm-svg chx-tm-pack" viewBox="0 0 300 150">
+      <circle class="chx-tm-fi chx-tm-c1" cx="78" cy="75" r="58" opacity=".28"></circle>
+      <circle class="chx-tm-fi chx-tm-c2" cx="66" cy="60" r="26"></circle>
+      <circle class="chx-tm-fa chx-tm-c3" cx="96" cy="92" r="18"></circle>
+      <circle class="chx-tm-fp chx-tm-c3" cx="104" cy="52" r="13"></circle>
+      <circle class="chx-tm-fw chx-tm-c2" cx="60" cy="98" r="11"></circle>
+      <circle class="chx-tm-fa chx-tm-c1" cx="214" cy="78" r="52" opacity=".26"></circle>
+      <circle class="chx-tm-fc chx-tm-c2" cx="204" cy="66" r="24"></circle>
+      <circle class="chx-tm-fa chx-tm-c3" cx="232" cy="94" r="16"></circle>
+      <circle class="chx-tm-fi chx-tm-c3" cx="238" cy="58" r="12"></circle>
+      <text class="chx-tm-lb" x="52" y="63">Atlas</text>
+      <text class="chx-tm-lb" x="192" y="69">Comet</text>
+      <text class="chx-tm-ld" x="8" y="16">Circle packing</text>
+    </svg></div></div>
+<div class="meta"><b>Circle Packing</b> · <code>charts-circle-packing</code><br>Charts &amp; Metrics · TREEMAPS &amp; HIERARCHIES<p>Nested bubbles size children inside parents and grow in on a loop. Use it for hierarchy where each node is a count.</p></div>
+
+</body>
+</html>

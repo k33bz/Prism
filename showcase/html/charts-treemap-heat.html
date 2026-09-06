@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Treemap Heat · Prism</title>
+<!-- Prism showcase sample: charts-treemap-heat (gallery: charts). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.chx-tm-svg { width: 100%; max-width: 300px; height: auto; display: block; font-family: ui-sans-serif, system-ui, sans-serif; }
+.chx-tm-lb { fill: var(--ink); font: 600 8px ui-sans-serif, system-ui, sans-serif; }
+.chx-tm-ld { fill: var(--dim); font: 7px ui-sans-serif, system-ui, sans-serif; }
+.chx-tm-heat rect { stroke: var(--bg); stroke-width: 1.2; animation-name: chxTmHeat; animation-duration: 3.4s; animation-timing-function: ease-in-out; animation-iteration-count: infinite; animation-delay: var(--d,0s); }
+.chx-tm-heat .chx-tm-key { fill: rgba(var(--accent-rgb),1); }
+@keyframes chxTmHeat { 
+  0% { opacity: 0.3; }
+  50% { opacity: 1; }
+  100% { opacity: 0.3; }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><svg class="chx-tm-svg chx-tm-heat" viewBox="0 0 300 150">
+      <rect style="--d:0s;fill:rgba(var(--accent-rgb),.85)" x="4" y="8" width="120" height="72" rx="2"></rect>
+      <rect style="--d:.3s;fill:rgba(var(--accent-rgb),.5)" x="128" y="8" width="80" height="72" rx="2"></rect>
+      <rect style="--d:.6s;fill:rgba(var(--accent-rgb),.28)" x="212" y="8" width="84" height="42" rx="2"></rect>
+      <rect style="--d:.9s;fill:rgba(var(--accent-rgb),.62)" x="212" y="54" width="84" height="26" rx="2"></rect>
+      <rect style="--d:.4s;fill:rgba(var(--accent-rgb),.4)" x="4" y="84" width="96" height="42" rx="2"></rect>
+      <rect style="--d:.7s;fill:rgba(var(--accent-rgb),.72)" x="104" y="84" width="104" height="42" rx="2"></rect>
+      <rect style="--d:1s;fill:rgba(var(--accent-rgb),.2)" x="212" y="84" width="84" height="42" rx="2"></rect>
+      <text class="chx-tm-lb" x="42" y="48">Atlas</text>
+      <text class="chx-tm-lb" x="146" y="48">Comet</text>
+      <rect class="chx-tm-key" x="4" y="136" width="8" height="8" opacity=".2"></rect>
+      <rect class="chx-tm-key" x="14" y="136" width="8" height="8" opacity=".5"></rect>
+      <rect class="chx-tm-key" x="24" y="136" width="8" height="8" opacity=".8"></rect>
+      <text class="chx-tm-ld" x="38" y="143">low to high load</text>
+    </svg></div></div>
+<div class="meta"><b>Treemap Heat</b> · <code>charts-treemap-heat</code><br>Charts &amp; Metrics · TREEMAPS &amp; HIERARCHIES<p>Cell size carries one metric while colour intensity carries a second, with a legend strip. Use it for size against pressure.</p></div>
+
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dendrogram to Bar · Prism</title>
+<!-- Prism showcase sample: charts-dendrogram-to-bar (gallery: charts). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.chx-tm-svg { width: 100%; max-width: 300px; height: auto; display: block; font-family: ui-sans-serif, system-ui, sans-serif; }
+.chx-tm-ld { fill: var(--dim); font: 7px ui-sans-serif, system-ui, sans-serif; }
+.chx-tm-fa { fill: rgba(var(--accent-rgb),.6); }
+.chx-tm-fi { fill: rgba(var(--info-rgb),.58); }
+.chx-tm-fp { fill: rgba(var(--pos-rgb),.55); }
+.chx-tm-fw { fill: rgba(var(--warn-rgb),.55); }
+.chx-tm-dend path { fill: none; stroke: rgba(var(--info-rgb),.7); stroke-width: 1.3; stroke-dasharray: 90; stroke-dashoffset: 90; animation-name: chxTmDendDraw; animation-duration: 1.6s; animation-timing-function: ease; animation-iteration-count: infinite; animation-delay: var(--d,0s); }
+.chx-tm-dend rect { transform-box: fill-box; transform-origin: left center; animation-name: chxTmDendBar; animation-duration: 4s; animation-timing-function: ease-in-out; animation-iteration-count: infinite; animation-delay: var(--d,0s); }
+@keyframes chxTmDendDraw { 
+  100% { stroke-dashoffset: 0; }
+}
+@keyframes chxTmDendBar { 
+  0%, 30% { transform: scaleX(0); }
+  64%, 90% { transform: scaleX(1); }
+  100% { transform: scaleX(0); }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><svg class="chx-tm-svg chx-tm-dend" viewBox="0 0 300 150">
+      <path style="--d:0s" d="M18,75 L52,75 L52,30 L86,30"></path>
+      <path style="--d:.2s" d="M52,75 L52,120 L86,120"></path>
+      <path style="--d:.4s" d="M86,30 L86,16 L120,16"></path>
+      <path style="--d:.5s" d="M86,30 L86,46 L120,46"></path>
+      <path style="--d:.6s" d="M86,120 L86,104 L120,104"></path>
+      <path style="--d:.7s" d="M86,120 L86,134 L120,134"></path>
+      <rect class="chx-tm-fa" style="--d:1.4s" x="128" y="10" width="150" height="12" rx="2"></rect>
+      <rect class="chx-tm-fi" style="--d:1.6s" x="128" y="40" width="118" height="12" rx="2"></rect>
+      <rect class="chx-tm-fp" style="--d:1.8s" x="128" y="98" width="96" height="12" rx="2"></rect>
+      <rect class="chx-tm-fw" style="--d:2s" x="128" y="128" width="64" height="12" rx="2"></rect>
+      <text class="chx-tm-ld" x="284" y="20" text-anchor="end">1,284</text>
+      <text class="chx-tm-ld" x="252" y="50" text-anchor="end">980</text>
+    </svg></div></div>
+<div class="meta"><b>Dendrogram to Bar</b> · <code>charts-dendrogram-to-bar</code><br>Charts &amp; Metrics · TREEMAPS &amp; HIERARCHIES<p>Tree links draw from the root, then resolve into a ranked bar list on the right. Use it to turn a cluster into an order.</p></div>
+
+</body>
+</html>

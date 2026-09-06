@@ -15,7 +15,7 @@ catalog and showcase). Per-batch idea lists are the remaining work; strike ideas
 | 4 | Glow as a system | FX Store | `fx-gl-` / `fxGl` | `glow.fx.html` | landed (20) |
 | 5 | Scroll and reveal choreography | Animation Lab | `lab-rv-` / `labRv` | `reveal.lab.html` | landed (21) |
 | 6 | 3D CSS | Animated Objects | `ob3d-` / `ob3d` | `threed.objects.html` | landed (20) |
-| 7 | Treemaps and hierarchies (Datylon set) | Charts & Metrics | `chx-tm-` / `chxTm` | `treemaps.charts.html` | todo |
+| 7 | Treemaps and hierarchies (Datylon set) | Charts & Metrics | `chx-tm-` / `chxTm` | `treemaps.charts.html` | landed (17) |
 | 8 | Correlation, time and distribution plots (Datylon set) | Charts & Metrics | `chx-pl-` / `chxPl` | `plots.charts.html` | landed (18) |
 | 9 | Liquid gauges and variance bands | Charts & Metrics | `chx-lq-` / `chxLq` | `liquid.charts.html` | todo |
 | 10 | Run charts and SPC rules (needs JS) | Charts & Metrics | `chx-rc-` / `chxRc` | `runcharts.charts.html` | todo |
@@ -74,10 +74,9 @@ Methods has (ripple, morph, split), tooltips and popovers, modals and drawers, c
 sets, image galleries and sliders, 404 and empty-state art, cursors and pointer effects.
 
 ## Batch 7: treemaps and hierarchies
-Ideas: circle packing, convex/voronoi-style treemap, icicle, radial icicle, treemap drill-in, treemap
-delta, treemap heat, treemap with cell sparklines, hierarchical bar, dendrogram-to-bar, Euler diagram,
-icon array, diverging stacked bar (Likert), semi-circle donut with needle, tree ring chart, nested
-donuts, pyramid stack with values.
+Landed (17): circle packing, voronoi treemap, icicle, radial icicle, treemap drill-in, treemap delta,
+treemap heat, treemap sparklines, hierarchical bar, dendrogram to bar, Euler diagram, icon array,
+diverging Likert bar, semi donut needle, tree ring chart, nested donuts, pyramid stack. Remaining: none.
 
 ## Batch 8: correlation, time and distribution plots
 Landed (18): parallel coordinates, quadrant chart, connected scatter, hexagonal binning, contour plot,
