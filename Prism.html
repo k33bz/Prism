@@ -147571,165 +147571,8 @@ document.addEventListener('DOMContentLoaded',function(){
 
 
 
-<!-- prism-section:cardfoil.fx -->
-<h3 class="sec">CARD MOTION &amp; FOIL</h3>
-<style id="fxc-styles">
-/* ===== Card motion & foil (k33bz fork). A card-agnostic system: an abstract placeholder card
-   with two independent axes, MOTION (flip, tap, invert, deal, toss, peek) and SURFACE (shine,
-   rainbow holo, cosmos, linear foil, reverse holo, etched, prismatic, gold). Drop your own art
-   in the .fxc-art slot. The rainbow is the six semantic tokens, so foils retint. Foils are
-   pure-CSS ambient sweeps; the live-tilt tile adds a small --mx/--my initializer (needs JS).
-   No real card art, layout or trade dress is reproduced. fxc- prefix, tokens only. ===== */
-.fxc{position:relative;width:100%;max-width:300px;height:150px;display:grid;place-items:center;perspective:640px;--fxc-w:90px;--fxc-h:126px}
-.fxc-card{position:relative;width:var(--fxc-w);height:var(--fxc-h);transform-style:preserve-3d;border-radius:9px}
-.fxc-face{position:absolute;inset:0;border-radius:9px;overflow:hidden;backface-visibility:hidden;
-  background:linear-gradient(160deg,var(--panel),var(--panel2));border:1px solid var(--line);box-shadow:0 6px 14px rgba(0,0,0,.45)}
-.fxc-back{transform:rotateY(180deg);background:repeating-linear-gradient(45deg,var(--panel2) 0 6px,var(--panel) 6px 12px)}
-.fxc-back::after{content:"";position:absolute;inset:14px;border-radius:6px;border:2px solid rgba(var(--accent-rgb),.4)}
-.fxc-hd{position:absolute;left:5px;right:5px;top:5px;height:13px;border-radius:4px;background:rgba(var(--accent-rgb),.85);display:flex;align-items:center;justify-content:space-between;padding:0 5px}
-.fxc-name{font:800 7px ui-sans-serif,system-ui,sans-serif;letter-spacing:.08em;color:var(--bg)}
-.fxc-cost{width:8px;height:8px;border-radius:50%;background:var(--bg);opacity:.7}
-.fxc-art{position:absolute;left:5px;right:5px;top:21px;height:48px;border-radius:4px;overflow:hidden;
-  background:radial-gradient(120% 90% at 50% 20%,rgba(var(--info-rgb),.55),rgba(var(--crit-rgb),.35) 60%,var(--bg))}
-.fxc-art::after{content:"";position:absolute;left:50%;bottom:6px;width:34px;height:34px;margin-left:-17px;border-radius:50%;background:radial-gradient(circle at 40% 35%,rgba(255,255,255,.5),rgba(var(--accent-rgb),.5) 55%,transparent 72%)}
-.fxc-type{position:absolute;left:5px;right:5px;top:71px;height:9px;border-radius:2px;background:var(--panel2);font:800 6px ui-sans-serif,system-ui,sans-serif;color:var(--muted);display:flex;align-items:center;padding:0 5px;letter-spacing:.1em}
-.fxc-txt{position:absolute;left:6px;right:6px;top:83px;display:flex;flex-direction:column;gap:3px}
-.fxc-txt i{height:3px;border-radius:2px;background:var(--line)}.fxc-txt i:nth-child(2){width:85%}.fxc-txt i:nth-child(3){width:60%}
-.fxc-stat{position:absolute;right:6px;bottom:5px;font:900 11px ui-sans-serif,system-ui,sans-serif;color:var(--ink)}
-/* foil overlay: sits over the front face, confined to the card, blends as light */
-.fxc-foil{position:absolute;inset:0;border-radius:9px;pointer-events:none;z-index:3;opacity:.85}
-.fxc-rainbow{--fxc-rain:linear-gradient(115deg,var(--accent),var(--pos),var(--info),var(--crit),var(--neg),var(--warn),var(--accent))}
-/* --- SURFACES --- */
-.fxc-f-shine .fxc-foil{background:linear-gradient(115deg,transparent 34%,rgba(255,255,255,.55) 48%,transparent 62%);background-size:260% 260%;mix-blend-mode:overlay;animation:fxcSweep 3.4s ease-in-out infinite}
-.fxc-f-holo .fxc-foil{background:var(--fxc-rain);background-size:220% 220%;mix-blend-mode:color-dodge;opacity:.5;animation:fxcSweep 3.4s ease-in-out infinite}
-.fxc-f-holo .fxc-foil::after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 40%,rgba(255,255,255,.5) 50%,transparent 60%);background-size:260% 260%;mix-blend-mode:overlay;animation:fxcSweep 3.4s ease-in-out infinite}
-.fxc-f-cosmos .fxc-foil{background:var(--fxc-rain),radial-gradient(rgba(255,255,255,.7) 0.5px,transparent 1.2px);background-size:220% 220%,7px 7px;mix-blend-mode:color-dodge;opacity:.55;animation:fxcSweep 4s ease-in-out infinite}
-.fxc-f-linear .fxc-foil{background:repeating-linear-gradient(96deg,rgba(255,255,255,.16) 0 2px,transparent 2px 5px),linear-gradient(115deg,transparent 40%,rgba(255,255,255,.55) 50%,transparent 60%);background-size:auto,260% 260%;mix-blend-mode:overlay;animation:fxcSweep 3s ease-in-out infinite}
-.fxc-f-reverse .fxc-foil{background:var(--fxc-rain);background-size:200% 200%;mix-blend-mode:color-dodge;opacity:.5;animation:fxcSweep 3.4s ease-in-out infinite;
-  -webkit-mask:linear-gradient(#000 0 0);mask:linear-gradient(#000 0 0)}
-.fxc-f-reverse .fxc-art{box-shadow:inset 0 0 0 40px var(--bg)}
-.fxc-f-reverse .fxc-foil{clip-path:polygon(0 0,100% 0,100% 21px,5px 21px,5px 69px,calc(100% - 5px) 69px,calc(100% - 5px) 21px,100% 21px,100% 100%,0 100%)}
-.fxc-f-etched .fxc-foil{background:conic-gradient(from 0deg,rgba(255,255,255,.22),transparent 25%,rgba(255,255,255,.22) 50%,transparent 75%,rgba(255,255,255,.22));background-size:16px 16px;mix-blend-mode:soft-light;opacity:.7;animation:fxcEtch 4s linear infinite}
-.fxc-f-prism .fxc-foil{background:repeating-linear-gradient(60deg,rgba(var(--accent-rgb),.4) 0 6px,rgba(var(--info-rgb),.4) 6px 12px,rgba(var(--crit-rgb),.4) 12px 18px);background-size:200% 200%;mix-blend-mode:color-dodge;opacity:.4;animation:fxcSweep 3.6s ease-in-out infinite}
-.fxc-f-gold .fxc-foil{background:linear-gradient(115deg,rgba(var(--warn-rgb),.2) 20%,rgba(255,255,255,.6) 48%,rgba(var(--accent-rgb),.5) 60%,transparent 74%),repeating-linear-gradient(92deg,rgba(255,255,255,.08) 0 3px,transparent 3px 6px);background-size:260% 260%,auto;mix-blend-mode:overlay;animation:fxcSweep 3.2s ease-in-out infinite}
-@keyframes fxcSweep{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
-@keyframes fxcEtch{to{background-position:16px 16px}}
-/* --- MOTIONS (on the card) --- */
-.fxc-m-flipy .fxc-card{animation:fxcFlipY 4s ease-in-out infinite}
-.fxc-m-flipx .fxc-card{animation:fxcFlipX 4s ease-in-out infinite}
-.fxc-m-tap .fxc-card{transform-origin:70% 82%;animation:fxcTap 3.2s ease-in-out infinite}
-.fxc-m-invert .fxc-card{animation:fxcInvert 4s ease-in-out infinite}
-.fxc-m-deal .fxc-card{animation:fxcDeal 3.2s cubic-bezier(.2,.8,.3,1) infinite}
-.fxc-m-toss .fxc-card{animation:fxcToss 3.4s cubic-bezier(.3,0,.5,1) infinite}
-.fxc-m-peek .fxc-card{transform-origin:left center;animation:fxcPeek 3.2s ease-in-out infinite}
-@keyframes fxcFlipY{0%,16%{transform:rotateY(0)}46%,66%{transform:rotateY(180deg)}96%,100%{transform:rotateY(0)}}
-@keyframes fxcFlipX{0%,16%{transform:rotateX(0)}46%,66%{transform:rotateX(180deg)}96%,100%{transform:rotateX(0)}}
-@keyframes fxcTap{0%,14%{transform:rotate(0)}40%,60%{transform:rotate(90deg)}86%,100%{transform:rotate(0)}}
-@keyframes fxcInvert{0%,14%{transform:rotate(0)}44%,64%{transform:rotate(180deg)}94%,100%{transform:rotate(0)}}
-@keyframes fxcDeal{0%{transform:translate(120px,-40px) rotate(28deg) scale(.7);opacity:0}18%{opacity:1}40%,78%{transform:translate(0,0) rotate(0) scale(1);opacity:1}92%,100%{transform:translate(0,6px) rotate(0) scale(1);opacity:0}}
-@keyframes fxcToss{0%{transform:translateX(-130px) rotate(-40deg) scale(.9);opacity:0}12%{opacity:1}88%{opacity:1}100%{transform:translateX(130px) rotate(320deg) scale(.9);opacity:0}}
-@keyframes fxcPeek{0%,20%,100%{transform:rotateY(0)}50%,70%{transform:rotateY(-46deg)}}
-/* --- POINTER-REACTIVE LIVE HOLO (needs the fxc-tilt initializer) --- */
-.fxc-live{--fxc-mx:.5;--fxc-my:.5}
-.fxc-live .fxc-card{transition:transform .12s ease-out;transform:rotateX(calc((var(--fxc-my) - .5)*-26deg)) rotateY(calc((var(--fxc-mx) - .5)*26deg))}
-.fxc-live .fxc-foil{background:var(--fxc-rain);background-size:200% 200%;background-position:calc(var(--fxc-mx)*100%) calc(var(--fxc-my)*100%);mix-blend-mode:color-dodge;opacity:.55}
-.fxc-live .fxc-foil::after{content:"";position:absolute;inset:0;background:radial-gradient(120px 120px at calc(var(--fxc-mx)*100%) calc(var(--fxc-my)*100%),rgba(255,255,255,.55),transparent 60%);mix-blend-mode:overlay}
-/* the idle loop sweeps --fxc-mx/my so the GIF shows the tilt; a pointer overrides it live */
-.fxc-live:not(.fxc-hot) .fxc-card{animation:fxcOrbitCard 4s ease-in-out infinite}
-.fxc-live:not(.fxc-hot) .fxc-foil,.fxc-live:not(.fxc-hot) .fxc-foil::after{animation:fxcOrbitFoil 4s ease-in-out infinite}
-@keyframes fxcOrbitCard{0%,100%{transform:rotateX(12deg) rotateY(-16deg)}50%{transform:rotateX(-12deg) rotateY(16deg)}}
-@keyframes fxcOrbitFoil{0%,100%{background-position:12% 78%}50%{background-position:88% 22%}}
-@media (prefers-reduced-motion:reduce){ .fxc *,.fxc-card,.fxc-foil,.fxc-foil::after{animation:none!important} .fxc-card{transform:none!important} }
-</style>
-<div class="gallery">
 
-  <div class="tile is-new" data-ctype="fx-card" data-interact="auto-play" data-c="accent"><div class="stage">
-    <div class="fxc" role="img" aria-label="Card foil: holographic rainbow shine sweeping across a card"><div class="fxc-card fxc-rainbow"><div class="fxc-face fxc-front"><div class="fxc-hd"><span class="fxc-name">ATLAS</span><span class="fxc-cost"></span></div><div class="fxc-art"></div><div class="fxc-type">CONSTRUCT</div><div class="fxc-txt"><i></i><i></i><i></i></div><div class="fxc-stat">7</div><span class="fxc-foil"></span></div><div class="fxc-face fxc-back"></div></div></div>
-  </div><div class="meta"><div class="nm">Rainbow Holo</div><span class="ref">.fxc-f-holo</span><div class="desc">A rainbow of the six theme accents sweeps across the card as a colour-dodge sheen with a white glare over it, the classic holographic look. Add the class to any card; drop your own art in the slot.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new" data-ctype="fx-card" data-interact="auto-play" data-c="info"><div class="stage">
-    <div class="fxc fxc-f-cosmos" role="img" aria-label="Card foil: cosmos holo with sparkles"><div class="fxc-card fxc-rainbow"><div class="fxc-face fxc-front"><div class="fxc-hd"><span class="fxc-name">COMET</span><span class="fxc-cost"></span></div><div class="fxc-art"></div><div class="fxc-type">SPELL</div><div class="fxc-txt"><i></i><i></i><i></i></div><div class="fxc-stat">4</div><span class="fxc-foil"></span></div><div class="fxc-face fxc-back"></div></div></div>
-  </div><div class="meta"><div class="nm">Cosmos Holo</div><span class="ref">.fxc-f-cosmos</span><div class="desc">The rainbow sheen over a fine sparkle field, the galaxy or cosmos foil. The stars twinkle under the moving light. Colour rides the tokens.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
-
-  <div class="tile is-new" data-ctype="fx-card" data-interact="auto-play" data-c="accent"><div class="stage">
-    <div class="fxc fxc-f-shine" role="img" aria-label="Card foil: plain glare shine"><div class="fxc-card"><div class="fxc-face fxc-front"><div class="fxc-hd"><span class="fxc-name">EMBER</span><span class="fxc-cost"></span></div><div class="fxc-art"></div><div class="fxc-type">UNIT</div><div class="fxc-txt"><i></i><i></i><i></i></div><div class="fxc-stat">5</div><span class="fxc-foil"></span></div><div class="fxc-face fxc-back"></div></div></div>
-  </div><div class="meta"><div class="nm">Shine</div><span class="ref">.fxc-f-shine</span><div class="desc">A single soft glare rakes across the card face, the everyday non-rainbow foil. The lightest of the surfaces, good under any of the motions.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
-
-  <div class="tile is-new" data-ctype="fx-card" data-interact="auto-play" data-c="info"><div class="stage">
-    <div class="fxc fxc-f-linear" role="img" aria-label="Card foil: brushed linear foil"><div class="fxc-card"><div class="fxc-face fxc-front"><div class="fxc-hd"><span class="fxc-name">PIXEL</span><span class="fxc-cost"></span></div><div class="fxc-art"></div><div class="fxc-type">ARTIFACT</div><div class="fxc-txt"><i></i><i></i><i></i></div><div class="fxc-stat">3</div><span class="fxc-foil"></span></div><div class="fxc-face fxc-back"></div></div></div>
-  </div><div class="meta"><div class="nm">Linear Foil</div><span class="ref">.fxc-f-linear</span><div class="desc">Fine parallel lines flare into a metallic sheen as the light passes, the brushed line-foil finish. A quieter, premium look.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
-
-  <div class="tile is-new" data-ctype="fx-card" data-interact="auto-play" data-c="crit"><div class="stage">
-    <div class="fxc fxc-f-reverse" role="img" aria-label="Card foil: reverse holo on the frame"><div class="fxc-card fxc-rainbow"><div class="fxc-face fxc-front"><div class="fxc-hd"><span class="fxc-name">NOVA</span><span class="fxc-cost"></span></div><div class="fxc-art"></div><div class="fxc-type">UNIT</div><div class="fxc-txt"><i></i><i></i><i></i></div><div class="fxc-stat">6</div><span class="fxc-foil"></span></div><div class="fxc-face fxc-back"></div></div></div>
-  </div><div class="meta"><div class="nm">Reverse Holo</div><span class="ref">.fxc-f-reverse</span><div class="desc">The shimmer sits on the frame and text box, not the art window, the reverse-holo treatment. A mask holds the foil out of the picture.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
-
-  <div class="tile is-new" data-ctype="fx-card" data-interact="auto-play" data-c="pos"><div class="stage">
-    <div class="fxc fxc-f-etched" role="img" aria-label="Card foil: etched texture foil"><div class="fxc-card"><div class="fxc-face fxc-front"><div class="fxc-hd"><span class="fxc-name">ORBIT</span><span class="fxc-cost"></span></div><div class="fxc-art"></div><div class="fxc-type">RELIC</div><div class="fxc-txt"><i></i><i></i><i></i></div><div class="fxc-stat">8</div><span class="fxc-foil"></span></div><div class="fxc-face fxc-back"></div></div></div>
-  </div><div class="meta"><div class="nm">Etched Foil</div><span class="ref">.fxc-f-etched</span><div class="desc">A raised diamond texture drifts across the card and catches the light, the etched or textured foil. Built from a tiled conic pattern in soft-light.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
-
-  <div class="tile is-new" data-ctype="fx-card" data-interact="auto-play" data-c="crit"><div class="stage">
-    <div class="fxc fxc-f-prism" role="img" aria-label="Card foil: prismatic shards"><div class="fxc-card"><div class="fxc-face fxc-front"><div class="fxc-hd"><span class="fxc-name">ATLAS</span><span class="fxc-cost"></span></div><div class="fxc-art"></div><div class="fxc-type">SPELL</div><div class="fxc-txt"><i></i><i></i><i></i></div><div class="fxc-stat">2</div><span class="fxc-foil"></span></div><div class="fxc-face fxc-back"></div></div></div>
-  </div><div class="meta"><div class="nm">Prismatic</div><span class="ref">.fxc-f-prism</span><div class="desc">Diagonal bands of accent, blue and violet slide across like a refractor or prism card. A denser, angular rainbow.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
-
-  <div class="tile is-new" data-ctype="fx-card" data-interact="auto-play" data-c="warn"><div class="stage">
-    <div class="fxc fxc-f-gold" role="img" aria-label="Card foil: gold secret-rare sweep"><div class="fxc-card"><div class="fxc-face fxc-front"><div class="fxc-hd"><span class="fxc-name">COMET</span><span class="fxc-cost"></span></div><div class="fxc-art"></div><div class="fxc-type">LEGEND</div><div class="fxc-txt"><i></i><i></i><i></i></div><div class="fxc-stat">9</div><span class="fxc-foil"></span></div><div class="fxc-face fxc-back"></div></div></div>
-  </div><div class="meta"><div class="nm">Gold Foil</div><span class="ref">.fxc-f-gold</span><div class="desc">A warm gold sheen with a fine grain sweeps across, the secret-rare or gold-card finish. Colour from the warn and accent roles.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
-
-  <div class="tile is-new" data-ctype="fx-card" data-interact="auto-play" data-c="info"><div class="stage">
-    <div class="fxc fxc-m-flipy" role="img" aria-label="Card motion: flip over on the Y axis"><div class="fxc-card"><div class="fxc-face fxc-front"><div class="fxc-hd"><span class="fxc-name">ATLAS</span><span class="fxc-cost"></span></div><div class="fxc-art"></div><div class="fxc-type">UNIT</div><div class="fxc-txt"><i></i><i></i><i></i></div><div class="fxc-stat">7</div></div><div class="fxc-face fxc-back"></div></div></div>
-  </div><div class="meta"><div class="nm">Flip Over</div><span class="ref">.fxc-m-flipy</span><div class="desc">The card turns on its vertical axis to show its back and returns, the reveal flip. Two faces with hidden backfaces do the trick.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
-
-  <div class="tile is-new" data-ctype="fx-card" data-interact="auto-play" data-c="info"><div class="stage">
-    <div class="fxc fxc-m-flipx" role="img" aria-label="Card motion: flip up on the X axis"><div class="fxc-card"><div class="fxc-face fxc-front"><div class="fxc-hd"><span class="fxc-name">COMET</span><span class="fxc-cost"></span></div><div class="fxc-art"></div><div class="fxc-type">SPELL</div><div class="fxc-txt"><i></i><i></i><i></i></div><div class="fxc-stat">4</div></div><div class="fxc-face fxc-back" style="transform:rotateX(180deg)"></div></div></div>
-  </div><div class="meta"><div class="nm">Flip Up</div><span class="ref">.fxc-m-flipx</span><div class="desc">The card flips top over bottom on its horizontal axis. The same two-face reveal, hinged the other way.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
-
-  <div class="tile is-new" data-ctype="fx-card" data-interact="auto-play" data-c="accent"><div class="stage">
-    <div class="fxc fxc-m-tap" role="img" aria-label="Card motion: tap ninety degrees"><div class="fxc-card"><div class="fxc-face fxc-front"><div class="fxc-hd"><span class="fxc-name">EMBER</span><span class="fxc-cost"></span></div><div class="fxc-art"></div><div class="fxc-type">UNIT</div><div class="fxc-txt"><i></i><i></i><i></i></div><div class="fxc-stat">5</div></div><div class="fxc-face fxc-back"></div></div></div>
-  </div><div class="meta"><div class="nm">Tap</div><span class="ref">.fxc-m-tap</span><div class="desc">The card turns ninety degrees to its side and back, the tap and untap. A Z-axis rotation about a lower-right pivot.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
-
-  <div class="tile is-new" data-ctype="fx-card" data-interact="auto-play" data-c="neg"><div class="stage">
-    <div class="fxc fxc-m-invert" role="img" aria-label="Card motion: rotate upside down"><div class="fxc-card"><div class="fxc-face fxc-front"><div class="fxc-hd"><span class="fxc-name">PIXEL</span><span class="fxc-cost"></span></div><div class="fxc-art"></div><div class="fxc-type">CURSE</div><div class="fxc-txt"><i></i><i></i><i></i></div><div class="fxc-stat">3</div></div><div class="fxc-face fxc-back"></div></div></div>
-  </div><div class="meta"><div class="nm">Upside Down</div><span class="ref">.fxc-m-invert</span><div class="desc">The card rotates a full half turn to sit upside down and back, for a reversed or cursed state. A Z-axis half rotation.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
-
-  <div class="tile is-new" data-ctype="fx-card" data-interact="auto-play" data-c="pos"><div class="stage">
-    <div class="fxc fxc-m-deal" role="img" aria-label="Card motion: deal in from the deck"><div class="fxc-card"><div class="fxc-face fxc-front"><div class="fxc-hd"><span class="fxc-name">NOVA</span><span class="fxc-cost"></span></div><div class="fxc-art"></div><div class="fxc-type">UNIT</div><div class="fxc-txt"><i></i><i></i><i></i></div><div class="fxc-stat">6</div></div><div class="fxc-face fxc-back"></div></div></div>
-  </div><div class="meta"><div class="nm">Deal In</div><span class="ref">.fxc-m-deal</span><div class="desc">The card flies in from the deck edge, rotating flat and settling with a small overshoot. The draw or deal.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
-
-  <div class="tile is-new" data-ctype="fx-card" data-interact="auto-play" data-c="crit"><div class="stage">
-    <div class="fxc fxc-m-toss" role="img" aria-label="Card motion: toss spinning across"><div class="fxc-card"><div class="fxc-face fxc-front"><div class="fxc-hd"><span class="fxc-name">ORBIT</span><span class="fxc-cost"></span></div><div class="fxc-art"></div><div class="fxc-type">SPELL</div><div class="fxc-txt"><i></i><i></i><i></i></div><div class="fxc-stat">2</div></div><div class="fxc-face fxc-back"></div></div></div>
-  </div><div class="meta"><div class="nm">Toss Spin</div><span class="ref">.fxc-m-toss</span><div class="desc">The card spins across the frame and off the far edge, the flick or discard. A travelling Z-rotation.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
-
-  <div class="tile is-new" data-ctype="fx-card" data-interact="auto-play" data-c="warn"><div class="stage">
-    <div class="fxc fxc-m-peek" role="img" aria-label="Card motion: peek a corner"><div class="fxc-card"><div class="fxc-face fxc-front"><div class="fxc-hd"><span class="fxc-name">ATLAS</span><span class="fxc-cost"></span></div><div class="fxc-art"></div><div class="fxc-type">UNIT</div><div class="fxc-txt"><i></i><i></i><i></i></div><div class="fxc-stat">7</div></div><div class="fxc-face fxc-back"></div></div></div>
-  </div><div class="meta"><div class="nm">Peek</div><span class="ref">.fxc-m-peek</span><div class="desc">The card swings open from its left edge to reveal a sliver of the back, then closes. The peek at your hand.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
-
-  <div class="tile is-new" data-ctype="fx-card" data-interact="auto-play" data-c="crit"><div class="stage">
-    <div class="fxc fxc-m-flipy fxc-f-holo" role="img" aria-label="Composed: flip over with holo catching the light"><div class="fxc-card fxc-rainbow"><div class="fxc-face fxc-front"><div class="fxc-hd"><span class="fxc-name">COMET</span><span class="fxc-cost"></span></div><div class="fxc-art"></div><div class="fxc-type">LEGEND</div><div class="fxc-txt"><i></i><i></i><i></i></div><div class="fxc-stat">9</div><span class="fxc-foil"></span></div><div class="fxc-face fxc-back"></div></div></div>
-  </div><div class="meta"><div class="nm">Flip + Holo</div><span class="ref">.fxc-m-flipy.fxc-f-holo</span><div class="desc">Motion and surface compose: the card flips over and the rainbow holo catches the light as the front turns back into view. Any motion class plus any foil class stack.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
-
-  <div class="tile is-new" data-ctype="fx-card" data-interact="auto-play" data-c="accent"><div class="stage">
-    <div class="fxc fxc-m-tap fxc-f-etched" role="img" aria-label="Composed: tap with etched foil"><div class="fxc-card"><div class="fxc-face fxc-front"><div class="fxc-hd"><span class="fxc-name">ORBIT</span><span class="fxc-cost"></span></div><div class="fxc-art"></div><div class="fxc-type">RELIC</div><div class="fxc-txt"><i></i><i></i><i></i></div><div class="fxc-stat">8</div><span class="fxc-foil"></span></div><div class="fxc-face fxc-back"></div></div></div>
-  </div><div class="meta"><div class="nm">Tap + Etched</div><span class="ref">.fxc-m-tap.fxc-f-etched</span><div class="desc">The card taps to its side while the etched texture keeps catching the light. A second example of stacking a motion and a foil on one card.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
-
-  <div class="tile is-new" data-ctype="fx-card" data-interact="hover" data-c="crit" data-needs-js="fxc-tilt"><div class="stage">
-    <div class="fxc fxc-live" role="img" aria-label="Live holo: the card tilts and the rainbow tracks the pointer"><div class="fxc-card fxc-rainbow"><div class="fxc-face fxc-front"><div class="fxc-hd"><span class="fxc-name">ATLAS</span><span class="fxc-cost"></span></div><div class="fxc-art"></div><div class="fxc-type">MYTHIC</div><div class="fxc-txt"><i></i><i></i><i></i></div><div class="fxc-stat">X</div><span class="fxc-foil"></span></div><div class="fxc-face fxc-back"></div></div></div>
-  </div><div class="meta"><div class="nm">Live Holo Tilt</div><span class="ref">.fxc-live</span><div class="desc">Move over the card: it tilts toward the pointer and the rainbow and glare track where you point, the interactive holo. The idle loop orbits it so the still shows the effect. Needs the small inline initializer, which Copy includes. <b>Hover the card.</b></div><button class="copy" onclick="copyVizJs(this)">Copy</button></div></div>
-
-</div>
-<script data-prism-init="fxc-tilt">
-/* Prism initializer "fxc-tilt": pointer-reactive holo tilt. Idempotent, no dependencies.
-   Sets --fxc-mx/--fxc-my (0..1) on any .fxc-live from the pointer and adds .fxc-hot to stop the
-   idle orbit while pointing; reading from data-* is not needed (position is the only input). */
-(function(){
-  if(window.__prismFxcTilt) return; window.__prismFxcTilt=true;
-  function at(el,e){ var r=el.getBoundingClientRect();
-    el.style.setProperty('--fxc-mx', Math.min(1,Math.max(0,(e.clientX-r.left)/r.width)));
-    el.style.setProperty('--fxc-my', Math.min(1,Math.max(0,(e.clientY-r.top)/r.height))); }
-  document.addEventListener('pointermove',function(e){ var el=e.target.closest && e.target.closest('.fxc-live'); if(!el) return; el.classList.add('fxc-hot'); at(el,e); });
-  document.addEventListener('pointerleave',function(e){ var el=e.target.closest && e.target.closest('.fxc-live'); if(el){ el.classList.remove('fxc-hot'); el.style.removeProperty('--fxc-mx'); el.style.removeProperty('--fxc-my'); } }, true);
-})();
-<\/script>
-<!-- /prism-section:cardfoil.fx -->
 
 <!-- prism-section:tcgfoils.fx -->
 <h3 class="sec">TCG FOIL STYLES</h3>
@@ -147863,6 +147706,166 @@ document.addEventListener('DOMContentLoaded',function(){
 
 </div>
 <!-- /prism-section:tcgfoils.fx -->
+
+<!-- prism-section:cardfoil.fx -->
+<h3 class="sec">CARD MOTION &amp; FOIL</h3>
+<style id="fxc-styles">
+/* ===== Card motion & foil (k33bz fork). A card-agnostic system: an abstract placeholder card
+   with two independent axes, MOTION (flip, tap, invert, deal, toss, peek) and SURFACE (shine,
+   rainbow holo, cosmos, linear foil, reverse holo, etched, prismatic, gold). Drop your own art
+   in the .fxc-art slot. The rainbow is the six semantic tokens, so foils retint. Foils are
+   pure-CSS ambient sweeps; the live-tilt tile adds a small --mx/--my initializer (needs JS).
+   No real card art, layout or trade dress is reproduced. fxc- prefix, tokens only. ===== */
+.fxc{position:relative;width:100%;max-width:300px;height:150px;display:grid;place-items:center;perspective:640px;--fxc-w:90px;--fxc-h:126px}
+.fxc-card{position:relative;width:var(--fxc-w);height:var(--fxc-h);transform-style:preserve-3d;border-radius:9px}
+.fxc-face{position:absolute;inset:0;border-radius:9px;overflow:hidden;backface-visibility:hidden;
+  background:linear-gradient(160deg,var(--panel),var(--panel2));border:1px solid var(--line);box-shadow:0 6px 14px rgba(0,0,0,.45)}
+.fxc-back{transform:rotateY(180deg);background:repeating-linear-gradient(45deg,var(--panel2) 0 6px,var(--panel) 6px 12px)}
+.fxc-back::after{content:"";position:absolute;inset:14px;border-radius:6px;border:2px solid rgba(var(--accent-rgb),.4)}
+.fxc-hd{position:absolute;left:5px;right:5px;top:5px;height:13px;border-radius:4px;background:rgba(var(--accent-rgb),.85);display:flex;align-items:center;justify-content:space-between;padding:0 5px}
+.fxc-name{font:800 7px ui-sans-serif,system-ui,sans-serif;letter-spacing:.08em;color:var(--bg)}
+.fxc-cost{width:8px;height:8px;border-radius:50%;background:var(--bg);opacity:.7}
+.fxc-art{position:absolute;left:5px;right:5px;top:21px;height:48px;border-radius:4px;overflow:hidden;
+  background:radial-gradient(120% 90% at 50% 20%,rgba(var(--info-rgb),.55),rgba(var(--crit-rgb),.35) 60%,var(--bg))}
+.fxc-art::after{content:"";position:absolute;left:50%;bottom:6px;width:34px;height:34px;margin-left:-17px;border-radius:50%;background:radial-gradient(circle at 40% 35%,rgba(255,255,255,.5),rgba(var(--accent-rgb),.5) 55%,transparent 72%)}
+.fxc-type{position:absolute;left:5px;right:5px;top:71px;height:9px;border-radius:2px;background:var(--panel2);font:800 6px ui-sans-serif,system-ui,sans-serif;color:var(--muted);display:flex;align-items:center;padding:0 5px;letter-spacing:.1em}
+.fxc-txt{position:absolute;left:6px;right:6px;top:83px;display:flex;flex-direction:column;gap:3px}
+.fxc-txt i{height:3px;border-radius:2px;background:var(--line)}.fxc-txt i:nth-child(2){width:85%}.fxc-txt i:nth-child(3){width:60%}
+.fxc-stat{position:absolute;right:6px;bottom:5px;font:900 11px ui-sans-serif,system-ui,sans-serif;color:var(--ink)}
+/* foil overlay: sits over the front face, confined to the card, blends as light */
+.fxc-foil{position:absolute;inset:0;border-radius:9px;pointer-events:none;z-index:3;opacity:.85}
+.fxc-rainbow{--fxc-rain:linear-gradient(115deg,var(--accent),var(--pos),var(--info),var(--crit),var(--neg),var(--warn),var(--accent))}
+/* --- SURFACES --- */
+.fxc-f-shine .fxc-foil{background:linear-gradient(115deg,transparent 34%,rgba(255,255,255,.55) 48%,transparent 62%);background-size:260% 260%;mix-blend-mode:overlay;animation:fxcSweep 3.4s ease-in-out infinite}
+.fxc-f-holo .fxc-foil{background:var(--fxc-rain);background-size:220% 220%;mix-blend-mode:color-dodge;opacity:.5;animation:fxcSweep 3.4s ease-in-out infinite}
+.fxc-f-holo .fxc-foil::after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 40%,rgba(255,255,255,.5) 50%,transparent 60%);background-size:260% 260%;mix-blend-mode:overlay;animation:fxcSweep 3.4s ease-in-out infinite}
+.fxc-f-cosmos .fxc-foil{background:var(--fxc-rain),radial-gradient(rgba(255,255,255,.7) 0.5px,transparent 1.2px);background-size:220% 220%,7px 7px;mix-blend-mode:color-dodge;opacity:.55;animation:fxcSweep 4s ease-in-out infinite}
+.fxc-f-linear .fxc-foil{background:repeating-linear-gradient(96deg,rgba(255,255,255,.16) 0 2px,transparent 2px 5px),linear-gradient(115deg,transparent 40%,rgba(255,255,255,.55) 50%,transparent 60%);background-size:auto,260% 260%;mix-blend-mode:overlay;animation:fxcSweep 3s ease-in-out infinite}
+.fxc-f-reverse .fxc-foil{background:var(--fxc-rain);background-size:200% 200%;mix-blend-mode:color-dodge;opacity:.5;animation:fxcSweep 3.4s ease-in-out infinite;
+  -webkit-mask:linear-gradient(#000 0 0);mask:linear-gradient(#000 0 0)}
+.fxc-f-reverse .fxc-art{box-shadow:inset 0 0 0 40px var(--bg)}
+.fxc-f-reverse .fxc-foil{clip-path:polygon(0 0,100% 0,100% 21px,5px 21px,5px 69px,calc(100% - 5px) 69px,calc(100% - 5px) 21px,100% 21px,100% 100%,0 100%)}
+.fxc-f-etched .fxc-foil{background:conic-gradient(from 0deg,rgba(255,255,255,.22),transparent 25%,rgba(255,255,255,.22) 50%,transparent 75%,rgba(255,255,255,.22));background-size:16px 16px;mix-blend-mode:soft-light;opacity:.7;animation:fxcEtch 4s linear infinite}
+.fxc-f-prism .fxc-foil{background:repeating-linear-gradient(60deg,rgba(var(--accent-rgb),.4) 0 6px,rgba(var(--info-rgb),.4) 6px 12px,rgba(var(--crit-rgb),.4) 12px 18px);background-size:200% 200%;mix-blend-mode:color-dodge;opacity:.4;animation:fxcSweep 3.6s ease-in-out infinite}
+.fxc-f-gold .fxc-foil{background:linear-gradient(115deg,rgba(var(--warn-rgb),.2) 20%,rgba(255,255,255,.6) 48%,rgba(var(--accent-rgb),.5) 60%,transparent 74%),repeating-linear-gradient(92deg,rgba(255,255,255,.08) 0 3px,transparent 3px 6px);background-size:260% 260%,auto;mix-blend-mode:overlay;animation:fxcSweep 3.2s ease-in-out infinite}
+@keyframes fxcSweep{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+@keyframes fxcEtch{to{background-position:16px 16px}}
+/* --- MOTIONS (on the card) --- */
+.fxc-m-flipy .fxc-card{animation:fxcFlipY 4s ease-in-out infinite}
+.fxc-m-flipx .fxc-card{animation:fxcFlipX 4s ease-in-out infinite}
+.fxc-m-tap .fxc-card{transform-origin:70% 82%;animation:fxcTap 3.2s ease-in-out infinite}
+.fxc-m-invert .fxc-card{animation:fxcInvert 4s ease-in-out infinite}
+.fxc-m-deal .fxc-card{animation:fxcDeal 3.2s cubic-bezier(.2,.8,.3,1) infinite}
+.fxc-m-toss .fxc-card{animation:fxcToss 3.4s cubic-bezier(.3,0,.5,1) infinite}
+.fxc-m-peek .fxc-card{transform-origin:left center;animation:fxcPeek 3.2s ease-in-out infinite}
+@keyframes fxcFlipY{0%,16%{transform:rotateY(0)}46%,66%{transform:rotateY(180deg)}96%,100%{transform:rotateY(0)}}
+@keyframes fxcFlipX{0%,16%{transform:rotateX(0)}46%,66%{transform:rotateX(180deg)}96%,100%{transform:rotateX(0)}}
+@keyframes fxcTap{0%,14%{transform:rotate(0)}40%,60%{transform:rotate(90deg)}86%,100%{transform:rotate(0)}}
+@keyframes fxcInvert{0%,14%{transform:rotate(0)}44%,64%{transform:rotate(180deg)}94%,100%{transform:rotate(0)}}
+@keyframes fxcDeal{0%{transform:translate(120px,-40px) rotate(28deg) scale(.7);opacity:0}18%{opacity:1}40%,78%{transform:translate(0,0) rotate(0) scale(1);opacity:1}92%,100%{transform:translate(0,6px) rotate(0) scale(1);opacity:0}}
+@keyframes fxcToss{0%{transform:translateX(-130px) rotate(-40deg) scale(.9);opacity:0}12%{opacity:1}88%{opacity:1}100%{transform:translateX(130px) rotate(320deg) scale(.9);opacity:0}}
+@keyframes fxcPeek{0%,20%,100%{transform:rotateY(0)}50%,70%{transform:rotateY(-46deg)}}
+/* --- POINTER-REACTIVE LIVE HOLO (needs the fxc-tilt initializer) --- */
+.fxc-live{--fxc-mx:.5;--fxc-my:.5}
+.fxc-live .fxc-card{transition:transform .12s ease-out;transform:rotateX(calc((var(--fxc-my) - .5)*-26deg)) rotateY(calc((var(--fxc-mx) - .5)*26deg))}
+.fxc-live .fxc-foil{background:var(--fxc-rain);background-size:200% 200%;background-position:calc(var(--fxc-mx)*100%) calc(var(--fxc-my)*100%);mix-blend-mode:color-dodge;opacity:.55}
+.fxc-live .fxc-foil::after{content:"";position:absolute;inset:0;background:radial-gradient(120px 120px at calc(var(--fxc-mx)*100%) calc(var(--fxc-my)*100%),rgba(255,255,255,.55),transparent 60%);mix-blend-mode:overlay}
+/* the idle loop sweeps --fxc-mx/my so the GIF shows the tilt; a pointer overrides it live */
+.fxc-live:not(.fxc-hot) .fxc-card{animation:fxcOrbitCard 4s ease-in-out infinite}
+.fxc-live:not(.fxc-hot) .fxc-foil,.fxc-live:not(.fxc-hot) .fxc-foil::after{animation:fxcOrbitFoil 4s ease-in-out infinite}
+@keyframes fxcOrbitCard{0%,100%{transform:rotateX(12deg) rotateY(-16deg)}50%{transform:rotateX(-12deg) rotateY(16deg)}}
+@keyframes fxcOrbitFoil{0%,100%{background-position:12% 78%}50%{background-position:88% 22%}}
+@media (prefers-reduced-motion:reduce){ .fxc *,.fxc-card,.fxc-foil,.fxc-foil::after{animation:none!important} .fxc-card{transform:none!important} }
+</style>
+<div class="gallery">
+
+  <div class="tile is-new" data-ctype="fx-card" data-interact="auto-play" data-c="accent"><div class="stage">
+    <div class="fxc fxc-f-holo" role="img" aria-label="Card foil: holographic rainbow shine sweeping across a card"><div class="fxc-card fxc-rainbow"><div class="fxc-face fxc-front"><div class="fxc-hd"><span class="fxc-name">ATLAS</span><span class="fxc-cost"></span></div><div class="fxc-art"></div><div class="fxc-type">CONSTRUCT</div><div class="fxc-txt"><i></i><i></i><i></i></div><div class="fxc-stat">7</div><span class="fxc-foil"></span></div><div class="fxc-face fxc-back"></div></div></div>
+  </div><div class="meta"><div class="nm">Rainbow Holo</div><span class="ref">.fxc-f-holo</span><div class="desc">A rainbow of the six theme accents sweeps across the card as a colour-dodge sheen with a white glare over it, the classic holographic look. Add the class to any card; drop your own art in the slot.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="fx-card" data-interact="auto-play" data-c="info"><div class="stage">
+    <div class="fxc fxc-f-cosmos" role="img" aria-label="Card foil: cosmos holo with sparkles"><div class="fxc-card fxc-rainbow"><div class="fxc-face fxc-front"><div class="fxc-hd"><span class="fxc-name">COMET</span><span class="fxc-cost"></span></div><div class="fxc-art"></div><div class="fxc-type">SPELL</div><div class="fxc-txt"><i></i><i></i><i></i></div><div class="fxc-stat">4</div><span class="fxc-foil"></span></div><div class="fxc-face fxc-back"></div></div></div>
+  </div><div class="meta"><div class="nm">Cosmos Holo</div><span class="ref">.fxc-f-cosmos</span><div class="desc">The rainbow sheen over a fine sparkle field, the galaxy or cosmos foil. The stars twinkle under the moving light. Colour rides the tokens.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="fx-card" data-interact="auto-play" data-c="accent"><div class="stage">
+    <div class="fxc fxc-f-shine" role="img" aria-label="Card foil: plain glare shine"><div class="fxc-card"><div class="fxc-face fxc-front"><div class="fxc-hd"><span class="fxc-name">EMBER</span><span class="fxc-cost"></span></div><div class="fxc-art"></div><div class="fxc-type">UNIT</div><div class="fxc-txt"><i></i><i></i><i></i></div><div class="fxc-stat">5</div><span class="fxc-foil"></span></div><div class="fxc-face fxc-back"></div></div></div>
+  </div><div class="meta"><div class="nm">Shine</div><span class="ref">.fxc-f-shine</span><div class="desc">A single soft glare rakes across the card face, the everyday non-rainbow foil. The lightest of the surfaces, good under any of the motions.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="fx-card" data-interact="auto-play" data-c="info"><div class="stage">
+    <div class="fxc fxc-f-linear" role="img" aria-label="Card foil: brushed linear foil"><div class="fxc-card"><div class="fxc-face fxc-front"><div class="fxc-hd"><span class="fxc-name">PIXEL</span><span class="fxc-cost"></span></div><div class="fxc-art"></div><div class="fxc-type">ARTIFACT</div><div class="fxc-txt"><i></i><i></i><i></i></div><div class="fxc-stat">3</div><span class="fxc-foil"></span></div><div class="fxc-face fxc-back"></div></div></div>
+  </div><div class="meta"><div class="nm">Linear Foil</div><span class="ref">.fxc-f-linear</span><div class="desc">Fine parallel lines flare into a metallic sheen as the light passes, the brushed line-foil finish. A quieter, premium look.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="fx-card" data-interact="auto-play" data-c="crit"><div class="stage">
+    <div class="fxc fxc-f-reverse" role="img" aria-label="Card foil: reverse holo on the frame"><div class="fxc-card fxc-rainbow"><div class="fxc-face fxc-front"><div class="fxc-hd"><span class="fxc-name">NOVA</span><span class="fxc-cost"></span></div><div class="fxc-art"></div><div class="fxc-type">UNIT</div><div class="fxc-txt"><i></i><i></i><i></i></div><div class="fxc-stat">6</div><span class="fxc-foil"></span></div><div class="fxc-face fxc-back"></div></div></div>
+  </div><div class="meta"><div class="nm">Reverse Holo</div><span class="ref">.fxc-f-reverse</span><div class="desc">The shimmer sits on the frame and text box, not the art window, the reverse-holo treatment. A mask holds the foil out of the picture.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="fx-card" data-interact="auto-play" data-c="pos"><div class="stage">
+    <div class="fxc fxc-f-etched" role="img" aria-label="Card foil: etched texture foil"><div class="fxc-card"><div class="fxc-face fxc-front"><div class="fxc-hd"><span class="fxc-name">ORBIT</span><span class="fxc-cost"></span></div><div class="fxc-art"></div><div class="fxc-type">RELIC</div><div class="fxc-txt"><i></i><i></i><i></i></div><div class="fxc-stat">8</div><span class="fxc-foil"></span></div><div class="fxc-face fxc-back"></div></div></div>
+  </div><div class="meta"><div class="nm">Etched Foil</div><span class="ref">.fxc-f-etched</span><div class="desc">A raised diamond texture drifts across the card and catches the light, the etched or textured foil. Built from a tiled conic pattern in soft-light.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="fx-card" data-interact="auto-play" data-c="crit"><div class="stage">
+    <div class="fxc fxc-f-prism" role="img" aria-label="Card foil: prismatic shards"><div class="fxc-card"><div class="fxc-face fxc-front"><div class="fxc-hd"><span class="fxc-name">ATLAS</span><span class="fxc-cost"></span></div><div class="fxc-art"></div><div class="fxc-type">SPELL</div><div class="fxc-txt"><i></i><i></i><i></i></div><div class="fxc-stat">2</div><span class="fxc-foil"></span></div><div class="fxc-face fxc-back"></div></div></div>
+  </div><div class="meta"><div class="nm">Prismatic</div><span class="ref">.fxc-f-prism</span><div class="desc">Diagonal bands of accent, blue and violet slide across like a refractor or prism card. A denser, angular rainbow.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="fx-card" data-interact="auto-play" data-c="warn"><div class="stage">
+    <div class="fxc fxc-f-gold" role="img" aria-label="Card foil: gold secret-rare sweep"><div class="fxc-card"><div class="fxc-face fxc-front"><div class="fxc-hd"><span class="fxc-name">COMET</span><span class="fxc-cost"></span></div><div class="fxc-art"></div><div class="fxc-type">LEGEND</div><div class="fxc-txt"><i></i><i></i><i></i></div><div class="fxc-stat">9</div><span class="fxc-foil"></span></div><div class="fxc-face fxc-back"></div></div></div>
+  </div><div class="meta"><div class="nm">Gold Foil</div><span class="ref">.fxc-f-gold</span><div class="desc">A warm gold sheen with a fine grain sweeps across, the secret-rare or gold-card finish. Colour from the warn and accent roles.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="fx-card" data-interact="auto-play" data-c="info"><div class="stage">
+    <div class="fxc fxc-m-flipy" role="img" aria-label="Card motion: flip over on the Y axis"><div class="fxc-card"><div class="fxc-face fxc-front"><div class="fxc-hd"><span class="fxc-name">ATLAS</span><span class="fxc-cost"></span></div><div class="fxc-art"></div><div class="fxc-type">UNIT</div><div class="fxc-txt"><i></i><i></i><i></i></div><div class="fxc-stat">7</div></div><div class="fxc-face fxc-back"></div></div></div>
+  </div><div class="meta"><div class="nm">Flip Over</div><span class="ref">.fxc-m-flipy</span><div class="desc">The card turns on its vertical axis to show its back and returns, the reveal flip. Two faces with hidden backfaces do the trick.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="fx-card" data-interact="auto-play" data-c="info"><div class="stage">
+    <div class="fxc fxc-m-flipx" role="img" aria-label="Card motion: flip up on the X axis"><div class="fxc-card"><div class="fxc-face fxc-front"><div class="fxc-hd"><span class="fxc-name">COMET</span><span class="fxc-cost"></span></div><div class="fxc-art"></div><div class="fxc-type">SPELL</div><div class="fxc-txt"><i></i><i></i><i></i></div><div class="fxc-stat">4</div></div><div class="fxc-face fxc-back" style="transform:rotateX(180deg)"></div></div></div>
+  </div><div class="meta"><div class="nm">Flip Up</div><span class="ref">.fxc-m-flipx</span><div class="desc">The card flips top over bottom on its horizontal axis. The same two-face reveal, hinged the other way.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="fx-card" data-interact="auto-play" data-c="accent"><div class="stage">
+    <div class="fxc fxc-m-tap" role="img" aria-label="Card motion: tap ninety degrees"><div class="fxc-card"><div class="fxc-face fxc-front"><div class="fxc-hd"><span class="fxc-name">EMBER</span><span class="fxc-cost"></span></div><div class="fxc-art"></div><div class="fxc-type">UNIT</div><div class="fxc-txt"><i></i><i></i><i></i></div><div class="fxc-stat">5</div></div><div class="fxc-face fxc-back"></div></div></div>
+  </div><div class="meta"><div class="nm">Tap</div><span class="ref">.fxc-m-tap</span><div class="desc">The card turns ninety degrees to its side and back, the tap and untap. A Z-axis rotation about a lower-right pivot.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="fx-card" data-interact="auto-play" data-c="neg"><div class="stage">
+    <div class="fxc fxc-m-invert" role="img" aria-label="Card motion: rotate upside down"><div class="fxc-card"><div class="fxc-face fxc-front"><div class="fxc-hd"><span class="fxc-name">PIXEL</span><span class="fxc-cost"></span></div><div class="fxc-art"></div><div class="fxc-type">CURSE</div><div class="fxc-txt"><i></i><i></i><i></i></div><div class="fxc-stat">3</div></div><div class="fxc-face fxc-back"></div></div></div>
+  </div><div class="meta"><div class="nm">Upside Down</div><span class="ref">.fxc-m-invert</span><div class="desc">The card rotates a full half turn to sit upside down and back, for a reversed or cursed state. A Z-axis half rotation.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="fx-card" data-interact="auto-play" data-c="pos"><div class="stage">
+    <div class="fxc fxc-m-deal" role="img" aria-label="Card motion: deal in from the deck"><div class="fxc-card"><div class="fxc-face fxc-front"><div class="fxc-hd"><span class="fxc-name">NOVA</span><span class="fxc-cost"></span></div><div class="fxc-art"></div><div class="fxc-type">UNIT</div><div class="fxc-txt"><i></i><i></i><i></i></div><div class="fxc-stat">6</div></div><div class="fxc-face fxc-back"></div></div></div>
+  </div><div class="meta"><div class="nm">Deal In</div><span class="ref">.fxc-m-deal</span><div class="desc">The card flies in from the deck edge, rotating flat and settling with a small overshoot. The draw or deal.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="fx-card" data-interact="auto-play" data-c="crit"><div class="stage">
+    <div class="fxc fxc-m-toss" role="img" aria-label="Card motion: toss spinning across"><div class="fxc-card"><div class="fxc-face fxc-front"><div class="fxc-hd"><span class="fxc-name">ORBIT</span><span class="fxc-cost"></span></div><div class="fxc-art"></div><div class="fxc-type">SPELL</div><div class="fxc-txt"><i></i><i></i><i></i></div><div class="fxc-stat">2</div></div><div class="fxc-face fxc-back"></div></div></div>
+  </div><div class="meta"><div class="nm">Toss Spin</div><span class="ref">.fxc-m-toss</span><div class="desc">The card spins across the frame and off the far edge, the flick or discard. A travelling Z-rotation.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="fx-card" data-interact="auto-play" data-c="warn"><div class="stage">
+    <div class="fxc fxc-m-peek" role="img" aria-label="Card motion: peek a corner"><div class="fxc-card"><div class="fxc-face fxc-front"><div class="fxc-hd"><span class="fxc-name">ATLAS</span><span class="fxc-cost"></span></div><div class="fxc-art"></div><div class="fxc-type">UNIT</div><div class="fxc-txt"><i></i><i></i><i></i></div><div class="fxc-stat">7</div></div><div class="fxc-face fxc-back"></div></div></div>
+  </div><div class="meta"><div class="nm">Peek</div><span class="ref">.fxc-m-peek</span><div class="desc">The card swings open from its left edge to reveal a sliver of the back, then closes. The peek at your hand.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="fx-card" data-interact="auto-play" data-c="crit"><div class="stage">
+    <div class="fxc fxc-m-flipy fxc-f-holo" role="img" aria-label="Composed: flip over with holo catching the light"><div class="fxc-card fxc-rainbow"><div class="fxc-face fxc-front"><div class="fxc-hd"><span class="fxc-name">COMET</span><span class="fxc-cost"></span></div><div class="fxc-art"></div><div class="fxc-type">LEGEND</div><div class="fxc-txt"><i></i><i></i><i></i></div><div class="fxc-stat">9</div><span class="fxc-foil"></span></div><div class="fxc-face fxc-back"></div></div></div>
+  </div><div class="meta"><div class="nm">Flip + Holo</div><span class="ref">.fxc-m-flipy.fxc-f-holo</span><div class="desc">Motion and surface compose: the card flips over and the rainbow holo catches the light as the front turns back into view. Any motion class plus any foil class stack.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="fx-card" data-interact="auto-play" data-c="accent"><div class="stage">
+    <div class="fxc fxc-m-tap fxc-f-etched" role="img" aria-label="Composed: tap with etched foil"><div class="fxc-card"><div class="fxc-face fxc-front"><div class="fxc-hd"><span class="fxc-name">ORBIT</span><span class="fxc-cost"></span></div><div class="fxc-art"></div><div class="fxc-type">RELIC</div><div class="fxc-txt"><i></i><i></i><i></i></div><div class="fxc-stat">8</div><span class="fxc-foil"></span></div><div class="fxc-face fxc-back"></div></div></div>
+  </div><div class="meta"><div class="nm">Tap + Etched</div><span class="ref">.fxc-m-tap.fxc-f-etched</span><div class="desc">The card taps to its side while the etched texture keeps catching the light. A second example of stacking a motion and a foil on one card.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="fx-card" data-interact="hover" data-c="crit" data-needs-js="fxc-tilt"><div class="stage">
+    <div class="fxc fxc-live" role="img" aria-label="Live holo: the card tilts and the rainbow tracks the pointer"><div class="fxc-card fxc-rainbow"><div class="fxc-face fxc-front"><div class="fxc-hd"><span class="fxc-name">ATLAS</span><span class="fxc-cost"></span></div><div class="fxc-art"></div><div class="fxc-type">MYTHIC</div><div class="fxc-txt"><i></i><i></i><i></i></div><div class="fxc-stat">X</div><span class="fxc-foil"></span></div><div class="fxc-face fxc-back"></div></div></div>
+  </div><div class="meta"><div class="nm">Live Holo Tilt</div><span class="ref">.fxc-live</span><div class="desc">Move over the card: it tilts toward the pointer and the rainbow and glare track where you point, the interactive holo. The idle loop orbits it so the still shows the effect. Needs the small inline initializer, which Copy includes. <b>Hover the card.</b></div><button class="copy" onclick="copyVizJs(this)">Copy</button></div></div>
+
+</div>
+<script data-prism-init="fxc-tilt">
+/* Prism initializer "fxc-tilt": pointer-reactive holo tilt. Idempotent, no dependencies.
+   Sets --fxc-mx/--fxc-my (0..1) on any .fxc-live from the pointer and adds .fxc-hot to stop the
+   idle orbit while pointing; reading from data-* is not needed (position is the only input). */
+(function(){
+  if(window.__prismFxcTilt) return; window.__prismFxcTilt=true;
+  function at(el,e){ var r=el.getBoundingClientRect();
+    el.style.setProperty('--fxc-mx', Math.min(1,Math.max(0,(e.clientX-r.left)/r.width)));
+    el.style.setProperty('--fxc-my', Math.min(1,Math.max(0,(e.clientY-r.top)/r.height))); }
+  document.addEventListener('pointermove',function(e){ var el=e.target.closest && e.target.closest('.fxc-live'); if(!el) return; el.classList.add('fxc-hot'); at(el,e); });
+  document.addEventListener('pointerleave',function(e){ var el=e.target.closest && e.target.closest('.fxc-live'); if(el){ el.classList.remove('fxc-hot'); el.style.removeProperty('--fxc-mx'); el.style.removeProperty('--fxc-my'); } }, true);
+})();
+<\/script>
+<!-- /prism-section:cardfoil.fx -->
 </div>
 <script>
 // Spotlight-Follow: update --mx/--my from pointer position
