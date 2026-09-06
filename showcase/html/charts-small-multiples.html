@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Small Multiples · Prism</title>
+<!-- Prism showcase sample: charts-small-multiples (gallery: charts). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.chx-pl-svg { width: 100%; max-width: 300px; height: auto; display: block; overflow: hidden; font: 600 8px ui-sans-serif, system-ui, sans-serif; }
+.chx-pl-svg text { font: 600 8px ui-sans-serif, system-ui, sans-serif; }
+.chx-pl-ax { stroke: var(--line); stroke-width: 1; fill: none; }
+.chx-pl-sm-panel { fill: var(--panel2); stroke: var(--line); stroke-width: 1; }
+.chx-pl-sm-ln { fill: none; stroke: var(--c,var(--accent)); stroke-width: 1.6; stroke-linejoin: round; stroke-dasharray: 1, 1; stroke-dashoffset: 0; animation-name: chxPlDrawFast; animation-duration: 4s; animation-timing-function: ease-out; animation-iteration-count: infinite; animation-fill-mode: both; animation-delay: calc(var(--i)*.5s); }
+.chx-pl-sm-end { fill: var(--c,var(--accent)); transform-box: fill-box; transform-origin: center center; animation-name: chxPlPop; animation-duration: 4s; animation-timing-function: ease-out; animation-iteration-count: infinite; animation-fill-mode: both; animation-delay: calc(.5s + var(--i)*.5s); }
+@keyframes chxPlDrawFast { 
+  0% { stroke-dashoffset: 1; }
+  12%, 100% { stroke-dashoffset: 0; }
+}
+@keyframes chxPlPop { 
+  0% { transform: scale(0); opacity: 0; }
+  14% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><svg class="chx-pl-svg chx-pl-multiples" viewBox="0 0 300 150" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect class="chx-pl-sm-panel" x="6" y="6" width="92" height="64" rx="3"></rect><text x="10" y="17" text-anchor="start" fill="var(--ink)">Atlas</text><text x="94" y="17" text-anchor="end" fill="var(--pos)">+8.0%</text><line class="chx-pl-ax" x1="10" y1="64" x2="94" y2="64"></line><polyline class="chx-pl-sm-ln" points="10,29.38 19.3,33.41 28.6,29.76 37.9,25.77 47.2,24 56.5,24 65.8,24 75.1,26.09 84.4,24.07 93.7,24.31" pathLength="1" style="--i:0"></polyline><circle class="chx-pl-sm-end" cx="93.7" cy="24.31" r="2.5" style="--i:0"></circle><rect class="chx-pl-sm-panel" x="104" y="6" width="92" height="64" rx="3"></rect><text x="108" y="17" text-anchor="start" fill="var(--ink)">Comet</text><text x="192" y="17" text-anchor="end" fill="var(--neg)">-9.7%</text><line class="chx-pl-ax" x1="108" y1="64" x2="192" y2="64"></line><polyline class="chx-pl-sm-ln" points="108,29.44 117.3,31.01 126.6,30.86 135.9,29.87 145.2,33.69 154.5,33.13 163.8,31.71 173.1,33.17 182.4,32.7 191.7,36.39" pathLength="1" style="--i:1"></polyline><circle class="chx-pl-sm-end" cx="191.7" cy="36.39" r="2.5" style="--i:1"></circle><rect class="chx-pl-sm-panel" x="202" y="6" width="92" height="64" rx="3"></rect><text x="206" y="17" text-anchor="start" fill="var(--ink)">Ember</text><text x="290" y="17" text-anchor="end" fill="var(--neg)">-11.4%</text><line class="chx-pl-ax" x1="206" y1="64" x2="290" y2="64"></line><polyline class="chx-pl-sm-ln" points="206,24.84 215.3,24 224.6,24 233.9,24.71 243.2,24 252.5,24 261.8,24.93 271.1,24 280.4,25.75 289.7,29.58" pathLength="1" style="--i:2"></polyline><circle class="chx-pl-sm-end" cx="289.7" cy="29.58" r="2.5" style="--i:2"></circle><rect class="chx-pl-sm-panel" x="6" y="76" width="92" height="64" rx="3"></rect><text x="10" y="87" text-anchor="start" fill="var(--ink)">Pixel</text><text x="94" y="87" text-anchor="end" fill="var(--pos)">+13.1%</text><line class="chx-pl-ax" x1="10" y1="134" x2="94" y2="134"></line><polyline class="chx-pl-sm-ln" points="10,99.78 19.3,96.22 28.6,94.66 37.9,96.21 47.2,94.3 56.5,94 65.8,96.44 75.1,94 84.4,94 93.7,94" pathLength="1" style="--i:3"></polyline><circle class="chx-pl-sm-end" cx="93.7" cy="94" r="2.5" style="--i:3"></circle><rect class="chx-pl-sm-panel" x="104" y="76" width="92" height="64" rx="3"></rect><text x="108" y="87" text-anchor="start" fill="var(--ink)">Nova</text><text x="192" y="87" text-anchor="end" fill="var(--pos)">+14.8%</text><line class="chx-pl-ax" x1="108" y1="134" x2="192" y2="134"></line><polyline class="chx-pl-sm-ln" points="108,101.24 117.3,97.35 126.6,98.09 135.9,99.98 145.2,100.11 154.5,99.87 163.8,99.31 173.1,102.91 182.4,102.37 191.7,98.77" pathLength="1" style="--i:4"></polyline><circle class="chx-pl-sm-end" cx="191.7" cy="98.77" r="2.5" style="--i:4"></circle><rect class="chx-pl-sm-panel" x="202" y="76" width="92" height="64" rx="3"></rect><text x="206" y="87" text-anchor="start" fill="var(--ink)">Total</text><text x="290" y="87" text-anchor="end" fill="var(--pos)">+16.5%</text><line class="chx-pl-ax" x1="206" y1="134" x2="290" y2="134"></line><polyline class="chx-pl-sm-ln" points="206,97.61 215.3,94.61 224.6,95.7 233.9,94 243.2,94 252.5,94 261.8,94 271.1,94 280.4,94 289.7,94" pathLength="1" style="--i:5"></polyline><circle class="chx-pl-sm-end" cx="289.7" cy="94" r="2.5" style="--i:5"></circle></svg></div></div>
+<div class="meta"><b>Small Multiples</b> · <code>charts-small-multiples</code><br>Charts &amp; Metrics · CORRELATION, TIME &amp; DISTRIBUTION PLOTS<p>Six mini line panels on a shared scale, each trace drawing in sequence with its own delta. Use it to compare the shape of several series without overlap.</p></div>
+
+</body>
+</html>

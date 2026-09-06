@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OHLC Chart · Prism</title>
+<!-- Prism showcase sample: charts-ohlc-chart (gallery: charts). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.chx-pl-svg { width: 100%; max-width: 300px; height: auto; display: block; overflow: hidden; font: 600 8px ui-sans-serif, system-ui, sans-serif; }
+.chx-pl-svg text { font: 600 8px ui-sans-serif, system-ui, sans-serif; }
+.chx-pl-ax { stroke: var(--line); stroke-width: 1; fill: none; }
+.chx-pl-oh-bar { fill: none; stroke-width: 1.8; stroke-dasharray: 1, 1; stroke-dashoffset: 0; animation-name: chxPlDrawFast; animation-duration: 4s; animation-timing-function: ease-out; animation-iteration-count: infinite; animation-fill-mode: both; animation-delay: calc(var(--i)*.2s); }
+.chx-pl-oh-up { stroke: var(--pos); }
+.chx-pl-oh-dn { stroke: var(--neg); }
+@keyframes chxPlDrawFast { 
+  0% { stroke-dashoffset: 1; }
+  12%, 100% { stroke-dashoffset: 0; }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><svg class="chx-pl-svg chx-pl-ohlc" viewBox="0 0 300 150" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><line class="chx-pl-ax" x1="20" y1="28" x2="270" y2="28"></line><text x="274" y="31" text-anchor="start" fill="var(--muted)">1,400</text><line class="chx-pl-ax" x1="20" y1="72" x2="270" y2="72"></line><text x="274" y="75" text-anchor="start" fill="var(--muted)">1,284</text><line class="chx-pl-ax" x1="20" y1="116" x2="270" y2="116"></line><text x="274" y="119" text-anchor="start" fill="var(--muted)">1,160</text><path class="chx-pl-oh-bar chx-pl-oh-dn" d="M26,60.55V88.89M22,70h4M26,82.69h4" pathLength="1" style="--i:0"></path><path class="chx-pl-oh-bar chx-pl-oh-up" d="M44,72.62V87.55M40,82.69h4M44,81.91h4" pathLength="1" style="--i:1"></path><path class="chx-pl-oh-bar chx-pl-oh-dn" d="M62,78.51V97.27M58,81.91h4M62,94.77h4" pathLength="1" style="--i:2"></path><path class="chx-pl-oh-bar chx-pl-oh-dn" d="M80,84.93V105.76M76,94.77h4M80,99.13h4" pathLength="1" style="--i:3"></path><path class="chx-pl-oh-bar chx-pl-oh-dn" d="M98,95.02V113.69M94,99.13h4M98,106.15h4" pathLength="1" style="--i:4"></path><path class="chx-pl-oh-bar chx-pl-oh-dn" d="M116,98.63V111.93M112,106.15h4M116,108.35h4" pathLength="1" style="--i:5"></path><path class="chx-pl-oh-bar chx-pl-oh-up" d="M134,91.02V120.32M130,108.35h4M134,94.13h4" pathLength="1" style="--i:6"></path><path class="chx-pl-oh-bar chx-pl-oh-dn" d="M152,90.47V105.16M148,94.13h4M152,94.68h4" pathLength="1" style="--i:7"></path><path class="chx-pl-oh-bar chx-pl-oh-up" d="M170,91.13V105.43M166,94.68h4M170,92.58h4" pathLength="1" style="--i:8"></path><path class="chx-pl-oh-bar chx-pl-oh-up" d="M188,85.28V95.73M184,92.58h4M188,89.51h4" pathLength="1" style="--i:9"></path><path class="chx-pl-oh-bar chx-pl-oh-dn" d="M206,83.01V97.87M202,89.51h4M206,97.28h4" pathLength="1" style="--i:10"></path><path class="chx-pl-oh-bar chx-pl-oh-up" d="M224,76.71V98.38M220,97.28h4M224,85.08h4" pathLength="1" style="--i:11"></path><path class="chx-pl-oh-bar chx-pl-oh-dn" d="M242,83.46V101.75M238,85.08h4M242,97.39h4" pathLength="1" style="--i:12"></path><path class="chx-pl-oh-bar chx-pl-oh-dn" d="M260,87.36V114.56M256,97.39h4M260,112.87h4" pathLength="1" style="--i:13"></path><text x="20" y="12" text-anchor="start" fill="var(--ink)">Atlas 14d</text><text x="20" y="143" text-anchor="start" fill="var(--muted)">open left, close right</text></svg></div></div>
+<div class="meta"><b>OHLC Chart</b> · <code>charts-ohlc-chart</code><br>Charts &amp; Metrics · CORRELATION, TIME &amp; DISTRIBUTION PLOTS<p>Open high low close ticks: a vertical range with open tick left and close tick right, drawing day by day. Use it for price or cost ranges per period.</p></div>
+
+</body>
+</html>

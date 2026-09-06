@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Range Plot · Prism</title>
+<!-- Prism showcase sample: charts-range-plot (gallery: charts). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.chx-pl-svg { width: 100%; max-width: 300px; height: auto; display: block; overflow: hidden; font: 600 8px ui-sans-serif, system-ui, sans-serif; }
+.chx-pl-svg text { font: 600 8px ui-sans-serif, system-ui, sans-serif; }
+.chx-pl-ax { stroke: var(--line); stroke-width: 1; fill: none; }
+.chx-pl-rp-bar { fill: rgba(var(--info-rgb),.45); transform-box: fill-box; transform-origin: left center; animation-name: chxPlGrowX; animation-duration: 4s; animation-timing-function: ease-out; animation-iteration-count: infinite; animation-fill-mode: both; animation-delay: calc(var(--i)*.18s); }
+.chx-pl-rp-now { fill: var(--c,var(--accent)); stroke: var(--panel); stroke-width: 1.5; transform-box: fill-box; transform-origin: center center; animation-name: chxPlPop; animation-duration: 4s; animation-timing-function: cubic-bezier(0.2, 1.4, 0.4, 1); animation-iteration-count: infinite; animation-fill-mode: both; animation-delay: calc(.9s + var(--i)*.18s); }
+@keyframes chxPlPop { 
+  0% { transform: scale(0); opacity: 0; }
+  14% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+@keyframes chxPlGrowX { 
+  0% { transform: scaleX(0); }
+  28%, 100% { transform: scaleX(1); }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><svg class="chx-pl-svg chx-pl-range" viewBox="0 0 300 150" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><text x="62" y="10" text-anchor="start" fill="var(--muted)">min</text><text x="248" y="10" text-anchor="end" fill="var(--muted)">max</text><text x="292" y="10" text-anchor="end" fill="var(--ink)">now</text><text x="8" y="29" text-anchor="start" fill="var(--ink)">Atlas</text><line class="chx-pl-ax" x1="62" y1="26" x2="248" y2="26"></line><rect class="chx-pl-rp-bar" x="84.32" y="22" width="93" height="8" rx="4" style="--i:0"></rect><circle class="chx-pl-rp-now" cx="136.4" cy="26" r="4.5" style="--i:0"></circle><text x="292" y="29" text-anchor="end" fill="var(--ink)">1,284</text><text x="8" y="53" text-anchor="start" fill="var(--ink)">Comet</text><line class="chx-pl-ax" x1="62" y1="50" x2="248" y2="50"></line><rect class="chx-pl-rp-bar" x="117.8" y="46" width="107.88" height="8" rx="4" style="--i:1"></rect><circle class="chx-pl-rp-now" cx="199.64" cy="50" r="4.5" style="--i:1"></circle><text x="292" y="53" text-anchor="end" fill="var(--ink)">2,910</text><text x="8" y="77" text-anchor="start" fill="var(--ink)">Ember</text><line class="chx-pl-ax" x1="62" y1="74" x2="248" y2="74"></line><rect class="chx-pl-rp-bar" x="71.3" y="70" width="55.8" height="8" rx="4" style="--i:2"></rect><circle class="chx-pl-rp-now" cx="102.92" cy="74" r="4.5" style="--i:2"></circle><text x="292" y="77" text-anchor="end" fill="var(--ink)">612</text><text x="8" y="101" text-anchor="start" fill="var(--ink)">Pixel</text><line class="chx-pl-ax" x1="62" y1="98" x2="248" y2="98"></line><rect class="chx-pl-rp-bar" x="151.28" y="94" width="87.42" height="8" rx="4" style="--i:3"></rect><circle class="chx-pl-rp-now" cx="169.88" cy="98" r="4.5" style="--i:3"></circle><text x="292" y="101" text-anchor="end" fill="var(--ink)">3,402</text><text x="8" y="125" text-anchor="start" fill="var(--ink)">Nova</text><line class="chx-pl-ax" x1="62" y1="122" x2="248" y2="122"></line><rect class="chx-pl-rp-bar" x="99.2" y="118" width="93" height="8" rx="4" style="--i:4"></rect><circle class="chx-pl-rp-now" cx="184.76" cy="122" r="4.5" style="--i:4"></circle><text x="292" y="125" text-anchor="end" fill="var(--ink)">1,908</text></svg></div></div>
+<div class="meta"><b>Range Plot</b> · <code>charts-range-plot</code><br>Charts &amp; Metrics · CORRELATION, TIME &amp; DISTRIBUTION PLOTS<p>One row per item with a bar spanning its minimum to maximum and a marker for the current value dropping in. Use it to show where today sits inside history.</p></div>
+
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Matrix Chart · Prism</title>
+<!-- Prism showcase sample: charts-matrix-chart (gallery: charts). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.chx-pl-svg { width: 100%; max-width: 300px; height: auto; display: block; overflow: hidden; font: 600 8px ui-sans-serif, system-ui, sans-serif; }
+.chx-pl-svg text { font: 600 8px ui-sans-serif, system-ui, sans-serif; }
+.chx-pl-ax { stroke: var(--line); stroke-width: 1; fill: none; }
+.chx-pl-mx-dot { fill: rgba(var(--c-rgb,var(--accent-rgb)),var(--v)); transform-box: fill-box; transform-origin: center center; animation-name: chxPlPop; animation-duration: 4s; animation-timing-function: cubic-bezier(0.2, 1.2, 0.4, 1); animation-iteration-count: infinite; animation-fill-mode: both; animation-delay: calc(var(--i)*.16s); }
+.chx-pl-mx-diag { fill: rgba(var(--info-rgb),.5); }
+@keyframes chxPlPop { 
+  0% { transform: scale(0); opacity: 0; }
+  14% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><svg class="chx-pl-svg chx-pl-matrix" viewBox="0 0 300 150" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><text x="76" y="16" text-anchor="middle" fill="var(--muted)">Atlas</text><text x="122" y="16" text-anchor="middle" fill="var(--muted)">Comet</text><text x="168" y="16" text-anchor="middle" fill="var(--muted)">Ember</text><text x="214" y="16" text-anchor="middle" fill="var(--muted)">Pixel</text><text x="260" y="16" text-anchor="middle" fill="var(--muted)">Nova</text><text x="56" y="39" text-anchor="end" fill="var(--muted)">Atlas</text><text x="56" y="61" text-anchor="end" fill="var(--muted)">Comet</text><text x="56" y="83" text-anchor="end" fill="var(--muted)">Ember</text><text x="56" y="105" text-anchor="end" fill="var(--muted)">Pixel</text><text x="56" y="127" text-anchor="end" fill="var(--muted)">Nova</text><line class="chx-pl-ax" x1="76" y1="24" x2="76" y2="136"></line><line class="chx-pl-ax" x1="122" y1="24" x2="122" y2="136"></line><line class="chx-pl-ax" x1="168" y1="24" x2="168" y2="136"></line><line class="chx-pl-ax" x1="214" y1="24" x2="214" y2="136"></line><line class="chx-pl-ax" x1="260" y1="24" x2="260" y2="136"></line><line class="chx-pl-ax" x1="64" y1="36" x2="272" y2="36"></line><line class="chx-pl-ax" x1="64" y1="58" x2="272" y2="58"></line><line class="chx-pl-ax" x1="64" y1="80" x2="272" y2="80"></line><line class="chx-pl-ax" x1="64" y1="102" x2="272" y2="102"></line><line class="chx-pl-ax" x1="64" y1="124" x2="272" y2="124"></line><circle class="chx-pl-mx-dot chx-pl-mx-diag" cx="76" cy="36" r="10" style="--v:1;--i:0"></circle><circle class="chx-pl-mx-dot" cx="122" cy="36" r="5.44" style="--v:0.6;--i:1"></circle><circle class="chx-pl-mx-dot" cx="168" cy="36" r="3.36" style="--v:0.42;--i:2"></circle><circle class="chx-pl-mx-dot" cx="214" cy="36" r="6.72" style="--v:0.71;--i:3"></circle><circle class="chx-pl-mx-dot" cx="260" cy="36" r="7.6" style="--v:0.79;--i:4"></circle><circle class="chx-pl-mx-dot" cx="76" cy="58" r="5.44" style="--v:0.6;--i:1"></circle><circle class="chx-pl-mx-dot chx-pl-mx-diag" cx="122" cy="58" r="10" style="--v:1;--i:2"></circle><circle class="chx-pl-mx-dot" cx="168" cy="58" r="5.52" style="--v:0.61;--i:3"></circle><circle class="chx-pl-mx-dot" cx="214" cy="58" r="8.16" style="--v:0.84;--i:4"></circle><circle class="chx-pl-mx-dot" cx="260" cy="58" r="7.28" style="--v:0.76;--i:5"></circle><circle class="chx-pl-mx-dot" cx="76" cy="80" r="3.36" style="--v:0.42;--i:2"></circle><circle class="chx-pl-mx-dot" cx="122" cy="80" r="5.52" style="--v:0.61;--i:3"></circle><circle class="chx-pl-mx-dot chx-pl-mx-diag" cx="168" cy="80" r="10" style="--v:1;--i:4"></circle><circle class="chx-pl-mx-dot" cx="214" cy="80" r="8.32" style="--v:0.85;--i:5"></circle><circle class="chx-pl-mx-dot" cx="260" cy="80" r="5.2" style="--v:0.58;--i:6"></circle><circle class="chx-pl-mx-dot" cx="76" cy="102" r="6.72" style="--v:0.71;--i:3"></circle><circle class="chx-pl-mx-dot" cx="122" cy="102" r="8.16" style="--v:0.84;--i:4"></circle><circle class="chx-pl-mx-dot" cx="168" cy="102" r="8.32" style="--v:0.85;--i:5"></circle><circle class="chx-pl-mx-dot chx-pl-mx-diag" cx="214" cy="102" r="10" style="--v:1;--i:6"></circle><circle class="chx-pl-mx-dot" cx="260" cy="102" r="8.24" style="--v:0.85;--i:7"></circle><circle class="chx-pl-mx-dot" cx="76" cy="124" r="7.6" style="--v:0.79;--i:4"></circle><circle class="chx-pl-mx-dot" cx="122" cy="124" r="7.28" style="--v:0.76;--i:5"></circle><circle class="chx-pl-mx-dot" cx="168" cy="124" r="5.2" style="--v:0.58;--i:6"></circle><circle class="chx-pl-mx-dot" cx="214" cy="124" r="8.24" style="--v:0.85;--i:7"></circle><circle class="chx-pl-mx-dot chx-pl-mx-diag" cx="260" cy="124" r="10" style="--v:1;--i:8"></circle><text x="292" y="146" text-anchor="end" fill="var(--muted)">overlap</text></svg></div></div>
+<div class="meta"><b>Matrix Chart</b> · <code>charts-matrix-chart</code><br>Charts &amp; Metrics · CORRELATION, TIME &amp; DISTRIBUTION PLOTS<p>Categories across against categories down, with symbol size and shade carrying each pair value. Use it for overlap or co occurrence.</p></div>
+
+</body>
+</html>

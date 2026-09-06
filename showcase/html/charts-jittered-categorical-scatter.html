@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jittered Categorical Scatter · Prism</title>
+<!-- Prism showcase sample: charts-jittered-categorical-scatter (gallery: charts). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.chx-pl-svg { width: 100%; max-width: 300px; height: auto; display: block; overflow: hidden; font: 600 8px ui-sans-serif, system-ui, sans-serif; }
+.chx-pl-svg text { font: 600 8px ui-sans-serif, system-ui, sans-serif; }
+.chx-pl-ax { stroke: var(--line); stroke-width: 1; fill: none; }
+.chx-pl-jt-pt { fill: rgba(var(--c-rgb,var(--accent-rgb)),.8); animation-name: chxPlFall; animation-duration: 4s; animation-timing-function: cubic-bezier(0.3, 1.3, 0.5, 1); animation-iteration-count: infinite; animation-fill-mode: both; animation-delay: calc(var(--i)*.045s); }
+.chx-pl-jt-med { stroke: var(--ink); stroke-width: 2; stroke-dasharray: 1, 1; stroke-dashoffset: 0; animation: 4s ease-out 0s infinite normal both running chxPlDrawLate; }
+@keyframes chxPlDrawLate { 
+  0%, 62% { stroke-dashoffset: 1; }
+  82%, 100% { stroke-dashoffset: 0; }
+}
+@keyframes chxPlFall { 
+  0% { transform: translateY(-70px); opacity: 0; }
+  16% { transform: translateY(0px); opacity: 1; }
+  100% { transform: translateY(0px); opacity: 1; }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><svg class="chx-pl-svg chx-pl-jitter" viewBox="0 0 300 150" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><line class="chx-pl-ax" x1="20" y1="128" x2="290" y2="128"></line><text x="8" y="70" text-anchor="middle" fill="var(--muted)" transform="rotate(-90 8 70)">ms</text><text x="55" y="141" text-anchor="middle" fill="var(--ink)">Atlas</text><circle class="chx-pl-jt-pt" cx="41.58" cy="63.9" r="3" style="--i:0"></circle><circle class="chx-pl-jt-pt" cx="61.75" cy="74.15" r="3" style="--i:1"></circle><circle class="chx-pl-jt-pt" cx="61.02" cy="73.85" r="3" style="--i:2"></circle><circle class="chx-pl-jt-pt" cx="44.33" cy="44.34" r="3" style="--i:3"></circle><circle class="chx-pl-jt-pt" cx="43.97" cy="60.87" r="3" style="--i:4"></circle><circle class="chx-pl-jt-pt" cx="50.17" cy="48.35" r="3" style="--i:5"></circle><circle class="chx-pl-jt-pt" cx="64.83" cy="98.99" r="3" style="--i:6"></circle><circle class="chx-pl-jt-pt" cx="57.91" cy="95.42" r="3" style="--i:7"></circle><circle class="chx-pl-jt-pt" cx="62.97" cy="94.35" r="3" style="--i:8"></circle><circle class="chx-pl-jt-pt" cx="56.24" cy="95.51" r="3" style="--i:9"></circle><circle class="chx-pl-jt-pt" cx="50.85" cy="89.75" r="3" style="--i:10"></circle><circle class="chx-pl-jt-pt" cx="65.5" cy="82.09" r="3" style="--i:11"></circle><circle class="chx-pl-jt-pt" cx="54.16" cy="116.67" r="3" style="--i:12"></circle><line class="chx-pl-jt-med" x1="37" y1="80" x2="73" y2="80" pathLength="1"></line><text x="120" y="141" text-anchor="middle" fill="var(--ink)">Comet</text><circle class="chx-pl-jt-pt" cx="106.23" cy="64.29" r="3" style="--i:13"></circle><circle class="chx-pl-jt-pt" cx="118.68" cy="50.6" r="3" style="--i:14"></circle><circle class="chx-pl-jt-pt" cx="114.49" cy="70.48" r="3" style="--i:15"></circle><circle class="chx-pl-jt-pt" cx="114.12" cy="65.81" r="3" style="--i:16"></circle><circle class="chx-pl-jt-pt" cx="119.13" cy="49.14" r="3" style="--i:17"></circle><circle class="chx-pl-jt-pt" cx="129.8" cy="63.4" r="3" style="--i:18"></circle><circle class="chx-pl-jt-pt" cx="130.9" cy="61.2" r="3" style="--i:19"></circle><circle class="chx-pl-jt-pt" cx="132.23" cy="36.83" r="3" style="--i:20"></circle><circle class="chx-pl-jt-pt" cx="118.45" cy="55.65" r="3" style="--i:21"></circle><circle class="chx-pl-jt-pt" cx="129.51" cy="54.74" r="3" style="--i:22"></circle><circle class="chx-pl-jt-pt" cx="131.23" cy="28.66" r="3" style="--i:23"></circle><circle class="chx-pl-jt-pt" cx="122.63" cy="49.21" r="3" style="--i:24"></circle><circle class="chx-pl-jt-pt" cx="124.18" cy="69.92" r="3" style="--i:25"></circle><line class="chx-pl-jt-med" x1="102" y1="60" x2="138" y2="60" pathLength="1"></line><text x="185" y="141" text-anchor="middle" fill="var(--ink)">Ember</text><circle class="chx-pl-jt-pt" cx="183.72" cy="71.32" r="3" style="--i:26"></circle><circle class="chx-pl-jt-pt" cx="179.38" cy="94.5" r="3" style="--i:27"></circle><circle class="chx-pl-jt-pt" cx="181.02" cy="84.21" r="3" style="--i:28"></circle><circle class="chx-pl-jt-pt" cx="194.57" cy="97.97" r="3" style="--i:29"></circle><circle class="chx-pl-jt-pt" cx="185.9" cy="105.35" r="3" style="--i:30"></circle><circle class="chx-pl-jt-pt" cx="193.49" cy="114.96" r="3" style="--i:31"></circle><circle class="chx-pl-jt-pt" cx="171.59" cy="80.31" r="3" style="--i:32"></circle><circle class="chx-pl-jt-pt" cx="198.11" cy="79.07" r="3" style="--i:33"></circle><circle class="chx-pl-jt-pt" cx="188.91" cy="95.87" r="3" style="--i:34"></circle><circle class="chx-pl-jt-pt" cx="187.8" cy="90.19" r="3" style="--i:35"></circle><circle class="chx-pl-jt-pt" cx="178.84" cy="70.5" r="3" style="--i:36"></circle><circle class="chx-pl-jt-pt" cx="175.3" cy="91.14" r="3" style="--i:37"></circle><circle class="chx-pl-jt-pt" cx="176.9" cy="114.19" r="3" style="--i:38"></circle><line class="chx-pl-jt-med" x1="167" y1="96" x2="203" y2="96" pathLength="1"></line><text x="250" y="141" text-anchor="middle" fill="var(--ink)">Pixel</text><circle class="chx-pl-jt-pt" cx="259.58" cy="85.72" r="3" style="--i:39"></circle><circle class="chx-pl-jt-pt" cx="254.51" cy="69.72" r="3" style="--i:40"></circle><circle class="chx-pl-jt-pt" cx="235.61" cy="68.14" r="3" style="--i:41"></circle><circle class="chx-pl-jt-pt" cx="257.16" cy="91.23" r="3" style="--i:42"></circle><circle class="chx-pl-jt-pt" cx="245.96" cy="55.78" r="3" style="--i:43"></circle><circle class="chx-pl-jt-pt" cx="254.45" cy="68.22" r="3" style="--i:44"></circle><circle class="chx-pl-jt-pt" cx="244.3" cy="65.4" r="3" style="--i:45"></circle><circle class="chx-pl-jt-pt" cx="252.03" cy="46.9" r="3" style="--i:46"></circle><circle class="chx-pl-jt-pt" cx="235.81" cy="84.66" r="3" style="--i:47"></circle><circle class="chx-pl-jt-pt" cx="260.43" cy="68.91" r="3" style="--i:48"></circle><circle class="chx-pl-jt-pt" cx="244.34" cy="93.04" r="3" style="--i:49"></circle><circle class="chx-pl-jt-pt" cx="240.72" cy="93.46" r="3" style="--i:50"></circle><circle class="chx-pl-jt-pt" cx="251.63" cy="72.13" r="3" style="--i:51"></circle><line class="chx-pl-jt-med" x1="232" y1="70" x2="268" y2="70" pathLength="1"></line></svg></div></div>
+<div class="meta"><b>Jittered Categorical Scatter</b> · <code>charts-jittered-categorical-scatter</code><br>Charts &amp; Metrics · CORRELATION, TIME &amp; DISTRIBUTION PLOTS<p>Each observation as a dot dropped into its category column with sideways jitter so points do not stack, plus a median bar. Use it instead of bars of averages.</p></div>
+
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Spline Versus Straight Overlay · Prism</title>
+<!-- Prism showcase sample: charts-spline-versus-straight-overlay (gallery: charts). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.chx-pl-svg { width: 100%; max-width: 300px; height: auto; display: block; overflow: hidden; font: 600 8px ui-sans-serif, system-ui, sans-serif; }
+.chx-pl-svg text { font: 600 8px ui-sans-serif, system-ui, sans-serif; }
+.chx-pl-ax { stroke: var(--line); stroke-width: 1; fill: none; }
+.chx-pl-sv-lin { fill: none; stroke: var(--muted); stroke-width: 1.5; stroke-dasharray: 3, 2; animation: 4s ease-in-out 0s infinite normal both running chxPlSwapA; }
+.chx-pl-sv-spl { fill: none; stroke: var(--c,var(--accent)); stroke-width: 2.2; animation: 4s ease-in-out 0s infinite normal both running chxPlSwapB; }
+.chx-pl-sv-pt { fill: var(--ink); }
+.chx-pl-sv-lg1 { animation: 4s ease-in-out 0s infinite normal both running chxPlSwapA; }
+.chx-pl-sv-lg2 { animation: 4s ease-in-out 0s infinite normal both running chxPlSwapB; }
+@keyframes chxPlSwapA { 
+  0%, 42% { opacity: 1; }
+  52%, 92% { opacity: 0.22; }
+  100% { opacity: 1; }
+}
+@keyframes chxPlSwapB { 
+  0%, 42% { opacity: 0.22; }
+  52%, 92% { opacity: 1; }
+  100% { opacity: 0.22; }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><svg class="chx-pl-svg chx-pl-splinevs" viewBox="0 0 300 150" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><line class="chx-pl-ax" x1="20" y1="128" x2="290" y2="128"></line><polyline class="chx-pl-sv-lin" points="24,96 60,60 96,84 132,40 168,70 204,34 240,62 276,28"></polyline><path class="chx-pl-sv-spl" d="M24,96C30,90 48,62 60,60C72,58 84,87.33 96,84C108,80.67 120,42.33 132,40C144,37.67 156,71 168,70C180,69 192,35.33 204,34C216,32.67 228,63 240,62C252,61 270,33.67 276,28"></path><circle class="chx-pl-sv-pt" cx="24" cy="96" r="3"></circle><circle class="chx-pl-sv-pt" cx="60" cy="60" r="3"></circle><circle class="chx-pl-sv-pt" cx="96" cy="84" r="3"></circle><circle class="chx-pl-sv-pt" cx="132" cy="40" r="3"></circle><circle class="chx-pl-sv-pt" cx="168" cy="70" r="3"></circle><circle class="chx-pl-sv-pt" cx="204" cy="34" r="3"></circle><circle class="chx-pl-sv-pt" cx="240" cy="62" r="3"></circle><circle class="chx-pl-sv-pt" cx="276" cy="28" r="3"></circle><g class="chx-pl-sv-lg1"><line x1="180" y1="141" x2="196" y2="141" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="3 2"></line><text x="200" y="144" text-anchor="start" fill="var(--ink)">linear</text></g><g class="chx-pl-sv-lg2"><line x1="236" y1="141" x2="252" y2="141" stroke="var(--c,var(--accent))" stroke-width="2"></line><text x="256" y="144" text-anchor="start" fill="var(--ink)">smooth</text></g></svg></div></div>
+<div class="meta"><b>Spline Versus Straight Overlay</b> · <code>charts-spline-versus-straight-overlay</code><br>Charts &amp; Metrics · CORRELATION, TIME &amp; DISTRIBUTION PLOTS<p>The same eight points joined two ways, straight segments and a smoothed curve, emphasis alternating between them. Use it to show what smoothing adds or hides.</p></div>
+
+</body>
+</html>

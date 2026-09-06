@@ -1,5 +1,5 @@
 {
-  "count": 3242,
+  "count": 3260,
   "effects": [
     {
       "id": "charts-big-metric-count-up",
@@ -1898,8 +1898,9 @@
         "lv",
         "info",
         "m",
-        "ok",
+        "warn",
         "err",
+        "ok",
         "cursor"
       ],
       "params": [],
@@ -5752,6 +5753,597 @@
       "updatedOn": "2026-07-28",
       "author": "crazy54",
       "description": "A self-drawing area trace swept by a glowing scan cursor — the \"streaming right now\" signal for a live metric."
+    },
+    {
+      "id": "charts-parallel-coordinates",
+      "name": "Parallel Coordinates",
+      "gallery": "charts",
+      "category": "CORRELATION, TIME & DISTRIBUTION PLOTS",
+      "ref": ".chx-pl-parcoord",
+      "classes": [
+        "chx-pl-svg",
+        "chx-pl-parcoord",
+        "chx-pl-ax",
+        "chx-pl-pc-ln",
+        "chx-pl-pc-hi"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "charts",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-scatter",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Five vertical axes with one polyline per record drawing across them, one series highlighted. Use it to compare several metrics per item at once."
+    },
+    {
+      "id": "charts-quadrant-chart",
+      "name": "Quadrant Chart",
+      "gallery": "charts",
+      "category": "CORRELATION, TIME & DISTRIBUTION PLOTS",
+      "ref": ".chx-pl-quad",
+      "classes": [
+        "chx-pl-svg",
+        "chx-pl-quad",
+        "chx-pl-qd-tint",
+        "chx-pl-ax",
+        "chx-pl-qd-pt",
+        "chx-pl-qd-hi"
+      ],
+      "params": [],
+      "tags": [
+        "charts",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-scatter",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Two axes split the plane into four labelled zones, points settle in one by one and the target quadrant is tinted. Use it for effort against impact triage."
+    },
+    {
+      "id": "charts-connected-scatter",
+      "name": "Connected Scatter",
+      "gallery": "charts",
+      "category": "CORRELATION, TIME & DISTRIBUTION PLOTS",
+      "ref": ".chx-pl-conn",
+      "classes": [
+        "chx-pl-svg",
+        "chx-pl-conn",
+        "chx-pl-ax",
+        "chx-pl-cs-path",
+        "chx-pl-cs-pt",
+        "chx-pl-cs-last",
+        "chx-pl-cs-arrow"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "charts",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-scatter",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Points joined in time order with the path drawing forward and an arrowhead at the latest quarter. Use it to show how two measures moved together."
+    },
+    {
+      "id": "charts-hexagonal-binning",
+      "name": "Hexagonal Binning",
+      "gallery": "charts",
+      "category": "CORRELATION, TIME & DISTRIBUTION PLOTS",
+      "ref": ".chx-pl-hexbin",
+      "classes": [
+        "chx-pl-svg",
+        "chx-pl-hexbin",
+        "chx-pl-hx-cell"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "charts",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-heatmap",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A honeycomb of cells, each shaded by how many points fell inside it, filling in across the plane. Use it when a scatter plot has too many points to read."
+    },
+    {
+      "id": "charts-contour-plot",
+      "name": "Contour Plot",
+      "gallery": "charts",
+      "category": "CORRELATION, TIME & DISTRIBUTION PLOTS",
+      "ref": ".chx-pl-contour",
+      "classes": [
+        "chx-pl-svg",
+        "chx-pl-contour",
+        "chx-pl-ax",
+        "chx-pl-ct-ring",
+        "chx-pl-ct-peak"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "charts",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-heatmap",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Nested level lines drawing outward from two density peaks, inner rings strongest. Use it to show where a two dimensional distribution concentrates."
+    },
+    {
+      "id": "charts-barcode-chart",
+      "name": "Barcode Chart",
+      "gallery": "charts",
+      "category": "CORRELATION, TIME & DISTRIBUTION PLOTS",
+      "ref": ".chx-pl-barcode",
+      "classes": [
+        "chx-pl-svg",
+        "chx-pl-barcode",
+        "chx-pl-bc-band",
+        "chx-pl-bc-row",
+        "chx-pl-bc-in"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "charts",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-distribution",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Dense vertical ticks per category, one per observation, drawing left to right with a band marking the middle range. Use it for compact distribution rows."
+    },
+    {
+      "id": "charts-bump-area-chart",
+      "name": "Bump Area Chart",
+      "gallery": "charts",
+      "category": "CORRELATION, TIME & DISTRIBUTION PLOTS",
+      "ref": ".chx-pl-bumparea",
+      "classes": [
+        "chx-pl-svg",
+        "chx-pl-bumparea",
+        "chx-pl-ba-rib"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "charts",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-line",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Ranked ribbons stacked by position each week, with ribbon thickness carrying the value, crossing when the order changes. Use it for share and rank in one view."
+    },
+    {
+      "id": "charts-radial-histogram",
+      "name": "Radial Histogram",
+      "gallery": "charts",
+      "category": "CORRELATION, TIME & DISTRIBUTION PLOTS",
+      "ref": ".chx-pl-radialhist",
+      "classes": [
+        "chx-pl-svg",
+        "chx-pl-radialhist",
+        "chx-pl-ax",
+        "chx-pl-rh-bin"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "charts",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-distribution",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Twenty four bins around a clock face, each bar growing outward from the ring in turn. Use it for counts by hour or by heading, where the axis wraps around."
+    },
+    {
+      "id": "charts-one-dimensional-heatmap-strip",
+      "name": "One Dimensional Heatmap Strip",
+      "gallery": "charts",
+      "category": "CORRELATION, TIME & DISTRIBUTION PLOTS",
+      "ref": ".chx-pl-heatstrip",
+      "classes": [
+        "chx-pl-svg",
+        "chx-pl-heatstrip",
+        "chx-pl-hs-cell",
+        "chx-pl-hs-win",
+        "chx-pl-ax"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "charts",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-heatmap",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A single row of hour cells shaded by value with a window frame sliding along it. Use it for a compact daily profile or a rolling window explainer."
+    },
+    {
+      "id": "charts-word-cloud",
+      "name": "Word Cloud",
+      "gallery": "charts",
+      "category": "CORRELATION, TIME & DISTRIBUTION PLOTS",
+      "ref": ".chx-pl-wordcloud",
+      "classes": [
+        "chx-pl-svg",
+        "chx-pl-wordcloud",
+        "chx-pl-wc-w",
+        "chx-pl-wc-pulse"
+      ],
+      "params": [],
+      "tags": [
+        "charts",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-distribution",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Terms sized by frequency drifting into their slots, the largest one pulsing. Use it as a quick read of what dominates a corpus of tickets, tags or logs."
+    },
+    {
+      "id": "charts-range-plot",
+      "name": "Range Plot",
+      "gallery": "charts",
+      "category": "CORRELATION, TIME & DISTRIBUTION PLOTS",
+      "ref": ".chx-pl-range",
+      "classes": [
+        "chx-pl-svg",
+        "chx-pl-range",
+        "chx-pl-ax",
+        "chx-pl-rp-bar",
+        "chx-pl-rp-now"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "charts",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-bar",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "One row per item with a bar spanning its minimum to maximum and a marker for the current value dropping in. Use it to show where today sits inside history."
+    },
+    {
+      "id": "charts-matrix-chart",
+      "name": "Matrix Chart",
+      "gallery": "charts",
+      "category": "CORRELATION, TIME & DISTRIBUTION PLOTS",
+      "ref": ".chx-pl-matrix",
+      "classes": [
+        "chx-pl-svg",
+        "chx-pl-matrix",
+        "chx-pl-ax",
+        "chx-pl-mx-dot",
+        "chx-pl-mx-diag"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "charts",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-heatmap",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Categories across against categories down, with symbol size and shade carrying each pair value. Use it for overlap or co occurrence."
+    },
+    {
+      "id": "charts-small-multiples",
+      "name": "Small Multiples",
+      "gallery": "charts",
+      "category": "CORRELATION, TIME & DISTRIBUTION PLOTS",
+      "ref": ".chx-pl-multiples",
+      "classes": [
+        "chx-pl-svg",
+        "chx-pl-multiples",
+        "chx-pl-sm-panel",
+        "chx-pl-ax",
+        "chx-pl-sm-ln",
+        "chx-pl-sm-end"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "charts",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-line",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Six mini line panels on a shared scale, each trace drawing in sequence with its own delta. Use it to compare the shape of several series without overlap."
+    },
+    {
+      "id": "charts-jittered-categorical-scatter",
+      "name": "Jittered Categorical Scatter",
+      "gallery": "charts",
+      "category": "CORRELATION, TIME & DISTRIBUTION PLOTS",
+      "ref": ".chx-pl-jitter",
+      "classes": [
+        "chx-pl-svg",
+        "chx-pl-jitter",
+        "chx-pl-ax",
+        "chx-pl-jt-pt",
+        "chx-pl-jt-med"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "charts",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-distribution",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Each observation as a dot dropped into its category column with sideways jitter so points do not stack, plus a median bar. Use it instead of bars of averages."
+    },
+    {
+      "id": "charts-ohlc-chart",
+      "name": "OHLC Chart",
+      "gallery": "charts",
+      "category": "CORRELATION, TIME & DISTRIBUTION PLOTS",
+      "ref": ".chx-pl-ohlc",
+      "classes": [
+        "chx-pl-svg",
+        "chx-pl-ohlc",
+        "chx-pl-ax",
+        "chx-pl-oh-bar",
+        "chx-pl-oh-dn",
+        "chx-pl-oh-up"
+      ],
+      "params": [],
+      "tags": [
+        "charts",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-line",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Open high low close ticks: a vertical range with open tick left and close tick right, drawing day by day. Use it for price or cost ranges per period."
+    },
+    {
+      "id": "charts-spline-versus-straight-overlay",
+      "name": "Spline Versus Straight Overlay",
+      "gallery": "charts",
+      "category": "CORRELATION, TIME & DISTRIBUTION PLOTS",
+      "ref": ".chx-pl-splinevs",
+      "classes": [
+        "chx-pl-svg",
+        "chx-pl-splinevs",
+        "chx-pl-ax",
+        "chx-pl-sv-lin",
+        "chx-pl-sv-spl",
+        "chx-pl-sv-pt",
+        "chx-pl-sv-lg1",
+        "chx-pl-sv-lg2"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "charts",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-line",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "The same eight points joined two ways, straight segments and a smoothed curve, emphasis alternating between them. Use it to show what smoothing adds or hides."
+    },
+    {
+      "id": "charts-tile-map",
+      "name": "Tile Map",
+      "gallery": "charts",
+      "category": "CORRELATION, TIME & DISTRIBUTION PLOTS",
+      "ref": ".chx-pl-tilemap",
+      "classes": [
+        "chx-pl-svg",
+        "chx-pl-tilemap",
+        "chx-pl-tm-cell",
+        "chx-pl-tm-lg"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "charts",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-heatmap",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A grid of equal region tiles, each labelled and shaded by value, filling in with a legend ramp beside it. Use it when real geography would distort the read."
+    },
+    {
+      "id": "charts-density-heat-strip",
+      "name": "Density Heat Strip",
+      "gallery": "charts",
+      "category": "CORRELATION, TIME & DISTRIBUTION PLOTS",
+      "ref": ".chx-pl-densestrip",
+      "classes": [
+        "chx-pl-svg",
+        "chx-pl-densestrip",
+        "chx-pl-dh-bar",
+        "chx-pl-dh-info",
+        "chx-pl-dh-pos",
+        "chx-pl-dh-warn",
+        "chx-pl-dh-neg",
+        "chx-pl-ax",
+        "chx-pl-dh-legend"
+      ],
+      "params": [],
+      "tags": [
+        "charts",
+        "animated",
+        "new"
+      ],
+      "componentType": "chart-distribution",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A horizontal ridge of thin bars rising left to right, each coloured on a ramp by its own height so peaks glow hot. Use it for event density across a day."
     },
     {
       "id": "fx-pulse-glow-winner",

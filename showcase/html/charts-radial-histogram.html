@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Radial Histogram · Prism</title>
+<!-- Prism showcase sample: charts-radial-histogram (gallery: charts). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.chx-pl-svg { width: 100%; max-width: 300px; height: auto; display: block; overflow: hidden; font: 600 8px ui-sans-serif, system-ui, sans-serif; }
+.chx-pl-svg text { font: 600 8px ui-sans-serif, system-ui, sans-serif; }
+.chx-pl-ax { stroke: var(--line); stroke-width: 1; fill: none; }
+.chx-pl-rh-bin { stroke: rgba(var(--c-rgb,var(--accent-rgb)),var(--v)); stroke-width: 5; stroke-linecap: butt; stroke-dasharray: 1, 1; stroke-dashoffset: 0; animation-name: chxPlDraw; animation-duration: 4s; animation-timing-function: ease-out; animation-iteration-count: infinite; animation-fill-mode: both; animation-delay: calc(var(--i)*.09s); }
+@keyframes chxPlDraw { 
+  0% { stroke-dashoffset: 1; }
+  40%, 100% { stroke-dashoffset: 0; }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><svg class="chx-pl-svg chx-pl-radialhist" viewBox="0 0 300 150" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle class="chx-pl-ax" cx="150" cy="78" r="16" fill="none"></circle><line class="chx-pl-rh-bin" x1="150" y1="60" x2="150" y2="38.03" pathLength="1" style="--i:0;--v:0.55"></line><line class="chx-pl-rh-bin" x1="154.66" y1="60.61" x2="159.85" y2="41.23" pathLength="1" style="--i:1;--v:0.52"></line><line class="chx-pl-rh-bin" x1="159" y1="62.41" x2="168.75" y2="45.52" pathLength="1" style="--i:2;--v:0.51"></line><line class="chx-pl-rh-bin" x1="162.73" y1="65.27" x2="176.92" y2="51.08" pathLength="1" style="--i:3;--v:0.52"></line><line class="chx-pl-rh-bin" x1="165.59" y1="69" x2="184.26" y2="58.22" pathLength="1" style="--i:4;--v:0.54"></line><line class="chx-pl-rh-bin" x1="167.39" y1="73.34" x2="191.56" y2="66.86" pathLength="1" style="--i:5;--v:0.59"></line><line class="chx-pl-rh-bin" x1="168" y1="78" x2="196.35" y2="78" pathLength="1" style="--i:6;--v:0.64"></line><line class="chx-pl-rh-bin" x1="167.39" y1="82.66" x2="198.82" y2="91.08" pathLength="1" style="--i:7;--v:0.7"></line><line class="chx-pl-rh-bin" x1="165.59" y1="87" x2="196.64" y2="104.93" pathLength="1" style="--i:8;--v:0.74"></line><line class="chx-pl-rh-bin" x1="162.73" y1="90.73" x2="192.38" y2="120.38" pathLength="1" style="--i:9;--v:0.83"></line><line class="chx-pl-rh-bin" x1="159" y1="93.59" x2="181.41" y2="132.4" pathLength="1" style="--i:10;--v:0.87"></line><line class="chx-pl-rh-bin" x1="154.66" y1="95.39" x2="165.88" y2="137.27" pathLength="1" style="--i:11;--v:0.85"></line><line class="chx-pl-rh-bin" x1="150" y1="96" x2="150" y2="150" pathLength="1" style="--i:12;--v:1"></line><line class="chx-pl-rh-bin" x1="145.34" y1="95.39" x2="131.37" y2="147.55" pathLength="1" style="--i:13;--v:1"></line><line class="chx-pl-rh-bin" x1="141" y1="93.59" x2="114.2" y2="140" pathLength="1" style="--i:14;--v:0.99"></line><line class="chx-pl-rh-bin" x1="137.27" y1="90.73" x2="102.38" y2="125.62" pathLength="1" style="--i:15;--v:0.93"></line><line class="chx-pl-rh-bin" x1="134.41" y1="87" x2="94.4" y2="110.1" pathLength="1" style="--i:16;--v:0.89"></line><line class="chx-pl-rh-bin" x1="132.61" y1="82.66" x2="89.08" y2="94.32" pathLength="1" style="--i:17;--v:0.87"></line><line class="chx-pl-rh-bin" x1="132" y1="78" x2="91.75" y2="78" pathLength="1" style="--i:18;--v:0.81"></line><line class="chx-pl-rh-bin" x1="132.61" y1="73.34" x2="96.36" y2="63.63" pathLength="1" style="--i:19;--v:0.77"></line><line class="chx-pl-rh-bin" x1="134.41" y1="69" x2="104.41" y2="51.68" pathLength="1" style="--i:20;--v:0.73"></line><line class="chx-pl-rh-bin" x1="137.27" y1="65.27" x2="115.27" y2="43.27" pathLength="1" style="--i:21;--v:0.68"></line><line class="chx-pl-rh-bin" x1="141" y1="62.41" x2="127.74" y2="39.45" pathLength="1" style="--i:22;--v:0.61"></line><line class="chx-pl-rh-bin" x1="145.34" y1="60.61" x2="138.96" y2="36.8" pathLength="1" style="--i:23;--v:0.59"></line><text x="150" y="6" text-anchor="middle" fill="var(--muted)">00</text><text x="226" y="81" text-anchor="start" fill="var(--muted)">06</text><text x="150" y="158" text-anchor="middle" fill="var(--muted)">12</text><text x="74" y="81" text-anchor="end" fill="var(--muted)">18</text><text x="150" y="81" text-anchor="middle" fill="var(--ink)">req</text><text x="292" y="146" text-anchor="end" fill="var(--ink)">peak 1,284</text></svg></div></div>
+<div class="meta"><b>Radial Histogram</b> · <code>charts-radial-histogram</code><br>Charts &amp; Metrics · CORRELATION, TIME &amp; DISTRIBUTION PLOTS<p>Twenty four bins around a clock face, each bar growing outward from the ring in turn. Use it for counts by hour or by heading, where the axis wraps around.</p></div>
+
+</body>
+</html>

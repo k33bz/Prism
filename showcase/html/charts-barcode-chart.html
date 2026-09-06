@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Barcode Chart · Prism</title>
+<!-- Prism showcase sample: charts-barcode-chart (gallery: charts). Offline, self-contained. -->
+<style id="prism-tokens">
+:root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+</style>
+<style id="showcase-shell">
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;box-sizing:border-box;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px}
+.stage{position:relative;overflow:hidden;box-sizing:border-box;width:344px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel)}
+.stage.bg{padding:0;min-height:0;display:block}
+.stage.bg>*{width:100%}
+.meta{max-width:362px;text-align:center;font-size:12px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:13px}
+.meta code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--info)}
+.meta p{margin:6px 0 0}
+</style>
+<style id="effect-css">
+.chx-pl-svg { width: 100%; max-width: 300px; height: auto; display: block; overflow: hidden; font: 600 8px ui-sans-serif, system-ui, sans-serif; }
+.chx-pl-svg text { font: 600 8px ui-sans-serif, system-ui, sans-serif; }
+.chx-pl-bc-row { fill: none; stroke: rgba(var(--info-rgb),.55); stroke-width: 1.2; stroke-dasharray: 1, 1; stroke-dashoffset: 0; animation: 4s linear 0s infinite normal both running chxPlDraw; }
+.chx-pl-bc-in { stroke: var(--c,var(--accent)); stroke-width: 1.6; }
+.chx-pl-bc-band { fill: rgba(var(--c-rgb,var(--accent-rgb)),.1); stroke: rgba(var(--c-rgb,var(--accent-rgb)),.5); stroke-width: 1; animation: 4s steps(1) 0s infinite normal both running chxPlLate; }
+@keyframes chxPlDraw { 
+  0% { stroke-dashoffset: 1; }
+  40%, 100% { stroke-dashoffset: 0; }
+}
+@keyframes chxPlLate { 
+  0%, 64% { opacity: 0; }
+  65%, 100% { opacity: 1; }
+}
+</style>
+</head>
+<body>
+<div class="tile"><div class="stage" id="stage"><svg class="chx-pl-svg chx-pl-barcode" viewBox="0 0 300 150" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect class="chx-pl-bc-band" x="150" y="8" width="56" height="122" rx="2"></rect><text x="178" y="142" text-anchor="middle" fill="var(--ink)">P50 band</text><text x="8" y="25" text-anchor="start" fill="var(--ink)">Atlas</text><path class="chx-pl-bc-row" d="M99.92,15v14M244.98,15v14M206.79,15v14M252.92,15v14M133.27,15v14M217.7,15v14M133.15,15v14M241.84,15v14M101.9,15v14M107.3,15v14M141.4,15v14M109.21,15v14M254.01,15v14M90.49,15v14M58.39,15v14M229.14,15v14M55.55,15v14M231.15,15v14M238.64,15v14M253.3,15v14M223.13,15v14M228.85,15v14M243.32,15v14M149.49,15v14" pathLength="1"></path><path class="chx-pl-bc-row chx-pl-bc-in" d="M184.88,15v14M167.6,15v14M196.63,15v14M204.46,15v14M154.27,15v14M167.36,15v14M180.45,15v14M168.65,15v14M187.19,15v14M205.07,15v14" pathLength="1"></path><text x="8" y="49" text-anchor="start" fill="var(--ink)">Comet</text><path class="chx-pl-bc-row" d="M93.14,39v14M72.27,39v14M82.02,39v14M212.35,39v14M270.08,39v14M149.77,39v14M55.91,39v14M97.83,39v14M226.59,39v14M218.35,39v14M125.53,39v14M234.27,39v14M126.2,39v14M91.16,39v14M80.57,39v14M104.38,39v14M226.08,39v14M231.37,39v14M104.82,39v14M214.29,39v14" pathLength="1"></path><path class="chx-pl-bc-row chx-pl-bc-in" d="M190.71,39v14M158.72,39v14M167.68,39v14M153.32,39v14M203.31,39v14M177.01,39v14M202,39v14M155.21,39v14M194.72,39v14M193.79,39v14M162.61,39v14M184.64,39v14M180.73,39v14M178.66,39v14" pathLength="1"></path><text x="8" y="73" text-anchor="start" fill="var(--ink)">Ember</text><path class="chx-pl-bc-row" d="M237.62,63v14M240.49,63v14M256.87,63v14M228.95,63v14M112.83,63v14M81.66,63v14M145.42,63v14M86.97,63v14M110.2,63v14M221.78,63v14M218.33,63v14M137.43,63v14M149.96,63v14M213.74,63v14M237.25,63v14M80.13,63v14M288.32,63v14M55.66,63v14M219.82,63v14M118.46,63v14M105.46,63v14M88.88,63v14M85.51,63v14M282.32,63v14M83.13,63v14" pathLength="1"></path><path class="chx-pl-bc-row chx-pl-bc-in" d="M186.17,63v14M183.14,63v14M196.48,63v14M152.2,63v14M192.14,63v14M193.62,63v14M193.16,63v14M199,63v14M167.7,63v14" pathLength="1"></path><text x="8" y="97" text-anchor="start" fill="var(--ink)">Pixel</text><path class="chx-pl-bc-row" d="M219.42,87v14M267.84,87v14M57.23,87v14M229.5,87v14M117.87,87v14M124.57,87v14M218.81,87v14M215.27,87v14M244.19,87v14M287.37,87v14M80.8,87v14M107.6,87v14M58.86,87v14M55.82,87v14M232.48,87v14M95.15,87v14M65.04,87v14M249.59,87v14M116.52,87v14M242.95,87v14M137.64,87v14M229.21,87v14M101.99,87v14M144.34,87v14M86.43,87v14M216.66,87v14" pathLength="1"></path><path class="chx-pl-bc-row chx-pl-bc-in" d="M157.53,87v14M163.61,87v14M205.3,87v14M205.09,87v14M175.67,87v14M175.89,87v14M187.25,87v14M189.55,87v14" pathLength="1"></path><text x="8" y="121" text-anchor="start" fill="var(--ink)">Nova</text><path class="chx-pl-bc-row" d="M110.3,111v14M246.81,111v14M119.92,111v14M235.75,111v14M83.7,111v14M144.53,111v14M54.68,111v14M267.56,111v14M74.56,111v14M95.96,111v14M262.14,111v14M66.84,111v14M230.64,111v14M225.78,111v14M129.56,111v14M105.78,111v14M144.89,111v14M148.96,111v14M149.5,111v14M263.37,111v14M212.81,111v14M108.61,111v14" pathLength="1"></path><path class="chx-pl-bc-row chx-pl-bc-in" d="M192.21,111v14M169.53,111v14M177.7,111v14M205.1,111v14M205.58,111v14M160.09,111v14M201.69,111v14M173.83,111v14M192.37,111v14M204.16,111v14M189.88,111v14M160.3,111v14" pathLength="1"></path></svg></div></div>
+<div class="meta"><b>Barcode Chart</b> · <code>charts-barcode-chart</code><br>Charts &amp; Metrics · CORRELATION, TIME &amp; DISTRIBUTION PLOTS<p>Dense vertical ticks per category, one per observation, drawing left to right with a band marking the middle range. Use it for compact distribution rows.</p></div>
+
+</body>
+</html>
