@@ -79,6 +79,7 @@
 .mnu-dotnav a.is-active{background:var(--accent);box-shadow:0 0 0 4px rgba(var(--accent-rgb),.2);transform:scale(1.15)}
 .mnu-dotnav a::after{content:attr(data-tip);position:absolute;left:calc(100% + 13px);top:50%;transform:translateY(-50%) translateX(-4px);background:var(--panel);border:1px solid var(--line);color:var(--ink);font:600 10px ui-sans-serif,system-ui,sans-serif;padding:3px 8px;border-radius:6px;white-space:nowrap;opacity:0;pointer-events:none;transition:.18s}
 .mnu-dotnav a:hover::after{opacity:1;transform:translateY(-50%) translateX(0)}
+@media (prefers-reduced-motion:reduce){.mnu-rail a.is-active{animation:none}}
 </style>
 <div class="gallery">
 

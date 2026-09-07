@@ -85,6 +85,25 @@ const EXTRACT_FN = `function extractInPage(gallery, d){
         }
       }
       for(var rk=0; rk<rules.length; rk++){ if(rules[rk].type===7 && kf.has(rules[rk].name)) rulesOut.push(rules[rk].cssText); }
+      // @media blocks (prefers-reduced-motion, responsive) whose child selectors reference
+      // this facet's classes — carry them so a standalone copy keeps its reduced-motion /
+      // responsive behaviour instead of silently animating through prefers-reduced-motion.
+      for(var rm=0; rm<rules.length; rm++){
+        var mr=rules[rm];
+        if(mr.type===4 && mr.cssRules){
+          var mkids=[];
+          for(var mc=0; mc<mr.cssRules.length; mc++){
+            var cr=mr.cssRules[mc];
+            if(cr.type===1 && cr.selectorText){
+              var mhit=false;
+              classes.forEach(function(c){ if(mhit) return;
+                if(cr.selectorText.split(/[\\s,>+~]+/).some(function(sel){return sel.indexOf('.'+c)!==-1 && new RegExp('\\\\.'+c+'(?![\\\\w-])').test(sel);})){mhit=true;} });
+              if(mhit) mkids.push(cr.cssText);
+            }
+          }
+          if(mkids.length) rulesOut.push('@media '+(mr.media&&mr.media.mediaText||'')+'{'+mkids.join('')+'}');
+        }
+      }
       // @property registrations (typed custom properties) that the collected rules reference:
       // without them a standalone copy loses animated counters / interpolated custom props.
       var props={}; rulesOut.join('\\n').replace(/--[A-Za-z0-9_-]+/g, function(p){ props[p]=1; return p; });
