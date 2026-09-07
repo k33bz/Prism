@@ -89,12 +89,16 @@ function matchScore(effect, q) {
     desc: (effect.description || '').toLowerCase(),
     tags: (effect.tags || []).join(' ').toLowerCase(),
     cat: (effect.category || '').toLowerCase(),
+    // Derived selection fields, de-hyphenated so "time series" hits "time-series"
+    // and "part to whole" hits "part-to-whole".
+    sel: [effect.role, effect.dataShape].filter(Boolean).join(' ').toLowerCase().replace(/-/g, ' '),
   };
   for (const t of terms) {
     if (hay.name.includes(t)) score += 5;
     if (hay.id.includes(t)) score += 4;
     if (hay.tags.includes(t)) score += 3;
     if (hay.cat.includes(t)) score += 2;
+    if (hay.sel.includes(t)) score += 2;
     if (hay.desc.includes(t)) score += 1;
   }
   // exact-phrase bonuses
@@ -141,6 +145,8 @@ const FACET_DIMS = {
   componentType: { get: (e) => (e.componentType ? [e.componentType] : []), label: 'Component type' },
   spectrum: { get: (e) => (e.spectrum ? [e.spectrum] : []), label: 'Aesthetic (spectrum)' },
   category: { get: (e) => (e.category ? [e.category] : []), label: 'Category' },
+  role: { get: (e) => (e.role ? [e.role] : []), label: 'Role (purpose)' },
+  dataShape: { get: (e) => (e.dataShape ? [e.dataShape] : []), label: 'Data shape' },
   tag: { get: (e) => e.tags || [], label: 'Tag', multi: true },
   interaction: { get: (e) => normalizeInteractions(e.interaction), label: 'Interaction', multi: true, normalized: true },
 };
@@ -152,6 +158,10 @@ const BOOL_DIMS = {
   needsJs: { get: (e) => !!e.needsJs, label: 'Needs JS initializer' },
   isFixed: { get: (e) => !!e.isFixed, label: 'Fixed / pinned' },
   selfContained: { get: (e) => !!e.selfContained, label: 'Self-contained' },
+  // Derived accessibility signals (from a11y{}). selfAnimates = moves without user
+  // action; reducedMotionSafe = static, or honors prefers-reduced-motion.
+  selfAnimates: { get: (e) => !!(e.a11y && e.a11y.selfAnimates), label: 'Self-animates' },
+  reducedMotionSafe: { get: (e) => !e.a11y || e.a11y.reducedMotionSafe !== false, label: 'Reduced-motion safe' },
 };
 
 // Maps the plural filter keys accepted by search_effects to a facet dimension.
@@ -160,6 +170,8 @@ const FILTER_KEY_TO_DIM = {
   componentTypes: 'componentType',
   spectrums: 'spectrum',
   categories: 'category',
+  roles: 'role',
+  dataShapes: 'dataShape',
   tags: 'tag',
   interactions: 'interaction',
 };
@@ -304,13 +316,15 @@ export function buildTools() {
     // ============================== DISCOVERY (11) ==============================
     {
       name: 'list_effects',
-      description: 'List effects in the catalog with optional filters (gallery, tag, componentType, background-capable, new/fixed). Returns lightweight metadata (no html/css) with pagination.',
+      description: 'List effects in the catalog with optional filters (gallery, tag, componentType, role, dataShape, background-capable, new/fixed). Returns lightweight metadata (no html/css) with pagination. For relevance ranking or multi-value facets use search_effects.',
       inputSchema: {
         type: 'object',
         properties: {
           gallery: { type: 'string', description: 'Filter by gallery id (e.g. "charts", "fx")' },
           tag: { type: 'string', description: 'Filter to effects having this tag' },
           componentType: { type: 'string', description: 'Filter by componentType' },
+          role: { type: 'string', description: 'Filter by role/purpose (action, input, navigation, feedback, loading, data-display, decorative, ambient, media)' },
+          dataShape: { type: 'string', description: 'Filter by data shape (charts/maps/diagrams: single-value, time-series, comparison, part-to-whole, correlation, distribution, flow, geo)' },
           usableAsBackground: { type: 'boolean', description: 'Only background-capable effects' },
           isNew: { type: 'boolean', description: 'Only effects tagged new' },
           limit: { type: 'integer', minimum: 1, default: 50 },
@@ -323,6 +337,8 @@ export function buildTools() {
         if (a.gallery) list = list.filter((e) => e.gallery === a.gallery);
         if (a.tag) list = list.filter((e) => e.tags.includes(a.tag));
         if (a.componentType) list = list.filter((e) => e.componentType === a.componentType);
+        if (a.role) list = list.filter((e) => e.role === a.role);
+        if (a.dataShape) list = list.filter((e) => e.dataShape === a.dataShape);
         if (a.usableAsBackground === true) list = list.filter((e) => e.usableAsBackground);
         if (a.isNew === true) list = list.filter((e) => e.isNew);
         const page = paginate(list.map(lightEffect), a.limit ?? 50, a.offset ?? 0);
@@ -331,7 +347,7 @@ export function buildTools() {
     },
     {
       name: 'search_effects',
-      description: 'Faceted relevance search over the catalog. Full-text ranks across id/name/description/tags/category; the optional `filters` object narrows by gallery, componentType, spectrum (aesthetic), category, tag (AND), and interaction, plus boolean flags (isNew, usableAsBackground, needsJs, isFixed, selfContained). `sort` controls ordering (relevance/name/newest/gallery) and offset/limit paginate. query is optional when filters are given. Use get_available_filters to discover valid facet values.',
+      description: 'Faceted relevance search over the catalog. Full-text ranks across id/name/description/tags/category/role/dataShape; the optional `filters` object narrows by gallery, componentType, spectrum (aesthetic), category, role (component purpose), dataShape (chart/map/diagram data relationship), tag (AND), and interaction, plus boolean flags (isNew, usableAsBackground, needsJs, isFixed, selfContained, selfAnimates, reducedMotionSafe). Pick by intent with `roles` (e.g. loading, feedback, navigation), pick the right chart with `dataShapes` (e.g. time-series, part-to-whole), and respect motion prefs with reducedMotionSafe:true / selfAnimates:false. `sort` controls ordering (relevance/name/newest/gallery) and offset/limit paginate. query is optional when filters are given. Use get_available_filters to discover valid facet values.',
       inputSchema: {
         type: 'object',
         properties: {
@@ -345,6 +361,8 @@ export function buildTools() {
               componentTypes: { ...strArr, description: 'Match any of these componentType values' },
               spectrums: { ...strArr, description: 'Match any of these spectrum (aesthetic) values' },
               categories: { ...strArr, description: 'Match any of these category values' },
+              roles: { ...strArr, description: 'Match any of these roles (component purpose): action, input, navigation, feedback, loading, data-display, decorative, ambient, media' },
+              dataShapes: { ...strArr, description: 'Match any of these data shapes (charts/maps/diagrams only): single-value, time-series, comparison, part-to-whole, correlation, distribution, flow, geo' },
               tags: { ...strArr, description: 'Must carry ALL of these tags (AND)' },
               interactions: { ...strArr, description: 'Match any of these normalized interaction tokens (static, hover, click, focus, scroll, auto-play, drag, toggle, on-load, …)' },
               isNew: { type: 'boolean' },
@@ -352,6 +370,8 @@ export function buildTools() {
               needsJs: { type: 'boolean' },
               isFixed: { type: 'boolean' },
               selfContained: { type: 'boolean' },
+              selfAnimates: { type: 'boolean', description: 'Motion filter: true = animates without user action (reduced-motion sensitive); false = static or interaction-triggered.' },
+              reducedMotionSafe: { type: 'boolean', description: 'Accessibility filter: true = static, or honors prefers-reduced-motion; false = animates with no reduced-motion fallback.' },
               themeSensitive: { type: 'boolean', description: 'Theme-compat filter: true = only components whose look changes across themes (consume theme tokens); false = theme-neutral components.' },
             },
             additionalProperties: false,
@@ -595,7 +615,7 @@ export function buildTools() {
 
     {
       name: 'get_available_filters',
-      description: 'Describe every facet available for search_effects: each array facet (gallery, componentType, spectrum, category, tag, interaction) with its top values and counts, plus the boolean flags and their counts, and the valid sort options. Use this to build a faceted UI or to learn valid filter values before searching.',
+      description: 'Describe every facet available for search_effects: each array facet (gallery, componentType, spectrum, category, role, dataShape, tag, interaction) with its top values and counts, plus the boolean flags and their counts (including selfAnimates / reducedMotionSafe), and the valid sort options. Use this to build a faceted UI or to learn valid filter values before searching.',
       inputSchema: {
         type: 'object',
         properties: {
@@ -633,7 +653,7 @@ export function buildTools() {
     },
     {
       name: 'list_filter_values',
-      description: 'List the full set of values for a single facet dimension (gallery, componentType, spectrum, category, tag, or interaction) with per-value effect counts. Complements get_available_filters when you need every value of one facet (e.g. all 175 categories).',
+      description: 'List the full set of values for a single facet dimension (gallery, componentType, spectrum, category, role, dataShape, tag, or interaction) with per-value effect counts. Complements get_available_filters when you need every value of one facet (e.g. all 175 categories).',
       inputSchema: {
         type: 'object',
         properties: {

@@ -80,8 +80,8 @@ The Messages API accepts local MCP servers via the `mcp_servers` parameter (stdi
 ### Discovery & search (11)
 | Tool | Purpose |
 |------|---------|
-| `list_effects` | List effects with filters (gallery, tag, componentType, background, new) + pagination. Returns light metadata. |
-| `search_effects` | Faceted relevance search: full-text ranking + a `filters` object (gallery, componentType, spectrum, category, tag [AND], interaction) + boolean flags (incl. `themeSensitive`) + `sort` + pagination. |
+| `list_effects` | List effects with filters (gallery, tag, componentType, role, dataShape, background, new) + pagination. Returns light metadata. |
+| `search_effects` | Faceted relevance search: full-text ranking + a `filters` object (gallery, componentType, spectrum, category, **role**, **dataShape**, tag [AND], interaction) + boolean flags (incl. `themeSensitive`, **`selfAnimates`**, **`reducedMotionSafe`**) + `sort` + pagination. |
 | `get_available_filters` | Describe every facet with its top values + counts, the boolean flags, and valid sort options — everything needed to build a faceted UI. |
 | `list_filter_values` | Enumerate the full value set for one facet (e.g. all 175 categories) with per-value counts + prefix filtering. |
 | `create_saved_search` | Save a named query+filters+sort (session memory) and get an id back. |
@@ -92,7 +92,14 @@ The Messages API accepts local MCP servers via the `mcp_servers` parameter (stdi
 | `list_galleries` | All galleries with declared vs. live effect counts. |
 | `get_catalog_stats` | Aggregate stats: per-gallery counts, tags, componentTypes, etc. |
 
-> **Facets are grounded in real catalog data.** Available facets: `gallery`, `componentType`, `spectrum` (visual aesthetic), `category`, `tag`, `interaction`. Interaction values are **normalized** from noisy source data (`tatic`→`static`, `focu`→`focus`, `croll`→`scroll`, multi-value strings/arrays split). There is no `performance` field in the catalog, so that facet is intentionally omitted rather than faked. The `themeSensitive` facet is **derived** (does the component consume theme tokens?), not a stored field. Saved searches are per-process (in-memory), not persisted to disk.
+> **Facets are grounded in real catalog data.** Available facets: `gallery`, `componentType`, `spectrum` (visual aesthetic), `category`, `role`, `dataShape`, `tag`, `interaction`. Interaction values are **normalized** from noisy source data (`tatic`→`static`, `focu`→`focus`, `croll`→`scroll`, multi-value strings/arrays split). The `themeSensitive` facet is **derived** (does the component consume theme tokens?), not a stored field. Saved searches are per-process (in-memory), not persisted to disk.
+>
+> **Selection metadata (pick by intent, not keywords).** Every facet carries three derived fields, so an agent can retrieve by what it needs rather than guessing names:
+> - **`role`** — the component's purpose: `action`, `input`, `navigation`, `feedback`, `loading`, `data-display`, `decorative`, `ambient`, `media`. Filter with `filters.roles` (OR).
+> - **`dataShape`** — for charts/maps/diagrams, the data relationship the viz fits: `single-value`, `time-series`, `comparison`, `part-to-whole`, `correlation`, `distribution`, `flow`, `geo`. Filter with `filters.dataShapes` (OR). This is the "when do I use which chart" answer.
+> - **`a11y`** — `{ selfAnimates, reducedMotionSafe }`. Filter with the boolean flags `selfAnimates` and `reducedMotionSafe` (e.g. `reducedMotionSafe: true` to exclude motion that ignores `prefers-reduced-motion`).
+>
+> These are **derived deterministically** from existing fields (componentType, gallery, category, name, interaction, per-facet CSS) by the repo pipeline — not hand-authored — and gated so they can't go stale. `role` and `dataShape` also feed full-text ranking (de-hyphenated, so `"time series"` matches `time-series`).
 
 ### Component Variant Matrix (3)
 | Tool | Purpose |
@@ -186,7 +193,7 @@ prism-mcp-server/
 node --test          # or: npm test
 ```
 
-129 tests cover every tool (incl. the advanced-search & variant-matrix tools, the `themeSensitive` facet, and the 6 Collections tools + `export_collection` formats), the CSS/compose/validate utilities, the canonical theme token maps (the two Cloudscape modes), the `CollectionStore`, the JSON-RPC protocol layer, and loading the real `Prism.html` island.
+134 tests cover every tool (incl. the advanced-search & variant-matrix tools, the `themeSensitive` facet, and the 6 Collections tools + `export_collection` formats), the CSS/compose/validate utilities, the canonical theme token maps (the two Cloudscape modes), the `CollectionStore`, the JSON-RPC protocol layer, and loading the real `Prism.html` island.
 
 ---
 

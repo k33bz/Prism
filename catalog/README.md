@@ -10,12 +10,35 @@ The pipeline re-derives the island from the live gallery templates inside `Prism
 ```
 _facet_dates.mjs         →  facet-dates.json + #prism-facet-dates island   (git history: addedOn / updatedOn per facet)
 extract-from-prism.mjs   →  manifest.json + index.json   (headless Chrome / CDP; merges facet-dates.json)
+_derive_selection.mjs    →  adds role / dataShape / a11y to manifest.json + index.json   (--write; deterministic, from selection-vocab.json)
 _embed-catalog.mjs       →  writes the island back into Prism.html   (idempotent)
 _smoke.mjs               →  validates the island parses + shell scripts syntax-check
 _check_ds.mjs            →  design-system coverage & integrity gate (exit non-zero on fail)
+_check_selection.mjs     →  agent-facing selection-metadata gate: every facet has valid role + a11y, charts have dataShape (exit non-zero on fail)
 ```
 
-All four pipeline scripts honor `PRISM_HTML` (an absolute path to an alternate copy),
+## Agent-facing selection metadata
+
+`_derive_selection.mjs` enriches every facet with three fields the MCP server exposes as
+search facets, so an agent can pick by intent instead of keyword-guessing:
+
+- **`role`** — the component's purpose: `action`, `input`, `navigation`, `feedback`,
+  `loading`, `data-display`, `decorative`, `ambient`, `media`.
+- **`dataShape`** (charts / maps / diagrams only) — the data relationship it fits:
+  `single-value`, `time-series`, `comparison`, `part-to-whole`, `correlation`,
+  `distribution`, `flow`, `geo`. This is the machine-readable answer to "when do I use
+  which chart".
+- **`a11y`** — `{ selfAnimates, reducedMotionSafe }`: whether it moves without user
+  action, and whether it is static or honors `prefers-reduced-motion`.
+
+Everything is **derived deterministically** (no LLM, no hand-authoring) from fields that
+already exist — `componentType`, `gallery`, `category`, `name`, `interaction`, and the
+per-facet CSS. The mapping lives in `selection-vocab.json` as ordered, first-match rules;
+edit that file (never the per-facet values) and re-run `_derive_selection.mjs --write`.
+`_check_selection.mjs` gates the result so the values can't silently rot, and
+`--warn` lists facets that self-animate without a reduced-motion fallback (a11y follow-ups).
+
+All pipeline scripts honor `PRISM_HTML` (an absolute path to an alternate copy),
 so a staged temp copy can be extracted / embedded / smoke-checked / gated without
 touching the repo's `Prism.html`.
 
@@ -31,8 +54,10 @@ From the repo root:
 
 ```bash
 node catalog/extract-from-prism.mjs   # drives Prism.html in headless Chrome, writes manifest.json + index.json
+node catalog/_derive_selection.mjs --write   # adds role/dataShape/a11y to manifest.json + index.json
 node catalog/_embed-catalog.mjs       # embeds manifest.json into the #prism-catalog island in Prism.html
 node catalog/_smoke.mjs               # sanity-checks the island + shell
+node catalog/_check_selection.mjs     # gates role/dataShape/a11y coverage (exit non-zero on fail)
 ```
 
 A correct run reports **2670 effects across 15 galleries** (parity with the island) and

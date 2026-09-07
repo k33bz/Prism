@@ -241,3 +241,60 @@ test('execute_saved_search unknown id errors with available list', () => {
   assert.equal(r.error.code, 'not_found');
   assert.ok(Array.isArray(r.error.data.available));
 });
+
+// -------------------- selection metadata: role / dataShape / a11y (agent-facing) --------------------
+
+test('search_effects filters.roles narrows by component purpose', () => {
+  const ctx = toolCtx();
+  const r = ctx.call('search_effects', { filters: { roles: ['data-display'] } });
+  assert.equal(r.total, 2);
+  assert.ok(r.items.every((e) => e.role === 'data-display'));
+});
+
+test('search_effects filters.dataShapes narrows charts by data relationship', () => {
+  const ctx = toolCtx();
+  const r = ctx.call('search_effects', { filters: { dataShapes: ['single-value'] } });
+  assert.equal(r.total, 2);
+  assert.ok(r.items.every((e) => e.dataShape === 'single-value'));
+});
+
+test('search_effects reducedMotionSafe / selfAnimates a11y flags filter motion', () => {
+  const ctx = toolCtx();
+  assert.equal(ctx.call('search_effects', { filters: { reducedMotionSafe: true } }).total, 1); // kpi-delta only
+  assert.equal(ctx.call('search_effects', { filters: { reducedMotionSafe: false } }).total, 2); // kpi-pulse + wind
+  const anim = ctx.call('search_effects', { filters: { selfAnimates: true } });
+  assert.equal(anim.total, 1);
+  assert.equal(anim.items[0].id, 'fx-wind-bg');
+});
+
+test('search_effects full-text ranks the de-hyphenated selection fields', () => {
+  const ctx = toolCtx();
+  const r = ctx.call('search_effects', { query: 'single value' });
+  assert.ok(r.total >= 2);
+  assert.ok(r.items.slice(0, 2).every((e) => e.dataShape === 'single-value'));
+});
+
+test('list_effects accepts role and dataShape filters', () => {
+  const ctx = toolCtx();
+  assert.equal(ctx.call('list_effects', { role: 'ambient' }).total, 1);
+  assert.equal(ctx.call('list_effects', { dataShape: 'single-value' }).total, 2);
+});
+
+test('lightEffect projection carries role/dataShape/a11y', () => {
+  const ctx = toolCtx();
+  const e = ctx.call('search_effects', { filters: { roles: ['data-display'] } }).items[0];
+  assert.ok('role' in e && 'dataShape' in e && 'a11y' in e);
+  assert.equal(typeof e.a11y.selfAnimates, 'boolean');
+  assert.equal(typeof e.a11y.reducedMotionSafe, 'boolean');
+});
+
+test('get_available_filters + list_filter_values expose role and dataShape', () => {
+  const ctx = toolCtx();
+  const gaf = ctx.call('get_available_filters', {});
+  assert.ok(gaf.facets.role, 'role facet present');
+  assert.ok(gaf.facets.dataShape, 'dataShape facet present');
+  assert.ok('selfAnimates' in gaf.booleanFlags && 'reducedMotionSafe' in gaf.booleanFlags);
+  const roles = ctx.call('list_filter_values', { facet: 'role' });
+  const dataDisplay = roles.items.find((v) => v.value === 'data-display');
+  assert.equal(dataDisplay.count, 2);
+});

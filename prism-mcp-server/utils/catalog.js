@@ -86,6 +86,14 @@ function normalizeEffect(e) {
     interaction: e.interaction || null,
     spectrum: e.spectrum || null,
     tags: toArray(e.tags),
+    // Derived selection metadata (see catalog/_derive_selection.mjs). role is the
+    // component's purpose; dataShape (charts/maps/diagrams only) is the data
+    // relationship it fits; a11y describes motion + reduced-motion behaviour.
+    role: e.role || null,
+    dataShape: e.dataShape || null,
+    a11y: e.a11y && typeof e.a11y === 'object'
+      ? { selfAnimates: !!e.a11y.selfAnimates, reducedMotionSafe: e.a11y.reducedMotionSafe !== false }
+      : null,
     usableAsBackground: !!e.usableAsBackground,
     needsJs: e.needsJs || null,
     selfContained: e.selfContained !== false, // default true when absent
@@ -110,6 +118,9 @@ export function lightEffect(e) {
     tags: e.tags,
     componentType: e.componentType,
     interaction: e.interaction,
+    role: e.role,
+    dataShape: e.dataShape,
+    a11y: e.a11y,
     usableAsBackground: e.usableAsBackground,
     needsJs: e.needsJs,
     isNew: e.isNew,

@@ -1,0 +1,77 @@
+{
+  "version": "1.0.0",
+  "_doc": "Controlled vocabulary + deterministic mapping rules for agent-facing selection metadata (role, dataShape, a11y). Consumed by _derive_selection.mjs and validated by the selection gate. Edit the rules here, never hand-author per-facet values. Rules are ordered; first match wins. `on` picks which field the regex tests (componentType|gallery|category|name), matched case-insensitively.",
+
+  "roles": [
+    "action",
+    "input",
+    "navigation",
+    "feedback",
+    "loading",
+    "data-display",
+    "decorative",
+    "ambient",
+    "media"
+  ],
+
+  "roleRules": [
+    { "on": "componentType", "test": "loader|spinner|skeleton|progress|loading", "role": "loading" },
+    { "on": "componentType", "test": "notification|toast|banner|callout|badge|alert|ai-state|tooltip|status", "role": "feedback" },
+    { "on": "componentType", "test": "^chart|^gauge$|^map($|-)|^diagram|sparkline|timeline|list-tree|grid-layout|key-value|^table", "role": "data-display" },
+    { "on": "componentType", "test": "button|segmented-control|^fab$|action-bar", "role": "action" },
+    { "on": "componentType", "test": "^input|^chip$|toggle|switch|checkbox|radio|slider|select|^form", "role": "input" },
+    { "on": "componentType", "test": "menu|dropdown|tab|breadcrumb|crumb|stepper|pagination|rail|navbar|nav-|sidebar|drawer", "role": "navigation" },
+    { "on": "componentType", "test": "backdrop|weather|ambient|background", "role": "ambient" },
+    { "on": "componentType", "test": "^object-3d$|mechanism|^object-icon$|avatar|image|video|thumbnail|photo|media", "role": "media" },
+    { "on": "componentType", "test": "^fx|glow|text-effect|shaped-text|motion-reveal|^object", "role": "decorative" }
+  ],
+
+  "roleGalleryFallback": {
+    "charts": "data-display",
+    "maps": "data-display",
+    "diagrams": "data-display",
+    "arch": "data-display",
+    "input": "input",
+    "menus": "navigation",
+    "notify": "feedback",
+    "callouts": "feedback",
+    "ai": "feedback",
+    "tables": "data-display",
+    "text": "decorative",
+    "fx": "decorative",
+    "objects": "decorative",
+    "shapes": "decorative",
+    "obsidian": "decorative",
+    "lab": "decorative"
+  },
+  "roleDefault": "decorative",
+
+  "dataShapes": [
+    "single-value",
+    "time-series",
+    "comparison",
+    "part-to-whole",
+    "correlation",
+    "distribution",
+    "flow",
+    "geo"
+  ],
+  "dataShapeGalleries": ["charts", "maps", "diagrams"],
+  "dataShapeRules": [
+    { "on": "name", "test": "scatter|bubble|correlat", "shape": "correlation" },
+    { "on": "name", "test": "histogram|box\\s?plot|violin|density|distribut", "shape": "distribution" },
+    { "on": "name", "test": "pie|donut|doughnut|ring|stacked|treemap|sunburst|part[- ]?to[- ]?whole|share|proportion", "shape": "part-to-whole" },
+    { "on": "name", "test": "sankey|funnel|waterfall|flow|pipeline|tree|hierarch|org[- ]?chart|network|graph|node", "shape": "flow" },
+    { "on": "name", "test": "line|area|trend|spark|time|series|timeline|wave|stream|candle", "shape": "time-series" },
+    { "on": "name", "test": "bar|column|ranking|leaderboard|compare|comparison", "shape": "comparison" },
+    { "on": "componentType", "test": "^chart-kpi$|^gauge$|^chart-gauge$|^chart-3d$", "shape": "single-value" },
+    { "on": "category", "test": "kpi|single value|metric|stat", "shape": "single-value" },
+    { "on": "componentType", "test": "^chart-line$", "shape": "time-series" },
+    { "on": "componentType", "test": "^chart-bar$", "shape": "comparison" },
+    { "on": "componentType", "test": "^chart-flow$", "shape": "flow" },
+    { "on": "componentType", "test": "^map($|-)", "shape": "geo" },
+    { "on": "gallery", "test": "^maps$", "shape": "geo" },
+    { "on": "gallery", "test": "^diagrams$|^arch$", "shape": "flow" }
+  ],
+  "dataShapeDefault": "comparison"
+}

@@ -19,8 +19,9 @@ manifest.source = 'Prism.html (seeded from catalog/manifest.json)';
 const withHeader = {
   _ai: {
     what: 'Full-fat, offline catalog of every Prism effect (id, name, gallery, tags, params, and self-contained html+css).',
-    howToUse: 'JSON.parse the text of <script id="prism-catalog">. Filter effects[] by gallery/tags/description. Each effect ships its own html+css; include tokens.css once globally; if effect.needsJs, run initializers[effect.needsJs].js after inserting the markup.',
-    fields: 'effects[]: {id,name,gallery,category,ref,description,classes,keyframes,params,tags,usableAsBackground,needsJs,selfContained,addedOn,updatedOn,author,html,css,dataSnip}',
+    howToUse: 'JSON.parse the text of <script id="prism-catalog">. Filter effects[] by gallery/tags/description, or by the derived selection fields: role (what the component is for), dataShape (for charts/maps/diagrams: the data relationship it fits), and a11y.selfAnimates / a11y.reducedMotionSafe (motion + accessibility). Each effect ships its own html+css; include tokens.css once globally; if effect.needsJs, run initializers[effect.needsJs].js after inserting the markup.',
+    fields: 'effects[]: {id,name,gallery,category,ref,description,classes,keyframes,params,tags,role,dataShape?,a11y:{selfAnimates,reducedMotionSafe},usableAsBackground,needsJs,selfContained,addedOn,updatedOn,author,html,css,dataSnip}',
+    selection: 'role ∈ {action,input,navigation,feedback,loading,data-display,decorative,ambient,media}. dataShape ∈ {single-value,time-series,comparison,part-to-whole,correlation,distribution,flow,geo} (present only for charts/maps/diagrams). a11y.selfAnimates = animates without user action; a11y.reducedMotionSafe = has no motion or honors prefers-reduced-motion.',
     count: manifest.count,
   },
   ...manifest,
