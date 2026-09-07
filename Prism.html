@@ -179598,7 +179598,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
 <body>
 <div class="head">
   <h1>🔎 Search</h1>
-  <p>Advanced faceted search across all 3,400+ Prism facets — rank by relevance, filter by gallery, component, interaction, aesthetic Spectrum, tag or status, then save the searches you reuse. Every piece of this page — the bar, the chips, the result cards — is itself a Prism facet.</p>
+  <p>Advanced faceted search across all 1,800+ Prism facets — rank by relevance, filter by gallery, component, interaction, aesthetic Spectrum, tag or status, then save the searches you reuse. Every piece of this page — the bar, the chips, the result cards — is itself a Prism facet.</p>
 </div>
 <div class="wrap">
 <div class="srch-shell">
@@ -180326,6 +180326,13 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
     indexCatalog(ALL);
 
     var input=document.getElementById('srchInput');
+
+    // keep the flavor counts truthful & dynamic (ALL = the browsable, non-spectrum pool),
+    // so the placeholder and subheading never drift as facets are added.
+    var _n=ALL.length.toLocaleString();
+    input.setAttribute('placeholder','Search '+_n+' facets — try "animated menu", "material ui", or "3d chart"…');
+    var _sub=document.querySelector('.head p');
+    if(_sub){ _sub.innerHTML=_sub.innerHTML.replace(/across all [0-9,]+\+? Prism facets/,'across all '+_n+' Prism facets'); }
 
     // hydrate state from the shareable URL before first paint
     suppressUrl=true;
@@ -185286,7 +185293,7 @@ var THEME_REGISTRY=[
   var SUGGESTIONS=['material ui','3d chart','glassmorphism','neon','loader','kpi','gradient','radar','confetti'];
   function renderHint(){
     var picks=SUGGESTIONS.slice(0,6);
-    hint.innerHTML='<div class="qs-htitle">Search 1,800+ facets</div>'+
+    hint.innerHTML='<div class="qs-htitle">Search '+(ALL?ALL.length.toLocaleString():'')+' facets</div>'+
       '<div>Type to find components, or jump to a gallery.</div>'+
       '<div class="qs-chips"></div>';
     var box=hint.querySelector('.qs-chips');
