@@ -19,7 +19,6 @@ This is [k33bz/Prism](https://github.com/k33bz/Prism), a fork of [crazy54/Prism]
 - **Two galleries:** 📋 Tables & Data Layouts (55 facets, including click-driven sorting demos and a holographic file tree) and 📐 Diagrams & Frameworks (53 facets: every fishbone variant, flow, hierarchy, comparison, timeline, network, strategy frameworks, flywheels).
 - **New facet families inside existing galleries:** the Elemental Base blocks and Pokémon Battle scenes in FX Store, a self-hosted-Forgejo landing kit in Animated Objects and Text Effects, presence status modifiers and a live avatar stack in Notifications.
 - **Three more theme packs** (Cloudflare Orange, Google Cloud Console, Fluent for Azure) through the same profile, scaffolder, generator and 100-facet gate as upstream's packs, plus two skins (Frutiger Aero, Liquid Glass).
-- **A GIF showcase** of every facet, recorded headlessly by Firefox over WebDriver BiDi (Chromium over CDP as the alternative), with per-gallery pages and an offline browser.
 - **Git-derived metadata:** every catalog record carries `addedOn`, `updatedOn` and `author` mined from history, the New Facets page is built from those dates with an adjustable window, and Search filters and sorts by author.
 
 Every facet records who introduced it (`author`: `crazy54` upstream, `k33bz` fork), so attribution travels with the catalog rather than living in this paragraph.
@@ -292,24 +291,6 @@ Seventeen authored galleries, plus special views. Every element carries a name, 
 
 ---
 
-<!-- showcase:start -->
-## 🎞 GIF showcase
-
-Every one of the **3448 facets** is recorded as a looping GIF from its own standalone HTML sample, so you can browse the whole library without opening Prism.html — see [**showcase/**](showcase/README.md) (86.0 MB of GIFs, rendered by Firefox (WebDriver BiDi) 155.0.1). Click a gallery below to open its page; click any GIF there to get to the effect's self-contained HTML.
-
-<table>
-<tr><td align="center" valign="top" width="33%"><a href="showcase/galleries/charts.md"><img src="showcase/gif/charts-gauge-cluster.gif" width="300" alt="Charts &amp; Metrics"></a><br><b><a href="showcase/galleries/charts.md">Charts &amp; Metrics</a></b><br><sub>266 effects</sub></td><td align="center" valign="top" width="33%"><a href="showcase/galleries/fx.md"><img src="showcase/gif/fx-pulse-glow-winner.gif" width="300" alt="FX Store"></a><br><b><a href="showcase/galleries/fx.md">FX Store</a></b><br><sub>248 effects</sub></td><td align="center" valign="top" width="33%"><a href="showcase/galleries/lab.md"><img src="showcase/gif/lab-countdown-ring.gif" width="300" alt="Animation Lab"></a><br><b><a href="showcase/galleries/lab.md">Animation Lab</a></b><br><sub>260 effects</sub></td></tr>
-<tr><td align="center" valign="top" width="33%"><a href="showcase/galleries/ai.md"><img src="showcase/gif/ai-thinking-orb.gif" width="300" alt="AI Working"></a><br><b><a href="showcase/galleries/ai.md">AI Working</a></b><br><sub>118 effects</sub></td><td align="center" valign="top" width="33%"><a href="showcase/galleries/objects.md"><img src="showcase/gif/objects-snowfall.gif" width="300" alt="Animated Objects"></a><br><b><a href="showcase/galleries/objects.md">Animated Objects</a></b><br><sub>165 effects</sub></td><td align="center" valign="top" width="33%"><a href="showcase/galleries/input.md"><img src="showcase/gif/input-like-heart-burst.gif" width="300" alt="Input Methods"></a><br><b><a href="showcase/galleries/input.md">Input Methods</a></b><br><sub>134 effects</sub></td></tr>
-<tr><td align="center" valign="top" width="33%"><a href="showcase/galleries/text.md"><img src="showcase/gif/text-neon-sign.gif" width="300" alt="Text Effects"></a><br><b><a href="showcase/galleries/text.md">Text Effects</a></b><br><sub>102 effects</sub></td><td align="center" valign="top" width="33%"><a href="showcase/galleries/shapes.md"><img src="showcase/gif/shapes-ring-spin.gif" width="300" alt="Text Shapes"></a><br><b><a href="showcase/galleries/shapes.md">Text Shapes</a></b><br><sub>53 effects</sub></td><td align="center" valign="top" width="33%"><a href="showcase/galleries/maps.md"><img src="showcase/gif/maps-world-pulse-map.gif" width="300" alt="Maps &amp; Geo"></a><br><b><a href="showcase/galleries/maps.md">Maps &amp; Geo</a></b><br><sub>50 effects</sub></td></tr>
-<tr><td align="center" valign="top" width="33%"><a href="showcase/galleries/notify.md"><img src="showcase/gif/notify-stacking-toast-group.gif" width="300" alt="Notifications &amp; Status"></a><br><b><a href="showcase/galleries/notify.md">Notifications &amp; Status</a></b><br><sub>55 effects</sub></td><td align="center" valign="top" width="33%"><a href="showcase/galleries/arch.md"><img src="showcase/gif/arch-flowing-connector.gif" width="300" alt="Architecture Diagrams"></a><br><b><a href="showcase/galleries/arch.md">Architecture Diagrams</a></b><br><sub>76 effects</sub></td><td align="center" valign="top" width="33%"><a href="showcase/galleries/callouts.md"><img src="showcase/gif/callouts-progress-stepper.gif" width="300" alt="Callouts &amp; Annotations"></a><br><b><a href="showcase/galleries/callouts.md">Callouts &amp; Annotations</a></b><br><sub>50 effects</sub></td></tr>
-<tr><td align="center" valign="top" width="33%"><a href="showcase/galleries/obsidian.md"><img src="showcase/gif/obsidian-knowledge-constellation.gif" width="300" alt="Obsidian Facets"></a><br><b><a href="showcase/galleries/obsidian.md">Obsidian Facets</a></b><br><sub>130 effects</sub></td><td align="center" valign="top" width="33%"><a href="showcase/galleries/menus.md"><img src="showcase/gif/menus-compact-cmd-k-palette.gif" width="300" alt="Menus &amp; Actions"></a><br><b><a href="showcase/galleries/menus.md">Menus &amp; Actions</a></b><br><sub>62 effects</sub></td><td align="center" valign="top" width="33%"><a href="showcase/galleries/tables.md"><img src="showcase/gif/tables-zebra-table-scan.gif" width="300" alt="Tables &amp; Data Layouts"></a><br><b><a href="showcase/galleries/tables.md">Tables &amp; Data Layouts</a></b><br><sub>55 effects</sub></td></tr>
-<tr><td align="center" valign="top" width="33%"><a href="showcase/galleries/diagrams.md"><img src="showcase/gif/diagrams-simple-fishbone.gif" width="300" alt="Diagrams &amp; Frameworks"></a><br><b><a href="showcase/galleries/diagrams.md">Diagrams &amp; Frameworks</a></b><br><sub>58 effects</sub></td><td align="center" valign="top" width="33%"><a href="showcase/galleries/spectrums.md"><img src="showcase/gif/spectrums-filled-ripple-button.gif" width="300" alt="Spectrums"></a><br><b><a href="showcase/galleries/spectrums.md">Spectrums</a></b><br><sub>1566 effects</sub></td></tr>
-</table>
-
-Regenerate with `node showcase/build.mjs` (Node 18+, Firefox or Chromium, ffmpeg) — the GIFs are display-only and never part of the catalog or MCP server.
-
-<!-- showcase:end -->
-
 ---
 
 ## Themes
@@ -407,7 +388,6 @@ The MCP server's `compose` / `compose_with_template` tools do all of this for yo
 │   ├── drafts/                gallery sources (body + css) for the drafts-built galleries
 │   ├── profiles/              one profile per theme (palette, type, radius)
 │   └── additions/             generated facet batches merged into the galleries
-└── showcase/               ← GIF showcase: one HTML sample + one looping GIF per effect (display only)
     ├── build.mjs              records every effect headlessly (Firefox BiDi or Chromium CDP, no deps) + ffmpeg
     ├── browsers.mjs           the two raw wire-protocol drivers behind one tiny interface
     ├── html/  gif/            <id>.html standalone samples · <id>.gif recordings
@@ -426,10 +406,10 @@ node catalog/_embed-catalog.mjs       # embeds the fresh manifest into the #pris
 node catalog/_smoke.mjs               # island + shell scripts still parse
 node catalog/_check_ds.mjs            # theme-pack gate (add --only <pack> for one)
 node catalog/_sync_counts.mjs         # README badges and counts
-node showcase/build.mjs capture --only <ids>   # re-record the facets you touched, then: node showcase/build.mjs docs
+node catalog/_check_facets.mjs        # per-facet render / animation / reduced-motion gate across dark, reduced-motion and light (author k33bz by default; --all for everything)
 ```
 
-> Requires Node 18+ and Google Chrome or Edge for the extractor (headless, over the DevTools Protocol, no packages), plus Firefox or Chromium and ffmpeg for the showcase. With MCP hot reload on, a running server re-reads `Prism.html` automatically.
+> Requires Node 18+ and Google Chrome or Edge for the extractor and the per-facet gate (headless, over the DevTools Protocol, no packages). With MCP hot reload on, a running server re-reads `Prism.html` automatically.
 
 ---
 
