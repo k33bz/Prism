@@ -51,9 +51,16 @@ function deriveDataShape(e) {
 
 function deriveA11y(e) {
   const interaction = String(e.interaction || '');
-  const selfAnimates = /\b(auto-play|on-load)\b/.test(interaction);
   const css = String(e.css || '');
-  const hasMotion = /@keyframes|animation\s*:|transition\s*:/.test(css) || selfAnimates;
+  const html = String(e.html || '');
+  // Ground motion in real evidence, not just the noisy `interaction` label: a facet
+  // labelled auto-play/on-load that carries no CSS animation, no SVG SMIL, and no JS
+  // initializer does not actually move (e.g. a static "stamp" styled toast).
+  // Real animation only: a keyframe def, an animation shorthand/name with a value, or a
+  // transition. A lone animation-delay/duration longhand (orphan CSS, no keyframes) is NOT motion.
+  const cssMotion = /@keyframes|transition\s*:\s*[^;\s]|animation(-name)?\s*:\s*[^;\s]/.test(css);
+  const hasMotion = cssMotion || /<animate/.test(html) || !!e.needsJs;
+  const selfAnimates = /\b(auto-play|on-load)\b/.test(interaction) && hasMotion;
   const reducedMotionSafe = !hasMotion || /prefers-reduced-motion/.test(css);
   return { selfAnimates, reducedMotionSafe };
 }

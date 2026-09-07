@@ -25224,7 +25224,7 @@
       "role": "decorative",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": true
+        "reducedMotionSafe": false
       }
     },
     {
@@ -25292,7 +25292,7 @@
       "role": "decorative",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": true
+        "reducedMotionSafe": false
       }
     },
     {
@@ -47568,7 +47568,7 @@
       "role": "decorative",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": true
+        "reducedMotionSafe": false
       }
     },
     {
@@ -47600,7 +47600,7 @@
       "role": "decorative",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": true
+        "reducedMotionSafe": false
       }
     },
     {
@@ -48673,7 +48673,7 @@
       "role": "decorative",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": true
+        "reducedMotionSafe": false
       }
     },
     {
@@ -48704,7 +48704,7 @@
       "role": "decorative",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": true
+        "reducedMotionSafe": false
       }
     },
     {
@@ -48736,7 +48736,7 @@
       "role": "decorative",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": true
+        "reducedMotionSafe": false
       }
     },
     {
@@ -61529,7 +61529,7 @@
       "role": "decorative",
       "a11y": {
         "selfAnimates": true,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       }
     },
     {
@@ -62212,7 +62212,7 @@
       "role": "decorative",
       "a11y": {
         "selfAnimates": true,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       }
     },
     {
@@ -70827,7 +70827,7 @@
       "description": "Half-circle magenta-glow gauge reading a system load percentage; a compact single-metric dial.",
       "role": "data-display",
       "a11y": {
-        "selfAnimates": true,
+        "selfAnimates": false,
         "reducedMotionSafe": true
       }
     },
@@ -73731,8 +73731,8 @@
       "description": "A notification that lands flat with no fade, just a thick border and a hard shadow — reads like a rubber stamp slapped onto the page.",
       "role": "feedback",
       "a11y": {
-        "selfAnimates": true,
-        "reducedMotionSafe": false
+        "selfAnimates": false,
+        "reducedMotionSafe": true
       }
     },
     {
@@ -73767,8 +73767,8 @@
       "description": "The error variant of the stamp toast — loud hot-red border used only here, so the one alert that matters actually shouts.",
       "role": "feedback",
       "a11y": {
-        "selfAnimates": true,
-        "reducedMotionSafe": false
+        "selfAnimates": false,
+        "reducedMotionSafe": true
       }
     },
     {
