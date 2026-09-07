@@ -62,7 +62,7 @@ const EXTRACT_FN = `function extractInPage(gallery, d){
   function cssFor(html){
     var classes=new Set();
     (html.match(/class="([^"]*)"/g)||[]).forEach(function(m){m.replace(/class="|"/g,'').split(/\\s+/).forEach(function(c){if(c)classes.add(c);});});
-    var rulesOut=[]; var kf=new Set();
+    var rulesOut=[]; var kf=new Set(); var animSel=new Set();
     function scanAnims(text){
       (text.match(/animation(?:-name)?:\\s*[^;}]+/g)||[]).forEach(function(a){
         a.split(/[\\s:,]+/).forEach(function(t){
@@ -81,7 +81,7 @@ const EXTRACT_FN = `function extractInPage(gallery, d){
             if(hit) return;
             if(rule.selectorText.split(/[\\s,>+~]+/).some(function(sel){return sel.indexOf('.'+c)!==-1 && new RegExp('\\\\.'+c+'(?![\\\\w-])').test(sel);})){hit=true;}
           });
-          if(hit){ rulesOut.push(rule.cssText); scanAnims(rule.cssText); }
+          if(hit){ rulesOut.push(rule.cssText); scanAnims(rule.cssText); if(/animation(-name)?\\s*:/.test(rule.cssText)) animSel.add(rule.selectorText); }
         }
       }
       for(var rk=0; rk<rules.length; rk++){ if(rules[rk].type===7 && kf.has(rules[rk].name)) rulesOut.push(rules[rk].cssText); }
@@ -108,6 +108,13 @@ const EXTRACT_FN = `function extractInPage(gallery, d){
       // without them a standalone copy loses animated counters / interpolated custom props.
       var props={}; rulesOut.join('\\n').replace(/--[A-Za-z0-9_-]+/g, function(p){ props[p]=1; return p; });
       for(var rp=0; rp<rules.length; rp++){ var pr=rules[rp]; if(pr.name && pr.name.indexOf('--')===0 && props[pr.name] && pr.cssText.indexOf('@property')===0) rulesOut.push(pr.cssText); }
+    }
+    // Ensure standalone copies respect prefers-reduced-motion: disable every animated selector
+    // under the media query. Always emitted (idempotent where a section block already stops them)
+    // because some section blocks only reset transform/opacity, and an unrelated :hover rule setting
+    // animation-name:none must not be mistaken for reduced-motion handling.
+    if(kf.size>0 && animSel.size>0){
+      rulesOut.push('@media (prefers-reduced-motion:reduce){'+[...animSel].join(',')+'{animation:none!important}}');
     }
     return {css:[...new Set(rulesOut)].join('\\n'), classes:[...classes], keyframes:[...kf]};
   }
