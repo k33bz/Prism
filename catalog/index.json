@@ -1,5 +1,5 @@
 {
-  "count": 3449,
+  "count": 3467,
   "effects": [
     {
       "id": "charts-big-metric-count-up",
@@ -39757,6 +39757,681 @@
         "reducedMotionSafe": true
       },
       "layer": "background"
+    },
+    {
+      "id": "objects-svg-rain",
+      "name": "SVG Rain",
+      "gallery": "objects",
+      "category": "SVG RAIN",
+      "ref": ".svr-fall",
+      "classes": [
+        "svr-rain",
+        "svr-fall",
+        "svr-col",
+        "svr-g"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "objects",
+        "animated",
+        "new"
+      ],
+      "componentType": "object-backdrop",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Matrix-style code rain that drops inline-SVG glyphs down ordered, per-column staggered columns with a trailing comet fade, recolored via tokens.",
+      "role": "ambient",
+      "layer": "background",
+      "a11y": {
+        "selfAnimates": true,
+        "reducedMotionSafe": true
+      }
+    },
+    {
+      "id": "objects-svg-rain-shuffled",
+      "name": "SVG Rain — Shuffled",
+      "gallery": "objects",
+      "category": "SVG RAIN",
+      "ref": ".svr-shuffle",
+      "classes": [
+        "svr-rain",
+        "svr-shuffle",
+        "svr-col",
+        "svr-g"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "objects",
+        "animated",
+        "new"
+      ],
+      "componentType": "object-backdrop",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Same falling SVG rain but the glyphs appear in randomized order across columns and rows so the icon set looks shuffled.",
+      "role": "ambient",
+      "layer": "background",
+      "a11y": {
+        "selfAnimates": true,
+        "reducedMotionSafe": true
+      }
+    },
+    {
+      "id": "objects-svg-rain-tumble",
+      "name": "SVG Rain — Tumble",
+      "gallery": "objects",
+      "category": "SVG RAIN",
+      "ref": ".svr-tumble",
+      "classes": [
+        "svr-rain",
+        "svr-tumble",
+        "svr-col",
+        "svr-g"
+      ],
+      "params": [
+        "color"
+      ],
+      "tags": [
+        "objects",
+        "animated",
+        "new"
+      ],
+      "componentType": "object-backdrop",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Shuffled SVG rain where every glyph also starts at a random orientation and slowly spins as it falls.",
+      "role": "ambient",
+      "layer": "background",
+      "a11y": {
+        "selfAnimates": true,
+        "reducedMotionSafe": true
+      }
+    },
+    {
+      "id": "objects-neon-grid-horizon",
+      "name": "Neon Grid Horizon",
+      "gallery": "objects",
+      "category": "TRON",
+      "ref": ".tro-grid-horizon",
+      "classes": [
+        "tro-grid-horizon",
+        "tro-gh-sky",
+        "tro-gh-sun",
+        "tro-gh-floor",
+        "tro-gh-line"
+      ],
+      "params": [],
+      "tags": [
+        "objects",
+        "animated",
+        "new"
+      ],
+      "componentType": "object-backdrop",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "An early-Tron-inspired receding neon vector grid that scrolls toward the viewer beneath a glowing cyan horizon line.",
+      "role": "ambient",
+      "layer": "background",
+      "a11y": {
+        "selfAnimates": true,
+        "reducedMotionSafe": true
+      }
+    },
+    {
+      "id": "objects-light-ribbon-trail",
+      "name": "Light-Ribbon Trail",
+      "gallery": "objects",
+      "category": "TRON",
+      "ref": ".tro-light-ribbon",
+      "classes": [
+        "tro-light-ribbon",
+        "tro-lr-grid",
+        "tro-lr-path",
+        "tro-lr-glow",
+        "tro-lr-core",
+        "tro-lr-rider"
+      ],
+      "params": [],
+      "tags": [
+        "objects",
+        "animated",
+        "new"
+      ],
+      "componentType": "object",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "An early-Tron-inspired angular light-cycle trail that draws itself in as a glowing amber vector ribbon led by a bright rider node.",
+      "role": "decorative",
+      "layer": "content",
+      "a11y": {
+        "selfAnimates": true,
+        "reducedMotionSafe": true
+      }
+    },
+    {
+      "id": "objects-spinning-identity-disc",
+      "name": "Spinning Identity Disc",
+      "gallery": "objects",
+      "category": "TRON",
+      "ref": ".tro-identity-disc",
+      "classes": [
+        "tro-identity-disc",
+        "tro-id-ringdim",
+        "tro-id-ring",
+        "tro-id-spoke",
+        "tro-id-arc",
+        "tro-id-arc2",
+        "tro-id-core"
+      ],
+      "params": [],
+      "tags": [
+        "objects",
+        "animated",
+        "new"
+      ],
+      "componentType": "object",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "An early-Tron-inspired glowing disc of concentric rings and a rotating cyan arc gap, evoking a spinning vector identity disc.",
+      "role": "decorative",
+      "layer": "content",
+      "a11y": {
+        "selfAnimates": true,
+        "reducedMotionSafe": true
+      }
+    },
+    {
+      "id": "objects-circuit-trace-pulse",
+      "name": "Circuit Trace Pulse",
+      "gallery": "objects",
+      "category": "TRON",
+      "ref": ".tro-circuit-trace",
+      "classes": [
+        "tro-circuit-trace",
+        "tro-ct-base",
+        "tro-ct-pad",
+        "tro-ct-pulse",
+        "tro-ct-b"
+      ],
+      "params": [],
+      "tags": [
+        "objects",
+        "animated",
+        "new"
+      ],
+      "componentType": "fx-glow",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "An early-Tron-inspired circuit board of right-angled traces with bright energy pulses running along the dim vector paths.",
+      "role": "decorative",
+      "layer": "content",
+      "a11y": {
+        "selfAnimates": true,
+        "reducedMotionSafe": true
+      }
+    },
+    {
+      "id": "objects-digitized-readout-bar",
+      "name": "Digitized Readout Bar",
+      "gallery": "objects",
+      "category": "TRON",
+      "ref": ".tro-digitize-bar",
+      "classes": [
+        "tro-digitize-bar",
+        "tro-db-panel",
+        "tro-db-row",
+        "tro-db-cell",
+        "tro-db-amber",
+        "tro-db-sweep",
+        "tro-db-scan"
+      ],
+      "params": [],
+      "tags": [
+        "objects",
+        "animated",
+        "new"
+      ],
+      "componentType": "object",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "An early-Tron-inspired segmented glow bar whose blocky cells digitize on in sequence behind a soft CRT scanline overlay.",
+      "role": "decorative",
+      "layer": "content",
+      "a11y": {
+        "selfAnimates": true,
+        "reducedMotionSafe": true
+      }
+    },
+    {
+      "id": "objects-grid-sea-horizon",
+      "name": "Grid Sea Horizon",
+      "gallery": "objects",
+      "category": "TRON: LEGACY",
+      "ref": ".trl-grid",
+      "classes": [
+        "trl-grid",
+        "trl-gridfloor"
+      ],
+      "params": [],
+      "tags": [
+        "objects",
+        "animated",
+        "new"
+      ],
+      "componentType": "object-backdrop",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A sleek receding perspective grid plane sliding toward a crisp glowing horizon line.",
+      "role": "ambient",
+      "layer": "background",
+      "a11y": {
+        "selfAnimates": true,
+        "reducedMotionSafe": true
+      }
+    },
+    {
+      "id": "objects-light-ribbon-trail-2",
+      "name": "Light Ribbon Trail",
+      "gallery": "objects",
+      "category": "TRON: LEGACY",
+      "ref": ".trl-ribbon",
+      "classes": [
+        "trl-ribbon",
+        "trl-rpath",
+        "trl-rcomet",
+        "b"
+      ],
+      "params": [],
+      "tags": [
+        "objects",
+        "animated",
+        "new"
+      ],
+      "componentType": "object",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A smooth electric light-trail that flows around a circuit and leaves a fading volumetric wake.",
+      "role": "decorative",
+      "layer": "content",
+      "a11y": {
+        "selfAnimates": true,
+        "reducedMotionSafe": true
+      }
+    },
+    {
+      "id": "objects-identity-disc",
+      "name": "Identity Disc",
+      "gallery": "objects",
+      "category": "TRON: LEGACY",
+      "ref": ".trl-disc",
+      "classes": [
+        "trl-disc",
+        "trl-discwrap",
+        "trl-ring",
+        "r2",
+        "r3",
+        "trl-tick",
+        "trl-core"
+      ],
+      "params": [],
+      "tags": [
+        "objects",
+        "animated",
+        "new"
+      ],
+      "componentType": "object",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A thin-rimmed concentric disc that spins and pulses with clean layered bloom.",
+      "role": "decorative",
+      "layer": "content",
+      "a11y": {
+        "selfAnimates": true,
+        "reducedMotionSafe": true
+      }
+    },
+    {
+      "id": "objects-circuit-trace-panel",
+      "name": "Circuit Trace Panel",
+      "gallery": "objects",
+      "category": "TRON: LEGACY",
+      "ref": ".trl-circuit",
+      "classes": [
+        "trl-circuit",
+        "trl-ctrace",
+        "trl-cpulse",
+        "o",
+        "trl-cnode",
+        "lit",
+        "d"
+      ],
+      "params": [],
+      "tags": [
+        "objects",
+        "animated",
+        "new"
+      ],
+      "componentType": "object-backdrop",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A refined circuit board where light pulses race along clean right-angle traces to lit nodes.",
+      "role": "ambient",
+      "layer": "background",
+      "a11y": {
+        "selfAnimates": true,
+        "reducedMotionSafe": true
+      }
+    },
+    {
+      "id": "objects-energy-readout",
+      "name": "Energy Readout",
+      "gallery": "objects",
+      "category": "TRON: LEGACY",
+      "ref": ".trl-readout",
+      "classes": [
+        "trl-readout",
+        "trl-bar",
+        "trl-base",
+        "trl-scan"
+      ],
+      "params": [],
+      "tags": [
+        "objects",
+        "animated",
+        "new"
+      ],
+      "componentType": "object",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A volumetric bar-graph energy readout with soft bloom and a sweeping scan line.",
+      "role": "decorative",
+      "layer": "content",
+      "a11y": {
+        "selfAnimates": true,
+        "reducedMotionSafe": true
+      }
+    },
+    {
+      "id": "objects-ares-red-horizon",
+      "name": "Ares Red Horizon",
+      "gallery": "objects",
+      "category": "TRON: ARES",
+      "ref": ".tra-horizon",
+      "classes": [
+        "tra-horizon",
+        "tra-sky",
+        "tra-sun",
+        "tra-skyline",
+        "tra-city",
+        "tra-glowline",
+        "tra-floor"
+      ],
+      "params": [],
+      "tags": [
+        "objects",
+        "animated",
+        "new"
+      ],
+      "componentType": "object-backdrop",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A receding red perspective grid running to a glowing horizon with an ominous silhouette skyline and a swelling ember sun.",
+      "role": "ambient",
+      "layer": "background",
+      "a11y": {
+        "selfAnimates": true,
+        "reducedMotionSafe": true
+      }
+    },
+    {
+      "id": "objects-ares-light-stream",
+      "name": "Ares Light Stream",
+      "gallery": "objects",
+      "category": "TRON: ARES",
+      "ref": ".tra-lightstream",
+      "classes": [
+        "tra-lightstream",
+        "tra-wake",
+        "tra-streak",
+        "tra-spark"
+      ],
+      "params": [],
+      "tags": [
+        "objects",
+        "animated",
+        "new"
+      ],
+      "componentType": "fx-glow",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A sharp red light-cycle trail that streaks along an angular route and leaves a fading ember wake behind its hot head.",
+      "role": "decorative",
+      "layer": "content",
+      "a11y": {
+        "selfAnimates": true,
+        "reducedMotionSafe": true
+      }
+    },
+    {
+      "id": "objects-ares-identity-disc",
+      "name": "Ares Identity Disc",
+      "gallery": "objects",
+      "category": "TRON: ARES",
+      "ref": ".tra-disc",
+      "classes": [
+        "tra-disc",
+        "tra-ring",
+        "tra-ring2",
+        "tra-core"
+      ],
+      "params": [],
+      "tags": [
+        "objects",
+        "animated",
+        "new"
+      ],
+      "componentType": "object",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A spinning concentric identity ring with a molten hot core and a hard rotating red energy sweep.",
+      "role": "decorative",
+      "layer": "content",
+      "a11y": {
+        "selfAnimates": true,
+        "reducedMotionSafe": true
+      }
+    },
+    {
+      "id": "objects-ares-circuit-bloom",
+      "name": "Ares Circuit Bloom",
+      "gallery": "objects",
+      "category": "TRON: ARES",
+      "ref": ".tra-circuit",
+      "classes": [
+        "tra-circuit",
+        "tra-trace",
+        "tra-pulse",
+        "d2",
+        "d3",
+        "tra-node",
+        "n2"
+      ],
+      "params": [],
+      "tags": [
+        "objects",
+        "animated",
+        "new"
+      ],
+      "componentType": "object-backdrop",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "An energy circuit panel whose traces carry hot red pulses racing along the paths toward glowing nodes.",
+      "role": "ambient",
+      "layer": "background",
+      "a11y": {
+        "selfAnimates": true,
+        "reducedMotionSafe": true
+      }
+    },
+    {
+      "id": "objects-ares-reactor-core",
+      "name": "Ares Reactor Core",
+      "gallery": "objects",
+      "category": "TRON: ARES",
+      "ref": ".tra-reactor",
+      "classes": [
+        "tra-reactor",
+        "tra-rframe",
+        "tra-orb",
+        "tra-bar",
+        "tra-base"
+      ],
+      "params": [],
+      "tags": [
+        "objects",
+        "animated",
+        "new"
+      ],
+      "componentType": "object",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A red power-surge reactor readout with stacked energy bars and a heavy-bloom pulsing core.",
+      "role": "decorative",
+      "layer": "content",
+      "a11y": {
+        "selfAnimates": true,
+        "reducedMotionSafe": true
+      }
     },
     {
       "id": "input-basic-text-input",
