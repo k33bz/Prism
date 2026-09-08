@@ -1,5 +1,5 @@
 {
-  "count": 3469,
+  "count": 3471,
   "effects": [
     {
       "id": "charts-big-metric-count-up",
@@ -45239,6 +45239,89 @@
         "reducedMotionSafe": true
       },
       "layer": "content"
+    },
+    {
+      "id": "input-persistent-checklist",
+      "name": "Persistent Checklist",
+      "gallery": "input",
+      "category": "CHECKLISTS & TASK LISTS",
+      "ref": ".chk-list",
+      "classes": [
+        "chk-list",
+        "chk-item",
+        "chk-box",
+        "chk-txt"
+      ],
+      "params": [
+        "dataAttributes"
+      ],
+      "tags": [
+        "input",
+        "needs-js",
+        "animated",
+        "new"
+      ],
+      "componentType": "input-checklist",
+      "interaction": "click",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": "chk-store",
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "A checklist whose items stagger in on load and animate a popping tick, a green fill and a sweeping strike-through as you check them. The chk-store initializer saves each item to localStorage (keyed by the list's data-store id) so ticks survive a reload. Without JS it still animates and toggles, just resets on reload.",
+      "role": "input",
+      "layer": "content",
+      "a11y": {
+        "selfAnimates": false,
+        "reducedMotionSafe": true
+      }
+    },
+    {
+      "id": "input-task-list-with-progress",
+      "name": "Task List with Progress",
+      "gallery": "input",
+      "category": "CHECKLISTS & TASK LISTS",
+      "ref": ".chk-task",
+      "classes": [
+        "chk-task",
+        "chk-task-head",
+        "chk-title",
+        "chk-count",
+        "chk-bar",
+        "chk-bar-fill",
+        "chk-item",
+        "chk-box",
+        "chk-txt"
+      ],
+      "params": [
+        "dataAttributes"
+      ],
+      "tags": [
+        "input",
+        "needs-js",
+        "animated",
+        "new"
+      ],
+      "componentType": "input-checklist",
+      "interaction": "click",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": "chk-store",
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "The same animated checklist with a header count and a progress bar that fills as items complete; the title gets a check when the list is done. The chk-store initializer keeps the \"n / m\" count and bar in sync and persists every item to localStorage. Needs the initializer for the live count and persistence; static bar without it.",
+      "role": "input",
+      "layer": "content",
+      "a11y": {
+        "selfAnimates": false,
+        "reducedMotionSafe": true
+      }
     },
     {
       "id": "text-gradient-flow-staple",

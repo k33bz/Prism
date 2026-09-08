@@ -32,7 +32,7 @@
     {
       "id": "input",
       "title": "Input Methods",
-      "count": 134
+      "count": 136
     },
     {
       "id": "text",
@@ -217,6 +217,7 @@
     "input / BUTTON HOVER EFFECTS",
     "input / RETRO SCIFI CONTROL PANELS",
     "input / NIXIE TUBES",
+    "input / CHECKLISTS & TASK LISTS",
     "text / Gradient & Animated Fill",
     "text / Glow & Neon",
     "text / Outline & Stroke",
@@ -339,7 +340,7 @@
     "recolor": "If params.color is present, set --c and --c-rgb (or add a c-* class) on the effect element to recolor it.",
     "markers": "tags include \"new\" for latest-release facets and \"updated\"/\"fixed\" for repaired/refreshed facets (blue UPDATED badge in the UI)."
   },
-  "count": 3469,
+  "count": 3471,
   "initializers": {
     "amb-particles": {
       "js": null,
@@ -366,6 +367,10 @@
     "svr-parallax": {
       "js": "/* Prism initializer \"svr-parallax\": pointer-reactive depth for .svr-parallax rains.\n   Idempotent, no dependencies. Sets --svr-mx/--svr-my (0..1) from the pointer; the layers\n   translate by depth so near layers move more than far. Falls back to static centred depth. */\n(function(){\n  if(window.__prismSvrParallax) return; window.__prismSvrParallax=true;\n  function at(el,e){ var r=el.getBoundingClientRect(); if(!r.width) return;\n    el.style.setProperty('--svr-mx', Math.min(1,Math.max(0,(e.clientX-r.left)/r.width)).toFixed(3));\n    el.style.setProperty('--svr-my', Math.min(1,Math.max(0,(e.clientY-r.top)/r.height)).toFixed(3)); }\n  function reset(el){ el.style.setProperty('--svr-mx','.5'); el.style.setProperty('--svr-my','.5'); }\n  document.addEventListener('pointermove',function(e){ var el=e.target.closest&&e.target.closest('.svr-parallax'); if(el) at(el,e); });\n  document.addEventListener('pointerleave',function(e){ var el=e.target.closest&&e.target.closest('.svr-parallax'); if(el) reset(el); }, true);\n})();",
       "page": "objects"
+    },
+    "chk-store": {
+      "js": "/* Prism initializer \"chk-store\": persistence + live progress for .chk-list / .chk-task.\n   Idempotent, no dependencies. For any list carrying a data-store id it restores each\n   checkbox from localStorage on load and saves it on change (namespaced so lists never\n   collide); it also keeps the .chk-count text, .chk-bar-fill width and the .chk-done\n   state of task lists in sync. Lists without a data-store id animate and toggle but do\n   not persist. Storage failures (private mode, disabled) fail silently. */\n(function(){\n  if(window.__prismChkStore) return; window.__prismChkStore=true;\n  var NS='prism-chk:';\n  function boxes(list){ return list.querySelectorAll('input[type=checkbox]'); }\n  function key(list,i){ return NS+(list.getAttribute('data-store')||'')+':'+i; }\n  function progress(list){\n    var all=boxes(list), done=0; for(var i=0;i<all.length;i++){ if(all[i].checked) done++; }\n    var pct=all.length? Math.round(done/all.length*100):0;\n    var bar=list.querySelector('.chk-bar-fill'); if(bar) bar.style.width=pct+'%';\n    var cnt=list.querySelector('.chk-count'); if(cnt) cnt.textContent=done+' / '+all.length;\n    list.classList.toggle('chk-done', all.length>0 && done===all.length);\n  }\n  function restore(list){\n    if(list.getAttribute('data-store')){\n      var all=boxes(list);\n      for(var i=0;i<all.length;i++){ try{ var v=localStorage.getItem(key(list,i)); if(v!==null) all[i].checked=(v==='1'); }catch(e){} }\n    }\n    progress(list);\n  }\n  function save(list,cb){\n    if(!list.getAttribute('data-store')) return;\n    var all=boxes(list); for(var i=0;i<all.length;i++){ if(all[i]===cb){ try{ localStorage.setItem(key(list,i), cb.checked?'1':'0'); }catch(e){} return; } }\n  }\n  function run(){ var L=document.querySelectorAll('.chk-list,.chk-task'); for(var i=0;i<L.length;i++) restore(L[i]); }\n  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',run); else run();\n  document.addEventListener('change',function(e){\n    var cb=e.target; if(!cb||cb.type!=='checkbox') return;\n    var list=cb.closest&&cb.closest('.chk-list,.chk-task'); if(!list) return;\n    save(list,cb); progress(list);\n  });\n})();",
+      "page": "input"
     }
   },
   "effects": [
@@ -59117,6 +59122,111 @@
         "reducedMotionSafe": true
       },
       "layer": "content"
+    },
+    {
+      "id": "input-persistent-checklist",
+      "name": "Persistent Checklist",
+      "gallery": "input",
+      "category": "CHECKLISTS & TASK LISTS",
+      "ref": ".chk-list",
+      "description": "A checklist whose items stagger in on load and animate a popping tick, a green fill and a sweeping strike-through as you check them. The chk-store initializer saves each item to localStorage (keyed by the list's data-store id) so ticks survive a reload. Without JS it still animates and toggles, just resets on reload.",
+      "classes": [
+        "chk-list",
+        "chk-item",
+        "chk-box",
+        "chk-txt"
+      ],
+      "keyframes": [
+        "chkIn"
+      ],
+      "params": {
+        "dataAttributes": {
+          "data-store": "prism-demo-groceries",
+          "data-needs-js": "chk-store"
+        }
+      },
+      "componentType": "input-checklist",
+      "interaction": "click",
+      "spectrum": null,
+      "tags": [
+        "input",
+        "needs-js",
+        "animated",
+        "new"
+      ],
+      "usableAsBackground": false,
+      "needsJs": "chk-store",
+      "selfContained": false,
+      "isNew": true,
+      "isFixed": false,
+      "html": "<div class=\"chk-list\" data-store=\"prism-demo-groceries\" data-needs-js=\"chk-store\" role=\"group\" aria-label=\"Grocery checklist\">\n      <label class=\"chk-item\"><input type=\"checkbox\" checked=\"\"><span class=\"chk-box\"></span><span class=\"chk-txt\">Oat milk, 2 cartons</span></label>\n      <label class=\"chk-item\"><input type=\"checkbox\" checked=\"\"><span class=\"chk-box\"></span><span class=\"chk-txt\">Sourdough loaf</span></label>\n      <label class=\"chk-item\"><input type=\"checkbox\"><span class=\"chk-box\"></span><span class=\"chk-txt\">Avocados, ripe</span></label>\n      <label class=\"chk-item\"><input type=\"checkbox\"><span class=\"chk-box\"></span><span class=\"chk-txt\">Coffee beans, dark roast</span></label>\n      <label class=\"chk-item\"><input type=\"checkbox\"><span class=\"chk-box\"></span><span class=\"chk-txt\">Dish soap</span></label>\n    </div>",
+      "dataSnip": null,
+      "css": ".chk-list, .chk-task { width: 246px; max-width: 100%; display: flex; flex-direction: column; text-align: left; }\n.chk-list { gap: 2px; }\n.chk-item { display: flex; align-items: center; gap: 11px; padding: 8px 6px; border-radius: 9px; cursor: pointer; position: relative; opacity: 0; transform: translateY(6px); animation: 0.42s cubic-bezier(0.2, 0.8, 0.3, 1) 0s 1 normal both running chkIn; }\n.chk-item:hover { background: rgba(var(--info-rgb),.07); }\n.chk-item:nth-child(1) { animation-delay: 0.02s; }\n.chk-item:nth-child(2) { animation-delay: 0.08s; }\n.chk-item:nth-child(3) { animation-delay: 0.14s; }\n.chk-item:nth-child(4) { animation-delay: 0.2s; }\n.chk-item:nth-child(5) { animation-delay: 0.26s; }\n.chk-item:nth-child(6) { animation-delay: 0.32s; }\n.chk-item:nth-child(7) { animation-delay: 0.38s; }\n.chk-item input { position: absolute; opacity: 0; width: 1px; height: 1px; margin: 0px; }\n.chk-box { flex: 0 0 auto; width: 20px; height: 20px; border: 2px solid var(--line); border-radius: 6px; background: var(--panel2); position: relative; transition: border-color 0.2s, background 0.2s, box-shadow 0.2s; }\n.chk-item:hover .chk-box { border-color: var(--muted); }\n.chk-item input:focus-visible ~ .chk-box { outline: 2px solid var(--info); outline-offset: 2px; }\n.chk-item input:checked ~ .chk-box { background: var(--pos); border-color: var(--pos); box-shadow: 0 0 0 4px rgba(var(--pos-rgb),.14); }\n.chk-box::after { content: \"\"; position: absolute; left: 6px; top: 2px; width: 5px; height: 10px; border-style: solid; border-color: rgb(6, 20, 11); border-image: none; border-width: 0px 2.5px 2.5px 0px; transform: rotate(45deg) scale(0); opacity: 0; transition: transform 0.24s cubic-bezier(0.2, 1.1, 0.4, 1.4) 0.03s, opacity 0.12s; }\n.chk-item input:checked ~ .chk-box::after { transform: rotate(45deg) scale(1); opacity: 1; }\n.chk-txt { position: relative; font-size: 13.5px; color: var(--ink); line-height: 1.35; transition: color 0.25s; padding-right: 2px; }\n.chk-txt::after { content: \"\"; position: absolute; left: 0px; right: auto; top: 52%; height: 2px; width: 0px; background: var(--dim); border-radius: 2px; transition: width 0.32s; }\n.chk-item input:checked ~ .chk-txt { color: var(--dim); }\n.chk-item input:checked ~ .chk-txt::after { width: 100%; }\n.chk-task .chk-item { padding: 7px 4px; }\n@keyframes chkIn { \n  0% { opacity: 0; transform: translateY(6px); }\n  100% { opacity: 1; transform: none; }\n}\n@media (prefers-reduced-motion: reduce){.chk-item { animation: auto ease 0s 1 normal none running none; opacity: 1; transform: none; }.chk-box::after, .chk-txt::after, .chk-bar-fill, .chk-box { transition: none; }}\n@media (prefers-reduced-motion:reduce){.chk-item{animation:none!important}}",
+      "galleryTitle": "Input Methods",
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "role": "input",
+      "layer": "content",
+      "a11y": {
+        "selfAnimates": false,
+        "reducedMotionSafe": true
+      }
+    },
+    {
+      "id": "input-task-list-with-progress",
+      "name": "Task List with Progress",
+      "gallery": "input",
+      "category": "CHECKLISTS & TASK LISTS",
+      "ref": ".chk-task",
+      "description": "The same animated checklist with a header count and a progress bar that fills as items complete; the title gets a check when the list is done. The chk-store initializer keeps the \"n / m\" count and bar in sync and persists every item to localStorage. Needs the initializer for the live count and persistence; static bar without it.",
+      "classes": [
+        "chk-task",
+        "chk-task-head",
+        "chk-title",
+        "chk-count",
+        "chk-bar",
+        "chk-bar-fill",
+        "chk-item",
+        "chk-box",
+        "chk-txt"
+      ],
+      "keyframes": [
+        "chkIn"
+      ],
+      "params": {
+        "dataAttributes": {
+          "data-store": "prism-demo-sprint",
+          "data-needs-js": "chk-store"
+        }
+      },
+      "componentType": "input-checklist",
+      "interaction": "click",
+      "spectrum": null,
+      "tags": [
+        "input",
+        "needs-js",
+        "animated",
+        "new"
+      ],
+      "usableAsBackground": false,
+      "needsJs": "chk-store",
+      "selfContained": false,
+      "isNew": true,
+      "isFixed": false,
+      "html": "<div class=\"chk-task\" data-store=\"prism-demo-sprint\" data-needs-js=\"chk-store\" role=\"group\" aria-label=\"Sprint task list with progress\">\n      <div class=\"chk-task-head\"><span class=\"chk-title\">Release checklist</span><span class=\"chk-count\">3 / 5</span></div>\n      <div class=\"chk-bar\"><span class=\"chk-bar-fill\" style=\"width:60%\"></span></div>\n      <label class=\"chk-item\"><input type=\"checkbox\" checked=\"\"><span class=\"chk-box\"></span><span class=\"chk-txt\">Draft the release notes</span></label>\n      <label class=\"chk-item\"><input type=\"checkbox\" checked=\"\"><span class=\"chk-box\"></span><span class=\"chk-txt\">Review open PRs</span></label>\n      <label class=\"chk-item\"><input type=\"checkbox\" checked=\"\"><span class=\"chk-box\"></span><span class=\"chk-txt\">Bump the version</span></label>\n      <label class=\"chk-item\"><input type=\"checkbox\"><span class=\"chk-box\"></span><span class=\"chk-txt\">Cut the release branch</span></label>\n      <label class=\"chk-item\"><input type=\"checkbox\"><span class=\"chk-box\"></span><span class=\"chk-txt\">Post to #engineering</span></label>\n    </div>",
+      "dataSnip": null,
+      "css": ".chk-list, .chk-task { width: 246px; max-width: 100%; display: flex; flex-direction: column; text-align: left; }\n.chk-item { display: flex; align-items: center; gap: 11px; padding: 8px 6px; border-radius: 9px; cursor: pointer; position: relative; opacity: 0; transform: translateY(6px); animation: 0.42s cubic-bezier(0.2, 0.8, 0.3, 1) 0s 1 normal both running chkIn; }\n.chk-item:hover { background: rgba(var(--info-rgb),.07); }\n.chk-item:nth-child(1) { animation-delay: 0.02s; }\n.chk-item:nth-child(2) { animation-delay: 0.08s; }\n.chk-item:nth-child(3) { animation-delay: 0.14s; }\n.chk-item:nth-child(4) { animation-delay: 0.2s; }\n.chk-item:nth-child(5) { animation-delay: 0.26s; }\n.chk-item:nth-child(6) { animation-delay: 0.32s; }\n.chk-item:nth-child(7) { animation-delay: 0.38s; }\n.chk-item input { position: absolute; opacity: 0; width: 1px; height: 1px; margin: 0px; }\n.chk-box { flex: 0 0 auto; width: 20px; height: 20px; border: 2px solid var(--line); border-radius: 6px; background: var(--panel2); position: relative; transition: border-color 0.2s, background 0.2s, box-shadow 0.2s; }\n.chk-item:hover .chk-box { border-color: var(--muted); }\n.chk-item input:focus-visible ~ .chk-box { outline: 2px solid var(--info); outline-offset: 2px; }\n.chk-item input:checked ~ .chk-box { background: var(--pos); border-color: var(--pos); box-shadow: 0 0 0 4px rgba(var(--pos-rgb),.14); }\n.chk-box::after { content: \"\"; position: absolute; left: 6px; top: 2px; width: 5px; height: 10px; border-style: solid; border-color: rgb(6, 20, 11); border-image: none; border-width: 0px 2.5px 2.5px 0px; transform: rotate(45deg) scale(0); opacity: 0; transition: transform 0.24s cubic-bezier(0.2, 1.1, 0.4, 1.4) 0.03s, opacity 0.12s; }\n.chk-item input:checked ~ .chk-box::after { transform: rotate(45deg) scale(1); opacity: 1; }\n.chk-txt { position: relative; font-size: 13.5px; color: var(--ink); line-height: 1.35; transition: color 0.25s; padding-right: 2px; }\n.chk-txt::after { content: \"\"; position: absolute; left: 0px; right: auto; top: 52%; height: 2px; width: 0px; background: var(--dim); border-radius: 2px; transition: width 0.32s; }\n.chk-item input:checked ~ .chk-txt { color: var(--dim); }\n.chk-item input:checked ~ .chk-txt::after { width: 100%; }\n.chk-task { gap: 2px; padding: 14px; background: var(--panel2); border: 1px solid var(--line); border-radius: 12px; }\n.chk-task-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 9px; }\n.chk-title { font-weight: 700; font-size: 13px; color: var(--ink); }\n.chk-count { font-family: ui-monospace, Menlo, monospace; font-size: 11.5px; color: var(--muted); font-variant-numeric: tabular-nums; transition: color 0.25s; }\n.chk-bar { height: 6px; background: var(--card); border: 1px solid var(--line); border-radius: 5px; overflow: hidden; margin-bottom: 8px; }\n.chk-bar-fill { display: block; height: 100%; width: 0px; border-radius: 5px; background: linear-gradient(90deg,rgba(var(--info-rgb),.9),var(--pos)); transition: width 0.45s cubic-bezier(0.2, 0.8, 0.3, 1); }\n.chk-task .chk-item { padding: 7px 4px; }\n.chk-task.chk-done .chk-count { color: var(--pos); }\n.chk-task.chk-done .chk-title::after { content: \" ✓\"; color: var(--pos); }\n@keyframes chkIn { \n  0% { opacity: 0; transform: translateY(6px); }\n  100% { opacity: 1; transform: none; }\n}\n@media (prefers-reduced-motion: reduce){.chk-item { animation: auto ease 0s 1 normal none running none; opacity: 1; transform: none; }.chk-box::after, .chk-txt::after, .chk-bar-fill, .chk-box { transition: none; }}\n@media (prefers-reduced-motion:reduce){.chk-item{animation:none!important}}",
+      "galleryTitle": "Input Methods",
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "role": "input",
+      "layer": "content",
+      "a11y": {
+        "selfAnimates": false,
+        "reducedMotionSafe": true
+      }
     },
     {
       "id": "text-gradient-flow-staple",

@@ -1,0 +1,121 @@
+<h3 class="sec">CHECKLISTS &amp; TASK LISTS</h3>
+<style id="chk-styles">
+/* ===== Checklists & task lists (k33bz fork). Real <input type=checkbox> lists whose items
+   stagger in on load and animate a satisfying check-in (a popping tick, a green fill and a
+   sweeping strike-through) on toggle. Pure CSS drives the animation and the toggle; the small
+   chk-store initializer adds two things CSS cannot: it PERSISTS each item to localStorage
+   (keyed by the list's data-store id) so ticks survive a reload, and it keeps the task list's
+   live "n / m done" count and progress bar in sync. Copied without the initializer they are
+   ordinary animated checklists that simply reset on reload. Offline, no deps, token-only.
+   chk- prefix. Honors prefers-reduced-motion. ===== */
+.chk-list,.chk-task{width:246px;max-width:100%;display:flex;flex-direction:column;text-align:left}
+.chk-list{gap:2px}
+.chk-item{display:flex;align-items:center;gap:11px;padding:8px 6px;border-radius:9px;cursor:pointer;position:relative;
+  opacity:0;transform:translateY(6px);animation:chkIn .42s cubic-bezier(.2,.8,.3,1) both}
+.chk-item:hover{background:rgba(var(--info-rgb),.07)}
+.chk-item:nth-child(1){animation-delay:.02s}
+.chk-item:nth-child(2){animation-delay:.08s}
+.chk-item:nth-child(3){animation-delay:.14s}
+.chk-item:nth-child(4){animation-delay:.20s}
+.chk-item:nth-child(5){animation-delay:.26s}
+.chk-item:nth-child(6){animation-delay:.32s}
+.chk-item:nth-child(7){animation-delay:.38s}
+.chk-item input{position:absolute;opacity:0;width:1px;height:1px;margin:0}
+/* custom box */
+.chk-box{flex:0 0 auto;width:20px;height:20px;border:2px solid var(--line);border-radius:6px;background:var(--panel2);
+  position:relative;transition:border-color .2s,background .2s,box-shadow .2s}
+.chk-item:hover .chk-box{border-color:var(--muted)}
+.chk-item input:focus-visible ~ .chk-box{outline:2px solid var(--info);outline-offset:2px}
+.chk-item input:checked ~ .chk-box{background:var(--pos);border-color:var(--pos);box-shadow:0 0 0 4px rgba(var(--pos-rgb),.14)}
+/* the tick: a rotated corner that pops in when checked */
+.chk-box::after{content:"";position:absolute;left:6px;top:2px;width:5px;height:10px;border:solid #06140b;border-width:0 2.5px 2.5px 0;
+  transform:rotate(45deg) scale(0);opacity:0;transition:transform .24s cubic-bezier(.2,1.1,.4,1.4) .03s,opacity .12s}
+.chk-item input:checked ~ .chk-box::after{transform:rotate(45deg) scale(1);opacity:1}
+/* label text: dims and gets a sweeping strike-through when checked */
+.chk-txt{position:relative;font-size:13.5px;color:var(--ink);line-height:1.35;transition:color .25s;padding-right:2px}
+.chk-txt::after{content:"";position:absolute;left:0;right:auto;top:52%;height:2px;width:0;background:var(--dim);border-radius:2px;transition:width .32s ease}
+.chk-item input:checked ~ .chk-txt{color:var(--dim)}
+.chk-item input:checked ~ .chk-txt::after{width:100%}
+
+/* ---- task list: header + live progress bar ---- */
+.chk-task{gap:2px;padding:14px;background:var(--panel2);border:1px solid var(--line);border-radius:12px}
+.chk-task-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:9px}
+.chk-title{font-weight:700;font-size:13px;color:var(--ink)}
+.chk-count{font-family:ui-monospace,Menlo,monospace;font-size:11.5px;color:var(--muted);font-variant-numeric:tabular-nums;transition:color .25s}
+.chk-bar{height:6px;background:var(--card);border:1px solid var(--line);border-radius:5px;overflow:hidden;margin-bottom:8px}
+.chk-bar-fill{display:block;height:100%;width:0;border-radius:5px;
+  background:linear-gradient(90deg,rgba(var(--info-rgb),.9),var(--pos));transition:width .45s cubic-bezier(.2,.8,.3,1)}
+.chk-task .chk-item{padding:7px 4px}
+.chk-task.chk-done .chk-count{color:var(--pos)}
+.chk-task.chk-done .chk-title::after{content:" ✓";color:var(--pos)}
+
+@keyframes chkIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){
+  .chk-item{animation:none;opacity:1;transform:none}
+  .chk-box::after,.chk-txt::after,.chk-bar-fill,.chk-box{transition:none}
+}
+</style>
+<div class="gallery">
+
+  <div class="tile is-new" data-ctype="input-checklist" data-interact="click" data-c="pos" data-needs-js="chk-store"><div class="stage">
+    <div class="chk-list" data-store="prism-demo-groceries" data-needs-js="chk-store" role="group" aria-label="Grocery checklist">
+      <label class="chk-item"><input type="checkbox" checked><span class="chk-box"></span><span class="chk-txt">Oat milk, 2 cartons</span></label>
+      <label class="chk-item"><input type="checkbox" checked><span class="chk-box"></span><span class="chk-txt">Sourdough loaf</span></label>
+      <label class="chk-item"><input type="checkbox"><span class="chk-box"></span><span class="chk-txt">Avocados, ripe</span></label>
+      <label class="chk-item"><input type="checkbox"><span class="chk-box"></span><span class="chk-txt">Coffee beans, dark roast</span></label>
+      <label class="chk-item"><input type="checkbox"><span class="chk-box"></span><span class="chk-txt">Dish soap</span></label>
+    </div>
+  </div><div class="meta"><div class="nm">Persistent Checklist</div><span class="ref">.chk-list</span><div class="desc">A checklist whose items stagger in on load and animate a popping tick, a green fill and a sweeping strike-through as you check them. The chk-store initializer saves each item to localStorage (keyed by the list's data-store id) so ticks survive a reload. Without JS it still animates and toggles, just resets on reload.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="input-checklist" data-interact="click" data-c="info" data-needs-js="chk-store"><div class="stage">
+    <div class="chk-task chk-done" data-store="prism-demo-sprint" data-needs-js="chk-store" role="group" aria-label="Sprint task list with progress">
+      <div class="chk-task-head"><span class="chk-title">Release checklist</span><span class="chk-count">3 / 5</span></div>
+      <div class="chk-bar"><span class="chk-bar-fill" style="width:60%"></span></div>
+      <label class="chk-item"><input type="checkbox" checked><span class="chk-box"></span><span class="chk-txt">Draft the release notes</span></label>
+      <label class="chk-item"><input type="checkbox" checked><span class="chk-box"></span><span class="chk-txt">Review open PRs</span></label>
+      <label class="chk-item"><input type="checkbox" checked><span class="chk-box"></span><span class="chk-txt">Bump the version</span></label>
+      <label class="chk-item"><input type="checkbox"><span class="chk-box"></span><span class="chk-txt">Cut the release branch</span></label>
+      <label class="chk-item"><input type="checkbox"><span class="chk-box"></span><span class="chk-txt">Post to #engineering</span></label>
+    </div>
+  </div><div class="meta"><div class="nm">Task List with Progress</div><span class="ref">.chk-task</span><div class="desc">The same animated checklist with a header count and a progress bar that fills as items complete; the title gets a check when the list is done. The chk-store initializer keeps the "n / m" count and bar in sync and persists every item to localStorage. Needs the initializer for the live count and persistence; static bar without it.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+</div>
+<script data-prism-init="chk-store">
+/* Prism initializer "chk-store": persistence + live progress for .chk-list / .chk-task.
+   Idempotent, no dependencies. For any list carrying a data-store id it restores each
+   checkbox from localStorage on load and saves it on change (namespaced so lists never
+   collide); it also keeps the .chk-count text, .chk-bar-fill width and the .chk-done
+   state of task lists in sync. Lists without a data-store id animate and toggle but do
+   not persist. Storage failures (private mode, disabled) fail silently. */
+(function(){
+  if(window.__prismChkStore) return; window.__prismChkStore=true;
+  var NS='prism-chk:';
+  function boxes(list){ return list.querySelectorAll('input[type=checkbox]'); }
+  function key(list,i){ return NS+(list.getAttribute('data-store')||'')+':'+i; }
+  function progress(list){
+    var all=boxes(list), done=0; for(var i=0;i<all.length;i++){ if(all[i].checked) done++; }
+    var pct=all.length? Math.round(done/all.length*100):0;
+    var bar=list.querySelector('.chk-bar-fill'); if(bar) bar.style.width=pct+'%';
+    var cnt=list.querySelector('.chk-count'); if(cnt) cnt.textContent=done+' / '+all.length;
+    list.classList.toggle('chk-done', all.length>0 && done===all.length);
+  }
+  function restore(list){
+    if(list.getAttribute('data-store')){
+      var all=boxes(list);
+      for(var i=0;i<all.length;i++){ try{ var v=localStorage.getItem(key(list,i)); if(v!==null) all[i].checked=(v==='1'); }catch(e){} }
+    }
+    progress(list);
+  }
+  function save(list,cb){
+    if(!list.getAttribute('data-store')) return;
+    var all=boxes(list); for(var i=0;i<all.length;i++){ if(all[i]===cb){ try{ localStorage.setItem(key(list,i), cb.checked?'1':'0'); }catch(e){} return; } }
+  }
+  function run(){ var L=document.querySelectorAll('.chk-list,.chk-task'); for(var i=0;i<L.length;i++) restore(L[i]); }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',run); else run();
+  document.addEventListener('change',function(e){
+    var cb=e.target; if(!cb||cb.type!=='checkbox') return;
+    var list=cb.closest&&cb.closest('.chk-list,.chk-task'); if(!list) return;
+    save(list,cb); progress(list);
+  });
+})();
+</script>
