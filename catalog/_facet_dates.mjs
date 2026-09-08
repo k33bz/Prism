@@ -98,17 +98,79 @@ function tiles(html) {
   return res;
 }
 
+// All <style> inner text of a page template, concatenated.
+function pageCss(html) { let c = ''; const re = /<style\b[^>]*>([\s\S]*?)<\/style>/gi; let m; while ((m = re.exec(html))) c += '\n' + m[1]; return c; }
+// Split a stylesheet into top-level rules ({selector or @-prelude}{body}), brace-matched
+// so @media / @keyframes / @supports blocks stay whole.
+function splitRules(css) {
+  const out = []; let i = 0; const n = css.length;
+  while (i < n) {
+    if (css[i] === '/' && css[i + 1] === '*') { const e = css.indexOf('*/', i + 2); i = e < 0 ? n : e + 2; continue; }
+    if (/\s/.test(css[i])) { i++; continue; }
+    let j = i, depth = 0;
+    while (j < n && !(css[j] === '{' && depth === 0) && !(css[j] === '}' && depth === 0)) {
+      const c = css[j]; if (c === '(' || c === '[') depth++; else if (c === ')' || c === ']') depth--; j++;
+    }
+    if (j >= n || css[j] !== '{') { i = j + 1; continue; }
+    let k = j, d = 0;
+    for (; k < n; k++) { if (css[k] === '{') d++; else if (css[k] === '}') { d--; if (d === 0) { k++; break; } } }
+    out.push({ sel: css.slice(i, j).trim(), text: css.slice(i, k).replace(/\s+/g, ' ').trim() });
+    i = k;
+  }
+  return out;
+}
+// The CSS a facet actually depends on: rules whose selector (or, for @media/@supports
+// wrappers, whose body) references one of the facet's own classes, plus any @keyframes
+// those rules animate. Mirrors how the runtime extractor / Copy matches CSS by class
+// token, so a rework of a facet's rules (colors, keyframes, a @media block) changes its
+// fingerprint and counts as an update — not only edits to the tile markup.
+// Gallery-chrome classes every tile carries; excluded so a restyle of the shared tile
+// frame does not flip every facet, and so a facet matches only its OWN rules.
+const RESERVED = new Set(['tile', 'panel', 'stage', 'meta', 'nm', 'ptitle', 'ref', 'desc', 'copy', 'gallery', 'wrap', 'sec', 'head', 'bar', 'is-new', 'is-fixed']);
+
+// Index a page's rules ONCE per commit so per-facet CSS lookup is cheap (the naive
+// facet x rule x class scan is O(millions) on the 1.5k-facet spectrum page). byClass maps
+// a class token to the rules that mention it anywhere (selector, or inside an @media/
+// @supports body); kfByName maps a @keyframes name to its rule; animRefs[i] is the set of
+// animation-name tokens rule i references (for pulling in the @keyframes it animates).
+function cssIndex(rules) {
+  const byClass = new Map(); const kfByName = new Map(); const animRefs = [];
+  rules.forEach((r, i) => {
+    const kf = /^@keyframes\s+([\w-]+)/i.exec(r.sel);
+    if (kf) { kfByName.set(kf[1], i); return; }
+    const cls = r.text.match(/\.[A-Za-z_][\w-]*/g);
+    if (cls) for (const c of cls) { const n = c.slice(1); let s = byClass.get(n); if (!s) byClass.set(n, s = new Set()); s.add(i); }
+    const anims = r.text.match(/animation(?:-name)?\s*:[^;}]*/g);
+    if (anims) { const set = new Set(); anims.forEach(a => a.split(/[\s:,]+/).forEach(t => { if (/^[A-Za-z_][\w-]*$/.test(t)) set.add(t); })); animRefs[i] = set; }
+  });
+  return { rules, byClass, kfByName, animRefs };
+}
+// The CSS a facet depends on: rules referencing one of its own (non-chrome) classes, plus
+// the @keyframes those rules animate. A rework of the facet's rules (colors, keyframes, a
+// new @media block) changes this fingerprint and so counts as an update.
+function facetCss(idx, classes) {
+  if (!classes.size) return '';
+  const picked = new Set(); const kf = new Set();
+  for (const c of classes) { const s = idx.byClass.get(c); if (s) for (const i of s) picked.add(i); }
+  for (const i of picked) { const a = idx.animRefs[i]; if (a) for (const t of a) kf.add(t); }
+  for (const name of kf) { const i = idx.kfByName.get(name); if (i != null) picked.add(i); }
+  return [...picked].map(i => idx.rules[i].text).sort().join('\n');
+}
+
 function snapshot(src) {
   const map = {};
   for (const [pid, html] of Object.entries(pages(src))) {
+    const idx = cssIndex(splitRules(pageCss(html)));
     const seen = {};
     for (const t of tiles(html)) {
       let id = t.fxId || (pid + '-' + slug(t.name || 'effect'));
       if (seen[id]) { seen[id]++; id += '-' + seen[id]; } else seen[id] = 1;
-      // Hash markup with the release badges and whitespace normalized out, so a
-      // badge toggle or reformat does not count as an update.
+      // Fingerprint = tile markup (release badges + whitespace normalized out) PLUS the
+      // CSS the facet's own classes reference, so a CSS-only rework registers as an update.
+      const classes = new Set();
+      (t.outer.match(/class="([^"]*)"/g) || []).forEach(m => m.slice(7, -1).split(/\s+/).forEach(c => { if (c && !RESERVED.has(c)) classes.add(c); }));
       const norm = t.outer.replace(/\b(is-new|is-fixed)\b/g, '').replace(/\s+/g, ' ');
-      map[id] = createHash('sha1').update(norm).digest('hex').slice(0, 12);
+      map[id] = createHash('sha1').update(norm + '||' + facetCss(idx, classes)).digest('hex').slice(0, 12);
     }
   }
   return map;
@@ -118,15 +180,25 @@ const log = git('log', '--reverse', '--format=%H|%cI|%an', '--', 'Prism.html').t
   .map(l => { const [sha, iso, an] = l.split('|'); return { sha, date: iso.slice(0, 10), author: handleOf(an) }; });
 if (!log.length) { console.error('no history for Prism.html'); process.exit(1); }
 
+// Bulk/mechanical migrations that rewrote many facets' CSS at once (the reduced-motion
+// auto-inject) must NOT flood the "Updated" bucket. Listed commits re-baseline each
+// facet's fingerprint silently: the change is absorbed (hash adopted) but updatedOn is
+// NOT set, so only genuine reworks AFTER them count. Full SHAs (post history-rewrite).
+const SKIP_UPDATE = new Set([
+  'd575201f93139a018a358a2b54df76e6332b60cd', // a11y: auto-inject reduced-motion into every animated standalone facet
+  '365306e39bf02aa0dba6f730c77bf313942afd15', // carry @media (reduced-motion/responsive) into standalone facet CSS
+]);
+
 const facets = {};   // id -> { added, updated, hash }
 let n = 0;
 for (const c of log) {
   const src = git('show', `${c.sha}:Prism.html`);
   const snap = snapshot(src);
+  const skip = SKIP_UPDATE.has(c.sha);
   for (const [id, hash] of Object.entries(snap)) {
     const f = facets[id];
     if (!f) facets[id] = { added: c.date, updated: null, author: c.author, hash };
-    else if (f.hash !== hash) { f.hash = hash; if (c.date !== f.added) f.updated = c.date; }
+    else if (f.hash !== hash) { f.hash = hash; if (c.date !== f.added && !skip) f.updated = c.date; }
   }
   n++;
   process.stdout.write(`\r  ${n}/${log.length} commits · ${Object.keys(facets).length} facets`);
