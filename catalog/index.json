@@ -1,5 +1,5 @@
 {
-  "count": 3448,
+  "count": 3449,
   "effects": [
     {
       "id": "charts-big-metric-count-up",
@@ -25020,6 +25020,46 @@
         "reducedMotionSafe": true
       },
       "layer": "content"
+    },
+    {
+      "id": "lab-hex-reveal",
+      "name": "Hex Reveal",
+      "gallery": "lab",
+      "category": "LOADERS & WAITING STATES",
+      "ref": ".lab-ld-hexreveal",
+      "classes": [
+        "lab-ld-hexreveal",
+        "lab-ld-hxrc",
+        "lab-ld-hxrmid",
+        "lab-ld-hxrf",
+        "lab-ld-hxrs",
+        "lab-ld-hxrp"
+      ],
+      "params": [
+        "dataAttributes"
+      ],
+      "tags": [
+        "lab",
+        "animated",
+        "new"
+      ],
+      "componentType": "loader",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Hexes build in around a centre that counts the percent, then a photo fades in behind them like windows. data-move sets the build order (clockwise, counter, random); data-reveal sets the image reveal (middle-out, bottom-up, fade); --lab-ld-hxr-gap spaces the hexes. Swap the image for any photo.",
+      "role": "loading",
+      "layer": "content",
+      "a11y": {
+        "selfAnimates": true,
+        "reducedMotionSafe": true
+      }
     },
     {
       "id": "lab-liquid-loader",

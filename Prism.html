@@ -13,11 +13,11 @@
     "howToUse": "JSON.parse the text of <script id=\"prism-catalog\">. Filter effects[] by gallery/tags/description, or by the derived selection fields: role (what the component is for), dataShape (for charts/maps/diagrams: the data relationship it fits), and a11y.selfAnimates / a11y.reducedMotionSafe (motion + accessibility). Each effect ships its own html+css; include tokens.css once globally; if effect.needsJs, run initializers[effect.needsJs].js after inserting the markup.",
     "fields": "effects[]: {id,name,gallery,category,ref,description,classes,keyframes,params,tags,role,dataShape?,a11y:{selfAnimates,reducedMotionSafe},usableAsBackground,needsJs,selfContained,addedOn,updatedOn,author,html,css,dataSnip}",
     "selection": "role ∈ {action,input,navigation,feedback,loading,data-display,decorative,ambient,media}. dataShape ∈ {single-value,time-series,comparison,part-to-whole,correlation,distribution,flow,geo} (present only for charts/maps/diagrams). a11y.selfAnimates = animates without user action; a11y.reducedMotionSafe = has no motion or honors prefers-reduced-motion.",
-    "count": 3448
+    "count": 3449
   },
   "name": "prism-effects",
   "version": "1.0.0",
-  "generated": "2026-09-08T04:46:56.755Z",
+  "generated": "2026-09-08T05:57:34.177Z",
   "description": "Catalog of offline, self-contained CSS/SVG animations, effects, components and backdrops, structured for programmatic composition (e.g. an MCP server).",
   "galleries": [
     {
@@ -355,7 +355,7 @@
     "recolor": "If params.color is present, set --c and --c-rgb (or add a c-* class) on the effect element to recolor it.",
     "markers": "tags include \"new\" for latest-release facets and \"updated\"/\"fixed\" for repaired/refreshed facets (blue UPDATED badge in the UI)."
   },
-  "count": 3448,
+  "count": 3449,
   "initializers": {
     "amb-particles": {
       "js": null,
@@ -32659,6 +32659,57 @@
         "reducedMotionSafe": true
       },
       "layer": "content"
+    },
+    {
+      "id": "lab-hex-reveal",
+      "name": "Hex Reveal",
+      "gallery": "lab",
+      "category": "LOADERS & WAITING STATES",
+      "ref": ".lab-ld-hexreveal",
+      "description": "Hexes build in around a centre that counts the percent, then a photo fades in behind them like windows. data-move sets the build order (clockwise, counter, random); data-reveal sets the image reveal (middle-out, bottom-up, fade); --lab-ld-hxr-gap spaces the hexes. Swap the image for any photo.",
+      "classes": [
+        "lab-ld-hexreveal",
+        "lab-ld-hxrc",
+        "lab-ld-hxrmid",
+        "lab-ld-hxrf",
+        "lab-ld-hxrs",
+        "lab-ld-hxrp"
+      ],
+      "keyframes": [
+        "labLdHxrRun"
+      ],
+      "params": {
+        "dataAttributes": {
+          "data-move": "cw",
+          "data-reveal": "middleout"
+        }
+      },
+      "componentType": "loader",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "tags": [
+        "lab",
+        "animated",
+        "new"
+      ],
+      "usableAsBackground": false,
+      "needsJs": null,
+      "selfContained": false,
+      "isNew": true,
+      "isFixed": false,
+      "html": "<div class=\"lab-ld-hexreveal\" data-move=\"cw\" data-reveal=\"middleout\" role=\"img\" aria-label=\"Hex reveal loader: hexes build in around a centre percent, then an image reveals behind them like windows\">\n      <span class=\"lab-ld-hxrc lab-ld-hxrmid\" style=\"--dx:0;--dy:0;--i:0;--ci:0;--ri:0;--md:0;--bd:.5\"><i class=\"lab-ld-hxrf\"></i><i class=\"lab-ld-hxrs\"></i><b class=\"lab-ld-hxrp\"></b></span>\n      <span class=\"lab-ld-hxrc\" style=\"--dx:0;--dy:-38;--i:1;--ci:1;--ri:2;--md:1;--bd:1;--ax:-1;--ay:0;--ox:50%;--oy:100%\"><i class=\"lab-ld-hxrf\"></i><i class=\"lab-ld-hxrs\"></i></span>\n      <span class=\"lab-ld-hxrc\" style=\"--dx:33;--dy:-19;--i:2;--ci:6;--ri:5;--md:1;--bd:0.75;--ax:-0.51;--ay:-0.86;--ox:7%;--oy:76%\"><i class=\"lab-ld-hxrf\"></i><i class=\"lab-ld-hxrs\"></i></span>\n      <span class=\"lab-ld-hxrc\" style=\"--dx:33;--dy:19;--i:3;--ci:5;--ri:1;--md:1;--bd:0.25;--ax:0.49;--ay:-0.87;--ox:7%;--oy:25%\"><i class=\"lab-ld-hxrf\"></i><i class=\"lab-ld-hxrs\"></i></span>\n      <span class=\"lab-ld-hxrc\" style=\"--dx:0;--dy:38;--i:4;--ci:4;--ri:6;--md:1;--bd:0;--ax:1;--ay:0;--ox:50%;--oy:0%\"><i class=\"lab-ld-hxrf\"></i><i class=\"lab-ld-hxrs\"></i></span>\n      <span class=\"lab-ld-hxrc\" style=\"--dx:-33;--dy:19;--i:5;--ci:3;--ri:3;--md:1;--bd:0.25;--ax:0.49;--ay:0.87;--ox:93%;--oy:25%\"><i class=\"lab-ld-hxrf\"></i><i class=\"lab-ld-hxrs\"></i></span>\n      <span class=\"lab-ld-hxrc\" style=\"--dx:-33;--dy:-19;--i:6;--ci:2;--ri:4;--md:1;--bd:0.75;--ax:-0.51;--ay:0.86;--ox:93%;--oy:76%\"><i class=\"lab-ld-hxrf\"></i><i class=\"lab-ld-hxrs\"></i></span>\n    </div>",
+      "dataSnip": null,
+      "css": ".lab-ld-hexreveal { --lab-ld-hxr-p: 0; --lab-ld-hxr-gap: 1; position: relative; width: 176px; height: 156px; margin: 0px auto; perspective: 560px; animation: 5.6s cubic-bezier(0.55, 0, 0.4, 1) 0s infinite normal none running labLdHxrRun; }\n.lab-ld-hxrc { position: absolute; width: 44px; height: 39px; transform-style: preserve-3d; --hxrx: calc(66px + var(--lab-ld-hxr-gap) * var(--dx) * 1px); --hxry: calc(58.5px + var(--lab-ld-hxr-gap) * var(--dy) * 1px); left: var(--hxrx); top: var(--hxry); --hxrb: calc(var(--i) * 10); --hxrrd: var(--md); opacity: clamp(0,calc((var(--lab-ld-hxr-p) - var(--hxrb)) / 8),1); transform-origin: var(--ox,50%) var(--oy,50%); transform: rotate3d(var(--ax,1),var(--ay,0),0,calc((1 - clamp(0,calc((var(--lab-ld-hxr-p) - var(--hxrb)) / 12),1)) * 88deg)); }\n.lab-ld-hxrmid { transform: none; opacity: 1; }\n.lab-ld-hexreveal[data-move=\"ccw\"] .lab-ld-hxrc { --hxrb: calc(var(--ci) * 10); }\n.lab-ld-hexreveal[data-move=\"random\"] .lab-ld-hxrc { --hxrb: calc(var(--ri) * 10); }\n.lab-ld-hexreveal[data-reveal=\"bottomup\"] .lab-ld-hxrc { --hxrrd: var(--bd); }\n.lab-ld-hexreveal[data-reveal=\"fade\"] .lab-ld-hxrc { --hxrrd: 0; }\n.lab-ld-hxrf, .lab-ld-hxrs { position: absolute; inset: 0px; clip-path: polygon(25% 0px, 75% 0px, 100% 50%, 75% 100%, 25% 100%, 0px 50%); }\n.lab-ld-hxrf { background: linear-gradient(160deg,var(--panel2),var(--card)); box-shadow: inset 0 0 0 1px var(--line),inset 0 1px 0 rgba(255,255,255,.05); }\n.lab-ld-hxrs { background-image: url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22176%22%20height%3D%22156%22%20viewBox%3D%220%200%20176%20156%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22s%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%220%22%20y2%3D%221%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23243a7a%22%2F%3E%3Cstop%20offset%3D%22.44%22%20stop-color%3D%22%237a53d6%22%2F%3E%3Cstop%20offset%3D%22.70%22%20stop-color%3D%22%23ff9a56%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23ffd089%22%2F%3E%3C%2FlinearGradient%3E%3CradialGradient%20id%3D%22g%22%20cx%3D%22.5%22%20cy%3D%22.5%22%20r%3D%22.5%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23fff3d6%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23ffd089%22%20stop-opacity%3D%220%22%2F%3E%3C%2FradialGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%22176%22%20height%3D%22156%22%20fill%3D%22url(%23s)%22%2F%3E%3Ccircle%20cx%3D%22122%22%20cy%3D%2288%22%20r%3D%2236%22%20fill%3D%22url(%23g)%22%2F%3E%3Ccircle%20cx%3D%22122%22%20cy%3D%2288%22%20r%3D%2215%22%20fill%3D%22%23ffe6b0%22%2F%3E%3Cpath%20d%3D%22M0%20108%20L33%2079%20L63%20104%20L94%2068%20L129%20107%20L176%2082%20L176%20156%20L0%20156%20Z%22%20fill%3D%22%232f4a86%22%20opacity%3D%22.92%22%2F%3E%3Cpath%20d%3D%22M0%20131%20L30%20112%20L60%20130%20L94%20105%20L127%20133%20L154%20118%20L176%20132%20L176%20156%20L0%20156%20Z%22%20fill%3D%22%23163a2f%22%2F%3E%3Cpath%20d%3D%22M0%20142%20L25%20133%20L55%20144%20L83%20134%20L115%20145%20L148%20135%20L176%20145%20L176%20156%20L0%20156%20Z%22%20fill%3D%22%230e241d%22%2F%3E%3C%2Fsvg%3E\"); background-size: 176px 156px; background-position: calc(-1 * var(--hxrx)) calc(-1 * var(--hxry)); opacity: clamp(0,calc((var(--lab-ld-hxr-p) - (74 + var(--hxrrd) * 14)) / 13),1); }\n.lab-ld-hxrmid .lab-ld-hxrs { opacity: clamp(0,calc((var(--lab-ld-hxr-p) - (74 + var(--hxrrd) * 14)) / 13),.55); }\n.lab-ld-hxrp { position: absolute; inset: 0px; display: grid; place-items: center; z-index: 2; font: 800 13px ui-sans-serif, system-ui, sans-serif; color: var(--ink); text-shadow: rgba(0, 0, 0, 0.65) 0px 1px 3px; counter-reset: labLdHxr var(--lab-ld-hxr-p); }\n.lab-ld-hxrp::after { content: counter(labLdHxr) \"%\"; }\n@keyframes labLdHxrRun { \n  0% { --lab-ld-hxr-p: 0; }\n  6% { --lab-ld-hxr-p: 0; }\n  82% { --lab-ld-hxr-p: 100; }\n  92% { --lab-ld-hxr-p: 100; }\n  100% { --lab-ld-hxr-p: 0; }\n}\n@media (prefers-reduced-motion: reduce){.lab-ld-hexreveal { animation: auto ease 0s 1 normal none running none; --lab-ld-hxr-p: 100; }}\n@property --lab-ld-hxr-p { syntax: \"<integer>\"; inherits: true; initial-value: 0; }\n@media (prefers-reduced-motion:reduce){.lab-ld-hexreveal{animation:none!important}}",
+      "galleryTitle": "Animation Lab",
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "role": "loading",
+      "layer": "content",
+      "a11y": {
+        "selfAnimates": true,
+        "reducedMotionSafe": true
+      }
     },
     {
       "id": "lab-liquid-loader",
@@ -170928,6 +170979,29 @@ document.addEventListener('DOMContentLoaded',function(){
   animation-name:labLdHexEdge;animation-duration:2.8s;animation-timing-function:ease-in-out;animation-iteration-count:infinite;animation-delay:calc(var(--i,0)*.42s)}
 @keyframes labLdHexEdge{0%,52%,100%{transform:rotate3d(var(--ax,1),var(--ay,0),0,0deg);background:var(--panel2)}20%,38%{transform:rotate3d(var(--ax,1),var(--ay,0),0,180deg);background:var(--info)}}
 @media (prefers-reduced-motion:reduce){ .lab-ld-hexo{animation:none!important} .lab-ld-hexfilltile{animation:none!important} .lab-ld-hexmap{--lab-ld-hp:66} }
+
+/* Hex Reveal: hexes build in as it fills; the centre counts the percent; near the end an image reveals behind them like windows. data-move = build order (cw / ccw / random); data-reveal = image reveal (middleout / bottomup / fade); --lab-ld-hxr-gap = hex spacing; drive --lab-ld-hxr-p 0->100 from real progress. Swap the .lab-ld-hxrs background-image for a real photo. */
+@property --lab-ld-hxr-p{syntax:"<integer>";inherits:true;initial-value:0}
+.lab-ld-hexreveal{--lab-ld-hxr-p:0;--lab-ld-hxr-gap:1;position:relative;width:176px;height:156px;margin:0 auto;perspective:560px;animation:labLdHxrRun 5.6s cubic-bezier(.55,0,.4,1) infinite}
+.lab-ld-hxrc{position:absolute;width:44px;height:39px;transform-style:preserve-3d;
+  --hxrx:calc(66px + var(--lab-ld-hxr-gap) * var(--dx) * 1px);--hxry:calc(58.5px + var(--lab-ld-hxr-gap) * var(--dy) * 1px);
+  left:var(--hxrx);top:var(--hxry);--hxrb:calc(var(--i) * 10);--hxrrd:var(--md);
+  opacity:clamp(0,calc((var(--lab-ld-hxr-p) - var(--hxrb)) / 8),1);
+  transform-origin:var(--ox,50%) var(--oy,50%);
+  transform:rotate3d(var(--ax,1),var(--ay,0),0,calc((1 - clamp(0,calc((var(--lab-ld-hxr-p) - var(--hxrb)) / 12),1)) * 88deg))}
+.lab-ld-hxrmid{transform:none;opacity:1}
+.lab-ld-hexreveal[data-move="ccw"] .lab-ld-hxrc{--hxrb:calc(var(--ci) * 10)}
+.lab-ld-hexreveal[data-move="random"] .lab-ld-hxrc{--hxrb:calc(var(--ri) * 10)}
+.lab-ld-hexreveal[data-reveal="bottomup"] .lab-ld-hxrc{--hxrrd:var(--bd)}
+.lab-ld-hexreveal[data-reveal="fade"] .lab-ld-hxrc{--hxrrd:0}
+.lab-ld-hxrf,.lab-ld-hxrs{position:absolute;inset:0;clip-path:polygon(25% 0,75% 0,100% 50%,75% 100%,25% 100%,0 50%)}
+.lab-ld-hxrf{background:linear-gradient(160deg,var(--panel2),var(--card));box-shadow:inset 0 0 0 1px var(--line),inset 0 1px 0 rgba(255,255,255,.05)}
+.lab-ld-hxrs{background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22176%22%20height%3D%22156%22%20viewBox%3D%220%200%20176%20156%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22s%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%220%22%20y2%3D%221%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23243a7a%22%2F%3E%3Cstop%20offset%3D%22.44%22%20stop-color%3D%22%237a53d6%22%2F%3E%3Cstop%20offset%3D%22.70%22%20stop-color%3D%22%23ff9a56%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23ffd089%22%2F%3E%3C%2FlinearGradient%3E%3CradialGradient%20id%3D%22g%22%20cx%3D%22.5%22%20cy%3D%22.5%22%20r%3D%22.5%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23fff3d6%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23ffd089%22%20stop-opacity%3D%220%22%2F%3E%3C%2FradialGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%22176%22%20height%3D%22156%22%20fill%3D%22url(%23s)%22%2F%3E%3Ccircle%20cx%3D%22122%22%20cy%3D%2288%22%20r%3D%2236%22%20fill%3D%22url(%23g)%22%2F%3E%3Ccircle%20cx%3D%22122%22%20cy%3D%2288%22%20r%3D%2215%22%20fill%3D%22%23ffe6b0%22%2F%3E%3Cpath%20d%3D%22M0%20108%20L33%2079%20L63%20104%20L94%2068%20L129%20107%20L176%2082%20L176%20156%20L0%20156%20Z%22%20fill%3D%22%232f4a86%22%20opacity%3D%22.92%22%2F%3E%3Cpath%20d%3D%22M0%20131%20L30%20112%20L60%20130%20L94%20105%20L127%20133%20L154%20118%20L176%20132%20L176%20156%20L0%20156%20Z%22%20fill%3D%22%23163a2f%22%2F%3E%3Cpath%20d%3D%22M0%20142%20L25%20133%20L55%20144%20L83%20134%20L115%20145%20L148%20135%20L176%20145%20L176%20156%20L0%20156%20Z%22%20fill%3D%22%230e241d%22%2F%3E%3C%2Fsvg%3E");background-size:176px 156px;background-position:calc(-1 * var(--hxrx)) calc(-1 * var(--hxry));opacity:clamp(0,calc((var(--lab-ld-hxr-p) - (74 + var(--hxrrd) * 14)) / 13),1)}
+.lab-ld-hxrmid .lab-ld-hxrs{opacity:clamp(0,calc((var(--lab-ld-hxr-p) - (74 + var(--hxrrd) * 14)) / 13),.55)}
+.lab-ld-hxrp{position:absolute;inset:0;display:grid;place-items:center;z-index:2;font:800 13px ui-sans-serif,system-ui,sans-serif;color:var(--ink);text-shadow:0 1px 3px rgba(0,0,0,.65);counter-reset:labLdHxr var(--lab-ld-hxr-p)}
+.lab-ld-hxrp::after{content:counter(labLdHxr) "%"}
+@keyframes labLdHxrRun{0%{--lab-ld-hxr-p:0}6%{--lab-ld-hxr-p:0}82%{--lab-ld-hxr-p:100}92%{--lab-ld-hxr-p:100}100%{--lab-ld-hxr-p:0}}
+@media (prefers-reduced-motion:reduce){ .lab-ld-hexreveal{animation:none;--lab-ld-hxr-p:100} }
 </style>
 <div class="gallery">
 
@@ -171045,6 +171119,18 @@ document.addEventListener('DOMContentLoaded',function(){
       <span class="lab-ld-hx lab-ld-hexc" style="left:42px;top:38px"><i class="lab-ld-hexfill"></i><b class="lab-ld-hexmeter"></b></span>
     </div>
   </div><div class="meta"><div class="nm">Hex Orbit</div><span class="ref">.lab-ld-hexorbit</span><div class="desc">The hex map, but each outer hex flips on the edge that touches the central hex, so the ring rolls around it almost like a wheel while the centre fills to 100%.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="loader" data-interact="auto-play" data-c="info"><div class="stage">
+    <div class="lab-ld-hexreveal" data-move="cw" data-reveal="middleout" role="img" aria-label="Hex reveal loader: hexes build in around a centre percent, then an image reveals behind them like windows">
+      <span class="lab-ld-hxrc lab-ld-hxrmid" style="--dx:0;--dy:0;--i:0;--ci:0;--ri:0;--md:0;--bd:.5"><i class="lab-ld-hxrf"></i><i class="lab-ld-hxrs"></i><b class="lab-ld-hxrp"></b></span>
+      <span class="lab-ld-hxrc" style="--dx:0;--dy:-38;--i:1;--ci:1;--ri:2;--md:1;--bd:1;--ax:-1;--ay:0;--ox:50%;--oy:100%"><i class="lab-ld-hxrf"></i><i class="lab-ld-hxrs"></i></span>
+      <span class="lab-ld-hxrc" style="--dx:33;--dy:-19;--i:2;--ci:6;--ri:5;--md:1;--bd:0.75;--ax:-0.51;--ay:-0.86;--ox:7%;--oy:76%"><i class="lab-ld-hxrf"></i><i class="lab-ld-hxrs"></i></span>
+      <span class="lab-ld-hxrc" style="--dx:33;--dy:19;--i:3;--ci:5;--ri:1;--md:1;--bd:0.25;--ax:0.49;--ay:-0.87;--ox:7%;--oy:25%"><i class="lab-ld-hxrf"></i><i class="lab-ld-hxrs"></i></span>
+      <span class="lab-ld-hxrc" style="--dx:0;--dy:38;--i:4;--ci:4;--ri:6;--md:1;--bd:0;--ax:1;--ay:0;--ox:50%;--oy:0%"><i class="lab-ld-hxrf"></i><i class="lab-ld-hxrs"></i></span>
+      <span class="lab-ld-hxrc" style="--dx:-33;--dy:19;--i:5;--ci:3;--ri:3;--md:1;--bd:0.25;--ax:0.49;--ay:0.87;--ox:93%;--oy:25%"><i class="lab-ld-hxrf"></i><i class="lab-ld-hxrs"></i></span>
+      <span class="lab-ld-hxrc" style="--dx:-33;--dy:-19;--i:6;--ci:2;--ri:4;--md:1;--bd:0.75;--ax:-0.51;--ay:0.86;--ox:93%;--oy:76%"><i class="lab-ld-hxrf"></i><i class="lab-ld-hxrs"></i></span>
+    </div>
+  </div><div class="meta"><div class="nm">Hex Reveal</div><span class="ref">.lab-ld-hexreveal</span><div class="desc">Hexes build in around a centre that counts the percent, then a photo fades in behind them like windows. data-move sets the build order (clockwise, counter, random); data-reveal sets the image reveal (middle-out, bottom-up, fade); --lab-ld-hxr-gap spaces the hexes. Swap the image for any photo.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
 </div>
 <!-- /prism-section:loaders.lab -->
