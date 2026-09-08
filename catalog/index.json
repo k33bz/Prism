@@ -39770,9 +39770,7 @@
         "svr-col",
         "svr-g"
       ],
-      "params": [
-        "color"
-      ],
+      "params": [],
       "tags": [
         "objects",
         "animated",
@@ -39788,7 +39786,7 @@
       "addedOn": null,
       "updatedOn": null,
       "author": null,
-      "description": "Matrix-style code rain that drops inline-SVG glyphs down ordered, per-column staggered columns with a trailing comet fade, recolored via tokens.",
+      "description": "Matrix-style code rain that drops small monochrome-green SVG glyphs down dense columns, a bright leading glyph fading into a dim trail. Swap the symbol set for your own.",
       "role": "ambient",
       "layer": "background",
       "a11y": {
@@ -39808,9 +39806,7 @@
         "svr-col",
         "svr-g"
       ],
-      "params": [
-        "color"
-      ],
+      "params": [],
       "tags": [
         "objects",
         "animated",
@@ -39826,7 +39822,7 @@
       "addedOn": null,
       "updatedOn": null,
       "author": null,
-      "description": "Same falling SVG rain but the glyphs appear in randomized order across columns and rows so the icon set looks shuffled.",
+      "description": "The same green matrix rain, but the SVG glyphs fall in randomized order instead of a fixed cycle.",
       "role": "ambient",
       "layer": "background",
       "a11y": {
@@ -39844,11 +39840,10 @@
         "svr-rain",
         "svr-tumble",
         "svr-col",
-        "svr-g"
+        "svr-g",
+        "svr-spin"
       ],
-      "params": [
-        "color"
-      ],
+      "params": [],
       "tags": [
         "objects",
         "animated",
@@ -39864,7 +39859,7 @@
       "addedOn": null,
       "updatedOn": null,
       "author": null,
-      "description": "Shuffled SVG rain where every glyph also starts at a random orientation and slowly spins as it falls.",
+      "description": "Randomized green matrix rain where every glyph also starts at a random angle and slowly spins as it falls.",
       "role": "ambient",
       "layer": "background",
       "a11y": {
