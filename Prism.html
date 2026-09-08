@@ -203948,6 +203948,7 @@ body{padding-left:214px}
       <button class="active" onclick="switchTab('code')">Code</button>
       <button onclick="switchTab('visual')">Visual Builder</button>
       <button onclick="switchTab('templates')">Templates</button>
+      <button onclick="switchTab('calibrate')">Calibration</button>
     </div>
 
     <!-- Code editor -->
@@ -203960,6 +203961,17 @@ Example:
 <style>
 @keyframes spin { to { transform:rotate(360deg) } }
 </style>"></textarea>
+    </div>
+
+    <!-- Calibration -->
+    <div class="editor-wrap" id="tab-calibrate">
+      <textarea class="editor" id="calInput" style="min-height:110px" placeholder="Paste a facet's Copy output (its HTML + <style>) to auto-build controls for its data-* variants, @property, and custom properties."></textarea>
+      <button onclick="calBuild()" style="background:var(--accent);color:#1a1205;border:0;border-radius:8px;padding:9px 15px;font:700 12px sans-serif;cursor:pointer;margin:10px 0">Build controls</button>
+      <div id="calControls" style="display:flex;flex-direction:column;gap:16px"></div>
+      <div style="margin-top:14px">
+        <div style="font:700 10px sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:5px">Configured variant</div>
+        <code id="calConfig" style="display:block;font:11px ui-monospace,monospace;color:var(--info);white-space:pre-wrap;word-break:break-all">(paste a facet, then Build)</code>
+      </div>
     </div>
 
     <!-- Visual builder -->
@@ -204064,12 +204076,75 @@ Example:
 // ===== Tab switching =====
 function switchTab(tab){
   document.querySelectorAll('.tabs button').forEach(function(b){b.classList.remove('active')});
-  document.getElementById('tab-code').classList.remove('active');
-  document.getElementById('tab-visual').classList.remove('active');
-  document.getElementById('tab-templates').classList.remove('active');
-  if(tab==='code'){document.getElementById('tab-code').classList.add('active');document.querySelectorAll('.tabs button')[0].classList.add('active')}
-  else if(tab==='visual'){document.getElementById('tab-visual').classList.add('active');document.querySelectorAll('.tabs button')[1].classList.add('active')}
-  else{document.getElementById('tab-templates').classList.add('active');document.querySelectorAll('.tabs button')[2].classList.add('active')}
+  ['code','visual','templates','calibrate'].forEach(function(t){var el=document.getElementById('tab-'+t);if(el)el.classList.remove('active');});
+  var el=document.getElementById('tab-'+tab);if(el)el.classList.add('active');
+  var idx={code:0,visual:1,templates:2,calibrate:3}[tab];var btns=document.querySelectorAll('.tabs button');if(btns[idx])btns[idx].classList.add('active');
+}
+
+// ===== Calibration: auto-build live controls from a pasted facet =====
+var CAL_TOK=':root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0}';
+function calSeg(label,values,cur,onpick){
+  var box=document.createElement('div');box.style.cssText='display:flex;flex-direction:column;gap:6px';
+  var l=document.createElement('div');l.textContent=label;l.style.cssText='font:700 10px sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)';box.appendChild(l);
+  var seg=document.createElement('div');seg.style.cssText='display:inline-flex;flex-wrap:wrap;border:1px solid var(--line);border-radius:8px;overflow:hidden;width:fit-content';
+  function paint(active){[].forEach.call(seg.children,function(c){var on=c.textContent===active;c.style.background=on?'var(--panel2)':'var(--panel)';c.style.color=on?'var(--ink)':'var(--muted)';});}
+  values.forEach(function(v){var b=document.createElement('button');b.textContent=v;b.style.cssText='background:var(--panel);color:var(--muted);border:0;border-right:1px solid var(--line);padding:6px 11px;font:600 12px sans-serif;cursor:pointer';b.onclick=function(){paint(v);onpick(v);};seg.appendChild(b);});
+  paint(cur);box.appendChild(seg);box._paint=paint;return box;
+}
+function calSlider(label,min,max,step,val,unit,oninput){
+  var box=document.createElement('div');box.style.cssText='display:flex;flex-direction:column;gap:6px';
+  var l=document.createElement('div');l.style.cssText='display:flex;justify-content:space-between;font:700 10px sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)';
+  var nm=document.createElement('span');nm.textContent=label;var out=document.createElement('span');out.style.color='var(--accent)';out.textContent=val+(unit||'');l.appendChild(nm);l.appendChild(out);box.appendChild(l);
+  var r=document.createElement('input');r.type='range';r.min=min;r.max=max;r.step=step;r.value=val;r.style.accentColor='var(--accent)';
+  r.oninput=function(){out.textContent=r.value+(unit||'');oninput(r.value);};box.appendChild(r);return box;
+}
+function calBuild(){
+  var code=(document.getElementById('calInput').value||'').trim();
+  var wrap=document.getElementById('calControls');wrap.innerHTML='';
+  document.getElementById('calConfig').textContent='(paste a facet, then Build)';
+  if(!code){wrap.innerHTML='<div style="color:var(--dim);font-size:12px">Paste a facet above, then Build.</div>';return;}
+  var css='',html2=code,sm=code.match(/<style[^>]*>([\s\S]*?)<\/style>/i);
+  if(sm){css=sm[1];html2=code.replace(/<style[^>]*>[\s\S]*?<\/style>/ig,'').trim();}
+  var frame=document.getElementById('previewFrame'),doc=frame.contentDocument||frame.contentWindow.document;
+  doc.open();doc.write('<!DOCTYPE html><html><head><style>*{box-sizing:border-box}body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--bg);overflow:hidden}'+CAL_TOK+'</style><style>'+css+'</style></head><body>'+html2+'</body></html>');doc.close();
+  var root=doc.body&&doc.body.firstElementChild;
+  if(!root){wrap.innerHTML='<div style="color:var(--neg);font-size:12px">Could not find a root element in the pasted HTML.</div>';return;}
+  window._calRoot=root;
+  var mm;
+  var dataAttrs={},re=/\[data-([a-zA-Z][\w-]*)\s*[~|^$*]?=\s*["']([^"']+)["']\]/g;
+  while((mm=re.exec(css))){if(!dataAttrs[mm[1]])dataAttrs[mm[1]]=[];if(dataAttrs[mm[1]].indexOf(mm[2])<0)dataAttrs[mm[1]].push(mm[2]);}
+  for(var a in dataAttrs){var cur=root.getAttribute('data-'+a);if(cur&&dataAttrs[a].indexOf(cur)<0)dataAttrs[a].unshift(cur);}
+  var kf=(css.match(/@keyframes[\s\S]*?\{[\s\S]*?\}\s*\}/g)||[]).join(' ');
+  var props=[],pre=/@property\s+(--[\w-]+)\s*\{([^}]*)\}/g;
+  while((mm=pre.exec(css))){var nm=mm[1],syn=(mm[2].match(/syntax:\s*["']([^"']+)["']/)||[])[1]||'';props.push({name:nm,syntax:syn,timeline:kf.indexOf(nm)!==-1});}
+  var propNames=props.map(function(p){return p.name;});
+  var rootClass=(root.getAttribute('class')||'').split(/\s+/)[0]||'';
+  var plain=[];
+  if(rootClass){var rr=css.match(new RegExp('\\.'+rootClass.replace(/-/g,'\\-')+'\\s*\\{([^}]*)\\}'));var rdecl=rr?rr[1]:'',dre=/(--[\w-]+)\s*:\s*([^;}]+)/g;
+    while((mm=dre.exec(rdecl))){var n=mm[1],d=mm[2].trim();if(propNames.indexOf(n)>=0)continue;if(plain.some(function(p){return p.name===n;}))continue;if(isNaN(parseFloat(d)))continue;plain.push({name:n,def:d});}}
+  calRender(dataAttrs,props,plain,root);
+}
+function calRender(dataAttrs,props,plain,root){
+  var wrap=document.getElementById('calControls');wrap.innerHTML='';
+  var cfg={data:{},vars:{}};
+  function emit(){var s='';for(var k in cfg.data)s+='data-'+k+'=\"'+cfg.data[k]+'\" ';var vs='';for(var v in cfg.vars)vs+=v+':'+cfg.vars[v]+';';document.getElementById('calConfig').textContent=((s.trim()+(vs?'  style=\"'+vs+'\"':'')).trim())||'(defaults)';}
+  var any=false;
+  for(var a in dataAttrs){any=true;(function(a){var cur=root.getAttribute('data-'+a)||dataAttrs[a][0];cfg.data[a]=cur;wrap.appendChild(calSeg(a.replace(/-/g,' '),dataAttrs[a],cur,function(v){root.setAttribute('data-'+a,v);cfg.data[a]=v;emit();}));})(a);}
+  props.forEach(function(p){any=true;var short=p.name.replace(/^--/,'');
+    if(p.timeline){
+      var seg=calSeg('motion / '+short,['Play','Scrub'],'Play',function(v){if(v==='Play'){root.style.removeProperty('animation');root.style.removeProperty(p.name);}else{root.style.animation='none';}});
+      wrap.appendChild(seg);
+      wrap.appendChild(calSlider('scrub '+short,0,100,1,0,'%',function(val){root.style.animation='none';root.style.setProperty(p.name,val);seg._paint('Scrub');}));
+    } else {
+      var isInt=/integer/.test(p.syntax);wrap.appendChild(calSlider(short,0,100,isInt?1:0.1,0,'',function(val){root.style.setProperty(p.name,val);cfg.vars[p.name]=val;emit();}));
+    }
+  });
+  plain.forEach(function(p){any=true;var num=parseFloat(p.def);var unit=(p.def.match(/[a-z%]+$/)||[''])[0];var min,max,step;
+    if(Math.abs(num)<=4){min=0;max=Math.max(3,num*3||3);step=0.05;}else{min=0;max=Math.max(100,num*2);step=1;}
+    cfg.vars[p.name]=p.def;wrap.appendChild(calSlider(p.name.replace(/^--/,''),min,max,step,num,unit,function(val){root.style.setProperty(p.name,val+unit);cfg.vars[p.name]=val+unit;emit();}));
+  });
+  if(!any){wrap.innerHTML='<div style="color:var(--dim);font-size:12px">No data-* variants, @property, or root custom properties found to calibrate. This facet has no exposed knobs.</div>';return;}
+  emit();
 }
 
 // ===== Shape selection =====
