@@ -39881,9 +39881,12 @@
         "svr-col",
         "svr-g"
       ],
-      "params": [],
+      "params": [
+        "dataAttributes"
+      ],
       "tags": [
         "objects",
+        "needs-js",
         "animated",
         "new"
       ],
@@ -39891,13 +39894,13 @@
       "interaction": "auto-play",
       "spectrum": null,
       "usableAsBackground": false,
-      "needsJs": null,
+      "needsJs": "svr-parallax",
       "isNew": true,
       "isFixed": false,
       "addedOn": null,
       "updatedOn": null,
       "author": null,
-      "description": "Three depth layers of green rain: a small, slow, soft far layer through a big, fast, sharp near layer give real parallax depth. Same --svr-speed / --svr-density / --svr-scale controls.",
+      "description": "Three depth layers of green rain (far: small/slow/soft, near: big/fast/sharp) that also shift with the pointer for mouse-reactive 3D depth. Needs the svr-parallax initializer; falls back to static depth without JS. Same --svr-speed / --svr-density / --svr-scale controls.",
       "role": "ambient",
       "layer": "background",
       "a11y": {
@@ -39920,9 +39923,12 @@
         "svr-g",
         "svr-spin"
       ],
-      "params": [],
+      "params": [
+        "dataAttributes"
+      ],
       "tags": [
         "objects",
+        "needs-js",
         "animated",
         "new"
       ],
@@ -39930,13 +39936,13 @@
       "interaction": "auto-play",
       "spectrum": null,
       "usableAsBackground": false,
-      "needsJs": null,
+      "needsJs": "svr-parallax",
       "isNew": true,
       "isFixed": false,
       "addedOn": null,
       "updatedOn": null,
       "author": null,
-      "description": "Layered parallax matrix rain where the glyphs also tumble, deepening the sense of falling debris. Same live controls.",
+      "description": "Layered pointer-reactive parallax matrix rain where the glyphs also tumble as they fall. Needs the svr-parallax initializer; static depth without JS. Same live controls.",
       "role": "ambient",
       "layer": "background",
       "a11y": {
