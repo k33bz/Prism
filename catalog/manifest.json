@@ -90354,11 +90354,13 @@
       "gallery": "tables",
       "category": "ORDERED & BULLETED LISTS",
       "ref": ".lst-num",
-      "description": "A real ordered list with CSS counter markers in a hanging gutter, so wrapped lines align under the text, not the number. Switch the marker with data-style: filled circle (default, shown), ring (outline), plain (1.), zero (01, monospace) or roman (i, ii). Colour rides --c. Pure CSS, no JS.",
+      "description": "A real ordered list with CSS counter markers in a hanging gutter, so wrapped lines align under the text, not the number. Hover an item and it blooms: the number swells and glows while a ring ripples outward. Switch the marker with data-style: filled circle (default, shown), ring (outline), plain (1.), zero (01, monospace) or roman (i, ii). Colour rides --c. Pure CSS, hover-only motion.",
       "classes": [
         "lst-num"
       ],
-      "keyframes": [],
+      "keyframes": [
+        "lstBloom"
+      ],
       "params": {
         "color": {
           "var": "--c",
@@ -90368,10 +90370,11 @@
         }
       },
       "componentType": "list-ordered",
-      "interaction": null,
+      "interaction": "hover",
       "spectrum": null,
       "tags": [
         "tables",
+        "animated",
         "new"
       ],
       "usableAsBackground": false,
@@ -90381,7 +90384,7 @@
       "isFixed": false,
       "html": "<ol class=\"lst-num\" style=\"--c:var(--info);--c-rgb:var(--info-rgb)\">\n      <li>Provision the VPC and subnets</li>\n      <li>Attach the IAM roles</li>\n      <li>Deploy the service and health checks</li>\n      <li>Cut DNS over to the new endpoint</li>\n    </ol>",
       "dataSnip": null,
-      "css": ".lst-num, .lst-bul { width: 100%; max-width: 262px; margin: 0px; padding: 0px; list-style: none; font: 12.5px / 1.5 ui-sans-serif, system-ui, sans-serif; color: var(--ink); --lst-c: var(--c,var(--accent)); --lst-c-rgb: var(--c-rgb,var(--accent-rgb)); }\n.lst-num li, .lst-bul li { position: relative; padding: 5px 0px 5px 30px; min-height: 22px; }\n.lst-num li + li, .lst-bul li + li { border-top: 1px solid rgba(var(--lst-c-rgb),.08); }\n.lst-num { counter-reset: lst 0; }\n.lst-num li { counter-increment: lst 1; }\n.lst-num li::before { content: counter(lst); position: absolute; left: 0px; top: 50%; transform: translateY(-50%); width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; font-style: normal; font-variant: tabular-nums; font-size-adjust: none; font-language-override: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-weight: 800; font-stretch: normal; font-size: 11px; line-height: normal; font-family: ui-sans-serif, system-ui, sans-serif; background: var(--lst-c); color: var(--bg); }\n.lst-num[data-style=\"ring\"] li::before { background: transparent; color: var(--lst-c); border: 2px solid var(--lst-c); }\n.lst-num[data-style=\"plain\"] li { padding-left: 24px; }\n.lst-num[data-style=\"plain\"] li::before { content: counter(lst) \".\"; width: auto; height: auto; background: none; border-radius: 0px; color: var(--lst-c); font-weight: 700; top: 5px; transform: none; place-items: start; }\n.lst-num[data-style=\"zero\"] li { padding-left: 34px; }\n.lst-num[data-style=\"zero\"] li::before { content: counter(lst, decimal-leading-zero); width: auto; height: auto; background: none; border-radius: 0px; color: var(--lst-c); font-family: ui-monospace, Menlo, monospace; font-weight: 700; top: 5px; transform: none; place-items: start; letter-spacing: 0.02em; }\n.lst-num[data-style=\"roman\"] li { padding-left: 34px; }\n.lst-num[data-style=\"roman\"] li::before { content: counter(lst, lower-roman) \".\"; width: auto; height: auto; background: none; border-radius: 0px; color: var(--lst-c); font-weight: 700; top: 5px; transform: none; place-items: start; text-align: right; min-width: 24px; }",
+      "css": ".lst-num, .lst-bul { width: 100%; max-width: 262px; margin: 0px; padding: 0px; list-style: none; font: 12.5px / 1.5 ui-sans-serif, system-ui, sans-serif; color: var(--ink); --lst-c: var(--c,var(--accent)); --lst-c-rgb: var(--c-rgb,var(--accent-rgb)); }\n.lst-num li, .lst-bul li { position: relative; padding: 5px 8px 5px 30px; min-height: 22px; border-radius: 8px; transition: background-color 0.2s, color 0.2s; }\n.lst-num li + li, .lst-bul li + li { margin-top: 1px; }\n.lst-num li:hover, .lst-bul li:hover { background: rgba(var(--lst-c-rgb),.09); }\n.lst-num li::before, .lst-bul li::before { transform: var(--m-tf,translateY(-50%)); transition: transform 0.25s cubic-bezier(0.2, 0.9, 0.3, 1.5), filter 0.25s; }\n.lst-num li:hover::before, .lst-bul li:hover::before { transform: var(--m-tf,translateY(-50%)) scale(1.22); filter: drop-shadow(0 0 5px rgba(var(--lst-c-rgb),.65)); }\n.lst-num li::after, .lst-bul li::after { content: \"\"; position: absolute; top: 50%; width: 20px; height: 20px; border-radius: 50%; border: 2px solid var(--lst-c); opacity: 0; pointer-events: none; transform: translate(-50%, -50%) scale(0.4); }\n.lst-num li::after { left: 11px; }\n.lst-num li:hover::after, .lst-bul li:hover::after { animation: 0.62s ease-out 0s 1 normal none running lstBloom; }\n.lst-num { counter-reset: lst 0; }\n.lst-num li { counter-increment: lst 1; }\n.lst-num li::before { content: counter(lst); position: absolute; left: 0px; top: 50%; --m-tf: translateY(-50%); width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; font-style: normal; font-variant: tabular-nums; font-size-adjust: none; font-language-override: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-weight: 800; font-stretch: normal; font-size: 11px; line-height: normal; font-family: ui-sans-serif, system-ui, sans-serif; background: var(--lst-c); color: var(--bg); }\n.lst-num[data-style=\"ring\"] li::before { background: transparent; color: var(--lst-c); border: 2px solid var(--lst-c); }\n.lst-num[data-style=\"plain\"] li { padding-left: 24px; }\n.lst-num[data-style=\"plain\"] li::before { content: counter(lst) \".\"; width: auto; height: auto; background: none; border-radius: 0px; color: var(--lst-c); font-weight: 700; top: 5px; --m-tf: none; place-items: start; }\n.lst-num[data-style=\"zero\"] li { padding-left: 34px; }\n.lst-num[data-style=\"zero\"] li::before { content: counter(lst, decimal-leading-zero); width: auto; height: auto; background: none; border-radius: 0px; color: var(--lst-c); font-family: ui-monospace, Menlo, monospace; font-weight: 700; top: 5px; --m-tf: none; place-items: start; letter-spacing: 0.02em; }\n.lst-num[data-style=\"roman\"] li { padding-left: 34px; }\n.lst-num[data-style=\"roman\"] li::before { content: counter(lst, lower-roman) \".\"; width: auto; height: auto; background: none; border-radius: 0px; color: var(--lst-c); font-weight: 700; top: 5px; --m-tf: none; place-items: start; text-align: right; min-width: 24px; }\n@keyframes lstBloom { \n  0% { opacity: 0.55; transform: translate(-50%, -50%) scale(0.4); }\n  100% { opacity: 0; transform: translate(-50%, -50%) scale(2.5); }\n}\n@media (prefers-reduced-motion: reduce){.lst-num li, .lst-bul li, .lst-num li::before, .lst-bul li::before { transition: none; }.lst-num li:hover::after, .lst-bul li:hover::after { animation: auto ease 0s 1 normal none running none; }.lst-num li:hover::before, .lst-bul li:hover::before { transform: var(--m-tf,translateY(-50%)); }}\n@media (prefers-reduced-motion:reduce){.lst-num li:hover::after, .lst-bul li:hover::after{animation:none!important}}",
       "galleryTitle": "Tables & Data Layouts",
       "addedOn": null,
       "updatedOn": null,
@@ -90399,11 +90402,13 @@
       "gallery": "tables",
       "category": "ORDERED & BULLETED LISTS",
       "ref": ".lst-bul",
-      "description": "A real unordered list with CSS-drawn markers in a hanging gutter. Switch the marker with data-marker: dot (default, shown), dash, chevron, square or check (a drawn tick in --pos). Colour rides --c. Pure CSS, no icon fonts.",
+      "description": "A real unordered list with CSS-drawn markers in a hanging gutter. Hover an item and it blooms: the marker swells and glows while a ring ripples outward. Switch the marker with data-marker: dot (default, shown), dash, chevron, square or check (a drawn tick in --pos). Colour rides --c. Pure CSS, no icon fonts, hover-only motion.",
       "classes": [
         "lst-bul"
       ],
-      "keyframes": [],
+      "keyframes": [
+        "lstBloom"
+      ],
       "params": {
         "color": {
           "var": "--c",
@@ -90413,10 +90418,11 @@
         }
       },
       "componentType": "list-unordered",
-      "interaction": null,
+      "interaction": "hover",
       "spectrum": null,
       "tags": [
         "tables",
+        "animated",
         "new"
       ],
       "usableAsBackground": false,
@@ -90426,7 +90432,7 @@
       "isFixed": false,
       "html": "<ul class=\"lst-bul\">\n      <li>Overview and goals</li>\n      <li>Architecture and data flow</li>\n      <li>Rollout plan</li>\n      <li>Open questions</li>\n    </ul>",
       "dataSnip": null,
-      "css": ".lst-num, .lst-bul { width: 100%; max-width: 262px; margin: 0px; padding: 0px; list-style: none; font: 12.5px / 1.5 ui-sans-serif, system-ui, sans-serif; color: var(--ink); --lst-c: var(--c,var(--accent)); --lst-c-rgb: var(--c-rgb,var(--accent-rgb)); }\n.lst-num li, .lst-bul li { position: relative; padding: 5px 0px 5px 30px; min-height: 22px; }\n.lst-num li + li, .lst-bul li + li { border-top: 1px solid rgba(var(--lst-c-rgb),.08); }\n.lst-bul li::before { content: \"\"; position: absolute; left: 6px; top: 50%; transform: translateY(-50%); width: 7px; height: 7px; border-radius: 50%; background: var(--lst-c); }\n.lst-bul[data-marker=\"dash\"] li::before { width: 11px; height: 2px; border-radius: 2px; background: var(--lst-c); }\n.lst-bul[data-marker=\"chevron\"] li::before { width: 6px; height: 6px; border-radius: 0px; background: none; border-right: 2px solid var(--lst-c); border-top: 2px solid var(--lst-c); transform: translateY(-50%) rotate(45deg); left: 5px; }\n.lst-bul[data-marker=\"square\"] li::before { width: 7px; height: 7px; border-radius: 2px; }\n.lst-bul[data-marker=\"check\"] li { padding-left: 28px; }\n.lst-bul[data-marker=\"check\"] li::before { content: \"\"; left: 5px; width: 5px; height: 9px; border-radius: 0px; background: none; border-top-color: ; border-top-style: ; border-right-color: ; border-right-style: ; border-bottom-color: ; border-bottom-style: ; border-left-color: ; border-left-style: ; border-image-source: ; border-image-slice: ; border-image-width: ; border-image-outset: ; border-image-repeat: ; border-width: 0px 2px 2px 0px; transform: translateY(-62%) rotate(45deg); }",
+      "css": ".lst-num, .lst-bul { width: 100%; max-width: 262px; margin: 0px; padding: 0px; list-style: none; font: 12.5px / 1.5 ui-sans-serif, system-ui, sans-serif; color: var(--ink); --lst-c: var(--c,var(--accent)); --lst-c-rgb: var(--c-rgb,var(--accent-rgb)); }\n.lst-num li, .lst-bul li { position: relative; padding: 5px 8px 5px 30px; min-height: 22px; border-radius: 8px; transition: background-color 0.2s, color 0.2s; }\n.lst-num li + li, .lst-bul li + li { margin-top: 1px; }\n.lst-num li:hover, .lst-bul li:hover { background: rgba(var(--lst-c-rgb),.09); }\n.lst-num li::before, .lst-bul li::before { transform: var(--m-tf,translateY(-50%)); transition: transform 0.25s cubic-bezier(0.2, 0.9, 0.3, 1.5), filter 0.25s; }\n.lst-num li:hover::before, .lst-bul li:hover::before { transform: var(--m-tf,translateY(-50%)) scale(1.22); filter: drop-shadow(0 0 5px rgba(var(--lst-c-rgb),.65)); }\n.lst-num li::after, .lst-bul li::after { content: \"\"; position: absolute; top: 50%; width: 20px; height: 20px; border-radius: 50%; border: 2px solid var(--lst-c); opacity: 0; pointer-events: none; transform: translate(-50%, -50%) scale(0.4); }\n.lst-bul li::after { left: 9px; }\n.lst-num li:hover::after, .lst-bul li:hover::after { animation: 0.62s ease-out 0s 1 normal none running lstBloom; }\n.lst-bul li::before { content: \"\"; position: absolute; left: 6px; top: 50%; --m-tf: translateY(-50%); width: 7px; height: 7px; border-radius: 50%; background: var(--lst-c); }\n.lst-bul[data-marker=\"dash\"] li::before { width: 11px; height: 2px; border-radius: 2px; background: var(--lst-c); }\n.lst-bul[data-marker=\"chevron\"] li::before { width: 6px; height: 6px; border-radius: 0px; background: none; border-right: 2px solid var(--lst-c); border-top: 2px solid var(--lst-c); --m-tf: translateY(-50%) rotate(45deg); left: 5px; }\n.lst-bul[data-marker=\"square\"] li::before { width: 7px; height: 7px; border-radius: 2px; }\n.lst-bul[data-marker=\"check\"] li { padding-left: 28px; }\n.lst-bul[data-marker=\"check\"] li::before { content: \"\"; left: 5px; width: 5px; height: 9px; border-radius: 0px; background: none; border-top-color: ; border-top-style: ; border-right-color: ; border-right-style: ; border-bottom-color: ; border-bottom-style: ; border-left-color: ; border-left-style: ; border-image-source: ; border-image-slice: ; border-image-width: ; border-image-outset: ; border-image-repeat: ; border-width: 0px 2px 2px 0px; --m-tf: translateY(-62%) rotate(45deg); }\n.lst-bul[data-marker=\"check\"] li::after { border-color: var(--pos); left: 7px; }\n.lst-bul[data-marker=\"check\"] li:hover::before { filter: drop-shadow(0 0 4px rgba(var(--pos-rgb),.7)); }\n@keyframes lstBloom { \n  0% { opacity: 0.55; transform: translate(-50%, -50%) scale(0.4); }\n  100% { opacity: 0; transform: translate(-50%, -50%) scale(2.5); }\n}\n@media (prefers-reduced-motion: reduce){.lst-num li, .lst-bul li, .lst-num li::before, .lst-bul li::before { transition: none; }.lst-num li:hover::after, .lst-bul li:hover::after { animation: auto ease 0s 1 normal none running none; }.lst-num li:hover::before, .lst-bul li:hover::before { transform: var(--m-tf,translateY(-50%)); }}\n@media (prefers-reduced-motion:reduce){.lst-num li:hover::after, .lst-bul li:hover::after{animation:none!important}}",
       "galleryTitle": "Tables & Data Layouts",
       "addedOn": null,
       "updatedOn": null,
