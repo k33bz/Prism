@@ -1,5 +1,5 @@
 {
-  "count": 3467,
+  "count": 3469,
   "effects": [
     {
       "id": "charts-big-metric-count-up",
@@ -39786,7 +39786,7 @@
       "addedOn": null,
       "updatedOn": null,
       "author": null,
-      "description": "Matrix-style code rain that drops small monochrome-green SVG glyphs down dense columns, a bright leading glyph fading into a dim trail. Swap the symbol set for your own.",
+      "description": "Matrix-style code rain dropping small monochrome-green SVG glyphs down dense columns, a bright leading glyph fading into a dim trail. Live controls: --svr-speed, --svr-density, --svr-scale, --svr-c. Swap the symbol set for your own.",
       "role": "ambient",
       "layer": "background",
       "a11y": {
@@ -39822,7 +39822,7 @@
       "addedOn": null,
       "updatedOn": null,
       "author": null,
-      "description": "The same green matrix rain, but the SVG glyphs fall in randomized order instead of a fixed cycle.",
+      "description": "The green matrix rain with glyphs in randomized order. Adjustable via --svr-speed / --svr-density / --svr-scale.",
       "role": "ambient",
       "layer": "background",
       "a11y": {
@@ -39859,7 +39859,84 @@
       "addedOn": null,
       "updatedOn": null,
       "author": null,
-      "description": "Randomized green matrix rain where every glyph also starts at a random angle and slowly spins as it falls.",
+      "description": "Randomized green matrix rain where every glyph starts at a random angle and spins as it falls. Same live controls.",
+      "role": "ambient",
+      "layer": "background",
+      "a11y": {
+        "selfAnimates": true,
+        "reducedMotionSafe": true
+      }
+    },
+    {
+      "id": "objects-svg-rain-parallax",
+      "name": "SVG Rain — Parallax",
+      "gallery": "objects",
+      "category": "SVG RAIN",
+      "ref": ".svr-par",
+      "classes": [
+        "svr-rain",
+        "svr-parallax",
+        "svr-par",
+        "svr-layer",
+        "svr-col",
+        "svr-g"
+      ],
+      "params": [],
+      "tags": [
+        "objects",
+        "animated",
+        "new"
+      ],
+      "componentType": "object-backdrop",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Three depth layers of green rain: a small, slow, soft far layer through a big, fast, sharp near layer give real parallax depth. Same --svr-speed / --svr-density / --svr-scale controls.",
+      "role": "ambient",
+      "layer": "background",
+      "a11y": {
+        "selfAnimates": true,
+        "reducedMotionSafe": true
+      }
+    },
+    {
+      "id": "objects-svg-rain-parallax-tumble",
+      "name": "SVG Rain — Parallax Tumble",
+      "gallery": "objects",
+      "category": "SVG RAIN",
+      "ref": ".svr-par-tumble",
+      "classes": [
+        "svr-rain",
+        "svr-parallax",
+        "svr-par-tumble",
+        "svr-layer",
+        "svr-col",
+        "svr-g",
+        "svr-spin"
+      ],
+      "params": [],
+      "tags": [
+        "objects",
+        "animated",
+        "new"
+      ],
+      "componentType": "object-backdrop",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "description": "Layered parallax matrix rain where the glyphs also tumble, deepening the sense of falling debris. Same live controls.",
       "role": "ambient",
       "layer": "background",
       "a11y": {
