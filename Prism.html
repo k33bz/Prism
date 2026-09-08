@@ -13,11 +13,11 @@
     "howToUse": "JSON.parse the text of <script id=\"prism-catalog\">. Filter effects[] by gallery/tags/description, or by the derived selection fields: role (what the component is for), dataShape (for charts/maps/diagrams: the data relationship it fits), and a11y.selfAnimates / a11y.reducedMotionSafe (motion + accessibility). Each effect ships its own html+css; include tokens.css once globally; if effect.needsJs, run initializers[effect.needsJs].js after inserting the markup.",
     "fields": "effects[]: {id,name,gallery,category,ref,description,classes,keyframes,params,tags,role,dataShape?,a11y:{selfAnimates,reducedMotionSafe},usableAsBackground,needsJs,selfContained,addedOn,updatedOn,author,html,css,dataSnip}",
     "selection": "role ∈ {action,input,navigation,feedback,loading,data-display,decorative,ambient,media}. dataShape ∈ {single-value,time-series,comparison,part-to-whole,correlation,distribution,flow,geo} (present only for charts/maps/diagrams). a11y.selfAnimates = animates without user action; a11y.reducedMotionSafe = has no motion or honors prefers-reduced-motion.",
-    "count": 3471
+    "count": 3473
   },
   "name": "prism-effects",
   "version": "1.0.0",
-  "generated": "2026-09-08T16:49:52.315Z",
+  "generated": "2026-09-08T17:27:04.686Z",
   "description": "Catalog of offline, self-contained CSS/SVG animations, effects, components and backdrops, structured for programmatic composition (e.g. an MCP server).",
   "galleries": [
     {
@@ -93,7 +93,7 @@
     {
       "id": "tables",
       "title": "Tables & Data Layouts",
-      "count": 55
+      "count": 57
     },
     {
       "id": "diagrams",
@@ -315,6 +315,7 @@
     "tables / LISTS & TREES",
     "tables / GRIDS & SCHEDULES",
     "tables / LEDGERS, LOGS & TOOLBARS",
+    "tables / ORDERED & BULLETED LISTS",
     "diagrams / FISHBONE (ISHIKAWA)",
     "diagrams / FLOW & LOGIC",
     "diagrams / HIERARCHY & STRUCTURE",
@@ -356,7 +357,7 @@
     "recolor": "If params.color is present, set --c and --c-rgb (or add a c-* class) on the effect element to recolor it.",
     "markers": "tags include \"new\" for latest-release facets and \"updated\"/\"fixed\" for repaired/refreshed facets (blue UPDATED badge in the UI)."
   },
-  "count": 3471,
+  "count": 3473,
   "initializers": {
     "amb-particles": {
       "js": null,
@@ -90362,6 +90363,96 @@
         "reducedMotionSafe": true
       },
       "layer": "content"
+    },
+    {
+      "id": "tables-numbered-list",
+      "name": "Numbered List",
+      "gallery": "tables",
+      "category": "ORDERED & BULLETED LISTS",
+      "ref": ".lst-num",
+      "description": "A real ordered list with CSS counter markers in a hanging gutter, so wrapped lines align under the text, not the number. Switch the marker with data-style: filled circle (default, shown), ring (outline), plain (1.), zero (01, monospace) or roman (i, ii). Colour rides --c. Pure CSS, no JS.",
+      "classes": [
+        "lst-num"
+      ],
+      "keyframes": [],
+      "params": {
+        "color": {
+          "var": "--c",
+          "rgbVar": "--c-rgb",
+          "note": "Set --c (hex) and --c-rgb (R,G,B) to recolor",
+          "via": "class c-crit|c-neg|c-warn|c-pos|c-info|c-accent or inline style"
+        }
+      },
+      "componentType": "list-ordered",
+      "interaction": null,
+      "spectrum": null,
+      "tags": [
+        "tables",
+        "new"
+      ],
+      "usableAsBackground": false,
+      "needsJs": null,
+      "selfContained": false,
+      "isNew": true,
+      "isFixed": false,
+      "html": "<ol class=\"lst-num\" style=\"--c:var(--info);--c-rgb:var(--info-rgb)\">\n      <li>Provision the VPC and subnets</li>\n      <li>Attach the IAM roles</li>\n      <li>Deploy the service and health checks</li>\n      <li>Cut DNS over to the new endpoint</li>\n    </ol>",
+      "dataSnip": null,
+      "css": ".lst-num, .lst-bul { width: 100%; max-width: 262px; margin: 0px; padding: 0px; list-style: none; font: 12.5px / 1.5 ui-sans-serif, system-ui, sans-serif; color: var(--ink); --lst-c: var(--c,var(--accent)); --lst-c-rgb: var(--c-rgb,var(--accent-rgb)); }\n.lst-num li, .lst-bul li { position: relative; padding: 5px 0px 5px 30px; min-height: 22px; }\n.lst-num li + li, .lst-bul li + li { border-top: 1px solid rgba(var(--lst-c-rgb),.08); }\n.lst-num { counter-reset: lst 0; }\n.lst-num li { counter-increment: lst 1; }\n.lst-num li::before { content: counter(lst); position: absolute; left: 0px; top: 50%; transform: translateY(-50%); width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; font-style: normal; font-variant: tabular-nums; font-size-adjust: none; font-language-override: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-weight: 800; font-stretch: normal; font-size: 11px; line-height: normal; font-family: ui-sans-serif, system-ui, sans-serif; background: var(--lst-c); color: var(--bg); }\n.lst-num[data-style=\"ring\"] li::before { background: transparent; color: var(--lst-c); border: 2px solid var(--lst-c); }\n.lst-num[data-style=\"plain\"] li { padding-left: 24px; }\n.lst-num[data-style=\"plain\"] li::before { content: counter(lst) \".\"; width: auto; height: auto; background: none; border-radius: 0px; color: var(--lst-c); font-weight: 700; top: 5px; transform: none; place-items: start; }\n.lst-num[data-style=\"zero\"] li { padding-left: 34px; }\n.lst-num[data-style=\"zero\"] li::before { content: counter(lst, decimal-leading-zero); width: auto; height: auto; background: none; border-radius: 0px; color: var(--lst-c); font-family: ui-monospace, Menlo, monospace; font-weight: 700; top: 5px; transform: none; place-items: start; letter-spacing: 0.02em; }\n.lst-num[data-style=\"roman\"] li { padding-left: 34px; }\n.lst-num[data-style=\"roman\"] li::before { content: counter(lst, lower-roman) \".\"; width: auto; height: auto; background: none; border-radius: 0px; color: var(--lst-c); font-weight: 700; top: 5px; transform: none; place-items: start; text-align: right; min-width: 24px; }",
+      "galleryTitle": "Tables & Data Layouts",
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "role": "data-display",
+      "layer": "content",
+      "a11y": {
+        "selfAnimates": false,
+        "reducedMotionSafe": true
+      }
+    },
+    {
+      "id": "tables-bulleted-list",
+      "name": "Bulleted List",
+      "gallery": "tables",
+      "category": "ORDERED & BULLETED LISTS",
+      "ref": ".lst-bul",
+      "description": "A real unordered list with CSS-drawn markers in a hanging gutter. Switch the marker with data-marker: dot (default, shown), dash, chevron, square or check (a drawn tick in --pos). Colour rides --c. Pure CSS, no icon fonts.",
+      "classes": [
+        "lst-bul"
+      ],
+      "keyframes": [],
+      "params": {
+        "color": {
+          "var": "--c",
+          "rgbVar": "--c-rgb",
+          "note": "Set --c (hex) and --c-rgb (R,G,B) to recolor",
+          "via": "class c-crit|c-neg|c-warn|c-pos|c-info|c-accent or inline style"
+        }
+      },
+      "componentType": "list-unordered",
+      "interaction": null,
+      "spectrum": null,
+      "tags": [
+        "tables",
+        "new"
+      ],
+      "usableAsBackground": false,
+      "needsJs": null,
+      "selfContained": false,
+      "isNew": true,
+      "isFixed": false,
+      "html": "<ul class=\"lst-bul\">\n      <li>Overview and goals</li>\n      <li>Architecture and data flow</li>\n      <li>Rollout plan</li>\n      <li>Open questions</li>\n    </ul>",
+      "dataSnip": null,
+      "css": ".lst-num, .lst-bul { width: 100%; max-width: 262px; margin: 0px; padding: 0px; list-style: none; font: 12.5px / 1.5 ui-sans-serif, system-ui, sans-serif; color: var(--ink); --lst-c: var(--c,var(--accent)); --lst-c-rgb: var(--c-rgb,var(--accent-rgb)); }\n.lst-num li, .lst-bul li { position: relative; padding: 5px 0px 5px 30px; min-height: 22px; }\n.lst-num li + li, .lst-bul li + li { border-top: 1px solid rgba(var(--lst-c-rgb),.08); }\n.lst-bul li::before { content: \"\"; position: absolute; left: 6px; top: 50%; transform: translateY(-50%); width: 7px; height: 7px; border-radius: 50%; background: var(--lst-c); }\n.lst-bul[data-marker=\"dash\"] li::before { width: 11px; height: 2px; border-radius: 2px; background: var(--lst-c); }\n.lst-bul[data-marker=\"chevron\"] li::before { width: 6px; height: 6px; border-radius: 0px; background: none; border-right: 2px solid var(--lst-c); border-top: 2px solid var(--lst-c); transform: translateY(-50%) rotate(45deg); left: 5px; }\n.lst-bul[data-marker=\"square\"] li::before { width: 7px; height: 7px; border-radius: 2px; }\n.lst-bul[data-marker=\"check\"] li { padding-left: 28px; }\n.lst-bul[data-marker=\"check\"] li::before { content: \"\"; left: 5px; width: 5px; height: 9px; border-radius: 0px; background: none; border-top-color: ; border-top-style: ; border-right-color: ; border-right-style: ; border-bottom-color: ; border-bottom-style: ; border-left-color: ; border-left-style: ; border-image-source: ; border-image-slice: ; border-image-width: ; border-image-outset: ; border-image-repeat: ; border-width: 0px 2px 2px 0px; transform: translateY(-62%) rotate(45deg); }",
+      "galleryTitle": "Tables & Data Layouts",
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "role": "data-display",
+      "layer": "content",
+      "a11y": {
+        "selfAnimates": false,
+        "reducedMotionSafe": true
+      }
     },
     {
       "id": "diagrams-simple-fishbone",
@@ -201018,6 +201109,81 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
   });
 })();
 <\/script>
+
+
+<!-- prism-section:orderbullet.tables -->
+<h3 class="sec">ORDERED &amp; BULLETED LISTS</h3>
+<style id="lst-styles">
+/* ===== Ordered & bulleted lists (k33bz fork). The plain content-list primitives the gallery
+   was missing (it had trees, steppers and checklists but no styled ol/ul): a numbered list with
+   switchable counter markers and a bulleted list with switchable CSS-drawn markers. Real <ol>/
+   <ul> semantics; markers sit in a fixed gutter so wrapped lines hang and align. Pure CSS, no JS,
+   token-only. lst- prefix. Static, so reduced-motion safe by construction. Switch the variant
+   with data-style (numbered) / data-marker (bulleted). ===== */
+.lst-num,.lst-bul{width:100%;max-width:262px;margin:0;padding:0;list-style:none;
+  font:12.5px/1.5 ui-sans-serif,system-ui,sans-serif;color:var(--ink);--lst-c:var(--c,var(--accent));--lst-c-rgb:var(--c-rgb,var(--accent-rgb))}
+.lst-num li,.lst-bul li{position:relative;padding:5px 0 5px 30px;min-height:22px}
+.lst-num li+li,.lst-bul li+li{border-top:1px solid rgba(var(--lst-c-rgb),.08)}
+
+/* ---- numbered (ordered) ---- */
+.lst-num{counter-reset:lst}
+.lst-num li{counter-increment:lst}
+.lst-num li::before{content:counter(lst);position:absolute;left:0;top:50%;transform:translateY(-50%);
+  width:22px;height:22px;border-radius:50%;display:grid;place-items:center;
+  font:800 11px ui-sans-serif,system-ui,sans-serif;font-variant-numeric:tabular-nums;
+  background:var(--lst-c);color:var(--bg)}
+/* variant: outline ring */
+.lst-num[data-style="ring"] li::before{background:transparent;color:var(--lst-c);border:2px solid var(--lst-c)}
+/* variant: plain "1." accent number, no badge */
+.lst-num[data-style="plain"] li{padding-left:24px}
+.lst-num[data-style="plain"] li::before{content:counter(lst) ".";width:auto;height:auto;background:none;border-radius:0;
+  color:var(--lst-c);font-weight:700;top:5px;transform:none;place-items:start}
+/* variant: leading-zero monospace */
+.lst-num[data-style="zero"] li{padding-left:34px}
+.lst-num[data-style="zero"] li::before{content:counter(lst,decimal-leading-zero);width:auto;height:auto;background:none;border-radius:0;
+  color:var(--lst-c);font-family:ui-monospace,Menlo,monospace;font-weight:700;top:5px;transform:none;place-items:start;letter-spacing:.02em}
+/* variant: lower-roman */
+.lst-num[data-style="roman"] li{padding-left:34px}
+.lst-num[data-style="roman"] li::before{content:counter(lst,lower-roman) ".";width:auto;height:auto;background:none;border-radius:0;
+  color:var(--lst-c);font-weight:700;top:5px;transform:none;place-items:start;text-align:right;min-width:24px}
+
+/* ---- bulleted (unordered) ---- */
+.lst-bul li::before{content:"";position:absolute;left:6px;top:50%;transform:translateY(-50%);
+  width:7px;height:7px;border-radius:50%;background:var(--lst-c)}
+/* variant: dash */
+.lst-bul[data-marker="dash"] li::before{width:11px;height:2px;border-radius:2px;background:var(--lst-c)}
+/* variant: chevron */
+.lst-bul[data-marker="chevron"] li::before{width:6px;height:6px;border-radius:0;background:none;
+  border-right:2px solid var(--lst-c);border-top:2px solid var(--lst-c);transform:translateY(-50%) rotate(45deg);left:5px}
+/* variant: square */
+.lst-bul[data-marker="square"] li::before{width:7px;height:7px;border-radius:2px}
+/* variant: check (CSS-drawn tick, uses --pos) */
+.lst-bul[data-marker="check"] li{padding-left:28px}
+.lst-bul[data-marker="check"] li::before{content:"";left:5px;width:5px;height:9px;border-radius:0;background:none;
+  border:solid var(--pos);border-width:0 2px 2px 0;transform:translateY(-62%) rotate(45deg)}
+</style>
+<div class="gallery">
+
+  <div class="tile is-new" data-ctype="list-ordered" data-c="info"><div class="stage">
+    <ol class="lst-num" style="--c:var(--info);--c-rgb:var(--info-rgb)">
+      <li>Provision the VPC and subnets</li>
+      <li>Attach the IAM roles</li>
+      <li>Deploy the service and health checks</li>
+      <li>Cut DNS over to the new endpoint</li>
+    </ol>
+  </div><div class="meta"><div class="nm">Numbered List</div><span class="ref">.lst-num</span><div class="desc">A real ordered list with CSS counter markers in a hanging gutter, so wrapped lines align under the text, not the number. Switch the marker with data-style: filled circle (default, shown), ring (outline), plain (1.), zero (01, monospace) or roman (i, ii). Colour rides --c. Pure CSS, no JS.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="list-unordered" data-c="accent"><div class="stage">
+    <ul class="lst-bul">
+      <li>Overview and goals</li>
+      <li>Architecture and data flow</li>
+      <li>Rollout plan</li>
+      <li>Open questions</li>
+    </ul>
+  </div><div class="meta"><div class="nm">Bulleted List</div><span class="ref">.lst-bul</span><div class="desc">A real unordered list with CSS-drawn markers in a hanging gutter. Switch the marker with data-marker: dot (default, shown), dash, chevron, square or check (a drawn tick in --pos). Colour rides --c. Pure CSS, no icon fonts.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+</div>
+<!-- /prism-section:orderbullet.tables -->
 </div>
 <script>
 function copyViz(btn){

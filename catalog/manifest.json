@@ -77,7 +77,7 @@
     {
       "id": "tables",
       "title": "Tables & Data Layouts",
-      "count": 55
+      "count": 57
     },
     {
       "id": "diagrams",
@@ -299,6 +299,7 @@
     "tables / LISTS & TREES",
     "tables / GRIDS & SCHEDULES",
     "tables / LEDGERS, LOGS & TOOLBARS",
+    "tables / ORDERED & BULLETED LISTS",
     "diagrams / FISHBONE (ISHIKAWA)",
     "diagrams / FLOW & LOGIC",
     "diagrams / HIERARCHY & STRUCTURE",
@@ -340,7 +341,7 @@
     "recolor": "If params.color is present, set --c and --c-rgb (or add a c-* class) on the effect element to recolor it.",
     "markers": "tags include \"new\" for latest-release facets and \"updated\"/\"fixed\" for repaired/refreshed facets (blue UPDATED badge in the UI)."
   },
-  "count": 3471,
+  "count": 3473,
   "initializers": {
     "amb-particles": {
       "js": null,
@@ -90346,6 +90347,96 @@
         "reducedMotionSafe": true
       },
       "layer": "content"
+    },
+    {
+      "id": "tables-numbered-list",
+      "name": "Numbered List",
+      "gallery": "tables",
+      "category": "ORDERED & BULLETED LISTS",
+      "ref": ".lst-num",
+      "description": "A real ordered list with CSS counter markers in a hanging gutter, so wrapped lines align under the text, not the number. Switch the marker with data-style: filled circle (default, shown), ring (outline), plain (1.), zero (01, monospace) or roman (i, ii). Colour rides --c. Pure CSS, no JS.",
+      "classes": [
+        "lst-num"
+      ],
+      "keyframes": [],
+      "params": {
+        "color": {
+          "var": "--c",
+          "rgbVar": "--c-rgb",
+          "note": "Set --c (hex) and --c-rgb (R,G,B) to recolor",
+          "via": "class c-crit|c-neg|c-warn|c-pos|c-info|c-accent or inline style"
+        }
+      },
+      "componentType": "list-ordered",
+      "interaction": null,
+      "spectrum": null,
+      "tags": [
+        "tables",
+        "new"
+      ],
+      "usableAsBackground": false,
+      "needsJs": null,
+      "selfContained": false,
+      "isNew": true,
+      "isFixed": false,
+      "html": "<ol class=\"lst-num\" style=\"--c:var(--info);--c-rgb:var(--info-rgb)\">\n      <li>Provision the VPC and subnets</li>\n      <li>Attach the IAM roles</li>\n      <li>Deploy the service and health checks</li>\n      <li>Cut DNS over to the new endpoint</li>\n    </ol>",
+      "dataSnip": null,
+      "css": ".lst-num, .lst-bul { width: 100%; max-width: 262px; margin: 0px; padding: 0px; list-style: none; font: 12.5px / 1.5 ui-sans-serif, system-ui, sans-serif; color: var(--ink); --lst-c: var(--c,var(--accent)); --lst-c-rgb: var(--c-rgb,var(--accent-rgb)); }\n.lst-num li, .lst-bul li { position: relative; padding: 5px 0px 5px 30px; min-height: 22px; }\n.lst-num li + li, .lst-bul li + li { border-top: 1px solid rgba(var(--lst-c-rgb),.08); }\n.lst-num { counter-reset: lst 0; }\n.lst-num li { counter-increment: lst 1; }\n.lst-num li::before { content: counter(lst); position: absolute; left: 0px; top: 50%; transform: translateY(-50%); width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; font-style: normal; font-variant: tabular-nums; font-size-adjust: none; font-language-override: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-weight: 800; font-stretch: normal; font-size: 11px; line-height: normal; font-family: ui-sans-serif, system-ui, sans-serif; background: var(--lst-c); color: var(--bg); }\n.lst-num[data-style=\"ring\"] li::before { background: transparent; color: var(--lst-c); border: 2px solid var(--lst-c); }\n.lst-num[data-style=\"plain\"] li { padding-left: 24px; }\n.lst-num[data-style=\"plain\"] li::before { content: counter(lst) \".\"; width: auto; height: auto; background: none; border-radius: 0px; color: var(--lst-c); font-weight: 700; top: 5px; transform: none; place-items: start; }\n.lst-num[data-style=\"zero\"] li { padding-left: 34px; }\n.lst-num[data-style=\"zero\"] li::before { content: counter(lst, decimal-leading-zero); width: auto; height: auto; background: none; border-radius: 0px; color: var(--lst-c); font-family: ui-monospace, Menlo, monospace; font-weight: 700; top: 5px; transform: none; place-items: start; letter-spacing: 0.02em; }\n.lst-num[data-style=\"roman\"] li { padding-left: 34px; }\n.lst-num[data-style=\"roman\"] li::before { content: counter(lst, lower-roman) \".\"; width: auto; height: auto; background: none; border-radius: 0px; color: var(--lst-c); font-weight: 700; top: 5px; transform: none; place-items: start; text-align: right; min-width: 24px; }",
+      "galleryTitle": "Tables & Data Layouts",
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "role": "data-display",
+      "layer": "content",
+      "a11y": {
+        "selfAnimates": false,
+        "reducedMotionSafe": true
+      }
+    },
+    {
+      "id": "tables-bulleted-list",
+      "name": "Bulleted List",
+      "gallery": "tables",
+      "category": "ORDERED & BULLETED LISTS",
+      "ref": ".lst-bul",
+      "description": "A real unordered list with CSS-drawn markers in a hanging gutter. Switch the marker with data-marker: dot (default, shown), dash, chevron, square or check (a drawn tick in --pos). Colour rides --c. Pure CSS, no icon fonts.",
+      "classes": [
+        "lst-bul"
+      ],
+      "keyframes": [],
+      "params": {
+        "color": {
+          "var": "--c",
+          "rgbVar": "--c-rgb",
+          "note": "Set --c (hex) and --c-rgb (R,G,B) to recolor",
+          "via": "class c-crit|c-neg|c-warn|c-pos|c-info|c-accent or inline style"
+        }
+      },
+      "componentType": "list-unordered",
+      "interaction": null,
+      "spectrum": null,
+      "tags": [
+        "tables",
+        "new"
+      ],
+      "usableAsBackground": false,
+      "needsJs": null,
+      "selfContained": false,
+      "isNew": true,
+      "isFixed": false,
+      "html": "<ul class=\"lst-bul\">\n      <li>Overview and goals</li>\n      <li>Architecture and data flow</li>\n      <li>Rollout plan</li>\n      <li>Open questions</li>\n    </ul>",
+      "dataSnip": null,
+      "css": ".lst-num, .lst-bul { width: 100%; max-width: 262px; margin: 0px; padding: 0px; list-style: none; font: 12.5px / 1.5 ui-sans-serif, system-ui, sans-serif; color: var(--ink); --lst-c: var(--c,var(--accent)); --lst-c-rgb: var(--c-rgb,var(--accent-rgb)); }\n.lst-num li, .lst-bul li { position: relative; padding: 5px 0px 5px 30px; min-height: 22px; }\n.lst-num li + li, .lst-bul li + li { border-top: 1px solid rgba(var(--lst-c-rgb),.08); }\n.lst-bul li::before { content: \"\"; position: absolute; left: 6px; top: 50%; transform: translateY(-50%); width: 7px; height: 7px; border-radius: 50%; background: var(--lst-c); }\n.lst-bul[data-marker=\"dash\"] li::before { width: 11px; height: 2px; border-radius: 2px; background: var(--lst-c); }\n.lst-bul[data-marker=\"chevron\"] li::before { width: 6px; height: 6px; border-radius: 0px; background: none; border-right: 2px solid var(--lst-c); border-top: 2px solid var(--lst-c); transform: translateY(-50%) rotate(45deg); left: 5px; }\n.lst-bul[data-marker=\"square\"] li::before { width: 7px; height: 7px; border-radius: 2px; }\n.lst-bul[data-marker=\"check\"] li { padding-left: 28px; }\n.lst-bul[data-marker=\"check\"] li::before { content: \"\"; left: 5px; width: 5px; height: 9px; border-radius: 0px; background: none; border-top-color: ; border-top-style: ; border-right-color: ; border-right-style: ; border-bottom-color: ; border-bottom-style: ; border-left-color: ; border-left-style: ; border-image-source: ; border-image-slice: ; border-image-width: ; border-image-outset: ; border-image-repeat: ; border-width: 0px 2px 2px 0px; transform: translateY(-62%) rotate(45deg); }",
+      "galleryTitle": "Tables & Data Layouts",
+      "addedOn": null,
+      "updatedOn": null,
+      "author": null,
+      "role": "data-display",
+      "layer": "content",
+      "a11y": {
+        "selfAnimates": false,
+        "reducedMotionSafe": true
+      }
     },
     {
       "id": "diagrams-simple-fishbone",

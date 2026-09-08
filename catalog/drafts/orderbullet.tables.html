@@ -1,0 +1,71 @@
+<h3 class="sec">ORDERED &amp; BULLETED LISTS</h3>
+<style id="lst-styles">
+/* ===== Ordered & bulleted lists (k33bz fork). The plain content-list primitives the gallery
+   was missing (it had trees, steppers and checklists but no styled ol/ul): a numbered list with
+   switchable counter markers and a bulleted list with switchable CSS-drawn markers. Real <ol>/
+   <ul> semantics; markers sit in a fixed gutter so wrapped lines hang and align. Pure CSS, no JS,
+   token-only. lst- prefix. Static, so reduced-motion safe by construction. Switch the variant
+   with data-style (numbered) / data-marker (bulleted). ===== */
+.lst-num,.lst-bul{width:100%;max-width:262px;margin:0;padding:0;list-style:none;
+  font:12.5px/1.5 ui-sans-serif,system-ui,sans-serif;color:var(--ink);--lst-c:var(--c,var(--accent));--lst-c-rgb:var(--c-rgb,var(--accent-rgb))}
+.lst-num li,.lst-bul li{position:relative;padding:5px 0 5px 30px;min-height:22px}
+.lst-num li+li,.lst-bul li+li{border-top:1px solid rgba(var(--lst-c-rgb),.08)}
+
+/* ---- numbered (ordered) ---- */
+.lst-num{counter-reset:lst}
+.lst-num li{counter-increment:lst}
+.lst-num li::before{content:counter(lst);position:absolute;left:0;top:50%;transform:translateY(-50%);
+  width:22px;height:22px;border-radius:50%;display:grid;place-items:center;
+  font:800 11px ui-sans-serif,system-ui,sans-serif;font-variant-numeric:tabular-nums;
+  background:var(--lst-c);color:var(--bg)}
+/* variant: outline ring */
+.lst-num[data-style="ring"] li::before{background:transparent;color:var(--lst-c);border:2px solid var(--lst-c)}
+/* variant: plain "1." accent number, no badge */
+.lst-num[data-style="plain"] li{padding-left:24px}
+.lst-num[data-style="plain"] li::before{content:counter(lst) ".";width:auto;height:auto;background:none;border-radius:0;
+  color:var(--lst-c);font-weight:700;top:5px;transform:none;place-items:start}
+/* variant: leading-zero monospace */
+.lst-num[data-style="zero"] li{padding-left:34px}
+.lst-num[data-style="zero"] li::before{content:counter(lst,decimal-leading-zero);width:auto;height:auto;background:none;border-radius:0;
+  color:var(--lst-c);font-family:ui-monospace,Menlo,monospace;font-weight:700;top:5px;transform:none;place-items:start;letter-spacing:.02em}
+/* variant: lower-roman */
+.lst-num[data-style="roman"] li{padding-left:34px}
+.lst-num[data-style="roman"] li::before{content:counter(lst,lower-roman) ".";width:auto;height:auto;background:none;border-radius:0;
+  color:var(--lst-c);font-weight:700;top:5px;transform:none;place-items:start;text-align:right;min-width:24px}
+
+/* ---- bulleted (unordered) ---- */
+.lst-bul li::before{content:"";position:absolute;left:6px;top:50%;transform:translateY(-50%);
+  width:7px;height:7px;border-radius:50%;background:var(--lst-c)}
+/* variant: dash */
+.lst-bul[data-marker="dash"] li::before{width:11px;height:2px;border-radius:2px;background:var(--lst-c)}
+/* variant: chevron */
+.lst-bul[data-marker="chevron"] li::before{width:6px;height:6px;border-radius:0;background:none;
+  border-right:2px solid var(--lst-c);border-top:2px solid var(--lst-c);transform:translateY(-50%) rotate(45deg);left:5px}
+/* variant: square */
+.lst-bul[data-marker="square"] li::before{width:7px;height:7px;border-radius:2px}
+/* variant: check (CSS-drawn tick, uses --pos) */
+.lst-bul[data-marker="check"] li{padding-left:28px}
+.lst-bul[data-marker="check"] li::before{content:"";left:5px;width:5px;height:9px;border-radius:0;background:none;
+  border:solid var(--pos);border-width:0 2px 2px 0;transform:translateY(-62%) rotate(45deg)}
+</style>
+<div class="gallery">
+
+  <div class="tile is-new" data-ctype="list-ordered" data-c="info"><div class="stage">
+    <ol class="lst-num" style="--c:var(--info);--c-rgb:var(--info-rgb)">
+      <li>Provision the VPC and subnets</li>
+      <li>Attach the IAM roles</li>
+      <li>Deploy the service and health checks</li>
+      <li>Cut DNS over to the new endpoint</li>
+    </ol>
+  </div><div class="meta"><div class="nm">Numbered List</div><span class="ref">.lst-num</span><div class="desc">A real ordered list with CSS counter markers in a hanging gutter, so wrapped lines align under the text, not the number. Switch the marker with data-style: filled circle (default, shown), ring (outline), plain (1.), zero (01, monospace) or roman (i, ii). Colour rides --c. Pure CSS, no JS.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="list-unordered" data-c="accent"><div class="stage">
+    <ul class="lst-bul">
+      <li>Overview and goals</li>
+      <li>Architecture and data flow</li>
+      <li>Rollout plan</li>
+      <li>Open questions</li>
+    </ul>
+  </div><div class="meta"><div class="nm">Bulleted List</div><span class="ref">.lst-bul</span><div class="desc">A real unordered list with CSS-drawn markers in a hanging gutter. Switch the marker with data-marker: dot (default, shown), dash, chevron, square or check (a drawn tick in --pos). Colour rides --c. Pure CSS, no icon fonts.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+</div>
