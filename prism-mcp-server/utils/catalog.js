@@ -100,6 +100,12 @@ function normalizeEffect(e) {
     selfContained: e.selfContained !== false, // default true when absent
     isNew: !!e.isNew,
     isFixed: !!e.isFixed,
+    // Git-derived dates (catalog/_facet_dates.mjs): addedOn = first appearance,
+    // updatedOn = last markup change. These drive the HTML "New Facets" page's
+    // New/Updated split, so exposing them keeps MCP consumers in sync with it.
+    addedOn: e.addedOn || null,
+    updatedOn: e.updatedOn || null,
+    author: e.author || null,
     html: e.html || '',
     css: e.css || '',
     dataSnip: e.dataSnip || null,
@@ -127,6 +133,9 @@ export function lightEffect(e) {
     needsJs: e.needsJs,
     isNew: e.isNew,
     isFixed: e.isFixed,
+    addedOn: e.addedOn || null,
+    updatedOn: e.updatedOn || null,
+    author: e.author || null,
     hasHtml: !!e.html,
     hasCss: !!e.css,
   };

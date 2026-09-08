@@ -72,6 +72,10 @@ test('get_effect returns full record incl html/css', () => {
   assert.equal(e.id, 'charts-kpi-pulse');
   assert.ok(e.html.includes('kpi pulse'));
   assert.ok(e.css.includes('@keyframes kpiPulse'));
+  // git-derived dates flow through so MCP matches the HTML New/Updated page
+  assert.equal(e.addedOn, '2026-09-01');
+  assert.equal(e.updatedOn, '2026-09-05');
+  assert.equal(e.author, 'k33bz');
 });
 
 test('get_effect honors includeCss:false', () => {

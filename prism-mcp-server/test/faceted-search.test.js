@@ -286,6 +286,7 @@ test('lightEffect projection carries role/dataShape/a11y', () => {
   assert.ok('role' in e && 'dataShape' in e && 'a11y' in e);
   assert.equal(typeof e.a11y.selfAnimates, 'boolean');
   assert.equal(typeof e.a11y.reducedMotionSafe, 'boolean');
+  assert.ok('addedOn' in e && 'updatedOn' in e, 'git dates exposed in light projection');
 });
 
 test('get_available_filters + list_filter_values expose role and dataShape', () => {
