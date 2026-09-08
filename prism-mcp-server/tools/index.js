@@ -91,7 +91,7 @@ function matchScore(effect, q) {
     cat: (effect.category || '').toLowerCase(),
     // Derived selection fields, de-hyphenated so "time series" hits "time-series"
     // and "part to whole" hits "part-to-whole".
-    sel: [effect.role, effect.dataShape].filter(Boolean).join(' ').toLowerCase().replace(/-/g, ' '),
+    sel: [effect.role, effect.layer, effect.dataShape].filter(Boolean).join(' ').toLowerCase().replace(/-/g, ' '),
   };
   for (const t of terms) {
     if (hay.name.includes(t)) score += 5;
@@ -146,6 +146,7 @@ const FACET_DIMS = {
   spectrum: { get: (e) => (e.spectrum ? [e.spectrum] : []), label: 'Aesthetic (spectrum)' },
   category: { get: (e) => (e.category ? [e.category] : []), label: 'Category' },
   role: { get: (e) => (e.role ? [e.role] : []), label: 'Role (purpose)' },
+  layer: { get: (e) => (e.layer ? [e.layer] : []), label: 'Layer (stacking)' },
   dataShape: { get: (e) => (e.dataShape ? [e.dataShape] : []), label: 'Data shape' },
   tag: { get: (e) => e.tags || [], label: 'Tag', multi: true },
   interaction: { get: (e) => normalizeInteractions(e.interaction), label: 'Interaction', multi: true, normalized: true },
@@ -171,6 +172,7 @@ const FILTER_KEY_TO_DIM = {
   spectrums: 'spectrum',
   categories: 'category',
   roles: 'role',
+  layers: 'layer',
   dataShapes: 'dataShape',
   tags: 'tag',
   interactions: 'interaction',
@@ -324,6 +326,7 @@ export function buildTools() {
           tag: { type: 'string', description: 'Filter to effects having this tag' },
           componentType: { type: 'string', description: 'Filter by componentType' },
           role: { type: 'string', description: 'Filter by role/purpose (action, input, navigation, feedback, loading, data-display, decorative, ambient, media)' },
+          layer: { type: 'string', description: 'Filter by stacking layer (background, content, overlay)' },
           dataShape: { type: 'string', description: 'Filter by data shape (charts/maps/diagrams: single-value, time-series, comparison, part-to-whole, correlation, distribution, flow, geo)' },
           usableAsBackground: { type: 'boolean', description: 'Only background-capable effects' },
           isNew: { type: 'boolean', description: 'Only effects tagged new' },
@@ -338,6 +341,7 @@ export function buildTools() {
         if (a.tag) list = list.filter((e) => e.tags.includes(a.tag));
         if (a.componentType) list = list.filter((e) => e.componentType === a.componentType);
         if (a.role) list = list.filter((e) => e.role === a.role);
+        if (a.layer) list = list.filter((e) => e.layer === a.layer);
         if (a.dataShape) list = list.filter((e) => e.dataShape === a.dataShape);
         if (a.usableAsBackground === true) list = list.filter((e) => e.usableAsBackground);
         if (a.isNew === true) list = list.filter((e) => e.isNew);
@@ -362,6 +366,7 @@ export function buildTools() {
               spectrums: { ...strArr, description: 'Match any of these spectrum (aesthetic) values' },
               categories: { ...strArr, description: 'Match any of these category values' },
               roles: { ...strArr, description: 'Match any of these roles (component purpose): action, input, navigation, feedback, loading, data-display, decorative, ambient, media' },
+              layers: { ...strArr, description: 'Match any of these stacking layers: background (sits behind), content (in-flow, default), overlay (floats above: toasts/tooltips/notifications/modals)' },
               dataShapes: { ...strArr, description: 'Match any of these data shapes (charts/maps/diagrams only): single-value, time-series, comparison, part-to-whole, correlation, distribution, flow, geo' },
               tags: { ...strArr, description: 'Must carry ALL of these tags (AND)' },
               interactions: { ...strArr, description: 'Match any of these normalized interaction tokens (static, hover, click, focus, scroll, auto-play, drag, toggle, on-load, …)' },
@@ -771,7 +776,7 @@ export function buildTools() {
     // ============================== COMPOSITION (3) ==============================
     {
       name: 'compose',
-      description: 'Compose multiple effects (by id) into one production-ready bundle: merged HTML, deduplicated + token-merged CSS, list of required JS initializers, validation, and size metrics. Optionally wrap the markup in a container.',
+      description: 'Compose multiple effects (by id) into one production-ready bundle: merged HTML, deduplicated + token-merged CSS, list of required JS initializers, validation, and size metrics. Reports composition conflicts in `conflicts` (CSS selectors that two effects define differently — the later wins when bundled) and `backgroundConflict` (multiple background-layer effects). Optionally wrap the markup in a container.',
       inputSchema: {
         type: 'object',
         properties: {
@@ -819,7 +824,7 @@ export function buildTools() {
     },
     {
       name: 'validate_composition',
-      description: 'Validate that a set of effect ids can be composed: checks each id exists, flags missing ones, and reports which effects need JS initializers or are not self-contained. Does not build output.',
+      description: 'Validate that a set of effect ids can be composed: checks each id exists, flags missing ones, reports which effects need JS initializers or are not self-contained, and detects composition conflicts — CSS selectors that two effects define differently (the later silently wins when bundled) and multiple background-layer effects (only one renders). Does not build output.',
       inputSchema: {
         type: 'object',
         properties: { ids: { ...strArr, minItems: 1 } },
@@ -833,6 +838,8 @@ export function buildTools() {
           valid: res.valid,
           errors: res.errors,
           warnings: res.warnings,
+          conflicts: res.conflicts,
+          backgroundConflict: res.backgroundConflict,
           missing: res.missing,
           resolved: res.resolved.map((e) => e.id),
         };

@@ -80,8 +80,8 @@ The Messages API accepts local MCP servers via the `mcp_servers` parameter (stdi
 ### Discovery & search (11)
 | Tool | Purpose |
 |------|---------|
-| `list_effects` | List effects with filters (gallery, tag, componentType, role, dataShape, background, new) + pagination. Returns light metadata. |
-| `search_effects` | Faceted relevance search: full-text ranking + a `filters` object (gallery, componentType, spectrum, category, **role**, **dataShape**, tag [AND], interaction) + boolean flags (incl. `themeSensitive`, **`selfAnimates`**, **`reducedMotionSafe`**) + `sort` + pagination. |
+| `list_effects` | List effects with filters (gallery, tag, componentType, role, layer, dataShape, background, new) + pagination. Returns light metadata. |
+| `search_effects` | Faceted relevance search: full-text ranking + a `filters` object (gallery, componentType, spectrum, category, **role**, **layer**, **dataShape**, tag [AND], interaction) + boolean flags (incl. `themeSensitive`, **`selfAnimates`**, **`reducedMotionSafe`**) + `sort` + pagination. |
 | `get_available_filters` | Describe every facet with its top values + counts, the boolean flags, and valid sort options — everything needed to build a faceted UI. |
 | `list_filter_values` | Enumerate the full value set for one facet (e.g. all 175 categories) with per-value counts + prefix filtering. |
 | `create_saved_search` | Save a named query+filters+sort (session memory) and get an id back. |
@@ -92,10 +92,11 @@ The Messages API accepts local MCP servers via the `mcp_servers` parameter (stdi
 | `list_galleries` | All galleries with declared vs. live effect counts. |
 | `get_catalog_stats` | Aggregate stats: per-gallery counts, tags, componentTypes, etc. |
 
-> **Facets are grounded in real catalog data.** Available facets: `gallery`, `componentType`, `spectrum` (visual aesthetic), `category`, `role`, `dataShape`, `tag`, `interaction`. Interaction values are **normalized** from noisy source data (`tatic`→`static`, `focu`→`focus`, `croll`→`scroll`, multi-value strings/arrays split). The `themeSensitive` facet is **derived** (does the component consume theme tokens?), not a stored field. Saved searches are per-process (in-memory), not persisted to disk.
+> **Facets are grounded in real catalog data.** Available facets: `gallery`, `componentType`, `spectrum` (visual aesthetic), `category`, `role`, `layer`, `dataShape`, `tag`, `interaction`. Interaction values are **normalized** from noisy source data (`tatic`→`static`, `focu`→`focus`, `croll`→`scroll`, multi-value strings/arrays split). The `themeSensitive` facet is **derived** (does the component consume theme tokens?), not a stored field. Saved searches are per-process (in-memory), not persisted to disk.
 >
-> **Selection metadata (pick by intent, not keywords).** Every facet carries three derived fields, so an agent can retrieve by what it needs rather than guessing names:
+> **Selection metadata (pick by intent, not keywords).** Every facet carries four derived fields, so an agent can retrieve by what it needs rather than guessing names:
 > - **`role`** — the component's purpose: `action`, `input`, `navigation`, `feedback`, `loading`, `data-display`, `decorative`, `ambient`, `media`. Filter with `filters.roles` (OR).
+> - **`layer`** — where it sits when composed: `background` (behind), `content` (in-flow, default), `overlay` (floats above: toasts/tooltips/notifications/modals). Filter with `filters.layers` (OR).
 > - **`dataShape`** — for charts/maps/diagrams, the data relationship the viz fits: `single-value`, `time-series`, `comparison`, `part-to-whole`, `correlation`, `distribution`, `flow`, `geo`. Filter with `filters.dataShapes` (OR). This is the "when do I use which chart" answer.
 > - **`a11y`** — `{ selfAnimates, reducedMotionSafe }`. Filter with the boolean flags `selfAnimates` and `reducedMotionSafe` (e.g. `reducedMotionSafe: true` to exclude motion that ignores `prefers-reduced-motion`).
 >
@@ -113,9 +114,9 @@ The Messages API accepts local MCP servers via the `mcp_servers` parameter (stdi
 ### Composition (3)
 | Tool | Purpose |
 |------|---------|
-| `compose` | Merge effects into one bundle: combined HTML + deduped/token-merged CSS + required initializers + size metrics. Optional wrapper. |
+| `compose` | Merge effects into one bundle: combined HTML + deduped/token-merged CSS + required initializers + size metrics + composition `conflicts`/`backgroundConflict`. Optional wrapper. |
 | `compose_with_template` | `compose` plus a layout template (`stack`, `row`, `grid`, `card`). |
-| `validate_composition` | Check a set of ids composes cleanly (missing ids, JS needs) without building output. |
+| `validate_composition` | Check a set of ids composes cleanly without building output: missing ids, JS needs, plus composition conflicts — `conflicts` (CSS selectors two effects define differently, so the later silently wins when bundled) and `backgroundConflict` (multiple background-layer effects, only one renders). |
 
 ### Content creation (3)
 | Tool | Purpose |
@@ -193,7 +194,7 @@ prism-mcp-server/
 node --test          # or: npm test
 ```
 
-134 tests cover every tool (incl. the advanced-search & variant-matrix tools, the `themeSensitive` facet, and the 6 Collections tools + `export_collection` formats), the CSS/compose/validate utilities, the canonical theme token maps (the two Cloudscape modes), the `CollectionStore`, the JSON-RPC protocol layer, and loading the real `Prism.html` island.
+146 tests cover every tool (incl. the advanced-search & variant-matrix tools, the `themeSensitive` facet, and the 6 Collections tools + `export_collection` formats), the CSS/compose/validate utilities, the canonical theme token maps (the two Cloudscape modes), the `CollectionStore`, the JSON-RPC protocol layer, and loading the real `Prism.html` island.
 
 ---
 

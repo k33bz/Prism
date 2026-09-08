@@ -65,8 +65,15 @@ function deriveA11y(e) {
   return { selfAnimates, reducedMotionSafe };
 }
 
+function deriveLayer(e, role) {
+  if (e.usableAsBackground || role === 'ambient') return 'background';
+  if (new RegExp(VOCAB.overlayComponentTypes, 'i').test(e.componentType || '')) return 'overlay';
+  return 'content';
+}
+
 function derive(e) {
-  const out = { role: deriveRole(e), a11y: deriveA11y(e) };
+  const role = deriveRole(e);
+  const out = { role, layer: deriveLayer(e, role), a11y: deriveA11y(e) };
   const ds = deriveDataShape(e);
   if (ds) out.dataShape = ds;
   return out;
@@ -94,6 +101,7 @@ if (args.includes('--write')) {
       const d = derived.get(e.id);
       if (!d) continue;
       e.role = d.role;
+      e.layer = d.layer;
       e.a11y = d.a11y;
       if (d.dataShape) e.dataShape = d.dataShape; else delete e.dataShape;
       patched++;
@@ -122,6 +130,9 @@ const show = (t) => Object.entries(t).sort((a, b) => b[1] - a[1]).map(([k, v]) =
 
 console.log('=== role distribution (all ' + mEffects.length + ') ===');
 console.log(show(tally(e => derived.get(e.id).role)));
+
+console.log('\n=== layer distribution ===');
+console.log(show(tally(e => derived.get(e.id).layer)));
 
 console.log('\n=== role x is-spectrum (spectrum bulk vs authored) ===');
 const rs = {};

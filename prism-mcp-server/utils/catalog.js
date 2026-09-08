@@ -90,6 +90,7 @@ function normalizeEffect(e) {
     // component's purpose; dataShape (charts/maps/diagrams only) is the data
     // relationship it fits; a11y describes motion + reduced-motion behaviour.
     role: e.role || null,
+    layer: e.layer || null,
     dataShape: e.dataShape || null,
     a11y: e.a11y && typeof e.a11y === 'object'
       ? { selfAnimates: !!e.a11y.selfAnimates, reducedMotionSafe: e.a11y.reducedMotionSafe !== false }
@@ -119,6 +120,7 @@ export function lightEffect(e) {
     componentType: e.componentType,
     interaction: e.interaction,
     role: e.role,
+    layer: e.layer,
     dataShape: e.dataShape,
     a11y: e.a11y,
     usableAsBackground: e.usableAsBackground,

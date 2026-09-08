@@ -14,7 +14,7 @@ _derive_selection.mjs    →  adds role / dataShape / a11y to manifest.json + in
 _embed-catalog.mjs       →  writes the island back into Prism.html   (idempotent)
 _smoke.mjs               →  validates the island parses + shell scripts syntax-check
 _check_ds.mjs            →  design-system coverage & integrity gate (exit non-zero on fail)
-_check_selection.mjs     →  agent-facing selection-metadata gate: every facet has valid role + a11y, charts have dataShape (exit non-zero on fail)
+_check_selection.mjs     →  agent-facing selection-metadata gate: every facet has valid role + layer + a11y, charts have dataShape (exit non-zero on fail)
 ```
 
 ## Agent-facing selection metadata
@@ -24,6 +24,9 @@ search facets, so an agent can pick by intent instead of keyword-guessing:
 
 - **`role`** — the component's purpose: `action`, `input`, `navigation`, `feedback`,
   `loading`, `data-display`, `decorative`, `ambient`, `media`.
+- **`layer`** — where it sits when stacked for composition: `background` (behind, from
+  `usableAsBackground` or `role:ambient`), `overlay` (floats above: toasts / tooltips /
+  notifications / modals), or `content` (the default in-flow layer).
 - **`dataShape`** (charts / maps / diagrams only) — the data relationship it fits:
   `single-value`, `time-series`, `comparison`, `part-to-whole`, `correlation`,
   `distribution`, `flow`, `geo`. This is the machine-readable answer to "when do I use

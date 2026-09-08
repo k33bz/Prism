@@ -31,6 +31,12 @@ export function compose(ids, store, opts = {}) {
 
   const effects = check.resolved;
   trace.push(`Resolved ${effects.length} effect(s): ${effects.map((e) => e.id).join(', ')}`);
+  if (check.conflicts && check.conflicts.length) {
+    trace.push(`⚠ ${check.conflicts.length} selector collision(s): ${check.conflicts.map((c) => c.selector).join(', ')} (later rule wins)`);
+  }
+  if (check.backgroundConflict) {
+    trace.push(`⚠ Multiple background layers: ${check.backgroundConflict.join(', ')} (only one renders)`);
+  }
 
   // --- HTML ---
   const perEffectHtml = effects.map((e) => e.html || '');
@@ -72,6 +78,8 @@ export function compose(ids, store, opts = {}) {
     effects: effects.map((e) => e.id),
     initializers,
     warnings: check.warnings,
+    conflicts: check.conflicts || [],
+    backgroundConflict: check.backgroundConflict || null,
     validation,
     trace,
     _perEffectHtml: perEffectHtml,

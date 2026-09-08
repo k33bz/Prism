@@ -57,6 +57,46 @@ export function signature(rule) {
 }
 
 /**
+ * Detect CSS selector collisions across composed sources: a selector defined by two or
+ * more DIFFERENT effects with DIFFERENT declaration bodies. When such rules are bundled,
+ * dedupeCss keeps both (their signatures differ) and the later one silently wins in the
+ * cascade, breaking the earlier effect. This is the real composition hazard in a catalog
+ * where facets namespace their own classes; identical rules are dedupe-safe and ignored.
+ *
+ * `:root` and @-rules are excluded: `:root` token blocks are intentionally merged by
+ * mergeRootTokens (later-wins is by design), and @-blocks are handled elsewhere.
+ *
+ * @param {{id:string, css:string}[]} sources
+ * @returns {{selector:string, effects:string[], variants:number}[]}
+ */
+export function detectSelectorConflicts(sources) {
+  const bySelector = new Map(); // selector -> Map(bodySignature -> Set(effectId))
+  for (const { id, css } of sources || []) {
+    if (!css) continue;
+    for (const rule of splitRules(css)) {
+      const brace = rule.text.indexOf('{');
+      if (brace === -1) continue;
+      const selector = rule.text.slice(0, brace).trim();
+      if (!selector || selector.startsWith('@') || /(^|,)\s*:root\b/.test(selector)) continue;
+      const body = signature(rule.text.slice(brace));
+      if (!bySelector.has(selector)) bySelector.set(selector, new Map());
+      const bodies = bySelector.get(selector);
+      if (!bodies.has(body)) bodies.set(body, new Set());
+      bodies.get(body).add(id);
+    }
+  }
+  const conflicts = [];
+  for (const [selector, bodies] of bySelector) {
+    if (bodies.size < 2) continue; // same body everywhere = dedupe-safe
+    const ids = new Set();
+    for (const set of bodies.values()) for (const id of set) ids.add(id);
+    if (ids.size < 2) continue; // all variants from a single effect = not a compose conflict
+    conflicts.push({ selector, effects: [...ids], variants: bodies.size });
+  }
+  return conflicts;
+}
+
+/**
  * Dedupe + merge multiple CSS sources into one bundle, preserving first-seen order.
  * Returns { css, rulesIn, rulesOut, duplicatesRemoved }.
  */

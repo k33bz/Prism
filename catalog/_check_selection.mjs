@@ -31,6 +31,7 @@ function parseIsland(html) {
 }
 
 const roles = new Set(VOCAB.roles);
+const layers = new Set(VOCAB.layers);
 const shapes = new Set(VOCAB.dataShapes);
 const dsGalleries = new Set(VOCAB.dataShapeGalleries);
 
@@ -43,6 +44,9 @@ for (const e of effects) {
   const at = `${e.id}`;
   if (!e.role) errors.push(`${at}: missing role`);
   else if (!roles.has(e.role)) errors.push(`${at}: role "${e.role}" not in vocab`);
+
+  if (!e.layer) errors.push(`${at}: missing layer`);
+  else if (!layers.has(e.layer)) errors.push(`${at}: layer "${e.layer}" not in vocab`);
 
   const a = e.a11y;
   if (!a || typeof a !== 'object') errors.push(`${at}: missing a11y`);
@@ -62,8 +66,9 @@ for (const e of effects) {
 }
 
 const withRole = effects.filter((e) => e.role).length;
+const withLayer = effects.filter((e) => e.layer).length;
 const withShape = effects.filter((e) => e.dataShape).length;
-console.log(`selection gate: ${effects.length} effects | role ${withRole} | dataShape ${withShape} | a11y ${effects.filter((e) => e.a11y).length}`);
+console.log(`selection gate: ${effects.length} effects | role ${withRole} | layer ${withLayer} | dataShape ${withShape} | a11y ${effects.filter((e) => e.a11y).length}`);
 
 if (process.argv.includes('--warn') && warnings.length) {
   console.log(`\n${warnings.length} facets self-animate WITHOUT a reduced-motion fallback (a11y follow-ups):`);
@@ -76,4 +81,4 @@ if (errors.length) {
   if (errors.length > 40) console.error(`  … and ${errors.length - 40} more`);
   process.exit(1);
 }
-console.log('OK: every facet carries valid role + a11y (and dataShape where applicable).');
+console.log('OK: every facet carries valid role + layer + a11y (and dataShape where applicable).');

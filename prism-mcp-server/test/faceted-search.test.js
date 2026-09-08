@@ -298,3 +298,22 @@ test('get_available_filters + list_filter_values expose role and dataShape', () 
   const dataDisplay = roles.items.find((v) => v.value === 'data-display');
   assert.equal(dataDisplay.count, 2);
 });
+
+// -------------------- layer facet (composition stacking) --------------------
+
+test('search_effects + list_effects filter by layer', () => {
+  const ctx = toolCtx();
+  assert.equal(ctx.call('search_effects', { filters: { layers: ['background'] } }).total, 1);
+  assert.equal(ctx.call('search_effects', { filters: { layers: ['content'] } }).total, 2);
+  assert.equal(ctx.call('list_effects', { layer: 'background' }).total, 1);
+  const bg = ctx.call('search_effects', { filters: { layers: ['background'] } }).items[0];
+  assert.equal(bg.id, 'fx-wind-bg');
+  assert.equal(bg.layer, 'background');
+});
+
+test('get_available_filters + list_filter_values expose layer', () => {
+  const ctx = toolCtx();
+  assert.ok(ctx.call('get_available_filters', {}).facets.layer, 'layer facet present');
+  const vals = ctx.call('list_filter_values', { facet: 'layer' });
+  assert.equal(vals.items.find((v) => v.value === 'content').count, 2);
+});

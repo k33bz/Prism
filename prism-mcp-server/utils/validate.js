@@ -1,6 +1,6 @@
 // Facet + composition validation helpers.
 
-import { validateCss, referencedTokens, definedTokens } from './css.js';
+import { validateCss, referencedTokens, definedTokens, detectSelectorConflicts } from './css.js';
 
 const ID_RE = /^[a-z0-9]+(?:-[a-z0-9]+)*$/; // kebab-case, lowercase
 
@@ -113,7 +113,28 @@ export function validateComposition(ids, store) {
     if (e.needsJs) warnings.push(`Effect "${id}" needs JS initializer "${e.needsJs}" — run it after inserting markup`);
     if (e.selfContained === false) warnings.push(`Effect "${id}" is not fully self-contained — verify surrounding context`);
   }
-  return { valid: errors.length === 0, errors, warnings, resolved, missing };
+
+  // Composition-only checks (meaningful only when 2+ effects are bundled together).
+  const conflicts = resolved.length > 1
+    ? detectSelectorConflicts(resolved.map((e) => ({ id: e.id, css: e.css })))
+    : [];
+  for (const c of conflicts) {
+    warnings.push(`Selector "${c.selector}" is defined differently by ${c.effects.join(', ')} — when bundled the later rule wins and may break the earlier effect`);
+  }
+  const backgrounds = resolved.filter((e) => e.layer === 'background').map((e) => e.id);
+  if (backgrounds.length > 1) {
+    warnings.push(`Multiple background-layer effects (${backgrounds.join(', ')}) — only one background renders; the others are occluded`);
+  }
+
+  return {
+    valid: errors.length === 0,
+    errors,
+    warnings,
+    resolved,
+    missing,
+    conflicts,
+    backgroundConflict: backgrounds.length > 1 ? backgrounds : null,
+  };
 }
 
 export { ID_RE };

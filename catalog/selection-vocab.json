@@ -56,6 +56,10 @@
     "flow",
     "geo"
   ],
+  "layers": ["background", "content", "overlay"],
+  "overlayComponentTypes": "toast|tooltip|notification|popover|snackbar|dialog|modal",
+  "_layerDoc": "Stacking role for composition. background = sits behind (usableAsBackground or role=ambient); overlay = floats above content (toasts/tooltips/notifications/modals); content = the default in-flow layer.",
+
   "dataShapeGalleries": ["charts", "maps", "diagrams"],
   "dataShapeRules": [
     { "on": "name", "test": "scatter|bubble|correlat", "shape": "correlation" },
