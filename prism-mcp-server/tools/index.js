@@ -118,9 +118,20 @@ function paginate(items, limit, offset) {
   };
 }
 
+const MATCH_SCORE_CACHE = new WeakMap();
+const INTERACTION_CACHE = new Map();
+
 function matchScore(effect, q) {
   // Simple weighted relevance over id/name/description/tags/category.
-  const ql = q.toLowerCase();
+  if (!effect || !q) return 0;
+  const ql = String(q).toLowerCase();
+  let byQuery = MATCH_SCORE_CACHE.get(effect);
+  if (!byQuery) {
+    byQuery = new Map();
+    MATCH_SCORE_CACHE.set(effect, byQuery);
+  }
+  if (byQuery.has(ql)) return byQuery.get(ql);
+
   const terms = ql.split(/\s+/).filter(Boolean);
   let score = 0;
   const hay = {
@@ -144,6 +155,7 @@ function matchScore(effect, q) {
   // exact-phrase bonuses
   if (hay.name === ql) score += 10;
   if (hay.name.includes(ql)) score += 3;
+  byQuery.set(ql, score);
   return score;
 }
 
@@ -166,6 +178,9 @@ const INTERACTION_FIX = { tatic: 'static', focu: 'focus', croll: 'scroll' };
  */
 export function normalizeInteractions(raw) {
   if (raw == null) return [];
+  const cacheKey = Array.isArray(raw) ? raw.join('\u0000') : String(raw);
+  if (INTERACTION_CACHE.has(cacheKey)) return INTERACTION_CACHE.get(cacheKey).slice();
+
   const parts = Array.isArray(raw) ? raw : [raw];
   const seen = new Set();
   for (const part of parts) {
@@ -175,7 +190,9 @@ export function normalizeInteractions(raw) {
       seen.add(INTERACTION_FIX[t] || t);
     }
   }
-  return Array.from(seen);
+  const result = Array.from(seen);
+  INTERACTION_CACHE.set(cacheKey, result);
+  return result.slice();
 }
 
 // Multi-value facet dimensions: value(s) extracted per effect. `multi` means an
