@@ -8,7 +8,7 @@ import { spawn } from 'node:child_process';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { mkdirSync } from 'node:fs';
-import { resolveChrome } from './_chrome.mjs';
+import { resolveChrome, closeBrowser } from './_chrome.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const FILE = 'file://' + resolve(HERE, '../Prism.html').replace(/\\/g, '/');
@@ -78,5 +78,5 @@ try {
   process.exitCode = 1;
 } finally {
   try { ws && ws.close(); } catch {}   // an open DevTools socket keeps node alive after the shot
-  try { proc.kill(); } catch {}
+  await closeBrowser(PORT, proc);
 }

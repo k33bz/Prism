@@ -6,7 +6,7 @@ import { spawn } from 'node:child_process';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { mkdirSync, writeFileSync } from 'node:fs';
-import { resolveChrome } from './_chrome.mjs';
+import { resolveChrome, closeBrowser } from './_chrome.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const FILE = 'file://' + resolve(HERE, '../Prism.html').replace(/\\/g, '/');
@@ -70,5 +70,5 @@ try {
   console.error('ERR', e && e.message || e);
   process.exitCode = 1;
 } finally {
-  try { proc.kill(); } catch {}
+  await closeBrowser(PORT, proc);
 }

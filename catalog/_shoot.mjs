@@ -9,7 +9,7 @@ import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { mkdtempSync, mkdirSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
-import { resolveChrome } from './_chrome.mjs';
+import { resolveChrome, closeBrowser } from './_chrome.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const FILE = 'file://' + resolve(HERE, '../Prism.html');
@@ -91,5 +91,5 @@ try {
   console.error('SHOOT FAILED:', e.message);
 } finally {
   try { ws && ws.close(); } catch {}
-  proc.kill('SIGKILL');
+  await closeBrowser(PORT, proc);
 }

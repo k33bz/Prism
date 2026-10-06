@@ -58,6 +58,27 @@ function candidates() {
   ];
 }
 
+/** Shut down a headless browser started with --remote-debugging-port=<port>. Asks it to exit over
+ *  the browser-level DevTools endpoint (Browser.close takes every child process with it), then
+ *  kills the spawned process as a backstop. proc.kill() alone is not enough: on Windows the spawned
+ *  launcher is often not the browser process, so each run used to leak ~9 renderer/GPU/utility
+ *  processes that stayed alive until they saturated the CPU. */
+export async function closeBrowser(port, proc) {
+  try {
+    const { webSocketDebuggerUrl } = await (await fetch(`http://localhost:${port}/json/version`)).json();
+    await new Promise((resolve) => {
+      const ws = new WebSocket(webSocketDebuggerUrl);
+      const done = () => { clearTimeout(timer); try { ws.close(); } catch {} resolve(); };
+      const timer = setTimeout(done, 3000);
+      ws.onopen = () => ws.send(JSON.stringify({ id: 1, method: 'Browser.close' }));
+      ws.onmessage = done;
+      ws.onerror = done;
+      ws.onclose = done;
+    });
+  } catch { /* endpoint already gone */ }
+  try { proc && proc.kill('SIGKILL'); } catch {}
+}
+
 /** Resolve a Chromium-family executable path, or throw with guidance. */
 export function resolveChrome() {
   const override = process.env.PRISM_CHROME;

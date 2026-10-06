@@ -32,7 +32,7 @@ import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { mkdtempSync } from 'node:fs';
 import { tmpdir } from 'node:os';
-import { resolveChrome } from './_chrome.mjs';
+import { resolveChrome, closeBrowser } from './_chrome.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const argv = process.argv.slice(2);
@@ -124,7 +124,7 @@ const ev = async (x) => { const r = await send('Runtime.evaluate', { expression:
 
 (async () => {
   let tgt; for (let i=0;i<50;i++){ try{ const j=await (await fetch(`http://localhost:${PORT}/json`)).json(); tgt=j.find(t=>t.type==='page'); if(tgt) break; }catch{} await sleep(150); }
-  if(!tgt){ console.error('no devtools target'); proc.kill(); process.exit(2); }
+  if(!tgt){ console.error('no devtools target'); await closeBrowser(PORT, proc); process.exit(2); }
   const { WebSocket } = globalThis;
   ws = new WebSocket(tgt.webSocketDebuggerUrl);
   await new Promise((r,j)=>{ ws.onopen=r; ws.onerror=j; });
@@ -195,7 +195,7 @@ const ev = async (x) => { const r = await send('Runtime.evaluate', { expression:
   const newFails = failed.filter(r => !KNOWN_SET.has(r.id));
   const knownFails = failed.filter(r => KNOWN_SET.has(r.id));
   const warned = results.filter(r => r.pass && r.warns.length);
-  try { ws.close(); } catch {} proc.kill();
+  try { ws.close(); } catch {} await closeBrowser(PORT, proc);
 
   if (UPDATE_BASELINE) {
     const ids = failed.map(r => r.id).sort();

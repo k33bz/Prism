@@ -14,7 +14,7 @@ import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { mkdtempSync } from 'node:fs';
 import { tmpdir } from 'node:os';
-import { resolveChrome } from './_chrome.mjs';
+import { resolveChrome, closeBrowser } from './_chrome.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 // PRISM_HTML lets the inspector target an alternate file (e.g. a temp copy with staged
@@ -128,5 +128,5 @@ try {
   console.error('CHECK FAILED:', e.message);
 } finally {
   try { ws && ws.close(); } catch {}
-  proc.kill('SIGKILL');
+  await closeBrowser(PORT, proc);
 }

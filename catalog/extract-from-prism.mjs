@@ -16,7 +16,7 @@ import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { mkdtempSync } from 'node:fs';
 import { tmpdir } from 'node:os';
-import { resolveChrome } from './_chrome.mjs';
+import { resolveChrome, closeBrowser } from './_chrome.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const OUT = HERE;
@@ -390,5 +390,5 @@ try {
   process.exitCode = 1;
 } finally {
   try { ws && ws.close(); } catch {}
-  proc.kill('SIGKILL');
+  await closeBrowser(PORT, proc);
 }
