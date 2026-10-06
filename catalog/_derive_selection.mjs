@@ -10,7 +10,7 @@
 //
 // Fields added per effect:
 //   role         one of vocab.roles
-//   dataShape    one of vocab.dataShapes (only for charts/maps/diagrams; else omitted)
+//   dataShape    one of vocab.dataShapes (only for charts/maps/diagrams/aws; else omitted)
 //   a11y         { selfAnimates:bool, reducedMotionSafe:bool }
 //
 // selfAnimates      = interaction declares auto-play or on-load (moves without user action)
@@ -143,7 +143,7 @@ for (const e of mEffects) {
 for (const [r, c] of Object.entries(rs).sort((a, b) => (b[1].spectrum + b[1].authored) - (a[1].spectrum + a[1].authored)))
   console.log(`  ${r.padEnd(14)} authored ${String(c.authored).padStart(4)}  spectrum ${String(c.spectrum).padStart(5)}`);
 
-console.log('\n=== dataShape distribution (charts/maps/diagrams only) ===');
+console.log('\n=== dataShape distribution (charts/maps/diagrams/aws only) ===');
 console.log(show(tally(e => derived.get(e.id).dataShape)));
 
 console.log('\n=== a11y ===');

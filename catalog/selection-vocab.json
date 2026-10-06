@@ -31,6 +31,7 @@
     "maps": "data-display",
     "diagrams": "data-display",
     "arch": "data-display",
+    "aws": "data-display",
     "input": "input",
     "menus": "navigation",
     "notify": "feedback",
@@ -60,8 +61,9 @@
   "overlayComponentTypes": "toast|tooltip|notification|popover|snackbar|dialog|modal",
   "_layerDoc": "Stacking role for composition. background = sits behind (usableAsBackground or role=ambient); overlay = floats above content (toasts/tooltips/notifications/modals); content = the default in-flow layer.",
 
-  "dataShapeGalleries": ["charts", "maps", "diagrams"],
+  "dataShapeGalleries": ["charts", "maps", "diagrams", "aws"],
   "dataShapeRules": [
+    { "on": "gallery", "test": "^aws$", "shape": "flow" },
     { "on": "name", "test": "scatter|bubble|correlat", "shape": "correlation" },
     { "on": "name", "test": "histogram|box\\s?plot|violin|density|distribut", "shape": "distribution" },
     { "on": "name", "test": "pie|donut|doughnut|ring|stacked|treemap|sunburst|part[- ]?to[- ]?whole|share|proportion", "shape": "part-to-whole" },

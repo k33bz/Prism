@@ -1,0 +1,112 @@
+/* ===== AWS Architecture kit (k33bz fork). Diagrams built from the official AWS Architecture
+   Icons (embedded once as the #awd-sprite <symbol> sprite and referenced with <use href="#aws-…">)
+   on token-driven inline SVG: official group frames, wires with numbered step badges, and motion on
+   ONE clock per diagram (SMIL: request packets, arrival rings, fan-out, scale-out, failover,
+   replication, trust handshakes). Icon artwork is never recolored; the official -dark/-light
+   colorway pairs swap with the theme via [data-mode] (default dark). awd- prefix.
+   Reduced motion: packets/rings hidden, CSS motion off, the static diagram stays complete. ===== */
+
+/* diagrams want room: wider tiles, optional double-width */
+.gallery{grid-template-columns:repeat(auto-fill,minmax(440px,1fr));grid-auto-flow:dense}   /* dense: normal tiles fill holes beside wide ones */
+.tile.wide{grid-column:span 2}
+@media (max-width:980px){.tile.wide{grid-column:auto}}
+.tile .stage{padding:14px 12px}
+
+.awd{display:block;width:100%;height:auto;overflow:visible;
+  font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  --awd-ink:var(--ink,#eaf1f9);--awd-muted:var(--muted,#8593a8);
+  /* opaque (mixed against the page, not transparent) so wires that share a segment do not double up */
+  --awd-wire:color-mix(in srgb,var(--awd-ink) 58%,var(--bg,#0b0e17));
+  /* packet colors are fixed (not the theme accent) so request and response stay distinct in every
+     design system; override with --awd-request / --awd-response on any ancestor */
+  --awd-pk:var(--awd-request,#FF9900);--awd-pk2:var(--awd-response,#4493F8);
+  --awd-cloud:#FFFFFF;--awd-step-bg:#FFFFFF;--awd-step-fg:#232F3E}
+[data-mode="light"] .awd{--awd-ink:var(--ink,#16191F);--awd-muted:var(--muted,#5F6B7A);--awd-wire:color-mix(in srgb,var(--awd-ink) 58%,var(--bg,#FFFFFF));--awd-pk:var(--awd-request,#EC7211);--awd-pk2:var(--awd-response,#0972D3);--awd-cloud:#232F3E;--awd-step-bg:#232F3E;--awd-step-fg:#FFFFFF}
+@media (prefers-color-scheme:light){:root:not([data-mode]) .awd{--awd-ink:var(--ink,#16191F);--awd-muted:var(--muted,#5F6B7A);--awd-wire:color-mix(in srgb,var(--awd-ink) 58%,var(--bg,#FFFFFF));--awd-pk:var(--awd-request,#EC7211);--awd-pk2:var(--awd-response,#0972D3);--awd-cloud:#232F3E;--awd-step-bg:#232F3E;--awd-step-fg:#FFFFFF}}
+
+/* text: service labels centered under icons, group labels in the group's color */
+.awd text{fill:var(--awd-ink);font-size:10.5px;font-weight:500}
+.awd .t-c{text-anchor:middle}
+.awd .t-sub{font-size:9px;fill:var(--awd-muted)}
+.awd .t-g{font-size:10px;font-weight:700}
+.awd .t-wire{font-size:8.5px;fill:var(--awd-muted);text-anchor:middle}
+
+/* official group frames (colors from the AWS group icons; AZ/SG/generic per AWS guidance) */
+.awd .g{fill:none;stroke-width:1.25}
+.awd .g-cloud{stroke:var(--awd-cloud)}                    .awd .gt-cloud{fill:var(--awd-cloud)}
+.awd .g-region{stroke:#00A4A6;stroke-dasharray:5 3}       .awd .gt-region{fill:#00A4A6}
+.awd .g-az{stroke:#007CBC;stroke-dasharray:5 3}           .awd .gt-az{fill:#2E8FD0}
+.awd .g-vpc{stroke:#8C4FFF}                               .awd .gt-vpc{fill:#9D6BFF}
+.awd .g-pub{stroke:rgba(122,161,22,.65);fill:rgba(122,161,22,.10)}  .awd .gt-pub{fill:#7AA116}
+.awd .g-priv{stroke:rgba(0,164,166,.65);fill:rgba(0,164,166,.10)}   .awd .gt-priv{fill:#00A4A6}
+.awd .g-sg{stroke:#DD344C}                                .awd .gt-sg{fill:#DD344C}
+.awd .g-asg{stroke:#ED7100;stroke-dasharray:5 3}          .awd .gt-asg{fill:#ED7100}
+.awd .g-acct{stroke:#E7157B}                              .awd .gt-acct{fill:#E7157B}
+.awd .g-dc{stroke:#7D8998}                                .awd .gt-dc{fill:#7D8998}
+.awd .g-gen{stroke:#7D8998;stroke-dasharray:5 3}          .awd .gt-gen{fill:#7D8998}
+.awd .g-hot{stroke:#DD344C;stroke-width:2}                /* a group that has failed (set via SMIL or class) */
+
+/* wires: arrowheads come from markers defined in each diagram's own <defs> (they inherit these vars) */
+.awd .w{fill:none;stroke:var(--awd-wire);stroke-width:1.3}
+.awd .w-d{stroke-dasharray:4 3}
+.awd .w-flow{stroke-dasharray:5 4;animation:awdDash 1.1s linear infinite}
+.awd .w-hot{stroke:#DD344C}
+.awd .ah{fill:var(--awd-wire)}
+@keyframes awdDash{to{stroke-dashoffset:-9}}
+
+/* moving parts (driven by SMIL on the diagram's single clock) */
+.awd .pk{fill:var(--awd-pk);filter:drop-shadow(0 0 3px var(--awd-pk))}
+.awd .pk-2{fill:var(--awd-pk2);filter:drop-shadow(0 0 3px var(--awd-pk2))}
+.awd .pk-bad{fill:#DD344C;filter:drop-shadow(0 0 3px #DD344C)}
+.awd .ring{fill:none;stroke:var(--awd-pk);stroke-width:1.6}
+.awd .ring-2{fill:none;stroke:var(--awd-pk2);stroke-width:1.6}
+.awd .awd-static{display:none}   /* still copy of a node that appears on the clock (shown under reduced motion) */
+
+/* numbered step badges (AWS reference-architecture convention) */
+.awd .st circle{fill:var(--awd-step-bg)}
+.awd .st text{fill:var(--awd-step-fg);font-size:9px;font-weight:800;text-anchor:middle}
+
+/* official colorway pairs: .cw-d = "-dark" icon (for dark backgrounds), .cw-l = "-light" icon */
+.awd .cw-l{display:none}
+[data-mode="light"] .awd .cw-d{display:none}
+[data-mode="light"] .awd .cw-l{display:inline}
+@media (prefers-color-scheme:light){:root:not([data-mode]) .awd .cw-d{display:none}:root:not([data-mode]) .awd .cw-l{display:inline}}
+
+/* ---- gallery page chrome (not part of any diagram): reading legend + icon library ---- */
+.awd-legend{display:flex;flex-wrap:wrap;align-items:center;gap:8px 18px;margin:6px 0 4px;padding:11px 14px;
+  background:var(--panel);border:1px solid var(--line);border-radius:10px;font-size:12px}
+.awd-key{display:inline-flex;align-items:center;gap:7px;color:var(--ink)}
+.awd.awd-k{display:inline-block;width:14px;height:14px;flex:none}
+.awd.awd-kw{width:34px;height:12px}
+.awd-src{flex-basis:100%;color:var(--muted);font-size:11.5px}
+.awd-lib-bar{position:sticky;top:0;z-index:3;display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;padding:10px 0;background:var(--bg)}
+.awd-lib-q{flex:1 1 300px;min-width:0;padding:8px 12px;background:var(--panel2);border:1px solid var(--line);border-radius:8px;color:var(--ink);font:inherit;font-size:13px}
+.awd-lib-q::placeholder{color:var(--dim)}
+.awd-lib-kinds{display:flex;flex-wrap:wrap;gap:6px}
+.awd-lib-kinds button{padding:4px 11px;background:var(--panel2);border:1px solid var(--line);border-radius:999px;color:var(--muted);font:inherit;font-size:12px;cursor:pointer}
+.awd-lib-kinds button b{margin-left:6px;color:var(--dim);font-weight:700;font-variant-numeric:tabular-nums}
+.awd-lib-kinds button.on{border-color:var(--accent);color:var(--ink)}
+.awd-lib-kinds button.on b{color:var(--accent)}
+.awd-lib-count{color:var(--muted);font-size:12px;font-variant-numeric:tabular-nums}
+.awd-lib-note{margin:0 0 6px;max-width:900px;color:var(--muted);font-size:12px}
+.awd-lib-blk{margin:16px 0 4px;content-visibility:auto;contain-intrinsic-size:auto 300px}
+.awd-lib-cat{display:flex;align-items:baseline;gap:8px;margin:0 0 8px;color:var(--ink);font-size:12.5px;font-weight:700}
+.awd-lib-cat small{color:var(--dim);font-size:11px;font-weight:600}
+.awd-lib-cat .awd-lib-n{margin-left:auto;font-variant-numeric:tabular-nums}
+.awd-lib-cells{display:grid;grid-template-columns:repeat(auto-fill,minmax(122px,1fr));gap:8px}
+.awd-ic{position:relative;display:flex;flex-direction:column;align-items:center;gap:6px;min-width:0;padding:12px 8px 9px;
+  background:var(--panel);border:1px solid var(--line);border-radius:10px;color:var(--ink);font:inherit;text-align:center;cursor:pointer}
+.awd-ic:hover{border-color:var(--accent)}
+.awd-ic[hidden],.awd-lib-blk[hidden]{display:none}
+.awd.awd-icon{width:40px;height:40px;flex:none}
+.awd-ic-n{font-size:11.5px;font-weight:600;line-height:1.3;overflow-wrap:anywhere}
+.awd-ic-id{color:var(--muted);font:9.5px/1.3 ui-monospace,SFMono-Regular,Menlo,monospace;overflow-wrap:anywhere}
+.awd-ic.ok{border-color:var(--pos)}
+.awd-ic.ok::after{content:attr(data-flash);position:absolute;top:5px;right:7px;color:var(--pos);font-size:9.5px;font-weight:800}
+.awd-lib-live{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+@media (prefers-reduced-motion:reduce){
+  .awd .pk,.awd .pk-2,.awd .pk-bad,.awd .ring,.awd .ring-2,.awd .anim{display:none}
+  .awd .awd-static{display:inline}
+  .awd .w-flow{animation:none}
+}

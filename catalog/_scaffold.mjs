@@ -69,13 +69,26 @@ ${gcss}
 const COPY = `<script>
 function copyViz(btn){
   var stage=btn.closest('.tile').querySelector('.stage');
-  var html=stage.innerHTML.replace(/\\s+$/,'').trim();
+  var html=stage.innerHTML.trim();
   var usedClasses=new Set();
-  (html.match(/class="[^"]*"/g)||[]).forEach(function(m){m.replace(/class="/,'').replace(/"/,'').split(/\\s+/).forEach(function(c){if(c)usedClasses.add(c)})});
-  var cssRules=[];
-  try{var sheets=document.styleSheets;for(var s=0;s<sheets.length;s++){var rules=sheets[s].cssRules;for(var r=0;r<rules.length;r++){var rule=rules[r];if(rule.type===7&&html.indexOf(rule.name)!==-1){cssRules.push(rule.cssText)}if(rule.type===1&&rule.selectorText){for(var uc of usedClasses){if(rule.selectorText.indexOf('.'+uc)!==-1&&!rule.selectorText.includes('.tile')){cssRules.push(rule.cssText);break}}}}}}catch(e){}
+  (html.match(/class="[^"]*"/g)||[]).forEach(function(m){m.slice(7,-1).split(/\\s+/).forEach(function(c){if(c)usedClasses.add(c)})});
+  // a rule belongs to the copy when its selector names one of the markup's classes (gallery chrome excluded)
+  function mine(sel){if(!sel||sel.indexOf('.tile')!==-1)return false;for(var c of usedClasses){var i=-1;while((i=sel.indexOf('.'+c,i+1))!==-1){var ch=sel.charAt(i+c.length+1);if(!ch||!/[\\w-]/.test(ch))return true;}}return false;}
+  var cssRules=[],kf={};
+  try{var sheets=document.styleSheets;for(var s=0;s<sheets.length;s++){var rules=sheets[s].cssRules;for(var r=0;r<rules.length;r++){var rule=rules[r];
+    if(rule.type===1){if(mine(rule.selectorText))cssRules.push(rule.cssText);}
+    else if(rule.type===4){var kids=[];for(var k=0;k<rule.cssRules.length;k++){var cr=rule.cssRules[k];if(cr.type===1&&mine(cr.selectorText))kids.push(cr.cssText);}if(kids.length)cssRules.push('@media '+rule.media.mediaText+'{'+kids.join('')+'}');}
+    else if(rule.type===7){kf[rule.name]=rule.cssText;}}}}catch(e){}
+  // @keyframes named by the markup or by the collected rules
+  var joined=cssRules.join('\\n');Object.keys(kf).forEach(function(n){if(joined.indexOf(n)!==-1||html.indexOf(n)!==-1)cssRules.push(kf[n]);});
   cssRules=[...new Set(cssRules)];
+  // <symbol>s the markup references by id (e.g. the AWS icon sprite) travel with the copy
+  var defs=[],seen={};
+  (html.match(/href="#[^"]+"/g)||[]).forEach(function(m){var id=m.slice(7,-1);if(seen[id])return;seen[id]=1;var el=document.getElementById(id);
+    if(!el||stage.contains(el)||el.tagName.toLowerCase()!=='symbol')return;var c=el.cloneNode(true);
+    [].slice.call(c.attributes).forEach(function(a){if(a.name.indexOf('data-')===0)c.removeAttribute(a.name);});defs.push(c.outerHTML);});
   var output='<!-- Prism Component -->\\n'+html;
+  if(defs.length)output+='\\n<svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position:absolute" aria-hidden="true">'+defs.join('')+'</svg>';
   if(cssRules.length>0)output+='\\n\\n<style>\\n'+cssRules.join('\\n')+'\\n</style>';
   function sgCopy(txt){try{if(navigator.clipboard&&navigator.clipboard.writeText){return navigator.clipboard.writeText(txt).catch(function(){return sgCopyFallback(txt);});}}catch(e){}return Promise.resolve(sgCopyFallback(txt));}
   function sgCopyFallback(txt){var ta=document.createElement('textarea');ta.value=txt;ta.setAttribute('readonly','');ta.style.cssText='position:fixed;top:0;left:0;width:1px;height:1px;opacity:0';document.body.appendChild(ta);ta.focus();ta.select();try{ta.setSelectionRange(0,txt.length);}catch(e){}var ok=false;try{ok=document.execCommand('copy');}catch(e){}document.body.removeChild(ta);if(!ok)return Promise.reject(new Error('copy failed'));return true;}

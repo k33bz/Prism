@@ -77,5 +77,6 @@ try {
   console.error('ERR', e && e.message || e);
   process.exitCode = 1;
 } finally {
+  try { ws && ws.close(); } catch {}   // an open DevTools socket keeps node alive after the shot
   try { proc.kill(); } catch {}
 }

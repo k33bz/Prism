@@ -1,3 +1,10 @@
 # Screenshot output + temp headless-Chrome profiles from the catalog/*.mjs verification tools
 catalog/shots/
 catalog/.chrome-*/
+# AWS kit: awd.mjs previews/screenshots, and the gallery scaffolds catalog/aws-kit/build-gallery.mjs
+# regenerates (the sprite-bearing body/template and the icon-library section)
+catalog/aws-kit/specs/*.html
+catalog/aws-kit/specs/*.png
+catalog/drafts/aws.body.html
+catalog/drafts/aws.tpl.html
+catalog/drafts/icons.aws.html

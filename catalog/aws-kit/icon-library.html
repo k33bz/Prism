@@ -1,0 +1,132 @@
+<h3 class="sec">ICON LIBRARY</h3>
+<div class="awd-lib" id="awd-lib">
+  <div class="awd-lib-bar">
+    <input type="search" class="awd-lib-q" placeholder="Search {{FILES}} official AWS icons by name, service, category or id" aria-label="Search the AWS icons" spellcheck="false" autocomplete="off">
+    <div class="awd-lib-kinds" role="group" aria-label="Filter by kind">
+      <button type="button" class="on" data-k="" aria-pressed="true">All</button>
+      <button type="button" data-k="service" aria-pressed="false">Services</button>
+      <button type="button" data-k="resource" aria-pressed="false">Resources</button>
+      <button type="button" data-k="group" aria-pressed="false">Groups</button>
+      <button type="button" data-k="category" aria-pressed="false">Categories</button>
+    </div>
+    <span class="awd-lib-count"></span>
+  </div>
+  <p class="awd-lib-note">Every icon from the official AWS Architecture Icons package, {{SOURCE}}, unmodified. Click an icon to copy it as standalone SVG. Icons that ship as dark and light colorways appear once and follow the theme; the copy uses the colorway for the current theme. In kit specs, use the id shown under each icon.</p>
+  <div class="awd-lib-grid"></div>
+  <span class="awd-lib-live" role="status" aria-live="polite"></span>
+</div>
+<script>
+/* AWS icon library: renders one cell per icon from the page's #awd-sprite (each <symbol> carries
+   data-n name, data-k kind, data-c category, data-s service, data-a aliases joined by |). No-op where the
+   sprite or the library markup is absent (e.g. when the New Facets page harvests this script). */
+(function(){
+  var root=document.getElementById('awd-lib'), sprite=document.getElementById('awd-sprite');
+  if(!root||!sprite||root.getAttribute('data-ready')) return;
+  root.setAttribute('data-ready','1');
+  var grid=root.querySelector('.awd-lib-grid'), q=root.querySelector('.awd-lib-q'),
+      count=root.querySelector('.awd-lib-count'), live=root.querySelector('.awd-lib-live'),
+      kindBtns=[].slice.call(root.querySelectorAll('.awd-lib-kinds button'));
+  var ORDER={service:0,resource:1,group:2,category:3},
+      LABEL={service:'Services',resource:'Resources',group:'Groups',category:'Categories'};
+
+  // One item per icon. Official colorway pairs (x-dark + x-light, or x-dark + x) collapse into
+  // one cell holding both variants; the kit's .cw-d / .cw-l rules show the one for the theme.
+  var syms={};
+  [].slice.call(sprite.querySelectorAll('symbol')).forEach(function(s){ syms[s.id]=s; });
+  var items=[], done={};
+  Object.keys(syms).forEach(function(id){
+    if(done[id]) return;
+    var base=id.replace(/-(dark|light)$/,''), dark=syms[base+'-dark']?base+'-dark':null;
+    var light=dark?(syms[base+'-light']?base+'-light':(syms[base]?base:null)):null;
+    var ids=(dark&&light)?[dark,light]:[id];
+    ids.forEach(function(x){ done[x]=1; });
+    var s=syms[ids[0]];
+    var it={id:(dark&&light)?base:id, ids:ids, pair:!!(dark&&light),
+      name:s.getAttribute('data-n')||id, kind:s.getAttribute('data-k')||'', cat:s.getAttribute('data-c')||'',
+      svc:s.getAttribute('data-s')||'', al:s.getAttribute('data-a')||''};
+    it.hay=[it.name,it.id,it.svc,it.cat,it.al,LABEL[it.kind]||''].join(' ').toLowerCase();
+    items.push(it);
+  });
+  items.sort(function(a,b){ return (ORDER[a.kind]-ORDER[b.kind])||a.cat.localeCompare(b.cat)||a.name.localeCompare(b.name); });
+
+  // Blocks: one per kind + category, so browsing reads like the package's own folders.
+  var blocks=[], cur=null, frag=document.createDocumentFragment();
+  items.forEach(function(it){
+    var key=it.kind+'|'+it.cat;
+    if(!cur||cur.key!==key){
+      cur={key:key, items:[], el:document.createElement('section')};
+      cur.el.className='awd-lib-blk';
+      var h=document.createElement('h4'); h.className='awd-lib-cat';
+      var t=document.createElement('span'); t.textContent=(it.kind==='group'||it.kind==='category')?LABEL[it.kind]:it.cat;
+      var k=document.createElement('small'); k.textContent=(it.kind==='group'||it.kind==='category')?'':LABEL[it.kind];
+      cur.n=document.createElement('small'); cur.n.className='awd-lib-n';
+      h.appendChild(t); h.appendChild(k); h.appendChild(cur.n);
+      cur.box=document.createElement('div'); cur.box.className='awd-lib-cells';
+      cur.el.appendChild(h); cur.el.appendChild(cur.box);
+      blocks.push(cur); frag.appendChild(cur.el);
+    }
+    var b=document.createElement('button');
+    b.type='button'; b.className='awd-ic';
+    b.title=it.name+(it.svc&&it.svc!==it.name?' ('+it.svc+')':'')+'. Click to copy SVG';
+    var vb=syms[it.ids[0]].getAttribute('viewBox');
+    b.innerHTML='<svg class="awd awd-icon" viewBox="'+vb+'" aria-hidden="true">'+
+      (it.pair?'<use class="cw-d" href="#'+it.ids[0]+'"/><use class="cw-l" href="#'+it.ids[1]+'"/>':'<use href="#'+it.ids[0]+'"/>')+
+      '</svg><span class="awd-ic-n"></span><code class="awd-ic-id"></code>';
+    b.querySelector('.awd-ic-n').textContent=it.name;
+    b.querySelector('.awd-ic-id').textContent=it.id;
+    b.addEventListener('click', function(){ copyIcon(it,b); });
+    it.el=b; cur.items.push(it); cur.box.appendChild(b);
+  });
+  grid.appendChild(frag);
+
+  function isLight(){
+    var m=document.documentElement.getAttribute('data-mode');
+    if(m) return m==='light';
+    return !!(window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)').matches);
+  }
+  function put(txt){
+    function fb(){ var ta=document.createElement('textarea'); ta.value=txt; ta.setAttribute('readonly','');
+      ta.style.cssText='position:fixed;top:0;left:0;width:1px;height:1px;opacity:0'; document.body.appendChild(ta);
+      ta.select(); var ok=false; try{ ok=document.execCommand('copy'); }catch(e){} document.body.removeChild(ta);
+      return ok?Promise.resolve():Promise.reject(new Error('copy failed')); }
+    try{ if(navigator.clipboard&&navigator.clipboard.writeText) return navigator.clipboard.writeText(txt).catch(fb); }catch(e){}
+    return fb();
+  }
+  function copyIcon(it,b){
+    var id=it.pair?(isLight()?it.ids[1]:it.ids[0]):it.ids[0], s=syms[id];
+    var label=it.name.replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');
+    var svg='<svg xmlns="http://www.w3.org/2000/svg" viewBox="'+s.getAttribute('viewBox')+'" width="48" height="48" role="img" aria-label="'+label+'">'+s.innerHTML+'</svg>';
+    put(svg).then(function(){ flash(b,'Copied',it.name+' copied as SVG'); }, function(){ flash(b,'Press Ctrl+C','Copy failed'); });
+  }
+  function flash(b,msg,say){
+    b.setAttribute('data-flash',msg); b.classList.add('ok'); live.textContent=say;
+    clearTimeout(b._t); b._t=setTimeout(function(){ b.classList.remove('ok'); b.removeAttribute('data-flash'); },1300);
+  }
+
+  var kind='', timer=null;
+  function apply(){
+    var words=(q.value||'').toLowerCase().split(/\s+/).filter(Boolean), shown=0;
+    blocks.forEach(function(bk){
+      var n=0;
+      bk.items.forEach(function(it){
+        var ok=(!kind||it.kind===kind)&&words.every(function(w){ return it.hay.indexOf(w)!==-1; });
+        it.el.hidden=!ok; if(ok) n++;
+      });
+      bk.el.hidden=!n; bk.n.textContent=n; shown+=n;
+    });
+    count.textContent=shown===items.length?items.length+' icons':shown+' of '+items.length+' icons';
+  }
+  kindBtns.forEach(function(btn){
+    var k=btn.getAttribute('data-k'), c=document.createElement('b');
+    c.textContent=k?items.filter(function(it){ return it.kind===k; }).length:items.length;
+    btn.appendChild(c);
+    btn.addEventListener('click', function(){
+      kind=k;
+      kindBtns.forEach(function(x){ var on=x===btn; x.classList.toggle('on',on); x.setAttribute('aria-pressed',on?'true':'false'); });
+      apply();
+    });
+  });
+  q.addEventListener('input', function(){ clearTimeout(timer); timer=setTimeout(apply,80); });
+  apply();
+})();
+</script>

@@ -92,6 +92,12 @@ const PROBE = `(function(){
   var anim=0, names={};
   els.forEach(function(el){ ['',':before',':after'].forEach(function(p){
     var n=running(el, p?'::'+p.slice(1):null); if(n){ anim++; n.split(',').forEach(function(x){names[x.trim()]=1;}); } }); });
+  // SVG SMIL (<animate>, <animateMotion>, ...) runs without CSS keyframes: count each one whose
+  // target is actually rendered, so a reduced-motion rule that hides the moving parts reads as stopped.
+  [].slice.call(stage.querySelectorAll('animate,animateMotion,animateTransform,set')).forEach(function(a){
+    var shown=true;
+    for(var x=a.targetElement||a.parentNode; x && x!==stage; x=x.parentNode){ if(x.nodeType===1 && getComputedStyle(x).display==='none'){ shown=false; break; } }
+    if(shown){ anim++; names['smil:'+a.localName]=1; } });
   // substance
   var sub=false;
   if(r.width>=8 && r.height>=8){

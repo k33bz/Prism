@@ -40,6 +40,7 @@ const GALLERIES = [
   { gallery: 'maps', title: 'Maps & Geo' },
   { gallery: 'notify', title: 'Notifications & Status' },
   { gallery: 'arch', title: 'Architecture Diagrams' },
+  { gallery: 'aws', title: 'AWS Architecture' },
   { gallery: 'callouts', title: 'Callouts & Annotations' },
   // These three are real content galleries with pg-* templates + nav links in
   // Prism.html. Omitting them silently dropped 433 effects (obsidian 130,
@@ -153,6 +154,17 @@ const EXTRACT_FN = `function extractInPage(gallery, d){
     var id=node.getAttribute('data-fx-id') || (gallery+'-'+slug(name));
     if(seen[id]){seen[id]++;id+='-'+seen[id];}else seen[id]=1;
     var r=cssFor(html);
+    // <symbol>s the markup references by id but does not contain (the AWS gallery's icon sprite)
+    // travel with the facet, so its html stays self-contained like every other entry.
+    var defs=[], seenRef={};
+    (html.match(/href="#[^"]+"/g)||[]).forEach(function(m){
+      var rid=m.slice(7,-1); if(seenRef[rid]) return; seenRef[rid]=1;
+      var el=d.getElementById(rid); if(!el||node.contains(el)||el.tagName.toLowerCase()!=='symbol') return;
+      var c=el.cloneNode(true);
+      Array.prototype.slice.call(c.attributes).forEach(function(a){ if(a.name.indexOf('data-')===0) c.removeAttribute(a.name); });
+      defs.push(c.outerHTML);
+    });
+    if(defs.length) html+='\\n<svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position:absolute" aria-hidden="true">'+defs.join('')+'</svg>';
     // A tile may declare its initializer explicitly (fork convention: data-needs-js="<key>",
     // with the code in a <script data-prism-init="<key>"> on the same page); otherwise the
     // upstream heuristics apply.
