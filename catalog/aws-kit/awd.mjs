@@ -112,7 +112,7 @@ export function diagram(spec) {
   // inline style: a class rule (.awd .w) would outrank presentation attributes.
   const fx = spec.effects || [];
   const head = (mid, paint, size, user) => `<marker id="${id}-${mid}" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="${size}" markerHeight="${size}"${user ? ' markerUnits="userSpaceOnUse"' : ''} orient="auto-start-reverse"><path ${paint} d="M0,0 L8,4 L0,8 Z"/></marker>`;
-  parts.push(`<defs>${head('ah', 'class="ah"', 7)}${fx.some((e) => e.glow) ? head('ahg', 'style="fill:var(--awd-pk)"', 9.1, true) : ''}</defs>`);
+  parts.push(`<defs>${head('ah', 'class="ah"', 7)}${(spec.wires || []).some((w) => w.hot) ? head('ahh', 'style="fill:#DD344C"', 7) : ''}${fx.some((e) => e.glow) ? head('ahg', 'style="fill:var(--awd-pk)"', 9.1, true) : ''}</defs>`);
   // fade dims the wire itself (head included) during its window
   const fading = new Map(fx.filter((e) => e.fade).map((e) => [e.fade, e.t]));
 
@@ -133,7 +133,8 @@ export function diagram(spec) {
     if (!w.d && (!nodes[w.from] || !nodes[w.to])) throw new Error(`wire ${w.id}: unknown node`);
     wires[w.id] = d; wireDefs[w.id] = w;
     const cls = ['w', w.dashed ? 'w-d' : '', w.flow ? 'w-flow' : '', w.hot ? 'w-hot' : ''].filter(Boolean).join(' ');
-    const mk = w.arrow === false ? '' : `${w.both ? ` marker-start="url(#${id}-ah)"` : ''} marker-end="url(#${id}-ah)"`;
+    const ah = w.hot ? 'ahh' : 'ah';   // a red (hot) wire gets a red head
+    const mk = w.arrow === false ? '' : `${w.both ? ` marker-start="url(#${id}-${ah})"` : ''} marker-end="url(#${id}-${ah})"`;
     if (fading.has(w.id)) {
       // a drained wire: the live copy dims during the window; the still copy serves reduced motion
       const [a, b] = fading.get(w.id);

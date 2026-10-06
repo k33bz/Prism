@@ -34,7 +34,8 @@ const node = (args) => {
 
 const want = process.argv[2] ? process.argv[2].split(',').map((s) => s.trim()).filter(Boolean) : null;
 for (const f of want || []) if (!FAMILIES.includes(f)) { console.error(`unknown family "${f}" (known: ${FAMILIES.join(', ')})`); process.exit(1); }
-const families = (want || FAMILIES).filter((f) => fs.existsSync(path.join(DRAFTS, `${f}.aws.html`)));
+// page order is always FAMILIES order, whatever order the list was given in
+const families = FAMILIES.filter((f) => (!want || want.includes(f)) && fs.existsSync(path.join(DRAFTS, `${f}.aws.html`)));
 if (want && families.length !== want.length) {
   console.error('not built yet: ' + want.filter((f) => !families.includes(f)).join(', ') + ' (run awd.mjs build first)');
   process.exit(1);
