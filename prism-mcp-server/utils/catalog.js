@@ -12,6 +12,7 @@ import { readFile } from 'node:fs/promises';
 import fs from 'node:fs';
 import path from 'node:path';
 import { EventEmitter } from 'node:events';
+import { loadIcons } from './icons.js';
 
 const ISLAND_OPEN = '<script type="application/json" id="prism-catalog">';
 
@@ -87,7 +88,7 @@ function normalizeEffect(e) {
     spectrum: e.spectrum || null,
     tags: toArray(e.tags),
     // Derived selection metadata (see catalog/_derive_selection.mjs). role is the
-    // component's purpose; dataShape (charts/maps/diagrams only) is the data
+    // component's purpose; dataShape (charts/maps/diagrams/aws only) is the data
     // relationship it fits; a11y describes motion + reduced-motion behaviour.
     role: e.role || null,
     layer: e.layer || null,
@@ -215,6 +216,7 @@ export class CatalogStore extends EventEmitter {
       const raw = await loadCatalogFile(this.filePath);
       this.catalog = normalizeCatalog(raw);
       this._reindex();
+      this._icons = undefined;   // re-read the icon sprite on next use
       const stats = { effects: this.catalog.effects.length, galleries: this.catalog.galleries.length };
       this.log('info', `Hot-reloaded catalog: ${stats.effects} effects`);
       this.emit('reload', stats);
@@ -254,6 +256,12 @@ export class CatalogStore extends EventEmitter {
   gallery(id) { return this._byGallery.get(id) || []; }
   galleries() { return this.catalog ? this.catalog.galleries : []; }
   tokens() { return this.catalog ? this.catalog.tokens : null; }
+  /** AWS Architecture Icons that ship with this catalog ({ source, icons: Map }), loaded on first
+   *  use from the gallery sprite in Prism.html or aws-icons/aws-icons.json beside a manifest. */
+  icons() {
+    if (this._icons === undefined) this._icons = loadIcons(this.filePath);
+    return this._icons;
+  }
   meta() {
     const c = this.catalog || {};
     return {

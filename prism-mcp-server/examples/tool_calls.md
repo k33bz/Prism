@@ -500,6 +500,44 @@ Result:
 
 ---
 
+## AWS Architecture Icons
+
+The official AWS Architecture Icons behind the AWS Architecture gallery (read from its embedded sprite).
+
+### `search_aws_icons`
+Request:
+```json
+{ "name": "search_aws_icons", "arguments": { "query": "users", "limit": 5 } }
+```
+Result (dark/light colorway pairs collapse into one base id):
+```json
+{
+  "source": "…/Prism.html (#awd-sprite)",
+  "total": 1, "offset": 0, "count": 1,
+  "items": [
+    { "id": "aws-res-users", "name": "Users", "kind": "resource", "category": "General Icons",
+      "colorways": { "dark": "aws-res-users-dark", "light": "aws-res-users-light" } }
+  ]
+}
+```
+
+### `get_aws_icon`
+Request:
+```json
+{ "name": "get_aws_icon", "arguments": { "id": "aws-svc-lambda", "size": 48 } }
+```
+Result (artwork unmodified; `format: "symbol"` returns a `<symbol>` for a page sprite instead):
+```json
+{
+  "id": "aws-svc-lambda", "name": "AWS Lambda", "kind": "service", "category": "Compute",
+  "viewBox": "0 0 64 64", "format": "svg",
+  "markup": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 64 64\" width=\"48\" height=\"48\" role=\"img\" aria-label=\"AWS Lambda\">…</svg>",
+  "source": "…/Prism.html (#awd-sprite)"
+}
+```
+An unknown id fails with `code: "not_found"` and `data.suggestions` (near matches).
+
+---
 ## Collections & favorites
 
 Saved, named sets of effects that persist across sessions (disk-backed JSON).

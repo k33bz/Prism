@@ -1,4 +1,4 @@
-// The 20 Prism MCP tools. Each entry: { name, description, inputSchema, handler }.
+// The Prism MCP tools. Each entry: { name, description, inputSchema, handler }.
 // Handlers receive (args, ctx) where ctx = { store, logger } and return a plain
 // JS object (serialized to JSON text by the server). Handlers throw ToolError for
 // structured, actionable failures.
@@ -8,6 +8,7 @@ import { compose, composeWithTemplate, availableTemplates } from '../utils/compo
 import { validateFacet, validateComposition } from '../utils/validate.js';
 import { THEMES, THEME_IDS, TOKEN_META, BASE_TOKENS, getTheme, usesTokens, themeRootCss, isThemeSensitive, themeIdList, themesSummary } from '../utils/themes.js';
 import { CollectionError, toExportSchema } from '../utils/collections.js';
+import { ICON_KINDS, searchIcons, suggestIcons, resolveIcon, colorwayPair, iconSvg, iconSymbol } from '../utils/icons.js';
 
 export class ToolError extends Error {
   constructor(message, { code = 'tool_error', data = null } = {}) {
@@ -52,6 +53,15 @@ function resolveComponents(effectIds, store) {
     throw new ToolError(`Unknown effect id(s): ${missing.join(', ')}`, { code: 'not_found', data: { missing } });
   }
   return resolved;
+}
+
+/** The AWS icons that ship with the loaded catalog, or a structured 'unavailable' error. */
+function iconPack(store) {
+  const pack = store.icons ? store.icons() : null;
+  if (!pack) {
+    throw new ToolError('No AWS icons ship with this catalog: point the server at Prism.html, or at a manifest.json with aws-icons/aws-icons.json beside it', { code: 'unavailable' });
+  }
+  return pack;
 }
 
 // --- shared schema fragments ---
@@ -327,7 +337,7 @@ export function buildTools() {
           componentType: { type: 'string', description: 'Filter by componentType' },
           role: { type: 'string', description: 'Filter by role/purpose (action, input, navigation, feedback, loading, data-display, decorative, ambient, media)' },
           layer: { type: 'string', description: 'Filter by stacking layer (background, content, overlay)' },
-          dataShape: { type: 'string', description: 'Filter by data shape (charts/maps/diagrams: single-value, time-series, comparison, part-to-whole, correlation, distribution, flow, geo)' },
+          dataShape: { type: 'string', description: 'Filter by data shape (charts/maps/diagrams/aws: single-value, time-series, comparison, part-to-whole, correlation, distribution, flow, geo)' },
           usableAsBackground: { type: 'boolean', description: 'Only background-capable effects' },
           isNew: { type: 'boolean', description: 'Only effects tagged new' },
           limit: { type: 'integer', minimum: 1, default: 50 },
@@ -367,7 +377,7 @@ export function buildTools() {
               categories: { ...strArr, description: 'Match any of these category values' },
               roles: { ...strArr, description: 'Match any of these roles (component purpose): action, input, navigation, feedback, loading, data-display, decorative, ambient, media' },
               layers: { ...strArr, description: 'Match any of these stacking layers: background (sits behind), content (in-flow, default), overlay (floats above: toasts/tooltips/notifications/modals)' },
-              dataShapes: { ...strArr, description: 'Match any of these data shapes (charts/maps/diagrams only): single-value, time-series, comparison, part-to-whole, correlation, distribution, flow, geo' },
+              dataShapes: { ...strArr, description: 'Match any of these data shapes (charts/maps/diagrams/aws only): single-value, time-series, comparison, part-to-whole, correlation, distribution, flow, geo' },
               tags: { ...strArr, description: 'Must carry ALL of these tags (AND)' },
               interactions: { ...strArr, description: 'Match any of these normalized interaction tokens (static, hover, click, focus, scroll, auto-play, drag, toggle, on-load, …)' },
               isNew: { type: 'boolean' },
@@ -1035,6 +1045,67 @@ export function buildTools() {
             { token: '--cardgrad', purpose: 'Standard card gradient overlay' },
           ],
           recolorClasses: ['c-accent', 'c-info', 'c-pos', 'c-warn', 'c-neg', 'c-crit'],
+        };
+      },
+    },
+
+    // ============================== AWS ARCHITECTURE ICONS (2) ==============================
+    // The official AWS Architecture Icons behind the AWS Architecture gallery, read from the
+    // gallery's embedded sprite in Prism.html (or catalog/aws-icons/aws-icons.json). The gallery's
+    // own diagrams already carry their icons in get_effect html; these tools serve new diagrams.
+    {
+      name: 'search_aws_icons',
+      description: 'Search the official AWS Architecture Icons that ship with Prism (services, resources, group frames, categories) by words over name, id, service, category and aliases, e.g. "lambda", "managed microsoft ad", "nat gateway". Every word must match. Colorway pairs (separate artwork for dark and light backgrounds) collapse into one result keyed by the base id. Use get_aws_icon for the SVG.',
+      inputSchema: {
+        type: 'object',
+        properties: {
+          query: { type: 'string', description: 'Words that must all match (case-insensitive). Empty lists every icon.' },
+          kind: { type: 'string', enum: ICON_KINDS, description: 'Only this kind of icon.' },
+          limit: { type: 'integer', minimum: 1, maximum: 200, description: 'Max results (default 25, max 200).' },
+          offset: { type: 'integer', minimum: 0, description: 'Results to skip, for paging.' },
+        },
+        additionalProperties: false,
+      },
+      handler: (a, { store }) => {
+        const pack = iconPack(store);
+        if (a.kind != null && !ICON_KINDS.includes(a.kind)) {
+          throw new ToolError(`kind must be one of: ${ICON_KINDS.join(', ')}`, { code: 'invalid_argument' });
+        }
+        const limit = Math.min(200, nonNegInt(a.limit, 25));
+        return { source: pack.source, ...searchIcons(pack.icons, { query: a.query || '', kind: a.kind || null, limit, offset: nonNegInt(a.offset, 0) }) };
+      },
+    },
+    {
+      name: 'get_aws_icon',
+      description: 'Get one official AWS Architecture Icon, unmodified, as standalone SVG (default) or as a <symbol> for a page sprite (reference it with <use href="#id">). For icons with separate dark/light artwork, a base id such as aws-res-users returns the light-background artwork unless colorway is "dark".',
+      inputSchema: {
+        type: 'object',
+        properties: {
+          id: { type: 'string', description: 'Icon id from search_aws_icons, e.g. aws-svc-lambda.' },
+          format: { type: 'string', enum: ['svg', 'symbol'], description: 'svg (default): a standalone <svg>. symbol: a <symbol> for a sprite.' },
+          colorway: { type: 'string', enum: ['light', 'dark'], description: 'Artwork for light backgrounds (default) or dark ones; ignored for single-artwork icons.' },
+          size: { type: 'integer', minimum: 8, maximum: 1024, description: 'Width and height of the standalone svg in px (default 48).' },
+        },
+        required: ['id'],
+        additionalProperties: false,
+      },
+      handler: (a, { store }) => {
+        const pack = iconPack(store);
+        if (typeof a.id !== 'string' || !a.id.trim()) throw new ToolError('id is required', { code: 'invalid_argument' });
+        const icon = resolveIcon(pack.icons, a.id.trim(), a.colorway === 'dark' ? 'dark' : 'light');
+        if (!icon) {
+          throw new ToolError(`Unknown AWS icon id: ${a.id}`, { code: 'not_found', data: { suggestions: suggestIcons(pack.icons, a.id) } });
+        }
+        const pair = colorwayPair(pack.icons, icon.id);
+        const symbol = a.format === 'symbol';
+        return {
+          id: icon.id, name: icon.name, kind: icon.kind, category: icon.category,
+          ...(icon.service ? { service: icon.service } : {}),
+          ...(pair ? { colorways: { dark: pair.dark, light: pair.light } } : {}),
+          viewBox: icon.viewBox,
+          format: symbol ? 'symbol' : 'svg',
+          markup: symbol ? iconSymbol(icon) : iconSvg(icon, Math.min(1024, Math.max(8, nonNegInt(a.size, 48)))),
+          source: pack.source,
         };
       },
     },
