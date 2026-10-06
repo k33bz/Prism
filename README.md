@@ -4,9 +4,9 @@
 
 **One prism. Every facet of your report.**
 
-A single-file gallery of **3,448** offline, self-contained CSS/SVG animations, components, and backdrops — built to be browsed by humans *and* driven by AI agents. Ships with a **zero-dependency MCP server** so Claude (Desktop, Code, or the API) can search the catalog and compose production-ready HTML/CSS on demand.
+A single-file gallery of **3,526** offline, self-contained CSS/SVG animations, components, and backdrops — built to be browsed by humans *and* driven by AI agents. Ships with a **zero-dependency MCP server** so Claude (Desktop, Code, or the API) can search the catalog and compose production-ready HTML/CSS on demand.
 
-![Effects](https://img.shields.io/badge/effects-3448-ff9900) ![Galleries](https://img.shields.io/badge/galleries-17-4493f8) ![Dependencies](https://img.shields.io/badge/dependencies-0-3fb950) ![Offline](https://img.shields.io/badge/offline-100%25-3fb950) ![MCP](https://img.shields.io/badge/MCP-server%20included-c879ff) ![Single file](https://img.shields.io/badge/single%20file-HTML-e0a52b)
+![Effects](https://img.shields.io/badge/effects-3526-ff9900) ![Galleries](https://img.shields.io/badge/galleries-18-4493f8) ![Dependencies](https://img.shields.io/badge/dependencies-0-3fb950) ![Offline](https://img.shields.io/badge/offline-100%25-3fb950) ![MCP](https://img.shields.io/badge/MCP-server%20included-c879ff) ![Single file](https://img.shields.io/badge/single%20file-HTML-e0a52b)
 
 </div>
 
@@ -16,7 +16,8 @@ A single-file gallery of **3,448** offline, self-contained CSS/SVG animations, c
 
 This is [k33bz/Prism](https://github.com/k33bz/Prism), a fork of [crazy54/Prism](https://github.com/crazy54/Prism). Upstream is the design library and the MCP server; the fork keeps both intact and adds, on top:
 
-- **Two galleries:** 📋 Tables & Data Layouts (55 facets, including click-driven sorting demos and a holographic file tree) and 📐 Diagrams & Frameworks (53 facets: every fishbone variant, flow, hierarchy, comparison, timeline, network, strategy frameworks, flywheels).
+- **Two galleries:** 📋 Tables & Data Layouts (57 facets, including click-driven sorting demos and a holographic file tree) and 📐 Diagrams & Frameworks (58 facets: every fishbone variant, flow, hierarchy, comparison, timeline, network, strategy frameworks, flywheels).
+- **☁️ AWS Architecture gallery:** 53 animated reference architectures drawn with the official AWS Architecture Icons: serverless, three-tier web applications, Active Directory (forest trusts, AD Connector, Windows and Kerberos auth for RDS, Aurora and FSx), databases, multi-Region resilience, and VPC and hybrid networking. They compile from plain-data specs (`catalog/aws-kit`), all 859 icons are embedded once with a searchable icon library, Copy carries the icons a diagram uses, and the MCP server can search and serve any icon.
 - **New facet families inside existing galleries:** the Elemental Base blocks and Pokémon Battle scenes in FX Store, a self-hosted-Forgejo landing kit in Animated Objects and Text Effects, presence status modifiers and a live avatar stack in Notifications.
 - **Three more theme packs** (Cloudflare Orange, Google Cloud Console, Fluent for Azure) through the same profile, scaffolder, generator and 100-facet gate as upstream's packs, plus two skins (Frutiger Aero, Liquid Glass).
 - **Git-derived metadata:** every catalog record carries `addedOn`, `updatedOn` and `author` mined from history, the New Facets page is built from those dates with an adjustable window, and Search filters and sorts by author.
@@ -66,7 +67,7 @@ node cli.js tools
 node cli.js start --catalog ../Prism.html
 ```
 
-`info` should report **3,110 effects across 17 galleries** (1,300 of those are the 13 theme packs' Spectrum facets, 100 per pack). If it does, the server is working — the remaining steps just tell a client *how* to launch it.
+`info` should report **3,526 effects across 18 galleries** (1,300 of those are the 13 theme packs' Spectrum facets, 100 per pack). If it does, the server is working — the remaining steps just tell a client *how* to launch it.
 
 > **Always point `--catalog` at `Prism.html`.** The `#prism-catalog` island inside it is the authoritative catalog and can be fresher than `catalog/manifest.json`. If `--catalog` is omitted, the server defaults to `../Prism.html`, falling back to `../catalog/manifest.json`.
 
@@ -167,7 +168,7 @@ Options:
 
 Logs go to **stderr** (stdout is reserved for the JSON-RPC channel), so they never corrupt the MCP protocol stream. Verbosity is also settable via `PRISM_MCP_LOG_LEVEL`. A `--port` flag is accepted but ignored — this build is stdio-only; add an HTTP/SSE transport by implementing one against `PrismMCPServer`.
 
-### The 29 tools
+### The 31 tools
 
 | Group | Tools |
 |---|---|
@@ -176,6 +177,7 @@ Logs go to **stderr** (stdout is reserved for the JSON-RPC channel), so they nev
 | **Composition (3)** | `compose` · `compose_with_template` (`stack`/`row`/`grid`/`card`) · `validate_composition` |
 | **Content creation (3)** | `create_facet` · `update_facet` · `validate_facet` |
 | **Catalog management (3)** | `get_catalog_metadata` · `export_collection` (`bundle`/`document`/`schema`) · `get_token_reference` |
+| **AWS icons (2)** | `search_aws_icons` · `get_aws_icon` (the official AWS Architecture Icons, as standalone SVG or sprite symbols) |
 | **Collections & favorites (6)** | `list_collections` · `get_collection` · `create_collection` · `add_to_collection` · `remove_from_collection` · `delete_collection` |
 
 `compose` merges HTML, deduplicates CSS rules, collapses `:root` token blocks, validates the output, and reports size savings. **Collections** are named, disk-backed sets of effects that persist across sessions (stored in `prism-mcp-server/collections.json`, which is git-ignored); export one with `export_collection { collectionId, format: "schema" }` to hand it to the Prism.html UI. Full parameter schemas come back from `tools/list`, and one example call per tool lives in [`prism-mcp-server/examples/`](./prism-mcp-server/examples).
@@ -263,26 +265,27 @@ The page opens on a loader veil, then routes by device: touch devices land on **
 
 ## The galleries
 
-Seventeen authored galleries, plus special views. Every element carries a name, its canonical CSS selector (`.ref`), a one-line description, and a copy affordance.
+Eighteen authored galleries, plus special views. Every element carries a name, its canonical CSS selector (`.ref`), a one-line description, and a copy affordance.
 
 | Gallery | What's inside | Count |
 |---|---|--:|
-| 🧪 **Animation Lab** | Motion studies — easing, transforms, loaders, physics, keyframes, loaders and waiting states, reveal choreography | 260 |
+| 🧪 **Animation Lab** | Motion studies — easing, transforms, loaders, physics, keyframes, loaders and waiting states, reveal choreography | 261 |
 | ◆ **Spectrums** | 9 hand-authored families across full visual languages (Material, glass, brutalist, solarpunk…) plus the 13 theme packs at 100 generator facets each | 1566 |
 | 📊 **Charts & Metrics** | KPIs, gauges, progress, trends, comparisons, status, 3D charts, correlation/time/distribution plots, treemaps and hierarchies, liquid gauges and variance bands, run charts with SPC rules | 266 |
-| 🎇 **FX Store** | Drop-in visual effects: glow, pulse, shimmer, glass, particles, glitch, Pokémon Battle signature scenes, Elemental Base blocks (spray, bolt, streak, burst, aura, volley), glow system, hover and reveal | 213 |
+| 🎇 **FX Store** | Drop-in visual effects: glow, pulse, shimmer, glass, particles, glitch, Pokémon Battle signature scenes, Elemental Base blocks (spray, bolt, streak, burst, aura, volley), glow system, hover and reveal | 248 |
 | ◈ **Obsidian Facets** | Callouts, graph links, note chrome, Dataview dashboards, Canvas, focus scenes | 130 |
 | 🤖 **AI Working** | "Thinking" states, token streams, tool calls, model internals | 118 |
-| ✏️ **Input Methods** | Controls, pickers, toggles, interactive input patterns, button hover effects, retro sci-fi control panels, nixie tubes | 134 |
+| ✏️ **Input Methods** | Controls, pickers, toggles, interactive input patterns, button hover effects, retro sci-fi control panels, nixie tubes | 136 |
 | 🔤 **Text Effects** | Gradient, neon, glitch, shimmer, kinetic, 3D/extrude text | 102 |
-| ⌬ **Animated Objects** | Self-contained animated SVG/CSS objects, icons, 3D objects, forge landing kit, ambient backgrounds, 3D CSS objects, synthwave outrun scenes, hourglass and sand, lava lamps | 165 |
+| ⌬ **Animated Objects** | Self-contained animated SVG/CSS objects, icons, 3D objects, forge landing kit, ambient backgrounds, 3D CSS objects, synthwave outrun scenes, hourglass and sand, lava lamps | 185 |
 | 🌈 **Text Shapes** | Text arranged into arcs, rings, spirals, 3D tunnels | 53 |
 | 🌍 **Maps & Geo** | Offline SVG maps, pulsing markers, great-circle arcs, choropleth, radar, telemetry | 50 |
 | 🔔 **Notifications & Status** | Toasts, snackbars, banners, live indicators, presence status set, live avatar stack, empty states, skeletons, geometric and 3D avatar shapes | 55 |
 | 🗺 **Architecture Diagrams** | Service nodes, animated connectors, VPC containers, sequence & flow diagrams, AWS reference architectures, network flow maps | 76 |
+| ☁️ **AWS Architecture** | Animated reference architectures on the official AWS Architecture Icons: serverless, web applications, Active Directory and trusts, databases, regions and resilience, VPC and hybrid networking, plus a searchable library of all 859 icons | 53 |
 | ⭐ **Callouts & Annotations** | Admonitions, badges & pills, timelines, dividers, tooltips, key-value meta | 50 |
-| 🧭 **Menus & Actions** | Dropdowns, context menus, command palettes, action bars, radial menus, live long-press and drag dial menus | 39 |
-| 📋 **Tables & Data Layouts** | Data tables, status cells, matrices, key-value blocks, lists & trees, grids & schedules, ledgers, toolbars | 55 |
+| 🧭 **Menus & Actions** | Dropdowns, context menus, command palettes, action bars, radial menus, live long-press and drag dial menus | 62 |
+| 📋 **Tables & Data Layouts** | Data tables, status cells, matrices, key-value blocks, lists & trees, grids & schedules, ledgers, toolbars | 57 |
 | 📐 **Diagrams & Frameworks** | Fishbone variants, flowcharts & loops, trees & funnels, Venn & SWOT, roadmaps & Gantt, networks, Sankey sub-styles, OKR / RACI / canvas, flywheels | 58 |
 
 **Special views:** ✦ **New Facets** (live-assembled page of everything added or changed in a chosen window, default 30 days, with a day slider and an optional Spectrums toggle; dates come from git history) · 🔎 **Search** (faceted search over the whole catalog: gallery, component, interaction, author, status and tags, sortable by relevance, name, git date, gallery or author, with saved searches and shareable URLs) · 🎛 **Variant Matrix** (any facet rendered across every theme at once) · 📚 **Collections** (named sets of facets, exportable to the MCP server) · 📱 **Mobile** / 🖱️ **Desktop** (the library sliced by input modality) · 🎨 **Idea Gallery** (paste code, tweak variables, preview live).
@@ -323,7 +326,7 @@ The island is purpose-built to back an MCP server because everything a tool need
 {
   "id": "charts-gauge-cluster",     // stable, unique — what an agent references
   "name": "Gauge Cluster",
-  "gallery": "charts",              // charts|fx|lab|ai|objects|input|text|shapes|maps|notify|arch|callouts|obsidian|menus|tables|diagrams|spectrums
+  "gallery": "charts",              // charts|fx|lab|ai|objects|input|text|shapes|maps|notify|arch|aws|callouts|obsidian|menus|tables|diagrams|spectrums
   "category": "Gauges & Dials",
   "ref": ".nch-gaugetri",           // canonical selector
   "description": "Three half-gauges with sweeping needles…",
@@ -364,13 +367,13 @@ The MCP server's `compose` / `compose_with_template` tools do all of this for yo
 .
 ├── Prism.html              ← the whole tool: UI + all galleries + the JSON island
 ├── README.md               ← you are here
-├── prism-mcp-server/       ← the MCP server (zero-dependency Node, 29 tools)
+├── prism-mcp-server/       ← the MCP server (zero-dependency Node, 31 tools)
 │   ├── cli.js                 prism-mcp CLI (start / info / tools / help)
 │   ├── index.js               PrismMCPServer (JSON-RPC dispatch) + StdioTransport
-│   ├── tools/index.js         the 29 tool definitions
-│   ├── utils/                 catalog store, collections, themes mirror, css/compose/validate, logger
+│   ├── tools/index.js         the 31 tool definitions
+│   ├── utils/                 catalog store, collections, themes mirror, AWS icons, css/compose/validate, logger
 │   ├── examples/              per-tool example calls + Claude Desktop / Anthropic API configs
-│   ├── test/                  Node-native test suite (129 tests)
+│   ├── test/                  Node-native test suite (156 tests)
 │   └── README.md              server internals & architecture
 ├── catalog/                ← the catalog + the maintenance pipeline
 │   ├── manifest.json          full catalog (mirror of the island)
@@ -385,6 +388,8 @@ The MCP server's `compose` / `compose_with_template` tools do all of this for yo
 │   ├── _sync_counts.mjs       keep this README's badges and counts honest
 │   ├── _scaffold.mjs / _rescaffold.mjs / _splice.mjs / _splice_page.mjs   build and splice gallery templates from drafts/
 │   ├── _scaffold_ds.mjs / _gen_system.mjs / _merge_spectrum.mjs           theme packs: profile → registry + MCP mirror → 100 facets → Spectrums
+│   ├── aws-icons/             the official AWS Architecture Icons: JSON store, sprite, build script, NOTICE
+│   ├── aws-kit/               AWS diagram kit: awd.mjs (spec to SVG), build-gallery.mjs, one spec per family
 │   ├── drafts/                gallery sources (body + css) for the drafts-built galleries
 │   ├── profiles/              one profile per theme (palette, type, radius)
 │   └── additions/             generated facet batches merged into the galleries
