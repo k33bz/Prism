@@ -20,7 +20,11 @@ Screenshot a preview (SMIL advances under the virtual-time budget; take 2 budget
   --virtual-time-budget=1500 --window-size=1100,1400 --screenshot="<abs path>.png" "file:///<abs path to preview>.html"
 ```
 Use a fresh `--user-data-dir` for every shot: if a previous Edge still holds the profile, the new
-one hands off to it and exits without writing the PNG.
+one hands off to it and exits without writing the PNG. `--screenshot` returns before the PNG is
+written, so poll for the file (up to ~20 s) instead of checking once. Wrap calls in `timeout 90`.
+If you drive Edge over CDP (`--remote-debugging-port`), shut it down with `Browser.close` (see
+`closeBrowser()` in `catalog/_chrome.mjs`); killing the spawned process leaks the browser and its
+children, and dozens of leaked instances pin the CPU for everyone.
 
 Assemble the gallery page in `Prism.html` (maintainer step: re-scaffolds `pg-aws` with the full icon
 sprite and the legend, splices the family drafts in order, then the icon library):
@@ -42,12 +46,13 @@ export default {
     wide: false,             // true -> tile spans 2 columns: use w:960
     w: 480, h: 236,          // viewBox. Normal: w 480, h <= 300. Wide: w 960, h <= 440.
     dur: 6,                  // seconds; the single clock every animation in this diagram shares (6-10)
-    groups:  [ { kind, x, y, w, h, label?, id?, icon?:false } ],   // draw OUTER groups first
+    groups:  [ { kind, x, y, w, h, label?, id?, icon?:false|'<icon id>', note? } ],   // draw OUTER groups first
     nodes:   [ { id, icon, x, y, size?:40, label?, wrap?:14, sub? } ],
-    wires:   [ { id, from, to } | { id, d:'M..H..V..' } ,  dashed?, both?, flow?, label?, labelAt?:0.5, via?, arrow?:false ],
+    wires:   [ { id, from, to } | { id, d:'M..H..V..' } ,  dashed?, both?, flow?, label?, labelAt?:0.5, labelDx?, labelDy?:-5, labelAnchor?, via?, arrow?:false ],
     steps:   [ { n, at:'<wire id>', f?:0.5, dx?, dy?:-11 } | { n, x, y } ],
     timeline:[ { wire?, t:[a,b], reverse?, kind?:'pk'|'pk-2'|'pk-bad', ring?:'<node id>', r? } ],
     effects: [ { appear:'<node id>', t:[a,b], ghost?:true } | { fail:'<group id>', t } | { fade:'<wire id>', t } | { glow:'<wire id>', t } ],
+    notes:   [ { x, y, text, kind?:'caption'|'label'|'warn', anchor?:'start'|'middle'|'end', t?:[a,b] } ],
     extra: '<raw svg appended last>',   // escape hatch for anything the kit lacks
   }],
 };
@@ -56,7 +61,9 @@ export default {
 (public subnet), `priv` (private subnet), `sg` (security group), `asg` (Auto Scaling group), `acct`
 (AWS account), `dc` (corporate data center), `server`, `ec2`, `spot`, `gen` (generic dashed).
 The corner icon and label are automatic; override `label` (e.g. `'us-east-1'`, `'Private subnet 10.0.3.0/24'`).
-Give a group an `id` if an effect targets it.
+Give a group an `id` if an effect targets it. `note` prints right-aligned on the group's top edge
+(a CIDR, `0.0.0.0/0 > tgw`, an account id). `icon` may be any icon id, e.g. a `gen` frame for an
+ECS service or a state machine gets that service's icon in its corner.
 
 **Nodes**: `icon` is an id from the store: services `aws-svc-*`, resources `aws-res-*`. For icons
 that ship as official colorway pairs (Users, Client, Office building, Servers, Internet...) pass the
@@ -67,7 +74,15 @@ use 32 for resource icons in dense diagrams. Labels are the official name, wrapp
 elbow). Use explicit `d` with only `M`, `H`, `V` commands when you need a specific path. `dashed`
 = async/optional/logical, `both` = bidirectional, `flow` = continuous stream (CSS dash motion).
 `label` sits at the path's midpoint; move it with `labelAt` (0..1 along the path) when the midpoint
-lands on a vertical run. Wires are opaque, so two wires may share a segment without doubling up.
+lands on a vertical run. Wires are opaque, so two wires may share a segment without doubling up. `labelDy` moves the label
+(default -5 = above; +12 = below), `labelDx` sideways, `labelAnchor: 'start'` sets it beside a
+vertical run.
+
+**Notes** are free captions drawn on top of everything: tier names, DNS answers, route summaries,
+"cache miss", "standby promoted". `kind: 'warn'` is red, `'label'` is ink, default is the muted
+caption style; `
+` breaks lines; `t: [a,b]` shows a note only during that window. Prefer notes over
+`extra` text.
 
 **Timeline**: each entry moves a packet along a wire during window `[a,b]` (fractions of `dur`,
 `0 < a < b < 1`) and optionally pulses a `ring` on a node when the packet arrives (at `b`).
@@ -106,4 +121,6 @@ rerouted). Pair `fail` + `fade` + `glow` to tell a failover story.
   built `catalog/drafts/<family>.aws.html`. Do NOT edit `awd.mjs`, `aws.css`, `Prism.html`, the icon
   store, or other families' files. If the kit lacks something, use `extra` and report it.
 - Descriptions: plain sentences, no em dashes, no marketing; say what animates.
+- Section titles: no hyphens (the catalog cuts a category at the first dash: "MULTI-REGION" became
+  "MULTI").
 - `preview` must report `validation: OK` and `build` must succeed before you finish.

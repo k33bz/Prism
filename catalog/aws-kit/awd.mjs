@@ -122,8 +122,13 @@ export function diagram(spec) {
     const label = g.label != null ? g.label : G.label;
     parts.push(`<rect class="g ${G.cls}"${g.id ? ` id="${id}-${g.id}"` : ''} x="${g.x}" y="${g.y}" width="${g.w}" height="${g.h}"/>`);
     let tx = g.x + 6;
-    if (G.icon && g.icon !== false) { parts.push(use(G.icon, g.x, g.y, 20)); tx = g.x + 25; }
+    // corner icon: the kind's official group icon, a service icon id (e.g. a gen frame for an ECS
+    // service), or none with icon:false
+    const gi = typeof g.icon === 'string' ? g.icon : (g.icon !== false ? G.icon : null);
+    if (gi) { parts.push(use(gi, g.x, g.y, 20)); tx = g.x + 25; }
     if (label) parts.push(`<text class="t-g gt-${G.cls.slice(2)}" x="${tx}" y="${g.y + 14}">${esc(label)}</text>`);
+    // note: right-aligned on the top edge (a CIDR, a route summary, an account id)
+    if (g.note) parts.push(`<text class="t-sub" x="${g.x + g.w - 6}" y="${g.y + 14}" style="text-anchor:end">${esc(g.note)}</text>`);
   }
 
   // wires
@@ -141,7 +146,13 @@ export function diagram(spec) {
       parts.push(`<g class="awd-static"><path class="${cls}" d="${d}"${mk}/></g>`);
       parts.push(`<path id="${id}-${w.id}" class="${cls} anim" d="${d}"${mk}><animate attributeName="opacity" dur="${D}" repeatCount="indefinite" calcMode="discrete" values="1;.16;1" keyTimes="0;${pct(a)};${pct(b)}"/></path>`);
     } else parts.push(`<path id="${id}-${w.id}" class="${cls}" d="${d}"${mk}/>`);
-    if (w.label) { const [x, y] = pointAt(d, w.labelAt != null ? w.labelAt : 0.5); parts.push(`<text class="t-wire" x="${r2(x)}" y="${r2(y - 5)}">${esc(w.label)}</text>`); }
+    if (w.label) {
+      // labelDx/labelDy nudge the label off the path point (default 5 above); labelAnchor start|end
+      // puts it beside a vertical run
+      const [x, y] = pointAt(d, w.labelAt != null ? w.labelAt : 0.5);
+      const lx = x + (w.labelDx || 0), ly = y + (w.labelDy != null ? w.labelDy : -5);
+      parts.push(`<text class="t-wire" x="${r2(lx)}" y="${r2(ly)}"${w.labelAnchor ? ` style="text-anchor:${w.labelAnchor}"` : ''}>${esc(w.label)}</text>`);
+    }
   }
 
   // nodes + labels. A node targeted by an `appear` effect is drawn twice: animated (shown only
@@ -207,6 +218,20 @@ export function diagram(spec) {
       const ends = w.arrow === false ? '' : `${w.both ? ` marker-start="url(#${id}-ahg)"` : ''} marker-end="url(#${id}-ahg)"`;
       parts.push(`<path class="anim" d="${wires[e.glow]}" style="fill:none;stroke:var(--awd-pk);stroke-width:2.2;filter:drop-shadow(0 0 3px var(--awd-pk))"${ends} opacity="0">${winAttr('opacity', '0;1;0', a, b)}</path>`);
     }
+  }
+
+  // notes: free captions drawn on top. kind caption (muted, default) | label (ink) | warn (red);
+  // anchor start|middle|end; t:[a,b] shows the note only during that window (hidden under reduced
+  // motion, like every other window effect)
+  for (const nt of spec.notes || []) {
+    const cls = nt.kind === 'label' ? 't-c' : 't-wire';
+    const style = [nt.anchor ? `text-anchor:${nt.anchor}` : '', nt.kind === 'warn' ? 'fill:#DD344C;font-weight:700' : ''].filter(Boolean).join(';');
+    const lines = String(nt.text).split('\n');
+    const txt = `<text class="${cls}" x="${r2(nt.x)}" y="${r2(nt.y)}"${style ? ` style="${style}"` : ''}>${lines.map((l, i) => `<tspan x="${r2(nt.x)}"${i ? ' dy="10"' : ''}>${esc(l)}</tspan>`).join('')}</text>`;
+    if (nt.t) {
+      const [a, b] = nt.t; if (!(a > 0 && b < 1 && b > a)) throw new Error(`notes window must satisfy 0 < a < b < 1: ${JSON.stringify(nt)}`);
+      parts.push(`<g class="anim" opacity="0">${txt}${winAttr('opacity', '0;1;0', a, b)}</g>`);
+    } else parts.push(txt);
   }
 
   if (spec.extra) parts.push(spec.extra);
