@@ -4,9 +4,9 @@
 
 **One prism. Every facet of your report.**
 
-A single-file gallery of **3,526** offline, self-contained CSS/SVG animations, components, and backdrops — built to be browsed by humans *and* driven by AI agents. Ships with a **zero-dependency MCP server** so Claude (Desktop, Code, or the API) can search the catalog and compose production-ready HTML/CSS on demand.
+A single-file gallery of **3,551** offline, self-contained CSS/SVG animations, components, and backdrops — built to be browsed by humans *and* driven by AI agents. Ships with a **zero-dependency MCP server** so Claude (Desktop, Code, or the API) can search the catalog and compose production-ready HTML/CSS on demand.
 
-![Effects](https://img.shields.io/badge/effects-3526-ff9900) ![Galleries](https://img.shields.io/badge/galleries-18-4493f8) ![Dependencies](https://img.shields.io/badge/dependencies-0-3fb950) ![Offline](https://img.shields.io/badge/offline-100%25-3fb950) ![MCP](https://img.shields.io/badge/MCP-server%20included-c879ff) ![Single file](https://img.shields.io/badge/single%20file-HTML-e0a52b)
+![Effects](https://img.shields.io/badge/effects-3551-ff9900) ![Galleries](https://img.shields.io/badge/galleries-18-4493f8) ![Dependencies](https://img.shields.io/badge/dependencies-0-3fb950) ![Offline](https://img.shields.io/badge/offline-100%25-3fb950) ![MCP](https://img.shields.io/badge/MCP-server%20included-c879ff) ![Single file](https://img.shields.io/badge/single%20file-HTML-e0a52b)
 
 </div>
 
@@ -17,7 +17,7 @@ A single-file gallery of **3,526** offline, self-contained CSS/SVG animations, c
 This is [k33bz/Prism](https://github.com/k33bz/Prism), a fork of [crazy54/Prism](https://github.com/crazy54/Prism). Upstream is the design library and the MCP server; the fork keeps both intact and adds, on top:
 
 - **Two galleries:** 📋 Tables & Data Layouts (57 facets, including click-driven sorting demos and a holographic file tree) and 📐 Diagrams & Frameworks (58 facets: every fishbone variant, flow, hierarchy, comparison, timeline, network, strategy frameworks, flywheels).
-- **☁️ AWS Architecture gallery:** 53 animated reference architectures drawn with the official AWS Architecture Icons: serverless, three-tier web applications, Active Directory (forest trusts, AD Connector, Windows and Kerberos auth for RDS, Aurora and FSx), databases, multi-Region resilience, and VPC and hybrid networking. They compile from plain-data specs (`catalog/aws-kit`), all 859 icons are embedded once with a searchable icon library, Copy carries the icons a diagram uses, and the MCP server can search and serve any icon.
+- **☁️ AWS Architecture gallery:** 78 animated reference architectures drawn with the official AWS Architecture Icons: serverless, three-tier web applications, Active Directory (forest trusts, AD Connector, Windows and Kerberos auth for RDS, Aurora and FSx), databases, multi-Region resilience, VPC and hybrid networking, transit and segmentation (TGW route tables, Connect, Cloud WAN, Gateway Load Balancer, VPC Lattice, IPAM), service endpoints and private access, and Route 53 DNS (Resolver endpoints, Profiles, DNS Firewall, DNSSEC). They compile from plain-data specs (`catalog/aws-kit`), all 859 icons are embedded once with a searchable icon library, Copy carries the icons a diagram uses, and the MCP server can search and serve any icon.
 - **New facet families inside existing galleries:** the Elemental Base blocks and Pokémon Battle scenes in FX Store, a self-hosted-Forgejo landing kit in Animated Objects and Text Effects, presence status modifiers and a live avatar stack in Notifications.
 - **Three more theme packs** (Cloudflare Orange, Google Cloud Console, Fluent for Azure) through the same profile, scaffolder, generator and 100-facet gate as upstream's packs, plus two skins (Frutiger Aero, Liquid Glass).
 - **Git-derived metadata:** every catalog record carries `addedOn`, `updatedOn` and `author` mined from history, the New Facets page is built from those dates with an adjustable window, and Search filters and sorts by author.
@@ -67,7 +67,7 @@ node cli.js tools
 node cli.js start --catalog ../Prism.html
 ```
 
-`info` should report **3,526 effects across 18 galleries** (1,300 of those are the 13 theme packs' Spectrum facets, 100 per pack). If it does, the server is working — the remaining steps just tell a client *how* to launch it.
+`info` should report **3,551 effects across 18 galleries** (1,300 of those are the 13 theme packs' Spectrum facets, 100 per pack). If it does, the server is working — the remaining steps just tell a client *how* to launch it.
 
 > **Always point `--catalog` at `Prism.html`.** The `#prism-catalog` island inside it is the authoritative catalog and can be fresher than `catalog/manifest.json`. If `--catalog` is omitted, the server defaults to `../Prism.html`, falling back to `../catalog/manifest.json`.
 
@@ -282,7 +282,7 @@ Eighteen authored galleries, plus special views. Every element carries a name, i
 | 🌍 **Maps & Geo** | Offline SVG maps, pulsing markers, great-circle arcs, choropleth, radar, telemetry | 50 |
 | 🔔 **Notifications & Status** | Toasts, snackbars, banners, live indicators, presence status set, live avatar stack, empty states, skeletons, geometric and 3D avatar shapes | 55 |
 | 🗺 **Architecture Diagrams** | Service nodes, animated connectors, VPC containers, sequence & flow diagrams, AWS reference architectures, network flow maps | 76 |
-| ☁️ **AWS Architecture** | Animated reference architectures on the official AWS Architecture Icons: serverless, web applications, Active Directory and trusts, databases, regions and resilience, VPC and hybrid networking, plus a searchable library of all 859 icons | 53 |
+| ☁️ **AWS Architecture** | Animated reference architectures on the official AWS Architecture Icons: serverless, web applications, Active Directory and trusts, databases, regions and resilience, VPC and hybrid networking, transit and segmentation, service endpoints, Route 53 and DNS, plus a searchable library of all 859 icons | 78 |
 | ⭐ **Callouts & Annotations** | Admonitions, badges & pills, timelines, dividers, tooltips, key-value meta | 50 |
 | 🧭 **Menus & Actions** | Dropdowns, context menus, command palettes, action bars, radial menus, live long-press and drag dial menus | 62 |
 | 📋 **Tables & Data Layouts** | Data tables, status cells, matrices, key-value blocks, lists & trees, grids & schedules, ledgers, toolbars | 57 |
