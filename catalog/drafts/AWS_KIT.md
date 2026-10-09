@@ -57,13 +57,16 @@ export default {
     w: 480, h: 236,          // viewBox. Normal: w 480, h <= 300. Wide: w 960, h <= 440.
     lintAllow: [],           // accepted lint findings: '<code>' or '<code>:<start of message>' (say why in a comment)
     dur: 6,                  // seconds; the single clock every animation in this diagram shares (6-10)
-    groups:  [ { kind, x, y, w, h, label?, id?, icon?:false|'<icon id>', note?, align?:'left'|'center' } ],   // draw OUTER groups first
-    nodes:   [ { id, icon /* or [darkId, lightId] */, x, y, size?:40, label?, wrap?:14, sub? } ],
-    wires:   [ { id, from, to } | { id, d:'M..H..V..' } ,  dashed?, both?, flow?, label?, labelAt?:0.5, labelDx?, labelDy?:-5, labelAnchor?, via?, arrow?:false, hot? ],
-    steps:   [ { n, at:'<wire id>', f?:0.5, dx?, dy?:-11 } | { n, x, y } ],
-    timeline:[ { wire?, t:[a,b], reverse?, kind?:'pk'|'pk-2'|'pk-bad', ring?:'<node id>', r? } ],
+    groups:  [ { kind, x, y, w, h, label?, id?, icon?:false|'<icon id>', note?, align?:'left'|'center', tone?, fill?, dashed? } ],   // draw OUTER groups first
+    nodes:   [ { id, icon /* or [darkId, lightId] */, x, y, size?:40, label?, wrap?:14, sub?, labelPos?:'b'|'r'|'l'|'t' }
+             | { id, kind:'box'|'pill', x, y, w, h, label?, sub?, tone? } ],
+    wires:   [ { id, from, to } | { id, d:'M..H..V..' } ,  dashed?, both?, flow?, label?, labelAt?:0.5, labelDx?, labelDy?:-5, labelAnchor?, labelBg?, via?, arrow?:false, hot?, tone? ],
+    steps:   [ { n, at:'<wire id>', f?:0.5, dx?, dy?:-11, text } | { n, x, y, text } ],
+    timeline:[ { wire?, t:[a,b], reverse?, kind?:'pk'|'pk-2'|'pk-bad', ring?:'<node id>'|{ x, y, r? }, r? } ],
     effects: [ { appear:'<node id>', t:[a,b], ghost?:true } | { fail:'<group id>', t } | { fade:'<wire id>', t } | { glow:'<wire id>', t } ],
-    notes:   [ { x, y, text, kind?:'caption'|'label'|'warn', anchor?:'start'|'middle'|'end', t?:[a,b] } ],
+    notes:   [ { x, y, text, kind?:'caption'|'label'|'warn', anchor?:'start'|'middle'|'end', t?:[a,b], off?:[a,b], still?, tone?, size?, weight?, caps? } ],
+    marks:   [ { on:'<node or wire id>', f?, kind?:'blocked'|'ok', t?:[a,b], still?, dx?, dy? } | { x, y, ... } ],
+    legend:  { x, y, items?: [ { kind:'pk'|'pk-2'|'pk-bad'|'wire'|'dashed'|'blocked', label? } ] },
     extra: '<raw svg appended last>',   // escape hatch for anything the kit lacks (checked: see Input checks)
   }],
 };
@@ -96,7 +99,32 @@ vertical run.
 **Notes** are free captions drawn on top of everything: tier names, DNS answers, route summaries,
 "cache miss", "standby promoted". `kind: 'warn'` is red, `'label'` is ink, default is the muted
 caption style; `\n` breaks lines; `t: [a,b]` shows a note only during that window. Prefer notes over
-`extra` text.
+`extra` text. `tone` (request, response, bad, muted, ink), `size` (px), `weight: 'bold'` and `caps`
+(spaced capitals: tier headings such as WEB TIER) style a note. A caption that swaps one text for
+another is a standing note with `off: [a,b]` (hidden in that window) plus a timed note with
+`t: [a,b]` at the same spot: no cover-up rectangles. Timed notes, marks and effects are hidden in still
+frames; `still: true` keeps a copy there when the still must tell that part of the story.
+
+**Step texts**: every badge number carries `text`, one or two plain sentences on what happens at
+that step (on the first badge of a repeated number). The tile lists them under the description, as AWS
+reference architecture pages do, and the svg `<desc>` carries them for screen readers and copies.
+lint warns when a number has no text or the numbers do not run 1..n.
+
+**Marks** put a red X (`blocked`, default) or a green check (`ok`) on a node (its icon's top-right
+corner), a wire (at `f`) or a point: blocked routes, denied requests, a failed health check.
+**Legend** draws the key inside the diagram from `(x, y)`, one row per item; with no `items` it lists
+the packet kinds the timeline uses. **Rings** pulse on a node or on a point `{ x, y, r }` (a storage
+copy, a table row); a `pk-bad` packet's ring is red.
+
+**Wires** may take a `tone` (request orange, response blue, bad red, muted) with a matching head; a
+label with `\n` runs to several lines, and `labelBg` draws a halo in the tile color behind it.
+**Boxes and pills** (`kind: 'box' | 'pill'`, with `w`, `h`, label inside, optional category `tone`)
+stand in for what has no AWS icon: a corporate identity provider, a SaaS, a cluster endpoint name.
+`labelPos` puts an icon's label to the right, left or above. Groups take a category `tone`
+(compute, containers, storage, iot, database, devtools, networking, analytics, security, frontend,
+integration, management, ai, migration, general), `fill` (a light tint) and `dashed` (override the
+kind); `cloud-plain` is the AWS Cloud frame with the plain cloud icon and `iot` the IoT Greengrass
+group. place.mjs has `box(id, cx, cy, w, h, label)`, and its ports know boxes and label positions.
 
 **Timeline**: each entry moves a packet along a wire during window `[a,b]` (fractions of `dur`,
 `0 < a < b < 1`) and optionally pulses a `ring` on a node when the packet arrives (at `b`).
@@ -241,7 +269,7 @@ resolveIcon('AWS::RDS::DBInstance', { props: { Engine: 'postgres', MultiAZ: true
 ## Rules for parallel authors
 - Write ONLY your own files: `catalog/aws-kit/specs/<family>.mjs`, its previews/screenshots, the
   built `catalog/drafts/<family>.aws.html` and its export `catalog/aws-kit/json/<family>.json`. Do NOT edit `awd.mjs`, `aws.css`, `Prism.html`, the icon
-  store, or other families' files. If the kit lacks something, use `extra` and report it.
+  store, or other families' files. Use the primitives (legend, marks, notes, boxes, rings on points); if the kit still lacks something, use `extra` with a comment saying why, and report it.
 - Descriptions: plain sentences, no em dashes, no marketing; say what animates.
 - Section titles: a spaced dash or an em/en dash starts a subtitle that the catalog drops from the
   category ("NETWORKING - hub and spoke" files under "NETWORKING"); a hyphen inside a word stays.
