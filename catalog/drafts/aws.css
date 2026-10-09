@@ -13,45 +13,56 @@
 .tile .stage{padding:14px 12px}
 
 .awd{display:block;width:100%;height:auto;overflow:visible;
-  font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  /* AWS reference diagrams set text in Arial Regular */
+  font-family:Arial,"Helvetica Neue",Helvetica,"Liberation Sans",ui-sans-serif,system-ui,sans-serif;
   --awd-ink:var(--ink,#eaf1f9);--awd-muted:var(--muted,#8593a8);
-  /* opaque (mixed against the page, not transparent) so wires that share a segment do not double up */
-  --awd-wire:color-mix(in srgb,var(--awd-ink) 58%,var(--bg,#0b0e17));
+  /* opaque (mixed against the page, not transparent) so wires that share a segment do not double up;
+     88% ink keeps arrows near black on white (AWS: black open arrows) and near white on dark */
+  --awd-wire:color-mix(in srgb,var(--awd-ink) 88%,var(--bg,#0b0e17));
   /* packet colors are fixed (not the theme accent) so request and response stay distinct in every
      design system; override with --awd-request / --awd-response on any ancestor */
   --awd-pk:var(--awd-request,#FF9900);--awd-pk2:var(--awd-response,#4493F8);
-  --awd-cloud:#FFFFFF;--awd-step-bg:#FFFFFF;--awd-step-fg:#232F3E}
-[data-mode="light"] .awd{--awd-ink:var(--ink,#16191F);--awd-muted:var(--muted,#5F6B7A);--awd-wire:color-mix(in srgb,var(--awd-ink) 58%,var(--bg,#FFFFFF));--awd-pk:var(--awd-request,#EC7211);--awd-pk2:var(--awd-response,#0972D3);--awd-cloud:#232F3E;--awd-step-bg:#232F3E;--awd-step-fg:#FFFFFF}
-@media (prefers-color-scheme:light){:root:not([data-mode]) .awd{--awd-ink:var(--ink,#16191F);--awd-muted:var(--muted,#5F6B7A);--awd-wire:color-mix(in srgb,var(--awd-ink) 58%,var(--bg,#FFFFFF));--awd-pk:var(--awd-request,#EC7211);--awd-pk2:var(--awd-response,#0972D3);--awd-cloud:#232F3E;--awd-step-bg:#232F3E;--awd-step-fg:#FFFFFF}}
+  --awd-cloud:#FFFFFF;--awd-step-bg:#FFFFFF;--awd-step-fg:#232F3E;
+  /* Availability Zone frame: teal in the current AWS deck (legacy tooling used blue #147EBA) */
+  --awd-az:#00A4A6;
+  /* panel fills for pills and bars drawn inside a diagram; fallbacks keep a copied diagram whole on a bare page */
+  --awd-panel:var(--panel,#121623);--awd-panel2:var(--panel2,#171d2e)}
+/* light tokens. The second selector of each pair matches a standalone .svg file, where .awd is the root */
+[data-mode="light"] .awd,.awd[data-mode="light"]{--awd-ink:var(--ink,#16191F);--awd-muted:var(--muted,#5F6B7A);--awd-wire:color-mix(in srgb,var(--awd-ink) 88%,var(--bg,#FFFFFF));--awd-pk:var(--awd-request,#EC7211);--awd-pk2:var(--awd-response,#0972D3);--awd-cloud:#232F3E;--awd-step-bg:#232F3E;--awd-step-fg:#FFFFFF;--awd-panel:var(--panel,#FFFFFF);--awd-panel2:var(--panel2,#EEF1F6)}
+@media (prefers-color-scheme:light){:root:not([data-mode]) .awd,.awd:root:not([data-mode]){--awd-ink:var(--ink,#16191F);--awd-muted:var(--muted,#5F6B7A);--awd-wire:color-mix(in srgb,var(--awd-ink) 88%,var(--bg,#FFFFFF));--awd-pk:var(--awd-request,#EC7211);--awd-pk2:var(--awd-response,#0972D3);--awd-cloud:#232F3E;--awd-step-bg:#232F3E;--awd-step-fg:#FFFFFF;--awd-panel:var(--panel,#FFFFFF);--awd-panel2:var(--panel2,#EEF1F6)}}
 
-/* text: service labels centered under icons, group labels in the group's color */
-.awd text{fill:var(--awd-ink);font-size:10.5px;font-weight:500}
+/* text: service labels centered under icons; group labels regular and in ink (AWS: dark, not
+   group-colored; the frame and its icon already say which group it is) */
+.awd text{fill:var(--awd-ink);font-size:10.5px;font-weight:400}
 .awd .t-c{text-anchor:middle}
 .awd .t-sub{font-size:9px;fill:var(--awd-muted)}
-.awd .t-g{font-size:10px;font-weight:700}
+.awd .t-g{font-size:10px}
+.awd .t-gc{text-anchor:middle}
 .awd .t-wire{font-size:8.5px;fill:var(--awd-muted);text-anchor:middle}
 
-/* official group frames (colors from the AWS group icons; AZ/SG/generic per AWS guidance) */
+/* official group frames. Colors from the AWS group icons and the AWS Architecture Icons deck (2025+):
+   Region and AZ dashed teal, subnets solid green/teal at full strength (lines need 3:1). */
 .awd .g{fill:none;stroke-width:1.25}
-.awd .g-cloud{stroke:var(--awd-cloud)}                    .awd .gt-cloud{fill:var(--awd-cloud)}
-.awd .g-region{stroke:#00A4A6;stroke-dasharray:5 3}       .awd .gt-region{fill:#00A4A6}
-.awd .g-az{stroke:#007CBC;stroke-dasharray:5 3}           .awd .gt-az{fill:#2E8FD0}
-.awd .g-vpc{stroke:#8C4FFF}                               .awd .gt-vpc{fill:#9D6BFF}
-.awd .g-pub{stroke:rgba(122,161,22,.65);fill:rgba(122,161,22,.10)}  .awd .gt-pub{fill:#7AA116}
-.awd .g-priv{stroke:rgba(0,164,166,.65);fill:rgba(0,164,166,.10)}   .awd .gt-priv{fill:#00A4A6}
-.awd .g-sg{stroke:#DD344C}                                .awd .gt-sg{fill:#DD344C}
-.awd .g-asg{stroke:#ED7100;stroke-dasharray:5 3}          .awd .gt-asg{fill:#ED7100}
-.awd .g-acct{stroke:#E7157B}                              .awd .gt-acct{fill:#E7157B}
-.awd .g-dc{stroke:#7D8998}                                .awd .gt-dc{fill:#7D8998}
-.awd .g-gen{stroke:#7D8998;stroke-dasharray:5 3}          .awd .gt-gen{fill:#7D8998}
+.awd .g-cloud{stroke:var(--awd-cloud)}
+.awd .g-region{stroke:#00A4A6;stroke-dasharray:5 3}
+.awd .g-az{stroke:var(--awd-az);stroke-dasharray:5 3}
+.awd .g-vpc{stroke:#8C4FFF}
+.awd .g-pub{stroke:#7AA116;fill:rgba(122,161,22,.10)}
+.awd .g-priv{stroke:#00A4A6;fill:rgba(0,164,166,.10)}
+.awd .g-sg{stroke:#DD344C}
+.awd .g-asg{stroke:#ED7100;stroke-dasharray:5 3}
+.awd .g-ec2{stroke:#ED7100}
+.awd .g-acct{stroke:#E7157B}
+.awd .g-dc{stroke:#7D8998}
+.awd .g-gen{stroke:#7D8998;stroke-dasharray:5 3}
 .awd .g-hot{stroke:#DD344C;stroke-width:2}                /* a group that has failed (set via SMIL or class) */
 
-/* wires: arrowheads come from markers defined in each diagram's own <defs> (they inherit these vars) */
+/* wires: open arrowheads (AWS "open arrow") from markers in each diagram's own <defs>; they inherit these vars */
 .awd .w{fill:none;stroke:var(--awd-wire);stroke-width:1.3}
 .awd .w-d{stroke-dasharray:4 3}
 .awd .w-flow{stroke-dasharray:5 4;animation:awdDash 1.1s linear infinite}
 .awd .w-hot{stroke:#DD344C}
-.awd .ah{fill:var(--awd-wire)}
+.awd .ah{fill:none;stroke:var(--awd-wire)}
 @keyframes awdDash{to{stroke-dashoffset:-9}}
 
 /* moving parts (driven by SMIL on the diagram's single clock) */
@@ -68,9 +79,9 @@
 
 /* official colorway pairs: .cw-d = "-dark" icon (for dark backgrounds), .cw-l = "-light" icon */
 .awd .cw-l{display:none}
-[data-mode="light"] .awd .cw-d{display:none}
-[data-mode="light"] .awd .cw-l{display:inline}
-@media (prefers-color-scheme:light){:root:not([data-mode]) .awd .cw-d{display:none}:root:not([data-mode]) .awd .cw-l{display:inline}}
+[data-mode="light"] .awd .cw-d,.awd[data-mode="light"] .cw-d{display:none}
+[data-mode="light"] .awd .cw-l,.awd[data-mode="light"] .cw-l{display:inline}
+@media (prefers-color-scheme:light){:root:not([data-mode]) .awd .cw-d,.awd:root:not([data-mode]) .cw-d{display:none}:root:not([data-mode]) .awd .cw-l,.awd:root:not([data-mode]) .cw-l{display:inline}}
 
 /* ---- gallery page chrome (not part of any diagram): reading legend + icon library ---- */
 .awd-legend{display:flex;flex-wrap:wrap;align-items:center;gap:8px 18px;margin:6px 0 4px;padding:11px 14px;
@@ -110,3 +121,14 @@
   .awd .awd-static{display:inline}
   .awd .w-flow{animation:none}
 }
+/* still frames (print, screenshots, exports): data-still on the svg or any ancestor shows the
+   complete static diagram with no packet frozen mid-wire */
+@media print{
+  .awd .pk,.awd .pk-2,.awd .pk-bad,.awd .ring,.awd .ring-2,.awd .anim{display:none}
+  .awd .awd-static{display:inline}
+  .awd .w-flow{animation:none}
+}
+[data-still] .awd .pk,[data-still] .awd .pk-2,[data-still] .awd .pk-bad,[data-still] .awd .ring,[data-still] .awd .ring-2,[data-still] .awd .anim,
+.awd[data-still] .pk,.awd[data-still] .pk-2,.awd[data-still] .pk-bad,.awd[data-still] .ring,.awd[data-still] .ring-2,.awd[data-still] .anim{display:none}
+[data-still] .awd .awd-static,.awd[data-still] .awd-static{display:inline}
+[data-still] .awd .w-flow,.awd[data-still] .w-flow{animation:none}

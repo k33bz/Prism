@@ -20,12 +20,12 @@ function kit(dur) {
     return `<text${cls ? ` class="${cls}"` : ''}${st ? ` style="${st}"` : ''} x="${r2(x)}" y="${r2(y)}">${ls.map((l, i) => `<tspan x="${r2(x)}"${i ? ` dy="${o.lh || 11}"` : ''}>${esc(l)}</tspan>`).join('')}</text>`;
   };
   // opaque patch (panel color, plus an optional tint to match a tinted group) that hides static text under it
-  const patch = (x, y, w, h, tint) => `<rect x="${r2(x)}" y="${r2(y)}" width="${r2(w)}" height="${r2(h)}" style="fill:var(--panel)"/>${tint ? `<rect x="${r2(x)}" y="${r2(y)}" width="${r2(w)}" height="${r2(h)}" fill="${tint}"/>` : ''}`;
+  const patch = (x, y, w, h, tint) => `<rect x="${r2(x)}" y="${r2(y)}" width="${r2(w)}" height="${r2(h)}" style="fill:var(--awd-panel)"/>${tint ? `<rect x="${r2(x)}" y="${r2(y)}" width="${r2(w)}" height="${r2(h)}" fill="${tint}"/>` : ''}`;
   // endpoint pill (a DNS name is not a service, so it is drawn as a labelled pill, not an icon)
   const pill = (cx, cy, w, h, lines, o = {}) => {
     const ls = Array.isArray(lines) ? lines : [lines];
     const y0 = cy + 3.2 - (ls.length - 1) * 5;
-    return `<rect x="${r2(cx - w / 2)}" y="${r2(cy - h / 2)}" width="${w}" height="${h}" rx="${Math.min(h / 2, 14)}" style="fill:var(--panel2);stroke:var(--awd-wire);stroke-width:1.25"/>`
+    return `<rect x="${r2(cx - w / 2)}" y="${r2(cy - h / 2)}" width="${w}" height="${h}" rx="${Math.min(h / 2, 14)}" style="fill:var(--awd-panel2);stroke:var(--awd-wire);stroke-width:1.25"/>`
       + text(cx, y0, ls[0], { size: o.size || 9, weight: 700 })
       + ls.slice(1).map((l, i) => text(cx, y0 + 10 * (i + 1), l, { size: 8, weight: 500, fill: 'var(--awd-muted)' })).join('');
   };
@@ -216,7 +216,7 @@ function aurora() {
     K.pill(cP.x, cP.y, cP.w, cP.h, ['Cluster endpoint', 'writer']),
     K.pill(rP.x, rP.y, rP.w, rP.h, ['Reader endpoint', 'load balances the readers']),
     // the cluster volume: one bar crossing the three AZ columns (opaque so the AZ borders pass behind it)
-    `<rect x="${colX[0] + 4}" y="${barY}" width="${colX[2] + colW - 4 - (colX[0] + 4)}" height="${barH}" rx="6" style="fill:color-mix(in srgb,#C925D1 16%,var(--panel));stroke:#C925D1;stroke-width:1.4"/>`,
+    `<rect x="${colX[0] + 4}" y="${barY}" width="${colX[2] + colW - 4 - (colX[0] + 4)}" height="${barH}" rx="6" style="fill:color-mix(in srgb,#C925D1 16%,var(--awd-panel));stroke:#C925D1;stroke-width:1.4"/>`,
     ...copies.map(([x, y]) => dbIco(x - cs / 2, y - cs / 2, cs)),
     K.text(94, barY + 17, ['Aurora cluster', 'volume'], { anchor: 'end', size: 9.5, weight: 700, lh: 11 }),
     K.text(94, barY + 41, '6 copies, 3 AZs', { anchor: 'end', size: 8.5, fill: 'var(--awd-muted)' }),
@@ -290,7 +290,7 @@ function serverless() {
     K.text(tileX(0), 146, 'min', { anchor: 'start', size: 8.5, fill: 'var(--awd-muted)' }),
     K.text(tileX(7) + ts, 146, 'max', { anchor: 'end', size: 8.5, fill: 'var(--awd-muted)' }),
     // shared cluster volume under the writer (storage is separate from compute)
-    `<rect x="108" y="184" width="332" height="24" rx="6" style="fill:color-mix(in srgb,#C925D1 16%,var(--panel));stroke:#C925D1;stroke-width:1.4"/>`,
+    `<rect x="108" y="184" width="332" height="24" rx="6" style="fill:color-mix(in srgb,#C925D1 16%,var(--awd-panel));stroke:#C925D1;stroke-width:1.4"/>`,
     K.text(274, 200, 'Cluster volume: shared storage that grows automatically', { anchor: 'middle', size: 9, weight: 600 }),
     // load narration: static base text, swapped over by the live phases
     K.text(ctr, 166, 'Capacity follows the load, between min and max', { anchor: 'middle', size: 8.5, fill: 'var(--awd-muted)' }),
@@ -580,7 +580,7 @@ function auroraGlobal() {
   const mutedS = (x, y, lines, anchor = 'start') => K.text(x, y, lines, { anchor, size: 8.5, fill: 'var(--awd-muted)', lh: 10.5 });
   const icY = 154, ly = 206;                       // instance icon top, label baseline
   const barY = 232, barH = 46, cs = 22;
-  const bar = (x, w) => `<rect x="${x}" y="${barY}" width="${w}" height="${barH}" rx="6" style="fill:color-mix(in srgb,#C925D1 16%,var(--panel));stroke:#C925D1;stroke-width:1.4"/>`;
+  const bar = (x, w) => `<rect x="${x}" y="${barY}" width="${w}" height="${barH}" rx="6" style="fill:color-mix(in srgb,#C925D1 16%,var(--awd-panel));stroke:#C925D1;stroke-width:1.4"/>`;
   const copies = (x, w) => Array.from({ length: 6 }, (_, k) => [x + w / 2 - 120 + 48 * k, barY + barH / 2]);
   const A = { x: 170, w: 320 }, B = { x: 602, w: 320 };
   const cA = copies(A.x, A.w), cB = copies(B.x, B.w);

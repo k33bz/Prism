@@ -168,7 +168,7 @@ D.push((() => {
   const dx = nd('dx', 'aws-svc-direct-connect', 234, 112, 'AWS Direct Connect', { size: 40 });
   const vpn = nd('vpn', 'aws-svc-site-to-site-vpn', 234, 212, 'AWS Site-to-Site VPN', { size: 40, wrap: 16 });
   const vgw = nd('vgw', 'aws-res-vpc-vpn-gateway', 356, 161, 'Virtual private gateway', { wrap: 16 });
-  const res = nd('res', RESOLVER, 500, 114, 'Route 53 Resolver inbound endpoint', { wrap: 18, sub: 'ENI per AZ' });
+  const res = nd('res', RESOLVER, 500, 114, 'Route 53 VPC Resolver inbound endpoint', { wrap: 22, sub: 'ENI per AZ' });
   const s3ep = nd('s3ep', VPCE, 500, 208, 'S3 interface endpoint', { wrap: 22, sub: 'ENI per AZ' });
   const ec2 = nd('ec2', EC2, 470, 336, 'Amazon EC2');
   const gwe = nd('gwe', VPCE, 590, 336, 'S3 gateway endpoint', { sub: 'route table target' });
@@ -176,8 +176,8 @@ D.push((() => {
   return {
     id: 'ep-onprem-s3',
     name: 'On-premises access to Amazon S3',
-    aria: 'Architecture diagram: an on-premises client reaches Amazon S3 over AWS Direct Connect or Site-to-Site VPN through an S3 interface endpoint, resolving the name with a Route 53 Resolver inbound endpoint; the S3 gateway endpoint cannot be reached from on-premises.',
-    desc: 'An on-premises client reaches Amazon S3 over Direct Connect or Site-to-Site VPN through an S3 interface endpoint. Its DNS server forwards the S3 name to a Route 53 Resolver inbound endpoint (orange), the answer returns the endpoint IPs (blue), and the HTTPS request follows them to S3 over AWS PrivateLink; the client could instead call the endpoint-specific name. The gateway endpoint serves only the VPC, so traffic from on-premises cannot use it (red).',
+    aria: 'Architecture diagram: an on-premises client reaches Amazon S3 over AWS Direct Connect or Site-to-Site VPN through an S3 interface endpoint, resolving the name with a Route 53 VPC Resolver inbound endpoint; the S3 gateway endpoint cannot be reached from on-premises.',
+    desc: 'An on-premises client reaches Amazon S3 over Direct Connect or Site-to-Site VPN through an S3 interface endpoint. Its DNS server forwards the S3 name to a Route 53 VPC Resolver inbound endpoint (orange), the answer returns the endpoint IPs (blue), and the HTTPS request follows them to S3 over AWS PrivateLink; the client could instead call the endpoint-specific name. The gateway endpoint serves only the VPC, so traffic from on-premises cannot use it (red).',
     wide: true, w: 960, h: 432, dur,
     groups: [
       { kind: 'dc', x: 8, y: 56, w: 150, h: 272 },

@@ -39,7 +39,11 @@ export function compose(ids, store, opts = {}) {
   }
 
   // --- HTML ---
-  const perEffectHtml = effects.map((e) => e.html || '');
+  // AWS diagrams each carry a hidden sprite of the icon <symbol>s they use. Composing several would
+  // repeat shared symbols (duplicate ids), so the sprites are lifted out and merged into one.
+  const hoisted = hoistSprites(effects.map((e) => e.html || ''));
+  const perEffectHtml = hoisted.html;
+  if (hoisted.removed) trace.push(`Merged ${hoisted.sprites} icon sprite(s) into one: ${hoisted.symbols} symbol(s), ${hoisted.removed} duplicate(s) dropped`);
   let html = perEffectHtml.join(separator);
   if (wrap && wrap.tag) {
     const cls = wrap.className ? ` class="${escapeAttr(wrap.className)}"` : '';
@@ -47,6 +51,7 @@ export function compose(ids, store, opts = {}) {
     html = `<${wrap.tag}${cls}${sty}>\n${html}\n</${wrap.tag}>`;
     trace.push(`Wrapped markup in <${wrap.tag}>`);
   }
+  if (hoisted.sprite) html += '\n' + hoisted.sprite;
 
   // --- CSS: gather, optionally prepend tokens, dedupe, merge :root ---
   const cssSources = [];
@@ -83,6 +88,7 @@ export function compose(ids, store, opts = {}) {
     validation,
     trace,
     _perEffectHtml: perEffectHtml,
+    _sprite: hoisted.sprite,
     metrics: {
       effectCount: effects.length,
       rulesIn: deduped.rulesIn,
@@ -146,7 +152,7 @@ const TEMPLATES = {
       // For 'card' we re-wrap each effect individually.
       html: (b) => {
         const wrapped = b._perEffectHtml
-          ? b._perEffectHtml.map((h) => `<div class="prism-compose-card">${h}</div>`).join('\n')
+          ? b._perEffectHtml.map((h) => `<div class="prism-compose-card">${h}</div>`).join('\n') + (b._sprite ? '\n' + b._sprite : '')
           : `<div class="prism-compose-card">${b.html}</div>`;
         return `<div class="prism-compose-grid">\n${wrapped}\n</div>`;
       },
@@ -156,6 +162,26 @@ const TEMPLATES = {
 
 export function availableTemplates() {
   return Object.keys(TEMPLATES);
+}
+
+// The hidden sprite the catalog extractor appends to an AWS diagram's html (catalog/extract-from-prism.mjs).
+const SPRITE_OPEN = '<svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position:absolute" aria-hidden="true">';
+const SPRITE_RE = /\n?<svg xmlns="http:\/\/www\.w3\.org\/2000\/svg" width="0" height="0" style="position:absolute" aria-hidden="true">((?:<symbol\b[\s\S]*?<\/symbol>)+)<\/svg>/g;
+
+/** Lift each effect's icon sprite out of its html and merge them, first copy of each symbol id wins. */
+export function hoistSprites(htmls) {
+  const symbols = new Map();
+  let sprites = 0, seen = 0;
+  const html = htmls.map((h) => h.replace(SPRITE_RE, (_, inner) => {
+    sprites++;
+    for (const m of inner.matchAll(/<symbol id="([^"]+)"[\s\S]*?<\/symbol>/g)) {
+      seen++;
+      if (!symbols.has(m[1])) symbols.set(m[1], m[0]);
+    }
+    return '';
+  }));
+  const sprite = symbols.size ? `${SPRITE_OPEN}${[...symbols.values()].join('')}</svg>` : '';
+  return { html, sprite, sprites, symbols: symbols.size, removed: seen - symbols.size };
 }
 
 function escapeAttr(s) {

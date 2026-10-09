@@ -140,7 +140,9 @@ const EXTRACT_FN = `function extractInPage(gallery, d){
       // which the shell appends after mount; leaving it in poisons every category
       // with a trailing digit ("Progress & Ratio" -> "Progress & Ratio7").
       var hc=node.cloneNode(true); var badge=hc.querySelector('.sec-count'); if(badge)badge.remove();
-      currentCat=hc.textContent.replace(/^[^A-Za-z0-9]+/,'').split(/[—–-]/)[0].trim(); return;
+      // a subtitle follows an em/en dash or a spaced hyphen; a hyphen inside a word (Time-Series,
+      // MULTI-REGION) is part of the name
+      currentCat=hc.textContent.replace(/^[^A-Za-z0-9]+/,'').split(/\\s+[—–-]\\s+|\\s*[—–]\\s*/)[0].trim(); return;
     }
     var nameEl=node.querySelector('.nm, .ptitle');
     var name=(nameEl?nameEl.textContent:'').replace(/\\s+/g,' ').trim() || 'effect';

@@ -41,6 +41,15 @@ if (want && families.length !== want.length) {
   process.exit(1);
 }
 
+// diagram ids must be unique across the whole gallery (awd.mjs validate() sees one family at a time)
+const seenIds = new Map();
+for (const f of families) {
+  for (const [, fid] of fs.readFileSync(path.join(DRAFTS, `${f}.aws.html`), 'utf8').matchAll(/data-fx-id="([^"]+)"/g)) {
+    if (seenIds.has(fid)) { console.error(`duplicate diagram id ${fid} in ${f} and ${seenIds.get(fid)}`); process.exit(1); }
+    seenIds.set(fid, f);
+  }
+}
+
 // ---- 1. body: sprite + legend ----
 const store = JSON.parse(fs.readFileSync(path.join(CAT, 'aws-icons', 'aws-icons.json'), 'utf8'));
 const release = (store.source.split(',')[1] || 'current release').trim();   // e.g. "Icon-package_07312026 (Q3 2026 release)"

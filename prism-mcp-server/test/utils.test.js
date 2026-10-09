@@ -73,3 +73,15 @@ test('validateFacet enforces kebab-case id', () => {
   const good = validateFacet({ id: 'charts-good-id', name: 'x', gallery: 'charts', html: '<i></i>', description: 'long enough desc' });
   assert.equal(good.checks.id, true);
 });
+
+test('hoistSprites merges AWS icon sprites so composed diagrams share one copy of each symbol', async () => {
+  const { hoistSprites } = await import('../utils/compose.js');
+  const sprite = (...ids) => '\n<svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position:absolute" aria-hidden="true">'
+    + ids.map((id) => `<symbol id="${id}" viewBox="0 0 8 8"><path d="M0,0 H8"/></symbol>`).join('') + '</svg>';
+  const r = hoistSprites([`<svg class="awd"><use href="#aws-a"/></svg>${sprite('aws-a', 'aws-b')}`, `<svg class="awd"><use href="#aws-b"/></svg>${sprite('aws-b', 'aws-c')}`, '<div>plain</div>']);
+  assert.deepEqual(r.html, ['<svg class="awd"><use href="#aws-a"/></svg>', '<svg class="awd"><use href="#aws-b"/></svg>', '<div>plain</div>']);
+  assert.equal(r.sprites, 2);
+  assert.equal(r.symbols, 3);
+  assert.equal(r.removed, 1);
+  assert.equal((r.sprite.match(/<symbol /g) || []).length, 3);
+});

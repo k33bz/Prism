@@ -40,27 +40,29 @@ each diagram's referenced `<symbol>`s into its catalog `html`, so MCP output sta
 export default {
   section: { id: 'serverless', title: 'SERVERLESS' },          // id -> drafts/<id>.aws.html, title -> <h3>
   diagrams: [{
-    id: 'sl-api',            // unique across the WHOLE gallery: prefix with your family code (sl-, tt-, ds-, db-, mr-, vp-)
+    id: 'sl-api',            // unique across the WHOLE gallery: prefix with your family code (sl-, tt-, ds-, db-, mr-, vp-, tg-, ep-, dns-)
     name: 'Serverless REST API',   // tile title
     desc: '1-2 plain sentences: what the architecture is and what animates. No em dashes.',
     wide: false,             // true -> tile spans 2 columns: use w:960
     w: 480, h: 236,          // viewBox. Normal: w 480, h <= 300. Wide: w 960, h <= 440.
     dur: 6,                  // seconds; the single clock every animation in this diagram shares (6-10)
-    groups:  [ { kind, x, y, w, h, label?, id?, icon?:false|'<icon id>', note? } ],   // draw OUTER groups first
+    groups:  [ { kind, x, y, w, h, label?, id?, icon?:false|'<icon id>', note?, align?:'left'|'center' } ],   // draw OUTER groups first
     nodes:   [ { id, icon, x, y, size?:40, label?, wrap?:14, sub? } ],
-    wires:   [ { id, from, to } | { id, d:'M..H..V..' } ,  dashed?, both?, flow?, label?, labelAt?:0.5, labelDx?, labelDy?:-5, labelAnchor?, via?, arrow?:false ],
+    wires:   [ { id, from, to } | { id, d:'M..H..V..' } ,  dashed?, both?, flow?, label?, labelAt?:0.5, labelDx?, labelDy?:-5, labelAnchor?, via?, arrow?:false, hot? ],
     steps:   [ { n, at:'<wire id>', f?:0.5, dx?, dy?:-11 } | { n, x, y } ],
     timeline:[ { wire?, t:[a,b], reverse?, kind?:'pk'|'pk-2'|'pk-bad', ring?:'<node id>', r? } ],
     effects: [ { appear:'<node id>', t:[a,b], ghost?:true } | { fail:'<group id>', t } | { fade:'<wire id>', t } | { glow:'<wire id>', t } ],
     notes:   [ { x, y, text, kind?:'caption'|'label'|'warn', anchor?:'start'|'middle'|'end', t?:[a,b] } ],
-    extra: '<raw svg appended last>',   // escape hatch for anything the kit lacks
+    extra: '<raw svg appended last>',   // escape hatch for anything the kit lacks (checked: see Input checks)
   }],
 };
 ```
-**Groups** (`kind`): `cloud` (AWS Cloud), `region`, `az` (Availability Zone, dashed blue), `vpc`, `pub`
+**Groups** (`kind`): `cloud` (AWS Cloud), `region`, `az` (Availability Zone, dashed teal), `vpc`, `pub`
 (public subnet), `priv` (private subnet), `sg` (security group), `asg` (Auto Scaling group), `acct`
 (AWS account), `dc` (corporate data center), `server`, `ec2`, `spot`, `gen` (generic dashed).
 The corner icon and label are automatic; override `label` (e.g. `'us-east-1'`, `'Private subnet 10.0.3.0/24'`).
+Frames without an icon (`az`, `sg`, `gen` without `icon`) center their header, as in the AWS deck;
+`align` overrides that per group. `ec2` and `spot` frames are solid, `asg`, `az`, `region` and `gen` dashed.
 Give a group an `id` if an effect targets it. `note` prints right-aligned on the group's top edge
 (a CIDR, `0.0.0.0/0 > tgw`, an account id). `icon` may be any icon id, e.g. a `gen` frame for an
 ECS service or a state machine gets that service's icon in its corner.
@@ -68,11 +70,13 @@ ECS service or a state machine gets that service's icon in its corner.
 **Nodes**: `icon` is an id from the store: services `aws-svc-*`, resources `aws-res-*`. For icons
 that ship as official colorway pairs (Users, Client, Office building, Servers, Internet...) pass the
 base id (`aws-res-users`): the generator emits both and the theme picks one. Size 40 is standard;
-use 32 for resource icons in dense diagrams. Labels are the official name, wrapped at 14 chars.
+use 32 for resource icons in dense diagrams, and keep one size within a diagram. Labels are the
+official name, wrapped at 14 chars (raise `wrap` rather than let a label run to 3 lines).
 
 **Wires** auto-route from node to node (straight when aligned, one elbow otherwise; `via` pins the
 elbow). Use explicit `d` with only `M`, `H`, `V` commands when you need a specific path. `dashed`
-= async/optional/logical, `both` = bidirectional, `flow` = continuous stream (CSS dash motion).
+= async/optional/logical, `both` = bidirectional, `flow` = continuous stream (CSS dash motion),
+`hot` = red wire and head (blocked or failing path). Heads are the open arrow of the AWS deck.
 `label` sits at the path's midpoint; move it with `labelAt` (0..1 along the path) when the midpoint
 lands on a vertical run. Wires are opaque, so two wires may share a segment without doubling up. `labelDy` moves the label
 (default -5 = above; +12 = below), `labelDx` sideways, `labelAnchor: 'start'` sets it beside a
@@ -80,8 +84,7 @@ vertical run.
 
 **Notes** are free captions drawn on top of everything: tier names, DNS answers, route summaries,
 "cache miss", "standby promoted". `kind: 'warn'` is red, `'label'` is ink, default is the muted
-caption style; `
-` breaks lines; `t: [a,b]` shows a note only during that window. Prefer notes over
+caption style; `\n` breaks lines; `t: [a,b]` shows a note only during that window. Prefer notes over
 `extra` text.
 
 **Timeline**: each entry moves a packet along a wire during window `[a,b]` (fractions of `dur`,
@@ -98,6 +101,19 @@ motion it is shown, so the still diagram is complete; `ghost: true` keeps a 30% 
 the window, so a scale-out slot reads as empty rather than missing), `fail` turns a group red
 with an X (AZ/Region outage), `fade` dims a wire (traffic drained), `glow` highlights a wire (traffic
 rerouted). Pair `fail` + `fade` + `glow` to tell a failover story.
+
+**Style** follows the AWS Architecture Icons deck: Arial Regular, group labels in ink (the frame and
+its icon carry the color), open arrowheads near black on light and near white on dark, solid subnet
+frames, teal dashed Availability Zones (`--awd-az` to change it). Stills (print, screenshots,
+exports) set `data-still` on the svg or an ancestor: packets and rings are hidden and the static
+diagram shows, as under reduced motion. `preview <spec> [light] still` writes such a page.
+
+**Input checks**: `build` and `preview` reject a spec before writing markup when an id is not
+`[A-Za-z0-9_-]+`, a coordinate is not a finite number, a wire `d` uses anything but `M H V L`, a
+reference (wire end, step `at`, ring, effect target) names nothing, a window is outside
+`0 < a < b < 1`, an enumeration (`kind`, `anchor`, `labelAnchor`, `align`) is unknown, or `extra`
+holds script, `on*=` handlers, `foreignObject`/`style`/`iframe`, or an `href`/`url()` that is not a
+`#fragment`. Tests: `node --test catalog/aws-kit/awd.test.mjs`.
 
 ## Layout rules (the bar is "looks like an official AWS reference architecture")
 - 16px padding inside groups; leave 22px at the top of a group for its corner icon + label.
@@ -121,6 +137,6 @@ rerouted). Pair `fail` + `fade` + `glow` to tell a failover story.
   built `catalog/drafts/<family>.aws.html`. Do NOT edit `awd.mjs`, `aws.css`, `Prism.html`, the icon
   store, or other families' files. If the kit lacks something, use `extra` and report it.
 - Descriptions: plain sentences, no em dashes, no marketing; say what animates.
-- Section titles: no hyphens (the catalog cuts a category at the first dash: "MULTI-REGION" became
-  "MULTI").
+- Section titles: a spaced dash or an em/en dash starts a subtitle that the catalog drops from the
+  category ("NETWORKING - hub and spoke" files under "NETWORKING"); a hyphen inside a word stays.
 - `preview` must report `validation: OK` and `build` must succeed before you finish.

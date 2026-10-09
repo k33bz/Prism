@@ -5,7 +5,8 @@
 //
 // CLI:
 //   node catalog/aws-kit/awd.mjs build <spec.mjs>            -> catalog/drafts/<section.id>.aws.html
-//   node catalog/aws-kit/awd.mjs preview <spec.mjs> [light]  -> scratch preview HTML + validation report
+//   node catalog/aws-kit/awd.mjs preview <spec.mjs> [light] [still]  -> scratch preview HTML + validation report
+//     (still: no packets or rings, the complete static diagram, as for print and exports)
 import fs from 'node:fs';
 import path from 'node:path';
 import { pathToFileURL, fileURLToPath } from 'node:url';
@@ -18,30 +19,121 @@ const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replac
 const r2 = (n) => Math.round(n * 100) / 100;
 const pct = (n) => String(r2(n)).replace(/^0\./, '.');
 
+// center: the AWS deck centers the header of the frames that carry no icon (AZ, security group,
+// generic); a spec can override per group with align:'left'|'center'
 const GROUP = {
   cloud:  { cls: 'g-cloud',  icon: ['aws-grp-cloud-logo-dark', 'aws-grp-cloud-logo'], label: 'AWS Cloud' },
   region: { cls: 'g-region', icon: 'aws-grp-region', label: 'Region' },
-  az:     { cls: 'g-az',     icon: null, label: 'Availability Zone' },
+  az:     { cls: 'g-az',     icon: null, label: 'Availability Zone', center: true },
   vpc:    { cls: 'g-vpc',    icon: 'aws-grp-virtual-private-cloud-vpc', label: 'VPC' },
   pub:    { cls: 'g-pub',    icon: 'aws-grp-public-subnet', label: 'Public subnet' },
   priv:   { cls: 'g-priv',   icon: 'aws-grp-private-subnet', label: 'Private subnet' },
-  sg:     { cls: 'g-sg',     icon: null, label: 'Security group' },
+  sg:     { cls: 'g-sg',     icon: null, label: 'Security group', center: true },
   asg:    { cls: 'g-asg',    icon: 'aws-grp-auto-scaling-group', label: 'Auto Scaling group' },
   acct:   { cls: 'g-acct',   icon: 'aws-grp-account', label: 'AWS account' },
   dc:     { cls: 'g-dc',     icon: 'aws-grp-corporate-data-center', label: 'Corporate data center' },
   server: { cls: 'g-dc',     icon: 'aws-grp-server-contents', label: 'Server contents' },
-  ec2:    { cls: 'g-asg',    icon: 'aws-grp-ec2-instance-contents', label: 'EC2 instance contents' },
-  spot:   { cls: 'g-asg',    icon: 'aws-grp-spot-fleet', label: 'Spot Fleet' },
-  gen:    { cls: 'g-gen',    icon: null, label: '' },
+  ec2:    { cls: 'g-ec2',    icon: 'aws-grp-ec2-instance-contents', label: 'EC2 instance contents' },
+  spot:   { cls: 'g-ec2',    icon: 'aws-grp-spot-fleet', label: 'Spot Fleet' },
+  gen:    { cls: 'g-gen',    icon: null, label: '', center: true },
 };
+
+// ---- input checks. Specs may come from importers (draw.io, Mermaid, IaC), so everything that
+// lands in markup is checked here: ids are plain tokens, numbers are finite, wire paths use only
+// M/H/V/L, enumerations come from a fixed set, and raw `extra` markup cannot run script, load
+// anything external or escape the diagram. ----
+const ID_RE = /^[A-Za-z0-9_-]+$/;
+const D_RE = /^[MHVL\d.,\s-]+$/;
+const ANCHORS = new Set(['start', 'middle', 'end']);
+const PACKETS = new Set(['pk', 'pk-2', 'pk-bad']);
+const NOTE_KINDS = new Set(['caption', 'label', 'warn']);
+const EXTRA_BAD = [
+  [/<\s*(script|foreignObject|style|iframe|object|embed)\b/i, 'element not allowed'],
+  [/\son[a-z]+\s*=/i, 'event handler attribute'],
+  [/javascript\s*:/i, 'javascript: URL'],
+  [/\bhref\s*=\s*(?:["'](?!#)|(?!["'#]))/i, 'href must be a #fragment'],
+  [/url\(\s*(?:["'](?!#)|(?!["'#]))/i, 'url() must be a #fragment'],
+];
+
+function fail(where, msg) { throw new Error(`${where}: ${msg}`); }
+function okId(v, where) { if (!ID_RE.test(String(v))) fail(where, `id must match [A-Za-z0-9_-]+, got ${JSON.stringify(v)}`); }
+function okNum(v, where) { if (typeof v !== 'number' || !Number.isFinite(v)) fail(where, `expected a finite number, got ${JSON.stringify(v)}`); }
+function okOptNum(o, keys, where) { for (const k of keys) if (o[k] != null) okNum(o[k], `${where}.${k}`); }
+function okWindow(t, where) {
+  if (!Array.isArray(t) || t.length !== 2) fail(where, 't must be [a, b]');
+  const [a, b] = t; okNum(a, where + '.t[0]'); okNum(b, where + '.t[1]');
+  if (!(a > 0 && b < 1 && b > a)) fail(where, `window must satisfy 0 < a < b < 1: ${JSON.stringify(t)}`);
+}
+function okExtra(x, where) {
+  if (typeof x !== 'string') fail(where, 'extra must be a string of SVG markup');
+  for (const [re, why] of EXTRA_BAD) { const m = x.match(re); if (m) fail(where, `${why}: ${JSON.stringify(x.slice(Math.max(0, m.index - 20), m.index + 40))}`); }
+}
+
+// Check a whole spec before any markup is written; throws with the element at fault.
+export function checkSpec(spec) {
+  const id = spec.id; if (!/^[a-z][a-z0-9-]*$/.test(String(id))) fail('diagram', 'id must be kebab/alnum: ' + JSON.stringify(id));
+  const at = `diagram ${id}`;
+  okOptNum(spec, ['w', 'h', 'dur'], at);
+  const nodeIds = new Set(), wireIds = new Set(), groupIds = new Set();
+  for (const [i, g] of (spec.groups || []).entries()) {
+    const w = `${at} group[${i}]`;
+    if (!GROUP[g.kind]) fail(w, `unknown group kind ${JSON.stringify(g.kind)} (known: ${Object.keys(GROUP).join(', ')})`);
+    for (const k of ['x', 'y', 'w', 'h']) okNum(g[k], `${w}.${k}`);
+    if (g.id != null) { okId(g.id, w); groupIds.add(g.id); }
+    if (g.align != null && g.align !== 'left' && g.align !== 'center') fail(w, 'align must be left or center');
+  }
+  for (const n of spec.nodes || []) {
+    const w = `${at} node ${n.id}`;
+    okId(n.id, `${at} node`); if (nodeIds.has(n.id)) fail(w, 'duplicate node id'); nodeIds.add(n.id);
+    okNum(n.x, w + '.x'); okNum(n.y, w + '.y'); okOptNum(n, ['size', 'wrap'], w);
+    if (Array.isArray(n.icon)) { for (const ic of n.icon) if (!Object.hasOwn(ICONS, ic)) fail(w, `unknown icon ${JSON.stringify(ic)}`); } else iconUses(n.icon, w);
+  }
+  for (const wr of spec.wires || []) {
+    const w = `${at} wire ${wr.id}`;
+    okId(wr.id, `${at} wire`); if (wireIds.has(wr.id)) fail(w, 'duplicate wire id'); wireIds.add(wr.id);
+    if (wr.d != null) { if (typeof wr.d !== 'string' || !D_RE.test(wr.d)) fail(w, 'd may use only M, H, V, L and numbers'); }
+    else for (const end of ['from', 'to']) if (!nodeIds.has(wr[end])) fail(w, `${end} names unknown node ${JSON.stringify(wr[end])}`);
+    okOptNum(wr, ['via', 'labelAt', 'labelDx', 'labelDy'], w);
+    if (wr.labelAnchor != null && !ANCHORS.has(wr.labelAnchor)) fail(w, 'labelAnchor must be start, middle or end');
+  }
+  for (const [i, s] of (spec.steps || []).entries()) {
+    const w = `${at} step[${i}]`;
+    if (s.at != null) { if (!wireIds.has(s.at)) fail(w, `at names unknown wire ${JSON.stringify(s.at)}`); okOptNum(s, ['f', 'dx', 'dy'], w); }
+    else { okNum(s.x, w + '.x'); okNum(s.y, w + '.y'); }
+  }
+  for (const [i, e] of (spec.timeline || []).entries()) {
+    const w = `${at} timeline[${i}]`;
+    okWindow(e.t, w); okOptNum(e, ['r'], w);
+    if (e.wire != null && !wireIds.has(e.wire)) fail(w, `unknown wire ${JSON.stringify(e.wire)}`);
+    if (e.ring != null && !nodeIds.has(e.ring)) fail(w, `unknown ring node ${JSON.stringify(e.ring)}`);
+    if (e.wire == null && e.ring == null) fail(w, 'needs a wire, a ring, or both');
+    if (e.kind != null && !PACKETS.has(e.kind)) fail(w, `kind must be one of ${[...PACKETS].join(', ')}`);
+  }
+  for (const [i, e] of (spec.effects || []).entries()) {
+    const w = `${at} effects[${i}]`;
+    okWindow(e.t, w);
+    if (e.appear != null && !nodeIds.has(e.appear)) fail(w, `appear: unknown node ${JSON.stringify(e.appear)}`);
+    if (e.fail != null && !groupIds.has(e.fail)) fail(w, `fail: unknown group id ${JSON.stringify(e.fail)}`);
+    if (e.fade != null && !wireIds.has(e.fade)) fail(w, `fade: unknown wire ${JSON.stringify(e.fade)}`);
+    if (e.glow != null && !wireIds.has(e.glow)) fail(w, `glow: unknown wire ${JSON.stringify(e.glow)}`);
+  }
+  for (const [i, nt] of (spec.notes || []).entries()) {
+    const w = `${at} note[${i}]`;
+    okNum(nt.x, w + '.x'); okNum(nt.y, w + '.y');
+    if (nt.kind != null && !NOTE_KINDS.has(nt.kind)) fail(w, `kind must be one of ${[...NOTE_KINDS].join(', ')}`);
+    if (nt.anchor != null && !ANCHORS.has(nt.anchor)) fail(w, 'anchor must be start, middle or end');
+    if (nt.t != null) okWindow(nt.t, w);
+  }
+  if (spec.extra != null) okExtra(spec.extra, `${at} extra`);
+}
 
 // Resolve an icon reference to one or two <use> ids: a base id that has official -dark/-light
 // colorways becomes a theme-swapping pair; an explicit id is used as-is.
-function iconUses(icon) {
+function iconUses(icon, where = 'icon') {
   if (Array.isArray(icon)) return [{ id: icon[0], cls: 'cw-d' }, { id: icon[1], cls: 'cw-l' }];
-  if (ICONS[icon]) return [{ id: icon, cls: '' }];
-  if (ICONS[icon + '-dark'] && ICONS[icon + '-light']) return [{ id: icon + '-dark', cls: 'cw-d' }, { id: icon + '-light', cls: 'cw-l' }];
-  throw new Error(`unknown icon "${icon}" (not in catalog/aws-icons/aws-icons.json)`);
+  if (Object.hasOwn(ICONS, icon)) return [{ id: icon, cls: '' }];
+  if (Object.hasOwn(ICONS, icon + '-dark') && Object.hasOwn(ICONS, icon + '-light')) return [{ id: icon + '-dark', cls: 'cw-d' }, { id: icon + '-light', cls: 'cw-l' }];
+  throw new Error(`${where}: unknown icon ${JSON.stringify(icon)} (not in catalog/aws-icons/aws-icons.json; search with: node catalog/aws-kit/awd.mjs icons <words>)`);
 }
 const use = (icon, x, y, s) => iconUses(icon).map((u) =>
   `<use${u.cls ? ` class="${u.cls}"` : ''} href="#${u.id}" x="${r2(x)}" y="${r2(y)}" width="${s}" height="${s}"/>`).join('');
@@ -76,14 +168,33 @@ function route(a, b, gap = 4, via) {
   return `M${r2(A.cx)},${r2(y1l)} V${r2(my)} H${r2(B.cx)} V${r2(y2)}`;
 }
 
-// point at fraction f along a polyline path made of M/H/V segments (for badges/labels)
-function pointAt(d, f = 0.5) {
+// vertices of a polyline path made of M/H/V/L segments
+function pathPoints(d) {
   const pts = []; let x = 0, y = 0;
   for (const [, c, v] of d.matchAll(/([MHVL])\s*([-\d.]+(?:[ ,][-\d.]+)?)/g)) {
     const nums = v.split(/[ ,]/).map(Number);
     if (c === 'M' || c === 'L') { x = nums[0]; y = nums[1]; } else if (c === 'H') x = nums[0]; else if (c === 'V') y = nums[0];
     pts.push([x, y]);
   }
+  return pts;
+}
+
+// does any segment of path d touch box {x, y, r, b}? (exact for H/V runs, a bounding-box test for L)
+function crosses(d, box) {
+  const p = pathPoints(d);
+  for (let i = 1; i < p.length; i++) {
+    const [x1, y1] = p[i - 1], [x2, y2] = p[i];
+    if (Math.max(x1, x2) >= box.x && Math.min(x1, x2) <= box.r && Math.max(y1, y2) >= box.y && Math.min(y1, y2) <= box.b) return true;
+  }
+  return false;
+}
+
+// rough rendered width of a line of Arial at px size (average advance about 0.56 em)
+const textW = (s, px) => String(s).length * px * 0.56;
+
+// point at fraction f along a polyline path made of M/H/V segments (for badges/labels)
+function pointAt(d, f = 0.5) {
+  const pts = pathPoints(d);
   if (pts.length < 2) return pts[0] || [0, 0];
   const seg = []; let tot = 0;
   for (let i = 1; i < pts.length; i++) { const l = Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]); seg.push(l); tot += l; }
@@ -101,41 +212,61 @@ function pointAt(d, f = 0.5) {
 const win = (dur, a, b, inner) => inner; // (kept for readability of call sites)
 
 export function diagram(spec) {
-  const id = spec.id; if (!/^[a-z][a-z0-9-]*$/.test(id)) throw new Error('diagram id must be kebab/alnum: ' + id);
+  checkSpec(spec);
+  const id = spec.id;
   const W = spec.w || 480, H = spec.h || 240, dur = spec.dur || 6;
   const D = `${dur}s`;
-  const nodes = Object.fromEntries((spec.nodes || []).map((n) => [n.id, n]));
+  // null-prototype lookups: an id such as "constructor" must not resolve to an inherited member
+  const nodes = Object.assign(Object.create(null), Object.fromEntries((spec.nodes || []).map((n) => [n.id, n])));
   const parts = [];
 
-  // Arrowheads. The wire head scales with the wire's stroke (7 x 1.3 = 9.1 units); the glow overlay
-  // gets its own head in user space so its thicker stroke does not inflate it. Overlay paint goes in
-  // inline style: a class rule (.awd .w) would outrank presentation attributes.
+  // Arrowheads: the open chevron of the AWS deck ("open arrow"), stroked like the wire. The wire head
+  // scales with the wire's stroke (7 x 1.3 = 9.1 units); the glow overlay gets its own head in user
+  // space so its thicker stroke does not inflate it. Overlay paint goes in inline style: a class rule
+  // (.awd .w) would outrank presentation attributes.
   const fx = spec.effects || [];
-  const head = (mid, paint, size, user) => `<marker id="${id}-${mid}" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="${size}" markerHeight="${size}"${user ? ' markerUnits="userSpaceOnUse"' : ''} orient="auto-start-reverse"><path ${paint} d="M0,0 L8,4 L0,8 Z"/></marker>`;
-  parts.push(`<defs>${head('ah', 'class="ah"', 7)}${(spec.wires || []).some((w) => w.hot) ? head('ahh', 'style="fill:#DD344C"', 7) : ''}${fx.some((e) => e.glow) ? head('ahg', 'style="fill:var(--awd-pk)"', 9.1, true) : ''}</defs>`);
+  const head = (mid, paint, size, sw, user) => `<marker id="${id}-${mid}" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="${size}" markerHeight="${size}"${user ? ' markerUnits="userSpaceOnUse"' : ''} orient="auto-start-reverse"><path ${paint} d="M1.5,1.5 L9,5 L1.5,8.5" stroke-width="${sw}" stroke-linecap="round" stroke-linejoin="round"/></marker>`;
+  parts.push(`<defs>${head('ah', 'class="ah"', 7, 1.4)}${(spec.wires || []).some((w) => w.hot) ? head('ahh', 'style="fill:none;stroke:#DD344C"', 7, 1.4) : ''}${fx.some((e) => e.glow) ? head('ahg', 'style="fill:none;stroke:var(--awd-pk)"', 9.1, 2.4, true) : ''}</defs>`);
   // fade dims the wire itself (head included) during its window
   const fading = new Map(fx.filter((e) => e.fade).map((e) => [e.fade, e.t]));
 
+  // wire paths first: a centered group header must not sit on a wire
+  const paths = Object.create(null);
+  for (const w of spec.wires || []) paths[w.id] = w.d || route(nodes[w.from], nodes[w.to], 4, w.via);
+  // Icon-less frames (AZ, security group, generic) center their header. A kind falls back to the
+  // left for the whole diagram when any of its centered headers would sit on a wire or its group's
+  // note, so sibling frames stay alike. An explicit align always wins.
+  const groupIcon = (g) => (typeof g.icon === 'string' ? g.icon : (g.icon !== false ? GROUP[g.kind].icon : null));
+  const groupLabel = (g) => (g.label != null ? g.label : GROUP[g.kind].label);
+  const leftKinds = new Set();
+  for (const g of spec.groups || []) {
+    if (g.align || !GROUP[g.kind].center || groupIcon(g) || !groupLabel(g)) continue;
+    const cx = g.x + g.w / 2, half = textW(groupLabel(g), 10) / 2 + 6;
+    const band = { x: cx - half, r: cx + half, y: g.y + 2, b: g.y + 18 };
+    const noteLeft = g.note ? g.x + g.w - 6 - textW(g.note, 9) - 6 : Infinity;
+    if (band.x < g.x + 4 || band.r > noteLeft || Object.values(paths).some((d) => crosses(d, band))) leftKinds.add(g.kind);
+  }
+
   // groups (draw order = array order; put outer groups first)
   for (const g of spec.groups || []) {
-    const G = GROUP[g.kind]; if (!G) throw new Error('unknown group kind ' + g.kind);
-    const label = g.label != null ? g.label : G.label;
-    parts.push(`<rect class="g ${G.cls}"${g.id ? ` id="${id}-${g.id}"` : ''} x="${g.x}" y="${g.y}" width="${g.w}" height="${g.h}"/>`);
+    const G = GROUP[g.kind];
+    const label = groupLabel(g);
+    parts.push(`<rect class="g ${G.cls}"${g.id ? ` id="${id}-${g.id}"` : ''} x="${r2(g.x)}" y="${r2(g.y)}" width="${r2(g.w)}" height="${r2(g.h)}"/>`);
     let tx = g.x + 6;
     // corner icon: the kind's official group icon, a service icon id (e.g. a gen frame for an ECS
     // service), or none with icon:false
-    const gi = typeof g.icon === 'string' ? g.icon : (g.icon !== false ? G.icon : null);
+    const gi = groupIcon(g);
     if (gi) { parts.push(use(gi, g.x, g.y, 20)); tx = g.x + 25; }
-    if (label) parts.push(`<text class="t-g gt-${G.cls.slice(2)}" x="${tx}" y="${g.y + 14}">${esc(label)}</text>`);
+    const center = g.align ? g.align === 'center' : (G.center && !gi && !leftKinds.has(g.kind));
+    if (label) parts.push(`<text class="t-g${center ? ' t-gc' : ''}" x="${r2(center ? g.x + g.w / 2 : tx)}" y="${r2(g.y + 14)}">${esc(label)}</text>`);
     // note: right-aligned on the top edge (a CIDR, a route summary, an account id)
-    if (g.note) parts.push(`<text class="t-sub" x="${g.x + g.w - 6}" y="${g.y + 14}" style="text-anchor:end">${esc(g.note)}</text>`);
+    if (g.note) parts.push(`<text class="t-sub" x="${r2(g.x + g.w - 6)}" y="${r2(g.y + 14)}" style="text-anchor:end">${esc(g.note)}</text>`);
   }
 
   // wires
-  const wires = {}, wireDefs = {};
+  const wires = Object.create(null), wireDefs = Object.create(null);
   for (const w of spec.wires || []) {
-    const d = w.d || route(nodes[w.from], nodes[w.to], 4, w.via);
-    if (!w.d && (!nodes[w.from] || !nodes[w.to])) throw new Error(`wire ${w.id}: unknown node`);
+    const d = paths[w.id];
     wires[w.id] = d; wireDefs[w.id] = w;
     const cls = ['w', w.dashed ? 'w-d' : '', w.flow ? 'w-flow' : '', w.hot ? 'w-hot' : ''].filter(Boolean).join(' ');
     const ah = w.hot ? 'ahh' : 'ah';   // a red (hot) wire gets a red head
@@ -179,7 +310,7 @@ export function diagram(spec) {
   // step badges (at a wire's point, nudged off the line)
   for (const s of spec.steps || []) {
     let x, y;
-    if (s.at && wires[s.at]) { [x, y] = pointAt(wires[s.at], s.f != null ? s.f : 0.5); x += s.dx != null ? s.dx : 0; y += s.dy != null ? s.dy : -11; }
+    if (s.at != null) { [x, y] = pointAt(wires[s.at], s.f != null ? s.f : 0.5); x += s.dx != null ? s.dx : 0; y += s.dy != null ? s.dy : -11; }
     else { x = s.x; y = s.y; }
     parts.push(`<g class="st" transform="translate(${r2(x)},${r2(y)})"><circle r="7.5"/><text y="3.2">${esc(s.n)}</text></g>`);
   }
@@ -242,13 +373,15 @@ export function diagram(spec) {
 export function tile(spec) {
   const svg = diagram(spec);
   const ref = `.awd #${spec.id}`;
-  return `  <div class="tile is-new${spec.wide ? ' wide' : ''}" data-fx-id="aws-${spec.id}" data-ctype="${spec.ctype || 'diagram-arch'}" data-interact="auto-play" data-c="accent"><div class="stage">
+  return `  <div class="tile is-new${spec.wide ? ' wide' : ''}" data-fx-id="aws-${spec.id}" data-ctype="${esc(spec.ctype || 'diagram-arch')}" data-interact="auto-play" data-c="accent"><div class="stage">
     ${svg}
   </div><div class="meta"><div class="nm">${esc(spec.name)}</div><span class="ref">${esc(spec.ref || 'svg.awd')}</span><div class="desc">${esc(spec.desc || '')}</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>`;
 }
 
 export function section(mod) {
   const s = mod.section;
+  // section.id names the output file: a kebab token, never a path
+  if (!/^[a-z][a-z0-9-]*$/.test(String(s.id))) fail('section', 'id must be kebab/alnum: ' + JSON.stringify(s.id));
   return `<h3 class="sec">${esc(s.title)}</h3>\n<div class="gallery">\n\n${mod.diagrams.map(tile).join('\n\n')}\n\n</div>`;
 }
 
@@ -267,14 +400,14 @@ export function validate(html) {
 
 async function loadSpec(p) { return (await import(pathToFileURL(path.resolve(p)).href)).default; }
 
-// preview page: tokens + kit css + sprite + section, optional light mode
-function previewHtml(sectionHtml, mode) {
+// preview page: tokens + kit css + sprite + section, optional light mode and still frame
+function previewHtml(sectionHtml, mode, still) {
   const css = fs.readFileSync(path.join(ROOT, 'catalog', 'drafts', 'aws.css'), 'utf8');
   const sprite = fs.readFileSync(path.join(ROOT, 'catalog', 'aws-icons', 'aws-icons.svg'), 'utf8')
     .replace('<svg xmlns="http://www.w3.org/2000/svg" style="display:none">', '<svg id="awd-sprite" xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position:absolute" aria-hidden="true">');
   const dark = ':root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--line:#243049;--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;--accent:#ff9900;--accent-rgb:255,153,0;--info:#4493f8;--info-rgb:68,147,248}';
   const light = ':root{--bg:#f4f6f9;--panel:#ffffff;--panel2:#eef1f6;--line:#d5dbe5;--ink:#16191f;--muted:#5f6b7a;--dim:#8a94a3;--accent:#ec7211;--accent-rgb:236,114,17;--info:#0972d3;--info-rgb:9,114,211}';
-  return `<!doctype html><html${mode === 'light' ? ' data-mode="light"' : ' data-mode="dark"'}><head><meta charset="utf-8"><title>awd preview</title><style>${mode === 'light' ? light : dark}
+  return `<!doctype html><html${mode === 'light' ? ' data-mode="light"' : ' data-mode="dark"'}${still ? ' data-still' : ''}><head><meta charset="utf-8"><title>awd preview</title><style>${mode === 'light' ? light : dark}
 *{box-sizing:border-box}body{margin:0;padding:20px;background:var(--bg);color:var(--ink);font:14px system-ui}
 h3.sec{font-size:12px;text-transform:uppercase;letter-spacing:.12em;color:var(--dim);border-bottom:1px solid var(--line);padding-bottom:8px}
 .gallery{display:grid;gap:18px}.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column}
@@ -296,7 +429,8 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
-  const [cmd, specPath, mode] = process.argv.slice(2);
+  const [cmd, specPath, ...flags] = process.argv.slice(2);
+  const mode = flags.includes('light') ? 'light' : 'dark', still = flags.includes('still');
   const mod = await loadSpec(specPath);
   const html = section(mod);
   const errs = validate(html);
@@ -306,9 +440,9 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
     fs.writeFileSync(out, html + '\n');
     console.log(`built ${path.relative(ROOT, out)}: ${mod.diagrams.length} diagram(s), ${html.length} bytes`);
   } else if (cmd === 'preview') {
-    const out = path.join(path.dirname(path.resolve(specPath)), `${mod.section.id}.preview${mode === 'light' ? '-light' : ''}.html`);
-    fs.writeFileSync(out, previewHtml(html, mode));
+    const out = path.join(path.dirname(path.resolve(specPath)), `${mod.section.id}.preview${mode === 'light' ? '-light' : ''}${still ? '-still' : ''}.html`);
+    fs.writeFileSync(out, previewHtml(html, mode, still));
     console.log(`preview ${out}`);
     console.log(errs.length ? 'VALIDATION:\n  ' + errs.join('\n  ') : 'validation: OK');
-  } else { console.error('usage: awd.mjs build|preview <spec.mjs> [light]'); process.exit(1); }
+  } else { console.error('usage: awd.mjs build|preview <spec.mjs> [light] [still]'); process.exit(1); }
 }
