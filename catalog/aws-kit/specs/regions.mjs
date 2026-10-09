@@ -62,12 +62,21 @@ const ecN = (id, R, slotNo) => N(id, 'aws-svc-ec2', 540, slotNo === 1 ? ec1Y(R) 
 const dbN = (id, R, icon, label, sub) => N(id, icon, 760, rowY(R), label, { sub });
 
 // ---- the three wide DR diagrams share these captions / badges ----
-const wideSteps = (usersWire) => [
-  usersWire === 'u' ? { n: 1, at: 'u', f: 0.26 } : { n: 1, at: usersWire, f: 0.39, dy: 0 },   // active-active: on the vertical run
-  { n: 2, at: 'ra', f: 0.82 },
-  { n: 3, at: 'a1', f: 0.53 },
-  { n: 4, at: 'ae1', f: 0.47 },
-  { n: 5, x: 822, y: 170 },
+// text: the five step descriptions, in badge order
+const wideSteps = (usersWire, text) => [
+  usersWire === 'u' ? { n: 1, at: 'u', f: 0.26, text: text[0] } : { n: 1, at: usersWire, f: 0.39, dy: 0, text: text[0] },   // active-active: on the vertical run
+  { n: 2, at: 'ra', f: 0.82, text: text[1] },
+  { n: 3, at: 'a1', f: 0.53, text: text[2] },
+  { n: 4, at: 'ae1', f: 0.47, text: text[3] },
+  { n: 5, x: 822, y: 170, text: text[4] },
+];
+// steps 1 to 4 of pilot light and warm standby (Route 53 failover routing, primary stack in us-east-1)
+const failoverSteps = (step5) => [
+  'Users resolve the application with Amazon Route 53, whose failover routing answers with the primary Region, us-east-1, while it is healthy.',
+  'Requests reach the Application Load Balancer in us-east-1. If that Region fails, Route 53 fails over to the load balancer in us-west-2.',
+  'The load balancer forwards requests to Amazon EC2 instances in the Auto Scaling group.',
+  'The EC2 instances read and write the primary Amazon Aurora cluster.',
+  step5,
 ];
 
 const pilot = (() => {
@@ -90,7 +99,7 @@ const pilot = (() => {
       ...regionWires(P, 'b', true, true),
       { id: 'rep', d: P.rep, flow: true },
     ],
-    steps: wideSteps('u'),
+    steps: wideSteps('u', failoverSteps('Aurora replicates asynchronously to the secondary cluster in us-west-2, where no EC2 instances run. On failover it is promoted and the group scales up from zero.')),
     timeline: [
       { wire: 'u', t: [0.03, 0.08] },
       { wire: 'ra', t: [0.09, 0.14], ring: 'albA' },
@@ -145,7 +154,7 @@ const warm = (() => {
       ...regionWires(P, 'b', false, true),
       { id: 'rep', d: P.rep, flow: true },
     ],
-    steps: wideSteps('u'),
+    steps: wideSteps('u', failoverSteps('Aurora replicates asynchronously to the secondary cluster in us-west-2, where a scaled-down stack already runs. On failover it is promoted and the group scales out.')),
     timeline: [
       { wire: 'u', t: [0.03, 0.08] },
       { wire: 'ra', t: [0.09, 0.14], ring: 'albA' },
@@ -202,7 +211,13 @@ const active = (() => {
       ...regionWires(P, 'b', false, false),
       { id: 'rep', d: P.rep, flow: true, both: true },
     ],
-    steps: wideSteps('ue'),
+    steps: wideSteps('ue', [
+      'Users query Amazon Route 53, whose latency-based routing answers with the Region that gives them the lowest latency.',
+      'Each Region serves its users through its own Application Load Balancer. If a Region fails, Route 53 sends all users to the remaining Region.',
+      'The load balancer forwards requests to Amazon EC2 instances in that Region\'s Auto Scaling group.',
+      'The instances read and write the local replica of the Amazon DynamoDB global table.',
+      'DynamoDB global tables replicate writes asynchronously in both directions, so either Region can take writes and serve all users if the other fails.',
+    ]),
     timeline: [
       { wire: 'ue', t: [0.03, 0.08] }, { wire: 'uw', t: [0.03, 0.08] },
       { wire: 'ra', t: [0.09, 0.14], ring: 'albA' }, { wire: 'rb', t: [0.09, 0.14], ring: 'albB' },
@@ -264,9 +279,9 @@ const r53failover = (() => {
       { id: 'w1', d: P.w1 }, { id: 'w2', d: P.w2 },
     ],
     steps: [
-      { n: 1, at: 'u', f: 0.26 },
-      { n: 2, x: 253, y: 73 },
-      { n: 3, x: 253, y: 187 },
+      { n: 1, at: 'u', f: 0.26, text: 'Users query Amazon Route 53 for the application\'s domain name.' },
+      { n: 2, x: 253, y: 73, text: 'While the health check on the primary endpoint passes, Route 53 answers with the Application Load Balancer in us-east-1, which forwards to Amazon EC2.' },
+      { n: 3, x: 253, y: 187, text: 'When the health check fails, Route 53 answers with the secondary record, and users reach the load balancer and EC2 in us-west-2.' },
     ],
     timeline: [
       { wire: 'u', t: [0.04, 0.09] },
@@ -322,9 +337,9 @@ const gax = (() => {
       { id: 'w1', d: P.w1 }, { id: 'w2', d: P.w2 },
     ],
     steps: [
-      { n: 1, at: 'u', f: 0.29 },
-      { n: 2, x: 230, y: 73 },
-      { n: 3, x: 230, y: 187 },
+      { n: 1, at: 'u', f: 0.29, text: 'Users connect to one of the two static anycast IP addresses of AWS Global Accelerator.' },
+      { n: 2, x: 230, y: 73, text: 'Global Accelerator carries the traffic over the AWS global network to the closest healthy endpoint, the Application Load Balancer in us-east-1.' },
+      { n: 3, x: 230, y: 187, text: 'When the us-east-1 endpoint fails its health checks, Global Accelerator shifts traffic to us-west-2 behind the same IP addresses, with no DNS change.' },
     ],
     timeline: [
       { wire: 'u', t: [0.04, 0.09], ring: 'ga' },
@@ -374,9 +389,9 @@ const s3crr = (() => {
       { id: 'rep', d: P.rep, flow: true, both: true },
     ],
     steps: [
-      { n: 1, at: 'u', f: 0.27 },
-      { n: 2, x: 252, y: 73 },
-      { n: 3, x: 388, y: 118 },
+      { n: 1, at: 'u', f: 0.27, text: 'Users send requests to the Amazon S3 Multi-Region Access Point.' },
+      { n: 2, x: 252, y: 73, text: 'The Multi-Region Access Point routes requests to the active source bucket in us-east-1.' },
+      { n: 3, x: 388, y: 118, text: 'S3 Cross-Region Replication copies new objects to the destination bucket in us-west-2. In a disruption, the failover controls make that bucket active.' },
     ],
     timeline: [
       { wire: 'u', t: [0.04, 0.09], ring: 'mrap' },
@@ -435,9 +450,10 @@ export default {
         { id: 'r2w', d: 'M242,234 H190' },
       ],
       steps: [
-        { n: 1, at: 'b1' }, { n: 2, at: 'b2' },
-        { n: 3, x: 372, y: 186 },
-        { n: 4, at: 'r1w' },
+        { n: 1, at: 'b1', text: 'AWS Backup backs up the protected Amazon EC2 and Amazon RDS resources in us-east-1.' },
+        { n: 2, at: 'b2', text: 'AWS Backup stores each recovery point in a backup vault in us-east-1.' },
+        { n: 3, x: 372, y: 186, text: 'AWS Backup copies the recovery points to a backup vault in us-west-2.' },
+        { n: 4, at: 'r1w', text: 'After a Region failure, AWS Backup in us-west-2 restores the recovery points to new EC2 and RDS resources. RPO and RTO are measured in hours.' },
       ],
       timeline: [
         { wire: 'b1', t: [0.04, 0.09], ring: 'bk1' },
@@ -502,9 +518,9 @@ export default {
         { id: 'e4', d: 'M803,282 H690 V204 H654', both: true },
       ],
       steps: [
-        { n: 1, at: 'e1', f: 0.45 },
-        { n: 2, x: 436, y: 187 },
-        { n: 3, at: 'e3', f: 0.45 },
+        { n: 1, at: 'e1', f: 0.45, text: 'An Amazon EC2 instance in VPC 10.0.0.0/16 sends a request for VPC 10.2.0.0/16 to AWS Transit Gateway in us-east-1.' },
+        { n: 2, x: 436, y: 187, text: 'A static route sends it across the peering attachment to the transit gateway in us-west-2, over the AWS global network.' },
+        { n: 3, at: 'e3', f: 0.45, text: 'The us-west-2 transit gateway delivers it to the EC2 instance in VPC 10.2.0.0/16, and the reply returns the same way.' },
       ],
       timeline: [
         { wire: 'e1', t: [0.04, 0.12], ring: 'tgw1' },
