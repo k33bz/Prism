@@ -654,6 +654,67 @@ Result — the portable `prism-collection-1.0` object the in-browser Collections
 
 ---
 
+## AWS Architecture diagrams
+
+Diagrams as JSON specs, compiled by the AWS kit beside the catalog (`catalog/aws-kit/awd.mjs`).
+
+### `get_diagram_spec`
+Request:
+```json
+{ "name": "get_diagram_spec", "arguments": { "id": "aws-sl-api" } }
+```
+Result (`spec` matches `catalog/aws-kit/spec.schema.json`):
+```json
+{
+  "id": "sl-api", "catalogId": "aws-sl-api",
+  "family": { "id": "serverless", "title": "SERVERLESS" }, "version": 1,
+  "spec": {
+    "id": "sl-api", "name": "Serverless REST API", "desc": "Users call an Amazon API Gateway REST API, …",
+    "w": 480, "h": 270, "dur": 8,
+    "groups": [{ "kind": "cloud", "x": 84, "y": 8, "w": 388, "h": 254 }, …],
+    "nodes": [{ "id": "users", "icon": "aws-res-users", "x": 18, "y": 76, "label": "Users" }, …],
+    "wires": [{ "id": "p1", "from": "users", "to": "apigw", "both": true }, …],
+    "steps": [{ "n": 1, "at": "p1", "f": 0.76 }, …],
+    "timeline": [{ "wire": "p1", "t": [0.04, 0.13], "ring": "apigw" }, …]
+  },
+  "source": "…/catalog/aws-kit/json/serverless.json"
+}
+```
+
+### `build_diagram`
+Request (one diagram; a family `{ "version": 1, "section": {…}, "diagrams": […] }` also works):
+```json
+{
+  "name": "build_diagram",
+  "arguments": {
+    "theme": "light",
+    "spec": {
+      "id": "x-ddb", "name": "Lambda and DynamoDB", "desc": "A Lambda function reads a DynamoDB table.",
+      "nodes": [
+        { "id": "fn", "icon": "aws-svc-lambda", "x": 20, "y": 40, "label": "AWS Lambda" },
+        { "id": "db", "icon": "aws-svc-dynamodb", "x": 160, "y": 40, "label": "Amazon DynamoDB" }
+      ],
+      "wires": [{ "id": "w", "from": "fn", "to": "db" }],
+      "timeline": [{ "wire": "w", "t": [0.1, 0.4], "ring": "db" }]
+    }
+  }
+}
+```
+Result (`svg` is a complete .svg file; `html` is the bare gallery `<svg class="awd">`):
+```json
+{
+  "id": "x-ddb",
+  "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" class=\"awd\" viewBox=\"0 0 480 240\" width=\"480\" height=\"240\" role=\"img\" aria-label=\"Lambda and DynamoDB\" data-mode=\"light\"><title>Lambda and DynamoDB</title><desc>…</desc><metadata id=\"awd-spec\" data-version=\"1\">…</metadata><style>…</style><defs>…</defs>…</svg>
+",
+  "html": "<svg class=\"awd\" viewBox=\"0 0 480 240\" role=\"img\" aria-label=\"Lambda and DynamoDB\">…<g class=\"awd-n\" data-node=\"fn\" data-icon=\"aws-svc-lambda\"><title>AWS Lambda</title>…</g>…</svg>",
+  "errors": []
+}
+```
+A spec with problems returns `svg: null`, `html: null` and the reasons, e.g.
+`"errors": ["nodes[0].lable: unknown property (did you mean label?)"]`.
+
+---
+
 ## Raw stdio session (no client library)
 
 You can drive the server by piping newline-delimited JSON-RPC to it:

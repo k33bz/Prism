@@ -4,6 +4,7 @@
 // structured, actionable failures.
 
 import { lightEffect } from '../utils/catalog.js';
+import { loadKit, buildDiagram, diagramSpecs, findDiagramSpec, suggestDiagrams } from '../utils/diagrams.js';
 import { compose, composeWithTemplate, availableTemplates } from '../utils/compose.js';
 import { validateFacet, validateComposition } from '../utils/validate.js';
 import { THEMES, THEME_IDS, TOKEN_META, BASE_TOKENS, getTheme, usesTokens, themeRootCss, isThemeSensitive, themeIdList, themesSummary } from '../utils/themes.js';
@@ -1206,7 +1207,65 @@ export function buildTools() {
       },
       handler: (a, { collections }) => withCollections(collections, (c) => c.delete(a.collectionId)),
     },
+
+    // ============================== AWS ARCHITECTURE DIAGRAMS (2) ==============================
+    // Diagrams as data: a JSON spec (catalog/aws-kit/spec.schema.json) compiled by the AWS kit that
+    // builds the gallery (catalog/aws-kit/awd.mjs), found beside the catalog file.
+    {
+      name: 'build_diagram',
+      description: 'Build an AWS architecture diagram from a JSON spec with the AWS kit behind the AWS Architecture gallery: official AWS icons and group frames, numbered steps, and packets on one SMIL clock. Pass one diagram object ({ id, name, desc, w, h, dur, groups, nodes, wires, steps, timeline, effects, notes }) or a family file ({ version: 1, section, diagrams }). Runs the schema and the kit\'s input checks; returns { id, svg, html, errors }: svg is one self-contained SVG document (kit CSS, only the icons it uses, the spec in <metadata id="awd-spec">), html is the bare <svg class="awd"> the gallery embeds (needs the kit CSS and icon sprite on the page). svg and html are null when errors is not empty. A family returns { section, diagrams: [...], errors }. Start from get_diagram_spec for a working example; find icon ids with search_aws_icons.',
+      inputSchema: {
+        type: 'object',
+        properties: {
+          spec: { type: 'object', description: 'One diagram spec, or a family { version: 1, section: { id, title }, diagrams: [...] }. Schema: catalog/aws-kit/spec.schema.json.' },
+          theme: { type: 'string', enum: ['auto', 'light', 'dark'], description: 'Standalone svg colors: auto (default) follows prefers-color-scheme; light or dark fixes them.' },
+          still: { type: 'boolean', description: 'Standalone svg shows the complete static diagram (no packets), for print and slides.' },
+        },
+        required: ['spec'],
+        additionalProperties: false,
+      },
+      handler: async (a, { store }) => {
+        let spec = a.spec;
+        if (typeof spec === 'string') {
+          try { spec = JSON.parse(spec); } catch (err) { throw new ToolError(`spec is not valid JSON: ${err.message}`, { code: 'invalid_argument' }); }
+        }
+        if (!spec || typeof spec !== 'object' || Array.isArray(spec)) throw new ToolError('spec must be a diagram object or a family { version, section, diagrams }', { code: 'invalid_argument' });
+        if (a.theme != null && !['auto', 'light', 'dark'].includes(a.theme)) throw new ToolError('theme must be auto, light or dark', { code: 'invalid_argument' });
+        const kit = await diagramKit(store);
+        return buildDiagram(kit, spec, { theme: a.theme || 'auto', still: a.still === true });
+      },
+    },
+    {
+      name: 'get_diagram_spec',
+      description: 'Get the JSON spec of one AWS Architecture gallery diagram by id (catalog id such as aws-sl-api, or spec id sl-api). About 8x smaller than the rendered html from get_effect, and editable: change it and pass it to build_diagram. Returns { id, catalogId, family, version, spec, source }.',
+      inputSchema: {
+        type: 'object',
+        properties: { id: { type: 'string', description: 'Diagram id, e.g. aws-sl-api or sl-api.' } },
+        required: ['id'],
+        additionalProperties: false,
+      },
+      handler: async (a, { store }) => {
+        if (typeof a.id !== 'string' || !a.id.trim()) throw new ToolError('id is required', { code: 'invalid_argument' });
+        const kit = await diagramKit(store);
+        const specs = diagramSpecs(kit.dir);
+        const hit = findDiagramSpec(specs, a.id);
+        if (!hit) throw new ToolError(`No diagram spec with id "${a.id}"`, { code: 'not_found', data: { suggestions: suggestDiagrams(specs, a.id), available: specs.length } });
+        return { id: hit.spec.id, catalogId: 'aws-' + hit.spec.id, family: hit.family, version: hit.version, spec: hit.spec, source: hit.file };
+      },
+    },
   ];
+}
+
+/** The AWS kit beside the loaded catalog, or a structured 'unavailable' error. */
+async function diagramKit(store) {
+  let kit = null;
+  try { kit = await loadKit(store.filePath); } catch (err) {
+    throw new ToolError(`The AWS kit beside ${store.filePath} failed to load: ${err.message}`, { code: 'unavailable' });
+  }
+  if (!kit) {
+    throw new ToolError(`The AWS kit is not reachable from the catalog at ${store.filePath}: expected catalog/aws-kit/awd.mjs next to Prism.html, or aws-kit/awd.mjs next to catalog/manifest.json (a full Prism checkout)`, { code: 'unavailable' });
+  }
+  return kit;
 }
 
 function escapeHtml(s) {

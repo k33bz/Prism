@@ -67,7 +67,7 @@ Add the server to your `claude_desktop_config.json` (see `examples/claude_deskto
 }
 ```
 
-Restart Claude Desktop; the 29 Prism tools appear in the tools menu.
+Restart Claude Desktop; the 33 Prism tools appear in the tools menu.
 
 ## Use with the Anthropic API
 
@@ -75,7 +75,7 @@ The Messages API accepts local MCP servers via the `mcp_servers` parameter (stdi
 
 ---
 
-## Tools (31)
+## Tools (33)
 
 ### Discovery & search (11)
 | Tool | Purpose |
@@ -153,6 +153,14 @@ Saved, named sets of effects that persist across sessions (disk-backed JSON). Co
 
 > Export a saved collection for the Prism.html UI with `export_collection { collectionId, format: "schema" }` — the resulting `prism-collection-1.0` JSON is the cross-surface bridge between the MCP server and the in-browser Collections panel.
 
+### AWS Architecture diagrams (2)
+Diagrams as data. A diagram is a JSON spec (schema: `catalog/aws-kit/spec.schema.json`, reference: `catalog/drafts/AWS_KIT.md`) compiled by the same AWS kit that builds the gallery (`catalog/aws-kit/awd.mjs`), found beside the catalog file: `catalog/aws-kit/` next to `Prism.html`, or `aws-kit/` next to `catalog/manifest.json`. Without it both tools return `unavailable`.
+
+| Tool | Purpose |
+|------|---------|
+| `build_diagram` | Build one diagram spec, or every diagram of a family (`{ version: 1, section, diagrams }`). Runs the schema and the kit's input checks and returns `{ id, svg, html, errors }`: `svg` is one self-contained SVG document (kit CSS, only the icons it uses, the spec in `<metadata id="awd-spec">`; `theme`: auto, light or dark; `still`: no packets), `html` is the bare `<svg class="awd">` the gallery embeds. Both are null when `errors` is not empty (typos come back as `nodes[0].lable: unknown property (did you mean label?)`). |
+| `get_diagram_spec` | The JSON spec of one gallery diagram by catalog id (`aws-sl-api`) or spec id (`sl-api`), from `catalog/aws-kit/json/`. Far smaller than the rendered `get_effect` html, and the starting point for an edited copy passed to `build_diagram`. Unknown ids return `not_found` with suggestions. |
+
 Full parameter schemas are returned by `tools/list`. Per-tool example calls live in [`examples/`](./examples).
 
 ---
@@ -175,7 +183,7 @@ prism-mcp-server/
 ├── index.js          # PrismMCPServer (JSON-RPC dispatch) + StdioTransport
 ├── cli.js            # prism-mcp CLI (start / info / tools / help)
 ├── tools/
-│   └── index.js      # the 31 tool definitions (name, description, schema, handler)
+│   └── index.js      # the 33 tool definitions (name, description, schema, handler)
 ├── utils/
 │   ├── catalog.js    # CatalogStore: load island/manifest, index, hot reload, runtime facets
 │   ├── collections.js# CollectionStore: disk-backed named sets + prism-collection-1.0 export
@@ -184,9 +192,10 @@ prism-mcp-server/
 │   ├── validate.js   # facet + composition validation
 │   ├── themes.js     # canonical theme token maps (variant matrix) — mirrors Prism.html THEMES
 │   ├── icons.js      # AWS Architecture Icons: sprite/store parsing, search, colorway resolution
+│   ├── diagrams.js   # AWS kit beside the catalog: build diagram specs, serve the gallery's specs
 │   └── logger.js     # stderr logger (never pollutes the stdio JSON-RPC channel)
 ├── examples/         # one example request/response per tool + integration configs
-└── test/             # node:test integration + unit tests (156 tests)
+└── test/             # node:test integration + unit tests (165 tests)
 ```
 
 **Server model.** `new PrismMCPServer(catalogPath, opts)` builds the tool registry and a `CatalogStore`. `await server.load()` reads + indexes the catalog. `server.connect(transport)` wires a transport; `StdioTransport` implements newline-delimited JSON-RPC on stdin/stdout. The transport is pluggable — implement `onMessage(cb)` / `send(obj)` to add HTTP/SSE.
@@ -203,7 +212,7 @@ prism-mcp-server/
 node --test          # or: npm test
 ```
 
-156 tests cover every tool (incl. the advanced-search & variant-matrix tools, the `themeSensitive` facet, the 6 Collections tools + `export_collection` formats, and the 2 AWS icon tools against a fixture sprite and the real one), the CSS/compose/validate utilities, the canonical theme token maps (the two Cloudscape modes), the `CollectionStore`, the JSON-RPC protocol layer, and loading the real `Prism.html` island.
+165 tests cover every tool (incl. the advanced-search & variant-matrix tools, the `themeSensitive` facet, the 6 Collections tools + `export_collection` formats, the 2 AWS icon tools against a fixture sprite and the real one, and the 2 AWS diagram tools against the real kit and gallery specs), the CSS/compose/validate utilities, the canonical theme token maps (the two Cloudscape modes), the `CollectionStore`, the JSON-RPC protocol layer, and loading the real `Prism.html` island.
 
 ---
 
