@@ -2,48 +2,72 @@
 // Domains: aws.example.com = AWS Managed Microsoft AD, corp.example.com = on-premises Active Directory
 // (a stand-alone directory with no on-premises side uses corp.example.com for the AWS directory).
 const D = [];
+// fraction along an M/H/V wire path at the point (x, y) on it: puts a wire label (labelAt) exactly
+// where the caption it names belongs
+const fAt = (d, x, y) => {
+  const p = [...d.matchAll(/([MHV])\s*([-\d.]+)(?:,([-\d.]+))?/g)].reduce((a, [, c, u, v]) => {
+    const [px, py] = a.length ? a[a.length - 1] : [0, 0];
+    a.push(c === 'M' ? [+u, +v] : c === 'H' ? [+u, py] : [px, +u]); return a;
+  }, []);
+  const seg = p.slice(1).map((q, i) => Math.hypot(q[0] - p[i][0], q[1] - p[i][1]));
+  const tot = seg.reduce((a, b) => a + b, 0);
+  let acc = 0;
+  for (let i = 0; i < seg.length; i++) {
+    const [a, b] = [p[i], p[i + 1]];
+    if (Math.min(a[0], b[0]) <= x && x <= Math.max(a[0], b[0]) && Math.min(a[1], b[1]) <= y && y <= Math.max(a[1], b[1])) return +((acc + Math.hypot(x - a[0], y - a[1])) / tot).toFixed(4);
+    acc += seg[i];
+  }
+  throw new Error(`(${x}, ${y}) is not on ${d}`);
+};
 
 // ---------------------------------------------------------------------------------------------
 D.push({
   id: 'ds-managed-ad',
   name: 'AWS Managed Microsoft AD',
-  aria: 'Architecture diagram: AWS Systems Manager joins Windows EC2 instances in two Availability Zones to an AWS Managed Microsoft AD directory whose two domain controllers run in private subnets of the same VPC.',
-  desc: 'AWS Managed Microsoft AD runs two domain controllers in private subnets in two Availability Zones, and AWS Systems Manager joins Windows EC2 instances to corp.example.com. Packets show the join command, sign-in to the local controller, replication between the controllers and the status report.',
-  w: 480, h: 298, dur: 8,
+  aria: 'Architecture diagram: AWS Systems Manager joins Windows EC2 instances in two Availability Zones to an AWS Managed Microsoft AD directory whose two domain controllers run in private subnets of the same VPC; the instances reach Systems Manager through interface VPC endpoints in their subnets.',
+  desc: 'AWS Managed Microsoft AD runs two domain controllers in private subnets in two Availability Zones, and AWS Systems Manager joins Windows EC2 instances to corp.example.com. The private subnets have no internet route, so the instances reach Systems Manager through interface VPC endpoints. Packets show the join command, sign-in to the local controller, replication between the controllers and the status report.',
+  wide: true, w: 960, h: 298, dur: 8,
   groups: [
-    { kind: 'cloud', x: 8, y: 8, w: 464, h: 282 },
-    { kind: 'region', x: 16, y: 32, w: 448, h: 250 },
-    { kind: 'vpc', x: 36, y: 106, w: 408, h: 170 },
-    { kind: 'az', x: 44, y: 130, w: 192, h: 140, label: 'Availability Zone 1' },
-    { kind: 'az', x: 244, y: 130, w: 192, h: 140, label: 'Availability Zone 2' },
-    { kind: 'priv', x: 50, y: 154, w: 180, h: 110 },
-    { kind: 'priv', x: 250, y: 154, w: 180, h: 110 },
+    { kind: 'cloud', x: 8, y: 8, w: 944, h: 282 },
+    { kind: 'region', x: 16, y: 32, w: 928, h: 250 },
+    { kind: 'vpc', x: 36, y: 106, w: 888, h: 170 },
+    { kind: 'az', x: 44, y: 130, w: 432, h: 140, label: 'Availability Zone 1' },
+    { kind: 'az', x: 484, y: 130, w: 432, h: 140, label: 'Availability Zone 2' },
+    { kind: 'priv', x: 50, y: 154, w: 420, h: 110 },
+    { kind: 'priv', x: 490, y: 154, w: 420, h: 110 },
   ],
   nodes: [
-    { id: 'ssm', icon: 'aws-svc-systems-manager', x: 224, y: 56, size: 32, label: 'AWS Systems Manager', wrap: 22 },
-    { id: 'eca', icon: 'aws-res-ec2-instance', x: 72, y: 180, label: 'Windows EC2 instance', sub: 'domain-joined' },
-    { id: 'dca', icon: 'aws-res-directory-service-managed-microsoft-ad', x: 162, y: 180, label: 'AWS Managed Microsoft AD', sub: 'corp.example.com' },
-    { id: 'dcb', icon: 'aws-res-directory-service-managed-microsoft-ad', x: 278, y: 180, label: 'AWS Managed Microsoft AD', sub: 'corp.example.com' },
-    { id: 'ecb', icon: 'aws-res-ec2-instance', x: 368, y: 180, label: 'Windows EC2 instance', sub: 'domain-joined' },
+    { id: 'ssm', icon: 'aws-svc-systems-manager', x: 464, y: 56, size: 32, label: 'AWS Systems Manager', wrap: 22 },
+    { id: 'epa', icon: 'aws-res-vpc-endpoints', x: 140, y: 180, label: 'Interface endpoints', sub: 'ssm, ssmmessages, ec2messages' },
+    { id: 'eca', icon: 'aws-res-ec2-instance', x: 260, y: 180, label: 'Windows EC2 instance', sub: 'domain-joined' },
+    { id: 'dca', icon: 'aws-res-directory-service-managed-microsoft-ad', x: 380, y: 180, label: 'AWS Managed Microsoft AD', sub: 'corp.example.com' },
+    { id: 'dcb', icon: 'aws-res-directory-service-managed-microsoft-ad', x: 540, y: 180, label: 'AWS Managed Microsoft AD', sub: 'corp.example.com' },
+    { id: 'ecb', icon: 'aws-res-ec2-instance', x: 660, y: 180, label: 'Windows EC2 instance', sub: 'domain-joined' },
+    { id: 'epb', icon: 'aws-res-vpc-endpoints', x: 780, y: 180, label: 'Interface endpoints', sub: 'ssm, ssmmessages, ec2messages' },
   ],
   wires: [
-    { id: 'w1a', d: 'M222,72 H26 V200 H69', both: true },
-    { id: 'w1b', d: 'M258,72 H454 V200 H411', both: true },
+    // Systems Manager reaches the instances through the interface endpoints in their subnets
+    { id: 'w1a', d: 'M462,72 H160 V176', both: true },
+    { id: 'w1b', d: 'M498,72 H800 V176', both: true },
+    { id: 'e1a', from: 'epa', to: 'eca', both: true },
+    { id: 'e1b', from: 'epb', to: 'ecb', both: true },
     { id: 'w2a', from: 'eca', to: 'dca', both: true },
     { id: 'w2b', from: 'ecb', to: 'dcb', both: true },
     { id: 'w3', from: 'dca', to: 'dcb', both: true, dashed: true },
   ],
   steps: [
-    { n: 1, at: 'w1a', f: 0.18, text: 'AWS Systems Manager sends the domain join command to the Windows EC2 instances in both Availability Zones.' }, { n: 1, at: 'w1b', f: 0.18 },
+    { n: 1, at: 'w1a', f: 0.5, text: 'AWS Systems Manager sends the domain join command to the Windows EC2 instances in both Availability Zones. The private subnets have no internet route, so it reaches them through the Systems Manager interface endpoints in each subnet.' }, { n: 1, at: 'w1b', f: 0.5 },
     { n: 2, at: 'w2a', text: 'Each Windows EC2 instance joins corp.example.com through one of the directory domain controllers.' }, { n: 2, at: 'w2b' },
     { n: 3, at: 'w3', f: 0.15, text: 'The domain controllers replicate the new computer accounts to each other, and the instances report the result to AWS Systems Manager.' },
   ],
   timeline: [
-    { wire: 'w1a', t: [0.05, 0.19], ring: 'eca' }, { wire: 'w1b', t: [0.05, 0.19], ring: 'ecb' },
-    { wire: 'w2a', t: [0.22, 0.36], ring: 'dca' }, { wire: 'w2b', t: [0.22, 0.36], ring: 'dcb' },
-    { wire: 'w3', t: [0.39, 0.53], kind: 'pk-2', ring: 'dcb' }, { wire: 'w3', t: [0.39, 0.53], reverse: true, kind: 'pk-2', ring: 'dca' },
-    { wire: 'w2a', t: [0.56, 0.70], reverse: true, kind: 'pk-2', ring: 'eca' }, { wire: 'w2b', t: [0.56, 0.70], reverse: true, kind: 'pk-2', ring: 'ecb' },
-    { wire: 'w1a', t: [0.73, 0.87], reverse: true, kind: 'pk-2', ring: 'ssm' }, { wire: 'w1b', t: [0.73, 0.87], reverse: true, kind: 'pk-2' },
+    { wire: 'w1a', t: [0.04, 0.14], ring: 'epa' }, { wire: 'w1b', t: [0.04, 0.14], ring: 'epb' },
+    { wire: 'e1a', t: [0.15, 0.21], ring: 'eca' }, { wire: 'e1b', t: [0.15, 0.21], ring: 'ecb' },
+    { wire: 'w2a', t: [0.24, 0.36], ring: 'dca' }, { wire: 'w2b', t: [0.24, 0.36], ring: 'dcb' },
+    { wire: 'w3', t: [0.39, 0.52], kind: 'pk-2', ring: 'dcb' }, { wire: 'w3', t: [0.39, 0.52], reverse: true, kind: 'pk-2', ring: 'dca' },
+    { wire: 'w2a', t: [0.55, 0.67], reverse: true, kind: 'pk-2', ring: 'eca' }, { wire: 'w2b', t: [0.55, 0.67], reverse: true, kind: 'pk-2', ring: 'ecb' },
+    { wire: 'e1a', t: [0.70, 0.76], reverse: true, kind: 'pk-2', ring: 'epa' }, { wire: 'e1b', t: [0.70, 0.76], reverse: true, kind: 'pk-2', ring: 'epb' },
+    { wire: 'w1a', t: [0.77, 0.88], reverse: true, kind: 'pk-2', ring: 'ssm' }, { wire: 'w1b', t: [0.77, 0.88], reverse: true, kind: 'pk-2' },
   ],
 });
 
@@ -58,23 +82,26 @@ D.push({
     { kind: 'dc', x: 8, y: 100, w: 300, h: 200 },
     { kind: 'cloud', x: 446, y: 44, w: 506, h: 256 },
     { kind: 'region', x: 454, y: 68, w: 490, h: 224 },
-    { kind: 'vpc', x: 548, y: 92, w: 388, h: 194 },
-    { kind: 'az', x: 556, y: 116, w: 181, h: 164, label: 'Availability Zone 1' },
-    { kind: 'az', x: 745, y: 116, w: 183, h: 164, label: 'Availability Zone 2' },
-    { kind: 'priv', x: 562, y: 140, w: 169, h: 134 },
-    { kind: 'priv', x: 751, y: 140, w: 171, h: 134 },
+    // the virtual private gateway sits on the VPC's left edge (the VPC's attachment to the VPN or
+    // Direct Connect), so the AZs start clear of it
+    { kind: 'vpc', x: 572, y: 92, w: 364, h: 194 },
+    { kind: 'az', x: 600, y: 116, w: 180, h: 164, label: 'Availability Zone 1' },
+    { kind: 'az', x: 788, y: 116, w: 140, h: 164, label: 'Availability Zone 2' },
+    { kind: 'priv', x: 606, y: 140, w: 168, h: 134 },
+    { kind: 'priv', x: 794, y: 140, w: 128, h: 134 },
   ],
   nodes: [
     { id: 'onp', icon: 'aws-res-servers', x: 132, y: 166, label: 'Active Directory domain controllers', wrap: 18, sub: 'corp.example.com' },
     { id: 'cgw', icon: 'aws-res-vpc-customer-gateway', x: 232, y: 166, label: 'Customer gateway device' },
     { id: 'vpn', icon: 'aws-svc-site-to-site-vpn', x: 356, y: 116, label: 'AWS Site-to-Site VPN', wrap: 18 },
     { id: 'dx', icon: 'aws-svc-direct-connect', x: 356, y: 216, label: 'AWS Direct Connect', wrap: 18 },
-    { id: 'vgw', icon: 'aws-res-vpc-vpn-gateway', x: 480, y: 166, label: 'Virtual private gateway', wrap: 16 },
-    { id: 'dc1', icon: 'aws-res-directory-service-managed-microsoft-ad', x: 646, y: 166, label: 'AWS Managed Microsoft AD', sub: 'aws.example.com' },
-    { id: 'dc2', icon: 'aws-res-directory-service-managed-microsoft-ad', x: 817, y: 166, label: 'AWS Managed Microsoft AD', sub: 'aws.example.com' },
+    // no node label: a label under an icon on the VPC edge would sit across the edge (a note below-left)
+    { id: 'vgw', icon: 'aws-res-vpc-vpn-gateway', x: 552, y: 166 },
+    { id: 'dc1', icon: 'aws-res-directory-service-managed-microsoft-ad', x: 692, y: 166, label: 'AWS Managed Microsoft AD', sub: 'aws.example.com' },
+    { id: 'dc2', icon: 'aws-res-directory-service-managed-microsoft-ad', x: 838, y: 166, label: 'AWS Managed Microsoft AD', sub: 'aws.example.com' },
   ],
   wires: [
-    { id: 'trust', d: 'M152,162 V18 H666 V162', both: true, dashed: true },
+    { id: 'trust', d: 'M152,162 V18 H712 V162', both: true, dashed: true },
     { id: 'c1', from: 'onp', to: 'cgw' },
     { id: 'c2', from: 'cgw', to: 'vpn', via: 316 },
     { id: 'c3', from: 'vpn', to: 'vgw', via: 432 },
@@ -96,13 +123,17 @@ D.push({
     { wire: 'rep', t: [0.74, 0.88], kind: 'pk-2', ring: 'dc2' },
   ],
   effects: [{ glow: 'trust', t: [0.47, 0.72] }],
-  extra: [
-    '<text class="t-c" x="409" y="11">Two-way forest trust</text>',
-    '<text class="t-wire" style="text-anchor:start" x="221" y="32">DNS lookups</text><text class="t-wire" style="text-anchor:start" x="356" y="32">Trust handshake</text><text class="t-wire" style="text-anchor:start" x="491" y="32">Cross-forest authentication</text>',
-    '<text class="t-c t-sub" x="376" y="204">or</text>',
-    '<text class="t-c t-sub" x="152" y="254">DNS conditional forwarder</text><text class="t-c t-sub" x="152" y="265">for aws.example.com</text>',
-    '<text class="t-c t-sub" x="666" y="254">DNS conditional forwarder</text><text class="t-c t-sub" x="666" y="265">for corp.example.com</text>',
-  ].join(''),
+  notes: [
+    { x: 432, y: 11, text: 'Two-way forest trust', kind: 'label' },
+    // what each numbered badge on the trust carries
+    { x: 232, y: 32, text: 'DNS lookups', anchor: 'start' },
+    { x: 376, y: 32, text: 'Trust handshake', anchor: 'start' },
+    { x: 520, y: 32, text: 'Cross-forest authentication', anchor: 'start' },
+    { x: 376, y: 204, text: 'or', size: 9 },
+    { x: 566, y: 218, text: 'Virtual private\ngateway', kind: 'label', anchor: 'end', size: 10.5 },
+    { x: 152, y: 254, text: 'DNS conditional forwarder\nfor aws.example.com', size: 9 },
+    { x: 712, y: 254, text: 'DNS conditional forwarder\nfor corp.example.com', size: 9 },
+  ],
 });
 
 // ---------------------------------------------------------------------------------------------
@@ -125,9 +156,9 @@ D.push({
     { id: 'ad', icon: 'aws-res-directory-service-managed-microsoft-ad', x: 352, y: 190, label: 'AWS Managed Microsoft AD', sub: 'aws.example.com' },
   ],
   wires: [
-    { id: 'u1', from: 'usr', to: 'ec2', both: true },
+    { id: 'u1', from: 'usr', to: 'ec2', both: true, label: 'corp\\user', labelAt: fAt('M95,104 H348', 262, 104) },
     { id: 'a1', d: 'M372,154 V186', both: true },
-    { id: 't1', from: 'ad', to: 'onp', dashed: true },
+    { id: 't1', from: 'ad', to: 'onp', dashed: true, label: 'One-way trust', labelAt: fAt('M350,210 H97', 250, 210) },
   ],
   steps: [
     { n: 1, at: 'u1', f: 0.5, dy: 0, text: 'On-premises users sign in to the Windows EC2 instance with their corp.example.com credentials over VPN or Direct Connect.' },
@@ -142,13 +173,11 @@ D.push({
     { wire: 'a1', t: [0.64, 0.73], reverse: true, kind: 'pk-2', ring: 'ec2' },
     { wire: 'u1', t: [0.75, 0.85], reverse: true, kind: 'pk-2', ring: 'usr' },
   ],
-  extra: [
-    '<text class="t-wire" x="262" y="99">corp\\user</text>',
-    '<text class="t-wire" x="292" y="117">over VPN or Direct Connect</text>',
-    '<text class="t-wire" style="text-anchor:end" x="448" y="70">2 domain controllers in 2 AZs</text>',
-    '<text class="t-wire" x="250" y="205">One-way trust</text>',
-    '<text class="t-wire" x="250" y="226">aws.example.com trusts</text><text class="t-wire" x="250" y="236">corp.example.com</text>',
-  ].join(''),
+  notes: [
+    { x: 292, y: 117, text: 'over VPN or Direct Connect' },
+    { x: 448, y: 70, text: '2 domain controllers in 2 AZs', anchor: 'end' },
+    { x: 250, y: 226, text: 'aws.example.com trusts\ncorp.example.com' },
+  ],
 });
 
 // ---------------------------------------------------------------------------------------------
@@ -162,6 +191,7 @@ D.push({
     { kind: 'cloud', x: 84, y: 8, w: 280, h: 272 },
     { kind: 'region', x: 92, y: 32, w: 264, h: 240 },
     { kind: 'vpc', x: 116, y: 132, w: 232, h: 132 },
+    // the label runs to two lines (a note): one line would not fit the narrow frame
     { kind: 'dc', x: 372, y: 132, w: 100, h: 132, label: '' },
   ],
   nodes: [
@@ -174,8 +204,8 @@ D.push({
   wires: [
     { id: 'w1', d: 'M48,180 H134', both: true },
     { id: 'w2', d: 'M24,156 V78 H120', both: true },
-    { id: 'w3', from: 'ws', to: 'adc', both: true },
-    { id: 'w4', d: 'M170,78 H288 V156', both: true },
+    { id: 'w3', from: 'ws', to: 'adc', both: true, label: 'sign-in', labelAt: fAt('M180,180 H264', 205, 180) },
+    { id: 'w4', d: 'M170,78 H288 V156', both: true, label: 'console sign-in', labelAt: fAt('M170,78 H288 V156', 229, 78) },
     { id: 'w5', from: 'adc', to: 'onp', both: true },
   ],
   steps: [
@@ -191,14 +221,11 @@ D.push({
     { wire: 'w3', t: [0.64, 0.74], reverse: true, kind: 'pk-2', ring: 'ws' }, { wire: 'w4', t: [0.64, 0.74], reverse: true, kind: 'pk-2', ring: 'con' },
     { wire: 'w1', t: [0.76, 0.86], reverse: true, kind: 'pk-2', ring: 'usr' }, { wire: 'w2', t: [0.76, 0.86], reverse: true, kind: 'pk-2' },
   ],
-  extra: [
-    '<use href="#aws-grp-corporate-data-center" x="372" y="132" width="20" height="20"/>',
-    '<text class="t-g gt-dc" x="397" y="142">Corporate</text><text class="t-g gt-dc" x="397" y="153">data center</text>',
-    '<text class="t-c t-sub" x="288" y="235">2 connectors in 2 AZs</text>',
-    '<text class="t-wire" x="229" y="73">console sign-in</text>',
-    '<text class="t-wire" x="205" y="175">sign-in</text>',
-    '<text class="t-c t-sub" x="422" y="238">over VPN or</text><text class="t-c t-sub" x="422" y="248">Direct Connect</text>',
-  ].join(''),
+  notes: [
+    { x: 397, y: 142, text: 'Corporate\ndata center', kind: 'label', anchor: 'start', size: 10 },
+    { x: 288, y: 235, text: '2 connectors in 2 AZs', size: 9 },
+    { x: 422, y: 238, text: 'over VPN or\nDirect Connect', size: 9 },
+  ],
 });
 
 // ---------------------------------------------------------------------------------------------
@@ -206,7 +233,7 @@ D.push({
   id: 'ds-rds-sqlserver',
   name: 'RDS for SQL Server Windows Authentication',
   aria: 'Architecture diagram: a domain-joined on-premises client gets a Kerberos ticket through a one-way forest trust and connects with Windows Authentication to a Multi-AZ Amazon RDS for SQL Server instance joined to AWS Managed Microsoft AD.',
-  desc: 'Amazon RDS for SQL Server (Multi-AZ) is joined to AWS Managed Microsoft AD, and a user from the trusted on-premises domain gets a Kerberos ticket through the forest trust, then connects with Windows Authentication over VPN or AWS Direct Connect. Packets follow the ticket exchange, the connection and the directory validation.',
+  desc: 'Amazon RDS for SQL Server (Multi-AZ) is joined to AWS Managed Microsoft AD. A user from the trusted on-premises domain gets a TGT and then a referral across the forest trust from the on-premises domain controllers, gets the service ticket from AWS Managed Microsoft AD, and connects with Windows Authentication over VPN or AWS Direct Connect. Packets follow the ticket exchanges and the connection.',
   wide: true, w: 960, h: 368, dur: 10,
   groups: [
     { kind: 'dc', x: 8, y: 96, w: 170, h: 250 },
@@ -230,37 +257,37 @@ D.push({
     { id: 'dc2', icon: 'aws-res-directory-service-managed-microsoft-ad', x: 783, y: 250, label: 'AWS Managed Microsoft AD', sub: 'aws.example.com' },
   ],
   wires: [
-    { id: 'tgt', d: 'M93,210 V246', both: true },
-    { id: 'trust', from: 'dc1', to: 'onp', dashed: true },
-    { id: 'conn', from: 'cli', to: 'rds1', both: true },
-    { id: 'val1', d: 'M545,210 V246', both: true },
-    { id: 'val2', d: 'M803,210 V246', both: true },
-    { id: 'rep', from: 'rds1', to: 'rds2', both: true, dashed: true },
+    { id: 'tgt', d: 'M93,210 V246', both: true, label: 'Kerberos TGT\nand referral', labelDx: 27, labelDy: 3, labelAnchor: 'start' },
+    // the trust itself carries no traffic: it is why the on-premises controllers can refer the client
+    { id: 'trust', d: 'M523,280 H117', dashed: true, label: 'One-way forest trust', labelAt: fAt('M523,280 H117', 300, 280), labelDy: 13 },
+    { id: 'conn', from: 'cli', to: 'rds1', both: true, label: 'Windows Authentication', labelAt: fAt('M115,150 H521', 300, 150), labelDy: -6 },
+    // the client takes the referral to AWS Managed Microsoft AD itself, over the same hybrid link
+    { id: 'tgs', d: 'M115,150 H480 V260 H521', both: true, label: 'service ticket', labelAt: fAt('M115,150 H480 V260 H521', 480, 238), labelDx: 6, labelDy: 3, labelAnchor: 'start' },
+    // the instances are domain members: they check tickets with their own key, without a call per connection
+    { id: 'join1', d: 'M545,210 V246', dashed: true, arrow: false, label: 'domain-joined', labelDx: 25, labelDy: 3, labelAnchor: 'start' },
+    { id: 'join2', d: 'M803,210 V246', dashed: true, arrow: false },
+    { id: 'rep', from: 'rds1', to: 'rds2', both: true, dashed: true, label: 'sync replication', labelAt: fAt('M567,150 H779', 617, 150), labelDy: -6 },
     { id: 'drep', from: 'dc1', to: 'dc2', both: true, dashed: true },
   ],
   steps: [
     { n: 1, at: 'tgt', dx: 13, dy: 0, text: 'The domain-joined client gets a Kerberos ticket-granting ticket (TGT) from the on-premises domain controllers.' },
-    { n: 2, x: 232, y: 270, text: 'On-premises Active Directory refers the client across the one-way forest trust, and AWS Managed Microsoft AD issues a service ticket for SQL Server.' },
-    { n: 3, x: 232, y: 150, text: 'The client connects to the Amazon RDS for SQL Server primary with Windows Authentication, and the primary replicates synchronously to the standby.' },
-    { n: 4, at: 'val1', dx: 13, dy: 0, text: 'Amazon RDS for SQL Server validates the service ticket that AWS Managed Microsoft AD issued and accepts the connection.' },
+    { n: 2, x: 232, y: 280, text: 'The client asks the on-premises domain controllers for a ticket to SQL Server. The server is in the other forest, so they return a referral to aws.example.com across the one-way forest trust.' },
+    { n: 3, at: 'tgs', f: fAt('M115,150 H480 V260 H521', 480, 205), dx: 11, dy: 0, text: 'The client sends the referral to AWS Managed Microsoft AD, which issues the service ticket for SQL Server.' },
+    { n: 4, at: 'conn', f: fAt('M115,150 H521', 500, 150), text: 'The client connects to the Amazon RDS for SQL Server primary with Windows Authentication. The domain-joined instance decrypts the ticket with its own key and accepts the connection, and the primary replicates synchronously to the standby.' },
   ],
   timeline: [
-    { wire: 'tgt', t: [0.04, 0.12], ring: 'onp' },
-    { wire: 'tgt', t: [0.13, 0.21], reverse: true, kind: 'pk-2', ring: 'cli' },
-    { wire: 'trust', t: [0.25, 0.36], reverse: true, ring: 'dc1' },
-    { wire: 'trust', t: [0.37, 0.48], kind: 'pk-2', ring: 'onp' },
-    { wire: 'conn', t: [0.53, 0.65], ring: 'rds1' }, { wire: 'rep', t: [0.53, 0.65], kind: 'pk-2', ring: 'rds2' },
-    { wire: 'val1', t: [0.68, 0.75], ring: 'dc1' },
-    { wire: 'val1', t: [0.76, 0.83], reverse: true, kind: 'pk-2', ring: 'rds1' },
-    { wire: 'conn', t: [0.85, 0.96], reverse: true, kind: 'pk-2', ring: 'cli' },
+    // the TGT, then the referral, both from the on-premises domain controllers
+    { wire: 'tgt', t: [0.03, 0.10], ring: 'onp' },
+    { wire: 'tgt', t: [0.11, 0.18], reverse: true, kind: 'pk-2', ring: 'cli' },
+    { wire: 'tgt', t: [0.21, 0.28], ring: 'onp' },
+    { wire: 'tgt', t: [0.29, 0.36], reverse: true, kind: 'pk-2', ring: 'cli' },
+    // the service ticket from AWS Managed Microsoft AD
+    { wire: 'tgs', t: [0.39, 0.51], ring: 'dc1' },
+    { wire: 'tgs', t: [0.52, 0.64], reverse: true, kind: 'pk-2', ring: 'cli' },
+    // the connection: the instance checks the ticket itself
+    { wire: 'conn', t: [0.67, 0.79], ring: 'rds1' }, { wire: 'rep', t: [0.67, 0.79], kind: 'pk-2', ring: 'rds2' },
+    { wire: 'conn', t: [0.82, 0.94], reverse: true, kind: 'pk-2', ring: 'cli' },
   ],
-  extra: [
-    '<text class="t-wire" x="300" y="144">Windows Authentication</text>',
-    '<text class="t-wire" x="300" y="283">One-way forest trust</text>',
-    '<text class="t-wire" x="617" y="144">sync replication</text>',
-    '<text class="t-wire" style="text-anchor:start" x="120" y="231">Kerberos TGT</text>',
-    '<text class="t-wire" style="text-anchor:start" x="570" y="231">validate ticket</text>',
-  ].join(''),
 });
 
 // ---------------------------------------------------------------------------------------------
@@ -268,7 +295,7 @@ D.push({
   id: 'ds-aurora-kerberos',
   name: 'Aurora Kerberos authentication',
   aria: 'Architecture diagram: a domain-joined client authenticates to an Amazon Aurora cluster with Kerberos using AWS Managed Microsoft AD, with the writer and the reader in two Availability Zones.',
-  desc: 'An Amazon Aurora PostgreSQL or MySQL cluster is associated with AWS Managed Microsoft AD, so domain-joined clients connect to the writer with a Kerberos ticket that the instance validates against the directory. Packets follow the ticket request, the connection, the validation and the reply; the reader shares the cluster volume.',
+  desc: 'An Amazon Aurora PostgreSQL or MySQL cluster is associated with AWS Managed Microsoft AD, so domain-joined clients connect to the writer with a Kerberos ticket from the directory, which the writer checks with its own key. Packets follow the ticket request, the connection and the reply; the reader shares the cluster volume.',
   w: 480, h: 298, dur: 10,
   groups: [
     { kind: 'cloud', x: 96, y: 8, w: 376, h: 282 },
@@ -287,31 +314,27 @@ D.push({
     { id: 'dc2', icon: 'aws-res-directory-service-managed-microsoft-ad', x: 352, y: 210, size: 32, label: 'AWS Managed Microsoft AD', wrap: 26 },
   ],
   wires: [
-    { id: 'tkt', d: 'M60,183 H78 V226 H180', both: true },
-    { id: 'conn', d: 'M60,183 H78 V140 H180', both: true },
-    { id: 'val1', d: 'M200,185 V206', both: true },
-    { id: 'val2', d: 'M368,185 V206', both: true },
+    { id: 'tkt', d: 'M60,183 H78 V226 H180', both: true, label: 'Kerberos', labelAt: fAt('M60,183 H78 V226 H180', 153, 226), labelDy: -6 },
+    { id: 'conn', d: 'M60,183 H78 V140 H180', both: true, label: 'SQL', labelAt: fAt('M60,183 H78 V140 H180', 153, 140), labelDy: -6 },
+    // the instances are domain members: they check tickets with their own key, without a call per connection
+    { id: 'join1', d: 'M200,185 V206', dashed: true, arrow: false, label: 'domain-joined', labelDx: -6, labelDy: 3, labelAnchor: 'end' },
+    { id: 'join2', d: 'M368,185 V206', dashed: true, arrow: false },
     { id: 'vol', from: 'wr', to: 'rd', both: true, dashed: true },
     { id: 'rep', from: 'dc1', to: 'dc2', both: true, dashed: true },
   ],
   steps: [
     { n: 1, x: 78, y: 206, text: 'The domain-joined client requests a Kerberos ticket for the database from AWS Managed Microsoft AD.' },
     { n: 2, x: 78, y: 161, text: 'The client connects to the Aurora writer with the Kerberos ticket instead of a database password.' },
-    { n: 3, at: 'val1', dx: 13, dy: 0, text: 'The Aurora writer validates the ticket that AWS Managed Microsoft AD issued and accepts the connection. The domain controllers replicate between Availability Zones.' },
+    { n: 3, at: 'join1', dx: 13, dy: 0, text: 'The Aurora writer, joined to the domain, decrypts the ticket with its own key and accepts the connection without calling a domain controller. The domain controllers replicate between Availability Zones.' },
   ],
   timeline: [
-    { wire: 'tkt', t: [0.04, 0.16], ring: 'dc1' },
-    { wire: 'tkt', t: [0.18, 0.30], reverse: true, kind: 'pk-2', ring: 'cli' },
-    { wire: 'conn', t: [0.34, 0.46], ring: 'wr' }, { wire: 'vol', t: [0.34, 0.46], kind: 'pk-2', ring: 'rd' },
-    { wire: 'val1', t: [0.49, 0.57], ring: 'dc1' },
-    { wire: 'val1', t: [0.58, 0.66], reverse: true, kind: 'pk-2', ring: 'wr' },
-    { wire: 'conn', t: [0.69, 0.81], reverse: true, kind: 'pk-2', ring: 'cli' },
-    { wire: 'rep', t: [0.84, 0.95], kind: 'pk-2', ring: 'dc2' },
+    { wire: 'tkt', t: [0.04, 0.17], ring: 'dc1' },
+    { wire: 'tkt', t: [0.20, 0.33], reverse: true, kind: 'pk-2', ring: 'cli' },
+    { wire: 'conn', t: [0.37, 0.50], ring: 'wr' }, { wire: 'vol', t: [0.37, 0.50], kind: 'pk-2', ring: 'rd' },
+    { wire: 'conn', t: [0.56, 0.69], reverse: true, kind: 'pk-2', ring: 'cli' },
+    { wire: 'rep', t: [0.76, 0.90], kind: 'pk-2', ring: 'dc2' },
   ],
-  extra: [
-    '<text class="t-wire" style="text-anchor:end" x="448" y="68">AD domain: corp.example.com</text>',
-    '<text class="t-wire" x="153" y="134">SQL</text><text class="t-wire" x="153" y="220">Kerberos</text>',
-  ].join(''),
+  notes: [{ x: 448, y: 68, text: 'AD domain: corp.example.com', anchor: 'end' }],
 });
 
 // ---------------------------------------------------------------------------------------------
@@ -338,32 +361,27 @@ D.push({
     { id: 'dc2', icon: 'aws-res-directory-service-managed-microsoft-ad', x: 352, y: 210, size: 32, label: 'AWS Managed Microsoft AD', wrap: 26 },
   ],
   wires: [
-    { id: 'tkt', d: 'M60,183 H78 V226 H180', both: true },
-    { id: 'smb', d: 'M60,183 H78 V140 H180', both: true },
-    { id: 'val1', d: 'M200,185 V206', both: true },
-    { id: 'val2', d: 'M368,185 V206', both: true },
-    { id: 'sync', from: 'fs1', to: 'fs2', both: true, dashed: true },
+    { id: 'tkt', d: 'M60,183 H78 V226 H180', both: true, label: 'Kerberos', labelAt: fAt('M60,183 H78 V226 H180', 153, 226), labelDy: -6 },
+    { id: 'smb', d: 'M60,183 H78 V140 H180', both: true, label: 'SMB', labelAt: fAt('M60,183 H78 V140 H180', 153, 140), labelDy: -6 },
+    // the file servers are domain members: they check tickets with their own key, without a call per connection
+    { id: 'join1', d: 'M200,185 V206', dashed: true, arrow: false, label: 'domain-joined', labelDx: -6, labelDy: 3, labelAnchor: 'end' },
+    { id: 'join2', d: 'M368,185 V206', dashed: true, arrow: false },
+    { id: 'sync', from: 'fs1', to: 'fs2', both: true, dashed: true, label: 'replication', labelAt: fAt('M218,140 H348', 246, 140), labelDy: -6 },
     { id: 'rep', from: 'dc1', to: 'dc2', both: true, dashed: true },
   ],
   steps: [
     { n: 1, x: 78, y: 206, text: 'The domain-joined client requests a Kerberos ticket for the file system from AWS Managed Microsoft AD.' },
     { n: 2, x: 78, y: 161, text: 'The client connects to the SMB share on the preferred file server, which replicates writes synchronously to the standby file server.' },
-    { n: 3, at: 'val1', dx: 13, dy: 0, text: 'The preferred file server validates the ticket that AWS Managed Microsoft AD issued and grants access to the share. The domain controllers replicate between Availability Zones.' },
+    { n: 3, at: 'join1', dx: 13, dy: 0, text: 'The preferred file server, joined to the domain, decrypts the ticket with its own key and grants access to the share without calling a domain controller. The domain controllers replicate between Availability Zones.' },
   ],
   timeline: [
-    { wire: 'tkt', t: [0.04, 0.16], ring: 'dc1' },
-    { wire: 'tkt', t: [0.18, 0.30], reverse: true, kind: 'pk-2', ring: 'cli' },
-    { wire: 'smb', t: [0.34, 0.46], ring: 'fs1' }, { wire: 'sync', t: [0.34, 0.46], kind: 'pk-2', ring: 'fs2' },
-    { wire: 'val1', t: [0.49, 0.57], ring: 'dc1' },
-    { wire: 'val1', t: [0.58, 0.66], reverse: true, kind: 'pk-2', ring: 'fs1' },
-    { wire: 'smb', t: [0.69, 0.81], reverse: true, kind: 'pk-2', ring: 'cli' },
-    { wire: 'rep', t: [0.84, 0.95], kind: 'pk-2', ring: 'dc2' },
+    { wire: 'tkt', t: [0.04, 0.17], ring: 'dc1' },
+    { wire: 'tkt', t: [0.20, 0.33], reverse: true, kind: 'pk-2', ring: 'cli' },
+    { wire: 'smb', t: [0.37, 0.50], ring: 'fs1' }, { wire: 'sync', t: [0.37, 0.50], kind: 'pk-2', ring: 'fs2' },
+    { wire: 'smb', t: [0.56, 0.69], reverse: true, kind: 'pk-2', ring: 'cli' },
+    { wire: 'rep', t: [0.76, 0.90], kind: 'pk-2', ring: 'dc2' },
   ],
-  extra: [
-    '<text class="t-wire" style="text-anchor:end" x="448" y="68">AD domain: corp.example.com</text>',
-    '<text class="t-wire" x="153" y="134">SMB</text><text class="t-wire" x="153" y="220">Kerberos</text>',
-    '<text class="t-wire" x="246" y="134">replication</text>',
-  ].join(''),
+  notes: [{ x: 448, y: 68, text: 'AD domain: corp.example.com', anchor: 'end' }],
 });
 
 // ---------------------------------------------------------------------------------------------
@@ -390,7 +408,7 @@ D.push({
     { id: 'ws2', icon: 'aws-svc-workspaces', x: 352, y: 210, size: 32, label: 'Amazon WorkSpaces', wrap: 20 },
   ],
   wires: [
-    { id: 'sign', d: 'M60,226 H180', both: true },
+    { id: 'sign', d: 'M60,226 H180', both: true, label: 'sign in', labelAt: fAt('M60,226 H180', 153, 226), labelDy: -6 },
     { id: 'val1', d: 'M200,206 V178', both: true },
     { id: 'val2', d: 'M368,206 V178', both: true },
     { id: 'rep', from: 'dc1', to: 'dc2', both: true, dashed: true },
@@ -406,10 +424,7 @@ D.push({
     { wire: 'sign', t: [0.48, 0.64], reverse: true, kind: 'pk-2', ring: 'usr' },
     { wire: 'rep', t: [0.72, 0.86], kind: 'pk-2', ring: 'dc2' },
   ],
-  extra: [
-    '<text class="t-wire" style="text-anchor:end" x="448" y="68">Registered directory: corp.example.com</text>',
-    '<text class="t-wire" x="153" y="220">sign in</text>',
-  ].join(''),
+  notes: [{ x: 448, y: 68, text: 'Registered directory: corp.example.com', anchor: 'end' }],
 });
 
 // ---------------------------------------------------------------------------------------------
@@ -420,7 +435,7 @@ D.push({
   desc: 'AWS Managed Microsoft AD (two domain controllers) in a shared services account is shared with a workload account in the same AWS Organization, whose Windows EC2 instances join it over a VPC peering connection or AWS Transit Gateway. Packets show the share, the join request and the reply.',
   w: 480, h: 222, dur: 10,
   groups: [
-    { kind: 'gen', x: 4, y: 8, w: 472, h: 204, label: '' },
+    { kind: 'gen', x: 4, y: 8, w: 472, h: 204, icon: 'aws-svc-organizations', label: 'AWS Organizations' },
     { kind: 'acct', x: 12, y: 32, w: 192, h: 172, label: 'Shared services account' },
     { kind: 'acct', x: 276, y: 32, w: 192, h: 172, label: 'Workload account' },
     { kind: 'region', x: 20, y: 56, w: 176, h: 142 },
@@ -434,7 +449,7 @@ D.push({
     { id: 'ec2', icon: 'aws-res-ec2-instances', x: 352, y: 106, label: 'Windows EC2 instances', sub: 'domain-joined' },
   ],
   wires: [
-    { id: 'share', d: 'M206,52 H274', dashed: true },
+    { id: 'share', d: 'M206,52 H274', dashed: true, label: 'Directory\nsharing', labelDy: 15 },
     { id: 'j1', d: 'M350,126 H264', both: true },
     { id: 'j2', d: 'M218,126 H132', both: true },
   ],
@@ -450,11 +465,6 @@ D.push({
     { wire: 'j2', t: [0.58, 0.70], reverse: true, kind: 'pk-2', ring: 'peer' },
     { wire: 'j1', t: [0.71, 0.83], reverse: true, kind: 'pk-2', ring: 'ec2' },
   ],
-  extra: [
-    '<use href="#aws-svc-organizations" x="4" y="8" width="20" height="20"/>',
-    '<text class="t-g gt-gen" x="29" y="22">AWS Organizations</text>',
-    '<text class="t-wire" x="240" y="67">Directory</text><text class="t-wire" x="240" y="77">sharing</text>',
-  ].join(''),
 });
 
 // ---------------------------------------------------------------------------------------------
@@ -487,9 +497,9 @@ D.push({
   ],
   wires: [
     { id: 'a2', d: 'M503,150 H350 V70 H314', dashed: true },
-    { id: 'a1', d: 'M266,70 H122', dashed: true },
+    { id: 'a1', d: 'M266,70 H122', dashed: true, label: 'One-way trust', labelAt: fAt('M266,70 H122', 228, 70), labelDy: -6 },
     { id: 'b2', d: 'M503,150 H350 V230 H314', dashed: true },
-    { id: 'b1', d: 'M266,230 H122', dashed: true },
+    { id: 'b1', d: 'M266,230 H122', dashed: true, label: 'One-way trust', labelAt: fAt('M266,230 H122', 228, 230), labelDy: -6 },
     { id: 'v1', d: 'M527,210 V232', both: true },
     { id: 'v2', d: 'M797,210 V232', both: true },
     { id: 'rep', from: 'dc1', to: 'dc2', both: true, dashed: true },
@@ -509,12 +519,10 @@ D.push({
     { wire: 'v1', t: [0.73, 0.80], kind: 'pk-2', ring: 'r1' },
     { wire: 'rep', t: [0.81, 0.92], kind: 'pk-2', ring: 'dc2' },
   ],
-  extra: [
-    '<text class="t-wire" style="text-anchor:end" x="928" y="70">Resource forest: aws.example.com</text>',
-    '<text class="t-wire" x="228" y="64">One-way trust</text>',
-    '<text class="t-wire" x="228" y="224">One-way trust</text>',
-    '<text class="t-wire" x="98" y="152">No trust between these two forests</text>',
-  ].join(''),
+  notes: [
+    { x: 928, y: 70, text: 'Resource forest: aws.example.com', anchor: 'end' },
+    { x: 98, y: 152, text: 'No trust between these two forests' },
+  ],
 });
 
 

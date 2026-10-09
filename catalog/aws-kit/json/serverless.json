@@ -66,7 +66,7 @@
       "wires": [
         { "id": "signin", "d": "M38,180 V82 H136", "both": true },
         { "id": "call", "from": "users", "to": "apigw", "both": true },
-        { "id": "auth", "d": "M160,180 V132", "dashed": true, "both": true },
+        { "id": "auth", "d": "M160,180 V132", "dashed": true, "both": true, "label": "Cognito authorizer validates token", "labelDx": 11, "labelDy": 3, "labelAnchor": "start" },
         { "id": "p3", "from": "apigw", "to": "fn" },
         { "id": "p4", "from": "fn", "to": "ddb" }
       ],
@@ -88,8 +88,7 @@
         { "wire": "p4", "t": [0.71, 0.77], "reverse": true, "kind": "pk-2", "ring": "fn" },
         { "wire": "p3", "t": [0.78, 0.84], "reverse": true, "kind": "pk-2", "ring": "apigw" },
         { "wire": "call", "t": [0.85, 0.93], "reverse": true, "kind": "pk-2", "ring": "users" }
-      ],
-      "extra": "<text class=\"t-wire\" x=\"171\" y=\"159\" style=\"text-anchor:start\">Cognito authorizer validates token</text>"
+      ]
     },
     {
       "id": "sl-s3-events",
@@ -151,8 +150,8 @@
       "wires": [
         { "id": "c1", "d": "M56,70 H108 V128 H132", "both": true },
         { "id": "c2", "d": "M56,206 H108 V148 H132", "both": true },
-        { "id": "rt", "from": "apigw", "to": "fn" },
-        { "id": "cn", "d": "M276,114 V96 H156 V114", "dashed": true },
+        { "id": "rt", "from": "apigw", "to": "fn", "label": "route", "labelDx": 11, "labelDy": -8 },
+        { "id": "cn", "d": "M276,114 V96 H156 V114", "dashed": true, "label": "@connections", "labelAt": 0.6667 },
         { "id": "db", "from": "fn", "to": "ddb", "both": true }
       ],
       "steps": [
@@ -170,8 +169,7 @@
         { "wire": "cn", "t": [0.5, 0.6], "ring": "apigw" },
         { "wire": "c1", "t": [0.64, 0.74], "reverse": true, "kind": "pk-2", "ring": "ca" },
         { "wire": "c2", "t": [0.64, 0.74], "reverse": true, "kind": "pk-2", "ring": "cb" }
-      ],
-      "extra": "<text class=\"t-wire\" x=\"226\" y=\"130\">route</text><text class=\"t-wire\" x=\"190\" y=\"91\">@connections</text>"
+      ]
     },
     {
       "id": "sl-sfn",
@@ -200,7 +198,7 @@
       ],
       "wires": [
         { "id": "w1", "from": "users", "to": "apigw", "both": true },
-        { "id": "w2", "from": "apigw", "to": "sfn", "both": true },
+        { "id": "w2", "from": "apigw", "to": "sfn", "both": true, "label": "StartExecution", "labelDy": 14 },
         { "id": "w3", "from": "sfn", "to": "val" },
         { "id": "fa", "from": "val", "to": "pa", "via": 492 },
         { "id": "fb", "from": "val", "to": "pb", "via": 492 },
@@ -227,8 +225,7 @@
         { "wire": "ja", "t": [0.55, 0.65], "ring": "sns" },
         { "wire": "jb", "t": [0.55, 0.65] },
         { "wire": "w7", "t": [0.7, 0.79], "ring": "mail" }
-      ],
-      "extra": "<text class=\"t-wire\" x=\"239\" y=\"195\">StartExecution</text>"
+      ]
     },
     {
       "id": "sl-eventbridge",
@@ -256,13 +253,13 @@
       ],
       "wires": [
         { "id": "e1", "d": "M64,130 H170 V172 H238" },
-        { "id": "e2", "d": "M64,214 H170 V172 H238" },
+        { "id": "e2", "d": "M64,214 H170 V172 H238", "label": "PutEvents", "labelAt": 0.8426, "labelDy": 14 },
         { "id": "f1", "from": "bus", "to": "r1", "via": 400 },
         { "id": "f2", "from": "bus", "to": "r2" },
         { "id": "f3", "from": "bus", "to": "r3", "via": 400 },
-        { "id": "g1", "from": "r1", "to": "t1" },
-        { "id": "g2", "from": "r2", "to": "t2" },
-        { "id": "g3", "from": "r3", "to": "t3" }
+        { "id": "g1", "from": "r1", "to": "t1", "label": "Invoke", "labelDy": 14 },
+        { "id": "g2", "from": "r2", "to": "t2", "label": "SendMessage", "labelDy": 14 },
+        { "id": "g3", "from": "r3", "to": "t3", "label": "StartExecution", "labelDy": 14 }
       ],
       "steps": [
         { "n": 1, "at": "e1", "f": 0.9, "text": "Producers send events to the Amazon EventBridge custom event bus with PutEvents." },
@@ -280,8 +277,7 @@
         { "wire": "g1", "t": [0.48, 0.68], "ring": "t1" },
         { "wire": "g2", "t": [0.48, 0.68], "ring": "t2" },
         { "wire": "g3", "t": [0.48, 0.68], "ring": "t3" }
-      ],
-      "extra": "<text class=\"t-wire\" x=\"204\" y=\"186\">PutEvents</text><text class=\"t-wire\" x=\"686\" y=\"102\">Invoke</text><text class=\"t-wire\" x=\"686\" y=\"186\">SendMessage</text><text class=\"t-wire\" x=\"686\" y=\"270\">StartExecution</text>"
+      ]
     },
     {
       "id": "sl-queue",
@@ -309,10 +305,10 @@
       ],
       "wires": [
         { "id": "u", "from": "users", "to": "apigw", "both": true },
-        { "id": "s", "from": "apigw", "to": "sqs" },
-        { "id": "c", "d": "M458,204 H578" },
-        { "id": "d", "d": "M724,204 H818" },
-        { "id": "dlq", "d": "M436,245 V280", "dashed": true, "hot": true }
+        { "id": "s", "from": "apigw", "to": "sqs", "label": "SendMessage", "labelDy": 14 },
+        { "id": "c", "d": "M458,204 H578", "label": "event source mapping", "labelDy": 14 },
+        { "id": "d", "d": "M724,204 H818", "label": "PutItem", "labelDy": 14 },
+        { "id": "dlq", "d": "M436,245 V280", "dashed": true, "hot": true, "label": "maxReceiveCount", "labelDx": -12, "labelDy": 3.5, "labelAnchor": "end" }
       ],
       "steps": [
         { "n": 1, "at": "u", "f": 0.68, "text": "Users send a burst of requests to Amazon API Gateway." },
@@ -341,8 +337,7 @@
       "effects": [
         { "appear": "l2", "t": [0.34, 0.84], "ghost": true },
         { "appear": "l3", "t": [0.36, 0.84], "ghost": true }
-      ],
-      "extra": "<text class=\"t-wire\" x=\"341\" y=\"218\">SendMessage</text><text class=\"t-wire\" x=\"518\" y=\"218\">event source mapping</text><text class=\"t-wire\" x=\"771\" y=\"218\">PutItem</text><text class=\"t-wire\" x=\"424\" y=\"266\" style=\"text-anchor:end\">maxReceiveCount</text>"
+      ]
     },
     {
       "id": "sl-static",
@@ -366,11 +361,11 @@
         { "id": "fn", "icon": "aws-svc-lambda", "x": 780, "y": 258, "label": "AWS Lambda" }
       ],
       "wires": [
-        { "id": "dns", "d": "M70,158 V86 H216", "dashed": true, "both": true },
-        { "id": "https", "from": "users", "to": "cf", "both": true },
-        { "id": "alias", "d": "M240,127 V158", "dashed": true },
-        { "id": "b1", "d": "M262,182 H340 V86 H596", "both": true },
-        { "id": "b2", "d": "M262,182 H340 V278 H596", "both": true },
+        { "id": "dns", "d": "M70,158 V86 H216", "dashed": true, "both": true, "label": "DNS lookup", "labelAt": 0.7661, "labelDy": 14 },
+        { "id": "https", "from": "users", "to": "cf", "both": true, "label": "HTTPS", "labelAt": 0.5887, "labelDy": 14 },
+        { "id": "alias", "d": "M240,127 V158", "dashed": true, "label": "alias record", "labelDx": 8, "labelDy": 3.5, "labelAnchor": "start" },
+        { "id": "b1", "d": "M262,182 H340 V86 H596", "both": true, "label": "Default (*) behavior", "labelAt": 0.7023, "labelDy": 14 },
+        { "id": "b2", "d": "M262,182 H340 V278 H596", "both": true, "label": "/api/* behavior", "labelAt": 0.7023, "labelDy": 14 },
         { "id": "o", "from": "apigw", "to": "fn", "both": true }
       ],
       "steps": [
@@ -393,8 +388,7 @@
         { "wire": "https", "t": [0.61, 0.68], "reverse": true, "kind": "pk-2", "ring": "users" },
         { "wire": "b2", "t": [0.66, 0.78], "reverse": true, "kind": "pk-2", "ring": "cf" },
         { "wire": "https", "t": [0.79, 0.87], "reverse": true, "kind": "pk-2", "ring": "users" }
-      ],
-      "extra": "<text class=\"t-wire\" x=\"165\" y=\"100\">DNS lookup</text><text class=\"t-wire\" x=\"165\" y=\"196\">HTTPS</text><text class=\"t-wire\" x=\"248\" y=\"146\" style=\"text-anchor:start\">alias record</text><text class=\"t-wire\" x=\"468\" y=\"100\">Default (*) behavior</text><text class=\"t-wire\" x=\"468\" y=\"292\">/api/* behavior</text>"
+      ]
     }
   ]
 }

@@ -3,16 +3,31 @@
 //   node catalog/aws-kit/awd.mjs build   catalog/aws-kit/specs/serverless.mjs
 //
 // Conventions: icons are 40px (32px for resource icons) and are placed by CENTER with N(); step
-// badges ride on or just above wires, short captions (T) sit below them; each diagram has one
-// clock (`dur`). Tile order pairs the four normal-width diagrams, then the wide ones.
+// badges ride on or just above wires, and the API call names are wire labels below them; each
+// diagram has one clock (`dur`). Tile order pairs the four normal-width diagrams, then the wide ones.
 
 // node by center point
 const N = (id, icon, cx, cy, label, o = {}) => {
   const s = o.size || 40;
   return { id, icon, x: cx - s / 2, y: cy - s / 2, label, ...o };
 };
-// small muted caption in the wire-label style; anchor: 'start' | 'end' | undefined (middle)
-const T = (x, y, s, anchor) => `<text class="t-wire" x="${x}" y="${y}"${anchor ? ` style="text-anchor:${anchor}"` : ''}>${s}</text>`;
+// fraction along an M/H/V wire path at the point (x, y) on it: puts a wire label (labelAt) exactly
+// where the caption it names belongs
+const fAt = (d, x, y) => {
+  const p = [...d.matchAll(/([MHV])\s*([-\d.]+)(?:,([-\d.]+))?/g)].reduce((a, [, c, u, v]) => {
+    const [px, py] = a.length ? a[a.length - 1] : [0, 0];
+    a.push(c === 'M' ? [+u, +v] : c === 'H' ? [+u, py] : [px, +u]); return a;
+  }, []);
+  const seg = p.slice(1).map((q, i) => Math.hypot(q[0] - p[i][0], q[1] - p[i][1]));
+  const tot = seg.reduce((a, b) => a + b, 0);
+  let acc = 0;
+  for (let i = 0; i < seg.length; i++) {
+    const [a, b] = [p[i], p[i + 1]];
+    if (Math.min(a[0], b[0]) <= x && x <= Math.max(a[0], b[0]) && Math.min(a[1], b[1]) <= y && y <= Math.max(a[1], b[1])) return +((acc + Math.hypot(x - a[0], y - a[1])) / tot).toFixed(4);
+    acc += seg[i];
+  }
+  throw new Error(`(${x}, ${y}) is not on ${d}`);
+};
 
 export default {
   section: { id: 'serverless', title: 'SERVERLESS' },
@@ -80,7 +95,7 @@ export default {
       wires: [
         { id: 'signin', d: 'M38,180 V82 H136', both: true },
         { id: 'call', from: 'users', to: 'apigw', both: true },
-        { id: 'auth', d: 'M160,180 V132', dashed: true, both: true },
+        { id: 'auth', d: 'M160,180 V132', dashed: true, both: true, label: 'Cognito authorizer validates token', labelDx: 11, labelDy: 3, labelAnchor: 'start' },
         { id: 'p3', from: 'apigw', to: 'fn' },
         { id: 'p4', from: 'fn', to: 'ddb' },
       ],
@@ -103,7 +118,6 @@ export default {
         { wire: 'p3', t: [0.78, 0.84], reverse: true, kind: 'pk-2', ring: 'apigw' },
         { wire: 'call', t: [0.85, 0.93], reverse: true, kind: 'pk-2', ring: 'users' },
       ],
-      extra: T(171, 159, 'Cognito authorizer validates token', 'start'),
     },
 
     // ------------------------------------------------------------------ sl-s3-events
@@ -165,9 +179,9 @@ export default {
       wires: [
         { id: 'c1', d: 'M56,70 H108 V128 H132', both: true },
         { id: 'c2', d: 'M56,206 H108 V148 H132', both: true },
-        { id: 'rt', from: 'apigw', to: 'fn' },
+        { id: 'rt', from: 'apigw', to: 'fn', label: 'route', labelDx: 11, labelDy: -8 },
         // the management API call: Lambda posts back to API Gateway, which pushes to the clients
-        { id: 'cn', d: 'M276,114 V96 H156 V114', dashed: true },
+        { id: 'cn', d: 'M276,114 V96 H156 V114', dashed: true, label: '@connections', labelAt: fAt('M276,114 V96 H156 V114', 190, 96) },
         { id: 'db', from: 'fn', to: 'ddb', both: true },
       ],
       steps: [
@@ -186,7 +200,6 @@ export default {
         { wire: 'c1', t: [0.64, 0.74], reverse: true, kind: 'pk-2', ring: 'ca' },
         { wire: 'c2', t: [0.64, 0.74], reverse: true, kind: 'pk-2', ring: 'cb' },
       ],
-      extra: T(226, 130, 'route') + T(190, 91, '@connections'),
     },
 
     // ------------------------------------------------------------------ sl-sfn
@@ -215,7 +228,7 @@ export default {
       ],
       wires: [
         { id: 'w1', from: 'users', to: 'apigw', both: true },
-        { id: 'w2', from: 'apigw', to: 'sfn', both: true },
+        { id: 'w2', from: 'apigw', to: 'sfn', both: true, label: 'StartExecution', labelDy: 14 },
         { id: 'w3', from: 'sfn', to: 'val' },
         { id: 'fa', from: 'val', to: 'pa', via: 492 },
         { id: 'fb', from: 'val', to: 'pb', via: 492 },
@@ -243,7 +256,6 @@ export default {
         { wire: 'jb', t: [0.55, 0.65] },
         { wire: 'w7', t: [0.70, 0.79], ring: 'mail' },
       ],
-      extra: T(239, 195, 'StartExecution'),
     },
 
     // ------------------------------------------------------------------ sl-eventbridge
@@ -271,13 +283,13 @@ export default {
       ],
       wires: [
         { id: 'e1', d: 'M64,130 H170 V172 H238' },
-        { id: 'e2', d: 'M64,214 H170 V172 H238' },
+        { id: 'e2', d: 'M64,214 H170 V172 H238', label: 'PutEvents', labelAt: fAt('M64,214 H170 V172 H238', 204, 172), labelDy: 14 },
         { id: 'f1', from: 'bus', to: 'r1', via: 400 },
         { id: 'f2', from: 'bus', to: 'r2' },
         { id: 'f3', from: 'bus', to: 'r3', via: 400 },
-        { id: 'g1', from: 'r1', to: 't1' },
-        { id: 'g2', from: 'r2', to: 't2' },
-        { id: 'g3', from: 'r3', to: 't3' },
+        { id: 'g1', from: 'r1', to: 't1', label: 'Invoke', labelDy: 14 },
+        { id: 'g2', from: 'r2', to: 't2', label: 'SendMessage', labelDy: 14 },
+        { id: 'g3', from: 'r3', to: 't3', label: 'StartExecution', labelDy: 14 },
       ],
       steps: [
         { n: 1, at: 'e1', f: 0.9, text: 'Producers send events to the Amazon EventBridge custom event bus with PutEvents.' },
@@ -296,7 +308,6 @@ export default {
         { wire: 'g2', t: [0.48, 0.68], ring: 't2' },
         { wire: 'g3', t: [0.48, 0.68], ring: 't3' },
       ],
-      extra: T(204, 186, 'PutEvents') + T(686, 102, 'Invoke') + T(686, 186, 'SendMessage') + T(686, 270, 'StartExecution'),
     },
 
     // ------------------------------------------------------------------ sl-queue
@@ -324,10 +335,10 @@ export default {
       ],
       wires: [
         { id: 'u', from: 'users', to: 'apigw', both: true },
-        { id: 's', from: 'apigw', to: 'sqs' },
-        { id: 'c', d: 'M458,204 H578' },
-        { id: 'd', d: 'M724,204 H818' },
-        { id: 'dlq', d: 'M436,245 V280', dashed: true, hot: true },
+        { id: 's', from: 'apigw', to: 'sqs', label: 'SendMessage', labelDy: 14 },
+        { id: 'c', d: 'M458,204 H578', label: 'event source mapping', labelDy: 14 },
+        { id: 'd', d: 'M724,204 H818', label: 'PutItem', labelDy: 14 },
+        { id: 'dlq', d: 'M436,245 V280', dashed: true, hot: true, label: 'maxReceiveCount', labelDx: -12, labelDy: 3.5, labelAnchor: 'end' },
       ],
       steps: [
         { n: 1, at: 'u', f: 0.68, text: 'Users send a burst of requests to Amazon API Gateway.' },
@@ -360,7 +371,6 @@ export default {
         { appear: 'l2', t: [0.34, 0.84], ghost: true },
         { appear: 'l3', t: [0.36, 0.84], ghost: true },
       ],
-      extra: T(341, 218, 'SendMessage') + T(518, 218, 'event source mapping') + T(771, 218, 'PutItem') + T(424, 266, 'maxReceiveCount', 'end'),
     },
 
     // ------------------------------------------------------------------ sl-static
@@ -384,11 +394,11 @@ export default {
         N('fn', 'aws-svc-lambda', 800, 278, 'AWS Lambda'),
       ],
       wires: [
-        { id: 'dns', d: 'M70,158 V86 H216', dashed: true, both: true },
-        { id: 'https', from: 'users', to: 'cf', both: true },
-        { id: 'alias', d: 'M240,127 V158', dashed: true },
-        { id: 'b1', d: 'M262,182 H340 V86 H596', both: true },
-        { id: 'b2', d: 'M262,182 H340 V278 H596', both: true },
+        { id: 'dns', d: 'M70,158 V86 H216', dashed: true, both: true, label: 'DNS lookup', labelAt: fAt('M70,158 V86 H216', 165, 86), labelDy: 14 },
+        { id: 'https', from: 'users', to: 'cf', both: true, label: 'HTTPS', labelAt: fAt('M92,182 H216', 165, 182), labelDy: 14 },
+        { id: 'alias', d: 'M240,127 V158', dashed: true, label: 'alias record', labelDx: 8, labelDy: 3.5, labelAnchor: 'start' },
+        { id: 'b1', d: 'M262,182 H340 V86 H596', both: true, label: 'Default (*) behavior', labelAt: fAt('M262,182 H340 V86 H596', 468, 86), labelDy: 14 },
+        { id: 'b2', d: 'M262,182 H340 V278 H596', both: true, label: '/api/* behavior', labelAt: fAt('M262,182 H340 V278 H596', 468, 278), labelDy: 14 },
         { id: 'o', from: 'apigw', to: 'fn', both: true },
       ],
       steps: [
@@ -414,7 +424,6 @@ export default {
         { wire: 'b2', t: [0.66, 0.78], reverse: true, kind: 'pk-2', ring: 'cf' },
         { wire: 'https', t: [0.79, 0.87], reverse: true, kind: 'pk-2', ring: 'users' },
       ],
-      extra: T(165, 100, 'DNS lookup') + T(165, 196, 'HTTPS') + T(248, 146, 'alias record', 'start') + T(468, 100, 'Default (*) behavior') + T(468, 292, '/api/* behavior'),
     },
   ],
 };
