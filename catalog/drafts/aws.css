@@ -27,10 +27,12 @@
   /* Availability Zone frame: teal in the current AWS deck (legacy tooling used blue #147EBA) */
   --awd-az:#00A4A6;
   /* panel fills for pills and bars drawn inside a diagram; fallbacks keep a copied diagram whole on a bare page */
-  --awd-panel:var(--panel,#121623);--awd-panel2:var(--panel2,#171d2e)}
+  --awd-panel:var(--panel,#121623);--awd-panel2:var(--panel2,#171d2e);
+  /* behind a wire label with labelBg: the tile's own color, so the label reads across a line */
+  --awd-halo:var(--panel,#121623)}
 /* light tokens. The second selector of each pair matches a standalone .svg file, where .awd is the root */
-[data-mode="light"] .awd,.awd[data-mode="light"]{--awd-ink:var(--ink,#16191F);--awd-muted:var(--muted,#5F6B7A);--awd-wire:color-mix(in srgb,var(--awd-ink) 88%,var(--bg,#FFFFFF));--awd-pk:var(--awd-request,#EC7211);--awd-pk2:var(--awd-response,#0972D3);--awd-cloud:#232F3E;--awd-step-bg:#232F3E;--awd-step-fg:#FFFFFF;--awd-panel:var(--panel,#FFFFFF);--awd-panel2:var(--panel2,#EEF1F6)}
-@media (prefers-color-scheme:light){:root:not([data-mode]) .awd,.awd:root:not([data-mode]){--awd-ink:var(--ink,#16191F);--awd-muted:var(--muted,#5F6B7A);--awd-wire:color-mix(in srgb,var(--awd-ink) 88%,var(--bg,#FFFFFF));--awd-pk:var(--awd-request,#EC7211);--awd-pk2:var(--awd-response,#0972D3);--awd-cloud:#232F3E;--awd-step-bg:#232F3E;--awd-step-fg:#FFFFFF;--awd-panel:var(--panel,#FFFFFF);--awd-panel2:var(--panel2,#EEF1F6)}}
+[data-mode="light"] .awd,.awd[data-mode="light"]{--awd-ink:var(--ink,#16191F);--awd-muted:var(--muted,#5F6B7A);--awd-wire:color-mix(in srgb,var(--awd-ink) 88%,var(--bg,#FFFFFF));--awd-pk:var(--awd-request,#EC7211);--awd-pk2:var(--awd-response,#0972D3);--awd-cloud:#232F3E;--awd-step-bg:#232F3E;--awd-step-fg:#FFFFFF;--awd-panel:var(--panel,#FFFFFF);--awd-panel2:var(--panel2,#EEF1F6);--awd-halo:var(--panel,#FFFFFF)}
+@media (prefers-color-scheme:light){:root:not([data-mode]) .awd,.awd:root:not([data-mode]){--awd-ink:var(--ink,#16191F);--awd-muted:var(--muted,#5F6B7A);--awd-wire:color-mix(in srgb,var(--awd-ink) 88%,var(--bg,#FFFFFF));--awd-pk:var(--awd-request,#EC7211);--awd-pk2:var(--awd-response,#0972D3);--awd-cloud:#232F3E;--awd-step-bg:#232F3E;--awd-step-fg:#FFFFFF;--awd-panel:var(--panel,#FFFFFF);--awd-panel2:var(--panel2,#EEF1F6);--awd-halo:var(--panel,#FFFFFF)}}
 
 /* text: service labels centered under icons; group labels regular and in ink (AWS: dark, not
    group-colored; the frame and its icon already say which group it is) */
@@ -56,6 +58,9 @@
 .awd .g-acct{stroke:#E7157B}
 .awd .g-dc{stroke:#7D8998}
 .awd .g-gen{stroke:#7D8998;stroke-dasharray:5 3}
+.awd .g-iot{stroke:#7AA116}
+/* box / pill nodes: a plain shape for what has no AWS icon (tone sets a category stroke inline) */
+.awd .awd-box{fill:var(--awd-panel2);stroke:var(--awd-muted);stroke-width:1.25}
 .awd .g-hot{stroke:#DD344C;stroke-width:2}                /* a group that has failed (set via SMIL or class) */
 
 /* wires: open arrowheads (AWS "open arrow") from markers in each diagram's own <defs>; they inherit these vars */
@@ -63,6 +68,12 @@
 .awd .w-d{stroke-dasharray:4 3}
 .awd .w-flow{stroke-dasharray:5 4;animation:awdDash 1.1s linear infinite}
 .awd .w-hot{stroke:#DD344C}
+/* wire tones (heads follow from per-tone markers) and the label halo */
+.awd .w-request{stroke:var(--awd-pk)}
+.awd .w-response{stroke:var(--awd-pk2)}
+.awd .w-bad{stroke:#DD344C}
+.awd .w-muted{stroke:var(--awd-muted)}
+.awd .t-halo{paint-order:stroke;stroke:var(--awd-halo);stroke-width:3px;stroke-linejoin:round}
 .awd .ah{fill:none;stroke:var(--awd-wire)}
 @keyframes awdDash{to{stroke-dashoffset:-9}}
 
@@ -72,6 +83,11 @@
 .awd .pk-bad{fill:#DD344C;filter:drop-shadow(0 0 3px #DD344C)}
 .awd .ring{fill:none;stroke:var(--awd-pk);stroke-width:1.6}
 .awd .ring-2{fill:none;stroke:var(--awd-pk2);stroke-width:1.6}
+.awd .ring-bad{fill:none;stroke:#DD344C;stroke-width:1.6}
+/* in-diagram legend swatches (static, so they stay in still frames) */
+.awd .lg-pk{fill:var(--awd-pk)}
+.awd .lg-pk-2{fill:var(--awd-pk2)}
+.awd .lg-pk-bad{fill:#DD344C}
 .awd .awd-static{display:none}   /* still copy of a node that appears on the clock (shown under reduced motion) */
 
 /* numbered step badges (AWS reference-architecture convention) */
@@ -91,6 +107,11 @@
 .awd.awd-k{display:inline-block;width:14px;height:14px;flex:none}
 .awd.awd-kw{width:34px;height:12px}
 .awd-src{flex-basis:100%;color:var(--muted);font-size:11.5px}
+/* the numbered steps under a diagram (AWS reference architecture style), badges like the diagram's */
+.tile .awd-steps{display:grid;gap:4px;margin:8px 0 2px;padding:0;list-style:none;color:var(--muted);font-size:12px;line-height:1.45}
+.tile .awd-steps li{display:grid;grid-template-columns:16px 1fr;gap:7px;align-items:start}
+.tile .awd-steps li::before{content:attr(data-n);display:grid;place-items:center;width:16px;height:16px;margin-top:1px;border-radius:50%;
+  background:var(--ink);color:var(--bg);font-size:9.5px;font-weight:800;font-variant-numeric:tabular-nums}
 .awd-lib-bar{position:sticky;top:0;z-index:3;display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;padding:10px 0;background:var(--bg)}
 .awd-lib-q{flex:1 1 300px;min-width:0;padding:8px 12px;background:var(--panel2);border:1px solid var(--line);border-radius:8px;color:var(--ink);font:inherit;font-size:13px}
 .awd-lib-q::placeholder{color:var(--dim)}
@@ -118,18 +139,18 @@
 .awd-lib-live{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 
 @media (prefers-reduced-motion:reduce){
-  .awd .pk,.awd .pk-2,.awd .pk-bad,.awd .ring,.awd .ring-2,.awd .anim{display:none}
+  .awd .pk,.awd .pk-2,.awd .pk-bad,.awd .ring,.awd .ring-2,.awd .ring-bad,.awd .anim{display:none}
   .awd .awd-static{display:inline}
   .awd .w-flow{animation:none}
 }
 /* still frames (print, screenshots, exports): data-still on the svg or any ancestor shows the
    complete static diagram with no packet frozen mid-wire */
 @media print{
-  .awd .pk,.awd .pk-2,.awd .pk-bad,.awd .ring,.awd .ring-2,.awd .anim{display:none}
+  .awd .pk,.awd .pk-2,.awd .pk-bad,.awd .ring,.awd .ring-2,.awd .ring-bad,.awd .anim{display:none}
   .awd .awd-static{display:inline}
   .awd .w-flow{animation:none}
 }
-[data-still] .awd .pk,[data-still] .awd .pk-2,[data-still] .awd .pk-bad,[data-still] .awd .ring,[data-still] .awd .ring-2,[data-still] .awd .anim,
-.awd[data-still] .pk,.awd[data-still] .pk-2,.awd[data-still] .pk-bad,.awd[data-still] .ring,.awd[data-still] .ring-2,.awd[data-still] .anim{display:none}
+[data-still] .awd .pk,[data-still] .awd .pk-2,[data-still] .awd .pk-bad,[data-still] .awd .ring,[data-still] .awd .ring-2,[data-still] .awd .ring-bad,[data-still] .awd .anim,
+.awd[data-still] .pk,.awd[data-still] .pk-2,.awd[data-still] .pk-bad,.awd[data-still] .ring,.awd[data-still] .ring-2,.awd[data-still] .ring-bad,.awd[data-still] .anim{display:none}
 [data-still] .awd .awd-static,.awd[data-still] .awd-static{display:inline}
 [data-still] .awd .w-flow,.awd[data-still] .w-flow{animation:none}

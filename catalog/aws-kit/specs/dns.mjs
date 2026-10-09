@@ -81,7 +81,7 @@ const resolution = (() => {
     ],
     nodes: [res, cli, root, tld, ...NS, alb, ec2],
     wires: [
-      { id: 'c1', d: P(B(res, 0, 8), T(cli)), both: true, label: 'example.com A?', labelAt: 0.5, labelAnchor: 'start', labelDx: 8, labelDy: 3 },
+      { id: 'c1', d: P(T(cli), B(res, 0, 8)), both: true, label: 'example.com A?', labelAt: 0.5, labelAnchor: 'start', labelDx: 8, labelDy: 3 },
       { id: 'r1', d: P(R(res), [200, 196], [200, 50], L(root)), both: true },
       { id: 'r2', d: P(R(res), L(tld)), both: true },
       { id: 'r3', d: P(R(res), [200, 196], [200, 112], L(NS[0])), both: true },
@@ -90,11 +90,11 @@ const resolution = (() => {
       { id: 'h', d: P(R(cli), L(alb)), label: 'HTTPS to 203.0.113.10', labelAt: 0.5 },
     ],
     steps: [
-      { n: 1, at: 'c1', f: 0.3, dx: -11, dy: 0, text: 'The stub resolver on the client asks the recursive resolver for the A record of example.com.' },
+      { n: 1, at: 'c1', f: 0.7, dx: -11, dy: 0, text: 'The stub resolver on the client asks the recursive resolver for the A record of example.com.' },
       { n: 2, at: 'r1', f: 0.9, dy: -11, text: 'The recursive resolver queries a root name server, which refers it to the .com TLD name servers.' },
       { n: 3, at: 'r2', f: 0.5, dy: -11, text: 'The resolver queries a .com TLD name server, which refers it to the four Route 53 name servers for example.com.' },
       { n: 4, at: 'r3', f: 0.78, dy: -11, text: 'A Route 53 name server answers from the public hosted zone: the alias A record at the zone apex returns the Application Load Balancer addresses.' },
-      { n: 5, at: 'c1', f: 0.7, dx: -11, dy: 0, text: 'The resolver caches the answer for its 60-second TTL and returns 203.0.113.10 to the client.' },
+      { n: 5, at: 'c1', f: 0.3, dx: -11, dy: 0, text: 'The resolver caches the answer for its 60-second TTL and returns 203.0.113.10 to the client.' },
       { n: 6, at: 'h', f: 0.2, dy: -11, text: 'The client connects over HTTPS to the Application Load Balancer, which forwards to the EC2 instances. A repeat query inside the TTL is answered from cache.' },
     ],
         timeline: [
@@ -573,7 +573,7 @@ const dnssec = (() => {
       { id: 'ch2', d: P(R(com), L(hz)), dashed: true, label: 'DS example.com', labelAt: 0.715 },
       { id: 'sg', d: P(R(hz), L(kms)), both: true, label: 'signs', labelAt: 0.22 },
       { id: 'u', d: P(R(users), L(res)), both: true },
-      { id: 'v1', d: P(B(com), T(res)), both: true, label: 'DS lookup', labelAt: 0.5, labelAnchor: 'start', labelDx: 8, labelDy: 3 },
+      { id: 'v1', d: P(T(res), B(com)), both: true, label: 'DS lookup', labelAt: 0.5, labelAnchor: 'start', labelDx: 8, labelDy: 3 },
       { id: 'v2', d: P(R(res), [330, 226], B(hz)), both: true, label: 'DNSKEY, A, RRSIG', labelAt: 0.3 },
     ],
     steps: [

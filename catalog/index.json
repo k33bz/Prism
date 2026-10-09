@@ -58324,6 +58324,7 @@
         "pk-2",
         "ring-2",
         "pk-bad",
+        "ring-bad",
         "anim",
         "t-wire"
       ],
@@ -58493,6 +58494,7 @@
         "pk-2",
         "ring-2",
         "pk-bad",
+        "ring-bad",
         "t-wire",
         "anim"
       ],
@@ -62315,7 +62317,8 @@
         "ring",
         "pk-2",
         "ring-2",
-        "pk-bad"
+        "pk-bad",
+        "ring-bad"
       ],
       "params": [
         "dataAttributes"

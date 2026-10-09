@@ -54,6 +54,8 @@
         "timeline": { "type": "array", "items": { "$ref": "#/$defs/timelineEntry" } },
         "effects": { "type": "array", "items": { "$ref": "#/$defs/effect" } },
         "notes": { "type": "array", "items": { "$ref": "#/$defs/note" } },
+        "marks": { "type": "array", "items": { "$ref": "#/$defs/mark" }, "description": "Blocked X or ok check on a node, a wire or a point." },
+        "legend": { "$ref": "#/$defs/legend" },
         "extra": { "type": "string", "description": "Raw SVG appended last. No script, on* handlers, foreignObject/style/iframe/object/embed, javascript: URLs, or href/url() that is not a #fragment." }
       },
       "required": ["id", "name"],
@@ -62,7 +64,10 @@
     "group": {
       "type": "object",
       "properties": {
-        "kind": { "enum": ["cloud", "region", "az", "vpc", "pub", "priv", "sg", "asg", "acct", "dc", "server", "ec2", "spot", "gen"] },
+        "kind": { "enum": ["cloud", "region", "az", "vpc", "pub", "priv", "sg", "asg", "acct", "dc", "server", "ec2", "spot", "gen", "cloud-plain", "iot"] },
+        "tone": { "$ref": "#/$defs/category", "description": "Category color for the frame (a custom group)." },
+        "fill": { "type": "boolean", "description": "A light tint of the tone (or gray) inside the frame." },
+        "dashed": { "type": "boolean", "description": "Override the kind's solid or dashed line." },
         "id": { "$ref": "#/$defs/id", "description": "Needed when an effect targets the group (fail)." },
         "x": { "$ref": "#/$defs/num" },
         "y": { "$ref": "#/$defs/num" },
@@ -92,9 +97,15 @@
         "size": { "$ref": "#/$defs/size", "description": "Icon size (default 40)." },
         "label": { "type": "string", "description": "Official name, centered under the icon." },
         "wrap": { "$ref": "#/$defs/size", "description": "Label wrap width in characters (default 14)." },
-        "sub": { "type": "string", "description": "Muted second line under the label." }
+        "sub": { "type": "string", "description": "Muted second line under the label." },
+        "labelPos": { "enum": ["b", "r", "l", "t"], "description": "Label below (default), right, left or above the icon." },
+        "kind": { "enum": ["box", "pill"], "description": "A plain shape instead of an icon, for what has no AWS icon; needs w and h, label inside." },
+        "w": { "$ref": "#/$defs/size", "description": "Box width." },
+        "h": { "$ref": "#/$defs/size", "description": "Box height." },
+        "tone": { "$ref": "#/$defs/category", "description": "Box stroke in a category color." }
       },
-      "required": ["id", "icon", "x", "y"],
+      "required": ["id", "x", "y"],
+      "anyOf": [{ "required": ["icon"] }, { "required": ["kind", "w", "h"] }],
       "additionalProperties": false
     },
     "wire": {
@@ -109,6 +120,8 @@
         "both": { "type": "boolean", "description": "Bidirectional: a head at both ends." },
         "flow": { "type": "boolean", "description": "Continuous stream (CSS dash motion)." },
         "hot": { "type": "boolean", "description": "Red wire and head: a blocked or failing path." },
+        "tone": { "enum": ["request", "response", "bad", "muted"], "description": "Wire and head color." },
+        "labelBg": { "type": "boolean", "description": "A halo in the tile color behind the label." },
         "arrow": { "type": "boolean", "description": "false draws no heads." },
         "label": { "type": "string" },
         "labelAt": { "type": "number", "minimum": 0, "maximum": 1, "description": "Label position along the path (default 0.5)." },
@@ -129,7 +142,8 @@
         "dx": { "$ref": "#/$defs/num" },
         "dy": { "$ref": "#/$defs/num", "description": "Default -11 (above the wire)." },
         "x": { "$ref": "#/$defs/num", "description": "Free position, when not on a wire." },
-        "y": { "$ref": "#/$defs/num" }
+        "y": { "$ref": "#/$defs/num" },
+        "text": { "type": "string", "maxLength": 400, "description": "What happens at this step: one or two sentences for the numbered list under the diagram and its desc. One text per number (the first badge of a repeated number)." }
       },
       "required": ["n"],
       "anyOf": [{ "required": ["at"] }, { "required": ["x", "y"] }],
@@ -142,7 +156,13 @@
         "t": { "$ref": "#/$defs/window" },
         "reverse": { "type": "boolean", "description": "Runs the wire backwards." },
         "kind": { "enum": ["pk", "pk-2", "pk-bad"], "description": "pk request (default), pk-2 response or replication, pk-bad failed traffic." },
-        "ring": { "$ref": "#/$defs/id", "description": "Node that pulses a ring at the end of t." },
+        "ring": {
+          "description": "Node (id) or point { x, y, r } that pulses a ring at the end of t (red for pk-bad).",
+          "anyOf": [
+            { "$ref": "#/$defs/id" },
+            { "type": "object", "properties": { "x": { "$ref": "#/$defs/num" }, "y": { "$ref": "#/$defs/num" }, "r": { "$ref": "#/$defs/size" } }, "required": ["x", "y"], "additionalProperties": false }
+          ]
+        },
         "r": { "$ref": "#/$defs/size", "description": "Packet radius (default 3.4)." }
       },
       "required": ["t"],
@@ -171,10 +191,52 @@
         "text": { "type": "string", "description": "\\n breaks lines." },
         "kind": { "enum": ["caption", "label", "warn"], "description": "caption muted (default), label ink, warn red." },
         "anchor": { "$ref": "#/$defs/anchor" },
-        "t": { "$ref": "#/$defs/window", "description": "Shows the note only during this window." }
+        "t": { "$ref": "#/$defs/window", "description": "Shows the note only during this window." },
+        "off": { "$ref": "#/$defs/window", "description": "Hides a standing note during this window (a timed note takes its place)." },
+        "still": { "type": "boolean", "description": "A timed note also shows in still frames." },
+        "tone": { "enum": ["request", "response", "bad", "muted", "ink"] },
+        "size": { "type": "number", "minimum": 6, "maximum": 24, "description": "Font size in px." },
+        "weight": { "enum": ["normal", "bold"] },
+        "caps": { "type": "boolean", "description": "Spaced capitals (a tier heading)." }
       },
       "required": ["x", "y", "text"],
       "additionalProperties": false
-    }
+    },
+    "mark": {
+      "type": "object",
+      "properties": {
+        "kind": { "enum": ["blocked", "ok"], "description": "Red X (default) or green check." },
+        "on": { "$ref": "#/$defs/id", "description": "A node (top-right of its icon) or a wire (at f)." },
+        "f": { "type": "number", "minimum": 0, "maximum": 1 },
+        "x": { "$ref": "#/$defs/num" },
+        "y": { "$ref": "#/$defs/num" },
+        "dx": { "$ref": "#/$defs/num" },
+        "dy": { "$ref": "#/$defs/num" },
+        "t": { "$ref": "#/$defs/window", "description": "Shows the mark only during this window." },
+        "still": { "type": "boolean", "description": "A timed mark also shows in still frames." }
+      },
+      "anyOf": [{ "required": ["on"] }, { "required": ["x", "y"] }],
+      "additionalProperties": false
+    },
+    "legend": {
+      "type": "object",
+      "description": "Key drawn inside the diagram from (x, y), one row per item; items default to the packet kinds the timeline uses.",
+      "properties": {
+        "x": { "$ref": "#/$defs/num" },
+        "y": { "$ref": "#/$defs/num" },
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": { "kind": { "enum": ["pk", "pk-2", "pk-bad", "wire", "dashed", "blocked"] }, "label": { "type": "string" } },
+            "required": ["kind"],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": ["x", "y"],
+      "additionalProperties": false
+    },
+    "category": { "enum": ["compute", "containers", "storage", "iot", "database", "devtools", "networking", "analytics", "security", "frontend", "integration", "management", "ai", "migration", "general"] }
   }
 }

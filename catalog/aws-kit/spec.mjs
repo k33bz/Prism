@@ -13,7 +13,7 @@ export const VERSION = 1;
 // cannot drift past what is checked
 const ANNOTATIONS = new Set(['$schema', '$id', '$defs', '$comment', 'title', 'description', 'default', 'examples']);
 const KEYWORDS = new Set(['$ref', 'type', 'enum', 'const', 'properties', 'required', 'additionalProperties', 'items',
-  'minItems', 'maxItems', 'minimum', 'maximum', 'exclusiveMinimum', 'exclusiveMaximum', 'pattern', 'anyOf']);
+  'minItems', 'maxItems', 'minimum', 'maximum', 'exclusiveMinimum', 'exclusiveMaximum', 'pattern', 'maxLength', 'anyOf']);
 
 const typeOf = (v) => (v === null ? 'null' : Array.isArray(v) ? 'array' : Number.isInteger(v) ? 'integer' : typeof v);
 const isType = (v, t) => (t === 'number' ? typeof v === 'number' && Number.isFinite(v) : typeOf(v) === t);
@@ -50,6 +50,7 @@ export function validateSchema(value, schema = SCHEMA, root = SCHEMA, at = '') {
   if ('const' in s && value !== s.const) err(`must be ${JSON.stringify(s.const)}`);
   if (s.enum && !s.enum.includes(value)) err(`must be one of ${s.enum.join(', ')}, got ${JSON.stringify(value)}`);
   if (typeof value === 'string' && s.pattern && !new RegExp(s.pattern, 'u').test(value)) err(`must match ${s.pattern}, got ${JSON.stringify(value)}`);
+  if (typeof value === 'string' && s.maxLength != null && value.length > s.maxLength) err(`is longer than ${s.maxLength} characters`);
   if (typeof value === 'number') {
     if (s.minimum != null && value < s.minimum) err(`must be >= ${s.minimum}`);
     if (s.maximum != null && value > s.maximum) err(`must be <= ${s.maximum}`);

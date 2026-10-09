@@ -6,7 +6,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath, pathToFileURL } from 'node:url';
-import { checkSpec, diagram, section, standalone, validate } from './awd.mjs';
+import { checkSpec, diagram, section, standalone, stepTexts, tile, validate } from './awd.mjs';
 import { SCHEMA, canonical, canonicalDiagram, toJson, validateDiagram, validateFamily } from './spec.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
@@ -201,4 +201,58 @@ test('CLI: export-json, build from JSON with --out, svg, and schema errors', () 
     assert.notEqual(r.status, 0);
     assert.match(r.stderr, /diagrams\[0\]\.nodes\[0\]\.lable: unknown property \(did you mean label\?\)/);
   } finally { fs.rmSync(tmp, { recursive: true, force: true }); }
+});
+
+// ---- Phase 2 vocabulary: step texts, legend, marks, note tones and swaps, rings on points, wire
+// tones, boxes, label positions, category frames ----
+test('step texts become the tile list and the svg desc, one per number', () => {
+  const d = { ...base(), name: 'P', desc: 'Lambda reads DynamoDB.', wires: [{ id: 'w', from: 'a', to: 'b' }],
+    steps: [{ n: 2, at: 'w', f: 0.7, text: 'DynamoDB answers.' }, { n: 1, at: 'w', f: 0.3, text: 'Lambda asks.' }, { n: 1, x: 10, y: 10, text: 'ignored: not the first badge 1' }] };
+  const t = tile(d);
+  assert.match(t, /<ol class="awd-steps"><li data-n="1">Lambda asks\.<\/li><li data-n="2">DynamoDB answers\.<\/li><\/ol>/);
+  assert.match(diagram(d), /<desc>Lambda reads DynamoDB\. Steps: 1\. Lambda asks\. 2\. DynamoDB answers\.<\/desc>/);
+  assert.deepEqual(stepTexts({ steps: [{ n: 1 }] }), []);
+  rejects({ steps: [{ n: 1, x: 1, y: 1, text: 'x'.repeat(401) }] }, /at most 400/);
+});
+
+test('legend, marks, rings on points and red rings', () => {
+  const d = { ...base(), dur: 8, wires: [{ id: 'w', from: 'a', to: 'b' }],
+    timeline: [{ wire: 'w', t: [0.1, 0.3] }, { wire: 'w', t: [0.4, 0.6], kind: 'pk-bad', ring: { x: 200, y: 60, r: 10 } }],
+    marks: [{ on: 'b', t: [0.4, 0.7], still: true }, { on: 'w', kind: 'ok' }], legend: { x: 10, y: 200 } };
+  const svg = diagram(d);
+  assert.match(svg, /<g class="awd-keys"><circle class="lg-pk" [^>]*\/><text class="t-wire" [^>]*>Request<\/text><circle class="lg-pk-bad" [^>]*\/><text [^>]*>Failed or blocked<\/text><\/g>/);
+  assert.match(svg, /<circle class="ring-bad" cx="200" cy="60" r="10"/);
+  assert.match(svg, /<g class="anim" opacity="0"><g class="awd-mark"><title>blocked<\/title>/);
+  assert.match(svg, /<g class="awd-static"><g class="awd-mark"><title>blocked<\/title>/);   // still copy
+  assert.match(svg, /<g class="awd-mark"><title>allowed<\/title><circle [^>]*fill="#3F8624"/);
+  rejects({ marks: [{ on: 'nope' }] }, /names no node or wire/);
+  rejects({ legend: { x: 1, y: 1, items: [{ kind: 'sparkle' }] } }, /must be one of/);
+});
+
+test('note tones, caps, swaps and still copies', () => {
+  const svg = diagram({ ...base(), notes: [
+    { x: 10, y: 10, text: 'web tier', caps: true, tone: 'muted', size: 9 },
+    { x: 10, y: 30, text: 'primary', off: [0.4, 0.6] }, { x: 10, y: 30, text: 'promoted', t: [0.4, 0.6], tone: 'bad', still: true },
+  ] });
+  assert.match(svg, /style="fill:var\(--awd-muted\);font-size:9px;letter-spacing:\.8px"><tspan x="10">WEB TIER<\/tspan>/);
+  assert.match(svg, /<g class="awd-static"><text class="t-wire" x="10" y="30"><tspan x="10">primary<\/tspan><\/text><\/g><g class="anim"><text [^>]*><tspan x="10">primary<\/tspan><\/text><animate [^>]*values="1;0;1"/);
+  assert.match(svg, /<g class="awd-static"><text class="t-wire" x="10" y="30" style="fill:#DD344C"><tspan x="10">promoted/);
+  rejects({ notes: [{ x: 1, y: 1, text: 'n', tone: 'neon' }] }, /must be one of/);
+});
+
+test('wire tones and multi-line haloed labels; boxes, pills and side labels; category frames', () => {
+  const svg = diagram({ ...base(), groups: [{ kind: 'gen', x: 0, y: 0, w: 300, h: 200, label: 'Data', tone: 'database', fill: true, dashed: false }, { kind: 'iot', x: 5, y: 5, w: 100, h: 60 }],
+    nodes: [...base().nodes, { id: 'idp', kind: 'box', x: 300, y: 100, w: 90, h: 34, label: 'Corporate IdP', tone: 'security' }, { id: 'ep', kind: 'pill', x: 300, y: 160, w: 110, h: 22, label: 'Cluster endpoint' }, { id: 'r', icon: 'aws-svc-lambda', x: 0, y: 140, label: 'Right side', labelPos: 'r' }],
+    wires: [{ id: 'w', from: 'a', to: 'b', tone: 'response', label: 'replies\nasync', labelBg: true }, { id: 'v', from: 'b', to: 'idp' }] });
+  assert.match(svg, /<marker id="x-probe-ah-response"[^>]*><path style="fill:none;stroke:var\(--awd-pk2\)"/);
+  assert.match(svg, /<path id="x-probe-w" class="w w-response"[^>]*marker-end="url\(#x-probe-ah-response\)"/);
+  assert.match(svg, /<text class="t-wire t-halo" [^>]*><tspan [^>]*>replies<\/tspan><tspan [^>]*dy="9\.5">async<\/tspan><\/text>/);
+  assert.match(svg, /<g class="awd-n" data-node="idp" data-shape="box"><title>Corporate IdP<\/title><rect class="awd-box" x="300" y="100" width="90" height="34" rx="4" style="stroke:#DD344C"\/>/);
+  assert.match(svg, /data-shape="pill"><title>Cluster endpoint<\/title><rect class="awd-box" [^>]*rx="11"\/>/);
+  assert.match(svg, /<text class="t-c" x="46" y="163.5" style="text-anchor:start"><tspan x="46">Right side<\/tspan><\/text>/);
+  assert.match(svg, /<rect class="g g-gen" x="0" y="0" width="300" height="200" style="stroke:#C925D1;fill:#C925D1;fill-opacity:\.08;stroke-dasharray:none"\/>/);
+  assert.match(svg, /<rect class="g g-iot" [^>]*\/><use href="#aws-grp-iot-greengrass-deployment"/);
+  rejects({ nodes: [{ id: 'q', kind: 'box', x: 0, y: 0, w: 10 }] }, /\.h/);
+  rejects({ nodes: [{ id: 'q', kind: 'box', x: 0, y: 0, w: 10, h: 10, icon: 'aws-svc-lambda' }] }, /no icon/);
+  rejects({ wires: [{ id: 'w', d: 'M0,0 H9', tone: 'neon' }] }, /must be one of/);
 });

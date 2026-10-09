@@ -48,12 +48,12 @@
         { "id": "o2b", "d": "M774,204 V108 H542" }
       ],
       "steps": [
-        { "n": 1, "at": "net", "f": 0.35 },
-        { "n": 2, "at": "in1a", "f": 0.4 },
-        { "n": 3, "at": "in2a", "f": 0.28, "dx": 11, "dy": 0 },
-        { "n": 4, "at": "o1a", "f": 0.3, "dx": 11, "dy": 0 },
-        { "n": 5, "at": "o2a", "f": 0.5, "dy": 11 },
-        { "n": 6, "at": "net", "f": 0.62 }
+        { "n": 1, "at": "net", "f": 0.35, "text": "Inbound requests from the internet enter the VPC through the internet gateway." },
+        { "n": 2, "at": "in1a", "f": 0.4, "text": "The internet gateway delivers them to the Application Load Balancer, which has a node in the public subnet of each Availability Zone." },
+        { "n": 3, "at": "in2a", "f": 0.28, "dx": 11, "dy": 0, "text": "The load balancer forwards each request to Amazon EC2 instances in the private subnets." },
+        { "n": 4, "at": "o1a", "f": 0.3, "dx": 11, "dy": 0, "text": "The instances send outbound traffic by the private route table's default route to the NAT gateway in their own Availability Zone." },
+        { "n": 5, "at": "o2a", "f": 0.5, "dy": 11, "text": "The NAT gateway translates the private source address and sends the traffic by the public route table's default route to the internet gateway." },
+        { "n": 6, "at": "net", "f": 0.62, "text": "The internet gateway sends the outbound traffic to the internet." }
       ],
       "timeline": [
         { "wire": "net", "t": [0.048, 0.145], "ring": "igw" },
@@ -102,9 +102,9 @@
         { "id": "bl2", "d": "M112,171 V184", "dashed": true, "hot": true, "arrow": false }
       ],
       "steps": [
-        { "n": 1, "at": "w1a", "f": 0.3, "dy": -12 },
-        { "n": 2, "at": "w1b", "f": 0.45, "dx": 11, "dy": 0 },
-        { "n": 3, "at": "bl1", "f": 0.5, "dx": -11, "dy": 0 }
+        { "n": 1, "at": "w1a", "f": 0.3, "dy": -12, "text": "An Amazon EC2 instance in VPC A sends traffic for 10.1.0.0/16, which its route table sends to peering connection pcx-1." },
+        { "n": 2, "at": "w1b", "f": 0.45, "dx": 11, "dy": 0, "text": "The traffic crosses pcx-1 privately to the instance in VPC B, whose route for 10.0.0.0/16 returns the response over the same connection." },
+        { "n": 3, "at": "bl1", "f": 0.5, "dx": -11, "dy": 0, "text": "VPC C peers only with VPC B, through pcx-2. VPC B does not forward traffic from VPC A to VPC C, because peering is not transitive." }
       ],
       "timeline": [
         { "wire": "w1a", "t": [0.042, 0.115] },
@@ -151,10 +151,10 @@
         { "id": "i3", "d": "M366,218 H396" }
       ],
       "steps": [
-        { "n": 1, "at": "e1", "f": 0.5 },
-        { "n": 2, "at": "e3", "f": 0.72 },
-        { "n": 3, "at": "i1", "f": 0.5, "dx": 11, "dy": 0 },
-        { "n": 4, "at": "i3", "f": 0.5 }
+        { "n": 1, "at": "e1", "f": 0.5, "text": "Traffic from the Amazon EC2 instance to Amazon S3 or DynamoDB matches the service prefix lists in the subnet route table." },
+        { "n": 2, "at": "e3", "f": 0.72, "text": "The route table sends it to the gateway endpoints, which deliver it to Amazon S3 and Amazon DynamoDB without an internet gateway or NAT gateway." },
+        { "n": 3, "at": "i1", "f": 0.5, "dx": 11, "dy": 0, "text": "For other services, the instance sends traffic to an interface endpoint, a network interface with a private IP address in the subnet." },
+        { "n": 4, "at": "i3", "f": 0.5, "text": "AWS PrivateLink carries the traffic from the interface endpoint to Amazon SQS over the AWS network." }
       ],
       "timeline": [
         { "wire": "e1", "t": [0.053, 0.12] },
@@ -209,11 +209,11 @@
         { "id": "rt", "d": "M450,266 V286", "dashed": true, "arrow": false }
       ],
       "steps": [
-        { "n": 1, "at": "w1", "f": 0.37, "dy": 11 },
-        { "n": 2, "at": "w2", "f": 0.5 },
-        { "n": 3, "at": "tB", "f": 0.55 },
-        { "n": 4, "at": "tA", "f": 0.3, "dx": -11, "dy": 0 },
-        { "n": 5, "at": "tC", "f": 0.3, "dx": -11, "dy": 0 }
+        { "n": 1, "at": "w1", "f": 0.37, "dy": 11, "text": "On-premises servers send traffic from the customer gateway over IPsec tunnels to AWS Site-to-Site VPN." },
+        { "n": 2, "at": "w2", "f": 0.5, "text": "The VPN connection is attached to AWS Transit Gateway, which routes the traffic with its route table of propagated routes." },
+        { "n": 3, "at": "tB", "f": 0.55, "text": "The transit gateway sends the traffic through the Development VPC attachment, which has a subnet in each AZ, to the EC2 instances." },
+        { "n": 4, "at": "tA", "f": 0.3, "dx": -11, "dy": 0, "text": "An instance in the Production VPC sends traffic through its attachment to the transit gateway." },
+        { "n": 5, "at": "tC", "f": 0.3, "dx": -11, "dy": 0, "text": "The transit gateway routes it to the Shared services VPC, which runs AWS Managed Microsoft AD, with no peering between the VPCs." }
       ],
       "timeline": [
         { "wire": "w0", "t": [0.037, 0.087] },
@@ -284,11 +284,11 @@
         { "id": "rt", "d": "M262,279 V306", "dashed": true, "arrow": false }
       ],
       "steps": [
-        { "n": 1, "at": "sa", "f": 0.5, "dx": 11, "dy": 0 },
-        { "n": 2, "at": "fa", "f": 0.5 },
-        { "n": 3, "at": "sb", "f": 0.5, "dx": -11, "dy": 0 },
-        { "n": 4, "at": "fb", "f": 0.5 },
-        { "n": 5, "at": "gb", "f": 0.5, "dx": 11, "dy": 0 }
+        { "n": 1, "at": "sa", "f": 0.5, "dx": 11, "dy": 0, "text": "Spoke VPC A sends traffic by its default route through its attachment to AWS Transit Gateway." },
+        { "n": 2, "at": "fa", "f": 0.5, "text": "The transit gateway sends the traffic to the inspection VPC. Appliance mode keeps each flow in one AZ, where the AWS Network Firewall endpoint inspects it." },
+        { "n": 3, "at": "sb", "f": 0.5, "dx": -11, "dy": 0, "text": "The firewall returns allowed east-west traffic to the transit gateway, which delivers it to Spoke VPC B." },
+        { "n": 4, "at": "fb", "f": 0.5, "text": "Internet-bound traffic from Spoke VPC B also goes to the inspection VPC, here to the firewall endpoint in Availability Zone B." },
+        { "n": 5, "at": "gb", "f": 0.5, "dx": 11, "dy": 0, "text": "Inspected traffic leaves through the NAT gateway in the public subnet and the internet gateway to the internet." }
       ],
       "timeline": [
         { "wire": "sa", "t": [0.038, 0.096] },
@@ -361,11 +361,11 @@
         { "id": "rt", "d": "M282,268 V302", "dashed": true, "arrow": false }
       ],
       "steps": [
-        { "n": 1, "at": "s1", "f": 0.5, "dx": 11, "dy": 0 },
-        { "n": 2, "at": "ta", "f": 0.5, "dx": 11, "dy": 0 },
-        { "n": 3, "at": "na", "f": 0.2 },
-        { "n": 4, "at": "ga", "f": 0.75 },
-        { "n": 5, "at": "gn", "f": 0.8 }
+        { "n": 1, "at": "s1", "f": 0.5, "dx": 11, "dy": 0, "text": "Instances in the spoke VPCs send internet-bound traffic by the default route through their attachments to AWS Transit Gateway." },
+        { "n": 2, "at": "ta", "f": 0.5, "dx": 11, "dy": 0, "text": "The transit gateway route table sends 0.0.0.0/0 to the egress VPC attachment, which has a TGW subnet in each Availability Zone." },
+        { "n": 3, "at": "na", "f": 0.2, "text": "The TGW subnet route table sends the traffic to the NAT gateway in the same Availability Zone." },
+        { "n": 4, "at": "ga", "f": 0.75, "text": "The NAT gateway translates the source address and sends the traffic to the internet gateway. Its subnet routes 10.0.0.0/8 back to the transit gateway." },
+        { "n": 5, "at": "gn", "f": 0.8, "text": "The internet gateway sends the traffic to the internet. Responses return through the same NAT gateway and the transit gateway to the spoke." }
       ],
       "timeline": [
         { "wire": "s1", "t": [0.034, 0.092] },
@@ -427,9 +427,9 @@
         { "id": "t2", "d": "M802,181 H852", "both": true }
       ],
       "steps": [
-        { "n": 1, "at": "d1", "f": 0.6, "dx": 11, "dy": 0 },
-        { "n": 2, "at": "d3", "f": 0.5, "dx": 11, "dy": 0 },
-        { "n": 3, "at": "v3", "f": 0.5, "dx": 11, "dy": 0 }
+        { "n": 1, "at": "d1", "f": 0.6, "dx": 11, "dy": 0, "text": "On-premises servers send traffic from the customer gateway over AWS Direct Connect, the primary path." },
+        { "n": 2, "at": "d3", "f": 0.5, "dx": 11, "dy": 0, "text": "A transit VIF carries it to the Direct Connect gateway, which forwards it to AWS Transit Gateway and the Amazon EC2 instances in the VPC." },
+        { "n": 3, "at": "v3", "f": 0.5, "dx": 11, "dy": 0, "text": "When the Direct Connect location fails, BGP withdraws its routes and the traffic fails over to AWS Site-to-Site VPN on the same transit gateway." }
       ],
       "timeline": [
         { "wire": "w0", "t": [0.03, 0.05] },
@@ -497,9 +497,9 @@
         { "id": "ab", "d": "M194,198 H286", "both": true }
       ],
       "steps": [
-        { "n": 1, "at": "sa", "f": 0.4, "dy": 11 },
-        { "n": 2, "at": "la", "f": 0.84, "dy": -11 },
-        { "n": 3, "at": "ab", "f": 0.23, "dy": 11 }
+        { "n": 1, "at": "sa", "f": 0.4, "dy": 11, "text": "The network account shares two subnets of its VPC with workload accounts A and B through AWS Resource Access Manager." },
+        { "n": 2, "at": "la", "f": 0.84, "dy": -11, "text": "Each workload account launches its own Amazon EC2 instances into a shared subnet, while the network account keeps ownership of the VPC." },
+        { "n": 3, "at": "ab", "f": 0.23, "dy": 11, "text": "Instances from both accounts communicate over the VPC local route for 10.0.0.0/16, with no peering needed." }
       ],
       "timeline": [
         { "wire": "sa", "t": [0.053, 0.213], "kind": "pk-2", "ring": "wa" },
@@ -540,9 +540,9 @@
         { "id": "ad", "d": "M350,198 H378" }
       ],
       "steps": [
-        { "n": 1, "at": "tls", "f": 0.7 },
-        { "n": 2, "at": "auth", "f": 0.5, "dx": 11, "dy": 0 },
-        { "n": 3, "at": "as", "f": 0.74, "dy": -12 }
+        { "n": 1, "at": "tls", "f": 0.7, "text": "A remote client opens a TLS connection to the AWS Client VPN endpoint." },
+        { "n": 2, "at": "auth", "f": 0.5, "dx": 11, "dy": 0, "text": "The Client VPN endpoint authenticates the user through SAML federation with AWS IAM Identity Center." },
+        { "n": 3, "at": "as", "f": 0.74, "dy": -12, "text": "The endpoint forwards authorized traffic through its network interface in the associated subnet to the private Amazon EC2 instance and the Amazon RDS database." }
       ],
       "timeline": [
         { "wire": "tls", "t": [0.058, 0.203], "ring": "ep" },
@@ -586,9 +586,9 @@
         { "id": "d2", "d": "M342,144 H366 V172 H388", "both": true }
       ],
       "steps": [
-        { "n": 1, "at": "a", "f": 0.5 },
-        { "n": 2, "x": 220, "y": 104 },
-        { "n": 3, "at": "d1", "f": 0.55, "dx": -11, "dy": 0 }
+        { "n": 1, "at": "a", "f": 0.5, "text": "An Amazon EC2 instance in the consumer VPC sends a request to the interface endpoint in its subnet." },
+        { "n": 2, "x": 220, "y": 104, "text": "AWS PrivateLink carries the request over the AWS network to the provider's endpoint service in another account." },
+        { "n": 3, "at": "d1", "f": 0.55, "dx": -11, "dy": 0, "text": "The Network Load Balancer forwards the request to its EC2 targets, and the response returns the same way, with no peering, internet gateway or NAT." }
       ],
       "timeline": [
         { "wire": "a", "t": [0.047, 0.116] },

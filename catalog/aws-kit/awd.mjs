@@ -44,7 +44,26 @@ const GROUP = {
   ec2:    { cls: 'g-ec2',    icon: 'aws-grp-ec2-instance-contents', label: 'EC2 instance contents' },
   spot:   { cls: 'g-ec2',    icon: 'aws-grp-spot-fleet', label: 'Spot Fleet' },
   gen:    { cls: 'g-gen',    icon: null, label: '', center: true },
+  // the AWS Cloud frame with the plain cloud icon instead of the logo, and the IoT Greengrass group
+  'cloud-plain': { cls: 'g-cloud', icon: ['aws-grp-cloud-dark', 'aws-grp-cloud'], label: 'AWS Cloud' },
+  iot:    { cls: 'g-iot',    icon: 'aws-grp-iot-greengrass-deployment', label: 'AWS IoT Greengrass deployment' },
 };
+
+// AWS category colors (AWS Architecture Icons deck; draw.io's AWS 2025 palette agrees): a custom group
+// or a box takes one with tone
+const CATEGORY = {
+  compute: '#ED7100', containers: '#ED7100', storage: '#7AA116', iot: '#7AA116', database: '#C925D1', devtools: '#C925D1',
+  networking: '#8C4FFF', analytics: '#8C4FFF', security: '#DD344C', frontend: '#DD344C', integration: '#E7157B',
+  management: '#E7157B', ai: '#01A88D', migration: '#01A88D', general: '#7D8998',
+};
+// text and wire tones: the packet colors, the failure red, muted and ink
+const TONES = { request: 'var(--awd-pk)', response: 'var(--awd-pk2)', bad: '#DD344C', muted: 'var(--awd-muted)', ink: 'var(--awd-ink)' };
+const WIRE_TONES = new Set(['request', 'response', 'bad', 'muted']);
+const MARKS = new Set(['blocked', 'ok']);
+const SHAPES = new Set(['box', 'pill']);
+const LABEL_POS = new Set(['b', 'r', 'l', 't']);
+// legend rows: the swatch kinds and their default wording
+const LEGEND = { pk: 'Request', 'pk-2': 'Response', 'pk-bad': 'Failed or blocked', wire: 'Call or data path', dashed: 'Asynchronous or optional', blocked: 'Blocked' };
 
 // ---- input checks. Specs may come from importers (draw.io, Mermaid, IaC), so everything that
 // lands in markup is checked here: ids are plain tokens, numbers are finite, wire paths use only
@@ -72,6 +91,9 @@ function okWindow(t, where) {
   const [a, b] = t; okNum(a, where + '.t[0]'); okNum(b, where + '.t[1]');
   if (!(a > 0 && b < 1 && b > a)) fail(where, `window must satisfy 0 < a < b < 1: ${JSON.stringify(t)}`);
 }
+function okBool(o, keys, where) { for (const k of keys) if (o[k] != null && typeof o[k] !== 'boolean') fail(`${where}.${k}`, 'expected true or false'); }
+function okText(v, where, max = 400) { if (typeof v !== 'string' || v.length > max) fail(where, `expected text of at most ${max} characters`); }
+function okEnum(v, set, where) { if (v != null && !(set instanceof Set ? set.has(v) : Object.hasOwn(set, v))) fail(where, `must be one of ${[...(set instanceof Set ? set : Object.keys(set))].join(', ')}, got ${JSON.stringify(v)}`); }
 function okExtra(x, where) {
   if (typeof x !== 'string') fail(where, 'extra must be a string of SVG markup');
   for (const [re, why] of EXTRA_BAD) { const m = x.match(re); if (m) fail(where, `${why}: ${JSON.stringify(x.slice(Math.max(0, m.index - 20), m.index + 40))}`); }
@@ -89,12 +111,18 @@ export function checkSpec(spec) {
     for (const k of ['x', 'y', 'w', 'h']) okNum(g[k], `${w}.${k}`);
     if (g.id != null) { okId(g.id, w); groupIds.add(g.id); }
     if (g.align != null && g.align !== 'left' && g.align !== 'center') fail(w, 'align must be left or center');
+    okEnum(g.tone, CATEGORY, `${w}.tone`); okBool(g, ['fill', 'dashed'], w);
   }
   for (const n of spec.nodes || []) {
     const w = `${at} node ${n.id}`;
     okId(n.id, `${at} node`); if (nodeIds.has(n.id)) fail(w, 'duplicate node id'); nodeIds.add(n.id);
     okNum(n.x, w + '.x'); okNum(n.y, w + '.y'); okOptNum(n, ['size', 'wrap'], w);
-    if (Array.isArray(n.icon)) { for (const ic of n.icon) if (!Object.hasOwn(ICONS, ic)) fail(w, `unknown icon ${JSON.stringify(ic)}`); } else iconUses(n.icon, w);
+    okEnum(n.labelPos, LABEL_POS, `${w}.labelPos`);
+    if (n.kind != null) {
+      // a box or pill: a plain shape for what has no AWS icon (an identity provider, a SaaS, an endpoint name)
+      okEnum(n.kind, SHAPES, `${w}.kind`); okNum(n.w, w + '.w'); okNum(n.h, w + '.h'); okEnum(n.tone, CATEGORY, `${w}.tone`);
+      if (n.icon != null) fail(w, 'a box or pill has no icon');
+    } else if (Array.isArray(n.icon)) { for (const ic of n.icon) if (!Object.hasOwn(ICONS, ic)) fail(w, `unknown icon ${JSON.stringify(ic)}`); } else iconUses(n.icon, w);
   }
   for (const wr of spec.wires || []) {
     const w = `${at} wire ${wr.id}`;
@@ -103,17 +131,21 @@ export function checkSpec(spec) {
     else for (const end of ['from', 'to']) if (!nodeIds.has(wr[end])) fail(w, `${end} names unknown node ${JSON.stringify(wr[end])}`);
     okOptNum(wr, ['via', 'labelAt', 'labelDx', 'labelDy'], w);
     if (wr.labelAnchor != null && !ANCHORS.has(wr.labelAnchor)) fail(w, 'labelAnchor must be start, middle or end');
+    okEnum(wr.tone, WIRE_TONES, `${w}.tone`); okBool(wr, ['labelBg'], w);
   }
   for (const [i, s] of (spec.steps || []).entries()) {
     const w = `${at} step[${i}]`;
     if (s.at != null) { if (!wireIds.has(s.at)) fail(w, `at names unknown wire ${JSON.stringify(s.at)}`); okOptNum(s, ['f', 'dx', 'dy'], w); }
     else { okNum(s.x, w + '.x'); okNum(s.y, w + '.y'); }
+    if (s.text != null) okText(s.text, `${w}.text`);
   }
   for (const [i, e] of (spec.timeline || []).entries()) {
     const w = `${at} timeline[${i}]`;
     okWindow(e.t, w); okOptNum(e, ['r'], w);
     if (e.wire != null && !wireIds.has(e.wire)) fail(w, `unknown wire ${JSON.stringify(e.wire)}`);
-    if (e.ring != null && !nodeIds.has(e.ring)) fail(w, `unknown ring node ${JSON.stringify(e.ring)}`);
+    // a ring pulses on a node, or on a point { x, y, r? } (a storage copy, a route table row)
+    if (e.ring != null && typeof e.ring === 'object') { okNum(e.ring.x, w + '.ring.x'); okNum(e.ring.y, w + '.ring.y'); okOptNum(e.ring, ['r'], w + '.ring'); }
+    else if (e.ring != null && !nodeIds.has(e.ring)) fail(w, `unknown ring node ${JSON.stringify(e.ring)}`);
     if (e.wire == null && e.ring == null) fail(w, 'needs a wire, a ring, or both');
     if (e.kind != null && !PACKETS.has(e.kind)) fail(w, `kind must be one of ${[...PACKETS].join(', ')}`);
   }
@@ -131,6 +163,21 @@ export function checkSpec(spec) {
     if (nt.kind != null && !NOTE_KINDS.has(nt.kind)) fail(w, `kind must be one of ${[...NOTE_KINDS].join(', ')}`);
     if (nt.anchor != null && !ANCHORS.has(nt.anchor)) fail(w, 'anchor must be start, middle or end');
     if (nt.t != null) okWindow(nt.t, w);
+    if (nt.off != null) okWindow(nt.off, w + '.off');
+    okEnum(nt.tone, TONES, `${w}.tone`); okEnum(nt.weight, new Set(['normal', 'bold']), `${w}.weight`); okBool(nt, ['caps', 'still'], w);
+    if (nt.size != null) { okNum(nt.size, w + '.size'); if (nt.size < 6 || nt.size > 24) fail(w + '.size', 'must be 6 to 24'); }
+  }
+  for (const [i, m] of (spec.marks || []).entries()) {
+    const w = `${at} mark[${i}]`;
+    okEnum(m.kind || 'blocked', MARKS, `${w}.kind`); okOptNum(m, ['f', 'dx', 'dy'], w); okBool(m, ['still'], w);
+    if (m.on != null) { if (!nodeIds.has(m.on) && !wireIds.has(m.on)) fail(w, `on names no node or wire: ${JSON.stringify(m.on)}`); }
+    else { okNum(m.x, w + '.x'); okNum(m.y, w + '.y'); }
+    if (m.t != null) okWindow(m.t, w);
+  }
+  if (spec.legend != null) {
+    const L = spec.legend, w = `${at} legend`;
+    okNum(L.x, w + '.x'); okNum(L.y, w + '.y');
+    for (const [i, it] of (L.items || []).entries()) { okEnum(it.kind, LEGEND, `${w}.items[${i}].kind`); if (it.label != null) okText(it.label, `${w}.items[${i}].label`, 60); }
   }
   if (spec.extra != null) okExtra(spec.extra, `${at} extra`);
 }
@@ -146,7 +193,12 @@ function iconUses(icon, where = 'icon') {
 const use = (icon, x, y, s) => iconUses(icon).map((u) =>
   `<use${u.cls ? ` class="${u.cls}"` : ''} href="#${u.id}" x="${r2(x)}" y="${r2(y)}" width="${s}" height="${s}"/>`).join('');
 
-function nodeBox(n) { const s = n.size || 40; return { x: n.x, y: n.y, s, cx: n.x + s / 2, cy: n.y + s / 2, r: n.x + s, b: n.y + s }; }
+function nodeBox(n) {
+  if (n.kind) return { x: n.x, y: n.y, s: Math.min(n.w, n.h), cx: n.x + n.w / 2, cy: n.y + n.h / 2, r: n.x + n.w, b: n.y + n.h };
+  const s = n.size || 40; return { x: n.x, y: n.y, s, cx: n.x + s / 2, cy: n.y + s / 2, r: n.x + s, b: n.y + s };
+}
+// the label sits under the icon (the default), not beside or above it, and not inside a box
+const labelBelow = (n) => !n.kind && (n.labelPos || 'b') === 'b';
 
 // auto-route a wire between two node boxes: straight if aligned, else one elbow
 function route(a, b, gap = 4, via) {
@@ -160,7 +212,7 @@ function route(a, b, gap = 4, via) {
   }
   const y1 = dy > 0 ? A.b + 2 : A.y - 2, y2 = dy > 0 ? B.y - gap - 14 * 0 : B.b + gap;
   // vertical wires land on the icon top/bottom; leave room for the label under the source icon
-  const y1l = dy > 0 ? A.b + 2 + (a.label ? 13 * wrap(a.label, a.wrap).length : 0) : y1;
+  const y1l = dy > 0 ? A.b + 2 + (a.label && labelBelow(a) ? 13 * wrap(a.label, a.wrap).length : 0) : y1;
   if (Math.abs(dx) < 1) return `M${r2(A.cx)},${r2(y1l)} V${r2(y2)}`;
   const my = via != null ? via : r2((y1l + y2) / 2);
   return `M${r2(A.cx)},${r2(y1l)} V${r2(my)} H${r2(B.cx)} V${r2(y2)}`;
@@ -224,7 +276,9 @@ export function diagram(spec) {
   // (.awd .w) would outrank presentation attributes.
   const fx = spec.effects || [];
   const head = (mid, paint, size, sw, user) => `<marker id="${id}-${mid}" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="${size}" markerHeight="${size}"${user ? ' markerUnits="userSpaceOnUse"' : ''} orient="auto-start-reverse"><path ${paint} d="M1.5,1.5 L9,5 L1.5,8.5" stroke-width="${sw}" stroke-linecap="round" stroke-linejoin="round"/></marker>`;
-  parts.push(`<defs>${head('ah', 'class="ah"', 7, 1.4)}${(spec.wires || []).some((w) => w.hot) ? head('ahh', 'style="fill:none;stroke:#DD344C"', 7, 1.4) : ''}${fx.some((e) => e.glow) ? head('ahg', 'style="fill:none;stroke:var(--awd-pk)"', 9.1, 2.4, true) : ''}</defs>`);
+  // a toned wire gets a head in its own color
+  const tones = [...new Set((spec.wires || []).map((w) => w.tone).filter(Boolean))];
+  parts.push(`<defs>${head('ah', 'class="ah"', 7, 1.4)}${(spec.wires || []).some((w) => w.hot) ? head('ahh', 'style="fill:none;stroke:#DD344C"', 7, 1.4) : ''}${fx.some((e) => e.glow) ? head('ahg', 'style="fill:none;stroke:var(--awd-pk)"', 9.1, 2.4, true) : ''}${tones.map((t) => head('ah-' + t, `style="fill:none;stroke:${TONES[t]}"`, 7, 1.4)).join('')}</defs>`);
   // fade dims the wire itself (head included) during its window
   const fading = new Map(fx.filter((e) => e.fade).map((e) => [e.fade, e.t]));
 
@@ -249,7 +303,10 @@ export function diagram(spec) {
   for (const g of spec.groups || []) {
     const G = GROUP[g.kind];
     const label = groupLabel(g);
-    parts.push(`<rect class="g ${G.cls}"${g.id ? ` id="${id}-${g.id}"` : ''} x="${r2(g.x)}" y="${r2(g.y)}" width="${r2(g.w)}" height="${r2(g.h)}"/>`);
+    // tone: a category-colored custom group; fill: a light tint of that color; dashed overrides the kind
+    const gs = [g.tone ? `stroke:${CATEGORY[g.tone]}` : '', g.fill ? `fill:${CATEGORY[g.tone || 'general']};fill-opacity:.08` : '',
+      g.dashed === false ? 'stroke-dasharray:none' : g.dashed === true ? 'stroke-dasharray:5 3' : ''].filter(Boolean).join(';');
+    parts.push(`<rect class="g ${G.cls}"${g.id ? ` id="${id}-${g.id}"` : ''} x="${r2(g.x)}" y="${r2(g.y)}" width="${r2(g.w)}" height="${r2(g.h)}"${gs ? ` style="${gs}"` : ''}/>`);
     let tx = g.x + 6;
     // corner icon: the kind's official group icon, a service icon id (e.g. a gen frame for an ECS
     // service), or none with icon:false
@@ -266,8 +323,8 @@ export function diagram(spec) {
   for (const w of spec.wires || []) {
     const d = paths[w.id];
     wires[w.id] = d; wireDefs[w.id] = w;
-    const cls = ['w', w.dashed ? 'w-d' : '', w.flow ? 'w-flow' : '', w.hot ? 'w-hot' : ''].filter(Boolean).join(' ');
-    const ah = w.hot ? 'ahh' : 'ah';   // a red (hot) wire gets a red head
+    const cls = ['w', w.dashed ? 'w-d' : '', w.flow ? 'w-flow' : '', w.hot ? 'w-hot' : '', w.tone ? 'w-' + w.tone : ''].filter(Boolean).join(' ');
+    const ah = w.hot ? 'ahh' : w.tone ? 'ah-' + w.tone : 'ah';   // a red (hot) or toned wire gets a head in its color
     const mk = w.arrow === false ? '' : `${w.both ? ` marker-start="url(#${id}-${ah})"` : ''} marker-end="url(#${id}-${ah})"`;
     // semantic ends: the nodes a wire joins, when the spec names them
     const ends = (w.from != null && nodes[w.from] ? ` data-from="${esc(w.from)}"` : '') + (w.to != null && nodes[w.to] ? ` data-to="${esc(w.to)}"` : '');
@@ -282,7 +339,11 @@ export function diagram(spec) {
       // puts it beside a vertical run
       const [x, y] = pointAt(d, w.labelAt != null ? w.labelAt : 0.5);
       const lx = x + (w.labelDx || 0), ly = y + (w.labelDy != null ? w.labelDy : -5);
-      parts.push(`<text class="t-wire" x="${r2(lx)}" y="${r2(ly)}"${w.labelAnchor ? ` style="text-anchor:${w.labelAnchor}"` : ''}>${esc(w.label)}</text>`);
+      // "\n" breaks the label (lines run downward from the label point); labelBg draws a halo in the
+      // tile's color behind the text, so a label may sit across a line
+      const lines = String(w.label).split('\n');
+      const body = lines.length > 1 ? lines.map((l, i) => `<tspan x="${r2(lx)}"${i ? ' dy="9.5"' : ''}>${esc(l)}</tspan>`).join('') : esc(w.label);
+      parts.push(`<text class="t-wire${w.labelBg ? ' t-halo' : ''}" x="${r2(lx)}" y="${r2(ly)}"${w.labelAnchor ? ` style="text-anchor:${w.labelAnchor}"` : ''}>${body}</text>`);
     }
   }
 
@@ -291,16 +352,40 @@ export function diagram(spec) {
   // the still diagram stays complete).
   const appearing = new Set((spec.effects || []).filter((e) => e.appear).map((e) => e.appear));
   const nodeMarkup = (n) => {
-    const B = nodeBox(n), out = [use(n.icon, n.x, n.y, B.s)];
-    if (n.label) {
-      const lines = wrap(n.label, n.wrap);
-      out.push(`<text class="t-c" x="${r2(B.cx)}" y="${B.b + 12}">${lines.map((l, i) => `<tspan x="${r2(B.cx)}"${i ? ' dy="11"' : ''}>${esc(l)}</tspan>`).join('')}</text>`);
+    const B = nodeBox(n), out = [];
+    // a box wraps its label to its width; an icon wraps at 14 characters unless wrap says otherwise
+    const lines = n.label ? wrap(n.label, n.wrap || (n.kind ? Math.max(8, Math.floor((n.w - 12) / 5.6)) : undefined)) : [];
+    const tsp = (x) => lines.map((l, i) => `<tspan x="${r2(x)}"${i ? ' dy="11"' : ''}>${esc(l)}</tspan>`).join('');
+    // a block of label lines (11 apart) and an optional sub line, centered on y
+    const block = (x, cy, anchor) => {
+      const st = anchor ? ` style="text-anchor:${anchor}"` : '';
+      const h = 11 * Math.max(0, lines.length - 1) + (n.sub && lines.length ? 10 : 0), y0 = cy + 3.5 - h / 2;
+      if (lines.length) out.push(`<text class="t-c" x="${r2(x)}" y="${r2(y0)}"${st}>${tsp(x)}</text>`);
+      if (n.sub) out.push(`<text class="t-c t-sub" x="${r2(x)}" y="${r2(lines.length ? y0 + h : cy + 3)}"${st}>${esc(n.sub)}</text>`);
+    };
+    const pos = n.labelPos || 'b';
+    if (n.kind) {
+      // a box or pill: a plain shape (panel fill, optional category stroke) with its label inside
+      out.push(`<rect class="awd-box" x="${r2(n.x)}" y="${r2(n.y)}" width="${r2(n.w)}" height="${r2(n.h)}" rx="${r2(n.kind === 'pill' ? n.h / 2 : 4)}"${n.tone ? ` style="stroke:${CATEGORY[n.tone]}"` : ''}/>`);
+      block(B.cx, B.cy);
+    } else {
+      out.push(use(n.icon, n.x, n.y, B.s));
+      if (pos === 'b') {
+        if (lines.length) out.push(`<text class="t-c" x="${r2(B.cx)}" y="${B.b + 12}">${tsp(B.cx)}</text>`);
+        if (n.sub) out.push(`<text class="t-c t-sub" x="${r2(B.cx)}" y="${B.b + 12 + 11 * lines.length}">${esc(n.sub)}</text>`);
+      } else if (pos === 'r' || pos === 'l') block(pos === 'r' ? B.r + 6 : B.x - 6, B.cy, pos === 'r' ? 'start' : 'end');
+      else {
+        // above the icon: the sub line closest to it
+        const last = B.y - (n.sub ? 15 : 5), first = last - 11 * Math.max(0, lines.length - 1);
+        if (lines.length) out.push(`<text class="t-c" x="${r2(B.cx)}" y="${r2(first)}">${tsp(B.cx)}</text>`);
+        if (n.sub) out.push(`<text class="t-c t-sub" x="${r2(B.cx)}" y="${r2(B.y - 5)}">${esc(n.sub)}</text>`);
+      }
     }
-    if (n.sub) out.push(`<text class="t-c t-sub" x="${r2(B.cx)}" y="${B.b + 12 + 11 * wrap(n.label || '', n.wrap).length}">${esc(n.sub)}</text>`);
     // semantic wrapper (no id: an appearing node is drawn more than once): tools find a node by
     // data-node, and the title names it on hover
-    const title = n.label || ICONS[iconUses(n.icon)[0].id].name;
-    return `<g class="awd-n" data-node="${esc(n.id)}" data-icon="${esc([].concat(n.icon).join(' '))}"><title>${esc(title)}</title>${out.join('')}</g>`;
+    const title = n.label || (n.kind ? n.id : ICONS[iconUses(n.icon)[0].id].name);
+    const what = n.kind ? `data-shape="${n.kind}"` : `data-icon="${esc([].concat(n.icon).join(' '))}"`;
+    return `<g class="awd-n" data-node="${esc(n.id)}" ${what}><title>${esc(title)}</title>${out.join('')}</g>`;
   };
   // appear + ghost: a dim copy marks the empty slot (wires still attached) outside the window
   const ghosts = new Set(fx.filter((e) => e.appear && e.ghost).map((e) => e.appear));
@@ -327,9 +412,11 @@ export function diagram(spec) {
       parts.push(`<circle class="${e.kind || 'pk'}" r="${e.r || 3.4}" opacity="0"><animateMotion dur="${D}" repeatCount="indefinite" calcMode="linear" keyPoints="${kp}" keyTimes="0;${pct(a)};${pct(b)};1"><mpath href="#${id}-${e.wire}"/></animateMotion><animate attributeName="opacity" dur="${D}" repeatCount="indefinite" calcMode="discrete" values="0;1;0" keyTimes="0;${pct(a)};${pct(b)}"/></circle>`);
     }
     if (e.ring) {
-      const n = nodes[e.ring]; if (!n) throw new Error('timeline: unknown ring node ' + e.ring);
-      const B = nodeBox(n), r0 = B.s * 0.55, t = b, t2 = Math.min(0.995, t + 0.12);
-      parts.push(`<circle class="${e.kind === 'pk-2' ? 'ring-2' : 'ring'}" cx="${r2(B.cx)}" cy="${r2(B.cy)}" r="${r2(r0)}" opacity="0"><animate attributeName="opacity" dur="${D}" repeatCount="indefinite" values="0;0;.9;0;0" keyTimes="0;${pct(t - 0.001)};${pct(t)};${pct(t2)};1"/><animate attributeName="r" dur="${D}" repeatCount="indefinite" values="${r2(r0)};${r2(r0)};${r2(r0)};${r2(r0 * 1.45)};${r2(r0 * 1.45)}" keyTimes="0;${pct(t - 0.001)};${pct(t)};${pct(t2)};1"/></circle>`);
+      // on a node, or on a point { x, y, r }; a failed packet's ring is red
+      const pt = typeof e.ring === 'object' ? e.ring : null;
+      const n = pt ? null : nodes[e.ring]; if (!pt && !n) throw new Error('timeline: unknown ring node ' + e.ring);
+      const B = pt ? { cx: pt.x, cy: pt.y, s: (pt.r || 12) / 0.55 } : nodeBox(n), r0 = B.s * 0.55, t = b, t2 = Math.min(0.995, t + 0.12);
+      parts.push(`<circle class="${e.kind === 'pk-2' ? 'ring-2' : e.kind === 'pk-bad' ? 'ring-bad' : 'ring'}" cx="${r2(B.cx)}" cy="${r2(B.cy)}" r="${r2(r0)}" opacity="0"><animate attributeName="opacity" dur="${D}" repeatCount="indefinite" values="0;0;.9;0;0" keyTimes="0;${pct(t - 0.001)};${pct(t)};${pct(t2)};1"/><animate attributeName="r" dur="${D}" repeatCount="indefinite" values="${r2(r0)};${r2(r0)};${r2(r0)};${r2(r0 * 1.45)};${r2(r0 * 1.45)}" keyTimes="0;${pct(t - 0.001)};${pct(t)};${pct(t2)};1"/></circle>`);
     }
   }
   // appear: nodes hidden outside [a,b] (scale-out / scale-in); fail: group turns red + X; fade/glow: wire emphasis
@@ -354,32 +441,84 @@ export function diagram(spec) {
     }
   }
 
+  // marks: a blocked X or an ok check on a node (its icon's top-right corner), on a wire (at f), or
+  // at a point; t:[a,b] shows it only then, and still:true keeps it in still frames as well
+  const stillCopy = (body) => `<g class="awd-static">${body}</g>`;
+  for (const m of spec.marks || []) {
+    let x, y;
+    if (m.on != null && nodes[m.on]) { const B = nodeBox(nodes[m.on]); x = B.r - 2; y = B.y + 2; }
+    else if (m.on != null) [x, y] = pointAt(wires[m.on], m.f != null ? m.f : 0.5);
+    else { x = m.x; y = m.y; }
+    x += m.dx || 0; y += m.dy || 0;
+    const ok = m.kind === 'ok';
+    const glyph = ok ? `<path d="M${r2(x - 3.4)},${r2(y + 0.2)} L${r2(x - 1)},${r2(y + 2.6)} L${r2(x + 3.6)},${r2(y - 2.6)}" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>`
+      : `<path d="M${r2(x - 3)},${r2(y - 3)} L${r2(x + 3)},${r2(y + 3)} M${r2(x + 3)},${r2(y - 3)} L${r2(x - 3)},${r2(y + 3)}" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/>`;
+    const body = `<g class="awd-mark"><title>${ok ? 'allowed' : 'blocked'}</title><circle cx="${r2(x)}" cy="${r2(y)}" r="7.5" fill="${ok ? '#3F8624' : '#DD344C'}"/>${glyph}</g>`;
+    if (m.t) parts.push(`<g class="anim" opacity="0">${body}${winAttr('opacity', '0;1;0', m.t[0], m.t[1])}</g>${m.still ? stillCopy(body) : ''}`);
+    else parts.push(body);
+  }
+
   // notes: free captions drawn on top. kind caption (muted, default) | label (ink) | warn (red);
-  // anchor start|middle|end; t:[a,b] shows the note only during that window (hidden under reduced
-  // motion, like every other window effect)
+  // tone request|response|bad|muted|ink, size (px), weight bold, caps (spaced capitals, a tier
+  // heading); anchor start|middle|end; t:[a,b] shows the note only during that window (hidden under
+  // reduced motion like every window effect, unless still:true keeps a copy in still frames);
+  // off:[a,b] hides a standing note during a window, so a timed note can take its place
   for (const nt of spec.notes || []) {
     const cls = nt.kind === 'label' ? 't-c' : 't-wire';
-    const style = [nt.anchor ? `text-anchor:${nt.anchor}` : '', nt.kind === 'warn' ? 'fill:#DD344C;font-weight:700' : ''].filter(Boolean).join(';');
-    const lines = String(nt.text).split('\n');
-    const txt = `<text class="${cls}" x="${r2(nt.x)}" y="${r2(nt.y)}"${style ? ` style="${style}"` : ''}>${lines.map((l, i) => `<tspan x="${r2(nt.x)}"${i ? ' dy="10"' : ''}>${esc(l)}</tspan>`).join('')}</text>`;
+    const style = [nt.anchor ? `text-anchor:${nt.anchor}` : '', nt.kind === 'warn' ? 'fill:#DD344C;font-weight:700' : '',
+      nt.tone ? `fill:${TONES[nt.tone]}` : '', nt.size ? `font-size:${nt.size}px` : '', nt.weight ? `font-weight:${nt.weight === 'bold' ? 700 : 400}` : '',
+      nt.caps ? 'letter-spacing:.8px' : ''].filter(Boolean).join(';');
+    const lines = String(nt.text).split('\n').map((l) => (nt.caps ? l.toUpperCase() : l));
+    const lh = nt.size ? r2(nt.size * 1.2) : 10;
+    const txt = `<text class="${cls}" x="${r2(nt.x)}" y="${r2(nt.y)}"${style ? ` style="${style}"` : ''}>${lines.map((l, i) => `<tspan x="${r2(nt.x)}"${i ? ` dy="${lh}"` : ''}>${esc(l)}</tspan>`).join('')}</text>`;
     if (nt.t) {
       const [a, b] = nt.t; if (!(a > 0 && b < 1 && b > a)) throw new Error(`notes window must satisfy 0 < a < b < 1: ${JSON.stringify(nt)}`);
-      parts.push(`<g class="anim" opacity="0">${txt}${winAttr('opacity', '0;1;0', a, b)}</g>`);
+      parts.push(`<g class="anim" opacity="0">${txt}${winAttr('opacity', '0;1;0', a, b)}</g>${nt.still ? stillCopy(txt) : ''}`);
+    } else if (nt.off) {
+      parts.push(`${stillCopy(txt)}<g class="anim">${txt}${winAttr('opacity', '1;0;1', nt.off[0], nt.off[1])}</g>`);
     } else parts.push(txt);
+  }
+
+  // legend: the key for packets, wires and marks, inside the diagram so it travels with every copy
+  if (spec.legend) {
+    const L = spec.legend, rows = [];
+    const used = new Set((spec.timeline || []).filter((e) => e.wire).map((e) => e.kind || 'pk'));
+    const items = L.items || ['pk', 'pk-2', 'pk-bad'].filter((k) => used.has(k)).map((kind) => ({ kind }));
+    items.forEach((it, i) => {
+      const y = L.y + i * 13, x = L.x;
+      const sw = it.kind === 'wire' || it.kind === 'dashed' ? `<path class="w${it.kind === 'dashed' ? ' w-d' : ''}" d="M${r2(x - 1)},${r2(y - 3)} H${r2(x + 9)}"/>`
+        : it.kind === 'blocked' ? `<circle cx="${r2(x + 4)}" cy="${r2(y - 3)}" r="4.2" fill="#DD344C"/>`
+        : `<circle class="lg-${it.kind}" cx="${r2(x + 3.4)}" cy="${r2(y - 3)}" r="3.4"/>`;
+      rows.push(`${sw}<text class="t-wire" x="${r2(x + 13)}" y="${r2(y)}" style="text-anchor:start">${esc(it.label || LEGEND[it.kind])}</text>`);
+    });
+    parts.push(`<g class="awd-keys">${rows.join('')}</g>`);
   }
 
   if (spec.extra) parts.push(spec.extra);
   const aria = esc(spec.aria || spec.name || id);
-  const named = `<title>${esc(spec.name || id)}</title>${spec.desc ? `<desc>${esc(spec.desc)}</desc>` : ''}`;
+  // the description carries the numbered steps, so a screen reader or a copied .svg has the story
+  const steps = stepTexts(spec).map(([n, t]) => `${n}. ${t}`).join(' ');
+  const desc = [spec.desc, steps && `Steps: ${steps}`].filter(Boolean).join(' ');
+  const named = `<title>${esc(spec.name || id)}</title>${desc ? `<desc>${esc(desc)}</desc>` : ''}`;
   return `<svg class="awd" viewBox="0 0 ${W} ${H}" role="img" aria-label="${aria}">${named}${parts.join('')}</svg>`;
+}
+
+// the numbered step texts, one per badge number (the first text given for a number), in order
+export function stepTexts(spec) {
+  const by = new Map();
+  for (const s of spec.steps || []) if (s.text && !by.has(String(s.n))) by.set(String(s.n), s.text);
+  return [...by].sort((a, b) => (Number(a[0]) - Number(b[0])) || a[0].localeCompare(b[0]));
 }
 
 export function tile(spec) {
   const svg = diagram(spec);
   const ref = `.awd #${spec.id}`;
+  // the step list under the description, as AWS reference architecture pages pair callouts with steps
+  const st = stepTexts(spec);
+  const ol = st.length ? `<ol class="awd-steps">${st.map(([n, t]) => `<li data-n="${esc(n)}">${esc(t)}</li>`).join('')}</ol>` : '';
   return `  <div class="tile is-new${spec.full ? ' full' : spec.wide ? ' wide' : ''}" data-fx-id="aws-${spec.id}" data-ctype="${esc(spec.ctype || 'diagram-arch')}" data-interact="auto-play" data-c="accent"><div class="stage">
     ${svg}
-  </div><div class="meta"><div class="nm">${esc(spec.name)}</div><span class="ref">${esc(spec.ref || 'svg.awd')}</span><div class="desc">${esc(spec.desc || '')}</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>`;
+  </div><div class="meta"><div class="nm">${esc(spec.name)}</div><span class="ref">${esc(spec.ref || 'svg.awd')}</span><div class="desc">${esc(spec.desc || '')}</div>${ol}<button class="copy" onclick="copyViz(this)">Copy</button></div></div>`;
 }
 
 export function section(mod) {

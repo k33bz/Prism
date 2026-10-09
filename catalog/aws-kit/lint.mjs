@@ -58,6 +58,7 @@ function windowOf(el) {
   if (!an) return null;
   const v = (an.attrs.values || '').split(';'), kt = (an.attrs.keyTimes || '').split(';').map(Number);
   if (v.join(';') === '0;1;0' && kt.length === 3) return [kt[1], kt[2]];
+  if (v.join(';') === '1;0;1' && kt.length === 3) return { off: [kt[1], kt[2]] };   // a standing note hidden for a swap
   return 'live';   // e.g. a fading wire: always drawn
 }
 
@@ -66,11 +67,12 @@ function collect(svg, id) {
   const items = [];
   const walk = (el, st) => {
     if (el.tag === '#text' || el.tag === 'defs' || el.tag === 'marker' || el.tag === 'title' || el.tag === 'desc' || el.tag === 'metadata' || el.tag === 'style') return;
-    if (has(el, 'awd-static') || has(el, 'pk') || has(el, 'pk-2') || has(el, 'pk-bad') || has(el, 'ring') || has(el, 'ring-2') || has(el, 'g-hot')) return;
+    if (has(el, 'awd-static') || has(el, 'pk') || has(el, 'pk-2') || has(el, 'pk-bad') || has(el, 'ring') || has(el, 'ring-2') || has(el, 'ring-bad') || has(el, 'g-hot') || has(el, 'awd-mark')) return;
     let s = st;
     const w = windowOf(el);
     if (has(el, 'anim') || el.attrs.opacity === '0') {
       if (Array.isArray(w)) s = { ...st, t: w };
+      else if (w && w.off) s = { ...st, off: w.off };
       else if (w !== 'live') return;                       // hidden and never shown
     }
     if (el.tag === 'g' && has(el, 'st')) {
@@ -82,6 +84,12 @@ function collect(svg, id) {
       const x = +el.attrs.x || 0, y = +el.attrs.y || 0, wd = +el.attrs.width, ht = +el.attrs.height;
       // a colorway pair draws two <use>s on one spot: keep one
       if (!has(el, 'cw-l')) items.push({ k: 'icon', t: s.t, ghost: s.ghost, name: `icon ${String(el.attrs.href).replace('#aws-', '')}`, b: { x0: x, y0: y, x1: x + wd, y1: y + ht } });
+      return;
+    }
+    if (el.tag === 'rect' && has(el, 'awd-box')) {
+      // a box or pill node: an obstacle like an icon, with its own label inside
+      const x = +el.attrs.x, y = +el.attrs.y;
+      items.push({ k: 'icon', box: true, t: s.t, off: s.off, name: 'box', b: { x0: x, y0: y, x1: x + +el.attrs.width, y1: y + +el.attrs.height } });
       return;
     }
     if (el.tag === 'rect' && has(el, 'g')) {
@@ -135,7 +143,7 @@ function textItems(el, s, items) {
   for (const ln of lines) {
     const w = textWidth(ln.text, size, bold, spacing);
     const x0 = anchor === 'middle' ? ln.x - w / 2 : anchor === 'end' ? ln.x - w : ln.x;
-    items.push({ k: 'text', t: s.t, cls: c.trim(), name: `text "${ln.text.slice(0, 40)}"`, lines: lines.length, b: { x0, x1: x0 + w, y0: ln.y - 0.68 * size, y1: ln.y + 0.05 * size } });
+    items.push({ k: 'text', t: s.t, off: s.off, cls: c.trim(), name: `text "${ln.text.slice(0, 40)}"`, lines: lines.length, b: { x0, x1: x0 + w, y0: ln.y - 0.68 * size, y1: ln.y + 0.05 * size } });
   }
 }
 
@@ -149,7 +157,10 @@ function segHits(p, q, b) {
 }
 const wireHits = (w, b) => w.pts.some((p, i) => i > 0 && segHits(w.pts[i - 1], p, b));
 // windows overlap (null = always shown)
-const together = (a, b) => !a.t || !b.t || (a.t[0] < b.t[1] && b.t[0] < a.t[1]);
+// shown at the same time: timed windows overlap (null = always), and a standing note hidden for a swap
+// (off) does not meet what shows inside its off window
+const within = (t, off) => t && off && t[0] >= off[0] && t[1] <= off[1];
+const together = (a, b) => !within(a.t, b.off) && !within(b.t, a.off) && (!a.t || !b.t || (a.t[0] < b.t[1] && b.t[0] < a.t[1]));
 // does a timed opaque patch cover this static item while the timed item shows?
 const patched = (items, stat, timed) => items.some((p) => p.k === 'patch' && p.t && timed.t && p.t[0] <= timed.t[0] && p.t[1] >= timed.t[1] && inside(shrink(stat.b, 1), p.b));
 const at = (b) => `${Math.round((b.x0 + b.x1) / 2)},${Math.round((b.y0 + b.y1) / 2)}`;
@@ -182,7 +193,7 @@ export function lint(spec, svg) {
     else { const [s, t] = a.t ? [b, a] : [a, b]; if (!patched(items, s, t)) add('info', 'text-over-text', `timed ${t.name} lands on ${s.name}`, t.b); }
   }
   // text on icons (a frame's corner icon included)
-  for (const t of texts) for (const ic of icons) if (together(t, ic) && hit(t.b, shrink(ic.b, 2))) add('error', 'text-on-icon', `${t.name} overlaps ${ic.name}`, t.b);
+  for (const t of texts) for (const ic of icons) if (together(t, ic) && hit(t.b, shrink(ic.b, 2)) && !(ic.box && inside(t.b, ic.b))) add('error', 'text-on-icon', `${t.name} overlaps ${ic.name}`, t.b);
   // text across (or within 2px of) a frame border: rendered glyphs run a little wider than advances
   for (const t of texts) for (const f of frames) {
     const b = shrink(t.b, -2), F = f.b;
@@ -206,16 +217,25 @@ export function lint(spec, svg) {
 
   // a node in its frame's header band (22px under the top edge)
   for (const n of spec.nodes || []) {
+    if (n.kind) continue;
     const s = n.size || 40, cx = n.x + s / 2, cy = n.y + s / 2;
     const own = (spec.groups || []).filter((g) => cx > g.x && cx < g.x + g.w && cy > g.y && cy < g.y + g.h).sort((a, b) => a.w * a.h - b.w * b.h)[0];
     if (own && n.y < own.y + 22 && n.y + s > own.y) add('warn', 'header-band', `node ${n.id} sits in the ${own.kind} frame's 22px header band`, { x0: n.x, y0: n.y, x1: n.x + s, y1: n.y + s });
   }
   // AWS deck: labels at most 2 lines; one icon size per diagram
   for (const n of spec.nodes || []) {
+    if (n.kind || (n.labelPos || 'b') !== 'b') continue;
     const lines = texts.find((t) => t.cls === 't-c' && Math.abs((t.b.x0 + t.b.x1) / 2 - (n.x + (n.size || 40) / 2)) < 1 && t.b.y0 > n.y + (n.size || 40) - 2 && t.b.y0 < n.y + (n.size || 40) + 12);
     if (lines && lines.lines > 2) add('warn', 'label-lines', `node ${n.id} label runs to ${lines.lines} lines (raise wrap or shorten)`, lines.b);
   }
-  const sizes = new Set((spec.nodes || []).map((n) => n.size || 40));
+  const sizes = new Set((spec.nodes || []).filter((n) => !n.kind).map((n) => n.size || 40));
+  // AWS reference pages pair each numbered callout with a step text, numbered 1..n
+  const nums = [...new Set((spec.steps || []).map((s) => String(s.n)))];
+  const told = new Set((spec.steps || []).filter((s) => s.text).map((s) => String(s.n)));
+  const untold = nums.filter((n) => !told.has(n));
+  if (untold.length) add('warn', 'step-text', `step${untold.length > 1 ? 's' : ''} ${untold.join(', ')} ha${untold.length > 1 ? 've' : 's'} no text`);
+  const sorted = nums.map(Number).sort((a, b) => a - b);
+  if (sorted.some((n, i) => n !== i + 1)) add('warn', 'step-order', `step numbers ${sorted.join(', ')} do not run 1..${sorted.length}`);
   if (sizes.size > 1) add('info', 'icon-sizes', `icon sizes ${[...sizes].sort((a, b) => a - b).join(', ')} in one diagram (AWS keeps one)`);
 
   // dedupe (a two-line label can hit the same thing twice) and apply lintAllow

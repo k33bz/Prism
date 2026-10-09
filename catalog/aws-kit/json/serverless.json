@@ -29,9 +29,9 @@
         { "id": "l2", "d": "M278,137 V192 H243", "dashed": true }
       ],
       "steps": [
-        { "n": 1, "at": "p1", "f": 0.76 },
-        { "n": 2, "at": "p2" },
-        { "n": 3, "at": "p3" }
+        { "n": 1, "at": "p1", "f": 0.76, "text": "Users send requests to the REST API in Amazon API Gateway." },
+        { "n": 2, "at": "p2", "text": "Amazon API Gateway invokes the AWS Lambda function with the request." },
+        { "n": 3, "at": "p3", "text": "AWS Lambda reads and writes items in Amazon DynamoDB, and the response returns to users. API Gateway and Lambda send logs and metrics to Amazon CloudWatch." }
       ],
       "timeline": [
         { "wire": "p1", "t": [0.04, 0.13], "ring": "apigw" },
@@ -71,11 +71,11 @@
         { "id": "p4", "from": "fn", "to": "ddb" }
       ],
       "steps": [
-        { "n": 1, "at": "signin", "f": 0.26, "dx": 13, "dy": 0 },
-        { "n": 2, "at": "call", "f": 0.76 },
-        { "n": 3, "at": "auth", "f": 0.5, "dx": -13, "dy": 0 },
-        { "n": 4, "at": "p3" },
-        { "n": 5, "at": "p4" }
+        { "n": 1, "at": "signin", "f": 0.26, "dx": 13, "dy": 0, "text": "Users sign in to the Amazon Cognito user pool and receive tokens." },
+        { "n": 2, "at": "call", "f": 0.76, "text": "Users call Amazon API Gateway and send the token with the request." },
+        { "n": 3, "at": "auth", "f": 0.5, "dx": -13, "dy": 0, "text": "Amazon API Gateway validates the token with its Amazon Cognito authorizer against the user pool." },
+        { "n": 4, "at": "p3", "text": "Amazon API Gateway invokes the AWS Lambda function only after the token is valid." },
+        { "n": 5, "at": "p4", "text": "AWS Lambda reads Amazon DynamoDB, and the response returns to users through API Gateway." }
       ],
       "timeline": [
         { "wire": "signin", "t": [0.03, 0.13], "ring": "cog" },
@@ -117,10 +117,10 @@
         { "id": "o2", "from": "fn", "to": "ddb", "via": 336 }
       ],
       "steps": [
-        { "n": 1, "at": "up", "f": 0.76 },
-        { "n": 2, "at": "ev", "f": 0.25 },
-        { "n": 3, "at": "o1", "f": 0.86 },
-        { "n": 4, "at": "o2", "f": 0.86 }
+        { "n": 1, "at": "up", "f": 0.76, "text": "Users upload an object to the Amazon S3 source bucket." },
+        { "n": 2, "at": "ev", "f": 0.25, "text": "Amazon S3 sends an event notification that invokes the AWS Lambda function." },
+        { "n": 3, "at": "o1", "f": 0.86, "text": "AWS Lambda resizes the image and writes the result to the destination bucket, so the function does not trigger itself again." },
+        { "n": 4, "at": "o2", "f": 0.86, "text": "AWS Lambda records the image metadata in the Amazon DynamoDB table." }
       ],
       "timeline": [
         { "wire": "up", "t": [0.06, 0.22], "ring": "src" },
@@ -156,11 +156,11 @@
         { "id": "db", "from": "fn", "to": "ddb", "both": true }
       ],
       "steps": [
-        { "n": 1, "at": "c1", "f": 0.62, "dy": 0 },
+        { "n": 1, "at": "c1", "f": 0.62, "dy": 0, "text": "Clients keep WebSocket connections open to the Amazon API Gateway WebSocket API and send messages over them." },
         { "n": 1, "at": "c2", "f": 0.62, "dy": 0 },
-        { "n": 2, "at": "rt", "f": 0.2, "dy": 0 },
-        { "n": 3, "at": "db", "f": 0.5 },
-        { "n": 4, "at": "cn", "f": 0.3, "dy": 0 }
+        { "n": 2, "at": "rt", "f": 0.2, "dy": 0, "text": "Amazon API Gateway routes each message to the AWS Lambda function." },
+        { "n": 3, "at": "db", "f": 0.5, "text": "AWS Lambda reads the open connection IDs from the Amazon DynamoDB connections table." },
+        { "n": 4, "at": "cn", "f": 0.3, "dy": 0, "text": "AWS Lambda posts the message to each connection through the @connections API, and API Gateway pushes it to every connected client." }
       ],
       "timeline": [
         { "wire": "c1", "t": [0.05, 0.14], "ring": "apigw" },
@@ -209,12 +209,12 @@
         { "id": "w7", "from": "sns", "to": "mail" }
       ],
       "steps": [
-        { "n": 1, "at": "w1", "f": 0.8 },
-        { "n": 2, "at": "w2", "f": 0.2 },
-        { "n": 3, "at": "w3", "f": 0.2 },
-        { "n": 4, "at": "fa", "f": 0.82 },
-        { "n": 5, "at": "ja", "f": 0.9 },
-        { "n": 6, "at": "w7", "f": 0.62 }
+        { "n": 1, "at": "w1", "f": 0.8, "text": "Users submit an order through Amazon API Gateway." },
+        { "n": 2, "at": "w2", "f": 0.2, "text": "Amazon API Gateway calls StartExecution on AWS Step Functions and returns the execution ARN to the caller right away." },
+        { "n": 3, "at": "w3", "f": 0.2, "text": "AWS Step Functions runs the first task, an AWS Lambda function that validates the order." },
+        { "n": 4, "at": "fa", "f": 0.82, "text": "AWS Step Functions runs two AWS Lambda tasks in a Parallel state: process payment and reserve inventory." },
+        { "n": 5, "at": "ja", "f": 0.9, "text": "AWS Step Functions publishes to the Amazon SNS order topic after both branches finish." },
+        { "n": 6, "at": "w7", "f": 0.62, "text": "Amazon SNS sends an email notification to the topic subscribers." }
       ],
       "timeline": [
         { "wire": "w1", "t": [0.03, 0.1], "ring": "apigw" },
@@ -265,9 +265,9 @@
         { "id": "g3", "from": "r3", "to": "t3" }
       ],
       "steps": [
-        { "n": 1, "at": "e1", "f": 0.9 },
-        { "n": 2, "at": "f2", "f": 0.35 },
-        { "n": 3, "at": "g1", "f": 0.2 },
+        { "n": 1, "at": "e1", "f": 0.9, "text": "Producers send events to the Amazon EventBridge custom event bus with PutEvents." },
+        { "n": 2, "at": "f2", "f": 0.35, "text": "Amazon EventBridge matches each event against the event pattern of every rule on the bus." },
+        { "n": 3, "at": "g1", "f": 0.2, "text": "Each matching rule sends the event to its target: an AWS Lambda function, an Amazon SQS queue and an AWS Step Functions state machine." },
         { "n": 3, "at": "g2", "f": 0.2 },
         { "n": 3, "at": "g3", "f": 0.2 }
       ],
@@ -315,11 +315,11 @@
         { "id": "dlq", "d": "M436,245 V280", "dashed": true, "hot": true }
       ],
       "steps": [
-        { "n": 1, "at": "u", "f": 0.68 },
-        { "n": 2, "at": "s" },
-        { "n": 3, "at": "c" },
-        { "n": 4, "at": "d" },
-        { "n": 5, "at": "dlq", "f": 0.5, "dx": 13, "dy": 0 }
+        { "n": 1, "at": "u", "f": 0.68, "text": "Users send a burst of requests to Amazon API Gateway." },
+        { "n": 2, "at": "s", "text": "Amazon API Gateway writes each request to the Amazon SQS queue with SendMessage and responds right away, so the burst waits in the queue." },
+        { "n": 3, "at": "c", "text": "AWS Lambda polls the queue through an event source mapping and scales out concurrent executions as messages build up." },
+        { "n": 4, "at": "d", "text": "AWS Lambda writes each message to Amazon DynamoDB with PutItem." },
+        { "n": 5, "at": "dlq", "f": 0.5, "dx": 13, "dy": 0, "text": "Amazon SQS moves a message to the dead-letter queue after it is received more than maxReceiveCount times." }
       ],
       "timeline": [
         { "wire": "u", "t": [0.02, 0.07] },
@@ -374,11 +374,11 @@
         { "id": "o", "from": "apigw", "to": "fn", "both": true }
       ],
       "steps": [
-        { "n": 1, "at": "dns", "f": 0.3, "dx": 13, "dy": 0 },
-        { "n": 2, "at": "https", "f": 0.8 },
-        { "n": 3, "at": "b1", "f": 0.6 },
+        { "n": 1, "at": "dns", "f": 0.3, "dx": 13, "dy": 0, "text": "Users look up the domain in Amazon Route 53, which answers with an alias record for the CloudFront distribution." },
+        { "n": 2, "at": "https", "f": 0.8, "text": "Users send HTTPS requests to the Amazon CloudFront distribution." },
+        { "n": 3, "at": "b1", "f": 0.6, "text": "Amazon CloudFront routes by path: the default (*) behavior goes to the Amazon S3 origin, and /api/* goes to the Amazon API Gateway origin." },
         { "n": 3, "at": "b2", "f": 0.6 },
-        { "n": 4, "at": "o" }
+        { "n": 4, "at": "o", "text": "Amazon API Gateway invokes AWS Lambda, and both responses return to users through CloudFront." }
       ],
       "timeline": [
         { "wire": "dns", "t": [0.03, 0.11], "ring": "r53" },
