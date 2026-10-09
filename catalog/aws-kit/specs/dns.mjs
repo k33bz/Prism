@@ -90,12 +90,12 @@ const resolution = (() => {
       { id: 'h', d: P(R(cli), L(alb)), label: 'HTTPS to 203.0.113.10', labelAt: 0.5 },
     ],
     steps: [
-      { n: 1, at: 'c1', f: 0.3, dx: -11, dy: 0 },
-      { n: 2, at: 'r1', f: 0.9, dy: -11 },
-      { n: 3, at: 'r2', f: 0.5, dy: -11 },
-      { n: 4, at: 'r3', f: 0.78, dy: -11 },
-      { n: 5, at: 'c1', f: 0.7, dx: -11, dy: 0 },
-      { n: 6, at: 'h', f: 0.2, dy: -11 },
+      { n: 1, at: 'c1', f: 0.3, dx: -11, dy: 0, text: 'The stub resolver on the client asks the recursive resolver for the A record of example.com.' },
+      { n: 2, at: 'r1', f: 0.9, dy: -11, text: 'The recursive resolver queries a root name server, which refers it to the .com TLD name servers.' },
+      { n: 3, at: 'r2', f: 0.5, dy: -11, text: 'The resolver queries a .com TLD name server, which refers it to the four Route 53 name servers for example.com.' },
+      { n: 4, at: 'r3', f: 0.78, dy: -11, text: 'A Route 53 name server answers from the public hosted zone: the alias A record at the zone apex returns the Application Load Balancer addresses.' },
+      { n: 5, at: 'c1', f: 0.7, dx: -11, dy: 0, text: 'The resolver caches the answer for its 60-second TTL and returns 203.0.113.10 to the client.' },
+      { n: 6, at: 'h', f: 0.2, dy: -11, text: 'The client connects over HTTPS to the Application Load Balancer, which forwards to the EC2 instances. A repeat query inside the TTL is answered from cache.' },
     ],
         timeline: [
       // cold lookup: client, root referral, TLD referral, Route 53 answer, answer to the client
@@ -162,9 +162,9 @@ const weighted = (() => {
       { id: 'w2', d: P(R(alb2), L(ec2)) },
     ],
     steps: [
-      { n: 1, at: 'u', f: 0.5, dy: -11 },
-      { n: 2, at: 'p1', f: 0.55, dy: 12 },
-      { n: 3, at: 'w1', f: 0.5, dy: -11 },
+      { n: 1, at: 'u', f: 0.5, dy: -11, text: 'Users look up the application name. Amazon Route 53 holds two weighted alias records for it, with set identifiers v1 and v2.' },
+      { n: 2, at: 'p1', f: 0.55, dy: 12, text: 'Route 53 answers with the stable or the canary load balancer in proportion to the weights: 90/10, then 50/50, then 0/100 at cutover.' },
+      { n: 3, at: 'w1', f: 0.5, dy: -11, text: 'Users connect to the Application Load Balancer in the answer, which sends their requests to the v1 or v2 instances.' },
     ],
         timeline: [
       ...mix(0.02, ['p1', 'p1', 'p1', 'p2']),
@@ -220,8 +220,8 @@ const geo = (() => {
       { id: 'gAS', d: P(R(r53, 12), [196, 164], [196, 236], L(albs[2])), label: 'AS', labelAt: 0.82 },
     ],
     steps: [
-      { n: 1, at: 'u2', f: 0.45, dy: -11 },
-      { n: 2, at: 'gEU', f: 0.55, dy: -11 },
+      { n: 1, at: 'u2', f: 0.45, dy: -11, text: 'Users in Europe query the application name, and Amazon Route 53 matches the location of the query to the Europe geolocation record.' },
+      { n: 2, at: 'gEU', f: 0.55, dy: -11, text: 'Route 53 answers with the eu-west-1 load balancer. North America and the Default record, which serves South America, go to us-east-1; Asia goes to ap-southeast-1.' },
     ],
         timeline: [
       ...seq(0.03, 0.07, [fw('u0', { ring: 'r53' }), fw('gNA', { ring: 'alb0' })], 0.01),
@@ -261,9 +261,9 @@ const multivalue = (() => {
       { id: 'c', d: P(B(users), [30, 226], L(eps[0])), label: 'connect', labelAt: 0.24, labelAnchor: 'start', labelDx: 5, labelDy: 0 },
     ],
     steps: [
-      { n: 1, at: 'q', f: 0.25, dy: 12 },
-      { n: 2, at: 'q', f: 0.75, dy: 12 },
-      { n: 3, at: 'c', f: 0.88, dy: -11 },
+      { n: 1, at: 'q', f: 0.25, dy: 12, text: 'Users query app.example.com, which has four multivalue answer records, each with its own health check.' },
+      { n: 2, at: 'q', f: 0.75, dy: 12, text: 'Amazon Route 53 answers with up to eight healthy records. When 192.0.2.13 fails its health check, later answers leave it out.' },
+      { n: 3, at: 'c', f: 0.88, dy: -11, text: 'The client connects to one of the returned addresses, 192.0.2.10.' },
     ],
         timeline: [
       // first query: four healthy records, the client connects to the first
@@ -319,9 +319,9 @@ const privateZone = (() => {
       { id: 'zb', d: P(R(rb), [384, 230], [384, 200], L(phz, 6)), both: true },
     ],
     steps: [
-      { n: 1, at: 'ea', f: 0.5, dy: -11 },
-      { n: 2, at: 'za', f: 0.9, dy: -11 },
-      { n: 3, at: 'pu', f: 0.2, dy: -11 },
+      { n: 1, at: 'ea', f: 0.5, dy: -11, text: 'An instance in VPC A sends a query for app.example.com to the Route 53 VPC Resolver at 10.0.0.2, the VPC base address plus two.' },
+      { n: 2, at: 'za', f: 0.9, dy: -11, text: 'The Resolver answers from the private hosted zone associated with VPC A and VPC B, returning 10.0.1.25. VPC B resolves the name the same way.' },
+      { n: 3, at: 'pu', f: 0.2, dy: -11, text: 'The public hosted zone answers the same name for internet users with 203.0.113.10: split horizon.' },
     ],
         timeline: [
       ...seq(0.03, 0.05, [fw('ea', { ring: 'ra' }), fw('za', { ring: 'phz' }), bk('za', { ring: 'ra' }), bk('ea', { ring: 'ea' })], 0.005),
@@ -383,11 +383,11 @@ const hybrid = (() => {
       { id: 'z', d: P(R(res), L(phz)), both: true, label: 'zone lookup', labelAt: 0.76 },
     ],
     steps: [
-      { n: 1, at: 'c', f: 0.5, dx: 11, dy: 0 },
-      { n: 2, at: 'd2', f: 0.5, dy: -11 },
-      { n: 3, at: 'iar', f: 0.3, dy: -11 },
-      { n: 4, at: 'e', f: 0.5, dx: 11, dy: 0 },
-      { n: 5, at: 'obr', f: 0.85, dy: -11 },
+      { n: 1, at: 'c', f: 0.5, dx: 11, dy: 0, text: 'The on-premises client asks the on-premises DNS servers for a name in aws.example.com.' },
+      { n: 2, at: 'd2', f: 0.5, dy: -11, text: 'A conditional forwarder sends the query over AWS Direct Connect or AWS Site-to-Site VPN to the inbound endpoint IPs 10.0.1.10 and 10.0.2.10.' },
+      { n: 3, at: 'iar', f: 0.3, dy: -11, text: 'The inbound endpoint passes the query to the Route 53 VPC Resolver, which answers from the private hosted zone; the answer returns to the client.' },
+      { n: 4, at: 'e', f: 0.5, dx: 11, dy: 0, text: 'An instance in the VPC queries the Route 53 VPC Resolver at 10.0.0.2 for a name in corp.example.com.' },
+      { n: 5, at: 'obr', f: 0.85, dy: -11, text: 'The forwarding rule for corp.example.com sends the query through the outbound endpoint to the on-premises DNS servers, and the answer returns to the instance.' },
     ],
         timeline: [
       // inbound: on-premises client -> on-premises DNS -> inbound endpoint -> VPC Resolver -> private hosted zone
@@ -470,11 +470,11 @@ const sharedRules = (() => {
       { id: 'ib', d: P(B(ib), [596, 340], [396, 340], B(att)), dashed: true, both: true, label: 'on-premises queries', labelAt: 0.5, labelDy: 12 },
     ],
     steps: [
-      { n: 1, at: 'sb', f: 0.12, dy: -11 },
-      { n: 2, at: 'e', f: 0.5, dy: -11 },
-      { n: 3, at: 'q', f: 0.6, dy: 12 },
-      { n: 4, at: 'qr', f: 0.88, dx: 11, dy: 0 },
-      { n: 5, at: 'tx', f: 0.62, dy: -11 },
+      { n: 1, at: 'sb', f: 0.12, dy: -11, text: 'The networking account shares the Route 53 Profile, holding the forwarding rule, private hosted zone and DNS Firewall rule group, with the spoke accounts through AWS RAM.' },
+      { n: 2, at: 'e', f: 0.5, dy: -11, text: 'An instance in spoke account A queries the Route 53 VPC Resolver in its VPC for a name in corp.example.com.' },
+      { n: 3, at: 'q', f: 0.6, dy: 12, text: 'The Resolver matches the forwarding rule for corp.example.com, which the Profile applies to the spoke VPC.' },
+      { n: 4, at: 'qr', f: 0.88, dx: 11, dy: 0, text: 'The rule sends the query out of the outbound endpoint in the hub VPC, through the TGW attachment to AWS Transit Gateway.' },
+      { n: 5, at: 'tx', f: 0.62, dy: -11, text: 'AWS Transit Gateway carries the query over AWS Direct Connect to the on-premises DNS servers, and the answer returns the same way to the instance.' },
     ],
         timeline: [
       { wire: 'sb', t: [0.03, 0.12], kind: 'pk-2' }, { wire: 'sa', t: [0.03, 0.12], kind: 'pk-2' },
@@ -522,9 +522,9 @@ const firewall = (() => {
       { id: 'ls', d: P(R(ql, 6), [258, 98], [258, 122], L(s3)), dashed: true },
     ],
     steps: [
-      { n: 1, at: 'q', f: 0.5, dx: 11, dy: 0 },
-      { n: 2, at: 'rf', f: 0.5, dy: -11 },
-      { n: 3, at: 'fh', f: 0.62, dy: -11 },
+      { n: 1, at: 'q', f: 0.5, dx: 11, dy: 0, text: 'The instance sends a DNS query to the Route 53 VPC Resolver at 10.0.0.2.' },
+      { n: 2, at: 'rf', f: 0.5, dy: -11, text: 'The Resolver checks the query against the DNS Firewall rule group associated with the VPC. A domain on the block list, malware.example.net, gets NXDOMAIN.' },
+      { n: 3, at: 'fh', f: 0.62, dy: -11, text: 'The Resolver resolves good.example.com, which matches no rule, from the public hosted zone. Resolver query logging sends each query and action to CloudWatch Logs and Amazon S3.' },
     ],
         timeline: [
       // good.example.com: no rule matches, resolved
@@ -577,10 +577,10 @@ const dnssec = (() => {
       { id: 'v2', d: P(R(res), [330, 226], B(hz)), both: true, label: 'DNSKEY, A, RRSIG', labelAt: 0.3 },
     ],
     steps: [
-      { n: 1, at: 'sg', f: 0.5, dy: 12 },
-      { n: 2, at: 'u', f: 0.5, dy: -11 },
-      { n: 3, at: 'v1', f: 0.5, dx: -11, dy: 0 },
-      { n: 4, at: 'v2', f: 0.55, dy: -11 },
+      { n: 1, at: 'sg', f: 0.5, dy: 12, text: 'Route 53 signs the zone: a key signing key backed by an asymmetric AWS KMS key in us-east-1 signs the DNSKEY records, and a Route 53 managed zone signing key signs the rest.' },
+      { n: 2, at: 'u', f: 0.5, dy: -11, text: 'Users send a query for example.com to a validating resolver, which asks for the DNSSEC records along with the answer.' },
+      { n: 3, at: 'v1', f: 0.5, dx: -11, dy: 0, text: 'The resolver fetches the DS record for example.com from the .com zone. It holds a hash of the zone KSK and chains through .com to the root trust anchor.' },
+      { n: 4, at: 'v2', f: 0.55, dy: -11, text: 'The resolver gets the DNSKEY, A and RRSIG records from the hosted zone, validates them against the DS record, and sets the AD flag when the chain checks out.' },
     ],
         timeline: [
       // sign the zone: Route 53 calls KMS to sign with the KSK
