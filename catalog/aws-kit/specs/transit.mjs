@@ -7,7 +7,7 @@
 // Gateway Load Balancer, distributed Network Firewall, private NAT gateways and VPC IPAM.
 // Conventions: nodes are placed by CENTER with nd(); wires are explicit H/V paths built with P() from edge ports
 // (R/L/T/B); route summaries, CIDRs and captions use group `note`, wire labels and `notes` (timed where they
-// tell a moment of the story). `extra` is used only for the red "dropped" X marks, which the kit lacks.
+// tell a moment of the story). Dropped packets use the kit's `marks` (a red X) and red rings; no raw `extra`.
 
 // ---- icon ids ----
 const IGW = 'aws-res-vpc-internet-gateway';
@@ -41,13 +41,6 @@ const fit = (tl, end = 0.93) => {
 const cell = (x, y, text, o = {}) => ({ x, y, text, kind: 'label', anchor: 'start', ...o });
 const cap = (x, y, text, o = {}) => ({ x, y, text, ...o });
 const warn = (x, y, text, o = {}) => ({ x, y, text, kind: 'warn', ...o });
-// a red "dropped" X (the kit has no node-level fail mark); shown only during [a, b] of the clock
-const RED = '#DD344C';
-const dropX = (cx, cy, a, b, dur) => {
-  const f = (n) => String(Math.round(n * 1000) / 1000).replace(/^0\./, '.');
-  return `<g class="anim" opacity="0"><circle cx="${cx}" cy="${cy}" r="7.5" fill="${RED}"/><path d="M${cx - 3},${cy - 3} L${cx + 3},${cy + 3} M${cx + 3},${cy - 3} L${cx - 3},${cy + 3}" stroke="#fff" stroke-width="1.7" fill="none"/>` +
-    `<animate attributeName="opacity" dur="${dur}s" repeatCount="indefinite" calcMode="discrete" values="0;1;0" keyTimes="0;${f(a)};${f(b)}"/></g>`;
-};
 
 // ---------------------------------------------------------------------------------------------
 // tg-segmentation: Transit Gateway route tables isolate prod and dev, both reach shared services
@@ -119,13 +112,15 @@ const segmentation = (() => {
       { wire: 'rP', t: [0.46, 0.55], kind: 'pk-2', ring: 'attP' },
       { wire: 'pa', t: [0.55, 0.6], reverse: true, kind: 'pk-2', ring: 'ecP' },
       { wire: 'da', t: [0.68, 0.72], kind: 'pk-bad' },
-      { wire: 'aD', t: [0.72, 0.78], kind: 'pk-bad' },
+      { wire: 'aD', t: [0.72, 0.78], kind: 'pk-bad', ring: { x: 292, y: 322, r: 10 } },   // red pulse where the packet stops
     ], 0.93),
     notes: [
       ...cp.n, ...cs.n, ...cd.n,
-      warn(480, 404, 'Dev to Prod: blackhole route, packet dropped', { anchor: 'middle', t: [0.84, 0.985] }),
+      // the drop is the point of the diagram: the caption and the X stay in still frames
+      warn(480, 404, 'Dev to Prod: blackhole route, packet dropped', { anchor: 'middle', t: [0.84, 0.985], still: true }),
     ],
-    extra: dropX(294, 322, 0.84, 0.985, 12),
+    // the X sits beside the blackhole row of the Dev route table, the route that drops the packet
+    marks: [{ x: 462, y: 346, t: [0.84, 0.985], still: true }],
   };
 })();
 
@@ -172,9 +167,10 @@ const connect = (() => {
       { id: 'rt', d: P(Bi(tgw, 0, 4 + 26), [680, 294], [770, 294]), dashed: true, arrow: false },
     ],
     steps: [
-      { n: 1, at: 'wa', f: 0.62, dx: 11, dy: 0, text: 'The SD-WAN edge in Branch A sends traffic for the workload VPC over the SD-WAN overlay, across the internet, to the SD-WAN virtual appliance.' },
-      { n: 2, at: 'gre', f: 0.2, dy: -11, text: 'The appliance sends the traffic through the GRE tunnel of the Connect peer, whose two BGP sessions earlier advertised 172.16.0.0/16 and learned 10.1.0.0/16.' },
-      { n: 3, at: 'tw', f: 0.5, dy: -11, text: 'AWS Transit Gateway matches 10.1.0.0/16, propagated from the workload VPC attachment, and forwards the traffic to the instance in the workload VPC.' },
+      { n: 1, at: 'bgp', f: 0.22, dy: 11, text: 'The SD-WAN virtual appliance and the Connect peer exchange routes over two BGP sessions inside the GRE tunnel: the appliance advertises the branch prefix 172.16.0.0/16 and learns the workload VPC prefix 10.1.0.0/16.' },
+      { n: 2, at: 'wa', f: 0.62, dx: 11, dy: 0, text: 'The SD-WAN edge in Branch A sends traffic for the workload VPC over the SD-WAN overlay, across the internet, to the SD-WAN virtual appliance.' },
+      { n: 3, at: 'gre', f: 0.2, dy: -11, text: 'The appliance sends the traffic through the GRE tunnel of the Connect peer to the Connect attachment, which rides on the VPC attachment used as transport.' },
+      { n: 4, at: 'tw', f: 0.5, dy: -11, text: 'AWS Transit Gateway matches 10.1.0.0/16, propagated from the workload VPC attachment, and forwards the traffic to the instance in the workload VPC.' },
     ],
     timeline: [
       { wire: 'bgp', t: [0.03, 0.10], kind: 'pk-2', ring: 'conn' },
@@ -209,7 +205,8 @@ const connect = (() => {
 // ---------------------------------------------------------------------------------------------
 const dxgw = (() => {
   const srv = nd('srv', 'aws-res-servers', 60, 134, 'Servers', { size: 40, sub: '192.168.0.0/16' });
-  const rtr = nd('rtr', CGW, 60, 226, 'Customer gateway');
+  // the on-premises end of a Direct Connect link is the customer router ("customer gateway" is the VPN term)
+  const rtr = nd('rtr', CGW, 60, 226, 'Customer router');
   const dx = nd('dx', DX, 251, 226, 'AWS Direct Connect', { size: 40 });
   const gw = nd('gw', DXGW, 424, 226, 'Direct Connect gateway', { size: 40, sub: 'global resource' });
   const region = (k, y, tgwId, asn, ids) => {
@@ -252,7 +249,7 @@ const dxgw = (() => {
       { id: 'u2a', d: P(R(a2a), L(v2a)), arrow: false }, { id: 'u2b', d: P(R(a2b), L(v2b)), arrow: false },
     ],
     steps: [
-      { n: 1, at: 'rd', f: 0.62, dy: -11, text: 'The customer gateway sends traffic from the on-premises servers over a transit VIF on AWS Direct Connect to the Direct Connect gateway.' },
+      { n: 1, at: 'rd', f: 0.62, dy: -11, text: 'The customer router sends traffic from the on-premises servers over a transit VIF on AWS Direct Connect to the Direct Connect gateway.' },
       { n: 2, at: 'g1', f: 0.5, dx: 11, dy: 0, text: 'The Direct Connect gateway sends traffic for 10.1.0.0/16 and 10.2.0.0/16 to AWS Transit Gateway in us-east-1, whose association allows those prefixes.' },
       { n: 3, at: 'g2', f: 0.5, dx: 11, dy: 0, text: 'The Direct Connect gateway sends 10.3.0.0/16 and 10.4.0.0/16 to the Transit Gateway in eu-west-1. Each Transit Gateway delivers to its VPCs, and replies return the same way.' },
     ],
@@ -329,7 +326,7 @@ const cloudwan = (() => {
       { wire: 'c2p', t: [0.3, 0.35], reverse: true, kind: 'pk-2', ring: 'cne2' },
       { wire: 'm12', t: [0.35, 0.43], reverse: true, kind: 'pk-2', ring: 'cne1' },
       { wire: 'c1p', t: [0.43, 0.49], kind: 'pk-2', ring: 'v1p' },
-      { wire: 'c1d', t: [0.56, 0.63], reverse: true, kind: 'pk-bad' },
+      { wire: 'c1d', t: [0.56, 0.63], reverse: true, kind: 'pk-bad', ring: 'cne1' },
       { wire: 'c1p', t: [0.84, 0.89], reverse: true, ring: 'cne1' },
       { wire: 'c1s', t: [0.89, 0.95], ring: 'v1s' },
     ],
@@ -344,7 +341,8 @@ const cloudwan = (() => {
       cap(32, 374, 'tag segment = shared', { anchor: 'start' }), cap(32, 386, 'shared with prod and dev', { anchor: 'start' }),
       warn(342, 140, 'Dev to Prod: segments are isolated', { anchor: 'middle', t: [0.64, 0.8] }),
     ],
-    extra: dropX(342, 84, 0.64, 0.8, 14),
+    // the edge drops the Dev packet: a red X on its corner while the caption shows (the edge itself stays healthy, so no still copy)
+    marks: [{ on: 'cne1', t: [0.64, 0.8] }],
   };
 })();
 
@@ -425,9 +423,10 @@ const gwlb = (() => {
       { kind: 'vpc', x: 108, y: 58, w: 476, h: 354, label: 'Application VPC', note: '10.0.0.0/16' },
       { kind: 'az', x: 164, y: 80, w: 408, h: 154, label: 'Availability Zone A' },
       { kind: 'az', x: 164, y: 246, w: 408, h: 154, label: 'Availability Zone B' },
-      { kind: 'priv', x: 176, y: 104, w: 180, h: 122, label: 'Endpoint subnet', note: '0.0.0.0/0 > igw' },
+      // 0.0.0.0/0 > igw makes the endpoint subnets public subnets
+      { kind: 'pub', x: 176, y: 104, w: 180, h: 122, label: 'Endpoint subnet', note: '0.0.0.0/0 > igw' },
       { kind: 'pub', x: 364, y: 104, w: 196, h: 122, label: 'Public subnet', note: '0.0.0.0/0 > gwlbe' },
-      { kind: 'priv', x: 176, y: 270, w: 180, h: 122, label: 'Endpoint subnet', note: '0.0.0.0/0 > igw' },
+      { kind: 'pub', x: 176, y: 270, w: 180, h: 122, label: 'Endpoint subnet', note: '0.0.0.0/0 > igw' },
       { kind: 'pub', x: 364, y: 270, w: 196, h: 122, label: 'Public subnet', note: '0.0.0.0/0 > gwlbe' },
       { kind: 'vpc', x: 608, y: 58, w: 320, h: 354, label: 'Appliance VPC', note: '10.100.0.0/16' },
       { kind: 'az', x: 716, y: 80, w: 200, h: 154, label: 'Availability Zone A' },
@@ -501,9 +500,10 @@ const nfwDist = (() => {
       { kind: 'vpc', x: 108, y: 58, w: 568, h: 254, label: 'VPC', note: '10.0.0.0/16' },
       { kind: 'az', x: 190, y: 82, w: 474, h: 108, label: 'Availability Zone A' },
       { kind: 'az', x: 190, y: 198, w: 474, h: 108, label: 'Availability Zone B' },
-      { kind: 'priv', x: 202, y: 106, w: 224, h: 76, label: 'Firewall subnet', note: '0.0.0.0/0 > igw' },
+      // 0.0.0.0/0 > igw makes the firewall subnets public subnets
+      { kind: 'pub', x: 202, y: 106, w: 224, h: 76, label: 'Firewall subnet', note: '0.0.0.0/0 > igw' },
       { kind: 'pub', x: 438, y: 106, w: 214, h: 76, label: 'Public subnet', note: '0.0.0.0/0 > fw endpoint' },
-      { kind: 'priv', x: 202, y: 222, w: 224, h: 76, label: 'Firewall subnet', note: '0.0.0.0/0 > igw' },
+      { kind: 'pub', x: 202, y: 222, w: 224, h: 76, label: 'Firewall subnet', note: '0.0.0.0/0 > igw' },
       { kind: 'pub', x: 438, y: 222, w: 214, h: 76, label: 'Public subnet', note: '0.0.0.0/0 > fw endpoint' },
       { kind: 'gen', icon: 'aws-svc-network-firewall', x: 700, y: 110, w: 232, h: 136, label: 'AWS Network Firewall' },
     ],

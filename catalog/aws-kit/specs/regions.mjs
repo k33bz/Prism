@@ -6,16 +6,17 @@
 // restore, pilot light, warm standby, multi-site active-active) plus the building blocks they rely on
 // (Route 53 failover, Global Accelerator, S3 replication, inter-Region Transit Gateway peering).
 // Conventions: nodes are placed by CENTER with N(); step badges ride above wires and short captions sit
-// below them (T()); the single clock of each diagram is `dur`; wires never share a segment (translucent
-// strokes would double up), so a fork leaves a node as two parallel stubs.
+// below them (C(): kit notes, no raw `extra`); the single clock of each diagram is `dur`; wires never
+// share a segment (translucent strokes would double up), so a fork leaves a node as two parallel stubs.
 
 // node by center point (icons 40px; 32px inside dense groups)
 const N = (id, icon, cx, cy, label, o = {}) => {
   const s = o.size || 40;
   return { id, icon, x: cx - s / 2, y: cy - s / 2, label, ...o };
 };
-// small muted caption (same style as wire labels); anchor: 'start' | 'end' | undefined (middle)
-const T = (x, y, s, anchor) => `<text class="t-wire" x="${x}" y="${y}"${anchor ? ` style="text-anchor:${anchor}"` : ''}>${s}</text>`;
+// small muted caption, a kit note (same style as wire labels); "\n" breaks lines (10px apart);
+// anchor: 'start' | 'end' | undefined (middle)
+const C = (x, y, text, anchor) => ({ x, y, text, ...(anchor ? { anchor } : {}) });
 
 const ALB = 'aws-res-elastic-load-balancing-application-load-balancer';
 
@@ -124,13 +125,12 @@ const pilot = (() => {
       { glow: 'b1', t: [0.54, 0.98] }, { glow: 'b2', t: [0.54, 0.98] },
       { glow: 'be1', t: [0.54, 0.98] }, { glow: 'be2', t: [0.54, 0.98] },
     ],
-    extra: [
-      T(942, 22, 'RPO / RTO: tens of minutes', 'end'),
-      T(275, 143, 'primary'),
-      T(275, 335, 'secondary'),
-      T(830, 188, 'Asynchronous', 'start'),
-      T(830, 198, 'replication', 'start'),
-    ].join(''),
+    notes: [
+      C(942, 22, 'RPO / RTO: tens of minutes', 'end'),
+      C(275, 143, 'primary'),
+      C(275, 335, 'secondary'),
+      C(830, 188, 'Asynchronous\nreplication', 'start'),
+    ],
   };
 })();
 
@@ -177,13 +177,12 @@ const warm = (() => {
       { appear: 'ecB2', t: [0.54, 0.98], ghost: true },
       { glow: 'b2', t: [0.54, 0.98] }, { glow: 'be2', t: [0.54, 0.98] },
     ],
-    extra: [
-      T(942, 22, 'RPO / RTO: minutes', 'end'),
-      T(275, 143, 'primary'),
-      T(275, 335, 'secondary'),
-      T(830, 188, 'Asynchronous', 'start'),
-      T(830, 198, 'replication', 'start'),
-    ].join(''),
+    notes: [
+      C(942, 22, 'RPO / RTO: minutes', 'end'),
+      C(275, 143, 'primary'),
+      C(275, 335, 'secondary'),
+      C(830, 188, 'Asynchronous\nreplication', 'start'),
+    ],
   };
 })();
 
@@ -236,13 +235,12 @@ const active = (() => {
       { fade: 'rep', t: [0.48, 0.98] },
       { glow: 'ra', t: [0.52, 0.98] },
     ],
-    extra: [
-      T(942, 22, 'RPO / RTO: real-time', 'end'),
-      T(275, 143, 'nearest'),
-      T(275, 335, 'nearest'),
-      T(830, 188, 'Global tables', 'start'),
-      T(830, 198, 'replication', 'start'),
-    ].join(''),
+    notes: [
+      C(942, 22, 'RPO / RTO: real-time', 'end'),
+      C(275, 143, 'nearest'),
+      C(275, 335, 'nearest'),
+      C(830, 188, 'Global tables\nreplication', 'start'),
+    ],
   };
 })();
 
@@ -299,11 +297,10 @@ const r53failover = (() => {
       { fade: 'p1', t: [0.54, 0.98] },
       { glow: 'p2', t: [0.56, 0.98] },
     ],
-    extra: [
-      T(253, 96, 'primary'),
-      T(253, 106, 'health check'),
-      T(253, 210, 'secondary'),
-    ].join(''),
+    notes: [
+      C(253, 96, 'primary\nhealth check'),
+      C(253, 210, 'secondary'),
+    ],
   };
 })();
 
@@ -354,10 +351,10 @@ const gax = (() => {
       { fade: 'g1', t: [0.44, 0.98] },
       { glow: 'g2', t: [0.48, 0.98] },
     ],
-    extra: [
-      T(230, 96, 'AWS global network'),
-      T(230, 210, 'AWS global network'),
-    ].join(''),
+    notes: [
+      C(230, 96, 'AWS global network'),
+      C(230, 210, 'AWS global network'),
+    ],
   };
 })();
 
@@ -406,13 +403,11 @@ const s3crr = (() => {
       { fade: 'rep', t: [0.50, 0.98] },
       { glow: 'mb', t: [0.54, 0.98] },
     ],
-    extra: [
-      T(252, 96, 'active'),
-      T(252, 215, 'passive, failover'),
-      T(396, 170, 'Cross-Region', 'start'),
-      T(396, 180, 'Replication', 'start'),
-      T(396, 190, '(two-way)', 'start'),
-    ].join(''),
+    notes: [
+      C(252, 96, 'active'),
+      C(252, 215, 'passive, failover'),
+      C(396, 170, 'Cross-Region\nReplication\n(two-way)', 'start'),
+    ],
   };
 })();
 
@@ -469,11 +464,11 @@ export default {
         { appear: 'ec2r', t: [0.61, 0.98], ghost: true },
         { appear: 'rdsr', t: [0.61, 0.98], ghost: true },
       ],
-      extra: [
-        T(462, 22, 'RPO / RTO: hours', 'end'),
-        T(356, 186, 'Cross-Region copy', 'end'),
-        T(318, 247, 'restore'),
-      ].join(''),
+      notes: [
+        C(462, 22, 'RPO / RTO: hours', 'end'),
+        C(356, 186, 'Cross-Region copy', 'end'),
+        C(318, 247, 'restore'),
+      ],
     },
 
     pilot,
@@ -530,10 +525,10 @@ export default {
         { wire: 'peer', t: [0.62, 0.82], kind: 'pk-2', reverse: true, ring: 'tgw1' },
         { wire: 'e1', t: [0.84, 0.92], kind: 'pk-2', reverse: true, ring: 'ec1' },
       ],
-      extra: [
-        T(480, 210, 'Peering attachment'),
-        T(480, 221, 'static routes'),
-      ].join(''),
+      notes: [
+        C(480, 210, 'Peering attachment'),
+        C(480, 221, 'static routes'),
+      ],
     },
   ],
 };

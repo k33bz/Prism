@@ -56,7 +56,12 @@
         { "wire": "rP", "t": [0.548, 0.656], "kind": "pk-2", "ring": "attP" },
         { "wire": "pa", "t": [0.656, 0.715], "reverse": true, "kind": "pk-2", "ring": "ecP" },
         { "wire": "da", "t": [0.811, 0.858], "kind": "pk-bad" },
-        { "wire": "aD", "t": [0.858, 0.93], "kind": "pk-bad" }
+        {
+          "wire": "aD",
+          "t": [0.858, 0.93],
+          "kind": "pk-bad",
+          "ring": { "x": 292, "y": 322, "r": 10 }
+        }
       ],
       "notes": [
         { "x": 310, "y": 108, "text": "Destination", "anchor": "start" },
@@ -89,9 +94,11 @@
         { "x": 412, "y": 349, "text": "blackhole", "kind": "warn", "anchor": "start" },
         { "x": 552, "y": 349, "text": "static", "anchor": "start" },
         { "x": 310, "y": 370, "text": "propagation from: Shared attachment", "anchor": "start" },
-        { "x": 480, "y": 404, "text": "Dev to Prod: blackhole route, packet dropped", "kind": "warn", "anchor": "middle", "t": [0.84, 0.985] }
+        { "x": 480, "y": 404, "text": "Dev to Prod: blackhole route, packet dropped", "kind": "warn", "anchor": "middle", "t": [0.84, 0.985], "still": true }
       ],
-      "extra": "<g class=\"anim\" opacity=\"0\"><circle cx=\"294\" cy=\"322\" r=\"7.5\" fill=\"#DD344C\"/><path d=\"M291,319 L297,325 M297,319 L291,325\" stroke=\"#fff\" stroke-width=\"1.7\" fill=\"none\"/><animate attributeName=\"opacity\" dur=\"12s\" repeatCount=\"indefinite\" calcMode=\"discrete\" values=\"0;1;0\" keyTimes=\"0;.84;.985\"/></g>"
+      "marks": [
+        { "x": 462, "y": 346, "t": [0.84, 0.985], "still": true }
+      ]
     },
     {
       "id": "tg-connect",
@@ -138,9 +145,10 @@
         { "id": "rt", "d": "M680,244 V294 H770", "dashed": true, "arrow": false }
       ],
       "steps": [
-        { "n": 1, "at": "wa", "f": 0.62, "dx": 11, "dy": 0, "text": "The SD-WAN edge in Branch A sends traffic for the workload VPC over the SD-WAN overlay, across the internet, to the SD-WAN virtual appliance." },
-        { "n": 2, "at": "gre", "f": 0.2, "dy": -11, "text": "The appliance sends the traffic through the GRE tunnel of the Connect peer, whose two BGP sessions earlier advertised 172.16.0.0/16 and learned 10.1.0.0/16." },
-        { "n": 3, "at": "tw", "f": 0.5, "dy": -11, "text": "AWS Transit Gateway matches 10.1.0.0/16, propagated from the workload VPC attachment, and forwards the traffic to the instance in the workload VPC." }
+        { "n": 1, "at": "bgp", "f": 0.22, "dy": 11, "text": "The SD-WAN virtual appliance and the Connect peer exchange routes over two BGP sessions inside the GRE tunnel: the appliance advertises the branch prefix 172.16.0.0/16 and learns the workload VPC prefix 10.1.0.0/16." },
+        { "n": 2, "at": "wa", "f": 0.62, "dx": 11, "dy": 0, "text": "The SD-WAN edge in Branch A sends traffic for the workload VPC over the SD-WAN overlay, across the internet, to the SD-WAN virtual appliance." },
+        { "n": 3, "at": "gre", "f": 0.2, "dy": -11, "text": "The appliance sends the traffic through the GRE tunnel of the Connect peer to the Connect attachment, which rides on the VPC attachment used as transport." },
+        { "n": 4, "at": "tw", "f": 0.5, "dy": -11, "text": "AWS Transit Gateway matches 10.1.0.0/16, propagated from the workload VPC attachment, and forwards the traffic to the instance in the workload VPC." }
       ],
       "timeline": [
         { "wire": "bgp", "t": [0.03, 0.1], "kind": "pk-2", "ring": "conn" },
@@ -185,7 +193,7 @@
       ],
       "nodes": [
         { "id": "srv", "icon": "aws-res-servers", "x": 40, "y": 114, "size": 40, "label": "Servers", "sub": "192.168.0.0/16" },
-        { "id": "rtr", "icon": "aws-res-vpc-customer-gateway", "x": 44, "y": 210, "size": 32, "label": "Customer gateway" },
+        { "id": "rtr", "icon": "aws-res-vpc-customer-gateway", "x": 44, "y": 210, "size": 32, "label": "Customer router" },
         { "id": "dx", "icon": "aws-svc-direct-connect", "x": 231, "y": 206, "size": 40, "label": "AWS Direct Connect" },
         { "id": "gw", "icon": "aws-res-direct-connect-gateway", "x": 404, "y": 206, "size": 40, "label": "Direct Connect gateway", "sub": "global resource" },
         { "id": "tg1", "icon": "aws-svc-transit-gateway", "x": 556, "y": 104, "size": 48, "label": "AWS Transit Gateway", "sub": "ASN 64512" },
@@ -215,7 +223,7 @@
         { "id": "u2b", "d": "M726,370 H826", "arrow": false }
       ],
       "steps": [
-        { "n": 1, "at": "rd", "f": 0.62, "dy": -11, "text": "The customer gateway sends traffic from the on-premises servers over a transit VIF on AWS Direct Connect to the Direct Connect gateway." },
+        { "n": 1, "at": "rd", "f": 0.62, "dy": -11, "text": "The customer router sends traffic from the on-premises servers over a transit VIF on AWS Direct Connect to the Direct Connect gateway." },
         { "n": 2, "at": "g1", "f": 0.5, "dx": 11, "dy": 0, "text": "The Direct Connect gateway sends traffic for 10.1.0.0/16 and 10.2.0.0/16 to AWS Transit Gateway in us-east-1, whose association allows those prefixes." },
         { "n": 3, "at": "g2", "f": 0.5, "dx": 11, "dy": 0, "text": "The Direct Connect gateway sends 10.3.0.0/16 and 10.4.0.0/16 to the Transit Gateway in eu-west-1. Each Transit Gateway delivers to its VPCs, and replies return the same way." }
       ],
@@ -317,7 +325,7 @@
         { "wire": "c2p", "t": [0.3, 0.35], "reverse": true, "kind": "pk-2", "ring": "cne2" },
         { "wire": "m12", "t": [0.35, 0.43], "reverse": true, "kind": "pk-2", "ring": "cne1" },
         { "wire": "c1p", "t": [0.43, 0.49], "kind": "pk-2", "ring": "v1p" },
-        { "wire": "c1d", "t": [0.56, 0.63], "reverse": true, "kind": "pk-bad" },
+        { "wire": "c1d", "t": [0.56, 0.63], "reverse": true, "kind": "pk-bad", "ring": "cne1" },
         { "wire": "c1p", "t": [0.84, 0.89], "reverse": true, "ring": "cne1" },
         { "wire": "c1s", "t": [0.89, 0.95], "ring": "v1s" }
       ],
@@ -335,7 +343,9 @@
         { "x": 32, "y": 386, "text": "shared with prod and dev", "anchor": "start" },
         { "x": 342, "y": 140, "text": "Dev to Prod: segments are isolated", "kind": "warn", "anchor": "middle", "t": [0.64, 0.8] }
       ],
-      "extra": "<g class=\"anim\" opacity=\"0\"><circle cx=\"342\" cy=\"84\" r=\"7.5\" fill=\"#DD344C\"/><path d=\"M339,81 L345,87 M345,81 L339,87\" stroke=\"#fff\" stroke-width=\"1.7\" fill=\"none\"/><animate attributeName=\"opacity\" dur=\"14s\" repeatCount=\"indefinite\" calcMode=\"discrete\" values=\"0;1;0\" keyTimes=\"0;.64;.8\"/></g>"
+      "marks": [
+        { "on": "cne1", "t": [0.64, 0.8] }
+      ]
     },
     {
       "id": "tg-gwlb",
@@ -351,9 +361,9 @@
         { "kind": "vpc", "x": 108, "y": 58, "w": 476, "h": 354, "label": "Application VPC", "note": "10.0.0.0/16" },
         { "kind": "az", "x": 164, "y": 80, "w": 408, "h": 154, "label": "Availability Zone A" },
         { "kind": "az", "x": 164, "y": 246, "w": 408, "h": 154, "label": "Availability Zone B" },
-        { "kind": "priv", "x": 176, "y": 104, "w": 180, "h": 122, "label": "Endpoint subnet", "note": "0.0.0.0/0 > igw" },
+        { "kind": "pub", "x": 176, "y": 104, "w": 180, "h": 122, "label": "Endpoint subnet", "note": "0.0.0.0/0 > igw" },
         { "kind": "pub", "x": 364, "y": 104, "w": 196, "h": 122, "label": "Public subnet", "note": "0.0.0.0/0 > gwlbe" },
-        { "kind": "priv", "x": 176, "y": 270, "w": 180, "h": 122, "label": "Endpoint subnet", "note": "0.0.0.0/0 > igw" },
+        { "kind": "pub", "x": 176, "y": 270, "w": 180, "h": 122, "label": "Endpoint subnet", "note": "0.0.0.0/0 > igw" },
         { "kind": "pub", "x": 364, "y": 270, "w": 196, "h": 122, "label": "Public subnet", "note": "0.0.0.0/0 > gwlbe" },
         { "kind": "vpc", "x": 608, "y": 58, "w": 320, "h": 354, "label": "Appliance VPC", "note": "10.100.0.0/16" },
         { "kind": "az", "x": 716, "y": 80, "w": 200, "h": 154, "label": "Availability Zone A" },
@@ -431,9 +441,9 @@
         { "kind": "vpc", "x": 108, "y": 58, "w": 568, "h": 254, "label": "VPC", "note": "10.0.0.0/16" },
         { "kind": "az", "x": 190, "y": 82, "w": 474, "h": 108, "label": "Availability Zone A" },
         { "kind": "az", "x": 190, "y": 198, "w": 474, "h": 108, "label": "Availability Zone B" },
-        { "kind": "priv", "x": 202, "y": 106, "w": 224, "h": 76, "label": "Firewall subnet", "note": "0.0.0.0/0 > igw" },
+        { "kind": "pub", "x": 202, "y": 106, "w": 224, "h": 76, "label": "Firewall subnet", "note": "0.0.0.0/0 > igw" },
         { "kind": "pub", "x": 438, "y": 106, "w": 214, "h": 76, "label": "Public subnet", "note": "0.0.0.0/0 > fw endpoint" },
-        { "kind": "priv", "x": 202, "y": 222, "w": 224, "h": 76, "label": "Firewall subnet", "note": "0.0.0.0/0 > igw" },
+        { "kind": "pub", "x": 202, "y": 222, "w": 224, "h": 76, "label": "Firewall subnet", "note": "0.0.0.0/0 > igw" },
         { "kind": "pub", "x": 438, "y": 222, "w": 214, "h": 76, "label": "Public subnet", "note": "0.0.0.0/0 > fw endpoint" },
         { "kind": "gen", "x": 700, "y": 110, "w": 232, "h": 136, "label": "AWS Network Firewall", "icon": "aws-svc-network-firewall" }
       ],

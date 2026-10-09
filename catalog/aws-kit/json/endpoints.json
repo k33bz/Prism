@@ -114,7 +114,7 @@
       "nodes": [
         { "id": "cli", "icon": "aws-res-client", "x": 40, "y": 90, "size": 32, "label": "On-premises client" },
         { "id": "dns", "icon": "aws-res-servers", "x": 40, "y": 236, "size": 32, "label": "On-premises DNS", "sub": "forwarder" },
-        { "id": "cgw", "icon": "aws-res-vpc-customer-gateway", "x": 100, "y": 150, "size": 32, "label": "Customer gateway" },
+        { "id": "cgw", "icon": "aws-res-vpc-customer-gateway", "x": 100, "y": 150, "size": 32, "label": "Customer router" },
         { "id": "dx", "icon": "aws-svc-direct-connect", "x": 214, "y": 92, "size": 40, "label": "AWS Direct Connect", "sub": "private VIF" },
         { "id": "vpn", "icon": "aws-svc-site-to-site-vpn", "x": 214, "y": 192, "size": 40, "label": "AWS Site-to-Site VPN", "wrap": 16 },
         { "id": "vgw", "icon": "aws-res-vpc-vpn-gateway", "x": 340, "y": 145, "size": 32, "label": "Virtual private gateway", "wrap": 16 },
@@ -164,7 +164,12 @@
         { "wire": "s2", "t": [0.644, 0.715], "ring": "s3" },
         { "wire": "g1", "t": [0.746, 0.787], "ring": "gwe" },
         { "wire": "g2", "t": [0.787, 0.848], "ring": "s3" },
-        { "wire": "bad1", "t": [0.889, 0.95], "kind": "pk-bad" }
+        {
+          "wire": "bad1",
+          "t": [0.889, 0.95],
+          "kind": "pk-bad",
+          "ring": { "x": 540, "y": 278, "r": 11 }
+        }
       ],
       "notes": [
         { "x": 234, "y": 180, "text": "or", "anchor": "middle" },
@@ -175,12 +180,14 @@
         { "x": 648, "y": 352, "text": "Not reachable from\non-premises, peered VPCs\nor Transit Gateway", "kind": "warn", "anchor": "start" },
         { "x": 548, "y": 108, "text": "returns the S3\nendpoint IPs", "anchor": "start", "t": [0.27, 0.45] }
       ],
-      "extra": "<circle cx=\"540\" cy=\"278\" r=\"7.5\" fill=\"#DD344C\"/><path d=\"M537,275 L543,281 M543,275 L537,281\" stroke=\"#fff\" stroke-width=\"1.7\" fill=\"none\"/>"
+      "marks": [
+        { "x": 540, "y": 278 }
+      ]
     },
     {
       "id": "ep-ecr-private",
       "name": "Private image pulls for Fargate",
-      "desc": "An Amazon ECS task on AWS Fargate starts in a private subnet with no NAT gateway or internet gateway. Its image pull uses four private paths: a token from ecr.api, the manifest from ecr.dkr, the layers from Amazon S3 through the gateway endpoint, and container logs to CloudWatch Logs through a logs endpoint. Fargate platform version 1.4.0 or later needs all of them; requests are orange and responses blue.",
+      "desc": "An Amazon ECS task on AWS Fargate starts in a private subnet with no NAT gateway or internet gateway. Its image pull uses three private paths, all required on Fargate platform version 1.4.0 or later: a token from ecr.api, the manifest from ecr.dkr and the layers from Amazon S3 through the gateway endpoint. A logs endpoint carries container logs to CloudWatch Logs, needed only with the awslogs log driver. Requests are orange and responses blue.",
       "aria": "Architecture diagram: an Amazon ECS task on AWS Fargate in a private subnet with no NAT gateway pulls its image through interface endpoints for ecr.api and ecr.dkr, downloads image layers from Amazon S3 through a gateway endpoint, and sends logs through an interface endpoint for CloudWatch Logs.",
       "wide": true,
       "w": 960,
@@ -285,18 +292,31 @@
         { "wire": "g1", "t": [0.411, 0.47], "reverse": true, "kind": "pk-2", "ring": "ec2" },
         { "wire": "g1", "t": [0.541, 0.599], "ring": "gwe" },
         { "wire": "trunk", "t": [0.599, 0.635] },
-        { "wire": "a1", "t": [0.635, 0.728], "kind": "pk-bad" },
-        { "wire": "n1", "t": [0.822, 0.94], "kind": "pk-bad" }
+        {
+          "wire": "a1",
+          "t": [0.635, 0.728],
+          "kind": "pk-bad",
+          "ring": { "x": 334, "y": 100, "r": 11 }
+        },
+        {
+          "wire": "n1",
+          "t": [0.822, 0.94],
+          "kind": "pk-bad",
+          "ring": { "x": 300, "y": 220, "r": 11 }
+        }
       ],
       "notes": [
         { "x": 84, "y": 262, "text": "Endpoint policy", "kind": "label", "anchor": "start" },
         { "x": 84, "y": 274, "text": "Allow s3:GetObject and s3:PutObject\non analytics-data only", "anchor": "start" },
         { "x": 270, "y": 262, "text": "Bucket policy on analytics-data", "kind": "label", "anchor": "start" },
         { "x": 270, "y": 274, "text": "Deny s3:* unless aws:SourceVpce\nequals vpce-0a1b2c3d", "anchor": "start" },
-        { "x": 334, "y": 90, "text": "denied", "kind": "warn", "anchor": "middle" },
-        { "x": 300, "y": 212, "text": "denied", "kind": "warn", "anchor": "middle" }
+        { "x": 334, "y": 89, "text": "denied", "kind": "warn", "anchor": "middle" },
+        { "x": 300, "y": 211, "text": "denied", "kind": "warn", "anchor": "middle" }
       ],
-      "extra": "<circle cx=\"334\" cy=\"100\" r=\"6.5\" fill=\"#DD344C\"/><path d=\"M331,97 L337,103 M337,97 L331,103\" stroke=\"#fff\" stroke-width=\"1.7\" fill=\"none\"/><circle cx=\"300\" cy=\"220\" r=\"6.5\" fill=\"#DD344C\"/><path d=\"M297,217 L303,223 M303,217 L297,223\" stroke=\"#fff\" stroke-width=\"1.7\" fill=\"none\"/><circle class=\"anim\" cx=\"334\" cy=\"100\" r=\"11\" fill=\"none\" stroke=\"#DD344C\" stroke-width=\"1.6\" opacity=\"0\"><animate attributeName=\"opacity\" dur=\"8s\" repeatCount=\"indefinite\" values=\"0;0;.9;0;0\" keyTimes=\"0;.729;.73;.83;1\"/><animate attributeName=\"r\" dur=\"8s\" repeatCount=\"indefinite\" values=\"11;11;11;18.7;18.7\" keyTimes=\"0;.729;.73;.83;1\"/></circle><circle class=\"anim\" cx=\"300\" cy=\"220\" r=\"11\" fill=\"none\" stroke=\"#DD344C\" stroke-width=\"1.6\" opacity=\"0\"><animate attributeName=\"opacity\" dur=\"8s\" repeatCount=\"indefinite\" values=\"0;0;.9;0;0\" keyTimes=\"0;.939;.94;.995;1\"/><animate attributeName=\"r\" dur=\"8s\" repeatCount=\"indefinite\" values=\"11;11;11;18.7;18.7\" keyTimes=\"0;.939;.94;.995;1\"/></circle>"
+      "marks": [
+        { "x": 334, "y": 100 },
+        { "x": 300, "y": 220 }
+      ]
     },
     {
       "id": "ep-private-api",
@@ -341,7 +361,12 @@
         { "wire": "g3", "t": [0.423, 0.493], "reverse": true, "kind": "pk-2", "ring": "pl" },
         { "wire": "g2", "t": [0.493, 0.552], "reverse": true, "kind": "pk-2", "ring": "enp" },
         { "wire": "g1", "t": [0.552, 0.611], "reverse": true, "kind": "pk-2", "ring": "ec2" },
-        { "wire": "n", "t": [0.705, 0.94], "kind": "pk-bad" }
+        {
+          "wire": "n",
+          "t": [0.705, 0.94],
+          "kind": "pk-bad",
+          "ring": { "x": 350, "y": 124, "r": 11 }
+        }
       ],
       "notes": [
         { "x": 350, "y": 238, "text": "Resource policy", "kind": "label", "anchor": "middle" },
@@ -349,7 +374,9 @@
         { "x": 360, "y": 108, "text": "403 Forbidden", "kind": "warn", "anchor": "start" },
         { "x": 88, "y": 246, "text": "Private DNS: abc123.execute-api\n.us-east-1.amazonaws.com\nresolves to the endpoint ENIs", "anchor": "start" }
       ],
-      "extra": "<circle cx=\"350\" cy=\"124\" r=\"6.5\" fill=\"#DD344C\"/><path d=\"M347,121 L353,127 M353,121 L347,127\" stroke=\"#fff\" stroke-width=\"1.7\" fill=\"none\"/><circle class=\"anim\" cx=\"350\" cy=\"124\" r=\"11\" fill=\"none\" stroke=\"#DD344C\" stroke-width=\"1.6\" opacity=\"0\"><animate attributeName=\"opacity\" dur=\"8s\" repeatCount=\"indefinite\" values=\"0;0;.9;0;0\" keyTimes=\"0;.929;.93;.995;1\"/><animate attributeName=\"r\" dur=\"8s\" repeatCount=\"indefinite\" values=\"11;11;11;18.7;18.7\" keyTimes=\"0;.929;.93;.995;1\"/></circle>"
+      "marks": [
+        { "x": 350, "y": 124 }
+      ]
     },
     {
       "id": "ep-ssm-private",

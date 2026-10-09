@@ -53,7 +53,11 @@
         { "appear": "ec2r", "t": [0.61, 0.98], "ghost": true },
         { "appear": "rdsr", "t": [0.61, 0.98], "ghost": true }
       ],
-      "extra": "<text class=\"t-wire\" x=\"462\" y=\"22\" style=\"text-anchor:end\">RPO / RTO: hours</text><text class=\"t-wire\" x=\"356\" y=\"186\" style=\"text-anchor:end\">Cross-Region copy</text><text class=\"t-wire\" x=\"318\" y=\"247\">restore</text>"
+      "notes": [
+        { "x": 462, "y": 22, "text": "RPO / RTO: hours", "anchor": "end" },
+        { "x": 356, "y": 186, "text": "Cross-Region copy", "anchor": "end" },
+        { "x": 318, "y": 247, "text": "restore" }
+      ]
     },
     {
       "id": "mr-pilot",
@@ -129,7 +133,12 @@
         { "glow": "be1", "t": [0.54, 0.98] },
         { "glow": "be2", "t": [0.54, 0.98] }
       ],
-      "extra": "<text class=\"t-wire\" x=\"942\" y=\"22\" style=\"text-anchor:end\">RPO / RTO: tens of minutes</text><text class=\"t-wire\" x=\"275\" y=\"143\">primary</text><text class=\"t-wire\" x=\"275\" y=\"335\">secondary</text><text class=\"t-wire\" x=\"830\" y=\"188\" style=\"text-anchor:start\">Asynchronous</text><text class=\"t-wire\" x=\"830\" y=\"198\" style=\"text-anchor:start\">replication</text>"
+      "notes": [
+        { "x": 942, "y": 22, "text": "RPO / RTO: tens of minutes", "anchor": "end" },
+        { "x": 275, "y": 143, "text": "primary" },
+        { "x": 275, "y": 335, "text": "secondary" },
+        { "x": 830, "y": 188, "text": "Asynchronous\nreplication", "anchor": "start" }
+      ]
     },
     {
       "id": "mr-warm",
@@ -202,7 +211,12 @@
         { "glow": "b2", "t": [0.54, 0.98] },
         { "glow": "be2", "t": [0.54, 0.98] }
       ],
-      "extra": "<text class=\"t-wire\" x=\"942\" y=\"22\" style=\"text-anchor:end\">RPO / RTO: minutes</text><text class=\"t-wire\" x=\"275\" y=\"143\">primary</text><text class=\"t-wire\" x=\"275\" y=\"335\">secondary</text><text class=\"t-wire\" x=\"830\" y=\"188\" style=\"text-anchor:start\">Asynchronous</text><text class=\"t-wire\" x=\"830\" y=\"198\" style=\"text-anchor:start\">replication</text>"
+      "notes": [
+        { "x": 942, "y": 22, "text": "RPO / RTO: minutes", "anchor": "end" },
+        { "x": 275, "y": 143, "text": "primary" },
+        { "x": 275, "y": 335, "text": "secondary" },
+        { "x": 830, "y": 188, "text": "Asynchronous\nreplication", "anchor": "start" }
+      ]
     },
     {
       "id": "mr-active",
@@ -277,7 +291,12 @@
         { "fade": "rep", "t": [0.48, 0.98] },
         { "glow": "ra", "t": [0.52, 0.98] }
       ],
-      "extra": "<text class=\"t-wire\" x=\"942\" y=\"22\" style=\"text-anchor:end\">RPO / RTO: real-time</text><text class=\"t-wire\" x=\"275\" y=\"143\">nearest</text><text class=\"t-wire\" x=\"275\" y=\"335\">nearest</text><text class=\"t-wire\" x=\"830\" y=\"188\" style=\"text-anchor:start\">Global tables</text><text class=\"t-wire\" x=\"830\" y=\"198\" style=\"text-anchor:start\">replication</text>"
+      "notes": [
+        { "x": 942, "y": 22, "text": "RPO / RTO: real-time", "anchor": "end" },
+        { "x": 275, "y": 143, "text": "nearest" },
+        { "x": 275, "y": 335, "text": "nearest" },
+        { "x": 830, "y": 188, "text": "Global tables\nreplication", "anchor": "start" }
+      ]
     },
     {
       "id": "mr-r53-failover",
@@ -327,7 +346,10 @@
         { "fade": "p1", "t": [0.54, 0.98] },
         { "glow": "p2", "t": [0.56, 0.98] }
       ],
-      "extra": "<text class=\"t-wire\" x=\"253\" y=\"96\">primary</text><text class=\"t-wire\" x=\"253\" y=\"106\">health check</text><text class=\"t-wire\" x=\"253\" y=\"210\">secondary</text>"
+      "notes": [
+        { "x": 253, "y": 96, "text": "primary\nhealth check" },
+        { "x": 253, "y": 210, "text": "secondary" }
+      ]
     },
     {
       "id": "mr-gax",
@@ -374,7 +396,10 @@
         { "fade": "g1", "t": [0.44, 0.98] },
         { "glow": "g2", "t": [0.48, 0.98] }
       ],
-      "extra": "<text class=\"t-wire\" x=\"230\" y=\"96\">AWS global network</text><text class=\"t-wire\" x=\"230\" y=\"210\">AWS global network</text>"
+      "notes": [
+        { "x": 230, "y": 96, "text": "AWS global network" },
+        { "x": 230, "y": 210, "text": "AWS global network" }
+      ]
     },
     {
       "id": "mr-s3-crr",
@@ -418,7 +443,11 @@
         { "fade": "rep", "t": [0.5, 0.98] },
         { "glow": "mb", "t": [0.54, 0.98] }
       ],
-      "extra": "<text class=\"t-wire\" x=\"252\" y=\"96\">active</text><text class=\"t-wire\" x=\"252\" y=\"215\">passive, failover</text><text class=\"t-wire\" x=\"396\" y=\"170\" style=\"text-anchor:start\">Cross-Region</text><text class=\"t-wire\" x=\"396\" y=\"180\" style=\"text-anchor:start\">Replication</text><text class=\"t-wire\" x=\"396\" y=\"190\" style=\"text-anchor:start\">(two-way)</text>"
+      "notes": [
+        { "x": 252, "y": 96, "text": "active" },
+        { "x": 252, "y": 215, "text": "passive, failover" },
+        { "x": 396, "y": 170, "text": "Cross-Region\nReplication\n(two-way)", "anchor": "start" }
+      ]
     },
     {
       "id": "mr-tgw-peering",
@@ -469,7 +498,10 @@
         { "wire": "peer", "t": [0.62, 0.82], "reverse": true, "kind": "pk-2", "ring": "tgw1" },
         { "wire": "e1", "t": [0.84, 0.92], "reverse": true, "kind": "pk-2", "ring": "ec1" }
       ],
-      "extra": "<text class=\"t-wire\" x=\"480\" y=\"210\">Peering attachment</text><text class=\"t-wire\" x=\"480\" y=\"221\">static routes</text>"
+      "notes": [
+        { "x": 480, "y": 210, "text": "Peering attachment" },
+        { "x": 480, "y": 221, "text": "static routes" }
+      ]
     }
   ]
 }

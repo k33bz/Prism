@@ -1,7 +1,7 @@
 // Service endpoints & private access family: ep-* diagrams. Build: node catalog/aws-kit/awd.mjs build catalog/aws-kit/specs/endpoints.mjs
 // Authoring note: coordinates come from small helpers (node centers, edge ports, H/V paths) so every diagram sits on an explicit grid.
-// Text uses the kit's `notes`, group `note` and wire label offsets; raw SVG in `extra` is used only for red "blocked" marks
-// and their timed pulses (the kit has no red ring or red mark primitive).
+// Text uses the kit's `notes`, group `note` and wire label offsets; blocked traffic uses the kit's `marks` (a red X) and red
+// rings on the failed packets' timeline entries. No raw `extra`.
 // Already covered elsewhere (vpc.mjs): vp-endpoints (basic gateway + interface endpoint) and vp-privatelink (provider/consumer service).
 
 // ---- icon ids ----
@@ -28,22 +28,6 @@ const fit = (tl, end = 0.93) => {
   const r = (n) => Math.round(n * k * 1000) / 1000;
   return tl.map((e) => ({ ...e, t: [r(e.t[0]), r(e.t[1])] }));
 };
-// raw-SVG helpers (spec `extra` escape hatch): red blocked marks only
-const RED = '#DD344C';
-const xmark = (cx, cy, r = 7.5) =>
-  `<circle cx="${cx}" cy="${cy}" r="${r}" fill="${RED}"/><path d="M${cx - 3},${cy - 3} L${cx + 3},${cy + 3} M${cx + 3},${cy - 3} L${cx - 3},${cy + 3}" stroke="#fff" stroke-width="1.7" fill="none"/>`;
-const fmt = (n) => String(Math.round(n * 1000) / 1000).replace(/^0\./, '.');
-// a group shown only during [a,b] of the diagram clock (dur seconds)
-const timed = (a, b, dur, svg) =>
-  `<g class="anim" opacity="0">${svg}<animate attributeName="opacity" dur="${dur}s" repeatCount="indefinite" calcMode="discrete" values="0;1;0" keyTimes="0;${fmt(a)};${fmt(b)}"/></g>`;
-// one-shot red pulse ring on the diagram clock
-const pulse = (cx, cy, r0, t, dur) => {
-  const t2 = Math.min(0.995, t + 0.1);
-  return `<circle class="anim" cx="${cx}" cy="${cy}" r="${r0}" fill="none" stroke="${RED}" stroke-width="1.6" opacity="0">` +
-    `<animate attributeName="opacity" dur="${dur}s" repeatCount="indefinite" values="0;0;.9;0;0" keyTimes="0;${fmt(t - 0.001)};${fmt(t)};${fmt(t2)};1"/>` +
-    `<animate attributeName="r" dur="${dur}s" repeatCount="indefinite" values="${r0};${r0};${r0};${r0 * 1.7};${r0 * 1.7}" keyTimes="0;${fmt(t - 0.001)};${fmt(t)};${fmt(t2)};1"/></circle>`;
-};
-
 const D = [];
 
 // ---------------------------------------------------------------------------------------------
@@ -136,7 +120,9 @@ D.push((() => {
   const dur = 10;
   const cli = nd('cli', 'aws-res-client', 56, 106, 'On-premises client');
   const dns = nd('dns', 'aws-res-servers', 56, 252, 'On-premises DNS', { sub: 'forwarder' });
-  const cgw = nd('cgw', 'aws-res-vpc-customer-gateway', 116, 166, 'Customer gateway');
+  // one on-premises router serves both links: "customer router" is right for Direct Connect and for the VPN device
+  // ("customer gateway" is only the VPN term)
+  const cgw = nd('cgw', 'aws-res-vpc-customer-gateway', 116, 166, 'Customer router');
   const dx = nd('dx', 'aws-svc-direct-connect', 234, 112, 'AWS Direct Connect', { size: 40, sub: 'private VIF' });
   const vpn = nd('vpn', 'aws-svc-site-to-site-vpn', 234, 212, 'AWS Site-to-Site VPN', { size: 40, wrap: 16 });
   const vgw = nd('vgw', 'aws-res-vpc-vpn-gateway', 356, 161, 'Virtual private gateway', { wrap: 16 });
@@ -192,7 +178,7 @@ D.push((() => {
       { wire: 'c1', t: [0.47, 0.5] }, { wire: 'h1', t: [0.5, 0.55], ring: 'dx' }, { wire: 'h2', t: [0.55, 0.59], ring: 'vgw' },
       { wire: 's1', t: [0.59, 0.63], ring: 's3ep' }, { wire: 's2', t: [0.63, 0.7], ring: 's3' },
       { wire: 'g1', t: [0.73, 0.77], ring: 'gwe' }, { wire: 'g2', t: [0.77, 0.83], ring: 's3' },
-      { wire: 'bad1', t: [0.87, 0.93], kind: 'pk-bad' },
+      { wire: 'bad1', t: [0.87, 0.93], kind: 'pk-bad', ring: { x: 540, y: 278, r: 11 } },
     ], 0.95),
     notes: [
       { x: 234, y: 180, text: 'or', anchor: 'middle' },
@@ -203,7 +189,7 @@ D.push((() => {
       { x: 648, y: 352, text: 'Not reachable from\non-premises, peered VPCs\nor Transit Gateway', kind: 'warn', anchor: 'start' },
       { x: 548, y: 108, text: 'returns the S3\nendpoint IPs', anchor: 'start', t: [0.27, 0.45] },
     ],
-    extra: xmark(540, 278),
+    marks: [{ x: 540, y: 278 }],
   };
 })());
 
@@ -249,18 +235,19 @@ D.push((() => {
       { wire: 'g1', t: [0.04, 0.09], ring: 'gwe' }, { wire: 'trunk', t: [0.09, 0.12] }, { wire: 'b', t: [0.12, 0.2], ring: 'data' },
       { wire: 'b', t: [0.24, 0.32], reverse: true, kind: 'pk-2' }, { wire: 'trunk', t: [0.32, 0.35], reverse: true, kind: 'pk-2' },
       { wire: 'g1', t: [0.35, 0.4], reverse: true, kind: 'pk-2', ring: 'ec2' },
-      { wire: 'g1', t: [0.46, 0.51], ring: 'gwe' }, { wire: 'trunk', t: [0.51, 0.54] }, { wire: 'a1', t: [0.54, 0.62], kind: 'pk-bad' },
-      { wire: 'n1', t: [0.7, 0.8], kind: 'pk-bad' },
+      { wire: 'g1', t: [0.46, 0.51], ring: 'gwe' }, { wire: 'trunk', t: [0.51, 0.54] },
+      { wire: 'a1', t: [0.54, 0.62], kind: 'pk-bad', ring: { x: 334, y: 100, r: 11 } },
+      { wire: 'n1', t: [0.7, 0.8], kind: 'pk-bad', ring: { x: 300, y: 220, r: 11 } },
     ], 0.94),
     notes: [
       { x: 84, y: 262, text: 'Endpoint policy', kind: 'label', anchor: 'start' },
       { x: 84, y: 274, text: 'Allow s3:GetObject and s3:PutObject\non analytics-data only', anchor: 'start' },
       { x: 270, y: 262, text: 'Bucket policy on analytics-data', kind: 'label', anchor: 'start' },
       { x: 270, y: 274, text: 'Deny s3:* unless aws:SourceVpce\nequals vpce-0a1b2c3d', anchor: 'start' },
-      { x: 334, y: 90, text: 'denied', kind: 'warn', anchor: 'middle' },
-      { x: 300, y: 212, text: 'denied', kind: 'warn', anchor: 'middle' },
+      { x: 334, y: 89, text: 'denied', kind: 'warn', anchor: 'middle' },
+      { x: 300, y: 211, text: 'denied', kind: 'warn', anchor: 'middle' },
     ],
-    extra: xmark(334, 100, 6.5) + xmark(300, 220, 6.5) + pulse(334, 100, 11, 0.73, dur) + pulse(300, 220, 11, 0.94, dur),
+    marks: [{ x: 334, y: 100 }, { x: 300, y: 220 }],
   };
 })());
 
@@ -305,7 +292,7 @@ D.push((() => {
       { wire: 'g4', t: [0.2, 0.26], ring: 'fn' },
       { wire: 'g4', t: [0.3, 0.36], reverse: true, kind: 'pk-2', ring: 'api' }, { wire: 'g3', t: [0.36, 0.42], reverse: true, kind: 'pk-2', ring: 'pl' },
       { wire: 'g2', t: [0.42, 0.47], reverse: true, kind: 'pk-2', ring: 'enp' }, { wire: 'g1', t: [0.47, 0.52], reverse: true, kind: 'pk-2', ring: 'ec2' },
-      { wire: 'n', t: [0.6, 0.8], kind: 'pk-bad' },
+      { wire: 'n', t: [0.6, 0.8], kind: 'pk-bad', ring: { x: 350, y: 124, r: 11 } },
     ], 0.94),
     notes: [
       { x: 350, y: 238, text: 'Resource policy', kind: 'label', anchor: 'middle' },
@@ -313,7 +300,7 @@ D.push((() => {
       { x: 360, y: 108, text: '403 Forbidden', kind: 'warn', anchor: 'start' },
       { x: 88, y: 246, text: 'Private DNS: abc123.execute-api\n.us-east-1.amazonaws.com\nresolves to the endpoint ENIs', anchor: 'start' },
     ],
-    extra: xmark(350, 124, 6.5) + pulse(350, 124, 11, 0.93, dur),
+    marks: [{ x: 350, y: 124 }],
   };
 })());
 
@@ -339,7 +326,7 @@ D.push((() => {
     id: 'ep-ecr-private',
     name: 'Private image pulls for Fargate',
     aria: 'Architecture diagram: an Amazon ECS task on AWS Fargate in a private subnet with no NAT gateway pulls its image through interface endpoints for ecr.api and ecr.dkr, downloads image layers from Amazon S3 through a gateway endpoint, and sends logs through an interface endpoint for CloudWatch Logs.',
-    desc: 'An Amazon ECS task on AWS Fargate starts in a private subnet with no NAT gateway or internet gateway. Its image pull uses four private paths: a token from ecr.api, the manifest from ecr.dkr, the layers from Amazon S3 through the gateway endpoint, and container logs to CloudWatch Logs through a logs endpoint. Fargate platform version 1.4.0 or later needs all of them; requests are orange and responses blue.',
+    desc: 'An Amazon ECS task on AWS Fargate starts in a private subnet with no NAT gateway or internet gateway. Its image pull uses three private paths, all required on Fargate platform version 1.4.0 or later: a token from ecr.api, the manifest from ecr.dkr and the layers from Amazon S3 through the gateway endpoint. A logs endpoint carries container logs to CloudWatch Logs, needed only with the awslogs log driver. Requests are orange and responses blue.',
     wide: true, w: 960, h: 412, dur,
     groups: [
       { kind: 'cloud', x: 8, y: 8, w: 944, h: 396 },
