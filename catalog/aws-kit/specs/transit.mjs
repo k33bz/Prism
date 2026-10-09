@@ -105,9 +105,9 @@ const segmentation = (() => {
       { id: 'rD', d: P([292, 244], [268, 244], [268, 338], R(attD, 8)) },
     ],
     steps: [
-      { n: 1, at: 'aP', f: 0.5, dy: -11 },
-      { n: 2, at: 'dP', f: 0.48, dx: 11, dy: 0 },
-      { n: 3, at: 'aD', f: 0.5, dy: -11 },
+      { n: 1, at: 'aP', f: 0.5, dy: -11, text: 'A Prod instance sends traffic to shared services. AWS Transit Gateway looks it up in the Prod route table, the table the Prod attachment is associated with.' },
+      { n: 2, at: 'dP', f: 0.48, dx: 11, dy: 0, text: 'AWS Transit Gateway forwards it to the Shared attachment on the propagated 10.30.0.0/16 route. The reply is looked up in the Shared services route table.' },
+      { n: 3, at: 'aD', f: 0.5, dy: -11, text: 'A Dev instance sends traffic to Prod. The Dev route table holds a static blackhole route for 10.10.0.0/16, so AWS Transit Gateway drops the packet.' },
     ],
     timeline: fit([
       { wire: 'pa', t: [0.03, 0.07], ring: 'attP' },
@@ -172,9 +172,9 @@ const connect = (() => {
       { id: 'rt', d: P(Bi(tgw, 0, 4 + 26), [680, 294], [770, 294]), dashed: true, arrow: false },
     ],
     steps: [
-      { n: 1, at: 'wa', f: 0.62, dx: 11, dy: 0 },
-      { n: 2, at: 'gre', f: 0.2, dy: -11 },
-      { n: 3, at: 'tw', f: 0.5, dy: -11 },
+      { n: 1, at: 'wa', f: 0.62, dx: 11, dy: 0, text: 'The SD-WAN edge in Branch A sends traffic for the workload VPC over the SD-WAN overlay, across the internet, to the SD-WAN virtual appliance.' },
+      { n: 2, at: 'gre', f: 0.2, dy: -11, text: 'The appliance sends the traffic through the GRE tunnel of the Connect peer, whose two BGP sessions earlier advertised 172.16.0.0/16 and learned 10.1.0.0/16.' },
+      { n: 3, at: 'tw', f: 0.5, dy: -11, text: 'AWS Transit Gateway matches 10.1.0.0/16, propagated from the workload VPC attachment, and forwards the traffic to the instance in the workload VPC.' },
     ],
     timeline: [
       { wire: 'bgp', t: [0.03, 0.10], kind: 'pk-2', ring: 'conn' },
@@ -252,9 +252,9 @@ const dxgw = (() => {
       { id: 'u2a', d: P(R(a2a), L(v2a)), arrow: false }, { id: 'u2b', d: P(R(a2b), L(v2b)), arrow: false },
     ],
     steps: [
-      { n: 1, at: 'rd', f: 0.62, dy: -11 },
-      { n: 2, at: 'g1', f: 0.5, dx: 11, dy: 0 },
-      { n: 3, at: 'g2', f: 0.5, dx: 11, dy: 0 },
+      { n: 1, at: 'rd', f: 0.62, dy: -11, text: 'The customer gateway sends traffic from the on-premises servers over a transit VIF on AWS Direct Connect to the Direct Connect gateway.' },
+      { n: 2, at: 'g1', f: 0.5, dx: 11, dy: 0, text: 'The Direct Connect gateway sends traffic for 10.1.0.0/16 and 10.2.0.0/16 to AWS Transit Gateway in us-east-1, whose association allows those prefixes.' },
+      { n: 3, at: 'g2', f: 0.5, dx: 11, dy: 0, text: 'The Direct Connect gateway sends 10.3.0.0/16 and 10.4.0.0/16 to the Transit Gateway in eu-west-1. Each Transit Gateway delivers to its VPCs, and replies return the same way.' },
     ],
     timeline: [
       { wire: 'sr', t: [0.03, 0.06] },
@@ -317,10 +317,10 @@ const cloudwan = (() => {
     wide: true, w: 960, h: 440, dur: 14,
     groups, nodes, wires,
     steps: [
-      { n: 1, at: 'c1p', f: 0.16, dx: 0, dy: -11 },
-      { n: 2, at: 'm12', f: 0.62, dy: 11 },
-      { n: 3, at: 'c2p', f: 0.82, dx: 0, dy: -11 },
-      { n: 4, at: 'c1d', f: 0.4, dx: 11, dy: 0 },
+      { n: 1, at: 'c1p', f: 0.16, dx: 0, dy: -11, text: 'The Prod VPC in us-east-1, attached to the prod segment by its tag, sends traffic for the Prod VPC in eu-west-1 to the core network edge in its Region.' },
+      { n: 2, at: 'm12', f: 0.62, dy: 11, text: 'The core network edge carries the traffic over the AWS global network to the core network edge in eu-west-1, within the prod segment.' },
+      { n: 3, at: 'c2p', f: 0.82, dx: 0, dy: -11, text: 'The eu-west-1 core network edge delivers the traffic to the Prod VPC there, and the reply returns the same way.' },
+      { n: 4, at: 'c1d', f: 0.4, dx: 11, dy: 0, text: 'The core network edge drops a Dev VPC packet bound for Prod because the segments are isolated. Prod still reaches the shared segment, which is shared with both.' },
     ],
     timeline: [
       { wire: 'c1p', t: [0.03, 0.09], reverse: true, ring: 'cne1' },
@@ -384,9 +384,9 @@ const lattice = (() => {
       { id: 's3', d: P(R(sv[2]), L(tg3)), both: true },
     ],
     steps: [
-      { n: 1, at: 'a1', f: 0.62, dy: -11 },
-      { n: 2, at: 's1', f: 0.2, dy: -11 },
-      { n: 3, at: 's1', f: 0.9, dy: -11 },
+      { n: 1, at: 'a1', f: 0.62, dy: -11, text: 'Clients in VPC A and VPC B, both 10.0.0.0/16, call services by DNS name. Each VPC association sends the requests into the VPC Lattice service network.' },
+      { n: 2, at: 's1', f: 0.2, dy: -11, text: 'Amazon VPC Lattice evaluates the service network and service auth policies, then routes each request to the target group of the service in another account.' },
+      { n: 3, at: 's1', f: 0.9, dy: -11, text: 'The EC2 and ECS targets in Account B and Account D respond, and VPC Lattice returns the responses to the clients.' },
     ],
     timeline: [
       { wire: 'a1', t: [0.05, 0.14], ring: 'sv1' }, { wire: 'b3', t: [0.05, 0.14], ring: 'sv3' },
@@ -449,11 +449,11 @@ const gwlb = (() => {
       { id: 'q2', d: P(R(gw, 8), [702, 248], [702, Bz.f2.cy], L(Bz.f2)), both: true },
     ],
     steps: [
-      { n: 1, at: 'ni', f: 0.5, dy: -11 },
-      { n: 2, at: 'ga', f: 0.8, dy: -11 },
-      { n: 3, at: 'ge', f: 0.2, dy: -11 },
-      { n: 4, at: 'p1', f: 0.5, dx: 11, dy: 0 },
-      { n: 5, at: 'pa', f: 0.5, dy: -11 },
+      { n: 1, at: 'ni', f: 0.5, dy: -11, text: 'Traffic from the internet arrives at the internet gateway of the application VPC.' },
+      { n: 2, at: 'ga', f: 0.8, dy: -11, text: 'The internet gateway route table (edge association) sends traffic for the public subnet in AZ A to the Gateway Load Balancer endpoint in that AZ.' },
+      { n: 3, at: 'ge', f: 0.2, dy: -11, text: 'The Gateway Load Balancer endpoint sends the traffic over AWS PrivateLink to the Gateway Load Balancer in the appliance VPC.' },
+      { n: 4, at: 'p1', f: 0.5, dx: 11, dy: 0, text: 'The Gateway Load Balancer sends it to a firewall appliance in a GENEVE tunnel and gets it back after inspection. Flow stickiness keeps each flow on one appliance.' },
+      { n: 5, at: 'pa', f: 0.5, dy: -11, text: 'The endpoint delivers the inspected traffic to the instance. The reply follows the subnet default route back through the same endpoint and appliance.' },
     ],
     timeline: [
       { wire: 'ni', t: [0.02, 0.05] },
@@ -516,9 +516,9 @@ const nfwDist = (() => {
       { id: 'fb', d: P(R(Bz.fw), L(Bz.ec)), both: true },
     ],
     steps: [
-      { n: 1, at: 'ni', f: 0.5, dy: -11 },
-      { n: 2, at: 'ia', f: 0.7, dy: -11 },
-      { n: 3, at: 'fa', f: 0.5, dy: -11 },
+      { n: 1, at: 'ni', f: 0.5, dy: -11, text: 'Traffic from the internet arrives at the internet gateway.' },
+      { n: 2, at: 'ia', f: 0.7, dy: -11, text: 'The internet gateway route table (edge association) sends traffic for each public subnet to the firewall endpoint in its AZ, and AWS Network Firewall applies the firewall policy.' },
+      { n: 3, at: 'fa', f: 0.5, dy: -11, text: 'The firewall endpoint forwards allowed traffic to the instances. Their subnet default route points back at the same endpoint, so the replies are inspected too.' },
     ],
     timeline: [
       { wire: 'ni', t: [0.03, 0.07] },
@@ -569,9 +569,9 @@ const privateNat = (() => {
       { id: 'at', d: P(T(alb), B(tgt)), both: true },
     ],
     steps: [
-      { n: 1, at: 'cn', f: 0.5, dx: 11, dy: 0 },
-      { n: 2, at: 'nt', f: 0.5, dy: -11 },
-      { n: 3, at: 'at', f: 0.5, dx: 11, dy: 0 },
+      { n: 1, at: 'cn', f: 0.5, dx: 11, dy: 0, text: 'The instance in VPC A sends to the load balancer at 100.64.2.10 in VPC B. Its subnet route sends 100.64.2.0/24 to the private NAT gateway.' },
+      { n: 2, at: 'nt', f: 0.5, dy: -11, text: 'The private NAT gateway rewrites the source to its routable address, 100.64.1.7, and AWS Transit Gateway forwards the request on a static route to VPC B.' },
+      { n: 3, at: 'at', f: 0.5, dx: 11, dy: 0, text: 'The Application Load Balancer sends the request to the target 10.0.0.8 in the non-routable subnet, and the reply returns the same way.' },
     ],
     timeline: [
       { wire: 'cn', t: [0.05, 0.13], ring: 'nat' },
@@ -628,7 +628,7 @@ const ipam = (() => {
       { id: 'im', d: P(R(ipamN), [96, 62]), dashed: true },
       { id: 'rq', d: P(R(acct), L(nv)), both: true, label: 'new VPC /16', labelAt: 0.78 },
     ],
-    steps: [{ n: 1, at: 'rq', f: 0.16, dy: -12 }],
+    steps: [{ n: 1, at: 'rq', f: 0.16, dy: -12, text: 'Account D creates a VPC with a /16 from the us-east-1 pool it received through AWS RAM. IPAM allocates 10.2.0.0/16, a free block, so the VPC cannot overlap the others.' }],
     timeline: [
       { wire: 'rq', t: [0.05, 0.17] },
       { ring: 'nv', t: [0.19, 0.22], kind: 'pk-2' },
