@@ -31,21 +31,38 @@ const fmt = (e) => `${e.path}: ${e.message}`;
 
 /**
  * Build one diagram spec: schema check, the kit's input checks (checkSpec), then validation of the
- * markup. { id, svg (standalone document), html (the gallery's <svg class="awd">), errors };
- * svg and html are null whenever errors is not empty.
+ * markup. { id, svg (standalone document), html (the gallery's <svg class="awd">), errors, lint };
+ * svg and html are null whenever errors is not empty. lint holds the layout findings
+ * (catalog/aws-kit/lint.mjs): the drawing is returned with them, but the gallery build rejects
+ * any of severity error.
  */
 function buildOne(kit, d, opts) {
-  const out = { id: d && typeof d === 'object' && typeof d.id === 'string' ? d.id : null, svg: null, html: null, errors: [] };
+  const out = { id: d && typeof d === 'object' && typeof d.id === 'string' ? d.id : null, svg: null, html: null, errors: [], lint: [] };
   if (!d || typeof d !== 'object' || Array.isArray(d)) { out.errors.push('(root): a diagram must be an object'); return out; }
   out.errors.push(...kit.spec.validateDiagram(d).map(fmt));
   if (out.errors.length) return out;
   try {
     const html = kit.awd.diagram(d);
     out.errors.push(...kit.awd.validate(html));
-    if (!out.errors.length) { out.html = html; out.svg = kit.awd.standalone(d, opts); }
+    if (!out.errors.length) { out.html = html; out.svg = kit.awd.standalone(d, opts); out.lint = kit.awd.lint(d); }
   } catch (err) {
     out.errors.push(err.message);
   }
+  return out;
+}
+
+/**
+ * Lint one diagram spec: { id, errors (schema and input checks), findings, counts, clean }.
+ * clean means no finding of severity error (the bar the gallery build applies).
+ */
+export function lintDiagram(kit, d) {
+  const out = { id: d && typeof d === 'object' && typeof d.id === 'string' ? d.id : null, errors: [], findings: [], counts: { error: 0, warn: 0, info: 0 }, clean: false };
+  if (!d || typeof d !== 'object' || Array.isArray(d)) { out.errors.push('(root): a diagram must be an object'); return out; }
+  out.errors.push(...kit.spec.validateDiagram(d).map(fmt));
+  if (out.errors.length) return out;
+  try { out.findings = kit.awd.lint(d); } catch (err) { out.errors.push(err.message); return out; }
+  for (const f of out.findings) out.counts[f.severity]++;
+  out.clean = out.counts.error === 0;
   return out;
 }
 

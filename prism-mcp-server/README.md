@@ -75,7 +75,7 @@ The Messages API accepts local MCP servers via the `mcp_servers` parameter (stdi
 
 ---
 
-## Tools (33)
+## Tools (34)
 
 ### Discovery & search (11)
 | Tool | Purpose |
@@ -160,6 +160,7 @@ Diagrams as data. A diagram is a JSON spec (schema: `catalog/aws-kit/spec.schema
 |------|---------|
 | `build_diagram` | Build one diagram spec, or every diagram of a family (`{ version: 1, section, diagrams }`). Runs the schema and the kit's input checks and returns `{ id, svg, html, errors }`: `svg` is one self-contained SVG document (kit CSS, only the icons it uses, the spec in `<metadata id="awd-spec">`; `theme`: auto, light or dark; `still`: no packets), `html` is the bare `<svg class="awd">` the gallery embeds. Both are null when `errors` is not empty (typos come back as `nodes[0].lable: unknown property (did you mean label?)`). |
 | `get_diagram_spec` | The JSON spec of one gallery diagram by catalog id (`aws-sl-api`) or spec id (`sl-api`), from `catalog/aws-kit/json/`. Far smaller than the rendered `get_effect` html, and the starting point for an edited copy passed to `build_diagram`. Unknown ids return `not_found` with suggestions. |
+| `lint_diagram` | Layout findings for a diagram spec or a gallery diagram id, measured on the drawn markup with Arial's real widths: `{ id, errors, findings: [{ severity, code, message, at }], counts, clean }`. Errors are what the gallery build rejects (text across a frame edge, wires through labels or icons, badges on icons, off-canvas...); `build_diagram` returns the same findings as `lint`. |
 
 Full parameter schemas are returned by `tools/list`. Per-tool example calls live in [`examples/`](./examples).
 

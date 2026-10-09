@@ -103,3 +103,23 @@ test('get_diagram_spec: unknown ids get suggestions', async () => {
   await assert.rejects(call('get_diagram_spec', { id: 'aws-sl-apii' }), (e) => e instanceof ToolError && e.code === 'not_found' && e.data.suggestions.includes('sl-api'));
   await assert.rejects(call('get_diagram_spec', { id: ' ' }), (e) => e instanceof ToolError && e.code === 'invalid_argument');
 });
+
+test('lint_diagram: gallery diagrams are clean; a label across a frame edge is an error', async () => {
+  const g = await call('lint_diagram', { id: 'aws-tt-classic' });
+  assert.equal(g.id, 'tt-classic');
+  assert.equal(g.clean, true);
+  assert.equal(g.counts.error, 0);
+  const bad = { ...probe(), groups: [{ kind: 'vpc', x: 40, y: 10, w: 300, h: 200 }] };   // the frame's left edge runs through the Lambda label
+  const r = await call('lint_diagram', { spec: bad });
+  assert.equal(r.clean, false);
+  assert.ok(r.findings.some((f) => f.severity === 'error' && f.code === 'text-on-border' && /AWS Lambda/.test(f.message)), JSON.stringify(r.findings));
+  await assert.rejects(call('lint_diagram', {}), (e) => e instanceof ToolError && /exactly one/.test(e.message));
+  await assert.rejects(call('lint_diagram', { id: 'aws-nope' }), (e) => e instanceof ToolError && e.code === 'not_found');
+});
+
+test('build_diagram returns lint findings with the drawing', async () => {
+  const r = await call('build_diagram', { spec: { ...probe(), groups: [{ kind: 'vpc', x: 40, y: 10, w: 300, h: 200 }] } });
+  assert.deepEqual(r.errors, []);
+  assert.ok(r.svg);
+  assert.ok(r.lint.some((f) => f.code === 'text-on-border'));
+});

@@ -168,7 +168,7 @@ Options:
 
 Logs go to **stderr** (stdout is reserved for the JSON-RPC channel), so they never corrupt the MCP protocol stream. Verbosity is also settable via `PRISM_MCP_LOG_LEVEL`. A `--port` flag is accepted but ignored — this build is stdio-only; add an HTTP/SSE transport by implementing one against `PrismMCPServer`.
 
-### The 33 tools
+### The 34 tools
 
 | Group | Tools |
 |---|---|
@@ -179,7 +179,7 @@ Logs go to **stderr** (stdout is reserved for the JSON-RPC channel), so they nev
 | **Catalog management (3)** | `get_catalog_metadata` · `export_collection` (`bundle`/`document`/`schema`) · `get_token_reference` |
 | **AWS icons (2)** | `search_aws_icons` · `get_aws_icon` (the official AWS Architecture Icons, as standalone SVG or sprite symbols) |
 | **Collections & favorites (6)** | `list_collections` · `get_collection` · `create_collection` · `add_to_collection` · `remove_from_collection` · `delete_collection` |
-| **AWS diagrams (2)** | `build_diagram` (a JSON diagram spec to a standalone SVG and the gallery svg, with the kit's checks) · `get_diagram_spec` (any gallery diagram's JSON spec) |
+| **AWS diagrams (3)** | `build_diagram` (a JSON diagram spec to a standalone SVG and the gallery svg, with the kit's checks and layout lint) · `lint_diagram` (layout findings for a spec or a gallery diagram) · `get_diagram_spec` (any gallery diagram's JSON spec) |
 
 `compose` merges HTML, deduplicates CSS rules, collapses `:root` token blocks, validates the output, and reports size savings. **Collections** are named, disk-backed sets of effects that persist across sessions (stored in `prism-mcp-server/collections.json`, which is git-ignored); export one with `export_collection { collectionId, format: "schema" }` to hand it to the Prism.html UI. Full parameter schemas come back from `tools/list`, and one example call per tool lives in [`prism-mcp-server/examples/`](./prism-mcp-server/examples).
 
@@ -368,7 +368,7 @@ The MCP server's `compose` / `compose_with_template` tools do all of this for yo
 .
 ├── Prism.html              ← the whole tool: UI + all galleries + the JSON island
 ├── README.md               ← you are here
-├── prism-mcp-server/       ← the MCP server (zero-dependency Node, 33 tools)
+├── prism-mcp-server/       ← the MCP server (zero-dependency Node, 34 tools)
 │   ├── cli.js                 prism-mcp CLI (start / info / tools / help)
 │   ├── index.js               PrismMCPServer (JSON-RPC dispatch) + StdioTransport
 │   ├── tools/index.js         the 33 tool definitions

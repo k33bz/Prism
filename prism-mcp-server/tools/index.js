@@ -4,7 +4,7 @@
 // structured, actionable failures.
 
 import { lightEffect } from '../utils/catalog.js';
-import { loadKit, buildDiagram, diagramSpecs, findDiagramSpec, suggestDiagrams } from '../utils/diagrams.js';
+import { loadKit, buildDiagram, lintDiagram, diagramSpecs, findDiagramSpec, suggestDiagrams } from '../utils/diagrams.js';
 import { compose, composeWithTemplate, availableTemplates } from '../utils/compose.js';
 import { validateFacet, validateComposition } from '../utils/validate.js';
 import { THEMES, THEME_IDS, TOKEN_META, BASE_TOKENS, getTheme, usesTokens, themeRootCss, isThemeSensitive, themeIdList, themesSummary } from '../utils/themes.js';
@@ -1208,12 +1208,12 @@ export function buildTools() {
       handler: (a, { collections }) => withCollections(collections, (c) => c.delete(a.collectionId)),
     },
 
-    // ============================== AWS ARCHITECTURE DIAGRAMS (2) ==============================
+    // ============================== AWS ARCHITECTURE DIAGRAMS (3) ==============================
     // Diagrams as data: a JSON spec (catalog/aws-kit/spec.schema.json) compiled by the AWS kit that
     // builds the gallery (catalog/aws-kit/awd.mjs), found beside the catalog file.
     {
       name: 'build_diagram',
-      description: 'Build an AWS architecture diagram from a JSON spec with the AWS kit behind the AWS Architecture gallery: official AWS icons and group frames, numbered steps, and packets on one SMIL clock. Pass one diagram object ({ id, name, desc, w, h, dur, groups, nodes, wires, steps, timeline, effects, notes }) or a family file ({ version: 1, section, diagrams }). Runs the schema and the kit\'s input checks; returns { id, svg, html, errors }: svg is one self-contained SVG document (kit CSS, only the icons it uses, the spec in <metadata id="awd-spec">), html is the bare <svg class="awd"> the gallery embeds (needs the kit CSS and icon sprite on the page). svg and html are null when errors is not empty. A family returns { section, diagrams: [...], errors }. Start from get_diagram_spec for a working example; find icon ids with search_aws_icons.',
+      description: 'Build an AWS architecture diagram from a JSON spec with the AWS kit behind the AWS Architecture gallery: official AWS icons and group frames, numbered steps, and packets on one SMIL clock. Pass one diagram object ({ id, name, desc, w, h, dur, groups, nodes, wires, steps, timeline, effects, notes }) or a family file ({ version: 1, section, diagrams }). Runs the schema and the kit\'s input checks; returns { id, svg, html, errors, lint }: lint lists layout findings (text across a frame edge, wires through labels or icons, badges on icons, off-canvas...; the gallery build rejects severity error, so fix those and rebuild); svg is one self-contained SVG document (kit CSS, only the icons it uses, the spec in <metadata id="awd-spec">), html is the bare <svg class="awd"> the gallery embeds (needs the kit CSS and icon sprite on the page). svg and html are null when errors is not empty. A family returns { section, diagrams: [...], errors }. Start from get_diagram_spec for a working example; find icon ids with search_aws_icons.',
       inputSchema: {
         type: 'object',
         properties: {
@@ -1251,6 +1251,34 @@ export function buildTools() {
         const hit = findDiagramSpec(specs, a.id);
         if (!hit) throw new ToolError(`No diagram spec with id "${a.id}"`, { code: 'not_found', data: { suggestions: suggestDiagrams(specs, a.id), available: specs.length } });
         return { id: hit.spec.id, catalogId: 'aws-' + hit.spec.id, family: hit.family, version: hit.version, spec: hit.spec, source: hit.file };
+      },
+    },
+    {
+      name: 'lint_diagram',
+      description: 'Check an AWS architecture diagram\'s layout against the kit\'s rules without building it: pass a diagram spec, or the id of a gallery diagram (aws-sl-api or sl-api). Measures text with Arial\'s real widths on the drawn markup (timed captions and raw extra included). Returns { id, errors, findings: [{ severity, code, message, at }], counts, clean }. Errors (the gallery build rejects them): off-canvas, icon-overlap, text-overlap, text-on-icon, text-on-border (text across or within 2px of a frame edge), wire-on-text, wire-on-icon, badge-on-icon, badge-on-text, badge-overlap. Warnings: header-band, label-lines, tile-size. Info: icon-sizes, text-over-text. at is the finding\'s center in viewBox units; move the element or its label and lint again.',
+      inputSchema: {
+        type: 'object',
+        properties: {
+          spec: { type: 'object', description: 'One diagram spec (catalog/aws-kit/spec.schema.json).' },
+          id: { type: 'string', description: 'A gallery diagram id instead of a spec, e.g. aws-tt-classic.' },
+        },
+        additionalProperties: false,
+      },
+      handler: async (a, { store }) => {
+        let spec = a.spec;
+        if (typeof spec === 'string') {
+          try { spec = JSON.parse(spec); } catch (err) { throw new ToolError(`spec is not valid JSON: ${err.message}`, { code: 'invalid_argument' }); }
+        }
+        if ((spec == null) === (a.id == null)) throw new ToolError('pass exactly one of spec or id', { code: 'invalid_argument' });
+        const kit = await diagramKit(store);
+        if (a.id != null) {
+          const specs = diagramSpecs(kit.dir);
+          const hit = findDiagramSpec(specs, a.id);
+          if (!hit) throw new ToolError(`No diagram spec with id "${a.id}"`, { code: 'not_found', data: { suggestions: suggestDiagrams(specs, a.id), available: specs.length } });
+          spec = hit.spec;
+        }
+        if (!spec || typeof spec !== 'object' || Array.isArray(spec)) throw new ToolError('spec must be one diagram object', { code: 'invalid_argument' });
+        return lintDiagram(kit, spec);
       },
     },
   ];
