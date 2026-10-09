@@ -1,0 +1,518 @@
+{
+  "version": 1,
+  "section": { "id": "databases", "title": "DATABASES" },
+  "diagrams": [
+    {
+      "id": "db-multiaz",
+      "name": "Amazon RDS Multi-AZ Instance Deployment",
+      "desc": "An application writes through the DB instance endpoint to the primary, which replicates synchronously to a standby in another Availability Zone. Packets show a write, then AZ a failing, the standby being promoted and the endpoint CNAME flipping to it.",
+      "w": 480,
+      "h": 298,
+      "dur": 9,
+      "groups": [
+        { "kind": "cloud", "x": 8, "y": 8, "w": 464, "h": 282 },
+        { "kind": "region", "x": 16, "y": 34, "w": 448, "h": 248, "label": "Region" },
+        { "kind": "vpc", "x": 24, "y": 60, "w": 432, "h": 214 },
+        { "kind": "az", "id": "az-a", "x": 196, "y": 84, "w": 252, "h": 78, "label": "Availability Zone a" },
+        { "kind": "az", "id": "az-b", "x": 196, "y": 188, "w": 252, "h": 78, "label": "Availability Zone b" },
+        { "kind": "priv", "x": 204, "y": 106, "w": 236, "h": 50 },
+        { "kind": "priv", "x": 204, "y": 210, "w": 236, "h": 50 }
+      ],
+      "nodes": [
+        { "id": "app", "icon": "aws-res-ec2-instance", "x": 40, "y": 163, "label": "Application" },
+        { "id": "primary", "icon": "aws-res-aurora-rds-instance", "x": 326, "y": 111 },
+        { "id": "standby", "icon": "aws-res-aurora-rds-instance", "x": 326, "y": 215 }
+      ],
+      "wires": [
+        { "id": "w-app", "d": "M84,183 H104" },
+        { "id": "w-prim", "d": "M145,168 V131 H322" },
+        { "id": "w-stby", "d": "M145,198 V235 H322", "dashed": true },
+        { "id": "w-sync", "d": "M346,153 V211" }
+      ],
+      "steps": [
+        { "n": 1, "at": "w-app", "f": 0.5 },
+        { "n": 2, "x": 157, "y": 150 },
+        { "n": 3, "x": 357, "y": 175 }
+      ],
+      "timeline": [
+        { "wire": "w-app", "t": [0.03, 0.1] },
+        { "wire": "w-prim", "t": [0.11, 0.21], "ring": "primary" },
+        { "wire": "w-sync", "t": [0.23, 0.33], "kind": "pk-2", "ring": "standby" },
+        { "wire": "w-app", "t": [0.47, 0.54] },
+        { "wire": "w-prim", "t": [0.55, 0.63], "kind": "pk-bad" },
+        { "wire": "w-app", "t": [0.7, 0.76] },
+        { "wire": "w-stby", "t": [0.77, 0.88], "ring": "standby" }
+      ],
+      "effects": [
+        { "fail": "az-a", "t": [0.5, 0.97] },
+        { "fade": "w-prim", "t": [0.58, 0.97] },
+        { "fade": "w-sync", "t": [0.52, 0.97] },
+        { "glow": "w-stby", "t": [0.66, 0.97] }
+      ],
+      "extra": "<rect x=\"108\" y=\"168\" width=\"74\" height=\"30\" rx=\"14\" style=\"fill:var(--awd-panel2);stroke:var(--awd-wire);stroke-width:1.25\"/><text class=\"t-c\" style=\"font-size:9px;font-weight:700;\" x=\"145\" y=\"181.2\"><tspan x=\"145\">DB instance</tspan></text><text class=\"t-c\" style=\"font-size:8px;font-weight:500;fill:var(--awd-muted);\" x=\"145\" y=\"191.2\"><tspan x=\"145\">endpoint</tspan></text><text style=\"text-anchor:start;\" x=\"372\" y=\"129\"><tspan x=\"372\">Primary</tspan><tspan x=\"372\" dy=\"11\">DB instance</tspan></text><text style=\"text-anchor:start;\" x=\"372\" y=\"233\"><tspan x=\"372\">Standby</tspan><tspan x=\"372\" dy=\"11\">DB instance</tspan></text><g class=\"anim\" opacity=\"0\"><rect x=\"370\" y=\"223\" width=\"66\" height=\"26\" style=\"fill:var(--awd-panel)\"/><rect x=\"370\" y=\"223\" width=\"66\" height=\"26\" fill=\"rgba(0,164,166,.10)\"/><text style=\"text-anchor:start;fill:var(--awd-pk);\" x=\"372\" y=\"233\"><tspan x=\"372\">Primary</tspan><tspan x=\"372\" dy=\"11\">(promoted)</tspan></text><animate attributeName=\"opacity\" dur=\"9s\" repeatCount=\"indefinite\" calcMode=\"discrete\" values=\"0;1;0\" keyTimes=\"0;.66;.97\"/></g><text class=\"t-wire\" style=\"text-anchor:end;\" x=\"338\" y=\"178.5\"><tspan x=\"338\">Synchronous replication</tspan></text><text style=\"text-anchor:start;font-size:8.5px;fill:var(--awd-muted);\" x=\"34\" y=\"98\"><tspan x=\"34\">The endpoint CNAME points to</tspan><tspan x=\"34\" dy=\"10.5\">the primary. Every write is</tspan><tspan x=\"34\" dy=\"10.5\">replicated synchronously.</tspan></text><g class=\"anim\" opacity=\"0\"><rect x=\"30\" y=\"88\" width=\"162\" height=\"40\" style=\"fill:var(--awd-panel)\"/><text style=\"text-anchor:start;font-size:8.5px;fill:var(--awd-pk);\" x=\"34\" y=\"98\"><tspan x=\"34\">AZ a fails: RDS promotes the</tspan><tspan x=\"34\" dy=\"10.5\">standby and flips the endpoint</tspan><tspan x=\"34\" dy=\"10.5\">CNAME (typically 60 to 120 s).</tspan></text><animate attributeName=\"opacity\" dur=\"9s\" repeatCount=\"indefinite\" calcMode=\"discrete\" values=\"0;1;0\" keyTimes=\"0;.66;.97\"/></g>"
+    },
+    {
+      "id": "db-cluster",
+      "name": "Amazon RDS Multi-AZ DB Cluster",
+      "desc": "A Multi-AZ DB cluster has one writer and two readable standby DB instances in three Availability Zones, replicated semisynchronously. Packets show a write through the cluster endpoint, its replication and acknowledgment, then reads through the reader endpoint.",
+      "w": 480,
+      "h": 294,
+      "dur": 9,
+      "groups": [
+        { "kind": "cloud", "x": 8, "y": 8, "w": 464, "h": 278 },
+        { "kind": "region", "x": 16, "y": 34, "w": 448, "h": 244, "label": "Region" },
+        { "kind": "vpc", "x": 24, "y": 60, "w": 432, "h": 210 },
+        { "kind": "az", "x": 100, "y": 128, "w": 112, "h": 134, "label": "AZ a" },
+        { "kind": "az", "x": 219, "y": 128, "w": 112, "h": 134, "label": "AZ b" },
+        { "kind": "az", "x": 338, "y": 128, "w": 112, "h": 134, "label": "AZ c" }
+      ],
+      "nodes": [
+        { "id": "app", "icon": "aws-res-ec2-instance", "x": 42, "y": 86, "label": "Application" },
+        { "id": "writer", "icon": "aws-res-aurora-rds-instance", "x": 136, "y": 156, "label": "Writer DB instance", "wrap": 20 },
+        { "id": "rd1", "icon": "aws-res-aurora-rds-instance", "x": 255, "y": 156, "label": "Reader DB instance", "wrap": 20 },
+        { "id": "rd2", "icon": "aws-res-aurora-rds-instance", "x": 374, "y": 156, "label": "Reader DB instance", "wrap": 20 }
+      ],
+      "wires": [
+        { "id": "w-appc", "d": "M86,106 H108" },
+        { "id": "w-appr", "d": "M86,106 H96 V80 H240.5" },
+        { "id": "w-cw", "d": "M156,120 V152" },
+        { "id": "w-rb", "d": "M275,94 V152" },
+        { "id": "w-rc", "d": "M394,94 V152" },
+        { "id": "rep-b", "d": "M156,217 V228 H275 V217", "dashed": true },
+        { "id": "rep-c", "d": "M156,217 V228 H394 V217", "dashed": true }
+      ],
+      "steps": [
+        { "n": 1, "x": 100, "y": 116 },
+        { "n": 2, "x": 360, "y": 240 },
+        { "n": 3, "x": 226, "y": 91 }
+      ],
+      "timeline": [
+        { "wire": "w-appc", "t": [0.03, 0.1] },
+        { "wire": "w-cw", "t": [0.11, 0.19], "ring": "writer" },
+        { "wire": "rep-b", "t": [0.21, 0.32], "kind": "pk-2", "ring": "rd1" },
+        { "wire": "rep-c", "t": [0.21, 0.34], "kind": "pk-2", "ring": "rd2" },
+        { "wire": "rep-b", "t": [0.36, 0.46], "reverse": true, "kind": "pk-2", "ring": "writer" },
+        { "wire": "w-appr", "t": [0.5, 0.58] },
+        { "wire": "w-rb", "t": [0.59, 0.67], "ring": "rd1" },
+        { "wire": "w-appr", "t": [0.69, 0.77] },
+        { "wire": "w-rc", "t": [0.78, 0.86], "ring": "rd2" }
+      ],
+      "extra": "<rect x=\"112\" y=\"92\" width=\"96\" height=\"28\" rx=\"14\" style=\"fill:var(--awd-panel2);stroke:var(--awd-wire);stroke-width:1.25\"/><text class=\"t-c\" style=\"font-size:9px;font-weight:700;\" x=\"160\" y=\"104.2\"><tspan x=\"160\">Cluster endpoint</tspan></text><text class=\"t-c\" style=\"font-size:8px;font-weight:500;fill:var(--awd-muted);\" x=\"160\" y=\"114.2\"><tspan x=\"160\">read/write</tspan></text><rect x=\"244.5\" y=\"66\" width=\"180\" height=\"28\" rx=\"14\" style=\"fill:var(--awd-panel2);stroke:var(--awd-wire);stroke-width:1.25\"/><text class=\"t-c\" style=\"font-size:9px;font-weight:700;\" x=\"334.5\" y=\"78.2\"><tspan x=\"334.5\">Reader endpoint</tspan></text><text class=\"t-c\" style=\"font-size:8px;font-weight:500;fill:var(--awd-muted);\" x=\"334.5\" y=\"88.2\"><tspan x=\"334.5\">read-only, load balanced</tspan></text><text class=\"t-wire\" x=\"275\" y=\"242\"><tspan x=\"275\">Semisynchronous</tspan><tspan x=\"275\" dy=\"11\">replication</tspan></text>"
+    },
+    {
+      "id": "db-aurora",
+      "name": "Amazon Aurora DB Cluster",
+      "desc": "A writer and two readers in three Availability Zones share one cluster volume that keeps six copies of the data, two per AZ. Packets show a write fanning out to all six copies, then reads served from the same volume.",
+      "w": 480,
+      "h": 300,
+      "dur": 8,
+      "groups": [
+        { "kind": "cloud", "x": 8, "y": 8, "w": 464, "h": 284 },
+        { "kind": "region", "x": 16, "y": 34, "w": 448, "h": 250, "label": "Region" },
+        { "kind": "az", "x": 100, "y": 110, "w": 112, "h": 166, "label": "AZ a" },
+        { "kind": "az", "x": 219, "y": 110, "w": 112, "h": 166, "label": "AZ b" },
+        { "kind": "az", "x": 338, "y": 110, "w": 112, "h": 166, "label": "AZ c" }
+      ],
+      "nodes": [
+        { "id": "app", "icon": "aws-res-ec2-instance", "x": 42, "y": 68, "label": "Application" },
+        { "id": "writer", "icon": "aws-res-aurora-instance-alternate", "x": 136, "y": 138, "label": "Writer DB instance", "wrap": 20 },
+        { "id": "rd1", "icon": "aws-res-aurora-instance-alternate", "x": 255, "y": 138, "label": "Reader DB instance", "wrap": 20 },
+        { "id": "rd2", "icon": "aws-res-aurora-instance-alternate", "x": 374, "y": 138, "label": "Reader DB instance", "wrap": 20 }
+      ],
+      "wires": [
+        { "id": "w-appc", "d": "M86,88 H108" },
+        { "id": "w-appr", "d": "M86,88 H96 V64 H240.5" },
+        { "id": "w-cw", "d": "M156,102 V134" },
+        { "id": "w-rb", "d": "M275,78 V134" },
+        { "id": "w-rc", "d": "M394,78 V134" },
+        { "id": "w-write", "d": "M156,198 V219" },
+        { "id": "w-read1", "d": "M275,220 V198", "dashed": true },
+        { "id": "w-read2", "d": "M394,220 V198", "dashed": true }
+      ],
+      "steps": [
+        { "n": 1, "x": 100, "y": 98 },
+        { "n": 2, "x": 168, "y": 210 },
+        { "n": 3, "x": 150, "y": 53 }
+      ],
+      "timeline": [
+        { "wire": "w-appc", "t": [0.04, 0.1] },
+        { "wire": "w-cw", "t": [0.11, 0.19], "ring": "writer" },
+        { "wire": "w-write", "t": [0.21, 0.29], "kind": "pk-2" },
+        { "wire": "w-appr", "t": [0.44, 0.51] },
+        { "wire": "w-rb", "t": [0.52, 0.59], "ring": "rd1" },
+        { "wire": "w-rc", "t": [0.52, 0.6], "ring": "rd2" },
+        { "wire": "w-read1", "t": [0.63, 0.71], "kind": "pk-2", "ring": "rd1" },
+        { "wire": "w-read2", "t": [0.63, 0.72], "kind": "pk-2", "ring": "rd2" }
+      ],
+      "extra": "<rect x=\"112\" y=\"74\" width=\"96\" height=\"28\" rx=\"14\" style=\"fill:var(--awd-panel2);stroke:var(--awd-wire);stroke-width:1.25\"/><text class=\"t-c\" style=\"font-size:9px;font-weight:700;\" x=\"160\" y=\"86.2\"><tspan x=\"160\">Cluster endpoint</tspan></text><text class=\"t-c\" style=\"font-size:8px;font-weight:500;fill:var(--awd-muted);\" x=\"160\" y=\"96.2\"><tspan x=\"160\">writer</tspan></text><rect x=\"244.5\" y=\"50\" width=\"180\" height=\"28\" rx=\"14\" style=\"fill:var(--awd-panel2);stroke:var(--awd-wire);stroke-width:1.25\"/><text class=\"t-c\" style=\"font-size:9px;font-weight:700;\" x=\"334.5\" y=\"62.2\"><tspan x=\"334.5\">Reader endpoint</tspan></text><text class=\"t-c\" style=\"font-size:8px;font-weight:500;fill:var(--awd-muted);\" x=\"334.5\" y=\"72.2\"><tspan x=\"334.5\">load balances the readers</tspan></text><rect x=\"104\" y=\"222\" width=\"342\" height=\"46\" rx=\"6\" style=\"fill:color-mix(in srgb,#C925D1 16%,var(--awd-panel));stroke:#C925D1;stroke-width:1.4\"/><use class=\"cw-d\" href=\"#aws-res-database-dark\" x=\"129\" y=\"233\" width=\"24\" height=\"24\"/><use class=\"cw-l\" href=\"#aws-res-database-light\" x=\"129\" y=\"233\" width=\"24\" height=\"24\"/><use class=\"cw-d\" href=\"#aws-res-database-dark\" x=\"159\" y=\"233\" width=\"24\" height=\"24\"/><use class=\"cw-l\" href=\"#aws-res-database-light\" x=\"159\" y=\"233\" width=\"24\" height=\"24\"/><use class=\"cw-d\" href=\"#aws-res-database-dark\" x=\"248\" y=\"233\" width=\"24\" height=\"24\"/><use class=\"cw-l\" href=\"#aws-res-database-light\" x=\"248\" y=\"233\" width=\"24\" height=\"24\"/><use class=\"cw-d\" href=\"#aws-res-database-dark\" x=\"278\" y=\"233\" width=\"24\" height=\"24\"/><use class=\"cw-l\" href=\"#aws-res-database-light\" x=\"278\" y=\"233\" width=\"24\" height=\"24\"/><use class=\"cw-d\" href=\"#aws-res-database-dark\" x=\"367\" y=\"233\" width=\"24\" height=\"24\"/><use class=\"cw-l\" href=\"#aws-res-database-light\" x=\"367\" y=\"233\" width=\"24\" height=\"24\"/><use class=\"cw-d\" href=\"#aws-res-database-dark\" x=\"397\" y=\"233\" width=\"24\" height=\"24\"/><use class=\"cw-l\" href=\"#aws-res-database-light\" x=\"397\" y=\"233\" width=\"24\" height=\"24\"/><text style=\"text-anchor:end;font-size:9.5px;font-weight:700;\" x=\"94\" y=\"239\"><tspan x=\"94\">Aurora cluster</tspan><tspan x=\"94\" dy=\"11\">volume</tspan></text><text style=\"text-anchor:end;font-size:8.5px;fill:var(--awd-muted);\" x=\"94\" y=\"263\"><tspan x=\"94\">6 copies, 3 AZs</tspan></text><circle class=\"ring-2\" cx=\"141\" cy=\"245\" r=\"14\" opacity=\"0\"><animate attributeName=\"opacity\" dur=\"8s\" repeatCount=\"indefinite\" values=\"0;0;.9;0;0\" keyTimes=\"0;.3;.3;.42;1\"/><animate attributeName=\"r\" dur=\"8s\" repeatCount=\"indefinite\" values=\"14;14;14;20.3;20.3\" keyTimes=\"0;.3;.3;.42;1\"/></circle><circle class=\"ring-2\" cx=\"171\" cy=\"245\" r=\"14\" opacity=\"0\"><animate attributeName=\"opacity\" dur=\"8s\" repeatCount=\"indefinite\" values=\"0;0;.9;0;0\" keyTimes=\"0;.3;.3;.42;1\"/><animate attributeName=\"r\" dur=\"8s\" repeatCount=\"indefinite\" values=\"14;14;14;20.3;20.3\" keyTimes=\"0;.3;.3;.42;1\"/></circle><circle class=\"ring-2\" cx=\"260\" cy=\"245\" r=\"14\" opacity=\"0\"><animate attributeName=\"opacity\" dur=\"8s\" repeatCount=\"indefinite\" values=\"0;0;.9;0;0\" keyTimes=\"0;.31;.32;.44;1\"/><animate attributeName=\"r\" dur=\"8s\" repeatCount=\"indefinite\" values=\"14;14;14;20.3;20.3\" keyTimes=\"0;.31;.32;.44;1\"/></circle><circle class=\"ring-2\" cx=\"290\" cy=\"245\" r=\"14\" opacity=\"0\"><animate attributeName=\"opacity\" dur=\"8s\" repeatCount=\"indefinite\" values=\"0;0;.9;0;0\" keyTimes=\"0;.31;.32;.44;1\"/><animate attributeName=\"r\" dur=\"8s\" repeatCount=\"indefinite\" values=\"14;14;14;20.3;20.3\" keyTimes=\"0;.31;.32;.44;1\"/></circle><circle class=\"ring-2\" cx=\"379\" cy=\"245\" r=\"14\" opacity=\"0\"><animate attributeName=\"opacity\" dur=\"8s\" repeatCount=\"indefinite\" values=\"0;0;.9;0;0\" keyTimes=\"0;.33;.33;.45;1\"/><animate attributeName=\"r\" dur=\"8s\" repeatCount=\"indefinite\" values=\"14;14;14;20.3;20.3\" keyTimes=\"0;.33;.33;.45;1\"/></circle><circle class=\"ring-2\" cx=\"409\" cy=\"245\" r=\"14\" opacity=\"0\"><animate attributeName=\"opacity\" dur=\"8s\" repeatCount=\"indefinite\" values=\"0;0;.9;0;0\" keyTimes=\"0;.33;.33;.45;1\"/><animate attributeName=\"r\" dur=\"8s\" repeatCount=\"indefinite\" values=\"14;14;14;20.3;20.3\" keyTimes=\"0;.33;.33;.45;1\"/></circle>"
+    },
+    {
+      "id": "db-serverless",
+      "name": "Amazon Aurora Serverless v2 Scaling",
+      "desc": "An Aurora Serverless v2 writer scales its capacity in ACUs in place, between a configured minimum and maximum, while storage stays on the shared cluster volume. Capacity tiles appear as the load rises and drop away as it falls.",
+      "w": 480,
+      "h": 242,
+      "dur": 9,
+      "groups": [
+        { "kind": "cloud", "x": 76, "y": 8, "w": 396, "h": 226 },
+        { "kind": "region", "x": 84, "y": 34, "w": 380, "h": 192, "label": "Region" },
+        { "kind": "gen", "x": 92, "y": 60, "w": 364, "h": 158, "label": "Aurora DB cluster" }
+      ],
+      "nodes": [
+        { "id": "users", "icon": "aws-res-users", "x": 8, "y": 96, "label": "Users" },
+        { "id": "writer", "icon": "aws-res-aurora-instance-alternate", "x": 130, "y": 96, "label": "Writer DB instance", "wrap": 20, "sub": "db.serverless" },
+        { "id": "t0", "icon": "aws-svc-aurora", "x": 212, "y": 105, "size": 22 },
+        { "id": "t1", "icon": "aws-svc-aurora", "x": 242, "y": 105, "size": 22 },
+        { "id": "t2", "icon": "aws-svc-aurora", "x": 272, "y": 105, "size": 22 },
+        { "id": "t3", "icon": "aws-svc-aurora", "x": 302, "y": 105, "size": 22 },
+        { "id": "t4", "icon": "aws-svc-aurora", "x": 332, "y": 105, "size": 22 },
+        { "id": "t5", "icon": "aws-svc-aurora", "x": 362, "y": 105, "size": 22 },
+        { "id": "t6", "icon": "aws-svc-aurora", "x": 392, "y": 105, "size": 22 },
+        { "id": "t7", "icon": "aws-svc-aurora", "x": 422, "y": 105, "size": 22 }
+      ],
+      "wires": [
+        { "id": "w-in", "d": "M52,116 H126" },
+        { "id": "w-vol", "d": "M150,167 V181" }
+      ],
+      "steps": [
+        { "n": 1, "x": 62, "y": 104 },
+        { "n": 2, "x": 164, "y": 174 }
+      ],
+      "timeline": [
+        { "wire": "w-in", "t": [0.03, 0.1], "ring": "writer" },
+        { "wire": "w-in", "t": [0.15, 0.22] },
+        { "wire": "w-in", "t": [0.21, 0.28] },
+        { "wire": "w-in", "t": [0.26, 0.33] },
+        { "wire": "w-in", "t": [0.3, 0.37], "ring": "writer" },
+        { "wire": "w-in", "t": [0.34, 0.41] },
+        { "wire": "w-in", "t": [0.38, 0.45] },
+        { "wire": "w-in", "t": [0.41, 0.48] },
+        { "wire": "w-in", "t": [0.44, 0.51], "ring": "writer" },
+        { "wire": "w-in", "t": [0.47, 0.54] },
+        { "wire": "w-in", "t": [0.5, 0.57] },
+        { "wire": "w-in", "t": [0.53, 0.6] },
+        { "wire": "w-in", "t": [0.62, 0.69], "ring": "writer" },
+        { "wire": "w-in", "t": [0.68, 0.75] },
+        { "wire": "w-in", "t": [0.74, 0.81] },
+        { "wire": "w-in", "t": [0.82, 0.89], "ring": "writer" },
+        { "wire": "w-vol", "t": [0.3, 0.36], "kind": "pk-2" },
+        { "wire": "w-vol", "t": [0.5, 0.56], "kind": "pk-2" },
+        { "wire": "w-vol", "t": [0.7, 0.76], "kind": "pk-2" }
+      ],
+      "effects": [
+        { "appear": "t2", "t": [0.12, 0.9], "ghost": true },
+        { "appear": "t3", "t": [0.18, 0.84], "ghost": true },
+        { "appear": "t4", "t": [0.24, 0.78], "ghost": true },
+        { "appear": "t5", "t": [0.3, 0.72], "ghost": true },
+        { "appear": "t6", "t": [0.36, 0.66], "ghost": true },
+        { "appear": "t7", "t": [0.42, 0.6], "ghost": true }
+      ],
+      "extra": "<text style=\"text-anchor:middle;font-size:8.5px;fill:var(--awd-muted);\" x=\"328\" y=\"98\"><tspan x=\"328\">Capacity in ACUs, adjusted in 0.5 ACU steps</tspan></text><path class=\"w\" d=\"M212,129 V134 H444 V129\" style=\"stroke-width:1\"/><text style=\"text-anchor:start;font-size:8.5px;fill:var(--awd-muted);\" x=\"212\" y=\"146\"><tspan x=\"212\">min</tspan></text><text style=\"text-anchor:end;font-size:8.5px;fill:var(--awd-muted);\" x=\"444\" y=\"146\"><tspan x=\"444\">max</tspan></text><rect x=\"108\" y=\"184\" width=\"332\" height=\"24\" rx=\"6\" style=\"fill:color-mix(in srgb,#C925D1 16%,var(--awd-panel));stroke:#C925D1;stroke-width:1.4\"/><text style=\"text-anchor:middle;font-size:9px;font-weight:600;\" x=\"274\" y=\"200\"><tspan x=\"274\">Cluster volume: shared storage that grows automatically</tspan></text><text style=\"text-anchor:middle;font-size:8.5px;fill:var(--awd-muted);\" x=\"328\" y=\"166\"><tspan x=\"328\">Capacity follows the load, between min and max</tspan></text><g class=\"anim\" opacity=\"0\"><rect x=\"216\" y=\"157\" width=\"224\" height=\"14\" style=\"fill:var(--awd-panel)\"/><text style=\"text-anchor:middle;font-size:8.5px;fill:var(--awd-pk);\" x=\"328\" y=\"166\"><tspan x=\"328\">Low load: minimum capacity</tspan></text><animate attributeName=\"opacity\" dur=\"9s\" repeatCount=\"indefinite\" calcMode=\"discrete\" values=\"0;1;0\" keyTimes=\"0;.01;.12\"/></g><g class=\"anim\" opacity=\"0\"><rect x=\"216\" y=\"157\" width=\"224\" height=\"14\" style=\"fill:var(--awd-panel)\"/><text style=\"text-anchor:middle;font-size:8.5px;fill:var(--awd-pk);\" x=\"328\" y=\"166\"><tspan x=\"328\">Load rising: capacity scales up in place</tspan></text><animate attributeName=\"opacity\" dur=\"9s\" repeatCount=\"indefinite\" calcMode=\"discrete\" values=\"0;1;0\" keyTimes=\"0;.12;.4\"/></g><g class=\"anim\" opacity=\"0\"><rect x=\"216\" y=\"157\" width=\"224\" height=\"14\" style=\"fill:var(--awd-panel)\"/><text style=\"text-anchor:middle;font-size:8.5px;fill:var(--awd-pk);\" x=\"328\" y=\"166\"><tspan x=\"328\">Peak load: capacity at its maximum</tspan></text><animate attributeName=\"opacity\" dur=\"9s\" repeatCount=\"indefinite\" calcMode=\"discrete\" values=\"0;1;0\" keyTimes=\"0;.4;.62\"/></g><g class=\"anim\" opacity=\"0\"><rect x=\"216\" y=\"157\" width=\"224\" height=\"14\" style=\"fill:var(--awd-panel)\"/><text style=\"text-anchor:middle;font-size:8.5px;fill:var(--awd-pk);\" x=\"328\" y=\"166\"><tspan x=\"328\">Load falling: capacity scales back down</tspan></text><animate attributeName=\"opacity\" dur=\"9s\" repeatCount=\"indefinite\" calcMode=\"discrete\" values=\"0;1;0\" keyTimes=\"0;.62;.9\"/></g><g class=\"anim\" opacity=\"0\"><rect x=\"216\" y=\"157\" width=\"224\" height=\"14\" style=\"fill:var(--awd-panel)\"/><text style=\"text-anchor:middle;font-size:8.5px;fill:var(--awd-pk);\" x=\"328\" y=\"166\"><tspan x=\"328\">Low load: minimum capacity</tspan></text><animate attributeName=\"opacity\" dur=\"9s\" repeatCount=\"indefinite\" calcMode=\"discrete\" values=\"0;1;0\" keyTimes=\"0;.9;1\"/></g>"
+    },
+    {
+      "id": "db-proxy",
+      "name": "Amazon RDS Proxy Connection Pooling",
+      "desc": "A fleet of AWS Lambda functions opens many connections to Amazon RDS Proxy, which pools them into a few reused connections to the RDS or Aurora database and reads the credentials from AWS Secrets Manager. Packets show requests converging, being multiplexed, and responses fanning back out.",
+      "w": 480,
+      "h": 300,
+      "dur": 8,
+      "groups": [
+        { "kind": "cloud", "x": 8, "y": 8, "w": 464, "h": 284 },
+        { "kind": "region", "x": 16, "y": 34, "w": 448, "h": 250, "label": "Region" },
+        { "kind": "vpc", "x": 24, "y": 92, "w": 432, "h": 184 }
+      ],
+      "nodes": [
+        { "id": "sec", "icon": "aws-svc-secrets-manager", "x": 230, "y": 42 },
+        { "id": "l0", "icon": "aws-svc-lambda", "x": 56, "y": 118, "size": 26 },
+        { "id": "l1", "icon": "aws-svc-lambda", "x": 56, "y": 150, "size": 26 },
+        { "id": "l2", "icon": "aws-svc-lambda", "x": 56, "y": 182, "size": 26 },
+        { "id": "l3", "icon": "aws-svc-lambda", "x": 56, "y": 214, "size": 26 },
+        { "id": "proxy", "icon": "aws-res-rds-proxy-instance-alternate", "x": 230, "y": 159, "label": "Amazon RDS Proxy", "sub": "connection pooling" },
+        { "id": "db", "icon": "aws-res-aurora-rds-instance", "x": 380, "y": 159, "label": "RDS or Aurora DB instance" }
+      ],
+      "wires": [
+        { "id": "sec", "d": "M250,84 V155", "dashed": true },
+        { "id": "s0", "d": "M84,131 H150 V179", "arrow": false },
+        { "id": "s1", "d": "M84,163 H150 V179", "arrow": false },
+        { "id": "s2", "d": "M84,195 H150 V179", "arrow": false },
+        { "id": "s3", "d": "M84,227 H150 V179", "arrow": false },
+        { "id": "merge", "d": "M150,179 H226" },
+        { "id": "o1", "d": "M276,173 H376" },
+        { "id": "o2", "d": "M276,185 H376" }
+      ],
+      "steps": [
+        { "n": 1, "x": 235, "y": 108 },
+        { "n": 2, "at": "merge", "f": 0.5, "dy": -11 },
+        { "n": 3, "x": 326, "y": 197 }
+      ],
+      "timeline": [
+        { "wire": "sec", "t": [0.02, 0.09], "kind": "pk-2", "ring": "proxy" },
+        { "wire": "s0", "t": [0.12, 0.19] },
+        { "wire": "s1", "t": [0.13999999999999999, 0.21] },
+        { "wire": "s2", "t": [0.16, 0.23] },
+        { "wire": "s3", "t": [0.18, 0.25] },
+        { "wire": "merge", "t": [0.19, 0.27] },
+        { "wire": "merge", "t": [0.21, 0.29000000000000004] },
+        { "wire": "merge", "t": [0.23, 0.31] },
+        { "wire": "merge", "t": [0.25, 0.33], "ring": "proxy" },
+        { "wire": "o1", "t": [0.31, 0.41], "ring": "db" },
+        { "wire": "o2", "t": [0.35, 0.45] },
+        { "wire": "o1", "t": [0.5, 0.6], "reverse": true, "kind": "pk-2", "ring": "proxy" },
+        { "wire": "o2", "t": [0.52, 0.62], "reverse": true, "kind": "pk-2" },
+        { "wire": "merge", "t": [0.62, 0.7], "reverse": true, "kind": "pk-2" },
+        { "wire": "merge", "t": [0.66, 0.74], "reverse": true, "kind": "pk-2" },
+        { "wire": "s0", "t": [0.72, 0.8], "reverse": true, "kind": "pk-2", "ring": "l0" },
+        { "wire": "s1", "t": [0.73, 0.81], "reverse": true, "kind": "pk-2", "ring": "l1" },
+        { "wire": "s2", "t": [0.74, 0.8200000000000001], "reverse": true, "kind": "pk-2", "ring": "l2" },
+        { "wire": "s3", "t": [0.75, 0.8300000000000001], "reverse": true, "kind": "pk-2", "ring": "l3" }
+      ],
+      "extra": "<text style=\"text-anchor:start;\" x=\"276\" y=\"58\"><tspan x=\"276\">AWS Secrets</tspan><tspan x=\"276\" dy=\"11\">Manager</tspan></text><text style=\"text-anchor:start;font-size:8.5px;fill:var(--awd-muted);\" x=\"258\" y=\"122\"><tspan x=\"258\">credentials</tspan></text><text style=\"text-anchor:middle;\" x=\"69\" y=\"252\"><tspan x=\"69\">AWS Lambda</tspan><tspan x=\"69\" dy=\"11\">functions</tspan></text><text style=\"text-anchor:middle;font-size:8.5px;fill:var(--awd-muted);\" x=\"142\" y=\"121\"><tspan x=\"142\">Many app connections</tspan></text><text style=\"text-anchor:middle;font-size:8.5px;fill:var(--awd-muted);\" x=\"326\" y=\"165\"><tspan x=\"326\">Pooled connections</tspan></text>"
+    },
+    {
+      "id": "db-cache",
+      "name": "Amazon ElastiCache Cache-Aside",
+      "desc": "The application checks Amazon ElastiCache first; on a miss it queries Amazon RDS and writes the result back to the cache. Packets show a miss that fills the cache, then a hit that never reaches the database.",
+      "w": 480,
+      "h": 290,
+      "dur": 10,
+      "groups": [
+        { "kind": "cloud", "x": 76, "y": 8, "w": 396, "h": 274 },
+        { "kind": "region", "x": 84, "y": 34, "w": 380, "h": 240, "label": "Region" },
+        { "kind": "vpc", "x": 92, "y": 60, "w": 364, "h": 206 }
+      ],
+      "nodes": [
+        { "id": "users", "icon": "aws-res-users", "x": 14, "y": 136, "label": "Users" },
+        { "id": "app", "icon": "aws-res-ec2-instance", "x": 150, "y": 136, "label": "Application" },
+        { "id": "cache", "icon": "aws-svc-elasticache", "x": 360, "y": 82, "label": "Amazon ElastiCache" },
+        { "id": "db", "icon": "aws-res-aurora-rds-instance", "x": 360, "y": 190, "label": "Amazon RDS DB instance" }
+      ],
+      "wires": [
+        { "id": "u-app", "d": "M58,156 H146" },
+        { "id": "a-cache", "d": "M194,148 H260 V102 H356" },
+        { "id": "a-db", "d": "M194,164 H260 V210 H356" }
+      ],
+      "steps": [
+        { "n": 1, "x": 121, "y": 144 },
+        { "n": 2, "x": 300, "y": 91 },
+        { "n": 3, "x": 300, "y": 222 }
+      ],
+      "timeline": [
+        { "wire": "u-app", "t": [0.03, 0.08] },
+        { "wire": "a-cache", "t": [0.09, 0.16], "ring": "cache" },
+        { "wire": "a-cache", "t": [0.17, 0.24], "reverse": true, "kind": "pk-2" },
+        { "wire": "a-db", "t": [0.26, 0.33], "ring": "db" },
+        { "wire": "a-db", "t": [0.34, 0.41], "reverse": true, "kind": "pk-2" },
+        { "wire": "a-cache", "t": [0.42, 0.49], "ring": "cache" },
+        { "wire": "u-app", "t": [0.5, 0.55], "reverse": true, "kind": "pk-2" },
+        { "wire": "u-app", "t": [0.63, 0.68] },
+        { "wire": "a-cache", "t": [0.69, 0.76], "ring": "cache" },
+        { "wire": "a-cache", "t": [0.77, 0.84], "reverse": true, "kind": "pk-2" },
+        { "wire": "u-app", "t": [0.85, 0.9], "reverse": true, "kind": "pk-2" }
+      ],
+      "extra": "<text class=\"t-wire\" x=\"308\" y=\"114\"><tspan x=\"308\">GET / SET with TTL</tspan></text><text class=\"t-wire\" x=\"308\" y=\"204\"><tspan x=\"308\">SQL query on a miss</tspan></text><text style=\"text-anchor:start;font-size:8.5px;fill:var(--awd-muted);\" x=\"100\" y=\"232\"><tspan x=\"100\">Cache-aside: read the cache first,</tspan><tspan x=\"100\" dy=\"10.5\">query RDS only on a miss, then</tspan><tspan x=\"100\" dy=\"10.5\">fill the cache for the next read.</tspan></text><g class=\"anim\" opacity=\"0\"><rect x=\"96\" y=\"222\" width=\"150\" height=\"38\" style=\"fill:var(--awd-panel)\"/><text style=\"text-anchor:start;font-size:8.5px;fill:var(--awd-pk);\" x=\"100\" y=\"232\"><tspan x=\"100\">Request 1, cache miss: read</tspan><tspan x=\"100\" dy=\"10.5\">RDS, then fill the cache.</tspan></text><animate attributeName=\"opacity\" dur=\"10s\" repeatCount=\"indefinite\" calcMode=\"discrete\" values=\"0;1;0\" keyTimes=\"0;.01;.6\"/></g><g class=\"anim\" opacity=\"0\"><rect x=\"96\" y=\"222\" width=\"150\" height=\"38\" style=\"fill:var(--awd-panel)\"/><text style=\"text-anchor:start;font-size:8.5px;fill:var(--awd-pk);\" x=\"100\" y=\"232\"><tspan x=\"100\">Request 2, cache hit: answered</tspan><tspan x=\"100\" dy=\"10.5\">from memory, RDS not touched.</tspan></text><animate attributeName=\"opacity\" dur=\"10s\" repeatCount=\"indefinite\" calcMode=\"discrete\" values=\"0;1;0\" keyTimes=\"0;.6;1\"/></g>"
+    },
+    {
+      "id": "db-ddb-global",
+      "name": "Amazon DynamoDB Global Tables",
+      "desc": "A DynamoDB global table keeps a replica in each Region and replicates changes both ways, so users write locally in either Region and concurrent updates resolve by last writer wins. Packets show a write in us-east-1 reaching eu-west-1, then a write in eu-west-1 reaching us-east-1.",
+      "w": 480,
+      "h": 296,
+      "dur": 10,
+      "groups": [
+        { "kind": "cloud", "x": 76, "y": 8, "w": 396, "h": 280 },
+        { "kind": "region", "x": 84, "y": 34, "w": 380, "h": 110, "label": "us-east-1" },
+        { "kind": "region", "x": 84, "y": 170, "w": 380, "h": 110, "label": "eu-west-1" }
+      ],
+      "nodes": [
+        { "id": "users-a", "icon": "aws-res-users", "x": 14, "y": 62, "label": "Users" },
+        { "id": "fn-a", "icon": "aws-svc-lambda", "x": 164, "y": 62, "label": "AWS Lambda" },
+        { "id": "tbl-a", "icon": "aws-svc-dynamodb", "x": 344, "y": 62, "label": "Amazon DynamoDB", "wrap": 20, "sub": "global table replica" },
+        { "id": "users-b", "icon": "aws-res-users", "x": 14, "y": 198, "label": "Users" },
+        { "id": "fn-b", "icon": "aws-svc-lambda", "x": 164, "y": 198, "label": "AWS Lambda" },
+        { "id": "tbl-b", "icon": "aws-svc-dynamodb", "x": 344, "y": 198, "label": "Amazon DynamoDB", "wrap": 20, "sub": "global table replica" }
+      ],
+      "wires": [
+        { "id": "ua", "d": "M58,82 H160" },
+        { "id": "fa", "d": "M208,82 H340" },
+        { "id": "ub", "d": "M58,218 H160" },
+        { "id": "fb", "d": "M208,218 H340" },
+        { "id": "repl", "d": "M364,134 V194", "dashed": true, "both": true }
+      ],
+      "steps": [
+        { "n": 1, "at": "ua", "f": 0.5, "dy": -12 },
+        { "n": 2, "x": 364, "y": 157 },
+        { "n": 3, "at": "ub", "f": 0.5, "dy": -12 }
+      ],
+      "timeline": [
+        { "wire": "ua", "t": [0.03, 0.09] },
+        { "wire": "fa", "t": [0.1, 0.17], "ring": "tbl-a" },
+        { "wire": "repl", "t": [0.19, 0.31], "kind": "pk-2", "ring": "tbl-b" },
+        { "wire": "ub", "t": [0.5, 0.56] },
+        { "wire": "fb", "t": [0.57, 0.64], "ring": "tbl-b" },
+        { "wire": "repl", "t": [0.66, 0.78], "reverse": true, "kind": "pk-2", "ring": "tbl-a" }
+      ],
+      "extra": "<text class=\"t-wire\" style=\"text-anchor:end;\" x=\"348\" y=\"161.5\"><tspan x=\"348\">Asynchronous replication</tspan></text><text class=\"t-wire\" style=\"text-anchor:start;\" x=\"380\" y=\"161.5\"><tspan x=\"380\">Last writer wins</tspan></text>"
+    },
+    {
+      "id": "db-replicas",
+      "name": "Amazon RDS Read Replicas",
+      "desc": "A source DB instance replicates asynchronously to two read replicas in other AZs and to a cross-Region read replica, which can serve local reads or be promoted for disaster recovery. Packets show a write, the replication fan-out, then reads from each replica.",
+      "wide": true,
+      "w": 960,
+      "h": 336,
+      "dur": 10,
+      "groups": [
+        { "kind": "cloud", "x": 8, "y": 8, "w": 944, "h": 320 },
+        { "kind": "region", "x": 16, "y": 34, "w": 620, "h": 286, "label": "us-east-1" },
+        { "kind": "region", "x": 652, "y": 34, "w": 292, "h": 286, "label": "eu-west-1" },
+        { "kind": "vpc", "x": 24, "y": 60, "w": 604, "h": 252 },
+        { "kind": "vpc", "x": 660, "y": 60, "w": 276, "h": 252 },
+        { "kind": "az", "x": 118, "y": 156, "w": 160, "h": 120, "label": "AZ a" },
+        { "kind": "az", "x": 288, "y": 156, "w": 160, "h": 120, "label": "AZ b" },
+        { "kind": "az", "x": 458, "y": 156, "w": 160, "h": 120, "label": "AZ c" },
+        { "kind": "az", "x": 740, "y": 156, "w": 188, "h": 120, "label": "AZ a" }
+      ],
+      "nodes": [
+        { "id": "app", "icon": "aws-res-ec2-instance", "x": 42, "y": 110, "label": "Application" },
+        { "id": "src", "icon": "aws-res-aurora-rds-instance", "x": 178, "y": 184, "label": "Source DB instance", "sub": "read/write" },
+        { "id": "rep1", "icon": "aws-res-aurora-rds-instance", "x": 348, "y": 184, "label": "Read replica", "sub": "read-only" },
+        { "id": "rep2", "icon": "aws-res-aurora-rds-instance", "x": 518, "y": 184, "label": "Read replica", "sub": "read-only" },
+        { "id": "appx", "icon": "aws-res-ec2-instance", "x": 684, "y": 110, "label": "Application" },
+        { "id": "xr", "icon": "aws-res-aurora-rds-instance", "x": 814, "y": 184, "label": "Cross-Region read replica", "sub": "read-only" }
+      ],
+      "wires": [
+        { "id": "w-wr", "d": "M86,142 H198 V180" },
+        { "id": "w-rb", "d": "M86,130 H110 V110 H368 V180" },
+        { "id": "w-rc", "d": "M86,118 H98 V96 H538 V180" },
+        { "id": "w-rx", "d": "M728,130 H834 V180" },
+        { "id": "r1", "d": "M198,268 V282 H368 V256", "dashed": true },
+        { "id": "r2", "d": "M198,268 V282 H538 V256", "dashed": true },
+        { "id": "r3", "d": "M198,268 V282 H834 V268", "dashed": true }
+      ],
+      "steps": [
+        { "n": 1, "x": 150, "y": 131 },
+        { "n": 2, "x": 296, "y": 297 },
+        { "n": 3, "x": 710, "y": 297 },
+        { "n": 4, "x": 551, "y": 128 }
+      ],
+      "timeline": [
+        { "wire": "w-wr", "t": [0.03, 0.12], "ring": "src" },
+        { "wire": "r1", "t": [0.14, 0.3], "kind": "pk-2", "ring": "rep1" },
+        { "wire": "r2", "t": [0.14, 0.34], "kind": "pk-2", "ring": "rep2" },
+        { "wire": "r3", "t": [0.14, 0.56], "kind": "pk-2", "ring": "xr" },
+        { "wire": "w-rb", "t": [0.62, 0.72], "ring": "rep1" },
+        { "wire": "w-rc", "t": [0.64, 0.75], "ring": "rep2" },
+        { "wire": "w-rx", "t": [0.72, 0.82], "ring": "xr" }
+      ],
+      "extra": "<text style=\"text-anchor:middle;font-size:8.5px;fill:var(--awd-muted);\" x=\"300\" y=\"121\"><tspan x=\"300\">reads</tspan></text><text style=\"text-anchor:middle;font-size:8.5px;fill:var(--awd-muted);\" x=\"330\" y=\"91\"><tspan x=\"330\">reads</tspan></text><text style=\"text-anchor:middle;font-size:8.5px;fill:var(--awd-muted);\" x=\"781\" y=\"125\"><tspan x=\"781\">reads</tspan></text><text class=\"t-wire\" x=\"368\" y=\"300\"><tspan x=\"368\">Asynchronous replication</tspan></text><text class=\"t-wire\" x=\"780\" y=\"300\"><tspan x=\"780\">Cross-Region replication</tspan></text><text style=\"text-anchor:start;font-size:8.5px;fill:var(--awd-muted);\" x=\"742\" y=\"93\"><tspan x=\"742\">Promote the replica to a standalone</tspan><tspan x=\"742\" dy=\"10.5\">DB instance for disaster recovery.</tspan></text>"
+    },
+    {
+      "id": "db-aurora-global",
+      "name": "Amazon Aurora Global Database",
+      "desc": "The primary Region cluster replicates at the storage layer to a secondary Region, typically with under one second of lag, and a managed failover or switchover promotes the secondary. Packets show replication, then a Region outage, the promotion and Route 53 redirecting writes.",
+      "wide": true,
+      "w": 960,
+      "h": 340,
+      "dur": 11,
+      "groups": [
+        { "kind": "cloud", "x": 76, "y": 8, "w": 876, "h": 324 },
+        { "kind": "gen", "x": 148, "y": 100, "w": 796, "h": 222, "label": "Aurora global database" },
+        { "kind": "region", "id": "reg-a", "x": 158, "y": 126, "w": 344, "h": 188, "label": "us-east-1 (primary)" },
+        { "kind": "region", "x": 590, "y": 126, "w": 344, "h": 188, "label": "eu-west-1 (secondary)" }
+      ],
+      "nodes": [
+        { "id": "users", "icon": "aws-res-users", "x": 12, "y": 30, "label": "Users" },
+        { "id": "r53", "icon": "aws-svc-route-53", "x": 526, "y": 30 },
+        { "id": "rA", "icon": "aws-res-aurora-instance-alternate", "x": 230, "y": 154, "label": "Reader DB instance", "wrap": 20 },
+        { "id": "wA", "icon": "aws-res-aurora-instance-alternate", "x": 370, "y": 154, "label": "Writer DB instance", "wrap": 20 },
+        { "id": "rB1", "icon": "aws-res-aurora-instance-alternate", "x": 660, "y": 154, "label": "Reader DB instance", "wrap": 20 },
+        { "id": "rB2", "icon": "aws-res-aurora-instance-alternate", "x": 820, "y": 154, "label": "Reader DB instance", "wrap": 20 }
+      ],
+      "wires": [
+        { "id": "w-u", "d": "M56,50 H522" },
+        { "id": "w-ra", "d": "M538,72 V88 H390 V150" },
+        { "id": "w-rb", "d": "M554,72 V88 H840 V150", "dashed": true },
+        { "id": "w-wa", "d": "M390,216 V229" },
+        { "id": "w-ra1", "d": "M250,229 V216", "dashed": true },
+        { "id": "w-rb1", "d": "M680,229 V216", "dashed": true },
+        { "id": "w-rb2", "d": "M840,229 V216", "dashed": true },
+        { "id": "w-rep", "d": "M494,255 H598" }
+      ],
+      "steps": [
+        { "n": 1, "x": 220, "y": 39 },
+        { "n": 2, "x": 546, "y": 255 },
+        { "n": 3, "x": 700, "y": 77 }
+      ],
+      "timeline": [
+        { "wire": "w-u", "t": [0.03, 0.09] },
+        { "wire": "w-ra", "t": [0.1, 0.18], "ring": "wA" },
+        { "wire": "w-wa", "t": [0.19, 0.24], "kind": "pk-2" },
+        { "wire": "w-rep", "t": [0.26, 0.38], "kind": "pk-2" },
+        { "wire": "w-ra", "t": [0.52, 0.6], "kind": "pk-bad" },
+        { "wire": "w-u", "t": [0.68, 0.73] },
+        { "wire": "w-rb", "t": [0.74, 0.84], "ring": "rB2" }
+      ],
+      "effects": [
+        { "fail": "reg-a", "t": [0.5, 0.97] },
+        { "fade": "w-ra", "t": [0.52, 0.97] },
+        { "fade": "w-rep", "t": [0.52, 0.97] },
+        { "glow": "w-rb", "t": [0.66, 0.97] }
+      ],
+      "extra": "<text style=\"text-anchor:start;\" x=\"572\" y=\"48\"><tspan x=\"572\">Amazon</tspan><tspan x=\"572\" dy=\"11\">Route 53</tspan></text><text style=\"text-anchor:start;font-size:8.5px;fill:var(--awd-muted);\" x=\"90\" y=\"70\"><tspan x=\"90\">Writes go to the primary Region; the secondary</tspan><tspan x=\"90\" dy=\"10.5\">Region replicates from storage and serves reads.</tspan></text><g class=\"anim\" opacity=\"0\"><rect x=\"86\" y=\"62\" width=\"250\" height=\"24\" style=\"fill:var(--awd-panel)\"/><text style=\"text-anchor:start;font-size:8.5px;fill:var(--awd-pk);\" x=\"90\" y=\"70\"><tspan x=\"90\">Primary Region outage: the secondary cluster is</tspan><tspan x=\"90\" dy=\"10.5\">promoted and Route 53 sends writes to eu-west-1.</tspan></text><animate attributeName=\"opacity\" dur=\"11s\" repeatCount=\"indefinite\" calcMode=\"discrete\" values=\"0;1;0\" keyTimes=\"0;.5;1\"/></g><rect x=\"170\" y=\"232\" width=\"320\" height=\"46\" rx=\"6\" style=\"fill:color-mix(in srgb,#C925D1 16%,var(--awd-panel));stroke:#C925D1;stroke-width:1.4\"/><rect x=\"602\" y=\"232\" width=\"320\" height=\"46\" rx=\"6\" style=\"fill:color-mix(in srgb,#C925D1 16%,var(--awd-panel));stroke:#C925D1;stroke-width:1.4\"/><use class=\"cw-d\" href=\"#aws-res-database-dark\" x=\"199\" y=\"244\" width=\"22\" height=\"22\"/><use class=\"cw-l\" href=\"#aws-res-database-light\" x=\"199\" y=\"244\" width=\"22\" height=\"22\"/><use class=\"cw-d\" href=\"#aws-res-database-dark\" x=\"247\" y=\"244\" width=\"22\" height=\"22\"/><use class=\"cw-l\" href=\"#aws-res-database-light\" x=\"247\" y=\"244\" width=\"22\" height=\"22\"/><use class=\"cw-d\" href=\"#aws-res-database-dark\" x=\"295\" y=\"244\" width=\"22\" height=\"22\"/><use class=\"cw-l\" href=\"#aws-res-database-light\" x=\"295\" y=\"244\" width=\"22\" height=\"22\"/><use class=\"cw-d\" href=\"#aws-res-database-dark\" x=\"343\" y=\"244\" width=\"22\" height=\"22\"/><use class=\"cw-l\" href=\"#aws-res-database-light\" x=\"343\" y=\"244\" width=\"22\" height=\"22\"/><use class=\"cw-d\" href=\"#aws-res-database-dark\" x=\"391\" y=\"244\" width=\"22\" height=\"22\"/><use class=\"cw-l\" href=\"#aws-res-database-light\" x=\"391\" y=\"244\" width=\"22\" height=\"22\"/><use class=\"cw-d\" href=\"#aws-res-database-dark\" x=\"439\" y=\"244\" width=\"22\" height=\"22\"/><use class=\"cw-l\" href=\"#aws-res-database-light\" x=\"439\" y=\"244\" width=\"22\" height=\"22\"/><use class=\"cw-d\" href=\"#aws-res-database-dark\" x=\"631\" y=\"244\" width=\"22\" height=\"22\"/><use class=\"cw-l\" href=\"#aws-res-database-light\" x=\"631\" y=\"244\" width=\"22\" height=\"22\"/><use class=\"cw-d\" href=\"#aws-res-database-dark\" x=\"679\" y=\"244\" width=\"22\" height=\"22\"/><use class=\"cw-l\" href=\"#aws-res-database-light\" x=\"679\" y=\"244\" width=\"22\" height=\"22\"/><use class=\"cw-d\" href=\"#aws-res-database-dark\" x=\"727\" y=\"244\" width=\"22\" height=\"22\"/><use class=\"cw-l\" href=\"#aws-res-database-light\" x=\"727\" y=\"244\" width=\"22\" height=\"22\"/><use class=\"cw-d\" href=\"#aws-res-database-dark\" x=\"775\" y=\"244\" width=\"22\" height=\"22\"/><use class=\"cw-l\" href=\"#aws-res-database-light\" x=\"775\" y=\"244\" width=\"22\" height=\"22\"/><use class=\"cw-d\" href=\"#aws-res-database-dark\" x=\"823\" y=\"244\" width=\"22\" height=\"22\"/><use class=\"cw-l\" href=\"#aws-res-database-light\" x=\"823\" y=\"244\" width=\"22\" height=\"22\"/><use class=\"cw-d\" href=\"#aws-res-database-dark\" x=\"871\" y=\"244\" width=\"22\" height=\"22\"/><use class=\"cw-l\" href=\"#aws-res-database-light\" x=\"871\" y=\"244\" width=\"22\" height=\"22\"/><text style=\"text-anchor:middle;font-size:8.5px;fill:var(--awd-muted);\" x=\"330\" y=\"298\"><tspan x=\"330\">Cluster volume: 6 copies across 3 AZs</tspan></text><text style=\"text-anchor:middle;font-size:8.5px;fill:var(--awd-muted);\" x=\"762\" y=\"298\"><tspan x=\"762\">Cluster volume: 6 copies across 3 AZs</tspan></text><text class=\"t-wire\" x=\"546\" y=\"229\"><tspan x=\"546\">Storage-level</tspan><tspan x=\"546\" dy=\"10.5\">replication</tspan></text><text class=\"t-wire\" x=\"546\" y=\"277\"><tspan x=\"546\">typical lag</tspan><tspan x=\"546\" dy=\"10.5\">under 1 s</tspan></text><g class=\"anim\" opacity=\"0\"><rect x=\"782\" y=\"196\" width=\"116\" height=\"14\" style=\"fill:var(--awd-panel)\"/><text class=\"t-c\" style=\"fill:var(--awd-pk);\" x=\"840\" y=\"206\"><tspan x=\"840\">Writer (promoted)</tspan></text><animate attributeName=\"opacity\" dur=\"11s\" repeatCount=\"indefinite\" calcMode=\"discrete\" values=\"0;1;0\" keyTimes=\"0;.64;1\"/></g><circle class=\"ring-2\" cx=\"642\" cy=\"255\" r=\"13\" opacity=\"0\"><animate attributeName=\"opacity\" dur=\"11s\" repeatCount=\"indefinite\" values=\"0;0;.9;0;0\" keyTimes=\"0;.38;.38;.5;1\"/><animate attributeName=\"r\" dur=\"11s\" repeatCount=\"indefinite\" values=\"13;13;13;18.85;18.85\" keyTimes=\"0;.38;.38;.5;1\"/></circle><circle class=\"ring-2\" cx=\"690\" cy=\"255\" r=\"13\" opacity=\"0\"><animate attributeName=\"opacity\" dur=\"11s\" repeatCount=\"indefinite\" values=\"0;0;.9;0;0\" keyTimes=\"0;.39;.39;.51;1\"/><animate attributeName=\"r\" dur=\"11s\" repeatCount=\"indefinite\" values=\"13;13;13;18.85;18.85\" keyTimes=\"0;.39;.39;.51;1\"/></circle><circle class=\"ring-2\" cx=\"738\" cy=\"255\" r=\"13\" opacity=\"0\"><animate attributeName=\"opacity\" dur=\"11s\" repeatCount=\"indefinite\" values=\"0;0;.9;0;0\" keyTimes=\"0;.39;.39;.51;1\"/><animate attributeName=\"r\" dur=\"11s\" repeatCount=\"indefinite\" values=\"13;13;13;18.85;18.85\" keyTimes=\"0;.39;.39;.51;1\"/></circle><circle class=\"ring-2\" cx=\"786\" cy=\"255\" r=\"13\" opacity=\"0\"><animate attributeName=\"opacity\" dur=\"11s\" repeatCount=\"indefinite\" values=\"0;0;.9;0;0\" keyTimes=\"0;.4;.4;.52;1\"/><animate attributeName=\"r\" dur=\"11s\" repeatCount=\"indefinite\" values=\"13;13;13;18.85;18.85\" keyTimes=\"0;.4;.4;.52;1\"/></circle><circle class=\"ring-2\" cx=\"834\" cy=\"255\" r=\"13\" opacity=\"0\"><animate attributeName=\"opacity\" dur=\"11s\" repeatCount=\"indefinite\" values=\"0;0;.9;0;0\" keyTimes=\"0;.4;.4;.52;1\"/><animate attributeName=\"r\" dur=\"11s\" repeatCount=\"indefinite\" values=\"13;13;13;18.85;18.85\" keyTimes=\"0;.4;.4;.52;1\"/></circle><circle class=\"ring-2\" cx=\"882\" cy=\"255\" r=\"13\" opacity=\"0\"><animate attributeName=\"opacity\" dur=\"11s\" repeatCount=\"indefinite\" values=\"0;0;.9;0;0\" keyTimes=\"0;.41;.41;.53;1\"/><animate attributeName=\"r\" dur=\"11s\" repeatCount=\"indefinite\" values=\"13;13;13;18.85;18.85\" keyTimes=\"0;.41;.41;.53;1\"/></circle>"
+    },
+    {
+      "id": "db-dms",
+      "name": "AWS Database Migration Service",
+      "desc": "AWS DMS copies an on-premises database into Amazon Aurora over Direct Connect or VPN, first as a full load and then as ongoing change data capture, with the optional AWS Schema Conversion Tool preparing the target schema. Packets show schema conversion, the bulk load, then change replication.",
+      "wide": true,
+      "w": 960,
+      "h": 288,
+      "dur": 11,
+      "groups": [
+        { "kind": "dc", "x": 8, "y": 20, "w": 252, "h": 252 },
+        { "kind": "cloud", "x": 340, "y": 8, "w": 612, "h": 272 },
+        { "kind": "region", "x": 348, "y": 34, "w": 596, "h": 238, "label": "Region" },
+        { "kind": "vpc", "x": 356, "y": 60, "w": 580, "h": 204 },
+        { "kind": "az", "x": 366, "y": 108, "w": 392, "h": 148, "label": "Availability Zone a" },
+        { "kind": "az", "x": 766, "y": 108, "w": 162, "h": 148, "label": "Availability Zone b" },
+        { "kind": "priv", "x": 374, "y": 130, "w": 376, "h": 118 },
+        { "kind": "priv", "x": 774, "y": 130, "w": 146, "h": 118 }
+      ],
+      "nodes": [
+        { "id": "sct", "icon": "aws-res-client", "x": 36, "y": 162, "label": "AWS Schema Conversion Tool", "wrap": 16, "sub": "(optional)" },
+        { "id": "src", "icon": "aws-res-database", "x": 190, "y": 162, "label": "Source database", "sub": "Oracle, SQL Server" },
+        { "id": "dms", "icon": "aws-svc-database-migration-service", "x": 430, "y": 162, "label": "AWS DMS replication instance", "wrap": 20 },
+        { "id": "tgt", "icon": "aws-res-aurora-instance-alternate", "x": 630, "y": 162, "label": "Aurora writer DB instance" },
+        { "id": "rd", "icon": "aws-res-aurora-instance-alternate", "x": 827, "y": 162, "label": "Aurora reader DB instance" }
+      ],
+      "wires": [
+        { "id": "w-sct-src", "d": "M80,182 H186", "dashed": true },
+        { "id": "w-sct-tgt", "d": "M56,158 V90 H650 V158", "dashed": true },
+        { "id": "w-link", "d": "M234,182 H426" },
+        { "id": "w-dms", "d": "M476,182 H626" }
+      ],
+      "steps": [
+        { "n": 1, "x": 133, "y": 193 },
+        { "n": 2, "x": 398, "y": 171 },
+        { "n": 3, "x": 551, "y": 193 }
+      ],
+      "timeline": [
+        { "wire": "w-sct-src", "t": [0.03, 0.08], "kind": "pk-2", "ring": "src" },
+        { "wire": "w-sct-tgt", "t": [0.09, 0.24], "kind": "pk-2", "ring": "tgt" },
+        { "wire": "w-link", "t": [0.27, 0.37] },
+        { "wire": "w-link", "t": [0.30000000000000004, 0.4] },
+        { "wire": "w-link", "t": [0.33, 0.43] },
+        { "wire": "w-link", "t": [0.36, 0.45999999999999996] },
+        { "wire": "w-dms", "t": [0.36, 0.44] },
+        { "wire": "w-dms", "t": [0.39, 0.47] },
+        { "wire": "w-dms", "t": [0.42, 0.5] },
+        { "wire": "w-dms", "t": [0.44999999999999996, 0.53], "ring": "tgt" },
+        { "wire": "w-link", "t": [0.57, 0.65], "kind": "pk-2" },
+        { "wire": "w-dms", "t": [0.66, 0.74], "kind": "pk-2", "ring": "tgt" },
+        { "wire": "w-link", "t": [0.77, 0.85], "kind": "pk-2" },
+        { "wire": "w-dms", "t": [0.86, 0.94], "kind": "pk-2", "ring": "tgt" }
+      ],
+      "extra": "<text style=\"text-anchor:middle;font-size:8.5px;fill:var(--awd-muted);\" x=\"551\" y=\"172\"><tspan x=\"551\">Full load, then CDC</tspan></text><g class=\"anim\" opacity=\"0\"><rect x=\"481\" y=\"162\" width=\"140\" height=\"14\" style=\"fill:var(--awd-panel)\"/><rect x=\"481\" y=\"162\" width=\"140\" height=\"14\" fill=\"rgba(0,164,166,.10)\"/><text style=\"text-anchor:middle;font-size:8.5px;fill:var(--awd-pk);\" x=\"551\" y=\"172\"><tspan x=\"551\">Full load</tspan></text><animate attributeName=\"opacity\" dur=\"11s\" repeatCount=\"indefinite\" calcMode=\"discrete\" values=\"0;1;0\" keyTimes=\"0;.26;.53\"/></g><g class=\"anim\" opacity=\"0\"><rect x=\"481\" y=\"162\" width=\"140\" height=\"14\" style=\"fill:var(--awd-panel)\"/><rect x=\"481\" y=\"162\" width=\"140\" height=\"14\" fill=\"rgba(0,164,166,.10)\"/><text style=\"text-anchor:middle;font-size:8.5px;fill:var(--awd-pk);\" x=\"551\" y=\"172\"><tspan x=\"551\">Ongoing replication (CDC)</tspan></text><animate attributeName=\"opacity\" dur=\"11s\" repeatCount=\"indefinite\" calcMode=\"discrete\" values=\"0;1;0\" keyTimes=\"0;.53;1\"/></g><text class=\"t-wire\" x=\"300\" y=\"163\"><tspan x=\"300\">Direct Connect</tspan><tspan x=\"300\" dy=\"10\">or VPN</tspan></text><text style=\"text-anchor:middle;font-size:8.5px;fill:var(--awd-muted);\" x=\"133\" y=\"176\"><tspan x=\"133\">reads schema</tspan></text><text style=\"text-anchor:middle;font-size:8.5px;fill:var(--awd-muted);\" x=\"500\" y=\"85\"><tspan x=\"500\">applies the converted schema</tspan></text>"
+    }
+  ]
+}

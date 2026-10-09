@@ -1,0 +1,602 @@
+{
+  "version": 1,
+  "section": { "id": "dns", "title": "ROUTE 53 & DNS" },
+  "diagrams": [
+    {
+      "id": "dns-resolution",
+      "name": "How a public name resolves",
+      "desc": "A recursive resolver walks the DNS hierarchy for example.com: the root refers it to the .com servers, which refer it to the four name servers of the Route 53 public hosted zone, where an alias record at the zone apex answers with the load balancer. The resolver caches the answer for its TTL, so a second query is answered from cache. Orange packets are queries, blue are referrals and answers; the animation runs the full lookup, the HTTPS request and then the cached repeat.",
+      "wide": true,
+      "w": 960,
+      "h": 424,
+      "dur": 10,
+      "groups": [
+        { "kind": "cloud", "x": 520, "y": 20, "w": 432, "h": 392 },
+        { "kind": "gen", "x": 536, "y": 46, "w": 400, "h": 172, "label": "Public hosted zone example.com", "icon": "aws-res-route-53-hosted-zone", "note": "4 name servers" },
+        { "kind": "region", "x": 536, "y": 238, "w": 400, "h": 156, "label": "us-east-1" }
+      ],
+      "nodes": [
+        { "id": "res", "icon": "aws-res-server", "x": 90, "y": 176, "size": 40, "label": "Recursive resolver", "wrap": 10, "sub": "caches by TTL" },
+        { "id": "cli", "icon": "aws-res-client", "x": 90, "y": 302, "size": 40, "label": "Client", "sub": "stub resolver" },
+        { "id": "root", "icon": "aws-res-server", "x": 310, "y": 30, "size": 40, "label": "Root name server", "wrap": 12 },
+        { "id": "tld", "icon": "aws-res-server", "x": 310, "y": 176, "size": 40, "label": ".com TLD name server", "wrap": 12 },
+        { "id": "ns1", "icon": "aws-svc-route-53", "x": 580, "y": 96, "size": 32, "label": "ns-17", "sub": "awsdns-02.com" },
+        { "id": "ns2", "icon": "aws-svc-route-53", "x": 670, "y": 96, "size": 32, "label": "ns-603", "sub": "awsdns-11.net" },
+        { "id": "ns3", "icon": "aws-svc-route-53", "x": 760, "y": 96, "size": 32, "label": "ns-1144", "sub": "awsdns-15.org" },
+        { "id": "ns4", "icon": "aws-svc-route-53", "x": 850, "y": 96, "size": 32, "label": "ns-1802", "sub": "awsdns-33.co.uk" },
+        { "id": "alb", "icon": "aws-res-elastic-load-balancing-application-load-balancer", "x": 680, "y": 302, "size": 40, "label": "Application Load Balancer" },
+        { "id": "ec2", "icon": "aws-res-ec2-instances", "x": 840, "y": 302, "size": 40, "label": "Amazon EC2 instances" }
+      ],
+      "wires": [
+        { "id": "c1", "d": "M110,261 V298", "both": true, "label": "example.com A?", "labelAt": 0.5, "labelDx": 8, "labelDy": 3, "labelAnchor": "start" },
+        { "id": "r1", "d": "M134,196 H200 V50 H306", "both": true },
+        { "id": "r2", "d": "M134,196 H306", "both": true },
+        { "id": "r3", "d": "M134,196 H200 V112 H576", "both": true },
+        { "id": "al", "d": "M700,218 V298", "dashed": true, "arrow": true, "label": "alias A record", "labelAt": 0.5, "labelDx": 8, "labelDy": 3, "labelAnchor": "start" },
+        { "id": "lb", "d": "M724,322 H836" },
+        { "id": "h", "d": "M134,322 H676", "label": "HTTPS to 203.0.113.10", "labelAt": 0.5 }
+      ],
+      "steps": [
+        { "n": 1, "at": "c1", "f": 0.3, "dx": -11, "dy": 0 },
+        { "n": 2, "at": "r1", "f": 0.9, "dy": -11 },
+        { "n": 3, "at": "r2", "f": 0.5, "dy": -11 },
+        { "n": 4, "at": "r3", "f": 0.78, "dy": -11 },
+        { "n": 5, "at": "c1", "f": 0.7, "dx": -11, "dy": 0 },
+        { "n": 6, "at": "h", "f": 0.2, "dy": -11 }
+      ],
+      "timeline": [
+        { "wire": "c1", "t": [0.02, 0.07] },
+        { "wire": "r1", "t": [0.075, 0.125], "ring": "root" },
+        { "wire": "r1", "t": [0.13, 0.18], "reverse": true, "kind": "pk-2", "ring": "res" },
+        { "wire": "r2", "t": [0.185, 0.235], "ring": "tld" },
+        { "wire": "r2", "t": [0.24, 0.29], "reverse": true, "kind": "pk-2", "ring": "res" },
+        { "wire": "r3", "t": [0.295, 0.345], "ring": "ns1" },
+        { "wire": "r3", "t": [0.35, 0.4], "reverse": true, "kind": "pk-2", "ring": "res" },
+        { "wire": "c1", "t": [0.405, 0.455], "reverse": true, "kind": "pk-2", "ring": "cli" },
+        { "wire": "h", "t": [0.47, 0.57], "ring": "alb" },
+        { "wire": "lb", "t": [0.59, 0.64], "ring": "ec2" },
+        { "wire": "c1", "t": [0.74, 0.79], "ring": "res" },
+        { "wire": "c1", "t": [0.8, 0.85], "reverse": true, "kind": "pk-2", "ring": "cli" }
+      ],
+      "notes": [
+        { "x": 362, "y": 46, "text": "Referral:\nNS for .com", "anchor": "start" },
+        { "x": 362, "y": 192, "text": "Referral: NS for example.com\n(4 name servers)", "anchor": "start" },
+        { "x": 552, "y": 184, "text": "example.com  A  ALIAS  my-alb-1234.us-east-1.elb.amazonaws.com", "anchor": "start" },
+        { "x": 552, "y": 195, "text": "Alias answers return the ALB addresses with TTL 60 s", "anchor": "start" },
+        { "x": 206, "y": 262, "text": "Cached: example.com A\n203.0.113.10, TTL 60 s", "anchor": "start", "t": [0.4, 0.72] },
+        { "x": 206, "y": 262, "text": "Second query inside the TTL: answered from cache", "kind": "label", "anchor": "start", "t": [0.73, 0.98] },
+        { "x": 206, "y": 275, "text": "No root, TLD or Route 53 lookups needed", "anchor": "start", "t": [0.73, 0.98] },
+        { "x": 25, "y": 395, "text": "Query", "anchor": "start" },
+        { "x": 25, "y": 409, "text": "Referral or answer", "anchor": "start" }
+      ],
+      "extra": "<circle cx=\"16\" cy=\"392\" r=\"3.4\" fill=\"var(--awd-pk)\"/><circle cx=\"16\" cy=\"406\" r=\"3.4\" fill=\"var(--awd-pk2)\"/>"
+    },
+    {
+      "id": "dns-weighted",
+      "name": "Weighted routing for a canary",
+      "desc": "Two weighted alias records with the same name point at a stable and a canary load balancer stack. Route 53 answers in proportion to the weights: 90 / 10 first, then 50 / 50, then 0 / 100 once the canary is promoted. The animation shifts the weights and the share of queries going to each stack.",
+      "w": 480,
+      "h": 282,
+      "dur": 10,
+      "groups": [
+        { "kind": "cloud", "x": 70, "y": 8, "w": 402, "h": 266 },
+        { "kind": "region", "x": 246, "y": 34, "w": 218, "h": 232, "label": "us-east-1" },
+        { "kind": "gen", "x": 258, "y": 58, "w": 194, "h": 96, "label": "Stable (v1)" },
+        { "kind": "gen", "x": 258, "y": 164, "w": 194, "h": 96, "label": "Canary (v2)" }
+      ],
+      "nodes": [
+        { "id": "users", "icon": "aws-res-users", "x": 12, "y": 132, "size": 36, "label": "Users" },
+        { "id": "r53", "icon": "aws-svc-route-53", "x": 110, "y": 130, "size": 40, "label": "Amazon Route 53", "wrap": 8, "sub": "weighted routing" },
+        { "id": "alb1", "icon": "aws-res-elastic-load-balancing-application-load-balancer", "x": 284, "y": 84, "size": 32, "label": "Application Load Balancer" },
+        { "id": "ec1", "icon": "aws-res-ec2-instances", "x": 394, "y": 84, "size": 32, "label": "Amazon EC2", "sub": "app v1" },
+        { "id": "alb2", "icon": "aws-res-elastic-load-balancing-application-load-balancer", "x": 284, "y": 192, "size": 32, "label": "Application Load Balancer" },
+        { "id": "ec2", "icon": "aws-res-ec2-instances", "x": 394, "y": 192, "size": 32, "label": "Amazon EC2", "sub": "app v2" }
+      ],
+      "wires": [
+        { "id": "u", "d": "M52,150 H106" },
+        { "id": "p1", "d": "M154,144 H176 V100 H280" },
+        { "id": "p2", "d": "M154,156 H176 V208 H280" },
+        { "id": "w1", "d": "M320,100 H390" },
+        { "id": "w2", "d": "M320,208 H390" }
+      ],
+      "steps": [
+        { "n": 1, "at": "u", "f": 0.5, "dy": -11 },
+        { "n": 2, "at": "p1", "f": 0.55, "dy": 12 },
+        { "n": 3, "at": "w1", "f": 0.5, "dy": -11 }
+      ],
+      "timeline": [
+        { "wire": "u", "t": [0.02, 0.04] },
+        { "wire": "p1", "t": [0.04, 0.07], "ring": "alb1" },
+        { "wire": "w1", "t": [0.07, 0.09], "ring": "ec1" },
+        { "wire": "u", "t": [0.1, 0.12] },
+        { "wire": "p1", "t": [0.12, 0.15], "ring": "alb1" },
+        { "wire": "w1", "t": [0.15, 0.17], "ring": "ec1" },
+        { "wire": "u", "t": [0.18, 0.2] },
+        { "wire": "p1", "t": [0.2, 0.23], "ring": "alb1" },
+        { "wire": "w1", "t": [0.23, 0.25], "ring": "ec1" },
+        { "wire": "u", "t": [0.26, 0.28] },
+        { "wire": "p2", "t": [0.28, 0.31], "ring": "alb2" },
+        { "wire": "w2", "t": [0.31, 0.33], "ring": "ec2" },
+        { "wire": "u", "t": [0.36, 0.38] },
+        { "wire": "p1", "t": [0.38, 0.41], "ring": "alb1" },
+        { "wire": "w1", "t": [0.41, 0.43], "ring": "ec1" },
+        { "wire": "u", "t": [0.44, 0.46] },
+        { "wire": "p2", "t": [0.46, 0.49], "ring": "alb2" },
+        { "wire": "w2", "t": [0.49, 0.51], "ring": "ec2" },
+        { "wire": "u", "t": [0.52, 0.54] },
+        { "wire": "p1", "t": [0.54, 0.57], "ring": "alb1" },
+        { "wire": "w1", "t": [0.57, 0.59], "ring": "ec1" },
+        { "wire": "u", "t": [0.6, 0.62] },
+        { "wire": "p2", "t": [0.62, 0.65], "ring": "alb2" },
+        { "wire": "w2", "t": [0.65, 0.67], "ring": "ec2" },
+        { "wire": "u", "t": [0.7, 0.72] },
+        { "wire": "p2", "t": [0.72, 0.75], "ring": "alb2" },
+        { "wire": "w2", "t": [0.75, 0.77], "ring": "ec2" },
+        { "wire": "u", "t": [0.78, 0.8] },
+        { "wire": "p2", "t": [0.8, 0.83], "ring": "alb2" },
+        { "wire": "w2", "t": [0.83, 0.85], "ring": "ec2" },
+        { "wire": "u", "t": [0.86, 0.88] },
+        { "wire": "p2", "t": [0.88, 0.91], "ring": "alb2" },
+        { "wire": "w2", "t": [0.91, 0.93], "ring": "ec2" }
+      ],
+      "effects": [
+        { "fade": "p1", "t": [0.72, 0.99] },
+        { "glow": "p2", "t": [0.72, 0.99] }
+      ],
+      "notes": [
+        { "x": 211, "y": 94, "text": "weight 90", "t": [0.02, 0.34] },
+        { "x": 211, "y": 202, "text": "weight 10", "t": [0.02, 0.34] },
+        { "x": 211, "y": 94, "text": "weight 50", "t": [0.36, 0.68] },
+        { "x": 211, "y": 202, "text": "weight 50", "t": [0.36, 0.68] },
+        { "x": 211, "y": 94, "text": "weight 0", "t": [0.7, 0.99] },
+        { "x": 211, "y": 202, "text": "weight 100", "t": [0.7, 0.99] },
+        { "x": 130, "y": 232, "text": "Canary: 90 / 10", "kind": "label", "t": [0.02, 0.34] },
+        { "x": 130, "y": 232, "text": "Ramp up: 50 / 50", "kind": "label", "t": [0.36, 0.68] },
+        { "x": 130, "y": 232, "text": "Cutover: 0 / 100", "kind": "label", "t": [0.7, 0.99] },
+        { "x": 130, "y": 250, "text": "Two records, same name,\nset identifiers v1 and v2" }
+      ]
+    },
+    {
+      "id": "dns-geo",
+      "name": "Geolocation routing",
+      "desc": "Route 53 matches the location of the query to a geolocation record: North America and a Default record go to us-east-1, Europe to eu-west-1 and Asia to ap-southeast-1. A South America query has no record of its own, so the Default record answers. The animation sends one query from each location.",
+      "w": 480,
+      "h": 292,
+      "dur": 10,
+      "groups": [
+        { "kind": "cloud", "x": 84, "y": 8, "w": 388, "h": 276 },
+        { "kind": "region", "x": 262, "y": 30, "w": 202, "h": 76, "label": "us-east-1" },
+        { "kind": "region", "x": 262, "y": 114, "w": 202, "h": 76, "label": "eu-west-1" },
+        { "kind": "region", "x": 262, "y": 198, "w": 202, "h": 76, "label": "ap-southeast-1" }
+      ],
+      "nodes": [
+        { "id": "u0", "icon": "aws-res-users", "x": 14, "y": 38, "size": 32, "label": "Users", "sub": "North America" },
+        { "id": "u1", "icon": "aws-res-users", "x": 14, "y": 98, "size": 32, "label": "Users", "sub": "South America" },
+        { "id": "u2", "icon": "aws-res-users", "x": 14, "y": 158, "size": 32, "label": "Users", "sub": "Europe" },
+        { "id": "u3", "icon": "aws-res-users", "x": 14, "y": 218, "size": 32, "label": "Users", "sub": "Asia" },
+        { "id": "r53", "icon": "aws-svc-route-53", "x": 120, "y": 132, "size": 40, "label": "Amazon Route 53", "wrap": 8, "sub": "geolocation" },
+        { "id": "alb0", "icon": "aws-res-elastic-load-balancing-application-load-balancer", "x": 344, "y": 52, "size": 32, "label": "Application Load Balancer", "wrap": 30 },
+        { "id": "alb1", "icon": "aws-res-elastic-load-balancing-application-load-balancer", "x": 344, "y": 136, "size": 32, "label": "Application Load Balancer", "wrap": 30 },
+        { "id": "alb2", "icon": "aws-res-elastic-load-balancing-application-load-balancer", "x": 344, "y": 220, "size": 32, "label": "Application Load Balancer", "wrap": 30 }
+      ],
+      "wires": [
+        { "id": "u0", "d": "M50,54 H70 V152 H116" },
+        { "id": "u1", "d": "M50,114 H70 V152 H116" },
+        { "id": "u2", "d": "M50,174 H70 V152 H116" },
+        { "id": "u3", "d": "M50,234 H70 V152 H116" },
+        { "id": "gNA", "d": "M164,138 H196 V62 H340", "label": "NA", "labelAt": 0.82 },
+        { "id": "gDEF", "d": "M164,144 H210 V74 H340", "dashed": true, "label": "Default", "labelAt": 0.6, "labelDy": 11 },
+        { "id": "gEU", "d": "M164,152 H340", "label": "EU", "labelAt": 0.82 },
+        { "id": "gAS", "d": "M164,164 H196 V236 H340", "label": "AS", "labelAt": 0.82 }
+      ],
+      "steps": [
+        { "n": 1, "at": "u2", "f": 0.45, "dy": -11 },
+        { "n": 2, "at": "gEU", "f": 0.55, "dy": -11 }
+      ],
+      "timeline": [
+        { "wire": "u0", "t": [0.03, 0.1], "ring": "r53" },
+        { "wire": "gNA", "t": [0.11, 0.18], "ring": "alb0" },
+        { "wire": "u1", "t": [0.27, 0.34], "ring": "r53" },
+        { "wire": "gDEF", "t": [0.35, 0.42], "ring": "alb0" },
+        { "wire": "u2", "t": [0.51, 0.58], "ring": "r53" },
+        { "wire": "gEU", "t": [0.59, 0.66], "ring": "alb1" },
+        { "wire": "u3", "t": [0.75, 0.82], "ring": "r53" },
+        { "wire": "gAS", "t": [0.83, 0.9], "ring": "alb2" }
+      ],
+      "notes": [
+        { "x": 140, "y": 222, "text": "No SA record,\nso Default answers", "t": [0.28, 0.5] }
+      ]
+    },
+    {
+      "id": "dns-multivalue",
+      "name": "Multivalue answer routing",
+      "desc": "Four multivalue answer records, each with its own health check, resolve app.example.com. Route 53 returns up to eight healthy addresses and the client connects to one. When the fourth endpoint fails its health check, Route 53 drops its address from the answers. The animation runs a query, the health checks, the failure and a second query.",
+      "w": 480,
+      "h": 292,
+      "dur": 10,
+      "groups": [
+        { "kind": "cloud", "x": 84, "y": 8, "w": 388, "h": 276 },
+        { "kind": "region", "x": 100, "y": 150, "w": 360, "h": 126, "label": "us-east-1" }
+      ],
+      "nodes": [
+        { "id": "users", "icon": "aws-res-users", "x": 12, "y": 38, "size": 36, "label": "Users" },
+        { "id": "r53", "icon": "aws-svc-route-53", "x": 170, "y": 36, "size": 40, "label": "Amazon Route 53", "wrap": 20, "sub": "multivalue answer routing" },
+        { "id": "e0", "icon": "aws-res-ec2-instance", "x": 174, "y": 210, "size": 32, "label": "Amazon EC2", "sub": "192.0.2.10" },
+        { "id": "e1", "icon": "aws-res-ec2-instance", "x": 254, "y": 210, "size": 32, "label": "Amazon EC2", "sub": "192.0.2.11" },
+        { "id": "e2", "icon": "aws-res-ec2-instance", "x": 334, "y": 210, "size": 32, "label": "Amazon EC2", "sub": "192.0.2.12" },
+        { "id": "e3", "icon": "aws-res-ec2-instance", "x": 414, "y": 210, "size": 32, "label": "Amazon EC2", "sub": "192.0.2.13" }
+      ],
+      "wires": [
+        { "id": "q", "d": "M52,56 H166", "both": true, "label": "app.example.com A?", "labelAt": 0.5, "labelDy": -6 },
+        { "id": "h0", "d": "M190,106 V128 H190 V206", "dashed": true },
+        { "id": "h1", "d": "M190,106 V128 H270 V206", "dashed": true },
+        { "id": "h2", "d": "M190,106 V128 H350 V206", "dashed": true },
+        { "id": "h3", "d": "M190,106 V128 H430 V206", "dashed": true },
+        { "id": "c", "d": "M30,82 V226 H170", "label": "connect", "labelAt": 0.24, "labelDx": 5, "labelDy": 0, "labelAnchor": "start" }
+      ],
+      "steps": [
+        { "n": 1, "at": "q", "f": 0.25, "dy": 12 },
+        { "n": 2, "at": "q", "f": 0.75, "dy": 12 },
+        { "n": 3, "at": "c", "f": 0.88, "dy": -11 }
+      ],
+      "timeline": [
+        { "wire": "q", "t": [0.02, 0.07], "ring": "r53" },
+        { "wire": "q", "t": [0.08, 0.13], "reverse": true, "kind": "pk-2", "ring": "users" },
+        { "wire": "c", "t": [0.16, 0.26], "ring": "e0" },
+        { "wire": "h0", "t": [0.3, 0.35], "kind": "pk-2" },
+        { "wire": "h1", "t": [0.3, 0.35], "kind": "pk-2" },
+        { "wire": "h2", "t": [0.3, 0.35], "kind": "pk-2" },
+        { "wire": "h3", "t": [0.3, 0.35], "kind": "pk-2" },
+        { "wire": "h0", "t": [0.36, 0.41], "reverse": true, "kind": "pk-2", "ring": "r53" },
+        { "wire": "h1", "t": [0.36, 0.41], "reverse": true, "kind": "pk-2" },
+        { "wire": "h2", "t": [0.36, 0.41], "reverse": true, "kind": "pk-2" },
+        { "wire": "h3", "t": [0.48, 0.56], "kind": "pk-bad" },
+        { "wire": "q", "t": [0.66, 0.71], "ring": "r53" },
+        { "wire": "q", "t": [0.72, 0.77], "reverse": true, "kind": "pk-2", "ring": "users" },
+        { "wire": "c", "t": [0.8, 0.9], "ring": "e0" }
+      ],
+      "notes": [
+        { "x": 232, "y": 36, "text": "Answer: 4 healthy records\n192.0.2.10  192.0.2.11\n192.0.2.12  192.0.2.13", "anchor": "start", "t": [0.1, 0.66] },
+        { "x": 232, "y": 36, "text": "Answer: 3 healthy records\n192.0.2.10  192.0.2.11\n192.0.2.12", "anchor": "start", "t": [0.73, 0.99] },
+        { "x": 232, "y": 120, "text": "health checks", "anchor": "start" },
+        { "x": 232, "y": 68, "text": "192.0.2.13 failed its health check", "kind": "warn", "anchor": "start", "t": [0.6, 0.99] }
+      ],
+      "extra": "<g class=\"anim\" opacity=\"0\"><circle cx=\"446\" cy=\"212\" r=\"7.5\" fill=\"#DD344C\"/><path d=\"M443,209 L449,215 M449,209 L443,215\" stroke=\"#fff\" stroke-width=\"1.7\" fill=\"none\"/><animate attributeName=\"opacity\" dur=\"10s\" repeatCount=\"indefinite\" calcMode=\"discrete\" values=\"0;1;0\" keyTimes=\"0;.58;.99\"/></g>"
+    },
+    {
+      "id": "dns-private-zone",
+      "name": "Private hosted zone and split horizon",
+      "desc": "One private hosted zone is associated with two VPCs. Instances query the Route 53 VPC Resolver at the VPC base address plus two, which answers app.example.com from the private zone with a private IP. The same name queried from the internet is answered by the public hosted zone with a public IP. The animation resolves from each VPC, then from the internet.",
+      "w": 480,
+      "h": 288,
+      "dur": 10,
+      "groups": [
+        { "kind": "cloud", "x": 70, "y": 8, "w": 402, "h": 272 },
+        { "kind": "region", "x": 82, "y": 106, "w": 290, "h": 166, "label": "us-east-1", "note": "enableDnsSupport + enableDnsHostnames" },
+        { "kind": "vpc", "x": 94, "y": 126, "w": 266, "h": 66, "label": "VPC A", "note": "10.0.0.0/16, Resolver 10.0.0.2" },
+        { "kind": "vpc", "x": 94, "y": 198, "w": 266, "h": 66, "label": "VPC B", "note": "10.1.0.0/16, Resolver 10.1.0.2" }
+      ],
+      "nodes": [
+        { "id": "inet", "icon": "aws-res-users", "x": 12, "y": 34, "size": 36, "label": "Internet users", "wrap": 8 },
+        { "id": "pub", "icon": "aws-res-route-53-hosted-zone", "x": 400, "y": 32, "size": 40, "label": "Public hosted zone", "wrap": 14, "sub": "example.com" },
+        { "id": "ea", "icon": "aws-res-ec2-instance", "x": 124, "y": 142, "size": 32, "label": "Amazon EC2" },
+        { "id": "ra", "icon": "aws-res-route-53-resolver", "x": 254, "y": 142, "size": 32, "label": "Route 53 VPC Resolver", "wrap": 22 },
+        { "id": "eb", "icon": "aws-res-ec2-instance", "x": 124, "y": 214, "size": 32, "label": "Amazon EC2" },
+        { "id": "rb", "icon": "aws-res-route-53-resolver", "x": 254, "y": 214, "size": 32, "label": "Route 53 VPC Resolver", "wrap": 22 },
+        { "id": "phz", "icon": "aws-res-route-53-hosted-zone", "x": 400, "y": 174, "size": 40, "label": "Private hosted zone", "wrap": 14, "sub": "example.com" }
+      ],
+      "wires": [
+        { "id": "pu", "d": "M52,52 H396", "both": true, "label": "app.example.com A?", "labelAt": 0.5 },
+        { "id": "ea", "d": "M160,158 H250" },
+        { "id": "za", "d": "M290,158 H384 V188 H396", "both": true },
+        { "id": "eb", "d": "M160,230 H250" },
+        { "id": "zb", "d": "M290,230 H384 V200 H396", "both": true }
+      ],
+      "steps": [
+        { "n": 1, "at": "ea", "f": 0.5, "dy": -11 },
+        { "n": 2, "at": "za", "f": 0.9, "dy": -11 },
+        { "n": 3, "at": "pu", "f": 0.2, "dy": -11 }
+      ],
+      "timeline": [
+        { "wire": "ea", "t": [0.03, 0.08], "ring": "ra" },
+        { "wire": "za", "t": [0.085, 0.135], "ring": "phz" },
+        { "wire": "za", "t": [0.14, 0.19], "reverse": true, "kind": "pk-2", "ring": "ra" },
+        { "wire": "ea", "t": [0.195, 0.245], "reverse": true, "kind": "pk-2", "ring": "ea" },
+        { "wire": "eb", "t": [0.3, 0.35], "ring": "rb" },
+        { "wire": "zb", "t": [0.355, 0.405], "ring": "phz" },
+        { "wire": "zb", "t": [0.41, 0.46], "reverse": true, "kind": "pk-2", "ring": "rb" },
+        { "wire": "eb", "t": [0.465, 0.515], "reverse": true, "kind": "pk-2", "ring": "eb" },
+        { "wire": "pu", "t": [0.6, 0.7], "ring": "pub" },
+        { "wire": "pu", "t": [0.73, 0.83], "reverse": true, "kind": "pk-2", "ring": "inet" }
+      ],
+      "notes": [
+        { "x": 420, "y": 122, "text": "app.example.com A\n203.0.113.10" },
+        { "x": 420, "y": 264, "text": "app.example.com A\n10.0.1.25" },
+        { "x": 227, "y": 98, "text": "Split horizon: same name, different answers" }
+      ]
+    },
+    {
+      "id": "dns-hybrid",
+      "name": "Hybrid DNS with Resolver endpoints",
+      "desc": "An inbound endpoint (ENIs in two Availability Zones) lets on-premises DNS servers resolve the private hosted zone aws.example.com over Direct Connect or VPN. An outbound endpoint and a forwarding rule send queries for corp.example.com from the VPC to the on-premises servers. The animation runs one inbound lookup, then one outbound lookup, each with its answer.",
+      "wide": true,
+      "w": 960,
+      "h": 428,
+      "dur": 10,
+      "groups": [
+        { "kind": "dc", "x": 8, "y": 40, "w": 168, "h": 316 },
+        { "kind": "cloud", "x": 300, "y": 8, "w": 652, "h": 412 },
+        { "kind": "region", "x": 312, "y": 34, "w": 496, "h": 376, "label": "Region" },
+        { "kind": "vpc", "x": 324, "y": 58, "w": 472, "h": 340, "label": "VPC", "note": "10.0.0.0/16" },
+        { "kind": "az", "x": 412, "y": 82, "w": 214, "h": 150, "label": "Availability Zone A" },
+        { "kind": "az", "x": 412, "y": 240, "w": 214, "h": 150, "label": "Availability Zone B" }
+      ],
+      "nodes": [
+        { "id": "cli", "icon": "aws-res-client", "x": 72, "y": 90, "size": 40, "label": "Client" },
+        { "id": "dns", "icon": "aws-res-servers", "x": 72, "y": 216, "size": 40, "label": "On-premises DNS servers", "wrap": 14, "sub": "10.1.1.10" },
+        { "id": "dx", "icon": "aws-svc-direct-connect", "x": 216, "y": 216, "size": 40, "label": "AWS Direct Connect", "wrap": 14, "sub": "or Site-to-Site VPN" },
+        { "id": "vgw", "icon": "aws-res-vpc-vpn-gateway", "x": 348, "y": 216, "size": 40, "label": "Virtual private gateway", "wrap": 14 },
+        { "id": "ia", "icon": "aws-res-vpc-elastic-network-interface", "x": 484, "y": 104, "size": 32, "label": "Inbound endpoint", "wrap": 18, "sub": "ENI 10.0.1.10" },
+        { "id": "oa", "icon": "aws-res-vpc-elastic-network-interface", "x": 484, "y": 168, "size": 32, "label": "Outbound endpoint", "wrap": 18, "sub": "ENI 10.0.1.20" },
+        { "id": "ib", "icon": "aws-res-vpc-elastic-network-interface", "x": 484, "y": 262, "size": 32, "label": "Inbound endpoint", "wrap": 18, "sub": "ENI 10.0.2.10" },
+        { "id": "ob", "icon": "aws-res-vpc-elastic-network-interface", "x": 484, "y": 326, "size": 32, "label": "Outbound endpoint", "wrap": 18, "sub": "ENI 10.0.2.20" },
+        { "id": "ec2", "icon": "aws-res-ec2-instance", "x": 720, "y": 98, "size": 40, "label": "Amazon EC2", "sub": "10.0.1.50" },
+        { "id": "res", "icon": "aws-res-route-53-resolver", "x": 720, "y": 216, "size": 40, "label": "Route 53 VPC Resolver", "wrap": 12, "sub": "10.0.0.2" },
+        { "id": "phz", "icon": "aws-res-route-53-hosted-zone", "x": 860, "y": 216, "size": 40, "label": "Private hosted zone", "wrap": 14, "sub": "aws.example.com" }
+      ],
+      "wires": [
+        { "id": "c", "d": "M92,147 V212", "both": true },
+        { "id": "d1", "d": "M116,236 H212", "both": true },
+        { "id": "d2", "d": "M260,236 H344", "both": true },
+        { "id": "ina", "d": "M392,236 H402 V120 H480" },
+        { "id": "inb", "d": "M392,236 H402 V278 H480" },
+        { "id": "outa", "d": "M480,184 H402 V230 H392" },
+        { "id": "outb", "d": "M480,342 H402 V242 H392" },
+        { "id": "iar", "d": "M520,120 H672 V224 H716" },
+        { "id": "ibr", "d": "M520,278 H672 V224 H716" },
+        { "id": "oar", "d": "M716,248 H672 V184 H520" },
+        { "id": "obr", "d": "M716,248 H672 V342 H520" },
+        { "id": "e", "d": "M740,166 V212", "both": true },
+        { "id": "z", "d": "M764,236 H856", "both": true, "label": "zone lookup" }
+      ],
+      "steps": [
+        { "n": 1, "at": "c", "f": 0.5, "dx": 11, "dy": 0 },
+        { "n": 2, "at": "d2", "f": 0.5, "dy": -11 },
+        { "n": 3, "at": "iar", "f": 0.3, "dy": -11 },
+        { "n": 4, "at": "e", "f": 0.5, "dx": 11, "dy": 0 },
+        { "n": 5, "at": "obr", "f": 0.85, "dy": -11 }
+      ],
+      "timeline": [
+        { "wire": "c", "t": [0.02, 0.052], "ring": "dns" },
+        { "wire": "d1", "t": [0.056, 0.088], "ring": "dx" },
+        { "wire": "d2", "t": [0.092, 0.124], "ring": "vgw" },
+        { "wire": "ina", "t": [0.128, 0.16], "ring": "ia" },
+        { "wire": "iar", "t": [0.164, 0.196], "ring": "res" },
+        { "wire": "z", "t": [0.2, 0.232], "ring": "phz" },
+        { "wire": "z", "t": [0.236, 0.268], "reverse": true, "kind": "pk-2", "ring": "res" },
+        { "wire": "iar", "t": [0.272, 0.304], "reverse": true, "kind": "pk-2", "ring": "ia" },
+        { "wire": "ina", "t": [0.308, 0.34], "reverse": true, "kind": "pk-2", "ring": "vgw" },
+        { "wire": "d2", "t": [0.344, 0.376], "reverse": true, "kind": "pk-2", "ring": "dx" },
+        { "wire": "d1", "t": [0.38, 0.412], "reverse": true, "kind": "pk-2", "ring": "dns" },
+        { "wire": "c", "t": [0.416, 0.448], "reverse": true, "kind": "pk-2", "ring": "cli" },
+        { "wire": "e", "t": [0.52, 0.556], "ring": "res" },
+        { "wire": "obr", "t": [0.56, 0.596], "ring": "ob" },
+        { "wire": "outb", "t": [0.6, 0.636], "ring": "vgw" },
+        { "wire": "d2", "t": [0.64, 0.676], "reverse": true, "ring": "dx" },
+        { "wire": "d1", "t": [0.68, 0.716], "reverse": true, "ring": "dns" },
+        { "wire": "d1", "t": [0.72, 0.756], "kind": "pk-2", "ring": "dx" },
+        { "wire": "d2", "t": [0.76, 0.796], "kind": "pk-2", "ring": "vgw" },
+        { "wire": "outb", "t": [0.8, 0.836], "reverse": true, "kind": "pk-2", "ring": "ob" },
+        { "wire": "obr", "t": [0.84, 0.876], "reverse": true, "kind": "pk-2", "ring": "res" },
+        { "wire": "e", "t": [0.88, 0.916], "reverse": true, "kind": "pk-2", "ring": "ec2" }
+      ],
+      "notes": [
+        { "x": 92, "y": 314, "text": "Conditional forwarder:\naws.example.com >\n10.0.1.10, 10.0.2.10" },
+        { "x": 236, "y": 306, "text": "Inbound: on-premises\nresolves aws.example.com", "t": [0.02, 0.5] },
+        { "x": 236, "y": 306, "text": "Outbound: AWS resolves\ncorp.example.com", "t": [0.52, 0.98] },
+        { "x": 740, "y": 312, "text": "Forwarding rule:\ncorp.example.com >\n10.1.1.10, 10.1.1.11" },
+        { "x": 25, "y": 407, "text": "Query", "anchor": "start" },
+        { "x": 25, "y": 421, "text": "Answer", "anchor": "start" }
+      ],
+      "extra": "<circle cx=\"16\" cy=\"404\" r=\"3.4\" fill=\"var(--awd-pk)\"/><circle cx=\"16\" cy=\"418\" r=\"3.4\" fill=\"var(--awd-pk2)\"/>"
+    },
+    {
+      "id": "dns-shared-rules",
+      "name": "Centralized DNS with AWS RAM and Profiles",
+      "desc": "A networking account owns the Resolver endpoints, the forwarding rule and the private hosted zone, bundles them in a Route 53 Profile and shares it with spoke accounts through AWS RAM (dashed). Spoke VPCs attach to a Transit Gateway. A spoke query for corp.example.com is forwarded by the shared rule through the central outbound endpoint and over Direct Connect to the on-premises DNS servers. The animation shares the Profile, then forwards one query and returns the answer.",
+      "wide": true,
+      "w": 960,
+      "h": 440,
+      "dur": 10,
+      "groups": [
+        { "kind": "dc", "x": 812, "y": 230, "w": 140, "h": 150 },
+        { "kind": "cloud", "x": 8, "y": 8, "w": 730, "h": 424 },
+        { "kind": "region", "x": 20, "y": 34, "w": 706, "h": 390, "label": "Region" },
+        { "kind": "acct", "x": 32, "y": 58, "w": 204, "h": 150, "label": "Spoke account A" },
+        { "kind": "vpc", "x": 44, "y": 82, "w": 180, "h": 118, "label": "Spoke VPC", "note": "10.1.0.0/16" },
+        { "kind": "acct", "x": 32, "y": 232, "w": 204, "h": 150, "label": "Spoke account B" },
+        { "kind": "vpc", "x": 44, "y": 256, "w": 180, "h": 118, "label": "Spoke VPC", "note": "10.2.0.0/16" },
+        { "kind": "acct", "x": 336, "y": 58, "w": 380, "h": 324, "label": "Networking account" },
+        { "kind": "gen", "x": 348, "y": 82, "w": 356, "h": 104, "label": "Route 53 Profile", "icon": "aws-svc-route-53" },
+        { "kind": "vpc", "x": 348, "y": 208, "w": 356, "h": 162, "label": "Hub VPC", "note": "10.0.0.0/16" }
+      ],
+      "nodes": [
+        { "id": "ec2a", "icon": "aws-res-ec2-instance", "x": 68, "y": 112, "size": 32, "label": "Amazon EC2" },
+        { "id": "resa", "icon": "aws-res-route-53-resolver", "x": 168, "y": 112, "size": 32, "label": "Route 53 VPC Resolver", "wrap": 12 },
+        { "id": "ec2b", "icon": "aws-res-ec2-instance", "x": 68, "y": 292, "size": 32, "label": "Amazon EC2" },
+        { "id": "resb", "icon": "aws-res-route-53-resolver", "x": 168, "y": 292, "size": 32, "label": "Route 53 VPC Resolver", "wrap": 12 },
+        { "id": "ram", "icon": "aws-svc-resource-access-manager", "x": 264, "y": 52, "size": 40, "label": "AWS Resource Access Manager", "wrap": 14 },
+        { "id": "tgw", "icon": "aws-svc-transit-gateway", "x": 264, "y": 200, "size": 40, "label": "AWS Transit Gateway", "wrap": 12 },
+        { "id": "rule", "icon": "aws-res-route-53-resolver", "x": 384, "y": 112, "size": 32, "label": "Forwarding rule", "wrap": 16, "sub": "corp.example.com" },
+        { "id": "phz", "icon": "aws-res-route-53-hosted-zone", "x": 494, "y": 112, "size": 32, "label": "Private hosted zone", "wrap": 14, "sub": "aws.example.com" },
+        { "id": "fwg", "icon": "aws-res-route-53-resolver-dns-firewall", "x": 604, "y": 112, "size": 32, "label": "DNS Firewall rule group", "wrap": 14, "sub": "block list" },
+        { "id": "att", "icon": "aws-res-transit-gateway-attachment", "x": 372, "y": 272, "size": 32, "label": "TGW attachment", "wrap": 16 },
+        { "id": "ob", "icon": "aws-res-vpc-elastic-network-interface", "x": 472, "y": 272, "size": 32, "label": "Outbound endpoint", "wrap": 18, "sub": "ENIs in 2 AZs" },
+        { "id": "ib", "icon": "aws-res-vpc-elastic-network-interface", "x": 580, "y": 272, "size": 32, "label": "Inbound endpoint", "wrap": 18, "sub": "ENIs in 2 AZs" },
+        { "id": "dx", "icon": "aws-svc-direct-connect", "x": 752, "y": 280, "size": 40, "label": "AWS Direct Connect", "wrap": 14 },
+        { "id": "dns", "icon": "aws-res-servers", "x": 862, "y": 280, "size": 40, "label": "On-premises DNS servers", "wrap": 14, "sub": "10.1.1.10" }
+      ],
+      "wires": [
+        { "id": "sa", "d": "M260,78 H244 V100 H226", "dashed": true },
+        { "id": "sb", "d": "M260,66 H244 V270 H226", "dashed": true },
+        { "id": "sp", "d": "M308,84 H346", "dashed": true },
+        { "id": "e", "d": "M104,128 H164" },
+        { "id": "eb", "d": "M104,308 H164" },
+        { "id": "q", "d": "M204,128 H380", "dashed": true },
+        { "id": "qr", "d": "M400,172 V196 H488 V268" },
+        { "id": "qe", "d": "M468,288 H408", "both": true },
+        { "id": "th", "d": "M308,220 H322 V288 H368", "both": true },
+        { "id": "tx", "d": "M284,270 V404 H772 V350", "both": true },
+        { "id": "xd", "d": "M796,300 H858", "both": true },
+        { "id": "aa", "d": "M210,200 V220 H260", "both": true },
+        { "id": "ab", "d": "M210,256 V220 H260", "both": true },
+        { "id": "ib", "d": "M596,332 V340 H388 V321", "dashed": true, "both": true, "label": "on-premises queries", "labelAt": 0.5, "labelDy": 12 }
+      ],
+      "steps": [
+        { "n": 1, "at": "sb", "f": 0.12, "dy": -11 },
+        { "n": 2, "at": "e", "f": 0.5, "dy": -11 },
+        { "n": 3, "at": "q", "f": 0.6, "dy": 12 },
+        { "n": 4, "at": "qr", "f": 0.88, "dx": 11, "dy": 0 },
+        { "n": 5, "at": "tx", "f": 0.62, "dy": -11 }
+      ],
+      "timeline": [
+        { "wire": "sb", "t": [0.03, 0.12], "kind": "pk-2" },
+        { "wire": "sa", "t": [0.03, 0.12], "kind": "pk-2" },
+        { "wire": "e", "t": [0.2, 0.248], "ring": "resa" },
+        { "wire": "q", "t": [0.252, 0.3], "ring": "rule" },
+        { "wire": "qr", "t": [0.304, 0.352], "ring": "ob" },
+        { "wire": "qe", "t": [0.356, 0.404], "ring": "att" },
+        { "wire": "th", "t": [0.408, 0.456], "reverse": true, "ring": "tgw" },
+        { "wire": "tx", "t": [0.46, 0.508], "ring": "dx" },
+        { "wire": "xd", "t": [0.512, 0.56], "ring": "dns" },
+        { "wire": "xd", "t": [0.564, 0.612], "reverse": true, "kind": "pk-2", "ring": "dx" },
+        { "wire": "tx", "t": [0.616, 0.664], "reverse": true, "kind": "pk-2", "ring": "tgw" },
+        { "wire": "th", "t": [0.668, 0.716], "kind": "pk-2", "ring": "att" },
+        { "wire": "qe", "t": [0.72, 0.768], "reverse": true, "kind": "pk-2", "ring": "ob" },
+        { "wire": "qr", "t": [0.772, 0.82], "reverse": true, "kind": "pk-2", "ring": "rule" },
+        { "wire": "q", "t": [0.824, 0.872], "reverse": true, "kind": "pk-2", "ring": "resa" },
+        { "wire": "e", "t": [0.876, 0.924], "reverse": true, "kind": "pk-2", "ring": "ec2a" }
+      ],
+      "notes": [
+        { "x": 45, "y": 405, "text": "Query", "anchor": "start" },
+        { "x": 45, "y": 419, "text": "Answer or share", "anchor": "start" }
+      ],
+      "extra": "<circle cx=\"36\" cy=\"402\" r=\"3.4\" fill=\"var(--awd-pk)\"/><circle cx=\"36\" cy=\"416\" r=\"3.4\" fill=\"var(--awd-pk2)\"/>"
+    },
+    {
+      "id": "dns-firewall",
+      "name": "Route 53 Resolver DNS Firewall",
+      "desc": "A DNS Firewall rule group with a block list is associated with the VPC, so the Route 53 VPC Resolver checks every query from the instance against it. A good domain matches no rule and resolves normally; a domain on the block list is answered with NXDOMAIN. Resolver query logging sends every query and firewall action to CloudWatch Logs and Amazon S3. The animation sends a good query, then a blocked one, and logs both.",
+      "w": 480,
+      "h": 292,
+      "dur": 10,
+      "groups": [
+        { "kind": "cloud", "x": 8, "y": 8, "w": 464, "h": 276 },
+        { "kind": "region", "x": 20, "y": 34, "w": 336, "h": 242, "label": "us-east-1" },
+        { "kind": "vpc", "x": 32, "y": 58, "w": 120, "h": 198, "label": "VPC" }
+      ],
+      "nodes": [
+        { "id": "ec2", "icon": "aws-res-ec2-instance", "x": 72, "y": 76, "size": 40, "label": "Amazon EC2" },
+        { "id": "res", "icon": "aws-res-route-53-resolver", "x": 72, "y": 160, "size": 40, "label": "Route 53 VPC Resolver", "wrap": 12, "sub": "10.0.0.2" },
+        { "id": "fw", "icon": "aws-res-route-53-resolver-dns-firewall", "x": 204, "y": 160, "size": 40, "label": "DNS Firewall rule group", "wrap": 14, "sub": "block list" },
+        { "id": "ql", "icon": "aws-res-route-53-resolver-query-logging", "x": 184, "y": 72, "size": 40, "label": "Resolver query logging", "wrap": 14 },
+        { "id": "cwl", "icon": "aws-res-cloudwatch-logs", "x": 290, "y": 46, "size": 32, "label": "Amazon CloudWatch Logs", "wrap": 16 },
+        { "id": "s3", "icon": "aws-res-simple-storage-service-bucket", "x": 290, "y": 106, "size": 32, "label": "Amazon S3 bucket", "wrap": 22 },
+        { "id": "hz", "icon": "aws-res-route-53-hosted-zone", "x": 404, "y": 160, "size": 40, "label": "Public hosted zone", "wrap": 14, "sub": "example.com" }
+      ],
+      "wires": [
+        { "id": "q", "d": "M92,133 V156", "both": true },
+        { "id": "rf", "d": "M116,180 H200", "both": true },
+        { "id": "fh", "d": "M248,180 H400", "both": true, "label": "no match: resolve", "labelAt": 0.32 },
+        { "id": "rl", "d": "M116,170 H166 V92 H180", "dashed": true },
+        { "id": "lc", "d": "M228,86 H258 V62 H286", "dashed": true },
+        { "id": "ls", "d": "M228,98 H258 V122 H286", "dashed": true }
+      ],
+      "steps": [
+        { "n": 1, "at": "q", "f": 0.5, "dx": 11, "dy": 0 },
+        { "n": 2, "at": "rf", "f": 0.5, "dy": -11 },
+        { "n": 3, "at": "fh", "f": 0.62, "dy": -11 }
+      ],
+      "timeline": [
+        { "wire": "q", "t": [0.02, 0.065], "ring": "res" },
+        { "wire": "rf", "t": [0.069, 0.114], "ring": "fw" },
+        { "wire": "fh", "t": [0.118, 0.163], "ring": "hz" },
+        { "wire": "fh", "t": [0.167, 0.212], "reverse": true, "kind": "pk-2", "ring": "fw" },
+        { "wire": "rf", "t": [0.216, 0.261], "reverse": true, "kind": "pk-2", "ring": "res" },
+        { "wire": "q", "t": [0.265, 0.31], "reverse": true, "kind": "pk-2", "ring": "ec2" },
+        { "wire": "rl", "t": [0.33, 0.365], "kind": "pk-2", "ring": "ql" },
+        { "wire": "lc", "t": [0.369, 0.404], "kind": "pk-2", "ring": "cwl" },
+        { "wire": "ls", "t": [0.408, 0.443], "kind": "pk-2", "ring": "s3" },
+        { "wire": "q", "t": [0.5, 0.55], "ring": "res" },
+        { "wire": "rf", "t": [0.554, 0.604], "ring": "fw" },
+        { "wire": "rf", "t": [0.608, 0.658], "reverse": true, "kind": "pk-bad", "ring": "res" },
+        { "wire": "q", "t": [0.662, 0.712], "reverse": true, "kind": "pk-bad", "ring": "ec2" },
+        { "wire": "rl", "t": [0.73, 0.765], "kind": "pk-2", "ring": "ql" },
+        { "wire": "lc", "t": [0.769, 0.804], "kind": "pk-2", "ring": "cwl" },
+        { "wire": "ls", "t": [0.808, 0.843], "kind": "pk-2", "ring": "s3" }
+      ],
+      "effects": [
+        { "fade": "fh", "t": [0.5, 0.99] }
+      ],
+      "notes": [
+        { "x": 168, "y": 254, "text": "good.example.com: no rule matches,\nresolved to 203.0.113.10", "anchor": "start", "t": [0.02, 0.48] },
+        { "x": 168, "y": 254, "text": "malware.example.net: on the block list,\nanswered with NXDOMAIN", "kind": "warn", "anchor": "start", "t": [0.5, 0.99] }
+      ]
+    },
+    {
+      "id": "dns-dnssec",
+      "name": "DNSSEC signing and chain of trust",
+      "desc": "Route 53 signs the public hosted zone with a key signing key backed by an asymmetric AWS KMS key in us-east-1 and a zone signing key that Route 53 manages. The DS record in the parent .com zone links the zone to the chain of trust, so a validating resolver checks the answer from the root trust anchor down. The animation signs the zone, resolves and validates one query.",
+      "w": 480,
+      "h": 292,
+      "dur": 10,
+      "groups": [
+        { "kind": "cloud", "x": 236, "y": 24, "w": 236, "h": 138 },
+        { "kind": "region", "x": 384, "y": 44, "w": 80, "h": 108, "label": "us-east-1" }
+      ],
+      "nodes": [
+        { "id": "root", "icon": "aws-res-server", "x": 28, "y": 60, "size": 40, "label": "Root zone", "wrap": 12, "sub": "trust anchor" },
+        { "id": "com", "icon": "aws-res-server", "x": 140, "y": 60, "size": 40, "label": ".com zone", "wrap": 12, "sub": "holds DS record" },
+        { "id": "hz", "icon": "aws-res-route-53-hosted-zone", "x": 310, "y": 60, "size": 40, "label": "Public hosted zone", "wrap": 20, "sub": "example.com, signed" },
+        { "id": "kms", "icon": "aws-svc-key-management-service", "x": 404, "y": 60, "size": 40, "label": "AWS KMS", "wrap": 12, "sub": "KSK key" },
+        { "id": "users", "icon": "aws-res-users", "x": 30, "y": 208, "size": 36, "label": "Users" },
+        { "id": "res", "icon": "aws-res-server", "x": 140, "y": 206, "size": 40, "label": "Validating resolver", "wrap": 10, "sub": "DNSSEC aware" }
+      ],
+      "wires": [
+        { "id": "ch1", "d": "M72,80 H136", "dashed": true, "label": "DS .com", "labelAt": 0.5 },
+        { "id": "ch2", "d": "M184,80 H306", "dashed": true, "label": "DS example.com", "labelAt": 0.5 },
+        { "id": "sg", "d": "M354,80 H400", "both": true, "label": "signs", "labelAt": 0.22 },
+        { "id": "u", "d": "M70,226 H136", "both": true },
+        { "id": "v1", "d": "M160,128 V202", "both": true, "label": "DS lookup", "labelAt": 0.5, "labelDx": 8, "labelDy": 3, "labelAnchor": "start" },
+        { "id": "v2", "d": "M184,226 H330 V128", "both": true, "label": "DNSKEY, A, RRSIG", "labelAt": 0.3 }
+      ],
+      "steps": [
+        { "n": 1, "at": "sg", "f": 0.5, "dy": 12 },
+        { "n": 2, "at": "u", "f": 0.5, "dy": -11 },
+        { "n": 3, "at": "v1", "f": 0.5, "dx": -11, "dy": 0 },
+        { "n": 4, "at": "v2", "f": 0.55, "dy": -11 }
+      ],
+      "timeline": [
+        { "wire": "sg", "t": [0.03, 0.11], "kind": "pk-2", "ring": "kms" },
+        { "wire": "sg", "t": [0.12, 0.2], "reverse": true, "kind": "pk-2", "ring": "hz" },
+        { "wire": "u", "t": [0.26, 0.335], "ring": "res" },
+        { "wire": "v1", "t": [0.345, 0.42], "ring": "com" },
+        { "wire": "v1", "t": [0.43, 0.505], "reverse": true, "kind": "pk-2", "ring": "res" },
+        { "wire": "v2", "t": [0.515, 0.59], "ring": "hz" },
+        { "wire": "v2", "t": [0.6, 0.675], "reverse": true, "kind": "pk-2", "ring": "res" },
+        { "wire": "u", "t": [0.685, 0.76], "reverse": true, "kind": "pk-2", "ring": "users" }
+      ],
+      "effects": [
+        { "glow": "ch1", "t": [0.675, 0.98] },
+        { "glow": "ch2", "t": [0.675, 0.98] }
+      ],
+      "notes": [
+        { "x": 190, "y": 196, "text": "Chain validated: AD flag set", "kind": "label", "anchor": "start", "t": [0.675, 0.98] },
+        { "x": 236, "y": 250, "text": "KSK: asymmetric KMS key in us-east-1", "anchor": "start" },
+        { "x": 236, "y": 262, "text": "ZSK: managed by Route 53", "anchor": "start" },
+        { "x": 236, "y": 274, "text": "DS record in .com holds the KSK hash", "anchor": "start" },
+        { "x": 236, "y": 286, "text": "Validates root > .com > example.com", "anchor": "start" }
+      ]
+    }
+  ]
+}

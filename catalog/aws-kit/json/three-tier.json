@@ -1,0 +1,454 @@
+{
+  "version": 1,
+  "section": { "id": "three-tier", "title": "WEB APPLICATIONS" },
+  "diagrams": [
+    {
+      "id": "tt-classic",
+      "name": "Classic three-tier web application",
+      "desc": "Amazon Route 53 and Amazon CloudFront with AWS WAF front an internet-facing Application Load Balancer, an Auto Scaling group of EC2 instances and an Amazon RDS Multi-AZ database across two Availability Zones. A request follows the numbered path and the response returns; the RDS primary replicates synchronously to the standby.",
+      "wide": true,
+      "w": 960,
+      "h": 426,
+      "dur": 10,
+      "groups": [
+        { "kind": "cloud", "x": 84, "y": 8, "w": 868, "h": 410 },
+        { "kind": "region", "x": 292, "y": 30, "w": 644, "h": 374, "label": "Region" },
+        { "kind": "vpc", "x": 308, "y": 52, "w": 612, "h": 338, "label": "VPC 10.0.0.0/16" },
+        { "kind": "az", "id": "aza", "x": 408, "y": 74, "w": 496, "h": 146, "label": "Availability Zone a" },
+        { "kind": "az", "id": "azb", "x": 408, "y": 230, "w": 496, "h": 146, "label": "Availability Zone b" },
+        { "kind": "pub", "x": 424, "y": 96, "w": 104, "h": 112, "label": "Public subnet" },
+        { "kind": "priv", "x": 546, "y": 96, "w": 150, "h": 112, "label": "Private subnet" },
+        { "kind": "priv", "x": 714, "y": 96, "w": 174, "h": 112, "label": "Private subnet" },
+        { "kind": "pub", "x": 424, "y": 252, "w": 104, "h": 112, "label": "Public subnet" },
+        { "kind": "priv", "x": 546, "y": 252, "w": 150, "h": 112, "label": "Private subnet" },
+        { "kind": "priv", "x": 714, "y": 252, "w": 174, "h": 112, "label": "Private subnet" },
+        { "kind": "asg", "x": 554, "y": 116, "w": 134, "h": 86 },
+        { "kind": "asg", "x": 554, "y": 272, "w": 134, "h": 86 }
+      ],
+      "nodes": [
+        { "id": "users", "icon": "aws-res-users", "x": 14, "y": 216, "label": "Users" },
+        { "id": "r53", "icon": "aws-svc-route-53", "x": 120, "y": 216, "label": "Amazon Route 53", "wrap": 16 },
+        { "id": "cf", "icon": "aws-svc-cloudfront", "x": 206, "y": 216, "label": "Amazon CloudFront" },
+        { "id": "waf", "icon": "aws-svc-waf", "x": 210, "y": 134, "size": 32, "label": "AWS WAF" },
+        { "id": "igw", "icon": "aws-res-vpc-internet-gateway", "x": 320, "y": 216, "label": "Internet gateway" },
+        { "id": "albA", "icon": "aws-res-elastic-load-balancing-application-load-balancer", "x": 456, "y": 138, "label": "Application Load Balancer" },
+        { "id": "ec2A", "icon": "aws-res-ec2-instance", "x": 601, "y": 138, "label": "Amazon EC2 instance", "wrap": 20 },
+        { "id": "rdsA", "icon": "aws-res-aurora-rds-instance", "x": 811, "y": 138, "label": "Amazon RDS primary" },
+        { "id": "albB", "icon": "aws-res-elastic-load-balancing-application-load-balancer", "x": 456, "y": 294, "label": "Application Load Balancer" },
+        { "id": "ec2B", "icon": "aws-res-ec2-instance", "x": 601, "y": 294, "label": "Amazon EC2 instance", "wrap": 20 },
+        { "id": "rdsB", "icon": "aws-res-aurora-rds-instance-aternate", "x": 811, "y": 294, "label": "Amazon RDS standby" }
+      ],
+      "wires": [
+        { "id": "w1", "from": "users", "to": "r53" },
+        { "id": "w2", "from": "r53", "to": "cf" },
+        { "id": "wf", "d": "M226,186 V212", "dashed": true, "arrow": false },
+        { "id": "w3", "from": "cf", "to": "igw" },
+        { "id": "w4a", "from": "igw", "to": "albA", "via": 384 },
+        { "id": "w4b", "from": "igw", "to": "albB", "via": 384 },
+        { "id": "w5a", "from": "albA", "to": "ec2A" },
+        { "id": "w5b", "from": "albB", "to": "ec2B" },
+        { "id": "w6a", "from": "ec2A", "to": "rdsA" },
+        { "id": "w6b", "d": "M643,314 H705 V158 H807" },
+        { "id": "wr", "from": "rdsA", "to": "rdsB", "flow": true }
+      ],
+      "steps": [
+        { "n": 1, "at": "w1", "f": 0.2 },
+        { "n": 2, "at": "w2" },
+        { "n": 3, "at": "w3", "f": 0.3 },
+        { "n": 4, "at": "w5a", "f": 0.12 },
+        { "n": 5, "at": "w6a", "f": 0.8 },
+        { "n": 6, "x": 831, "y": 241 }
+      ],
+      "timeline": [
+        { "wire": "w1", "t": [0.034, 0.0924], "ring": "r53" },
+        { "wire": "w2", "t": [0.1004, 0.1589], "ring": "cf" },
+        { "wire": "w3", "t": [0.1669, 0.2253], "ring": "igw" },
+        { "wire": "w4a", "t": [0.2333, 0.2917], "ring": "albA" },
+        { "wire": "w5a", "t": [0.2997, 0.3581], "ring": "ec2A" },
+        { "wire": "w6a", "t": [0.3661, 0.4246], "ring": "rdsA" },
+        { "wire": "wr", "t": [0.4326, 0.491], "kind": "pk-2", "ring": "rdsB" },
+        { "wire": "w6a", "t": [0.5654, 0.6239], "reverse": true, "kind": "pk-2", "ring": "ec2A" },
+        { "wire": "w5a", "t": [0.6319, 0.6903], "reverse": true, "kind": "pk-2", "ring": "albA" },
+        { "wire": "w4a", "t": [0.6983, 0.7567], "reverse": true, "kind": "pk-2", "ring": "igw" },
+        { "wire": "w3", "t": [0.7647, 0.8231], "reverse": true, "kind": "pk-2", "ring": "cf" },
+        { "wire": "w2", "t": [0.8311, 0.8896], "reverse": true, "kind": "pk-2", "ring": "r53" },
+        { "wire": "w1", "t": [0.8976, 0.956], "reverse": true, "kind": "pk-2", "ring": "users" }
+      ],
+      "extra": "<text class=\"t-wire\" x=\"476\" y=\"66\" style=\"letter-spacing:.08em\">WEB TIER</text><text class=\"t-wire\" x=\"621\" y=\"66\" style=\"letter-spacing:.08em\">APPLICATION TIER</text><text class=\"t-wire\" x=\"831\" y=\"66\" style=\"letter-spacing:.08em\">DATABASE TIER</text><text class=\"t-wire\" x=\"816\" y=\"244\" style=\"text-anchor:end;\">Synchronous replication</text><circle cx=\"104\" cy=\"46\" r=\"3.4\" fill=\"var(--awd-pk)\"/><text class=\"t-wire\" style=\"text-anchor:start\" x=\"112\" y=\"49\">Request</text><circle cx=\"104\" cy=\"60\" r=\"3.4\" fill=\"var(--awd-pk2)\"/><text class=\"t-wire\" style=\"text-anchor:start\" x=\"112\" y=\"63\">Response / replication</text>"
+    },
+    {
+      "id": "tt-cache",
+      "name": "Three-tier web with a cache (cache-aside)",
+      "desc": "Amazon ElastiCache sits between the app tier and Amazon RDS. The first request is a cache hit and is answered from the cache; the second misses, so the instance reads RDS, populates the cache and returns the result.",
+      "w": 480,
+      "h": 270,
+      "dur": 10,
+      "groups": [
+        { "kind": "cloud", "x": 56, "y": 8, "w": 416, "h": 254 },
+        { "kind": "vpc", "x": 72, "y": 30, "w": 384, "h": 218, "label": "VPC" },
+        { "kind": "pub", "x": 88, "y": 52, "w": 108, "h": 174, "label": "Public subnet" },
+        { "kind": "priv", "x": 208, "y": 52, "w": 108, "h": 174, "label": "Private subnet" },
+        { "kind": "priv", "x": 328, "y": 52, "w": 112, "h": 174, "label": "Private subnet" }
+      ],
+      "nodes": [
+        { "id": "users", "icon": "aws-res-users", "x": 6, "y": 122, "label": "Users" },
+        { "id": "alb", "icon": "aws-res-elastic-load-balancing-application-load-balancer", "x": 122, "y": 122, "label": "Application Load Balancer" },
+        { "id": "ec2", "icon": "aws-res-ec2-instance", "x": 242, "y": 122, "label": "Amazon EC2 instance" },
+        { "id": "cache", "icon": "aws-svc-elasticache", "x": 364, "y": 78, "label": "Amazon ElastiCache" },
+        { "id": "rds", "icon": "aws-res-aurora-rds-instance", "x": 364, "y": 166, "label": "Amazon RDS" }
+      ],
+      "wires": [
+        { "id": "w1", "from": "users", "to": "alb" },
+        { "id": "w2", "from": "alb", "to": "ec2" },
+        { "id": "w3", "from": "ec2", "to": "cache", "via": 322, "both": true },
+        { "id": "w4", "from": "ec2", "to": "rds", "via": 322, "both": true }
+      ],
+      "steps": [
+        { "n": 1, "at": "w1", "f": 0.76 },
+        { "n": 2, "at": "w2", "f": 0.22 },
+        { "n": 3, "at": "w3", "f": 0.84 },
+        { "n": 4, "at": "w4", "f": 0.84 }
+      ],
+      "timeline": [
+        { "wire": "w1", "t": [0.034, 0.0841], "ring": "alb" },
+        { "wire": "w2", "t": [0.0921, 0.1422], "ring": "ec2" },
+        { "wire": "w3", "t": [0.1502, 0.2004], "ring": "cache" },
+        { "wire": "w3", "t": [0.2084, 0.2585], "reverse": true, "kind": "pk-2", "ring": "ec2" },
+        { "wire": "w2", "t": [0.2665, 0.3166], "reverse": true, "kind": "pk-2", "ring": "alb" },
+        { "wire": "w1", "t": [0.3246, 0.3748], "reverse": true, "kind": "pk-2", "ring": "users" },
+        { "wire": "w1", "t": [0.4409, 0.491], "ring": "alb" },
+        { "wire": "w2", "t": [0.499, 0.5491], "ring": "ec2" },
+        { "wire": "w3", "t": [0.5571, 0.6072], "ring": "cache" },
+        { "wire": "w3", "t": [0.6152, 0.6654], "reverse": true, "kind": "pk-bad", "ring": "ec2" },
+        { "wire": "w4", "t": [0.6734, 0.7235], "ring": "rds" },
+        { "wire": "w4", "t": [0.7315, 0.7816], "reverse": true, "kind": "pk-2", "ring": "ec2" },
+        { "wire": "w3", "t": [0.7896, 0.8397], "ring": "cache" },
+        { "wire": "w2", "t": [0.8478, 0.8979], "reverse": true, "kind": "pk-2", "ring": "alb" },
+        { "wire": "w1", "t": [0.9059, 0.956], "reverse": true, "kind": "pk-2", "ring": "users" }
+      ],
+      "extra": "<text class=\"t-wire\" x=\"142\" y=\"240\" style=\"letter-spacing:.08em\">WEB TIER</text><text class=\"t-wire\" x=\"262\" y=\"240\" style=\"letter-spacing:.08em\">APP TIER</text><text class=\"t-wire\" x=\"384\" y=\"240\" style=\"letter-spacing:.08em\">DATA TIER</text><g class=\"anim\" opacity=\"0\"><text class=\"t-wire\" x=\"384\" y=\"154\" style=\"fill:var(--awd-pk2);font-weight:700\">cache hit</text><animate attributeName=\"opacity\" dur=\"10s\" repeatCount=\"indefinite\" calcMode=\"discrete\" values=\"0;1;0\" keyTimes=\"0;0.2084;0.3185\"/></g><g class=\"anim\" opacity=\"0\"><text class=\"t-wire\" x=\"384\" y=\"154\" style=\"fill:#DD344C;font-weight:700\">cache miss</text><animate attributeName=\"opacity\" dur=\"10s\" repeatCount=\"indefinite\" calcMode=\"discrete\" values=\"0;1;0\" keyTimes=\"0;0.6152;0.7854\"/></g><g class=\"anim\" opacity=\"0\"><text class=\"t-wire\" x=\"384\" y=\"154\" style=\"fill:var(--awd-pk);font-weight:700\">populate cache</text><animate attributeName=\"opacity\" dur=\"10s\" repeatCount=\"indefinite\" calcMode=\"discrete\" values=\"0;1;0\" keyTimes=\"0;0.7896;0.8397\"/></g>"
+    },
+    {
+      "id": "tt-scale",
+      "name": "Auto Scaling scale-out",
+      "desc": "The instances publish CPU to Amazon CloudWatch. When the alarm fires, Amazon EC2 Auto Scaling launches two more instances; once they are registered, the load balancer starts sending them traffic along with the original two.",
+      "w": 480,
+      "h": 300,
+      "dur": 10,
+      "groups": [
+        { "kind": "cloud", "x": 56, "y": 8, "w": 416, "h": 284 },
+        { "kind": "vpc", "x": 70, "y": 30, "w": 284, "h": 248, "label": "VPC" },
+        { "kind": "pub", "x": 86, "y": 52, "w": 100, "h": 212, "label": "Public subnet" },
+        { "kind": "priv", "x": 198, "y": 52, "w": 140, "h": 212, "label": "Private subnet" },
+        { "kind": "asg", "x": 206, "y": 74, "w": 124, "h": 182 }
+      ],
+      "nodes": [
+        { "id": "users", "icon": "aws-res-users", "x": 6, "y": 154, "label": "Users" },
+        { "id": "alb", "icon": "aws-res-elastic-load-balancing-application-load-balancer", "x": 116, "y": 154, "label": "Application Load Balancer" },
+        { "id": "i1", "icon": "aws-res-ec2-instance", "x": 252, "y": 98, "size": 32, "label": "" },
+        { "id": "i2", "icon": "aws-res-ec2-instance", "x": 252, "y": 138, "size": 32, "label": "" },
+        { "id": "i3", "icon": "aws-res-ec2-instance", "x": 252, "y": 178, "size": 32, "label": "" },
+        { "id": "i4", "icon": "aws-res-ec2-instance", "x": 252, "y": 218, "size": 32, "label": "" },
+        { "id": "cw", "icon": "aws-res-cloudwatch-alarm", "x": 393, "y": 94, "label": "Amazon CloudWatch alarm", "wrap": 18, "sub": "high CPU" },
+        { "id": "as", "icon": "aws-svc-ec2-auto-scaling", "x": 393, "y": 204, "label": "Amazon EC2 Auto Scaling", "sub": "scale-out policy" }
+      ],
+      "wires": [
+        { "id": "w1", "from": "users", "to": "alb" },
+        { "id": "a1", "from": "alb", "to": "i1", "via": 192 },
+        { "id": "a2", "from": "alb", "to": "i2", "via": 192 },
+        { "id": "a3", "from": "alb", "to": "i3", "via": 192 },
+        { "id": "a4", "from": "alb", "to": "i4", "via": 192 },
+        { "id": "w3", "from": "i1", "to": "cw", "dashed": true },
+        { "id": "w4", "d": "M413,174 V200" },
+        { "id": "w5", "d": "M391,224 H332", "dashed": true }
+      ],
+      "steps": [
+        { "n": 1, "at": "w3", "f": 0.835 },
+        { "n": 2, "at": "w4", "f": 0.5, "dx": 13, "dy": 0 },
+        { "n": 3, "at": "w5", "f": 0.3 },
+        { "n": 4, "at": "a3", "f": 0.9 }
+      ],
+      "timeline": [
+        { "wire": "w1", "t": [0.03, 0.075], "ring": "alb" },
+        { "wire": "a1", "t": [0.08, 0.125], "ring": "i1" },
+        { "wire": "a2", "t": [0.08, 0.125], "ring": "i2" },
+        { "wire": "w1", "t": [0.14, 0.185], "ring": "alb" },
+        { "wire": "a1", "t": [0.19, 0.235], "ring": "i1" },
+        { "wire": "a2", "t": [0.19, 0.235], "ring": "i2" },
+        { "wire": "w3", "t": [0.27, 0.34], "kind": "pk-2", "ring": "cw" },
+        { "wire": "w4", "t": [0.37, 0.43], "ring": "as" },
+        { "wire": "w5", "t": [0.45, 0.51] },
+        { "t": [0.5, 0.52], "ring": "i3" },
+        { "t": [0.5, 0.52], "ring": "i4" },
+        { "wire": "w1", "t": [0.6, 0.645], "ring": "alb" },
+        { "wire": "a1", "t": [0.65, 0.7], "ring": "i1" },
+        { "wire": "a2", "t": [0.65, 0.7], "ring": "i2" },
+        { "wire": "a3", "t": [0.65, 0.7], "ring": "i3" },
+        { "wire": "a4", "t": [0.65, 0.7], "ring": "i4" },
+        { "wire": "w1", "t": [0.76, 0.805], "ring": "alb" },
+        { "wire": "a1", "t": [0.81, 0.855], "ring": "i1" },
+        { "wire": "a2", "t": [0.81, 0.855], "ring": "i2" },
+        { "wire": "a3", "t": [0.81, 0.855], "ring": "i3" },
+        { "wire": "a4", "t": [0.81, 0.855], "ring": "i4" },
+        { "wire": "w1", "t": [0.9, 0.935], "ring": "alb" },
+        { "wire": "a3", "t": [0.94, 0.985], "ring": "i3" },
+        { "wire": "a4", "t": [0.94, 0.985], "ring": "i4" }
+      ],
+      "effects": [
+        { "appear": "i3", "t": [0.51, 0.995], "ghost": true },
+        { "appear": "i4", "t": [0.51, 0.995], "ghost": true },
+        { "fade": "a3", "t": [0.001, 0.58] },
+        { "fade": "a4", "t": [0.001, 0.58] },
+        { "glow": "a3", "t": [0.58, 0.995] },
+        { "glow": "a4", "t": [0.58, 0.995] }
+      ],
+      "extra": "<g class=\"anim\" opacity=\"0\"><text class=\"t-wire\" x=\"291\" y=\"197\" style=\"text-anchor:start;fill:var(--awd-pk2);font-weight:700\">new</text><animate attributeName=\"opacity\" dur=\"10s\" repeatCount=\"indefinite\" calcMode=\"discrete\" values=\"0;1;0\" keyTimes=\"0;0.51;0.995\"/></g><g class=\"anim\" opacity=\"0\"><text class=\"t-wire\" x=\"291\" y=\"237\" style=\"text-anchor:start;fill:var(--awd-pk2);font-weight:700\">new</text><animate attributeName=\"opacity\" dur=\"10s\" repeatCount=\"indefinite\" calcMode=\"discrete\" values=\"0;1;0\" keyTimes=\"0;0.51;0.995\"/></g>"
+    },
+    {
+      "id": "tt-az-fail",
+      "name": "Availability Zone failure and failover",
+      "desc": "Traffic first spreads across both AZs. When Availability Zone a fails, the load balancer stops routing to it, all requests shift to the instances in AZ b, and Amazon RDS fails over so the standby in AZ b becomes the primary.",
+      "wide": true,
+      "w": 960,
+      "h": 426,
+      "dur": 10,
+      "groups": [
+        { "kind": "cloud", "x": 84, "y": 8, "w": 868, "h": 410 },
+        { "kind": "region", "x": 292, "y": 30, "w": 644, "h": 374, "label": "Region" },
+        { "kind": "vpc", "x": 308, "y": 52, "w": 612, "h": 338, "label": "VPC 10.0.0.0/16" },
+        { "kind": "az", "id": "aza", "x": 408, "y": 74, "w": 496, "h": 146, "label": "Availability Zone a" },
+        { "kind": "az", "id": "azb", "x": 408, "y": 230, "w": 496, "h": 146, "label": "Availability Zone b" },
+        { "kind": "pub", "x": 424, "y": 96, "w": 104, "h": 112, "label": "Public subnet" },
+        { "kind": "priv", "x": 546, "y": 96, "w": 150, "h": 112, "label": "Private subnet" },
+        { "kind": "priv", "x": 714, "y": 96, "w": 174, "h": 112, "label": "Private subnet" },
+        { "kind": "pub", "x": 424, "y": 252, "w": 104, "h": 112, "label": "Public subnet" },
+        { "kind": "priv", "x": 546, "y": 252, "w": 150, "h": 112, "label": "Private subnet" },
+        { "kind": "priv", "x": 714, "y": 252, "w": 174, "h": 112, "label": "Private subnet" },
+        { "kind": "asg", "x": 554, "y": 116, "w": 134, "h": 86 },
+        { "kind": "asg", "x": 554, "y": 272, "w": 134, "h": 86 }
+      ],
+      "nodes": [
+        { "id": "users", "icon": "aws-res-users", "x": 14, "y": 216, "label": "Users" },
+        { "id": "r53", "icon": "aws-svc-route-53", "x": 120, "y": 216, "label": "Amazon Route 53", "wrap": 16 },
+        { "id": "cf", "icon": "aws-svc-cloudfront", "x": 206, "y": 216, "label": "Amazon CloudFront" },
+        { "id": "waf", "icon": "aws-svc-waf", "x": 210, "y": 134, "size": 32, "label": "AWS WAF" },
+        { "id": "igw", "icon": "aws-res-vpc-internet-gateway", "x": 320, "y": 216, "label": "Internet gateway" },
+        { "id": "albA", "icon": "aws-res-elastic-load-balancing-application-load-balancer", "x": 456, "y": 138, "label": "Application Load Balancer" },
+        { "id": "ec2A", "icon": "aws-res-ec2-instance", "x": 601, "y": 138, "label": "Amazon EC2 instance", "wrap": 20 },
+        { "id": "rdsA", "icon": "aws-res-aurora-rds-instance", "x": 811, "y": 138, "label": "Amazon RDS primary" },
+        { "id": "albB", "icon": "aws-res-elastic-load-balancing-application-load-balancer", "x": 456, "y": 294, "label": "Application Load Balancer" },
+        { "id": "ec2B", "icon": "aws-res-ec2-instance", "x": 601, "y": 294, "label": "Amazon EC2 instance", "wrap": 20 },
+        { "id": "rdsB", "icon": "aws-res-aurora-rds-instance-aternate", "x": 811, "y": 294, "label": "Amazon RDS standby" }
+      ],
+      "wires": [
+        { "id": "w1", "from": "users", "to": "r53" },
+        { "id": "w2", "from": "r53", "to": "cf" },
+        { "id": "wf", "d": "M226,186 V212", "dashed": true, "arrow": false },
+        { "id": "w3", "from": "cf", "to": "igw" },
+        { "id": "w4a", "from": "igw", "to": "albA", "via": 384 },
+        { "id": "w4b", "from": "igw", "to": "albB", "via": 384 },
+        { "id": "w5a", "from": "albA", "to": "ec2A" },
+        { "id": "w5b", "from": "albB", "to": "ec2B" },
+        { "id": "w6a", "from": "ec2A", "to": "rdsA" },
+        { "id": "w6b", "d": "M643,314 H705 V158 H807" },
+        { "id": "wr", "from": "rdsA", "to": "rdsB", "flow": true },
+        { "id": "w6n", "d": "M643,314 H807", "dashed": true }
+      ],
+      "steps": [
+        { "n": 1, "x": 866, "y": 85 },
+        { "n": 2, "x": 440, "y": 147 },
+        { "n": 3, "x": 440, "y": 303 },
+        { "n": 4, "x": 770, "y": 300 }
+      ],
+      "timeline": [
+        { "wire": "w3", "t": [0.03, 0.08], "ring": "igw" },
+        { "wire": "w4a", "t": [0.09, 0.14], "ring": "albA" },
+        { "wire": "w4b", "t": [0.09, 0.14], "ring": "albB" },
+        { "wire": "w5a", "t": [0.15, 0.2], "ring": "ec2A" },
+        { "wire": "w5b", "t": [0.15, 0.2], "ring": "ec2B" },
+        { "wire": "w6a", "t": [0.21, 0.27], "ring": "rdsA" },
+        { "wire": "w6b", "t": [0.21, 0.27] },
+        { "wire": "w4a", "t": [0.31, 0.36], "kind": "pk-bad" },
+        { "wire": "w3", "t": [0.46, 0.5], "ring": "igw" },
+        { "wire": "w4b", "t": [0.51, 0.55], "ring": "albB" },
+        { "wire": "w5b", "t": [0.56, 0.6], "ring": "ec2B" },
+        { "t": [0.62, 0.66], "kind": "pk-2", "ring": "rdsB" },
+        { "wire": "w6n", "t": [0.67, 0.72], "ring": "rdsB" },
+        { "wire": "w6n", "t": [0.74, 0.79], "reverse": true, "kind": "pk-2", "ring": "ec2B" },
+        { "wire": "w5b", "t": [0.8, 0.84], "reverse": true, "kind": "pk-2", "ring": "albB" },
+        { "wire": "w4b", "t": [0.85, 0.89], "reverse": true, "kind": "pk-2", "ring": "igw" },
+        { "wire": "w3", "t": [0.9, 0.94], "reverse": true, "kind": "pk-2", "ring": "cf" }
+      ],
+      "effects": [
+        { "fail": "aza", "t": [0.3, 0.97] },
+        { "fade": "w4a", "t": [0.38, 0.97] },
+        { "fade": "w5a", "t": [0.38, 0.97] },
+        { "fade": "w6a", "t": [0.38, 0.97] },
+        { "fade": "wr", "t": [0.38, 0.97] },
+        { "glow": "w4b", "t": [0.45, 0.97] },
+        { "glow": "w5b", "t": [0.45, 0.97] },
+        { "fade": "w6b", "t": [0.62, 0.97] },
+        { "glow": "w6n", "t": [0.62, 0.97] }
+      ],
+      "extra": "<text class=\"t-wire\" x=\"476\" y=\"66\" style=\"letter-spacing:.08em\">WEB TIER</text><text class=\"t-wire\" x=\"621\" y=\"66\" style=\"letter-spacing:.08em\">APPLICATION TIER</text><text class=\"t-wire\" x=\"831\" y=\"66\" style=\"letter-spacing:.08em\">DATABASE TIER</text><g class=\"anim\" opacity=\"0\"><text class=\"t-wire\" x=\"850\" y=\"88\" style=\"text-anchor:end;fill:#DD344C;font-weight:700\">AZ a unavailable</text><animate attributeName=\"opacity\" dur=\"10s\" repeatCount=\"indefinite\" calcMode=\"discrete\" values=\"0;1;0\" keyTimes=\"0;0.3;0.97\"/></g><g class=\"anim\" opacity=\"0\"><text class=\"t-wire\" x=\"762\" y=\"328\" style=\"fill:var(--awd-pk2);font-weight:700\">standby promoted</text><animate attributeName=\"opacity\" dur=\"10s\" repeatCount=\"indefinite\" calcMode=\"discrete\" values=\"0;1;0\" keyTimes=\"0;0.62;0.97\"/></g><g class=\"st\" transform=\"translate(111,330)\"><circle r=\"7.5\"/><text y=\"3.2\">1</text></g><text class=\"t-wire\" x=\"124\" y=\"333\" style=\"text-anchor:start;\">AZ a becomes unavailable</text><g class=\"st\" transform=\"translate(111,348)\"><circle r=\"7.5\"/><text y=\"3.2\">2</text></g><text class=\"t-wire\" x=\"124\" y=\"351\" style=\"text-anchor:start;\">ALB stops routing to AZ a</text><g class=\"st\" transform=\"translate(111,366)\"><circle r=\"7.5\"/><text y=\"3.2\">3</text></g><text class=\"t-wire\" x=\"124\" y=\"369\" style=\"text-anchor:start;\">Traffic shifts to AZ b</text><g class=\"st\" transform=\"translate(111,384)\"><circle r=\"7.5\"/><text y=\"3.2\">4</text></g><text class=\"t-wire\" x=\"124\" y=\"387\" style=\"text-anchor:start;\">RDS fails over to the standby</text><circle cx=\"104\" cy=\"46\" r=\"3.4\" fill=\"var(--awd-pk)\"/><text class=\"t-wire\" style=\"text-anchor:start\" x=\"112\" y=\"49\">Request</text><circle cx=\"104\" cy=\"60\" r=\"3.4\" fill=\"var(--awd-pk2)\"/><text class=\"t-wire\" style=\"text-anchor:start\" x=\"112\" y=\"63\">Response</text><circle cx=\"104\" cy=\"74\" r=\"3.4\" fill=\"#DD344C\"/><text class=\"t-wire\" style=\"text-anchor:start\" x=\"112\" y=\"77\">Failed request</text>"
+    },
+    {
+      "id": "tt-nat",
+      "name": "Outbound internet access with NAT gateways",
+      "desc": "Instances in the private subnets have no public address, so each AZ routes 0.0.0.0/0 to the NAT gateway in its own public subnet, which sends the traffic out through the internet gateway and returns the replies. Packets leave through AZ a first, then through AZ b.",
+      "w": 480,
+      "h": 300,
+      "dur": 10,
+      "groups": [
+        { "kind": "cloud", "x": 8, "y": 6, "w": 416, "h": 286 },
+        { "kind": "vpc", "x": 24, "y": 28, "w": 364, "h": 256, "label": "VPC" },
+        { "kind": "az", "x": 40, "y": 50, "w": 264, "h": 110, "label": "Availability Zone a" },
+        { "kind": "az", "x": 40, "y": 166, "w": 264, "h": 110, "label": "Availability Zone b" },
+        { "kind": "priv", "x": 56, "y": 72, "w": 116, "h": 80, "label": "Private subnet" },
+        { "kind": "pub", "x": 182, "y": 72, "w": 106, "h": 80, "label": "Public subnet" },
+        { "kind": "priv", "x": 56, "y": 188, "w": 116, "h": 80, "label": "Private subnet" },
+        { "kind": "pub", "x": 182, "y": 188, "w": 106, "h": 80, "label": "Public subnet" }
+      ],
+      "nodes": [
+        { "id": "ecA", "icon": "aws-res-ec2-instance", "x": 98, "y": 98, "size": 32, "label": "Amazon EC2 instance", "wrap": 20 },
+        { "id": "natA", "icon": "aws-res-vpc-nat-gateway", "x": 219, "y": 98, "size": 32, "label": "NAT gateway" },
+        { "id": "ecB", "icon": "aws-res-ec2-instance", "x": 98, "y": 214, "size": 32, "label": "Amazon EC2 instance", "wrap": 20 },
+        { "id": "natB", "icon": "aws-res-vpc-nat-gateway", "x": 219, "y": 214, "size": 32, "label": "NAT gateway" },
+        { "id": "igw", "icon": "aws-res-vpc-internet-gateway", "x": 340, "y": 152, "label": "Internet gateway" },
+        { "id": "net", "icon": "aws-res-internet", "x": 436, "y": 152, "label": "Internet" }
+      ],
+      "wires": [
+        { "id": "e1a", "from": "ecA", "to": "natA" },
+        { "id": "e1b", "from": "ecB", "to": "natB" },
+        { "id": "n2a", "from": "natA", "to": "igw", "via": 314 },
+        { "id": "n2b", "from": "natB", "to": "igw", "via": 314 },
+        { "id": "n3", "from": "igw", "to": "net" }
+      ],
+      "steps": [
+        { "n": 1, "at": "e1a", "f": 0.24 },
+        { "n": 2, "at": "n2a", "f": 0.12 },
+        { "n": 3, "at": "n3", "f": 0.48 }
+      ],
+      "timeline": [
+        { "wire": "e1a", "t": [0.034, 0.0983], "ring": "natA" },
+        { "wire": "n2a", "t": [0.1063, 0.1706], "ring": "igw" },
+        { "wire": "n3", "t": [0.1786, 0.2429], "ring": "net" },
+        { "wire": "n3", "t": [0.2509, 0.3152], "reverse": true, "kind": "pk-2", "ring": "igw" },
+        { "wire": "n2a", "t": [0.3232, 0.3875], "reverse": true, "kind": "pk-2", "ring": "natA" },
+        { "wire": "e1a", "t": [0.3955, 0.4598], "reverse": true, "kind": "pk-2", "ring": "ecA" },
+        { "wire": "e1b", "t": [0.5402, 0.6045], "ring": "natB" },
+        { "wire": "n2b", "t": [0.6125, 0.6768], "ring": "igw" },
+        { "wire": "n3", "t": [0.6848, 0.7491], "ring": "net" },
+        { "wire": "n3", "t": [0.7571, 0.8214], "reverse": true, "kind": "pk-2", "ring": "igw" },
+        { "wire": "n2b", "t": [0.8294, 0.8937], "reverse": true, "kind": "pk-2", "ring": "natB" },
+        { "wire": "e1b", "t": [0.9017, 0.966], "reverse": true, "kind": "pk-2", "ring": "ecB" }
+      ]
+    },
+    {
+      "id": "tt-ecs",
+      "name": "Containerized three-tier on Amazon ECS and AWS Fargate",
+      "desc": "An Application Load Balancer forwards requests to an Amazon ECS service whose AWS Fargate tasks use an Amazon Aurora cluster with a writer and a reader, and the tasks pull their image from Amazon ECR. The first request writes to the writer, the second reads from the reader.",
+      "w": 480,
+      "h": 274,
+      "dur": 10,
+      "groups": [
+        { "kind": "cloud", "x": 50, "y": 8, "w": 428, "h": 258 },
+        { "kind": "vpc", "x": 60, "y": 98, "w": 410, "h": 154, "label": "VPC" },
+        { "kind": "pub", "x": 76, "y": 120, "w": 104, "h": 118, "label": "Public subnet" },
+        { "kind": "priv", "x": 192, "y": 120, "w": 128, "h": 118, "label": "Private subnet" },
+        { "kind": "priv", "x": 344, "y": 120, "w": 108, "h": 118, "label": "Private subnet" },
+        { "kind": "gen", "x": 198, "y": 142, "w": 116, "h": 80, "label": "" },
+        { "kind": "gen", "x": 350, "y": 142, "w": 96, "h": 80, "label": "Aurora cluster" }
+      ],
+      "nodes": [
+        { "id": "users", "icon": "aws-res-users", "x": 4, "y": 164, "label": "Users" },
+        { "id": "alb", "icon": "aws-res-elastic-load-balancing-application-load-balancer", "x": 108, "y": 164, "label": "Application Load Balancer" },
+        { "id": "t1", "icon": "aws-svc-fargate", "x": 216, "y": 168, "size": 32, "label": "" },
+        { "id": "t2", "icon": "aws-svc-fargate", "x": 264, "y": 168, "size": 32, "label": "" },
+        { "id": "wr", "icon": "aws-res-aurora-instance", "x": 361, "y": 168, "size": 32, "label": "Writer" },
+        { "id": "rd", "icon": "aws-res-aurora-instance-alternate", "x": 403, "y": 168, "size": 32, "label": "Reader" },
+        { "id": "ecr", "icon": "aws-svc-elastic-container-registry", "x": 286, "y": 34, "label": "Amazon ECR" }
+      ],
+      "wires": [
+        { "id": "w1", "d": "M46,184 H104" },
+        { "id": "w2", "d": "M150,184 H197" },
+        { "id": "w3", "d": "M315,184 H349" },
+        { "id": "w0", "d": "M306,95 V141", "dashed": true }
+      ],
+      "steps": [
+        { "n": 1, "at": "w1", "f": 0.76 },
+        { "n": 2, "at": "w2", "f": 0.3 },
+        { "n": 3, "at": "w3", "f": 0.5 }
+      ],
+      "timeline": [
+        { "wire": "w0", "t": [0.034, 0.0887], "kind": "pk-2", "ring": "t1" },
+        { "wire": "w1", "t": [0.1593, 0.214], "ring": "alb" },
+        { "wire": "w2", "t": [0.222, 0.2767], "ring": "t1" },
+        { "wire": "w3", "t": [0.2847, 0.3393], "ring": "wr" },
+        { "wire": "w3", "t": [0.3473, 0.402], "reverse": true, "kind": "pk-2", "ring": "t1" },
+        { "wire": "w2", "t": [0.41, 0.4647], "reverse": true, "kind": "pk-2", "ring": "alb" },
+        { "wire": "w1", "t": [0.4727, 0.5273], "reverse": true, "kind": "pk-2", "ring": "users" },
+        { "wire": "w1", "t": [0.598, 0.6527], "ring": "alb" },
+        { "wire": "w2", "t": [0.6607, 0.7153], "ring": "t2" },
+        { "wire": "w3", "t": [0.7233, 0.778], "ring": "rd" },
+        { "wire": "w3", "t": [0.786, 0.8407], "reverse": true, "kind": "pk-2", "ring": "t2" },
+        { "wire": "w2", "t": [0.8487, 0.9033], "reverse": true, "kind": "pk-2", "ring": "alb" },
+        { "wire": "w1", "t": [0.9113, 0.966], "reverse": true, "kind": "pk-2", "ring": "users" }
+      ],
+      "extra": "<use href=\"#aws-svc-elastic-container-service\" x=\"198\" y=\"142\" width=\"20\" height=\"20\"/><text class=\"t-g gt-gen\" x=\"223\" y=\"156\">ECS service</text><text class=\"t-c\" x=\"256\" y=\"212\">AWS Fargate tasks</text><text class=\"t-wire\" x=\"312\" y=\"113\" style=\"text-anchor:start;\">pull image</text>"
+    },
+    {
+      "id": "tt-bluegreen",
+      "name": "Blue/green deployment with weighted target groups",
+      "desc": "The Application Load Balancer forwards to two target groups, each backed by its own Auto Scaling group. The traffic weights move from blue 100% / green 0% to 50% / 50% and finally 0% / 100%, after which the blue path drains.",
+      "w": 480,
+      "h": 290,
+      "dur": 10,
+      "groups": [
+        { "kind": "cloud", "x": 50, "y": 8, "w": 428, "h": 274 },
+        { "kind": "vpc", "x": 60, "y": 30, "w": 410, "h": 238, "label": "VPC" },
+        { "kind": "pub", "x": 76, "y": 52, "w": 108, "h": 202, "label": "Public subnet" },
+        { "kind": "priv", "x": 208, "y": 52, "w": 244, "h": 202, "label": "Private subnet" },
+        { "kind": "asg", "id": "blue", "x": 216, "y": 74, "w": 228, "h": 82, "label": "Auto Scaling group (blue, v1)" },
+        { "kind": "asg", "id": "green", "x": 216, "y": 164, "w": 228, "h": 82, "label": "Auto Scaling group (green, v2)" }
+      ],
+      "nodes": [
+        { "id": "users", "icon": "aws-res-users", "x": 4, "y": 140, "label": "Users" },
+        { "id": "alb", "icon": "aws-res-elastic-load-balancing-application-load-balancer", "x": 110, "y": 140, "label": "Application Load Balancer", "sub": "weighted routing" },
+        { "id": "b1", "icon": "aws-res-ec2-instance", "x": 274, "y": 100, "size": 32, "label": "Amazon EC2" },
+        { "id": "b2", "icon": "aws-res-ec2-instance", "x": 354, "y": 100, "size": 32, "label": "Amazon EC2" },
+        { "id": "g1", "icon": "aws-res-ec2-instance", "x": 274, "y": 190, "size": 32, "label": "Amazon EC2" },
+        { "id": "g2", "icon": "aws-res-ec2-instance", "x": 354, "y": 190, "size": 32, "label": "Amazon EC2" }
+      ],
+      "wires": [
+        { "id": "w1", "d": "M46,160 H106" },
+        { "id": "wb", "d": "M152,160 H196 V115 H215" },
+        { "id": "wg", "d": "M152,160 H196 V205 H215" }
+      ],
+      "steps": [
+        { "n": 1, "at": "w1", "f": 0.8 },
+        { "n": 2, "x": 196, "y": 137.5 },
+        { "n": 3, "x": 196, "y": 182.5 }
+      ],
+      "timeline": [
+        { "wire": "w1", "t": [0.03, 0.07], "ring": "alb" },
+        { "wire": "wb", "t": [0.08, 0.13], "ring": "b1" },
+        { "wire": "w1", "t": [0.15, 0.19] },
+        { "wire": "wb", "t": [0.2, 0.25], "ring": "b2" },
+        { "wire": "w1", "t": [0.37, 0.41] },
+        { "wire": "wb", "t": [0.42, 0.47], "ring": "b1" },
+        { "wire": "w1", "t": [0.49, 0.53] },
+        { "wire": "wg", "t": [0.54, 0.59], "ring": "g1" },
+        { "wire": "w1", "t": [0.69, 0.73] },
+        { "wire": "wg", "t": [0.74, 0.79], "ring": "g1" },
+        { "wire": "w1", "t": [0.82, 0.86] },
+        { "wire": "wg", "t": [0.87, 0.92], "ring": "g2" }
+      ],
+      "effects": [
+        { "fade": "wg", "t": [0.001, 0.33] },
+        { "fade": "wb", "t": [0.66, 0.995] }
+      ],
+      "extra": "<circle cx=\"434\" cy=\"85\" r=\"4\" fill=\"#4A90E2\"/><circle cx=\"434\" cy=\"175\" r=\"4\" fill=\"#3FB950\"/><g class=\"anim\" opacity=\"0\"><text class=\"t-wire\" x=\"426\" y=\"88\" style=\"text-anchor:end;font-weight:700\">100%</text><animate attributeName=\"opacity\" dur=\"10s\" repeatCount=\"indefinite\" calcMode=\"discrete\" values=\"0;1;0\" keyTimes=\"0;0.001;0.33\"/></g><g class=\"anim\" opacity=\"0\"><text class=\"t-wire\" x=\"426\" y=\"88\" style=\"text-anchor:end;font-weight:700\">50%</text><animate attributeName=\"opacity\" dur=\"10s\" repeatCount=\"indefinite\" calcMode=\"discrete\" values=\"0;1;0\" keyTimes=\"0;0.34;0.65\"/></g><g class=\"anim\" opacity=\"0\"><text class=\"t-wire\" x=\"426\" y=\"88\" style=\"text-anchor:end;font-weight:700\">0%</text><animate attributeName=\"opacity\" dur=\"10s\" repeatCount=\"indefinite\" calcMode=\"discrete\" values=\"0;1;0\" keyTimes=\"0;0.66;0.995\"/></g><g class=\"anim\" opacity=\"0\"><text class=\"t-wire\" x=\"426\" y=\"178\" style=\"text-anchor:end;font-weight:700\">0%</text><animate attributeName=\"opacity\" dur=\"10s\" repeatCount=\"indefinite\" calcMode=\"discrete\" values=\"0;1;0\" keyTimes=\"0;0.001;0.33\"/></g><g class=\"anim\" opacity=\"0\"><text class=\"t-wire\" x=\"426\" y=\"178\" style=\"text-anchor:end;font-weight:700\">50%</text><animate attributeName=\"opacity\" dur=\"10s\" repeatCount=\"indefinite\" calcMode=\"discrete\" values=\"0;1;0\" keyTimes=\"0;0.34;0.65\"/></g><g class=\"anim\" opacity=\"0\"><text class=\"t-wire\" x=\"426\" y=\"178\" style=\"text-anchor:end;font-weight:700\">100%</text><animate attributeName=\"opacity\" dur=\"10s\" repeatCount=\"indefinite\" calcMode=\"discrete\" values=\"0;1;0\" keyTimes=\"0;0.66;0.995\"/></g>"
+    }
+  ]
+}

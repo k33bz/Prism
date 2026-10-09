@@ -1,0 +1,458 @@
+{
+  "version": 1,
+  "section": { "id": "endpoints", "title": "SERVICE ENDPOINTS & PRIVATE ACCESS" },
+  "diagrams": [
+    {
+      "id": "ep-centralized",
+      "name": "Centralized interface endpoints",
+      "desc": "Interface endpoints for Amazon SQS live once, in a shared services VPC, with private DNS turned off. A Route 53 private hosted zone for sqs.us-east-1.amazonaws.com, associated with each spoke VPC, answers the DNS query with the endpoint network interface IPs (orange query, blue answer). The spoke then sends the request across the Transit Gateway to the endpoint, which reaches Amazon SQS over AWS PrivateLink.",
+      "aria": "Architecture diagram: interface endpoints for Amazon SQS in a shared services VPC with private DNS disabled, a Route 53 private hosted zone for sqs.us-east-1.amazonaws.com associated with two spoke VPCs, and the spokes reaching the endpoint network interfaces over a Transit Gateway.",
+      "wide": true,
+      "w": 960,
+      "h": 420,
+      "dur": 10,
+      "groups": [
+        { "kind": "cloud", "x": 8, "y": 8, "w": 944, "h": 404 },
+        { "kind": "region", "x": 16, "y": 32, "w": 928, "h": 372, "label": "us-east-1" },
+        { "kind": "vpc", "x": 28, "y": 92, "w": 196, "h": 96, "label": "Spoke A", "note": "10.0.0.0/16 > tgw" },
+        { "kind": "vpc", "x": 28, "y": 298, "w": 196, "h": 96, "label": "Spoke B", "note": "10.0.0.0/16 > tgw" },
+        { "kind": "vpc", "x": 480, "y": 48, "w": 308, "h": 340, "label": "Shared services VPC", "note": "10.0.0.0/16" },
+        { "kind": "az", "x": 488, "y": 72, "w": 292, "h": 150, "label": "Availability Zone A" },
+        { "kind": "az", "x": 488, "y": 230, "w": 292, "h": 150, "label": "Availability Zone B" },
+        { "kind": "priv", "x": 496, "y": 96, "w": 128, "h": 118, "label": "TGW subnet" },
+        { "kind": "priv", "x": 636, "y": 96, "w": 136, "h": 118, "label": "Endpoint subnet" },
+        { "kind": "priv", "x": 496, "y": 254, "w": 128, "h": 118, "label": "TGW subnet" },
+        { "kind": "priv", "x": 636, "y": 254, "w": 136, "h": 118, "label": "Endpoint subnet" }
+      ],
+      "nodes": [
+        { "id": "eca", "icon": "aws-res-ec2-instance", "x": 102, "y": 124, "size": 32, "label": "Amazon EC2" },
+        { "id": "ata", "icon": "aws-res-transit-gateway-attachment", "x": 168, "y": 124, "size": 32, "label": "Attachment" },
+        { "id": "ecb", "icon": "aws-res-ec2-instance", "x": 102, "y": 330, "size": 32, "label": "Amazon EC2" },
+        { "id": "atb", "icon": "aws-res-transit-gateway-attachment", "x": 168, "y": 330, "size": 32, "label": "Attachment" },
+        { "id": "phz", "icon": "aws-res-route-53-hosted-zone", "x": 272, "y": 223, "size": 40, "label": "Private hosted zone", "sub": "sqs.us-east-1.amazonaws.com" },
+        { "id": "tgw", "icon": "aws-svc-transit-gateway", "x": 396, "y": 219, "size": 48, "label": "AWS Transit Gateway" },
+        { "id": "saa", "icon": "aws-res-transit-gateway-attachment", "x": 544, "y": 148, "size": 32, "label": "Attachment" },
+        { "id": "sab", "icon": "aws-res-transit-gateway-attachment", "x": 544, "y": 306, "size": 32, "label": "Attachment" },
+        { "id": "epa", "icon": "aws-res-vpc-endpoints", "x": 688, "y": 148, "size": 32, "label": "Interface endpoint", "wrap": 18, "sub": "ENI 10.0.1.25" },
+        { "id": "epb", "icon": "aws-res-vpc-endpoints", "x": 688, "y": 306, "size": 32, "label": "Interface endpoint", "wrap": 18, "sub": "ENI 10.0.2.25" },
+        { "id": "pl", "icon": "aws-svc-privatelink", "x": 812, "y": 223, "size": 40, "label": "AWS PrivateLink" },
+        { "id": "sqs", "icon": "aws-svc-simple-queue-service", "x": 888, "y": 225, "size": 36, "label": "Amazon SQS" }
+      ],
+      "wires": [
+        { "id": "dns", "d": "M118,173 V243 H268", "dashed": true, "both": true, "label": "DNS query", "labelAt": 0.8 },
+        { "id": "dnsb", "d": "M118,326 V243 H268", "dashed": true, "both": true },
+        { "id": "iA", "d": "M138,140 H164" },
+        { "id": "iB", "d": "M138,346 H164" },
+        { "id": "sA", "d": "M204,140 H376 V235 H392", "both": true },
+        { "id": "sB", "d": "M204,346 H376 V251 H392", "both": true },
+        { "id": "tA", "d": "M448,235 H468 V164 H540", "both": true },
+        { "id": "tB", "d": "M448,251 H468 V322 H540", "both": true },
+        { "id": "eA", "d": "M580,164 H684", "both": true },
+        { "id": "eB", "d": "M580,322 H684", "both": true },
+        { "id": "pA", "d": "M724,164 H832 V219", "both": true },
+        { "id": "pB", "d": "M724,322 H832 V293", "both": true },
+        { "id": "q", "d": "M856,243 H884", "both": true }
+      ],
+      "steps": [
+        { "n": 1, "at": "dns", "f": 0.5, "dy": -11 },
+        { "n": 2, "at": "sA", "f": 0.2, "dy": -11 },
+        { "n": 3, "at": "eA", "f": 0.5, "dy": -11 },
+        { "n": 4, "at": "q", "f": 0.5, "dy": -11 }
+      ],
+      "timeline": [
+        { "wire": "dns", "t": [0.033, 0.111], "ring": "phz" },
+        { "wire": "dnsb", "t": [0.033, 0.111] },
+        { "wire": "dns", "t": [0.133, 0.21], "reverse": true, "kind": "pk-2", "ring": "eca" },
+        { "wire": "dnsb", "t": [0.133, 0.21], "reverse": true, "kind": "pk-2", "ring": "ecb" },
+        { "wire": "iA", "t": [0.255, 0.288] },
+        { "wire": "iB", "t": [0.255, 0.288] },
+        { "wire": "sA", "t": [0.288, 0.343], "ring": "tgw" },
+        { "wire": "sB", "t": [0.288, 0.343] },
+        { "wire": "tA", "t": [0.343, 0.399], "ring": "saa" },
+        { "wire": "tB", "t": [0.343, 0.399], "ring": "sab" },
+        { "wire": "eA", "t": [0.399, 0.443], "ring": "epa" },
+        { "wire": "eB", "t": [0.399, 0.443], "ring": "epb" },
+        { "wire": "pA", "t": [0.443, 0.509], "ring": "pl" },
+        { "wire": "pB", "t": [0.443, 0.509] },
+        { "wire": "q", "t": [0.509, 0.576], "ring": "sqs" },
+        { "wire": "q", "t": [0.642, 0.709], "reverse": true, "kind": "pk-2", "ring": "pl" },
+        { "wire": "pA", "t": [0.709, 0.775], "reverse": true, "kind": "pk-2", "ring": "epa" },
+        { "wire": "pB", "t": [0.709, 0.775], "reverse": true, "kind": "pk-2", "ring": "epb" },
+        { "wire": "eA", "t": [0.775, 0.819], "reverse": true, "kind": "pk-2" },
+        { "wire": "eB", "t": [0.775, 0.819], "reverse": true, "kind": "pk-2" },
+        { "wire": "tA", "t": [0.819, 0.875], "reverse": true, "kind": "pk-2", "ring": "tgw" },
+        { "wire": "tB", "t": [0.819, 0.875], "reverse": true, "kind": "pk-2" },
+        { "wire": "sA", "t": [0.875, 0.93], "reverse": true, "kind": "pk-2", "ring": "ata" },
+        { "wire": "sB", "t": [0.875, 0.93], "reverse": true, "kind": "pk-2", "ring": "atb" }
+      ],
+      "notes": [
+        { "x": 292, "y": 203, "text": "Zone associated with\neach spoke VPC", "anchor": "middle" },
+        { "x": 704, "y": 134, "text": "private DNS disabled", "anchor": "middle" },
+        { "x": 704, "y": 292, "text": "private DNS disabled", "anchor": "middle" },
+        { "x": 193, "y": 258, "text": "A: 10.0.1.25, 10.0.2.25", "anchor": "middle", "t": [0.14, 0.3] },
+        { "x": 936, "y": 330, "text": "Repeat per service:\none endpoint and\none hosted zone", "anchor": "end" }
+      ]
+    },
+    {
+      "id": "ep-onprem-s3",
+      "name": "On-premises access to Amazon S3",
+      "desc": "An on-premises client reaches Amazon S3 over Direct Connect or Site-to-Site VPN through an S3 interface endpoint. Its DNS server forwards the S3 name to a Route 53 VPC Resolver inbound endpoint (orange), the answer returns the endpoint IPs (blue), and the HTTPS request follows them to S3 over AWS PrivateLink; the client could instead call the endpoint-specific name. The gateway endpoint serves only the VPC, so traffic from on-premises cannot use it (red).",
+      "aria": "Architecture diagram: an on-premises client reaches Amazon S3 over AWS Direct Connect or Site-to-Site VPN through an S3 interface endpoint, resolving the name with a Route 53 VPC Resolver inbound endpoint; the S3 gateway endpoint cannot be reached from on-premises.",
+      "wide": true,
+      "w": 960,
+      "h": 432,
+      "dur": 10,
+      "groups": [
+        { "kind": "dc", "x": 8, "y": 56, "w": 150, "h": 272 },
+        { "kind": "gen", "x": 172, "y": 56, "w": 116, "h": 272, "label": "Hybrid link" },
+        { "kind": "cloud", "x": 306, "y": 8, "w": 646, "h": 416 },
+        { "kind": "region", "x": 314, "y": 32, "w": 630, "h": 384, "label": "us-east-1" },
+        { "kind": "vpc", "x": 420, "y": 52, "w": 362, "h": 352, "label": "VPC", "note": "10.0.0.0/16" },
+        { "kind": "priv", "x": 432, "y": 78, "w": 338, "h": 180, "label": "Private subnets" },
+        { "kind": "priv", "x": 432, "y": 306, "w": 338, "h": 90, "label": "Private subnet" }
+      ],
+      "nodes": [
+        { "id": "cli", "icon": "aws-res-client", "x": 40, "y": 90, "size": 32, "label": "On-premises client" },
+        { "id": "dns", "icon": "aws-res-servers", "x": 40, "y": 236, "size": 32, "label": "On-premises DNS", "sub": "forwarder" },
+        { "id": "cgw", "icon": "aws-res-vpc-customer-gateway", "x": 100, "y": 150, "size": 32, "label": "Customer gateway" },
+        { "id": "dx", "icon": "aws-svc-direct-connect", "x": 214, "y": 92, "size": 40, "label": "AWS Direct Connect" },
+        { "id": "vpn", "icon": "aws-svc-site-to-site-vpn", "x": 214, "y": 192, "size": 40, "label": "AWS Site-to-Site VPN", "wrap": 16 },
+        { "id": "vgw", "icon": "aws-res-vpc-vpn-gateway", "x": 340, "y": 145, "size": 32, "label": "Virtual private gateway", "wrap": 16 },
+        { "id": "res", "icon": "aws-res-route-53-resolver", "x": 484, "y": 98, "size": 32, "label": "Route 53 VPC Resolver inbound endpoint", "wrap": 22, "sub": "ENI per AZ" },
+        { "id": "s3ep", "icon": "aws-res-vpc-endpoints", "x": 484, "y": 192, "size": 32, "label": "S3 interface endpoint", "wrap": 22, "sub": "ENI per AZ" },
+        { "id": "ec2", "icon": "aws-res-ec2-instance", "x": 454, "y": 320, "size": 32, "label": "Amazon EC2" },
+        { "id": "gwe", "icon": "aws-res-vpc-endpoints", "x": 574, "y": 320, "size": 32, "label": "S3 gateway endpoint", "sub": "route table target" },
+        { "id": "s3", "icon": "aws-svc-simple-storage-service", "x": 860, "y": 188, "size": 40, "label": "Amazon S3" }
+      ],
+      "wires": [
+        { "id": "q0", "d": "M56,152 V232" },
+        { "id": "q1", "d": "M76,252 H116 V212" },
+        { "id": "c1", "d": "M76,106 H116 V146" },
+        { "id": "h1", "d": "M136,166 H165 V112 H210", "both": true },
+        { "id": "h1v", "d": "M136,166 H165 V212 H210", "dashed": true, "both": true },
+        { "id": "h2", "d": "M258,112 H297 V155 H336", "both": true, "label": "private VIF", "labelAt": 0.42, "labelDx": 5, "labelDy": 0, "labelAnchor": "start" },
+        { "id": "h2v", "d": "M258,212 H297 V167 H336", "dashed": true, "both": true },
+        { "id": "r1", "d": "M376,155 H406 V114 H480", "both": true },
+        { "id": "s1", "d": "M376,167 H406 V208 H480", "both": true },
+        { "id": "s2", "d": "M520,208 H856", "both": true, "label": "AWS PrivateLink", "labelAt": 0.88 },
+        { "id": "g1", "d": "M490,336 H570" },
+        { "id": "g2", "d": "M610,336 H880 V245" },
+        { "id": "bad1", "d": "M376,171 H406 V278 H540", "dashed": true, "hot": true, "arrow": false },
+        { "id": "bad2", "d": "M540,278 H590 V316", "dashed": true, "hot": true }
+      ],
+      "steps": [
+        { "n": 1, "at": "q0", "f": 0.5, "dx": 11, "dy": 0 },
+        { "n": 2, "at": "h2", "f": 0.08, "dy": -11 },
+        { "n": 3, "at": "s2", "f": 0.5, "dy": -11 },
+        { "n": 4, "at": "g2", "f": 0.62, "dy": 11 }
+      ],
+      "timeline": [
+        { "wire": "q0", "t": [0.031, 0.061] },
+        { "wire": "q1", "t": [0.061, 0.092] },
+        { "wire": "h1", "t": [0.092, 0.143], "ring": "dx" },
+        { "wire": "h2", "t": [0.143, 0.184], "ring": "vgw" },
+        { "wire": "r1", "t": [0.184, 0.225], "ring": "res" },
+        { "wire": "r1", "t": [0.245, 0.286], "reverse": true, "kind": "pk-2", "ring": "vgw" },
+        { "wire": "h2", "t": [0.286, 0.327], "reverse": true, "kind": "pk-2", "ring": "dx" },
+        { "wire": "h1", "t": [0.327, 0.378], "reverse": true, "kind": "pk-2", "ring": "cgw" },
+        { "wire": "q1", "t": [0.378, 0.409], "reverse": true, "kind": "pk-2", "ring": "dns" },
+        { "wire": "q0", "t": [0.409, 0.439], "reverse": true, "kind": "pk-2", "ring": "cli" },
+        { "wire": "c1", "t": [0.48, 0.511] },
+        { "wire": "h1", "t": [0.511, 0.562], "ring": "dx" },
+        { "wire": "h2", "t": [0.562, 0.603], "ring": "vgw" },
+        { "wire": "s1", "t": [0.603, 0.644], "ring": "s3ep" },
+        { "wire": "s2", "t": [0.644, 0.715], "ring": "s3" },
+        { "wire": "g1", "t": [0.746, 0.787], "ring": "gwe" },
+        { "wire": "g2", "t": [0.787, 0.848], "ring": "s3" },
+        { "wire": "bad1", "t": [0.889, 0.95], "kind": "pk-bad" }
+      ],
+      "notes": [
+        { "x": 234, "y": 180, "text": "or", "anchor": "middle" },
+        { "x": 14, "y": 350, "text": "Option 1: endpoint-specific name", "kind": "label", "anchor": "start" },
+        { "x": 14, "y": 364, "text": "bucket.vpce-0a1b2c3d-4e5f.s3.us-east-1.vpce.amazonaws.com", "anchor": "start" },
+        { "x": 14, "y": 386, "text": "Option 2: private DNS for inbound endpoints", "kind": "label", "anchor": "start" },
+        { "x": 14, "y": 400, "text": "forward s3.us-east-1.amazonaws.com to the\nResolver inbound endpoint", "anchor": "start" },
+        { "x": 648, "y": 352, "text": "Not reachable from\non-premises, peered VPCs\nor Transit Gateway", "kind": "warn", "anchor": "start" },
+        { "x": 548, "y": 108, "text": "returns the S3\nendpoint IPs", "anchor": "start", "t": [0.27, 0.45] }
+      ],
+      "extra": "<circle cx=\"540\" cy=\"278\" r=\"7.5\" fill=\"#DD344C\"/><path d=\"M537,275 L543,281 M543,275 L537,281\" stroke=\"#fff\" stroke-width=\"1.7\" fill=\"none\"/>"
+    },
+    {
+      "id": "ep-ecr-private",
+      "name": "Private image pulls for Fargate",
+      "desc": "An Amazon ECS task on AWS Fargate starts in a private subnet with no NAT gateway or internet gateway. Its image pull uses four private paths: a token from ecr.api, the manifest from ecr.dkr, the layers from Amazon S3 through the gateway endpoint, and container logs to CloudWatch Logs through a logs endpoint. Fargate platform version 1.4.0 or later needs all of them; requests are orange and responses blue.",
+      "aria": "Architecture diagram: an Amazon ECS task on AWS Fargate in a private subnet with no NAT gateway pulls its image through interface endpoints for ecr.api and ecr.dkr, downloads image layers from Amazon S3 through a gateway endpoint, and sends logs through an interface endpoint for CloudWatch Logs.",
+      "wide": true,
+      "w": 960,
+      "h": 412,
+      "dur": 10,
+      "groups": [
+        { "kind": "cloud", "x": 8, "y": 8, "w": 944, "h": 396 },
+        { "kind": "region", "x": 16, "y": 32, "w": 928, "h": 364, "label": "us-east-1" },
+        { "kind": "vpc", "x": 28, "y": 52, "w": 520, "h": 332, "label": "VPC", "note": "no NAT gateway, no internet gateway" },
+        { "kind": "priv", "x": 40, "y": 160, "w": 150, "h": 120, "label": "Private subnet" }
+      ],
+      "nodes": [
+        { "id": "task", "icon": "aws-res-elastic-container-service-task", "x": 99, "y": 204, "size": 32, "label": "Amazon ECS task", "sub": "AWS Fargate" },
+        { "id": "ep1", "icon": "aws-res-vpc-endpoints", "x": 314, "y": 96, "size": 32, "label": "Interface endpoint", "wrap": 18, "sub": "ecr.api" },
+        { "id": "ep2", "icon": "aws-res-vpc-endpoints", "x": 314, "y": 168, "size": 32, "label": "Interface endpoint", "wrap": 18, "sub": "ecr.dkr" },
+        { "id": "gwe", "icon": "aws-res-vpc-endpoints", "x": 314, "y": 240, "size": 32, "label": "S3 gateway endpoint", "wrap": 22, "sub": "route table target" },
+        { "id": "ep4", "icon": "aws-res-vpc-endpoints", "x": 314, "y": 312, "size": 32, "label": "Interface endpoint", "wrap": 18, "sub": "logs" },
+        { "id": "ecr", "icon": "aws-svc-elastic-container-registry", "x": 740, "y": 128, "size": 40, "label": "Amazon ECR", "sub": "private repository" },
+        { "id": "s3", "icon": "aws-svc-simple-storage-service", "x": 740, "y": 236, "size": 40, "label": "Amazon S3", "sub": "prod-us-east-1-starport-layer-bucket" },
+        { "id": "cwl", "icon": "aws-res-cloudwatch-logs", "x": 742, "y": 310, "size": 36, "label": "Amazon CloudWatch Logs", "wrap": 24 }
+      ],
+      "wires": [
+        { "id": "w1", "d": "M135,220 H235 V112 H310" },
+        { "id": "w2", "d": "M135,220 H235 V184 H310" },
+        { "id": "w3", "d": "M135,220 H235 V256 H310" },
+        { "id": "w4", "d": "M135,220 H235 V328 H310" },
+        { "id": "e1", "d": "M350,112 H690 V140 H736", "both": true, "label": "GetAuthorizationToken", "labelAt": 0.4 },
+        { "id": "e2", "d": "M350,184 H690 V156 H736", "both": true, "label": "image manifest", "labelAt": 0.4 },
+        { "id": "e3", "d": "M350,256 H736", "both": true, "label": "image layers", "labelAt": 0.4 },
+        { "id": "e4", "d": "M350,328 H738", "both": true, "label": "awslogs driver", "labelAt": 0.4 }
+      ],
+      "steps": [
+        { "n": 1, "at": "w1", "f": 0.8, "dy": -11 },
+        { "n": 2, "at": "w2", "f": 0.8, "dy": -11 },
+        { "n": 3, "at": "w3", "f": 0.8, "dy": -11 },
+        { "n": 4, "at": "w4", "f": 0.8, "dy": -11 }
+      ],
+      "timeline": [
+        { "wire": "w1", "t": [0.031, 0.083], "ring": "ep1" },
+        { "wire": "e1", "t": [0.083, 0.145], "ring": "ecr" },
+        { "wire": "e1", "t": [0.165, 0.217], "reverse": true, "kind": "pk-2", "ring": "ep1" },
+        { "wire": "w1", "t": [0.217, 0.258], "reverse": true, "kind": "pk-2", "ring": "task" },
+        { "wire": "w2", "t": [0.258, 0.31], "ring": "ep2" },
+        { "wire": "e2", "t": [0.31, 0.372], "ring": "ecr" },
+        { "wire": "e2", "t": [0.393, 0.444], "reverse": true, "kind": "pk-2", "ring": "ep2" },
+        { "wire": "w2", "t": [0.444, 0.485], "reverse": true, "kind": "pk-2", "ring": "task" },
+        { "wire": "w3", "t": [0.485, 0.537], "ring": "gwe" },
+        { "wire": "e3", "t": [0.537, 0.599], "ring": "s3" },
+        { "wire": "e3", "t": [0.62, 0.671], "reverse": true, "kind": "pk-2", "ring": "gwe" },
+        { "wire": "w3", "t": [0.671, 0.713], "reverse": true, "kind": "pk-2", "ring": "task" },
+        { "wire": "w4", "t": [0.713, 0.764], "ring": "ep4" },
+        { "wire": "e4", "t": [0.764, 0.826], "ring": "cwl" },
+        { "wire": "e4", "t": [0.847, 0.899], "reverse": true, "kind": "pk-2", "ring": "ep4" },
+        { "wire": "w4", "t": [0.899, 0.94], "reverse": true, "kind": "pk-2", "ring": "task" }
+      ],
+      "notes": [
+        { "x": 40, "y": 326, "text": "Interface endpoints:\none ENI per AZ, security\ngroup allows TCP 443\nfrom the task", "anchor": "start" }
+      ]
+    },
+    {
+      "id": "ep-policies",
+      "name": "Endpoint policy and bucket policy",
+      "desc": "Two policies enforce least privilege. The S3 gateway endpoint policy allows only the analytics-data bucket, and that bucket denies any request that does not arrive through the endpoint (aws:SourceVpce). A request from the instance to analytics-data succeeds (orange, response blue); a request to another bucket fails at the endpoint policy and one from the internet fails at the bucket policy (red).",
+      "aria": "Architecture diagram: an EC2 instance in a private subnet reaches Amazon S3 through a gateway endpoint whose endpoint policy allows only the analytics-data bucket; a request to another bucket is denied by the endpoint policy, and a request from the internet is denied by the bucket policy that requires aws:SourceVpce.",
+      "w": 480,
+      "h": 300,
+      "dur": 8,
+      "groups": [
+        { "kind": "cloud", "x": 64, "y": 8, "w": 408, "h": 236 },
+        { "kind": "region", "x": 72, "y": 32, "w": 392, "h": 204, "label": "us-east-1" },
+        { "kind": "vpc", "x": 84, "y": 56, "w": 192, "h": 140, "label": "VPC" },
+        { "kind": "priv", "x": 92, "y": 78, "w": 98, "h": 110, "label": "Private subnet" },
+        { "kind": "gen", "x": 352, "y": 56, "w": 104, "h": 152, "label": "Amazon S3", "icon": "aws-svc-simple-storage-service" }
+      ],
+      "nodes": [
+        { "id": "ec2", "icon": "aws-res-ec2-instance", "x": 125, "y": 114, "size": 32, "label": "Amazon EC2" },
+        { "id": "gwe", "icon": "aws-res-vpc-endpoints", "x": 220, "y": 114, "size": 32, "label": "S3 gateway endpoint" },
+        { "id": "other", "icon": "aws-res-simple-storage-service-bucket", "x": 388, "y": 84, "size": 32, "label": "other-bucket" },
+        { "id": "data", "icon": "aws-res-simple-storage-service-bucket", "x": 388, "y": 150, "size": 32, "label": "analytics-data" },
+        { "id": "net", "icon": "aws-res-internet", "x": 14, "y": 204, "size": 32, "label": "Internet" }
+      ],
+      "wires": [
+        { "id": "g1", "d": "M161,130 H216" },
+        { "id": "trunk", "d": "M256,130 H312", "arrow": false },
+        { "id": "a1", "d": "M312,130 V100 H334", "dashed": true, "hot": true, "arrow": false },
+        { "id": "a2", "d": "M334,100 H384", "dashed": true, "hot": true },
+        { "id": "b", "d": "M312,130 V166 H384", "label": "allowed", "labelAt": 0.5 },
+        { "id": "n1", "d": "M50,220 H300", "dashed": true, "hot": true, "arrow": false },
+        { "id": "n2", "d": "M300,220 H404 V199", "dashed": true, "hot": true }
+      ],
+      "steps": [
+        { "n": 1, "at": "g1", "f": 0.5 },
+        { "n": 2, "at": "a1", "f": 0.3, "dx": -11, "dy": 0 },
+        { "n": 3, "at": "n1", "f": 0.45 }
+      ],
+      "timeline": [
+        { "wire": "g1", "t": [0.047, 0.106], "ring": "gwe" },
+        { "wire": "trunk", "t": [0.106, 0.141] },
+        { "wire": "b", "t": [0.141, 0.235], "ring": "data" },
+        { "wire": "b", "t": [0.282, 0.376], "reverse": true, "kind": "pk-2" },
+        { "wire": "trunk", "t": [0.376, 0.411], "reverse": true, "kind": "pk-2" },
+        { "wire": "g1", "t": [0.411, 0.47], "reverse": true, "kind": "pk-2", "ring": "ec2" },
+        { "wire": "g1", "t": [0.541, 0.599], "ring": "gwe" },
+        { "wire": "trunk", "t": [0.599, 0.635] },
+        { "wire": "a1", "t": [0.635, 0.728], "kind": "pk-bad" },
+        { "wire": "n1", "t": [0.822, 0.94], "kind": "pk-bad" }
+      ],
+      "notes": [
+        { "x": 84, "y": 262, "text": "Endpoint policy", "kind": "label", "anchor": "start" },
+        { "x": 84, "y": 274, "text": "Allow s3:GetObject and s3:PutObject\non analytics-data only", "anchor": "start" },
+        { "x": 270, "y": 262, "text": "Bucket policy on analytics-data", "kind": "label", "anchor": "start" },
+        { "x": 270, "y": 274, "text": "Deny s3:* unless aws:SourceVpce\nequals vpce-0a1b2c3d", "anchor": "start" },
+        { "x": 334, "y": 90, "text": "denied", "kind": "warn", "anchor": "middle" },
+        { "x": 300, "y": 212, "text": "denied", "kind": "warn", "anchor": "middle" }
+      ],
+      "extra": "<circle cx=\"334\" cy=\"100\" r=\"6.5\" fill=\"#DD344C\"/><path d=\"M331,97 L337,103 M337,97 L331,103\" stroke=\"#fff\" stroke-width=\"1.7\" fill=\"none\"/><circle cx=\"300\" cy=\"220\" r=\"6.5\" fill=\"#DD344C\"/><path d=\"M297,217 L303,223 M303,217 L297,223\" stroke=\"#fff\" stroke-width=\"1.7\" fill=\"none\"/><circle class=\"anim\" cx=\"334\" cy=\"100\" r=\"11\" fill=\"none\" stroke=\"#DD344C\" stroke-width=\"1.6\" opacity=\"0\"><animate attributeName=\"opacity\" dur=\"8s\" repeatCount=\"indefinite\" values=\"0;0;.9;0;0\" keyTimes=\"0;.729;.73;.83;1\"/><animate attributeName=\"r\" dur=\"8s\" repeatCount=\"indefinite\" values=\"11;11;11;18.7;18.7\" keyTimes=\"0;.729;.73;.83;1\"/></circle><circle class=\"anim\" cx=\"300\" cy=\"220\" r=\"11\" fill=\"none\" stroke=\"#DD344C\" stroke-width=\"1.6\" opacity=\"0\"><animate attributeName=\"opacity\" dur=\"8s\" repeatCount=\"indefinite\" values=\"0;0;.9;0;0\" keyTimes=\"0;.939;.94;.995;1\"/><animate attributeName=\"r\" dur=\"8s\" repeatCount=\"indefinite\" values=\"11;11;11;18.7;18.7\" keyTimes=\"0;.939;.94;.995;1\"/></circle>"
+    },
+    {
+      "id": "ep-private-api",
+      "name": "Private API Gateway API",
+      "desc": "A private REST API in Amazon API Gateway can be called only through an execute-api interface endpoint. An instance in a private subnet reaches the API over AWS PrivateLink, the resource policy allows that endpoint (aws:SourceVpce), and the Lambda backend answers (request orange, response blue). A call from the internet is refused with 403 Forbidden (red).",
+      "aria": "Architecture diagram: an EC2 instance in a private subnet calls a private Amazon API Gateway REST API through an execute-api interface endpoint and AWS PrivateLink; the API resource policy allows only that endpoint, so a call from the internet is refused with 403 Forbidden.",
+      "w": 480,
+      "h": 292,
+      "dur": 8,
+      "groups": [
+        { "kind": "cloud", "x": 64, "y": 8, "w": 408, "h": 276 },
+        { "kind": "region", "x": 72, "y": 32, "w": 392, "h": 244, "label": "us-east-1" },
+        { "kind": "vpc", "x": 80, "y": 90, "w": 164, "h": 140, "label": "VPC" },
+        { "kind": "priv", "x": 88, "y": 112, "w": 148, "h": 110, "label": "Private subnet" }
+      ],
+      "nodes": [
+        { "id": "net", "icon": "aws-res-internet", "x": 14, "y": 44, "size": 32, "label": "Internet" },
+        { "id": "ec2", "icon": "aws-res-ec2-instance", "x": 106, "y": 140, "size": 32, "label": "Amazon EC2" },
+        { "id": "enp", "icon": "aws-res-vpc-endpoints", "x": 188, "y": 140, "size": 32, "label": "Interface endpoint", "sub": "execute-api" },
+        { "id": "pl", "icon": "aws-svc-privatelink", "x": 266, "y": 140, "size": 32, "label": "AWS PrivateLink" },
+        { "id": "api", "icon": "aws-svc-api-gateway", "x": 330, "y": 136, "size": 40, "label": "Amazon API Gateway", "sub": "private REST API" },
+        { "id": "fn", "icon": "aws-svc-lambda", "x": 410, "y": 138, "size": 36, "label": "AWS Lambda" }
+      ],
+      "wires": [
+        { "id": "g1", "d": "M142,156 H184" },
+        { "id": "g2", "d": "M224,156 H262" },
+        { "id": "g3", "d": "M302,156 H326", "both": true },
+        { "id": "g4", "d": "M374,156 H406", "both": true },
+        { "id": "n", "d": "M50,60 H350 V132", "dashed": true, "hot": true, "label": "from the internet", "labelAt": 0.3, "labelDy": 12 }
+      ],
+      "steps": [
+        { "n": 1, "at": "g1", "f": 0.5 },
+        { "n": 2, "at": "g3", "f": 0.5, "dy": -11 },
+        { "n": 3, "at": "n", "f": 0.5, "dy": -11 }
+      ],
+      "timeline": [
+        { "wire": "g1", "t": [0.047, 0.106], "ring": "enp" },
+        { "wire": "g2", "t": [0.106, 0.164], "ring": "pl" },
+        { "wire": "g3", "t": [0.164, 0.235], "ring": "api" },
+        { "wire": "g4", "t": [0.235, 0.305], "ring": "fn" },
+        { "wire": "g4", "t": [0.352, 0.423], "reverse": true, "kind": "pk-2", "ring": "api" },
+        { "wire": "g3", "t": [0.423, 0.493], "reverse": true, "kind": "pk-2", "ring": "pl" },
+        { "wire": "g2", "t": [0.493, 0.552], "reverse": true, "kind": "pk-2", "ring": "enp" },
+        { "wire": "g1", "t": [0.552, 0.611], "reverse": true, "kind": "pk-2", "ring": "ec2" },
+        { "wire": "n", "t": [0.705, 0.94], "kind": "pk-bad" }
+      ],
+      "notes": [
+        { "x": 350, "y": 238, "text": "Resource policy", "kind": "label", "anchor": "middle" },
+        { "x": 350, "y": 250, "text": "Allow execute-api:Invoke\nif aws:SourceVpce =\nvpce-0a1b2c3d", "anchor": "middle" },
+        { "x": 360, "y": 108, "text": "403 Forbidden", "kind": "warn", "anchor": "start" },
+        { "x": 88, "y": 246, "text": "Private DNS: abc123.execute-api\n.us-east-1.amazonaws.com\nresolves to the endpoint ENIs", "anchor": "start" }
+      ],
+      "extra": "<circle cx=\"350\" cy=\"124\" r=\"6.5\" fill=\"#DD344C\"/><path d=\"M347,121 L353,127 M353,121 L347,127\" stroke=\"#fff\" stroke-width=\"1.7\" fill=\"none\"/><circle class=\"anim\" cx=\"350\" cy=\"124\" r=\"11\" fill=\"none\" stroke=\"#DD344C\" stroke-width=\"1.6\" opacity=\"0\"><animate attributeName=\"opacity\" dur=\"8s\" repeatCount=\"indefinite\" values=\"0;0;.9;0;0\" keyTimes=\"0;.929;.93;.995;1\"/><animate attributeName=\"r\" dur=\"8s\" repeatCount=\"indefinite\" values=\"11;11;11;18.7;18.7\" keyTimes=\"0;.929;.93;.995;1\"/></circle>"
+    },
+    {
+      "id": "ep-ssm-private",
+      "name": "Session Manager without internet access",
+      "desc": "An operator starts a Session Manager session from the console or AWS CLI to an instance in a private subnet with no inbound ports, bastion host or internet path. The SSM Agent opens its connections outward through interface endpoints for ssm and ssmmessages, so the session returns over the channel the agent already holds (request orange, response blue). SSM Agent 3.3.40.0 and later does not need ec2messages.",
+      "aria": "Architecture diagram: an operator starts an AWS Systems Manager Session Manager session to an EC2 instance in a private subnet with no internet path; the SSM Agent reaches the service through interface endpoints for ssm and ssmmessages.",
+      "w": 480,
+      "h": 300,
+      "dur": 10,
+      "groups": [
+        { "kind": "cloud", "x": 64, "y": 8, "w": 408, "h": 284 },
+        { "kind": "region", "x": 72, "y": 32, "w": 392, "h": 252, "label": "us-east-1" },
+        { "kind": "vpc", "x": 84, "y": 56, "w": 226, "h": 188, "label": "VPC", "note": "ec2messages: agents before 3.3.40.0" },
+        { "kind": "priv", "x": 92, "y": 78, "w": 210, "h": 158, "label": "Private subnet" }
+      ],
+      "nodes": [
+        { "id": "op", "icon": "aws-res-user", "x": 14, "y": 248, "size": 32, "label": "Operator" },
+        { "id": "ec2", "icon": "aws-res-ec2-instance", "x": 118, "y": 134, "size": 32, "label": "Amazon EC2", "sub": "SSM Agent" },
+        { "id": "ep1", "icon": "aws-res-vpc-endpoints", "x": 228, "y": 102, "size": 32, "label": "Interface endpoint", "wrap": 18, "sub": "ssm" },
+        { "id": "ep2", "icon": "aws-res-vpc-endpoints", "x": 228, "y": 166, "size": 32, "label": "Interface endpoint", "wrap": 18, "sub": "ssmmessages" },
+        { "id": "svc", "icon": "aws-svc-systems-manager", "x": 404, "y": 130, "size": 40, "label": "AWS Systems Manager", "sub": "Session Manager" }
+      ],
+      "wires": [
+        { "id": "a1", "d": "M154,150 H190 V118 H224" },
+        { "id": "a2", "d": "M154,150 H190 V182 H224" },
+        { "id": "b1", "d": "M264,118 H340 V142 H400", "both": true },
+        { "id": "b2", "d": "M264,182 H340 V158 H400", "both": true },
+        { "id": "op", "d": "M50,264 H424 V211", "both": true, "label": "AWS Management Console or AWS CLI", "labelAt": 0.3 }
+      ],
+      "steps": [
+        { "n": 1, "at": "a1", "f": 0.8, "dy": -11 },
+        { "n": 2, "at": "a2", "f": 0.8, "dy": 11 },
+        { "n": 3, "at": "op", "f": 0.93, "dy": 0 },
+        { "n": 4, "at": "b2", "f": 0.45, "dy": 11 }
+      ],
+      "timeline": [
+        { "wire": "a1", "t": [0.031, 0.084], "ring": "ep1" },
+        { "wire": "b1", "t": [0.084, 0.146], "ring": "svc" },
+        { "wire": "a2", "t": [0.178, 0.23], "ring": "ep2" },
+        { "wire": "b2", "t": [0.23, 0.292], "ring": "svc" },
+        { "wire": "op", "t": [0.355, 0.48], "ring": "svc" },
+        { "wire": "b2", "t": [0.522, 0.585], "reverse": true, "ring": "ep2" },
+        { "wire": "a2", "t": [0.585, 0.637], "reverse": true, "ring": "ec2" },
+        { "wire": "a2", "t": [0.689, 0.731], "kind": "pk-2", "ring": "ep2" },
+        { "wire": "b2", "t": [0.731, 0.794], "kind": "pk-2", "ring": "svc" },
+        { "wire": "op", "t": [0.815, 0.94], "reverse": true, "kind": "pk-2", "ring": "op" }
+      ],
+      "notes": [
+        { "x": 100, "y": 214, "text": "No inbound ports,\nno bastion host,\nno public IP", "anchor": "start" },
+        { "x": 346, "y": 108, "text": "AWS PrivateLink", "anchor": "start" }
+      ]
+    },
+    {
+      "id": "ep-resource",
+      "name": "PrivateLink access to VPC resources",
+      "desc": "A provider account shares a private Amazon RDS database without a Network Load Balancer. A resource gateway in the provider VPC fronts the database, and its resource configuration is shared with AWS RAM (blue). In the consumer VPC an instance connects to a resource endpoint (orange), and AWS PrivateLink carries the connection to the resource gateway and the database.",
+      "aria": "Architecture diagram: a provider account shares an Amazon RDS database through a resource gateway and a resource configuration with AWS Resource Access Manager, and an EC2 instance in a consumer VPC reaches it through a resource endpoint over AWS PrivateLink without a Network Load Balancer.",
+      "w": 480,
+      "h": 292,
+      "dur": 10,
+      "groups": [
+        { "kind": "cloud", "x": 8, "y": 8, "w": 464, "h": 276 },
+        { "kind": "region", "x": 16, "y": 32, "w": 448, "h": 244, "label": "us-east-1" },
+        { "kind": "vpc", "x": 24, "y": 56, "w": 340, "h": 94, "label": "Consumer VPC", "note": "account 1111-2222-3333" },
+        { "kind": "vpc", "x": 24, "y": 174, "w": 340, "h": 98, "label": "Provider VPC", "note": "account 4444-5555-6666" }
+      ],
+      "nodes": [
+        { "id": "ec2", "icon": "aws-res-ec2-instance", "x": 44, "y": 86, "size": 32, "label": "Amazon EC2" },
+        { "id": "rep", "icon": "aws-res-vpc-endpoints", "x": 124, "y": 86, "size": 32, "label": "Resource endpoint", "wrap": 14 },
+        { "id": "gw", "icon": "aws-res-vpc-elastic-network-interface", "x": 124, "y": 206, "size": 32, "label": "Resource gateway", "wrap": 18, "sub": "ENIs in 2 AZs" },
+        { "id": "rds", "icon": "aws-svc-rds", "x": 216, "y": 206, "size": 32, "label": "Amazon RDS", "sub": "MySQL, port 3306" },
+        { "id": "cfg", "icon": "aws-svc-vpc-lattice", "x": 310, "y": 206, "size": 32, "label": "Resource configuration", "wrap": 14 },
+        { "id": "ram", "icon": "aws-svc-resource-access-manager", "x": 398, "y": 134, "size": 32, "label": "AWS Resource Access Manager", "wrap": 14 }
+      ],
+      "wires": [
+        { "id": "g1", "d": "M80,102 H120" },
+        { "id": "g2", "d": "M140,148 V202", "both": true },
+        { "id": "g3", "d": "M160,222 H212", "both": true },
+        { "id": "d1", "d": "M252,222 H306", "dashed": true, "arrow": false },
+        { "id": "r1", "d": "M346,222 H414 V196", "dashed": true },
+        { "id": "r2", "d": "M414,130 V102 H160", "dashed": true }
+      ],
+      "steps": [
+        { "n": 1, "at": "r1", "f": 0.5, "dy": -11 },
+        { "n": 2, "at": "g1", "f": 0.5 },
+        { "n": 3, "at": "g2", "f": 0.78, "dy": 0 },
+        { "n": 4, "at": "g3", "f": 0.5 }
+      ],
+      "timeline": [
+        { "wire": "r1", "t": [0.039, 0.131], "kind": "pk-2", "ring": "ram" },
+        { "wire": "r2", "t": [0.131, 0.236], "kind": "pk-2", "ring": "rep" },
+        { "wire": "g1", "t": [0.341, 0.406], "ring": "rep" },
+        { "wire": "g2", "t": [0.406, 0.524], "ring": "gw" },
+        { "wire": "g3", "t": [0.524, 0.603], "ring": "rds" },
+        { "wire": "g3", "t": [0.681, 0.747], "reverse": true, "kind": "pk-2", "ring": "gw" },
+        { "wire": "g2", "t": [0.747, 0.865], "reverse": true, "kind": "pk-2", "ring": "rep" },
+        { "wire": "g1", "t": [0.865, 0.93], "reverse": true, "kind": "pk-2", "ring": "ec2" }
+      ],
+      "notes": [
+        { "x": 134, "y": 168, "text": "AWS PrivateLink", "anchor": "end" },
+        { "x": 146, "y": 168, "text": "connections start in the consumer VPC only", "anchor": "start" },
+        { "x": 414, "y": 238, "text": "shared through\nAWS RAM", "anchor": "middle" }
+      ]
+    }
+  ]
+}

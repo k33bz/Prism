@@ -1,0 +1,475 @@
+{
+  "version": 1,
+  "section": { "id": "regions", "title": "REGIONS & RESILIENCE" },
+  "diagrams": [
+    {
+      "id": "mr-backup",
+      "name": "Backup and restore",
+      "desc": "AWS Backup stores recovery points in a vault in us-east-1 and copies them to a vault in us-west-2; after a Region failure a restore job rebuilds the workload there, with RPO and RTO measured in hours. The animation runs a backup, the cross-Region copy, the outage and the restore.",
+      "w": 480,
+      "h": 300,
+      "dur": 8,
+      "groups": [
+        { "kind": "cloud", "x": 8, "y": 8, "w": 464, "h": 284 },
+        { "kind": "region", "id": "r1", "x": 20, "y": 34, "w": 440, "h": 120, "label": "us-east-1" },
+        { "kind": "region", "id": "r2", "x": 20, "y": 164, "w": 440, "h": 120, "label": "us-west-2" },
+        { "kind": "gen", "x": 36, "y": 58, "w": 152, "h": 88, "label": "Protected resources" },
+        { "kind": "gen", "x": 36, "y": 188, "w": 152, "h": 88, "label": "Restored resources" }
+      ],
+      "nodes": [
+        { "id": "ec2", "icon": "aws-svc-ec2", "x": 52, "y": 84, "label": "Amazon EC2" },
+        { "id": "rds", "icon": "aws-svc-rds", "x": 132, "y": 84, "label": "Amazon RDS" },
+        { "id": "bk1", "icon": "aws-svc-backup", "x": 244, "y": 84, "label": "AWS Backup" },
+        { "id": "v1", "icon": "aws-res-backup-vault", "x": 352, "y": 84, "label": "Backup vault" },
+        { "id": "ec2r", "icon": "aws-svc-ec2", "x": 52, "y": 214, "label": "Amazon EC2" },
+        { "id": "rdsr", "icon": "aws-svc-rds", "x": 132, "y": 214, "label": "Amazon RDS" },
+        { "id": "bk2", "icon": "aws-svc-backup", "x": 244, "y": 214, "label": "AWS Backup" },
+        { "id": "v2", "icon": "aws-res-backup-vault", "x": 352, "y": 214, "label": "Backup vault" }
+      ],
+      "wires": [
+        { "id": "b1", "d": "M190,104 H240" },
+        { "id": "b2", "d": "M286,104 H348" },
+        { "id": "cp", "d": "M372,143 V210", "dashed": true },
+        { "id": "r1w", "d": "M350,234 H288" },
+        { "id": "r2w", "d": "M242,234 H190" }
+      ],
+      "steps": [
+        { "n": 1, "at": "b1" },
+        { "n": 2, "at": "b2" },
+        { "n": 3, "x": 372, "y": 186 },
+        { "n": 4, "at": "r1w" }
+      ],
+      "timeline": [
+        { "wire": "b1", "t": [0.04, 0.09], "ring": "bk1" },
+        { "wire": "b2", "t": [0.1, 0.15], "ring": "v1" },
+        { "wire": "cp", "t": [0.17, 0.3], "kind": "pk-2", "ring": "v2" },
+        { "wire": "r1w", "t": [0.48, 0.54], "ring": "bk2" },
+        { "wire": "r2w", "t": [0.55, 0.61] },
+        { "t": [0.62, 0.66], "ring": "ec2r" },
+        { "t": [0.62, 0.66], "ring": "rdsr" }
+      ],
+      "effects": [
+        { "fail": "r1", "t": [0.38, 0.98] },
+        { "appear": "ec2r", "t": [0.61, 0.98], "ghost": true },
+        { "appear": "rdsr", "t": [0.61, 0.98], "ghost": true }
+      ],
+      "extra": "<text class=\"t-wire\" x=\"462\" y=\"22\" style=\"text-anchor:end\">RPO / RTO: hours</text><text class=\"t-wire\" x=\"356\" y=\"186\" style=\"text-anchor:end\">Cross-Region copy</text><text class=\"t-wire\" x=\"318\" y=\"247\">restore</text>"
+    },
+    {
+      "id": "mr-pilot",
+      "name": "Pilot light",
+      "desc": "The data tier replicates to Amazon Aurora in us-west-2 while the application servers there stay off. The animation fails us-east-1, flips Amazon Route 53 to us-west-2 and scales its Auto Scaling group up from zero.",
+      "wide": true,
+      "w": 960,
+      "h": 426,
+      "dur": 10,
+      "groups": [
+        { "kind": "cloud", "x": 100, "y": 8, "w": 852, "h": 410 },
+        { "kind": "region", "id": "r1", "x": 244, "y": 34, "w": 696, "h": 180, "label": "us-east-1" },
+        { "kind": "region", "id": "r2", "x": 244, "y": 226, "w": 696, "h": 180, "label": "us-west-2" },
+        { "kind": "asg", "x": 460, "y": 60, "w": 160, "h": 140 },
+        { "kind": "asg", "x": 460, "y": 252, "w": 160, "h": 140 }
+      ],
+      "nodes": [
+        { "id": "users", "icon": "aws-res-users", "x": 20, "y": 208, "label": "Users" },
+        { "id": "r53", "icon": "aws-svc-route-53", "x": 136, "y": 208, "label": "Amazon Route 53", "wrap": 16, "sub": "failover routing" },
+        { "id": "albA", "icon": "aws-res-elastic-load-balancing-application-load-balancer", "x": 310, "y": 112, "label": "Application Load Balancer" },
+        { "id": "ecA1", "icon": "aws-svc-ec2", "x": 524, "y": 88, "size": 32, "label": "Amazon EC2" },
+        { "id": "ecA2", "icon": "aws-svc-ec2", "x": 524, "y": 144, "size": 32, "label": "Amazon EC2" },
+        { "id": "dbA", "icon": "aws-svc-aurora", "x": 740, "y": 112, "label": "Amazon Aurora", "sub": "primary cluster" },
+        { "id": "albB", "icon": "aws-res-elastic-load-balancing-application-load-balancer", "x": 310, "y": 304, "label": "Application Load Balancer" },
+        { "id": "ecB1", "icon": "aws-svc-ec2", "x": 524, "y": 280, "size": 32, "label": "Amazon EC2" },
+        { "id": "ecB2", "icon": "aws-svc-ec2", "x": 524, "y": 336, "size": 32, "label": "Amazon EC2" },
+        { "id": "dbB", "icon": "aws-svc-aurora", "x": 740, "y": 304, "label": "Amazon Aurora", "sub": "secondary cluster" }
+      ],
+      "wires": [
+        { "id": "u", "d": "M62,228 H132" },
+        { "id": "ra", "d": "M178,222 H212 V132 H306" },
+        { "id": "rb", "d": "M178,234 H212 V324 H306", "dashed": true },
+        { "id": "a1", "d": "M352,126 H396 V104 H520", "dashed": false },
+        { "id": "a2", "d": "M352,138 H396 V160 H520", "dashed": false },
+        { "id": "ae1", "d": "M558,104 H690 V126 H736", "dashed": false },
+        { "id": "ae2", "d": "M558,160 H690 V138 H736", "dashed": false },
+        { "id": "b1", "d": "M352,318 H396 V296 H520", "dashed": true },
+        { "id": "b2", "d": "M352,330 H396 V352 H520", "dashed": true },
+        { "id": "be1", "d": "M558,296 H690 V318 H736", "dashed": true },
+        { "id": "be2", "d": "M558,352 H690 V330 H736", "dashed": true },
+        { "id": "rep", "d": "M782,132 H822 V324 H784", "flow": true }
+      ],
+      "steps": [
+        { "n": 1, "at": "u", "f": 0.26 },
+        { "n": 2, "at": "ra", "f": 0.82 },
+        { "n": 3, "at": "a1", "f": 0.53 },
+        { "n": 4, "at": "ae1", "f": 0.47 },
+        { "n": 5, "x": 822, "y": 170 }
+      ],
+      "timeline": [
+        { "wire": "u", "t": [0.03, 0.08] },
+        { "wire": "ra", "t": [0.09, 0.14], "ring": "albA" },
+        { "wire": "a1", "t": [0.15, 0.19], "ring": "ecA1" },
+        { "wire": "ae1", "t": [0.2, 0.25], "ring": "dbA" },
+        { "wire": "rep", "t": [0.27, 0.37], "kind": "pk-2", "ring": "dbB" },
+        { "t": [0.5, 0.53], "kind": "pk-2", "ring": "dbB" },
+        { "t": [0.55, 0.59], "ring": "ecB1" },
+        { "t": [0.55, 0.59], "ring": "ecB2" },
+        { "wire": "u", "t": [0.62, 0.67] },
+        { "wire": "rb", "t": [0.68, 0.73], "ring": "albB" },
+        { "wire": "b1", "t": [0.74, 0.78], "ring": "ecB1" },
+        { "wire": "be1", "t": [0.79, 0.84], "ring": "dbB" }
+      ],
+      "effects": [
+        { "fail": "r1", "t": [0.42, 0.98] },
+        { "fade": "ra", "t": [0.46, 0.98] },
+        { "fade": "rep", "t": [0.46, 0.98] },
+        { "glow": "rb", "t": [0.5, 0.98] },
+        { "appear": "ecB1", "t": [0.54, 0.98], "ghost": true },
+        { "appear": "ecB2", "t": [0.54, 0.98], "ghost": true },
+        { "glow": "b1", "t": [0.54, 0.98] },
+        { "glow": "b2", "t": [0.54, 0.98] },
+        { "glow": "be1", "t": [0.54, 0.98] },
+        { "glow": "be2", "t": [0.54, 0.98] }
+      ],
+      "extra": "<text class=\"t-wire\" x=\"942\" y=\"22\" style=\"text-anchor:end\">RPO / RTO: tens of minutes</text><text class=\"t-wire\" x=\"275\" y=\"143\">primary</text><text class=\"t-wire\" x=\"275\" y=\"335\">secondary</text><text class=\"t-wire\" x=\"830\" y=\"188\" style=\"text-anchor:start\">Asynchronous</text><text class=\"t-wire\" x=\"830\" y=\"198\" style=\"text-anchor:start\">replication</text>"
+    },
+    {
+      "id": "mr-warm",
+      "name": "Warm standby",
+      "desc": "A scaled-down but fully functional stack runs in us-west-2: a load balancer, one instance in the Auto Scaling group and a replicated Aurora cluster. The animation fails us-east-1, flips Amazon Route 53 to us-west-2 and scales the group out.",
+      "wide": true,
+      "w": 960,
+      "h": 426,
+      "dur": 10,
+      "groups": [
+        { "kind": "cloud", "x": 100, "y": 8, "w": 852, "h": 410 },
+        { "kind": "region", "id": "r1", "x": 244, "y": 34, "w": 696, "h": 180, "label": "us-east-1" },
+        { "kind": "region", "id": "r2", "x": 244, "y": 226, "w": 696, "h": 180, "label": "us-west-2" },
+        { "kind": "asg", "x": 460, "y": 60, "w": 160, "h": 140 },
+        { "kind": "asg", "x": 460, "y": 252, "w": 160, "h": 140 }
+      ],
+      "nodes": [
+        { "id": "users", "icon": "aws-res-users", "x": 20, "y": 208, "label": "Users" },
+        { "id": "r53", "icon": "aws-svc-route-53", "x": 136, "y": 208, "label": "Amazon Route 53", "wrap": 16, "sub": "failover routing" },
+        { "id": "albA", "icon": "aws-res-elastic-load-balancing-application-load-balancer", "x": 310, "y": 112, "label": "Application Load Balancer" },
+        { "id": "ecA1", "icon": "aws-svc-ec2", "x": 524, "y": 88, "size": 32, "label": "Amazon EC2" },
+        { "id": "ecA2", "icon": "aws-svc-ec2", "x": 524, "y": 144, "size": 32, "label": "Amazon EC2" },
+        { "id": "dbA", "icon": "aws-svc-aurora", "x": 740, "y": 112, "label": "Amazon Aurora", "sub": "primary cluster" },
+        { "id": "albB", "icon": "aws-res-elastic-load-balancing-application-load-balancer", "x": 310, "y": 304, "label": "Application Load Balancer" },
+        { "id": "ecB1", "icon": "aws-svc-ec2", "x": 524, "y": 280, "size": 32, "label": "Amazon EC2" },
+        { "id": "ecB2", "icon": "aws-svc-ec2", "x": 524, "y": 336, "size": 32, "label": "Amazon EC2" },
+        { "id": "dbB", "icon": "aws-svc-aurora", "x": 740, "y": 304, "label": "Amazon Aurora", "sub": "secondary cluster" }
+      ],
+      "wires": [
+        { "id": "u", "d": "M62,228 H132" },
+        { "id": "ra", "d": "M178,222 H212 V132 H306" },
+        { "id": "rb", "d": "M178,234 H212 V324 H306", "dashed": true },
+        { "id": "a1", "d": "M352,126 H396 V104 H520", "dashed": false },
+        { "id": "a2", "d": "M352,138 H396 V160 H520", "dashed": false },
+        { "id": "ae1", "d": "M558,104 H690 V126 H736", "dashed": false },
+        { "id": "ae2", "d": "M558,160 H690 V138 H736", "dashed": false },
+        { "id": "b1", "d": "M352,318 H396 V296 H520", "dashed": false },
+        { "id": "b2", "d": "M352,330 H396 V352 H520", "dashed": true },
+        { "id": "be1", "d": "M558,296 H690 V318 H736", "dashed": false },
+        { "id": "be2", "d": "M558,352 H690 V330 H736", "dashed": true },
+        { "id": "rep", "d": "M782,132 H822 V324 H784", "flow": true }
+      ],
+      "steps": [
+        { "n": 1, "at": "u", "f": 0.26 },
+        { "n": 2, "at": "ra", "f": 0.82 },
+        { "n": 3, "at": "a1", "f": 0.53 },
+        { "n": 4, "at": "ae1", "f": 0.47 },
+        { "n": 5, "x": 822, "y": 170 }
+      ],
+      "timeline": [
+        { "wire": "u", "t": [0.03, 0.08] },
+        { "wire": "ra", "t": [0.09, 0.14], "ring": "albA" },
+        { "wire": "a1", "t": [0.15, 0.19], "ring": "ecA1" },
+        { "wire": "ae1", "t": [0.2, 0.25], "ring": "dbA" },
+        { "wire": "rep", "t": [0.27, 0.37], "kind": "pk-2", "ring": "dbB" },
+        { "t": [0.5, 0.53], "kind": "pk-2", "ring": "dbB" },
+        { "t": [0.55, 0.59], "ring": "ecB2" },
+        { "wire": "u", "t": [0.62, 0.67] },
+        { "wire": "rb", "t": [0.68, 0.73], "ring": "albB" },
+        { "wire": "b1", "t": [0.74, 0.78], "ring": "ecB1" },
+        { "wire": "be1", "t": [0.79, 0.84], "ring": "dbB" },
+        { "wire": "b2", "t": [0.86, 0.9], "ring": "ecB2" }
+      ],
+      "effects": [
+        { "fail": "r1", "t": [0.42, 0.98] },
+        { "fade": "ra", "t": [0.46, 0.98] },
+        { "fade": "rep", "t": [0.46, 0.98] },
+        { "glow": "rb", "t": [0.5, 0.98] },
+        { "appear": "ecB2", "t": [0.54, 0.98], "ghost": true },
+        { "glow": "b2", "t": [0.54, 0.98] },
+        { "glow": "be2", "t": [0.54, 0.98] }
+      ],
+      "extra": "<text class=\"t-wire\" x=\"942\" y=\"22\" style=\"text-anchor:end\">RPO / RTO: minutes</text><text class=\"t-wire\" x=\"275\" y=\"143\">primary</text><text class=\"t-wire\" x=\"275\" y=\"335\">secondary</text><text class=\"t-wire\" x=\"830\" y=\"188\" style=\"text-anchor:start\">Asynchronous</text><text class=\"t-wire\" x=\"830\" y=\"198\" style=\"text-anchor:start\">replication</text>"
+    },
+    {
+      "id": "mr-active",
+      "name": "Active-active multi-Region",
+      "desc": "Amazon Route 53 latency-based routing sends each user to the nearer of two live Regions, each with an Application Load Balancer and an Auto Scaling group, sharing Amazon DynamoDB global tables. The animation fails us-west-2 and Route 53 sends everyone to us-east-1.",
+      "wide": true,
+      "w": 960,
+      "h": 426,
+      "dur": 10,
+      "groups": [
+        { "kind": "cloud", "x": 100, "y": 8, "w": 852, "h": 410 },
+        { "kind": "region", "id": "r1", "x": 244, "y": 34, "w": 696, "h": 180, "label": "us-east-1" },
+        { "kind": "region", "id": "r2", "x": 244, "y": 226, "w": 696, "h": 180, "label": "us-west-2" },
+        { "kind": "asg", "x": 460, "y": 60, "w": 160, "h": 140 },
+        { "kind": "asg", "x": 460, "y": 252, "w": 160, "h": 140 }
+      ],
+      "nodes": [
+        { "id": "uE", "icon": "aws-res-users", "x": 20, "y": 112, "label": "Users", "sub": "near us-east-1" },
+        { "id": "uW", "icon": "aws-res-users", "x": 20, "y": 304, "label": "Users", "sub": "near us-west-2" },
+        { "id": "r53", "icon": "aws-svc-route-53", "x": 136, "y": 208, "label": "Amazon Route 53", "wrap": 16, "sub": "latency routing" },
+        { "id": "albA", "icon": "aws-res-elastic-load-balancing-application-load-balancer", "x": 310, "y": 112, "label": "Application Load Balancer" },
+        { "id": "ecA1", "icon": "aws-svc-ec2", "x": 524, "y": 88, "size": 32, "label": "Amazon EC2" },
+        { "id": "ecA2", "icon": "aws-svc-ec2", "x": 524, "y": 144, "size": 32, "label": "Amazon EC2" },
+        { "id": "dbA", "icon": "aws-svc-dynamodb", "x": 740, "y": 112, "label": "Amazon DynamoDB", "sub": "global table" },
+        { "id": "albB", "icon": "aws-res-elastic-load-balancing-application-load-balancer", "x": 310, "y": 304, "label": "Application Load Balancer" },
+        { "id": "ecB1", "icon": "aws-svc-ec2", "x": 524, "y": 280, "size": 32, "label": "Amazon EC2" },
+        { "id": "ecB2", "icon": "aws-svc-ec2", "x": 524, "y": 336, "size": 32, "label": "Amazon EC2" },
+        { "id": "dbB", "icon": "aws-svc-dynamodb", "x": 740, "y": 304, "label": "Amazon DynamoDB", "sub": "global table" }
+      ],
+      "wires": [
+        { "id": "ue", "d": "M62,132 H80 V222 H132" },
+        { "id": "uw", "d": "M62,324 H80 V234 H132" },
+        { "id": "ra", "d": "M178,222 H212 V132 H306" },
+        { "id": "rb", "d": "M178,234 H212 V324 H306" },
+        { "id": "a1", "d": "M352,126 H396 V104 H520", "dashed": false },
+        { "id": "a2", "d": "M352,138 H396 V160 H520", "dashed": false },
+        { "id": "ae1", "d": "M558,104 H690 V126 H736", "dashed": false },
+        { "id": "ae2", "d": "M558,160 H690 V138 H736", "dashed": false },
+        { "id": "b1", "d": "M352,318 H396 V296 H520", "dashed": false },
+        { "id": "b2", "d": "M352,330 H396 V352 H520", "dashed": false },
+        { "id": "be1", "d": "M558,296 H690 V318 H736", "dashed": false },
+        { "id": "be2", "d": "M558,352 H690 V330 H736", "dashed": false },
+        { "id": "rep", "d": "M782,132 H822 V324 H784", "both": true, "flow": true }
+      ],
+      "steps": [
+        { "n": 1, "at": "ue", "f": 0.39, "dy": 0 },
+        { "n": 2, "at": "ra", "f": 0.82 },
+        { "n": 3, "at": "a1", "f": 0.53 },
+        { "n": 4, "at": "ae1", "f": 0.47 },
+        { "n": 5, "x": 822, "y": 170 }
+      ],
+      "timeline": [
+        { "wire": "ue", "t": [0.03, 0.08] },
+        { "wire": "uw", "t": [0.03, 0.08] },
+        { "wire": "ra", "t": [0.09, 0.14], "ring": "albA" },
+        { "wire": "rb", "t": [0.09, 0.14], "ring": "albB" },
+        { "wire": "a1", "t": [0.15, 0.19], "ring": "ecA1" },
+        { "wire": "b1", "t": [0.15, 0.19], "ring": "ecB1" },
+        { "wire": "ae1", "t": [0.2, 0.25], "ring": "dbA" },
+        { "wire": "be1", "t": [0.2, 0.25], "ring": "dbB" },
+        { "wire": "rep", "t": [0.27, 0.37], "kind": "pk-2", "ring": "dbB" },
+        { "wire": "rep", "t": [0.27, 0.37], "reverse": true, "kind": "pk-2", "ring": "dbA" },
+        { "wire": "ue", "t": [0.58, 0.63] },
+        { "wire": "uw", "t": [0.58, 0.63] },
+        { "wire": "ra", "t": [0.64, 0.7], "ring": "albA" },
+        { "wire": "a2", "t": [0.71, 0.75], "ring": "ecA2" },
+        { "wire": "ae2", "t": [0.76, 0.81], "ring": "dbA" }
+      ],
+      "effects": [
+        { "fail": "r2", "t": [0.44, 0.98] },
+        { "fade": "rb", "t": [0.48, 0.98] },
+        { "fade": "rep", "t": [0.48, 0.98] },
+        { "glow": "ra", "t": [0.52, 0.98] }
+      ],
+      "extra": "<text class=\"t-wire\" x=\"942\" y=\"22\" style=\"text-anchor:end\">RPO / RTO: real-time</text><text class=\"t-wire\" x=\"275\" y=\"143\">nearest</text><text class=\"t-wire\" x=\"275\" y=\"335\">nearest</text><text class=\"t-wire\" x=\"830\" y=\"188\" style=\"text-anchor:start\">Global tables</text><text class=\"t-wire\" x=\"830\" y=\"198\" style=\"text-anchor:start\">replication</text>"
+    },
+    {
+      "id": "mr-r53-failover",
+      "name": "Route 53 failover routing",
+      "desc": "A Route 53 health check watches the primary endpoint in us-east-1; when it fails, DNS answers switch to the secondary record in us-west-2. The animation shows a healthy check, the outage, a failed check and the flip.",
+      "w": 480,
+      "h": 272,
+      "dur": 8,
+      "groups": [
+        { "kind": "cloud", "x": 92, "y": 8, "w": 380, "h": 256 },
+        { "kind": "region", "id": "r1", "x": 212, "y": 34, "w": 252, "h": 104, "label": "us-east-1" },
+        { "kind": "region", "id": "r2", "x": 212, "y": 148, "w": 252, "h": 104, "label": "us-west-2" }
+      ],
+      "nodes": [
+        { "id": "users", "icon": "aws-res-users", "x": 14, "y": 116, "label": "Users" },
+        { "id": "r53", "icon": "aws-svc-route-53", "x": 122, "y": 116, "label": "Amazon Route 53", "wrap": 8, "sub": "failover routing" },
+        { "id": "alb1", "icon": "aws-res-elastic-load-balancing-application-load-balancer", "x": 298, "y": 64, "label": "Application Load Balancer" },
+        { "id": "ec1", "icon": "aws-svc-ec2", "x": 404, "y": 64, "label": "Amazon EC2" },
+        { "id": "alb2", "icon": "aws-res-elastic-load-balancing-application-load-balancer", "x": 298, "y": 178, "label": "Application Load Balancer" },
+        { "id": "ec2", "icon": "aws-svc-ec2", "x": 404, "y": 178, "label": "Amazon EC2" }
+      ],
+      "wires": [
+        { "id": "u", "d": "M56,136 H118" },
+        { "id": "p1", "d": "M164,130 H190 V84 H294" },
+        { "id": "p2", "d": "M164,142 H190 V198 H294", "dashed": true },
+        { "id": "w1", "d": "M340,84 H400" },
+        { "id": "w2", "d": "M340,198 H400" }
+      ],
+      "steps": [
+        { "n": 1, "at": "u", "f": 0.26 },
+        { "n": 2, "x": 253, "y": 73 },
+        { "n": 3, "x": 253, "y": 187 }
+      ],
+      "timeline": [
+        { "wire": "u", "t": [0.04, 0.09] },
+        { "wire": "p1", "t": [0.1, 0.16], "ring": "alb1" },
+        { "wire": "w1", "t": [0.17, 0.21], "ring": "ec1" },
+        { "wire": "p1", "t": [0.25, 0.31], "kind": "pk-2" },
+        { "wire": "p1", "t": [0.32, 0.38], "reverse": true, "kind": "pk-2", "ring": "r53" },
+        { "wire": "p1", "t": [0.46, 0.52], "kind": "pk-bad" },
+        { "wire": "u", "t": [0.6, 0.65] },
+        { "wire": "p2", "t": [0.66, 0.72], "ring": "alb2" },
+        { "wire": "w2", "t": [0.73, 0.78], "ring": "ec2" }
+      ],
+      "effects": [
+        { "fail": "r1", "t": [0.44, 0.98] },
+        { "fade": "p1", "t": [0.54, 0.98] },
+        { "glow": "p2", "t": [0.56, 0.98] }
+      ],
+      "extra": "<text class=\"t-wire\" x=\"253\" y=\"96\">primary</text><text class=\"t-wire\" x=\"253\" y=\"106\">health check</text><text class=\"t-wire\" x=\"253\" y=\"210\">secondary</text>"
+    },
+    {
+      "id": "mr-gax",
+      "name": "AWS Global Accelerator",
+      "desc": "AWS Global Accelerator gives users two static anycast IP addresses and carries their traffic over the AWS global network to the closest healthy Regional endpoint. The animation fails us-east-1 and traffic shifts to us-west-2.",
+      "w": 480,
+      "h": 272,
+      "dur": 8,
+      "groups": [
+        { "kind": "cloud", "x": 92, "y": 8, "w": 380, "h": 256 },
+        { "kind": "region", "id": "r1", "x": 280, "y": 34, "w": 184, "h": 104, "label": "us-east-1" },
+        { "kind": "region", "id": "r2", "x": 280, "y": 148, "w": 184, "h": 104, "label": "us-west-2" }
+      ],
+      "nodes": [
+        { "id": "users", "icon": "aws-res-users", "x": 14, "y": 116, "label": "Users" },
+        { "id": "ga", "icon": "aws-svc-global-accelerator", "x": 116, "y": 116, "label": "AWS Global Accelerator", "sub": "2 anycast IPs" },
+        { "id": "alb1", "icon": "aws-res-elastic-load-balancing-application-load-balancer", "x": 306, "y": 64, "label": "Application Load Balancer" },
+        { "id": "ec1", "icon": "aws-svc-ec2", "x": 402, "y": 64, "label": "Amazon EC2" },
+        { "id": "alb2", "icon": "aws-res-elastic-load-balancing-application-load-balancer", "x": 306, "y": 178, "label": "Application Load Balancer" },
+        { "id": "ec2", "icon": "aws-svc-ec2", "x": 402, "y": 178, "label": "Amazon EC2" }
+      ],
+      "wires": [
+        { "id": "u", "d": "M56,136 H112" },
+        { "id": "g1", "d": "M158,130 H180 V84 H302", "flow": true },
+        { "id": "g2", "d": "M158,142 H180 V198 H302", "flow": true },
+        { "id": "w1", "d": "M348,84 H398" },
+        { "id": "w2", "d": "M348,198 H398" }
+      ],
+      "steps": [
+        { "n": 1, "at": "u", "f": 0.29 },
+        { "n": 2, "x": 230, "y": 73 },
+        { "n": 3, "x": 230, "y": 187 }
+      ],
+      "timeline": [
+        { "wire": "u", "t": [0.04, 0.09], "ring": "ga" },
+        { "wire": "g1", "t": [0.1, 0.18], "ring": "alb1" },
+        { "wire": "w1", "t": [0.19, 0.24], "ring": "ec1" },
+        { "wire": "u", "t": [0.54, 0.59], "ring": "ga" },
+        { "wire": "g2", "t": [0.6, 0.7], "ring": "alb2" },
+        { "wire": "w2", "t": [0.71, 0.76], "ring": "ec2" }
+      ],
+      "effects": [
+        { "fail": "r1", "t": [0.4, 0.98] },
+        { "fade": "g1", "t": [0.44, 0.98] },
+        { "glow": "g2", "t": [0.48, 0.98] }
+      ],
+      "extra": "<text class=\"t-wire\" x=\"230\" y=\"96\">AWS global network</text><text class=\"t-wire\" x=\"230\" y=\"210\">AWS global network</text>"
+    },
+    {
+      "id": "mr-s3-crr",
+      "name": "S3 Cross-Region Replication",
+      "desc": "Amazon S3 Cross-Region Replication keeps versioned buckets in us-east-1 and us-west-2 in sync behind a Multi-Region Access Point set active-passive. When us-east-1 is disrupted, the failover controls shift requests to the replica bucket within minutes; two-way replication carries new writes back after recovery. The animation uploads an object, replicates it, fails us-east-1 and serves from the replica.",
+      "w": 480,
+      "h": 284,
+      "dur": 8,
+      "groups": [
+        { "kind": "cloud", "x": 92, "y": 8, "w": 380, "h": 268 },
+        { "kind": "region", "id": "r1", "x": 212, "y": 34, "w": 252, "h": 110, "label": "us-east-1" },
+        { "kind": "region", "id": "r2", "x": 212, "y": 154, "w": 252, "h": 110, "label": "us-west-2" }
+      ],
+      "nodes": [
+        { "id": "users", "icon": "aws-res-users", "x": 14, "y": 122, "label": "Users" },
+        { "id": "mrap", "icon": "aws-res-simple-storage-service-s3-multi-region-access-points", "x": 120, "y": 122, "label": "Multi-Region Access Point" },
+        { "id": "bA", "icon": "aws-res-simple-storage-service-bucket", "x": 296, "y": 64, "label": "Source bucket", "wrap": 20, "sub": "versioning enabled" },
+        { "id": "bB", "icon": "aws-res-simple-storage-service-bucket", "x": 296, "y": 184, "label": "Destination bucket", "wrap": 20, "sub": "versioning enabled" }
+      ],
+      "wires": [
+        { "id": "u", "d": "M56,142 H116" },
+        { "id": "ma", "d": "M162,136 H188 V84 H292" },
+        { "id": "mb", "d": "M162,148 H188 V204 H292", "dashed": true },
+        { "id": "rep", "d": "M338,84 H388 V204 H340", "both": true, "flow": true }
+      ],
+      "steps": [
+        { "n": 1, "at": "u", "f": 0.27 },
+        { "n": 2, "x": 252, "y": 73 },
+        { "n": 3, "x": 388, "y": 118 }
+      ],
+      "timeline": [
+        { "wire": "u", "t": [0.04, 0.09], "ring": "mrap" },
+        { "wire": "ma", "t": [0.1, 0.18], "ring": "bA" },
+        { "wire": "rep", "t": [0.22, 0.38], "kind": "pk-2", "ring": "bB" },
+        { "wire": "u", "t": [0.58, 0.63], "ring": "mrap" },
+        { "wire": "mb", "t": [0.64, 0.74], "ring": "bB" }
+      ],
+      "effects": [
+        { "fail": "r1", "t": [0.46, 0.98] },
+        { "fade": "ma", "t": [0.5, 0.98] },
+        { "fade": "rep", "t": [0.5, 0.98] },
+        { "glow": "mb", "t": [0.54, 0.98] }
+      ],
+      "extra": "<text class=\"t-wire\" x=\"252\" y=\"96\">active</text><text class=\"t-wire\" x=\"252\" y=\"215\">passive, failover</text><text class=\"t-wire\" x=\"396\" y=\"170\" style=\"text-anchor:start\">Cross-Region</text><text class=\"t-wire\" x=\"396\" y=\"180\" style=\"text-anchor:start\">Replication</text><text class=\"t-wire\" x=\"396\" y=\"190\" style=\"text-anchor:start\">(two-way)</text>"
+    },
+    {
+      "id": "mr-tgw-peering",
+      "name": "Inter-Region Transit Gateway peering",
+      "desc": "A peering attachment links the AWS Transit Gateways in us-east-1 and us-west-2, so attached VPCs reach each other over the AWS global network. The animation sends a request across the peering and returns the reply.",
+      "wide": true,
+      "w": 960,
+      "h": 364,
+      "dur": 8,
+      "groups": [
+        { "kind": "cloud", "x": 8, "y": 8, "w": 944, "h": 348 },
+        { "kind": "region", "id": "r1", "x": 24, "y": 36, "w": 384, "h": 308, "label": "us-east-1" },
+        { "kind": "region", "id": "r2", "x": 552, "y": 36, "w": 384, "h": 308, "label": "us-west-2" },
+        { "kind": "vpc", "x": 40, "y": 62, "w": 190, "h": 128, "label": "VPC 10.0.0.0/16" },
+        { "kind": "vpc", "x": 40, "y": 206, "w": 190, "h": 128, "label": "VPC 10.1.0.0/16" },
+        { "kind": "priv", "x": 56, "y": 88, "w": 158, "h": 94, "label": "Private subnet" },
+        { "kind": "priv", "x": 56, "y": 232, "w": 158, "h": 94, "label": "Private subnet" },
+        { "kind": "vpc", "x": 730, "y": 62, "w": 190, "h": 128, "label": "VPC 10.2.0.0/16" },
+        { "kind": "vpc", "x": 730, "y": 206, "w": 190, "h": 128, "label": "VPC 10.3.0.0/16" },
+        { "kind": "priv", "x": 746, "y": 88, "w": 158, "h": 94, "label": "Private subnet" },
+        { "kind": "priv", "x": 746, "y": 232, "w": 158, "h": 94, "label": "Private subnet" }
+      ],
+      "nodes": [
+        { "id": "ec1", "icon": "aws-svc-ec2", "x": 115, "y": 118, "label": "Amazon EC2" },
+        { "id": "ec2", "icon": "aws-svc-ec2", "x": 115, "y": 262, "label": "Amazon EC2" },
+        { "id": "tgw1", "icon": "aws-svc-transit-gateway", "x": 310, "y": 178, "label": "AWS Transit Gateway" },
+        { "id": "tgw2", "icon": "aws-svc-transit-gateway", "x": 610, "y": 178, "label": "AWS Transit Gateway" },
+        { "id": "ec3", "icon": "aws-svc-ec2", "x": 805, "y": 118, "label": "Amazon EC2" },
+        { "id": "ec4", "icon": "aws-svc-ec2", "x": 805, "y": 262, "label": "Amazon EC2" }
+      ],
+      "wires": [
+        { "id": "e1", "d": "M157,138 H270 V192 H306", "both": true },
+        { "id": "e2", "d": "M157,282 H270 V204 H306", "both": true },
+        { "id": "peer", "d": "M354,198 H606", "both": true },
+        { "id": "e3", "d": "M803,138 H690 V192 H654", "both": true },
+        { "id": "e4", "d": "M803,282 H690 V204 H654", "both": true }
+      ],
+      "steps": [
+        { "n": 1, "at": "e1", "f": 0.45 },
+        { "n": 2, "x": 436, "y": 187 },
+        { "n": 3, "at": "e3", "f": 0.45 }
+      ],
+      "timeline": [
+        { "wire": "e1", "t": [0.04, 0.12], "ring": "tgw1" },
+        { "wire": "peer", "t": [0.14, 0.34], "ring": "tgw2" },
+        { "wire": "e3", "t": [0.36, 0.44], "reverse": true, "ring": "ec3" },
+        { "wire": "e3", "t": [0.52, 0.6], "kind": "pk-2", "ring": "tgw2" },
+        { "wire": "peer", "t": [0.62, 0.82], "reverse": true, "kind": "pk-2", "ring": "tgw1" },
+        { "wire": "e1", "t": [0.84, 0.92], "reverse": true, "kind": "pk-2", "ring": "ec1" }
+      ],
+      "extra": "<text class=\"t-wire\" x=\"480\" y=\"210\">Peering attachment</text><text class=\"t-wire\" x=\"480\" y=\"221\">static routes</text>"
+    }
+  ]
+}
