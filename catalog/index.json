@@ -58044,6 +58044,7 @@
         "g-region",
         "w",
         "w-d",
+        "t-wire",
         "awd-n",
         "t-c",
         "t-sub",
@@ -58051,8 +58052,7 @@
         "pk",
         "ring",
         "pk-2",
-        "ring-2",
-        "t-wire"
+        "ring-2"
       ],
       "params": [
         "dataAttributes"
@@ -58149,6 +58149,7 @@
         "t-g",
         "g-region",
         "w",
+        "t-wire",
         "w-d",
         "awd-n",
         "t-c",
@@ -58157,8 +58158,7 @@
         "pk",
         "ring",
         "pk-2",
-        "ring-2",
-        "t-wire"
+        "ring-2"
       ],
       "params": [
         "dataAttributes"
@@ -58205,6 +58205,7 @@
         "g-gen",
         "t-gc",
         "w",
+        "t-wire",
         "awd-n",
         "t-c",
         "t-sub",
@@ -58212,8 +58213,7 @@
         "pk",
         "ring",
         "pk-2",
-        "ring-2",
-        "t-wire"
+        "ring-2"
       ],
       "params": [
         "dataAttributes"
@@ -58258,13 +58258,13 @@
         "t-g",
         "g-region",
         "w",
+        "t-wire",
         "awd-n",
         "t-c",
         "t-sub",
         "st",
         "pk",
-        "ring",
-        "t-wire"
+        "ring"
       ],
       "params": [
         "dataAttributes"
@@ -58311,6 +58311,7 @@
         "g-gen",
         "t-gc",
         "w",
+        "t-wire",
         "w-d",
         "w-hot",
         "awd-n",
@@ -58325,8 +58326,7 @@
         "ring-2",
         "pk-bad",
         "ring-bad",
-        "anim",
-        "t-wire"
+        "anim"
       ],
       "params": [
         "dataAttributes"
@@ -58372,6 +58372,7 @@
         "g-region",
         "w",
         "w-d",
+        "t-wire",
         "awd-n",
         "t-c",
         "t-sub",
@@ -58379,8 +58380,7 @@
         "pk",
         "ring",
         "pk-2",
-        "ring-2",
-        "t-wire"
+        "ring-2"
       ],
       "params": [
         "dataAttributes"
@@ -58431,6 +58431,7 @@
         "g-asg",
         "w",
         "w-d",
+        "t-wire",
         "w-flow",
         "awd-n",
         "t-c",
@@ -58439,7 +58440,9 @@
         "ring",
         "pk-2",
         "ring-2",
-        "t-wire"
+        "awd-keys",
+        "lg-pk",
+        "lg-pk-2"
       ],
       "params": [
         "dataAttributes"
@@ -58459,7 +58462,7 @@
       "addedOn": "2026-10-06",
       "updatedOn": "2026-10-09",
       "author": "k33bz",
-      "description": "Amazon Route 53 and Amazon CloudFront with AWS WAF front an internet-facing Application Load Balancer, an Auto Scaling group of EC2 instances and an Amazon RDS Multi-AZ database across two Availability Zones. A request follows the numbered path and the response returns; the RDS primary replicates synchronously to the standby.",
+      "description": "Users resolve the domain in Amazon Route 53, then send requests to Amazon CloudFront with AWS WAF, which fronts an internet-facing Application Load Balancer, an Auto Scaling group of EC2 instances across two Availability Zones and an Amazon RDS Multi-AZ database. The DNS lookup comes first, then a request follows the numbered path and the response returns; the RDS primary replicates synchronously to the standby.",
       "role": "data-display",
       "layer": "content",
       "a11y": {
@@ -58607,6 +58610,7 @@
         "g-asg",
         "w",
         "w-d",
+        "t-wire",
         "awd-static",
         "anim",
         "w-flow",
@@ -58619,7 +58623,10 @@
         "ring-2",
         "pk-2",
         "g-hot",
-        "t-wire"
+        "awd-keys",
+        "lg-pk",
+        "lg-pk-2",
+        "lg-pk-bad"
       ],
       "params": [
         "dataAttributes"
@@ -58640,6 +58647,62 @@
       "updatedOn": "2026-10-09",
       "author": "k33bz",
       "description": "Traffic first spreads across both AZs. When Availability Zone a fails, the load balancer stops routing to it, all requests shift to the instances in AZ b, and Amazon RDS fails over so the standby in AZ b becomes the primary.",
+      "role": "data-display",
+      "layer": "content",
+      "a11y": {
+        "selfAnimates": true,
+        "reducedMotionSafe": true
+      },
+      "dataShape": "flow"
+    },
+    {
+      "id": "aws-tt-ecs",
+      "name": "Containerized three-tier on Amazon ECS and AWS Fargate",
+      "gallery": "aws",
+      "category": "WEB APPLICATIONS",
+      "ref": "svg.awd",
+      "classes": [
+        "awd",
+        "ah",
+        "g",
+        "g-cloud",
+        "cw-d",
+        "cw-l",
+        "t-g",
+        "g-vpc",
+        "g-pub",
+        "g-priv",
+        "g-gen",
+        "t-sub",
+        "w",
+        "w-d",
+        "awd-n",
+        "t-c",
+        "st",
+        "pk-2",
+        "ring-2",
+        "pk",
+        "ring"
+      ],
+      "params": [
+        "dataAttributes"
+      ],
+      "tags": [
+        "aws",
+        "animated",
+        "new"
+      ],
+      "componentType": "diagram-arch",
+      "interaction": "auto-play",
+      "spectrum": null,
+      "usableAsBackground": false,
+      "needsJs": null,
+      "isNew": true,
+      "isFixed": false,
+      "addedOn": "2026-10-06",
+      "updatedOn": "2026-10-09",
+      "author": "k33bz",
+      "description": "An Application Load Balancer forwards requests to an Amazon ECS service whose AWS Fargate tasks run in a private subnet with no internet route: they pull their image from Amazon ECR through interface endpoints and the image layers from Amazon S3 through a gateway endpoint. The Amazon Aurora writer and reader run in two Availability Zones. The image pull animates first, then one request writes to the writer and a second reads from the reader.",
       "role": "data-display",
       "layer": "content",
       "a11y": {
@@ -58695,63 +58758,6 @@
       "updatedOn": "2026-10-09",
       "author": "k33bz",
       "description": "Instances in the private subnets have no public address, so each AZ routes 0.0.0.0/0 to the NAT gateway in its own public subnet, which sends the traffic out through the internet gateway and returns the replies. Packets leave through AZ a first, then through AZ b.",
-      "role": "data-display",
-      "layer": "content",
-      "a11y": {
-        "selfAnimates": true,
-        "reducedMotionSafe": true
-      },
-      "dataShape": "flow"
-    },
-    {
-      "id": "aws-tt-ecs",
-      "name": "Containerized three-tier on Amazon ECS and AWS Fargate",
-      "gallery": "aws",
-      "category": "WEB APPLICATIONS",
-      "ref": "svg.awd",
-      "classes": [
-        "awd",
-        "ah",
-        "g",
-        "g-cloud",
-        "cw-d",
-        "cw-l",
-        "t-g",
-        "g-vpc",
-        "g-pub",
-        "g-priv",
-        "g-gen",
-        "w",
-        "w-d",
-        "awd-n",
-        "t-c",
-        "st",
-        "pk-2",
-        "ring-2",
-        "pk",
-        "ring",
-        "gt-gen",
-        "t-wire"
-      ],
-      "params": [
-        "dataAttributes"
-      ],
-      "tags": [
-        "aws",
-        "animated",
-        "new"
-      ],
-      "componentType": "diagram-arch",
-      "interaction": "auto-play",
-      "spectrum": null,
-      "usableAsBackground": false,
-      "needsJs": null,
-      "isNew": true,
-      "isFixed": false,
-      "addedOn": "2026-10-06",
-      "updatedOn": "2026-10-09",
-      "author": "k33bz",
-      "description": "An Application Load Balancer forwards requests to an Amazon ECS service whose AWS Fargate tasks use an Amazon Aurora cluster with a writer and a reader, and the tasks pull their image from Amazon ECR. The first request writes to the writer, the second reads from the reader.",
       "role": "data-display",
       "layer": "content",
       "a11y": {
@@ -58864,7 +58870,7 @@
       "addedOn": "2026-10-06",
       "updatedOn": "2026-10-09",
       "author": "k33bz",
-      "description": "AWS Managed Microsoft AD runs two domain controllers in private subnets in two Availability Zones, and AWS Systems Manager joins Windows EC2 instances to corp.example.com. Packets show the join command, sign-in to the local controller, replication between the controllers and the status report.",
+      "description": "AWS Managed Microsoft AD runs two domain controllers in private subnets in two Availability Zones, and AWS Systems Manager joins Windows EC2 instances to corp.example.com. The private subnets have no internet route, so the instances reach Systems Manager through interface VPC endpoints. Packets show the join command, sign-in to the local controller, replication between the controllers and the status report.",
       "role": "data-display",
       "layer": "content",
       "a11y": {
@@ -58950,6 +58956,7 @@
         "g-region",
         "g-vpc",
         "w",
+        "t-wire",
         "w-d",
         "awd-n",
         "t-c",
@@ -58958,8 +58965,7 @@
         "pk",
         "ring",
         "pk-2",
-        "ring-2",
-        "t-wire"
+        "ring-2"
       ],
       "params": [
         "dataAttributes"
@@ -59006,6 +59012,7 @@
         "g-vpc",
         "g-dc",
         "w",
+        "t-wire",
         "awd-n",
         "t-c",
         "t-sub",
@@ -59013,9 +59020,7 @@
         "pk",
         "ring",
         "pk-2",
-        "ring-2",
-        "gt-dc",
-        "t-wire"
+        "ring-2"
       ],
       "params": [
         "dataAttributes"
@@ -59066,6 +59071,7 @@
         "g-az",
         "g-priv",
         "w",
+        "t-wire",
         "w-d",
         "awd-n",
         "t-c",
@@ -59074,8 +59080,7 @@
         "pk",
         "ring",
         "pk-2",
-        "ring-2",
-        "t-wire"
+        "ring-2"
       ],
       "params": [
         "dataAttributes"
@@ -59095,7 +59100,7 @@
       "addedOn": "2026-10-06",
       "updatedOn": "2026-10-09",
       "author": "k33bz",
-      "description": "Amazon RDS for SQL Server (Multi-AZ) is joined to AWS Managed Microsoft AD, and a user from the trusted on-premises domain gets a Kerberos ticket through the forest trust, then connects with Windows Authentication over VPN or AWS Direct Connect. Packets follow the ticket exchange, the connection and the directory validation.",
+      "description": "Amazon RDS for SQL Server (Multi-AZ) is joined to AWS Managed Microsoft AD. A user from the trusted on-premises domain gets a TGT and then a referral across the forest trust from the on-premises domain controllers, gets the service ticket from AWS Managed Microsoft AD, and connects with Windows Authentication over VPN or AWS Direct Connect. Packets follow the ticket exchanges and the connection.",
       "role": "data-display",
       "layer": "content",
       "a11y": {
@@ -59124,6 +59129,7 @@
         "t-gc",
         "g-priv",
         "w",
+        "t-wire",
         "w-d",
         "awd-n",
         "t-c",
@@ -59132,8 +59138,7 @@
         "pk",
         "ring",
         "pk-2",
-        "ring-2",
-        "t-wire"
+        "ring-2"
       ],
       "params": [
         "dataAttributes"
@@ -59153,7 +59158,7 @@
       "addedOn": "2026-10-06",
       "updatedOn": "2026-10-09",
       "author": "k33bz",
-      "description": "An Amazon Aurora PostgreSQL or MySQL cluster is associated with AWS Managed Microsoft AD, so domain-joined clients connect to the writer with a Kerberos ticket that the instance validates against the directory. Packets follow the ticket request, the connection, the validation and the reply; the reader shares the cluster volume.",
+      "description": "An Amazon Aurora PostgreSQL or MySQL cluster is associated with AWS Managed Microsoft AD, so domain-joined clients connect to the writer with a Kerberos ticket from the directory, which the writer checks with its own key. Packets follow the ticket request, the connection and the reply; the reader shares the cluster volume.",
       "role": "data-display",
       "layer": "content",
       "a11y": {
@@ -59182,6 +59187,7 @@
         "t-gc",
         "g-priv",
         "w",
+        "t-wire",
         "w-d",
         "awd-n",
         "t-c",
@@ -59190,8 +59196,7 @@
         "pk",
         "ring",
         "pk-2",
-        "ring-2",
-        "t-wire"
+        "ring-2"
       ],
       "params": [
         "dataAttributes"
@@ -59240,6 +59245,7 @@
         "t-gc",
         "g-priv",
         "w",
+        "t-wire",
         "w-d",
         "awd-n",
         "t-c",
@@ -59248,8 +59254,7 @@
         "pk",
         "ring",
         "pk-2",
-        "ring-2",
-        "t-wire"
+        "ring-2"
       ],
       "params": [
         "dataAttributes"
@@ -59289,12 +59294,13 @@
         "ah",
         "g",
         "g-gen",
-        "g-acct",
         "t-g",
+        "g-acct",
         "g-region",
         "g-vpc",
         "w",
         "w-d",
+        "t-wire",
         "awd-n",
         "t-c",
         "t-sub",
@@ -59302,9 +59308,7 @@
         "pk-2",
         "pk",
         "ring",
-        "ring-2",
-        "gt-gen",
-        "t-wire"
+        "ring-2"
       ],
       "params": [
         "dataAttributes"
@@ -59355,6 +59359,7 @@
         "g-priv",
         "w",
         "w-d",
+        "t-wire",
         "awd-n",
         "t-c",
         "t-sub",
@@ -59362,8 +59367,7 @@
         "pk",
         "ring",
         "pk-2",
-        "ring-2",
-        "t-wire"
+        "ring-2"
       ],
       "params": [
         "dataAttributes"
@@ -59414,16 +59418,17 @@
         "awd-static",
         "anim",
         "w-d",
+        "t-wire",
         "awd-n",
         "t-c",
+        "awd-box",
         "st",
         "pk",
         "ring",
         "pk-2",
         "ring-2",
         "pk-bad",
-        "g-hot",
-        "t-wire"
+        "g-hot"
       ],
       "params": [
         "dataAttributes"
@@ -59473,6 +59478,8 @@
         "w-d",
         "awd-n",
         "t-c",
+        "awd-box",
+        "t-sub",
         "st",
         "pk",
         "ring",
@@ -59522,16 +59529,21 @@
         "cw-l",
         "t-g",
         "g-region",
+        "g-vpc",
         "g-az",
+        "g-gen",
         "w",
         "w-d",
         "awd-n",
         "t-c",
+        "awd-box",
+        "t-sub",
         "st",
         "pk",
         "ring",
         "pk-2",
-        "ring-2"
+        "ring-2",
+        "t-wire"
       ],
       "params": [
         "dataAttributes"
@@ -59551,7 +59563,7 @@
       "addedOn": "2026-10-06",
       "updatedOn": "2026-10-09",
       "author": "k33bz",
-      "description": "A writer and two readers in three Availability Zones share one cluster volume that keeps six copies of the data, two per AZ. Packets show a write fanning out to all six copies, then reads served from the same volume.",
+      "description": "A writer and two readers in three Availability Zones of a VPC share one cluster volume that keeps six copies of the data, two per AZ. Packets show a write fanning out to all six copies, then reads served from the same volume.",
       "role": "data-display",
       "layer": "content",
       "a11y": {
@@ -59575,8 +59587,8 @@
         "cw-l",
         "t-g",
         "g-region",
+        "g-vpc",
         "g-gen",
-        "t-gc",
         "w",
         "awd-n",
         "t-c",
@@ -59587,7 +59599,8 @@
         "pk",
         "ring",
         "pk-2",
-        "anim"
+        "anim",
+        "t-wire"
       ],
       "params": [
         "dataAttributes"
@@ -59607,7 +59620,7 @@
       "addedOn": "2026-10-06",
       "updatedOn": "2026-10-09",
       "author": "k33bz",
-      "description": "An Aurora Serverless v2 writer scales its capacity in ACUs in place, between a configured minimum and maximum, while storage stays on the shared cluster volume. Capacity tiles appear as the load rises and drop away as it falls.",
+      "description": "Users reach an application in a VPC that queries an Aurora Serverless v2 writer, which scales its capacity in ACUs in place, between a configured minimum and maximum, while storage stays on the shared cluster volume. Capacity tiles appear as the load rises and drop away as it falls.",
       "role": "data-display",
       "layer": "content",
       "a11y": {
@@ -59634,6 +59647,7 @@
         "g-vpc",
         "w",
         "w-d",
+        "t-wire",
         "awd-n",
         "t-c",
         "t-sub",
@@ -59687,13 +59701,14 @@
         "g-region",
         "g-vpc",
         "w",
+        "t-wire",
         "awd-n",
         "t-c",
         "st",
         "pk",
         "ring",
         "pk-2",
-        "t-wire",
+        "awd-static",
         "anim"
       ],
       "params": [
@@ -59740,6 +59755,7 @@
         "g-region",
         "w",
         "w-d",
+        "t-wire",
         "awd-n",
         "t-c",
         "t-sub",
@@ -59747,8 +59763,7 @@
         "pk",
         "ring",
         "pk-2",
-        "ring-2",
-        "t-wire"
+        "ring-2"
       ],
       "params": [
         "dataAttributes"
@@ -59795,6 +59810,7 @@
         "g-vpc",
         "g-az",
         "w",
+        "t-wire",
         "w-d",
         "awd-n",
         "t-c",
@@ -59803,8 +59819,7 @@
         "pk",
         "ring",
         "pk-2",
-        "ring-2",
-        "t-wire"
+        "ring-2"
       ],
       "params": [
         "dataAttributes"
@@ -59854,16 +59869,16 @@
         "awd-static",
         "anim",
         "w-d",
+        "t-wire",
         "awd-n",
         "t-c",
         "st",
         "pk",
         "ring",
         "pk-2",
+        "ring-2",
         "pk-bad",
-        "g-hot",
-        "t-wire",
-        "ring-2"
+        "g-hot"
       ],
       "params": [
         "dataAttributes"
@@ -59914,6 +59929,7 @@
         "g-priv",
         "w",
         "w-d",
+        "t-wire",
         "awd-n",
         "t-c",
         "t-sub",
@@ -59922,8 +59938,8 @@
         "ring-2",
         "pk",
         "ring",
-        "anim",
-        "t-wire"
+        "awd-static",
+        "anim"
       ],
       "params": [
         "dataAttributes"
@@ -60430,18 +60446,22 @@
         "t-g",
         "g-region",
         "g-vpc",
+        "t-sub",
         "g-az",
         "g-pub",
         "g-priv",
         "w",
         "awd-n",
         "t-c",
-        "t-sub",
         "st",
         "pk",
         "ring",
         "pk-2",
-        "ring-2"
+        "ring-2",
+        "awd-keys",
+        "lg-pk",
+        "t-wire",
+        "lg-pk-2"
       ],
       "params": [
         "dataAttributes"
@@ -60485,18 +60505,21 @@
         "cw-l",
         "t-g",
         "g-vpc",
+        "t-sub",
         "w",
         "w-d",
         "w-hot",
         "awd-n",
         "t-c",
-        "t-sub",
         "st",
         "pk",
         "ring",
         "pk-2",
         "ring-2",
         "pk-bad",
+        "ring-bad",
+        "awd-mark",
+        "t-wire",
         "anim"
       ],
       "params": [
@@ -60552,7 +60575,11 @@
         "pk",
         "ring",
         "pk-2",
-        "ring-2"
+        "ring-2",
+        "awd-keys",
+        "lg-pk",
+        "t-wire",
+        "lg-pk-2"
       ],
       "params": [
         "dataAttributes"
@@ -60598,17 +60625,20 @@
         "cw-l",
         "g-region",
         "g-vpc",
+        "t-sub",
         "w",
         "w-d",
         "t-wire",
         "awd-n",
         "t-c",
-        "t-sub",
         "st",
         "pk",
         "ring",
         "pk-2",
-        "ring-2"
+        "ring-2",
+        "awd-keys",
+        "lg-pk",
+        "lg-pk-2"
       ],
       "params": [
         "dataAttributes"
@@ -60653,6 +60683,7 @@
         "t-g",
         "g-region",
         "g-vpc",
+        "t-sub",
         "g-az",
         "t-gc",
         "g-priv",
@@ -60661,12 +60692,15 @@
         "w-d",
         "awd-n",
         "t-c",
-        "t-sub",
         "st",
         "pk",
         "ring",
         "pk-2",
-        "ring-2"
+        "ring-2",
+        "t-wire",
+        "awd-keys",
+        "lg-pk",
+        "lg-pk-2"
       ],
       "params": [
         "dataAttributes"
@@ -60686,7 +60720,7 @@
       "addedOn": "2026-10-06",
       "updatedOn": "2026-10-09",
       "author": "k33bz",
-      "description": "Spoke VPCs send traffic to the Transit Gateway, which hands it to an inspection VPC where an AWS Network Firewall endpoint in each AZ inspects it. East-west traffic (orange) is inspected and returned to the transit gateway for the other spoke; north-south traffic (blue) continues through a NAT gateway and the internet gateway.",
+      "description": "Spoke VPCs send traffic to the Transit Gateway, which hands it to an inspection VPC where an AWS Network Firewall endpoint in each AZ inspects it. Two transit gateway route tables keep every flow on that path: the spoke route table sends all spoke traffic to the inspection VPC, and the firewall route table returns inspected traffic to the spokes. East-west traffic (orange) is inspected and returned to the transit gateway for the other spoke; north-south traffic (blue) continues through a NAT gateway and the internet gateway.",
       "role": "data-display",
       "layer": "content",
       "a11y": {
@@ -60711,6 +60745,7 @@
         "t-g",
         "g-region",
         "g-vpc",
+        "t-sub",
         "g-az",
         "t-gc",
         "g-priv",
@@ -60719,12 +60754,15 @@
         "w-d",
         "awd-n",
         "t-c",
-        "t-sub",
         "st",
         "pk",
         "ring",
         "pk-2",
-        "ring-2"
+        "ring-2",
+        "t-wire",
+        "awd-keys",
+        "lg-pk",
+        "lg-pk-2"
       ],
       "params": [
         "dataAttributes"
@@ -60744,7 +60782,7 @@
       "addedOn": "2026-10-06",
       "updatedOn": "2026-10-09",
       "author": "k33bz",
-      "description": "Spoke VPCs have no NAT gateways of their own: a default route sends internet-bound traffic to the Transit Gateway, which forwards it to an egress VPC with a NAT gateway in each AZ and one internet gateway. Outbound requests (orange) leave through the NAT gateways and responses (blue) return the same way.",
+      "description": "Spoke VPCs have no NAT gateways of their own: a default route sends internet-bound traffic to the Transit Gateway, whose spoke route table forwards it to an egress VPC with a NAT gateway in each AZ and one internet gateway, and blackholes 10.0.0.0/8 so spokes cannot reach each other. Outbound requests (orange) leave through the NAT gateways and responses (blue) return through the egress route table to each spoke.",
       "role": "data-display",
       "layer": "content",
       "a11y": {
@@ -60772,6 +60810,7 @@
         "cw-l",
         "g-region",
         "g-vpc",
+        "t-sub",
         "w",
         "awd-static",
         "anim",
@@ -60785,7 +60824,9 @@
         "pk-2",
         "ring-2",
         "g-hot",
-        "t-sub"
+        "awd-keys",
+        "lg-pk",
+        "lg-pk-2"
       ],
       "params": [
         "dataAttributes"
@@ -60805,7 +60846,7 @@
       "addedOn": "2026-10-06",
       "updatedOn": "2026-10-09",
       "author": "k33bz",
-      "description": "On-premises traffic normally takes AWS Direct Connect, through a transit VIF and a Direct Connect gateway to the Transit Gateway. When the Direct Connect location fails, BGP withdraws its routes and the traffic (requests orange, responses blue) fails over to the Site-to-Site VPN attached to the same transit gateway.",
+      "description": "On-premises traffic normally takes AWS Direct Connect, through a transit VIF and a Direct Connect gateway (a global resource) to the Transit Gateway in the Region. When the Direct Connect location fails, BGP withdraws its routes and the traffic (requests orange, responses blue) fails over to the Site-to-Site VPN attached to the same transit gateway.",
       "role": "data-display",
       "layer": "content",
       "a11y": {
@@ -60830,13 +60871,13 @@
         "t-g",
         "g-acct",
         "g-vpc",
+        "t-sub",
         "g-priv",
         "w",
         "w-d",
         "t-wire",
         "awd-n",
         "t-c",
-        "t-sub",
         "st",
         "pk-2",
         "ring-2",
@@ -60886,6 +60927,7 @@
         "t-g",
         "g-region",
         "g-vpc",
+        "t-sub",
         "g-priv",
         "w",
         "t-wire",
@@ -60896,8 +60938,7 @@
         "pk",
         "ring",
         "pk-2",
-        "ring-2",
-        "t-sub"
+        "ring-2"
       ],
       "params": [
         "dataAttributes"
@@ -60917,7 +60958,7 @@
       "addedOn": "2026-10-06",
       "updatedOn": "2026-10-09",
       "author": "k33bz",
-      "description": "A remote client opens a TLS tunnel to the Client VPN endpoint (orange), which authenticates the user against an identity provider (blue) and then forwards traffic through a network interface in the associated subnet to private instances and databases.",
+      "description": "A remote client opens a TLS tunnel to the Client VPN endpoint (orange), a Regional resource that authenticates the user against an identity provider (blue) and then forwards traffic through its network interface in the associated subnet to private instances and databases.",
       "role": "data-display",
       "layer": "content",
       "a11y": {
@@ -61007,8 +61048,11 @@
         "pk-2",
         "ring-2",
         "pk-bad",
-        "t-wire",
-        "anim"
+        "ring-bad",
+        "anim",
+        "awd-mark",
+        "awd-static",
+        "t-wire"
       ],
       "params": [
         "dataAttributes"
@@ -61181,7 +61225,9 @@
         "pk-2",
         "ring-2",
         "pk-bad",
-        "anim"
+        "ring-bad",
+        "anim",
+        "awd-mark"
       ],
       "params": [
         "dataAttributes"
@@ -61229,7 +61275,6 @@
         "t-sub",
         "g-az",
         "t-gc",
-        "g-priv",
         "g-pub",
         "g-asg",
         "w",
@@ -61288,7 +61333,6 @@
         "t-sub",
         "g-az",
         "t-gc",
-        "g-priv",
         "g-pub",
         "g-gen",
         "w",
@@ -61586,6 +61630,8 @@
         "pk-2",
         "ring-2",
         "pk-bad",
+        "ring-bad",
+        "awd-mark",
         "anim"
       ],
       "params": [
@@ -61661,7 +61707,7 @@
       "addedOn": "2026-10-08",
       "updatedOn": "2026-10-09",
       "author": "k33bz",
-      "description": "An Amazon ECS task on AWS Fargate starts in a private subnet with no NAT gateway or internet gateway. Its image pull uses four private paths: a token from ecr.api, the manifest from ecr.dkr, the layers from Amazon S3 through the gateway endpoint, and container logs to CloudWatch Logs through a logs endpoint. Fargate platform version 1.4.0 or later needs all of them; requests are orange and responses blue.",
+      "description": "An Amazon ECS task on AWS Fargate starts in a private subnet with no NAT gateway or internet gateway. Its image pull uses three private paths, all required on Fargate platform version 1.4.0 or later: a token from ecr.api, the manifest from ecr.dkr and the layers from Amazon S3 through the gateway endpoint. A logs endpoint carries container logs to CloudWatch Logs, needed only with the awslogs log driver. Requests are orange and responses blue.",
       "role": "data-display",
       "layer": "content",
       "a11y": {
@@ -61700,7 +61746,8 @@
         "pk-2",
         "ring-2",
         "pk-bad",
-        "anim"
+        "ring-bad",
+        "awd-mark"
       ],
       "params": [
         "dataAttributes"
@@ -61759,7 +61806,8 @@
         "pk-2",
         "ring-2",
         "pk-bad",
-        "anim"
+        "ring-bad",
+        "awd-mark"
       ],
       "params": [
         "dataAttributes"
@@ -61925,7 +61973,10 @@
         "ring",
         "pk-2",
         "ring-2",
-        "anim"
+        "anim",
+        "awd-keys",
+        "lg-pk",
+        "lg-pk-2"
       ],
       "params": [
         "dataAttributes"
@@ -61972,6 +62023,7 @@
         "g-gen",
         "t-gc",
         "w",
+        "w-d",
         "awd-static",
         "anim",
         "awd-n",
@@ -61980,6 +62032,8 @@
         "st",
         "pk",
         "ring",
+        "pk-2",
+        "ring-2",
         "t-wire"
       ],
       "params": [
@@ -62000,7 +62054,7 @@
       "addedOn": "2026-10-08",
       "updatedOn": "2026-10-09",
       "author": "k33bz",
-      "description": "Two weighted alias records with the same name point at a stable and a canary load balancer stack. Route 53 answers in proportion to the weights: 90 / 10 first, then 50 / 50, then 0 / 100 once the canary is promoted. The animation shifts the weights and the share of queries going to each stack.",
+      "description": "Two weighted alias records with the same name point at a stable and a canary load balancer stack. Route 53 answers each DNS lookup (dashed) in proportion to the weights: 90 / 10 first, then 50 / 50, then 0 / 100 once the canary is promoted. Users then connect directly to the load balancer in the answer. The animation shifts the weights and the share of users going to each stack.",
       "role": "data-display",
       "layer": "content",
       "a11y": {
@@ -62025,14 +62079,16 @@
         "t-g",
         "g-region",
         "w",
-        "t-wire",
         "w-d",
+        "t-wire",
         "awd-n",
         "t-c",
         "t-sub",
         "st",
         "pk",
         "ring",
+        "pk-2",
+        "ring-2",
         "anim"
       ],
       "params": [
@@ -62053,7 +62109,7 @@
       "addedOn": "2026-10-08",
       "updatedOn": "2026-10-09",
       "author": "k33bz",
-      "description": "Route 53 matches the location of the query to a geolocation record: North America and a Default record go to us-east-1, Europe to eu-west-1 and Asia to ap-southeast-1. A South America query has no record of its own, so the Default record answers. The animation sends one query from each location.",
+      "description": "Route 53 matches the location each DNS lookup (dashed) comes from to a geolocation record: North America and a Default record answer with us-east-1, Europe with eu-west-1 and Asia with ap-southeast-1. A South America query has no record of its own, so the Default record answers. Users then connect directly to the load balancer in the answer. The animation runs one lookup and one request from each location.",
       "role": "data-display",
       "layer": "content",
       "a11y": {
@@ -62089,7 +62145,10 @@
         "pk-2",
         "ring-2",
         "pk-bad",
-        "anim"
+        "ring-bad",
+        "anim",
+        "awd-mark",
+        "awd-static"
       ],
       "params": [
         "dataAttributes"
@@ -62201,7 +62260,10 @@
         "ring",
         "pk-2",
         "ring-2",
-        "anim"
+        "anim",
+        "awd-keys",
+        "lg-pk",
+        "lg-pk-2"
       ],
       "params": [
         "dataAttributes"
@@ -62259,7 +62321,10 @@
         "pk-2",
         "pk",
         "ring",
-        "ring-2"
+        "ring-2",
+        "awd-keys",
+        "lg-pk",
+        "lg-pk-2"
       ],
       "params": [
         "dataAttributes"
@@ -62279,7 +62344,7 @@
       "addedOn": "2026-10-08",
       "updatedOn": "2026-10-09",
       "author": "k33bz",
-      "description": "A networking account owns the Resolver endpoints, the forwarding rule and the private hosted zone, bundles them in a Route 53 Profile and shares it with spoke accounts through AWS RAM (dashed). Spoke VPCs attach to a Transit Gateway. A spoke query for corp.example.com is forwarded by the shared rule through the central outbound endpoint and over Direct Connect to the on-premises DNS servers. The animation shares the Profile, then forwards one query and returns the answer.",
+      "description": "A networking account owns the Resolver endpoints in its hub VPC and shares a Route 53 Profile with the spoke accounts through AWS RAM (dashed). The Profile holds the forwarding rule, the private hosted zone and a DNS Firewall rule group, and applies them to the spoke VPCs it is associated with. Spoke VPCs attach to a Transit Gateway. A spoke query for corp.example.com is forwarded by the shared rule through the central outbound endpoint, then through a Direct Connect gateway and a transit VIF to the on-premises DNS servers. The animation shares the Profile, then forwards one query and returns the answer.",
       "role": "data-display",
       "layer": "content",
       "a11y": {

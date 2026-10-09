@@ -32,7 +32,7 @@
   --awd-halo:var(--panel,#121623)}
 /* light tokens. The second selector of each pair matches a standalone .svg file, where .awd is the root */
 [data-mode="light"] .awd,.awd[data-mode="light"]{--awd-ink:var(--ink,#16191F);--awd-muted:var(--muted,#5F6B7A);--awd-wire:color-mix(in srgb,var(--awd-ink) 88%,var(--bg,#FFFFFF));--awd-pk:var(--awd-request,#EC7211);--awd-pk2:var(--awd-response,#0972D3);--awd-cloud:#232F3E;--awd-step-bg:#232F3E;--awd-step-fg:#FFFFFF;--awd-panel:var(--panel,#FFFFFF);--awd-panel2:var(--panel2,#EEF1F6);--awd-halo:var(--panel,#FFFFFF)}
-@media (prefers-color-scheme:light){:root:not([data-mode]) .awd,.awd:root:not([data-mode]){--awd-ink:var(--ink,#16191F);--awd-muted:var(--muted,#5F6B7A);--awd-wire:color-mix(in srgb,var(--awd-ink) 88%,var(--bg,#FFFFFF));--awd-pk:var(--awd-request,#EC7211);--awd-pk2:var(--awd-response,#0972D3);--awd-cloud:#232F3E;--awd-step-bg:#232F3E;--awd-step-fg:#FFFFFF;--awd-panel:var(--panel,#FFFFFF);--awd-panel2:var(--panel2,#EEF1F6);--awd-halo:var(--panel,#FFFFFF)}}
+@media (prefers-color-scheme:light){:root:not([data-mode]) .awd:not([data-mode="dark"]),.awd:root:not([data-mode]){--awd-ink:var(--ink,#16191F);--awd-muted:var(--muted,#5F6B7A);--awd-wire:color-mix(in srgb,var(--awd-ink) 88%,var(--bg,#FFFFFF));--awd-pk:var(--awd-request,#EC7211);--awd-pk2:var(--awd-response,#0972D3);--awd-cloud:#232F3E;--awd-step-bg:#232F3E;--awd-step-fg:#FFFFFF;--awd-panel:var(--panel,#FFFFFF);--awd-panel2:var(--panel2,#EEF1F6);--awd-halo:var(--panel,#FFFFFF)}}
 
 /* text: service labels centered under icons; group labels regular and in ink (AWS: dark, not
    group-colored; the frame and its icon already say which group it is) */
@@ -98,7 +98,7 @@
 .awd .cw-l{display:none}
 [data-mode="light"] .awd .cw-d,.awd[data-mode="light"] .cw-d{display:none}
 [data-mode="light"] .awd .cw-l,.awd[data-mode="light"] .cw-l{display:inline}
-@media (prefers-color-scheme:light){:root:not([data-mode]) .awd .cw-d,.awd:root:not([data-mode]) .cw-d{display:none}:root:not([data-mode]) .awd .cw-l,.awd:root:not([data-mode]) .cw-l{display:inline}}
+@media (prefers-color-scheme:light){:root:not([data-mode]) .awd:not([data-mode="dark"]) .cw-d,.awd:root:not([data-mode]) .cw-d{display:none}:root:not([data-mode]) .awd:not([data-mode="dark"]) .cw-l,.awd:root:not([data-mode]) .cw-l{display:inline}}
 
 /* ---- gallery page chrome (not part of any diagram): reading legend + icon library ---- */
 .awd-legend{display:flex;flex-wrap:wrap;align-items:center;gap:8px 18px;margin:6px 0 4px;padding:11px 14px;
