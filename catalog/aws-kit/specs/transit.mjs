@@ -27,38 +27,10 @@ const DX = 'aws-svc-direct-connect';
 const NET = 'aws-res-internet';
 const VPCI = 'aws-res-vpc-virtual-private-cloud-vpc';
 
-// ---- layout helpers ----
-// word-wrap exactly like the generator does, so label heights can be predicted
-const wrapLines = (label, maxCh = 14) => {
-  const out = []; let line = '';
-  for (const w of String(label).split(/\s+/)) {
-    if (line && (line + ' ' + w).length > maxCh) { out.push(line); line = w; } else line = line ? line + ' ' + w : w;
-  }
-  if (line) out.push(line);
-  return out;
-};
-// node by CENTER (cx, cy); default 32px resource icon
-const nd = (id, icon, cx, cy, label, o = {}) => {
-  const size = o.size || 32;
-  return { id, icon, x: cx - size / 2, y: cy - size / 2, size, label, cx, cy, ...o };
-};
-// height of the label block under an icon (label lines at 13px + optional sub line at 11px)
-const lblH = (n) => (n.label ? 13 * wrapLines(n.label, n.wrap).length : 0) + (n.sub ? 11 : 0);
-// edge ports of a node: right / left / top / bottom-below-label / bottom-below-icon (g = gap to the icon)
-const R = (n, dy = 0, g = 4) => [n.cx + n.size / 2 + g, n.cy + dy];
-const L = (n, dy = 0, g = 4) => [n.cx - n.size / 2 - g, n.cy + dy];
-const T = (n, dx = 0, g = 4) => [n.cx + dx, n.cy - n.size / 2 - g];
-const B = (n, dx = 0, g = 4) => [n.cx + dx, n.cy + n.size / 2 + g + lblH(n)];
-const Bi = (n, dx = 0, g = 4) => [n.cx + dx, n.cy + n.size / 2 + g];
-// polyline path through points; consecutive points must share x or y (only H / V are emitted)
-const P = (...pts) => {
-  let d = `M${pts[0][0]},${pts[0][1]}`;
-  for (let i = 1; i < pts.length; i++) {
-    const [x0, y0] = pts[i - 1], [x1, y1] = pts[i];
-    if (y1 === y0) d += ` H${x1}`; else if (x1 === x0) d += ` V${y1}`; else throw new Error(`diagonal segment ${pts[i - 1]} -> ${pts[i]}`);
-  }
-  return d;
-};
+// ---- layout helpers (shared with the other specs: ../place.mjs) ----
+import { wrapLines, lblH, R, L, T, B, Bi, P, centered } from '../place.mjs';
+// node by CENTER (cx, cy); default 32px icon
+const nd = centered(32);
 // rescale a timeline so its last window ends at `end` of the clock
 const fit = (tl, end = 0.93) => {
   const k = end / Math.max(...tl.map((e) => e.t[1]));
@@ -83,7 +55,7 @@ const dropX = (cx, cy, a, b, dur) => {
 const segmentation = (() => {
   const PV = { x: 36, y: 70, w: 214, h: 96 }, SV = { x: 710, y: 176, w: 214, h: 96 }, DV = { x: 36, y: 282, w: 214, h: 96 };
   const ecP = nd('ecP', EC2, 88, 118, 'Amazon EC2'), attP = nd('attP', TGWA, 200, 118, 'TGW attachment');
-  const attS = nd('attS', TGWA, 744, 224, 'TGW attachment'), ecS = nd('ecS', EC2, 860, 224, 'Amazon EC2');
+  const attS = nd('attS', TGWA, 756, 224, 'TGW attachment'), ecS = nd('ecS', EC2, 860, 224, 'Amazon EC2');
   const ecD = nd('ecD', EC2, 88, 330, 'Amazon EC2'), attD = nd('attD', TGWA, 200, 330, 'TGW attachment');
   // one card per Transit Gateway route table: its association, its propagation source and the routes it holds
   const card = (y, name, assoc, prop, rows) => {
@@ -162,13 +134,13 @@ const segmentation = (() => {
 // ---------------------------------------------------------------------------------------------
 const connect = (() => {
   const brA = nd('brA', CGW, 74, 140, 'SD-WAN edge', { sub: 'Branch A' }), brB = nd('brB', CGW, 74, 240, 'SD-WAN edge', { sub: 'Branch B' });
-  const net = nd('net', NET, 204, 190, 'Internet', { size: 40 });
+  const net = nd('net', NET, 200, 190, 'Internet', { size: 40 });
   const igw = nd('igw', IGW, 276, 190, null);
   const app = nd('app', EC2, 350, 190, 'SD-WAN virtual appliance');
   const att = nd('att', TGWA, 466, 190, 'VPC attachment', { sub: '(transport)' });
   const conn = nd('conn', TGWA, 612, 134, 'Connect attachment', { sub: 'over transport' });
   const tgw = nd('tgw', TGW, 680, 190, 'AWS Transit Gateway', { size: 48 });
-  const attW = nd('attW', TGWA, 812, 190, 'TGW attachment'), ecW = nd('ecW', EC2, 902, 190, 'Amazon EC2');
+  const attW = nd('attW', TGWA, 826, 190, 'TGW attachment'), ecW = nd('ecW', EC2, 902, 190, 'Amazon EC2');
   return {
     id: 'tg-connect',
     name: 'Transit Gateway Connect with SD-WAN',
@@ -176,8 +148,8 @@ const connect = (() => {
     wide: true, w: 960, h: 352, dur: 14,
     groups: [
       { kind: 'dc', x: 8, y: 64, w: 150, h: 256, label: 'Branch offices' },
-      { kind: 'cloud', x: 232, y: 8, w: 720, h: 336 },
-      { kind: 'region', x: 244, y: 34, w: 696, h: 302, label: 'Region' },
+      { kind: 'cloud', x: 224, y: 8, w: 728, h: 336 },
+      { kind: 'region', x: 236, y: 34, w: 704, h: 302, label: 'Region' },
       { kind: 'vpc', x: 276, y: 62, w: 252, h: 266, label: 'SD-WAN VPC', note: '10.0.0.0/16' },
       { kind: 'pub', x: 288, y: 88, w: 228, h: 228, label: 'Public subnet' },
       { kind: 'gen', icon: TGW, x: 552, y: 70, w: 206, h: 236, label: 'AWS Transit Gateway' },
@@ -219,8 +191,9 @@ const connect = (() => {
     ],
     notes: [
       cap(74, 308, '172.16.0.0/16'),
-      cap(215, 162, 'SD-WAN overlay'),
-      cap(268, 224, 'Internet', { anchor: 'end' }), cap(268, 234, 'gateway', { anchor: 'end' }),
+      cap(196, 118, 'SD-WAN\noverlay'),
+      // centered in the 40px between the Region and VPC edges (the gateway sits on the VPC edge)
+      cap(256, 224, 'Internet'), cap(256, 234, 'gateway'),
       // route table card: what BGP installed
       cell(782, 292, '172.16.0.0/16'), cap(868, 292, 'Connect (BGP)', { anchor: 'start' }),
       cell(782, 306, '10.1.0.0/16'), cap(868, 306, 'VPC (propagated)', { anchor: 'start' }),
@@ -403,7 +376,7 @@ const lattice = (() => {
     ],
     nodes: [clA, clB, ...sv, tg1, tg2, tg3],
     wires: [
-      { id: 'a1', d: P(R(clA), [150, 104], [150, 66], L(sv[0])), label: 'VPC association', labelAt: 0.2 },
+      { id: 'a1', d: P(R(clA), [150, 104], [150, 66], L(sv[0])), label: 'VPC association', labelAt: 0.316, labelAnchor: 'end' },
       { id: 'a2', d: P(R(clA), [150, 104], [150, 146], L(sv[1])) },
       { id: 'b3', d: P(R(clB), [150, 218], [150, 226], L(sv[2])) },
       { id: 's1', d: P(R(sv[0]), L(tg1)), both: true },
@@ -413,7 +386,7 @@ const lattice = (() => {
     steps: [
       { n: 1, at: 'a1', f: 0.62, dy: -11 },
       { n: 2, at: 's1', f: 0.2, dy: -11 },
-      { n: 3, at: 's1', f: 0.8, dy: -11 },
+      { n: 3, at: 's1', f: 0.9, dy: -11 },
     ],
     timeline: [
       { wire: 'a1', t: [0.05, 0.14], ring: 'sv1' }, { wire: 'b3', t: [0.05, 0.14], ring: 'sv3' },
@@ -633,7 +606,7 @@ const privateNat = (() => {
 // ---------------------------------------------------------------------------------------------
 const ipam = (() => {
   const IPAM = 'aws-svc-virtual-private-cloud';
-  const ipamN = nd('ipam', IPAM, 44, 62, 'IP Address Manager', { size: 40, sub: 'Amazon VPC IPAM' });
+  const ipamN = nd('ipam', IPAM, 50, 62, 'IP Address Manager', { size: 40, sub: 'Amazon VPC IPAM' });
   const acct = nd('acct', 'aws-res-organizations-account', 44, 210, 'Account D', { size: 32 });
   const slot = (id, cx, cy, who, cidr) => nd(id, VPCI, cx, cy, who, { sub: cidr });
   const a = slot('va', 196, 98, 'Account A VPC', '10.0.0.0/16'), b = slot('vb', 196, 154, 'Account B VPC', '10.1.0.0/16');

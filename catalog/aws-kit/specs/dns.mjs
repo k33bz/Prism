@@ -30,33 +30,10 @@ const SERVERS = 'aws-res-servers';
 const USERS = 'aws-res-users';
 const CLIENT = 'aws-res-client';
 
-// ---- layout helpers ----
-const wrapLines = (label, maxCh = 14) => {
-  const out = []; let line = '';
-  for (const w of String(label).split(/\s+/)) {
-    if (line && (line + ' ' + w).length > maxCh) { out.push(line); line = w; } else line = line ? line + ' ' + w : w;
-  }
-  if (line) out.push(line);
-  return out;
-};
+// ---- layout helpers (shared with the other specs: ../place.mjs) ----
+import { wrapLines, lblH, R, L, T, B, Bi, P, centered } from '../place.mjs';
 // node by CENTER (cx, cy); default 40px icon
-const nd = (id, icon, cx, cy, label, o = {}) => {
-  const size = o.size || 40;
-  return { id, icon, x: cx - size / 2, y: cy - size / 2, size, label, cx, cy, ...o };
-};
-const lblH = (n) => (n.label ? 13 * wrapLines(n.label, n.wrap).length : 0) + (n.sub ? 11 : 0);
-const R = (n, dy = 0, g = 4) => [n.cx + n.size / 2 + g, n.cy + dy];
-const L = (n, dy = 0, g = 4) => [n.cx - n.size / 2 - g, n.cy + dy];
-const T = (n, dx = 0, g = 4) => [n.cx + dx, n.cy - n.size / 2 - g];
-const B = (n, dx = 0, g = 4) => [n.cx + dx, n.cy + n.size / 2 + g + lblH(n)];
-const P = (...pts) => {
-  let d = `M${pts[0][0]},${pts[0][1]}`;
-  for (let i = 1; i < pts.length; i++) {
-    const [x0, y0] = pts[i - 1], [x1, y1] = pts[i];
-    if (y1 === y0) d += ` H${x1}`; else if (x1 === x0) d += ` V${y1}`; else throw new Error(`diagonal segment ${pts[i - 1]} -> ${pts[i]}`);
-  }
-  return d;
-};
+const nd = centered(40);
 const f3 = (n) => Math.round(n * 1000) / 1000;
 // consecutive equal windows starting at t0 (len each, gap between), one per item
 const seq = (t0, len, items, gap = 0) => items.map((it, i) => ({ ...it, t: [f3(t0 + i * (len + gap)), f3(t0 + i * (len + gap) + len)] }));
@@ -274,14 +251,14 @@ const multivalue = (() => {
     desc: 'Four multivalue answer records, each with its own health check, resolve app.example.com. Route 53 returns up to eight healthy addresses and the client connects to one. When the fourth endpoint fails its health check, Route 53 drops its address from the answers. The animation runs a query, the health checks, the failure and a second query.',
     w: 480, h: 292, dur: 10,
     groups: [
-      { kind: 'cloud', x: 84, y: 8, w: 388, h: 276 },
-      { kind: 'region', x: 100, y: 150, w: 360, h: 126, label: 'us-east-1' },
+      { kind: 'cloud', x: 84, y: 8, w: 392, h: 276 },
+      { kind: 'region', x: 100, y: 150, w: 368, h: 126, label: 'us-east-1' },
     ],
     nodes: [users, r53, ...eps],
     wires: [
-      { id: 'q', d: P(R(users), L(r53)), both: true, label: 'app.example.com A?', labelAt: 0.5, labelDy: -6 },
+      { id: 'q', d: P(R(users), L(r53)), both: true, label: 'app.example.com A?', labelAt: 0.66, labelDy: -6 },
       ...eps.map((e, i) => ({ id: 'h' + i, d: P([190, 106], [190, busY], [EX[i], busY], T(e)), dashed: true })),
-      { id: 'c', d: P([30, 82], [30, 226], L(eps[0])), label: 'connect', labelAt: 0.24, labelAnchor: 'start', labelDx: 5, labelDy: 0 },
+      { id: 'c', d: P(B(users), [30, 226], L(eps[0])), label: 'connect', labelAt: 0.24, labelAnchor: 'start', labelDx: 5, labelDy: 0 },
     ],
     steps: [
       { n: 1, at: 'q', f: 0.25, dy: 12 },
@@ -403,7 +380,7 @@ const hybrid = (() => {
       { id: 'oar', d: P(L(res, 12), [672, 248], [672, 184], R(oa)) },
       { id: 'obr', d: P(L(res, 12), [672, 248], [672, 342], R(ob)) },
       { id: 'e', d: P(B(ec2), T(res)), both: true },
-      { id: 'z', d: P(R(res), L(phz)), both: true, label: 'zone lookup' },
+      { id: 'z', d: P(R(res), L(phz)), both: true, label: 'zone lookup', labelAt: 0.76 },
     ],
     steps: [
       { n: 1, at: 'c', f: 0.5, dx: 11, dy: 0 },
@@ -451,7 +428,7 @@ const sharedRules = (() => {
   const rule = nd('rule', RES, 400, 128, 'Forwarding rule', { size: 32, wrap: 16, sub: 'corp.example.com' });
   const phz = nd('phz', HZ, 510, 128, 'Private hosted zone', { size: 32, wrap: 14, sub: 'aws.example.com' });
   const fwg = nd('fwg', DNSFW, 620, 128, 'DNS Firewall rule group', { size: 32, wrap: 14, sub: 'block list' });
-  const att = nd('att', TGWA, 388, 288, 'TGW attachment', { size: 32, wrap: 16 });
+  const att = nd('att', TGWA, 396, 288, 'TGW attachment', { size: 32, wrap: 16 });
   const ob = nd('ob', ENI, 488, 288, 'Outbound endpoint', { size: 32, wrap: 18, sub: 'ENIs in 2 AZs' });
   const ib = nd('ib', ENI, 596, 288, 'Inbound endpoint', { size: 32, wrap: 18, sub: 'ENIs in 2 AZs' });
   const dx = nd('dx', DX, 772, 300, 'AWS Direct Connect', { wrap: 14 });
@@ -490,7 +467,7 @@ const sharedRules = (() => {
       { id: 'xd', d: P(R(dx), L(dns)), both: true },
       { id: 'aa', d: P([210, 200], [210, 220], L(tgw)), both: true },
       { id: 'ab', d: P([210, 256], [210, 220], L(tgw)), both: true },
-      { id: 'ib', d: P(B(ib), [596, 340], [388, 340], B(att)), dashed: true, both: true, label: 'on-premises queries', labelAt: 0.5, labelDy: 12 },
+      { id: 'ib', d: P(B(ib), [596, 340], [396, 340], B(att)), dashed: true, both: true, label: 'on-premises queries', labelAt: 0.5, labelDy: 12 },
     ],
     steps: [
       { n: 1, at: 'sb', f: 0.12, dy: -11 },
@@ -593,7 +570,7 @@ const dnssec = (() => {
     nodes: [root, com, hz, kms, users, res],
     wires: [
       { id: 'ch1', d: P(R(root), L(com)), dashed: true, label: 'DS .com', labelAt: 0.5 },
-      { id: 'ch2', d: P(R(com), L(hz)), dashed: true, label: 'DS example.com', labelAt: 0.5 },
+      { id: 'ch2', d: P(R(com), L(hz)), dashed: true, label: 'DS example.com', labelAt: 0.715 },
       { id: 'sg', d: P(R(hz), L(kms)), both: true, label: 'signs', labelAt: 0.22 },
       { id: 'u', d: P(R(users), L(res)), both: true },
       { id: 'v1', d: P(B(com), T(res)), both: true, label: 'DS lookup', labelAt: 0.5, labelAnchor: 'start', labelDx: 8, labelDy: 3 },

@@ -44,7 +44,9 @@ export default {
     name: 'Serverless REST API',   // tile title
     desc: '1-2 plain sentences: what the architecture is and what animates. No em dashes.',
     wide: false,             // true -> tile spans 2 columns: use w:960
+    full: false,             // true -> tile spans the whole row: w up to 1400, h up to 900 (imports, 3 AZs)
     w: 480, h: 236,          // viewBox. Normal: w 480, h <= 300. Wide: w 960, h <= 440.
+    lintAllow: [],           // accepted lint findings: '<code>' or '<code>:<start of message>' (say why in a comment)
     dur: 6,                  // seconds; the single clock every animation in this diagram shares (6-10)
     groups:  [ { kind, x, y, w, h, label?, id?, icon?:false|'<icon id>', note?, align?:'left'|'center' } ],   // draw OUTER groups first
     nodes:   [ { id, icon, x, y, size?:40, label?, wrap?:14, sub? } ],
@@ -115,6 +117,22 @@ reference (wire end, step `at`, ring, effect target) names nothing, a window is 
 holds script, `on*=` handlers, `foreignObject`/`style`/`iframe`, or an `href`/`url()` that is not a
 `#fragment`. Tests: `node --test catalog/aws-kit/awd.test.mjs`.
 
+**Placement helpers** (`catalog/aws-kit/place.mjs`, imported by the vpc, transit, endpoints and dns
+specs): `centered(size)` makes a node factory that places icons by center and keeps `cx`/`cy` on the
+node; `R`, `L`, `T`, `B` (below the label) and `Bi` (below the icon) give a node's edge ports;
+`P(...points)` joins points into an `M H V` path and throws on a diagonal; `lblH` predicts a label
+block's height with the generator's own `wrap`. Example, one elbow at x=300: `{ id: 'w', d: P(R(alb), [300, alb.cy], [300, tg.cy], L(tg)) }`.
+
+**Lint** (`catalog/aws-kit/lint.mjs`) checks the drawn markup, `extra` and timed captions included,
+with Arial's real advance widths. Errors (the build fails on any): `off-canvas`, `icon-overlap`,
+`text-overlap` (static, or timed captions shown at the same time), `text-on-icon`, `text-on-border`
+(text across or within 2px of a frame edge), `wire-on-text`, `wire-on-icon` (an icon the wire does
+not connect), `badge-on-icon`, `badge-on-text`, `badge-overlap`. Warnings: `header-band` (an icon
+inside a frame's 22px header), `label-lines` (more than 2), `tile-size`. Info: `icon-sizes` (AWS
+keeps one size per diagram), `text-over-text` (a timed caption over static text, usually a swap).
+`node catalog/aws-kit/awd.mjs lint <spec> [diagram id] [--info]` prints them; `preview` prints a
+count. It agrees with a headless-Edge measurement of the gallery (0 static defects in both).
+
 ## Layout rules (the bar is "looks like an official AWS reference architecture")
 - 16px padding inside groups; leave 22px at the top of a group for its corner icon + label.
 - Nothing overlaps: labels never cross wires, icons, group borders or other labels (>= 6px clear).
@@ -139,4 +157,4 @@ holds script, `on*=` handlers, `foreignObject`/`style`/`iframe`, or an `href`/`u
 - Descriptions: plain sentences, no em dashes, no marketing; say what animates.
 - Section titles: a spaced dash or an em/en dash starts a subtitle that the catalog drops from the
   category ("NETWORKING - hub and spoke" files under "NETWORKING"); a hyphen inside a word stays.
-- `preview` must report `validation: OK` and `build` must succeed before you finish.
+- `preview` must report `validation: OK` and `lint: 0 error`, and `build` must succeed before you finish.

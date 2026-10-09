@@ -7,9 +7,12 @@
 //   node catalog/aws-kit/awd.mjs build <spec.mjs>            -> catalog/drafts/<section.id>.aws.html
 //   node catalog/aws-kit/awd.mjs preview <spec.mjs> [light] [still]  -> scratch preview HTML + validation report
 //     (still: no packets or rings, the complete static diagram, as for print and exports)
+//   node catalog/aws-kit/awd.mjs lint <spec.mjs> [diagram id] [--info]  -> geometry findings (lint.mjs); build fails on errors
 import fs from 'node:fs';
 import path from 'node:path';
 import { pathToFileURL, fileURLToPath } from 'node:url';
+import { wrap } from './place.mjs';
+import { lint as lintSvg, report as lintReport } from './lint.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(HERE, '..', '..');
@@ -137,16 +140,6 @@ function iconUses(icon, where = 'icon') {
 }
 const use = (icon, x, y, s) => iconUses(icon).map((u) =>
   `<use${u.cls ? ` class="${u.cls}"` : ''} href="#${u.id}" x="${r2(x)}" y="${r2(y)}" width="${s}" height="${s}"/>`).join('');
-
-// word-wrap a label into <= maxCh-char lines, centered tspans
-function wrap(label, maxCh = 14) {
-  const out = []; let line = '';
-  for (const w of String(label).split(/\s+/)) {
-    if (line && (line + ' ' + w).length > maxCh) { out.push(line); line = w; } else line = line ? line + ' ' + w : w;
-  }
-  if (line) out.push(line);
-  return out;
-}
 
 function nodeBox(n) { const s = n.size || 40; return { x: n.x, y: n.y, s, cx: n.x + s / 2, cy: n.y + s / 2, r: n.x + s, b: n.y + s }; }
 
@@ -373,7 +366,7 @@ export function diagram(spec) {
 export function tile(spec) {
   const svg = diagram(spec);
   const ref = `.awd #${spec.id}`;
-  return `  <div class="tile is-new${spec.wide ? ' wide' : ''}" data-fx-id="aws-${spec.id}" data-ctype="${esc(spec.ctype || 'diagram-arch')}" data-interact="auto-play" data-c="accent"><div class="stage">
+  return `  <div class="tile is-new${spec.full ? ' full' : spec.wide ? ' wide' : ''}" data-fx-id="aws-${spec.id}" data-ctype="${esc(spec.ctype || 'diagram-arch')}" data-interact="auto-play" data-c="accent"><div class="stage">
     ${svg}
   </div><div class="meta"><div class="nm">${esc(spec.name)}</div><span class="ref">${esc(spec.ref || 'svg.awd')}</span><div class="desc">${esc(spec.desc || '')}</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>`;
 }
@@ -397,6 +390,9 @@ export function validate(html) {
   }
   return errs;
 }
+
+// ---- lint: layout rules checked on the drawn markup (see lint.mjs) ----
+export function lint(spec) { return lintSvg(spec, diagram(spec)); }
 
 async function loadSpec(p) { return (await import(pathToFileURL(path.resolve(p)).href)).default; }
 
@@ -434,9 +430,18 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
   const mod = await loadSpec(specPath);
   const html = section(mod);
   const errs = validate(html);
+  const findings = mod.diagrams.map((d) => [d.id, lint(d)]);
+  const lintErrs = findings.flatMap(([id, f]) => f.filter((x) => x.severity === 'error').map((x) => `${id}: ${x.code} ${x.message}`));
+  const count = (s) => findings.reduce((k, [, f]) => k + f.filter((x) => x.severity === s).length, 0);
+  if (cmd === 'lint') {
+    const only = flags.find((f) => !f.startsWith('--'));
+    for (const [id, f] of findings) if (!only || id === only) console.log(lintReport(id, flags.includes('--info') ? f : f.filter((x) => x.severity !== 'info')));
+    process.exit(lintErrs.length ? 1 : 0);
+  }
   if (cmd === 'build') {
     const out = path.join(ROOT, 'catalog', 'drafts', `${mod.section.id}.aws.html`);
     if (errs.length) { console.error('VALIDATION FAILED:\n  ' + errs.join('\n  ')); process.exit(1); }
+    if (lintErrs.length) { console.error('LINT FAILED (fix the layout, or accept a finding with lintAllow):\n  ' + lintErrs.join('\n  ')); process.exit(1); }
     fs.writeFileSync(out, html + '\n');
     console.log(`built ${path.relative(ROOT, out)}: ${mod.diagrams.length} diagram(s), ${html.length} bytes`);
   } else if (cmd === 'preview') {
@@ -444,5 +449,6 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
     fs.writeFileSync(out, previewHtml(html, mode, still));
     console.log(`preview ${out}`);
     console.log(errs.length ? 'VALIDATION:\n  ' + errs.join('\n  ') : 'validation: OK');
-  } else { console.error('usage: awd.mjs build|preview <spec.mjs> [light] [still]'); process.exit(1); }
+    console.log(`lint: ${count('error')} error, ${count('warn')} warn, ${count('info')} info (details: awd.mjs lint <spec>)`);
+  } else { console.error('usage: awd.mjs build|preview <spec.mjs> [light] [still] | lint <spec.mjs> [diagram id] [--info]'); process.exit(1); }
 }

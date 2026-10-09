@@ -27,38 +27,10 @@ const DX = 'aws-svc-direct-connect';
 const S2S = 'aws-svc-site-to-site-vpn';
 const NET = 'aws-res-internet';
 
-// ---- layout helpers ----
-// word-wrap exactly like the generator does, so label heights can be predicted
-const wrapLines = (label, maxCh = 14) => {
-  const out = []; let line = '';
-  for (const w of String(label).split(/\s+/)) {
-    if (line && (line + ' ' + w).length > maxCh) { out.push(line); line = w; } else line = line ? line + ' ' + w : w;
-  }
-  if (line) out.push(line);
-  return out;
-};
-// node by CENTER (cx, cy); default 32px resource icon
-const nd = (id, icon, cx, cy, label, o = {}) => {
-  const size = o.size || 32;
-  return { id, icon, x: cx - size / 2, y: cy - size / 2, size, label, cx, cy, ...o };
-};
-// height of the label block under an icon (label lines at 13px + optional sub line at 11px), as the generator lays it out
-const lblH = (n) => (n.label ? 13 * wrapLines(n.label, n.wrap).length : 0) + (n.sub ? 11 : 0);
-// edge ports of a node: right / left / top / bottom-below-label (g = gap to the icon)
-const R = (n, dy = 0, g = 4) => [n.cx + n.size / 2 + g, n.cy + dy];
-const L = (n, dy = 0, g = 4) => [n.cx - n.size / 2 - g, n.cy + dy];
-const T = (n, dx = 0, g = 4) => [n.cx + dx, n.cy - n.size / 2 - g];
-const B = (n, dx = 0, g = 4) => [n.cx + dx, n.cy + n.size / 2 + g + lblH(n)];
-const Bi = (n, dx = 0, g = 4) => [n.cx + dx, n.cy + n.size / 2 + g]; // directly under the icon (no label in the way)
-// polyline path through points; consecutive points must share x or y (only H / V are emitted)
-const P = (...pts) => {
-  let d = `M${pts[0][0]},${pts[0][1]}`;
-  for (let i = 1; i < pts.length; i++) {
-    const [x0, y0] = pts[i - 1], [x1, y1] = pts[i];
-    if (y1 === y0) d += ` H${x1}`; else if (x1 === x0) d += ` V${y1}`; else throw new Error(`diagonal segment ${pts[i - 1]} -> ${pts[i]}`);
-  }
-  return d;
-};
+// ---- layout helpers (shared with the other specs: ../place.mjs) ----
+import { wrapLines, lblH, R, L, T, B, Bi, P, centered } from '../place.mjs';
+// node by CENTER (cx, cy); default 32px icon
+const nd = centered(32);
 // raw-SVG helpers (spec `extra` escape hatch)
 const dot = (x, y, kind, text) =>
   `<circle cx="${x}" cy="${y}" r="3.4" fill="var(--awd-${kind})"/><text x="${x + 9}" y="${y + 3.4}">${text}</text>`;

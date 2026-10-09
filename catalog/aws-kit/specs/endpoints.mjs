@@ -18,38 +18,10 @@ const PHZ = 'aws-res-route-53-hosted-zone';
 const RESOLVER = 'aws-res-route-53-resolver';
 const NET = 'aws-res-internet';
 
-// ---- layout helpers ----
-// word-wrap exactly like the generator does, so label heights can be predicted
-const wrapLines = (label, maxCh = 14) => {
-  const out = []; let line = '';
-  for (const w of String(label).split(/\s+/)) {
-    if (line && (line + ' ' + w).length > maxCh) { out.push(line); line = w; } else line = line ? line + ' ' + w : w;
-  }
-  if (line) out.push(line);
-  return out;
-};
-// node by CENTER (cx, cy); default 32px resource icon
-const nd = (id, icon, cx, cy, label, o = {}) => {
-  const size = o.size || 32;
-  return { id, icon, x: cx - size / 2, y: cy - size / 2, size, label, cx, cy, ...o };
-};
-// height of the label block under an icon (label lines at 13px + optional sub line at 11px), as the generator lays it out
-const lblH = (n) => (n.label ? 13 * wrapLines(n.label, n.wrap).length : 0) + (n.sub ? 11 : 0);
-// edge ports of a node: right / left / top / bottom-below-label (g = gap to the icon)
-const R = (n, dy = 0, g = 4) => [n.cx + n.size / 2 + g, n.cy + dy];
-const L = (n, dy = 0, g = 4) => [n.cx - n.size / 2 - g, n.cy + dy];
-const T = (n, dx = 0, g = 4) => [n.cx + dx, n.cy - n.size / 2 - g];
-const B = (n, dx = 0, g = 4) => [n.cx + dx, n.cy + n.size / 2 + g + lblH(n)];
-const Bi = (n, dx = 0, g = 4) => [n.cx + dx, n.cy + n.size / 2 + g]; // directly under the icon (no label in the way)
-// polyline path through points; consecutive points must share x or y (only H / V are emitted)
-const P = (...pts) => {
-  let d = `M${pts[0][0]},${pts[0][1]}`;
-  for (let i = 1; i < pts.length; i++) {
-    const [x0, y0] = pts[i - 1], [x1, y1] = pts[i];
-    if (y1 === y0) d += ` H${x1}`; else if (x1 === x0) d += ` V${y1}`; else throw new Error(`diagonal segment ${pts[i - 1]} -> ${pts[i]}`);
-  }
-  return d;
-};
+// ---- layout helpers (shared with the other specs: ../place.mjs) ----
+import { wrapLines, lblH, R, L, T, B, Bi, P, centered } from '../place.mjs';
+// node by CENTER (cx, cy); default 32px icon
+const nd = centered(32);
 // rescale a timeline so its last window ends at `end` of the clock (keeps the idle tail short and every window ordered)
 const fit = (tl, end = 0.93) => {
   const k = end / Math.max(...tl.map((e) => e.t[1]));
@@ -165,7 +137,7 @@ D.push((() => {
   const cli = nd('cli', 'aws-res-client', 56, 106, 'On-premises client');
   const dns = nd('dns', 'aws-res-servers', 56, 252, 'On-premises DNS', { sub: 'forwarder' });
   const cgw = nd('cgw', 'aws-res-vpc-customer-gateway', 116, 166, 'Customer gateway');
-  const dx = nd('dx', 'aws-svc-direct-connect', 234, 112, 'AWS Direct Connect', { size: 40 });
+  const dx = nd('dx', 'aws-svc-direct-connect', 234, 112, 'AWS Direct Connect', { size: 40, sub: 'private VIF' });
   const vpn = nd('vpn', 'aws-svc-site-to-site-vpn', 234, 212, 'AWS Site-to-Site VPN', { size: 40, wrap: 16 });
   const vgw = nd('vgw', 'aws-res-vpc-vpn-gateway', 356, 161, 'Virtual private gateway', { wrap: 16 });
   const res = nd('res', RESOLVER, 500, 114, 'Route 53 VPC Resolver inbound endpoint', { wrap: 22, sub: 'ENI per AZ' });
@@ -195,11 +167,11 @@ D.push((() => {
       { id: 'c1', d: P(R(cli), [116, 106], T(cgw)) },
       { id: 'h1', d: P(R(cgw), [165, 166], [165, 112], L(dx)), both: true },
       { id: 'h1v', d: P(R(cgw), [165, 166], [165, 212], L(vpn)), both: true, dashed: true },
-      { id: 'h2', d: P(R(dx), [297, 112], [297, 155], L(vgw, -6)), both: true, label: 'private VIF', labelAt: 0.42, labelAnchor: 'start', labelDx: 5, labelDy: 0 },
+      { id: 'h2', d: P(R(dx), [297, 112], [297, 155], L(vgw, -6)), both: true },
       { id: 'h2v', d: P(R(vpn), [297, 212], [297, 167], L(vgw, 6)), both: true, dashed: true },
       { id: 'r1', d: P(R(vgw, -6), [406, 155], [406, 114], L(res)), both: true },
       { id: 's1', d: P(R(vgw, 6), [406, 167], [406, 208], L(s3ep)), both: true },
-      { id: 's2', d: P(R(s3ep), L(s3)), both: true, label: 'AWS PrivateLink', labelAt: 0.88 },
+      { id: 's2', d: P(R(s3ep), L(s3)), both: true, label: 'AWS PrivateLink', labelAt: 0.9 },
       { id: 'g1', d: P(R(ec2), L(gwe)) },
       { id: 'g2', d: P(R(gwe), [880, 336], B(s3)) },
       { id: 'bad1', d: P(R(vgw, 10), [406, 171], [406, 278], [540, 278]), hot: true, dashed: true, arrow: false },
@@ -381,8 +353,8 @@ D.push((() => {
       { id: 'w2', d: P(R(task), [235, 220], [235, 184], L(ep2)) },
       { id: 'w3', d: P(R(task), [235, 220], [235, 256], L(gwe)) },
       { id: 'w4', d: P(R(task), [235, 220], [235, 328], L(ep4)) },
-      { id: 'e1', d: P(R(ep1), [690, 112], [690, 140], L(ecr, -8)), both: true, label: 'GetAuthorizationToken', labelAt: 0.4 },
-      { id: 'e2', d: P(R(ep2), [690, 184], [690, 156], L(ecr, 8)), both: true, label: 'image manifest', labelAt: 0.4 },
+      { id: 'e1', d: P(R(ep1), [690, 112], [690, 140], L(ecr, -8)), both: true, label: 'GetAuthorizationToken', labelAt: 0.652 },
+      { id: 'e2', d: P(R(ep2), [690, 184], [690, 156], L(ecr, 8)), both: true, label: 'image manifest', labelAt: 0.652 },
       { id: 'e3', d: P(R(gwe), L(s3)), both: true, label: 'image layers', labelAt: 0.4 },
       { id: 'e4', d: P(R(ep4), L(cwl)), both: true, label: 'awslogs driver', labelAt: 0.4 },
     ],
@@ -449,7 +421,7 @@ D.push((() => {
       { wire: 'op', t: [0.78, 0.9], reverse: true, kind: 'pk-2', ring: 'op' },
     ], 0.94),
     notes: [
-      { x: 100, y: 214, text: 'No inbound ports,\nno bastion host,\nno public IP', anchor: 'start' },
+      { x: 100, y: 210, text: 'No inbound ports,\nno bastion host,\nno public IP', anchor: 'start' },
       { x: 346, y: 108, text: 'AWS PrivateLink', anchor: 'start' },
     ],
   };
