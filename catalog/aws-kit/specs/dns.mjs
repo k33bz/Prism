@@ -3,8 +3,8 @@
 //   node catalog/aws-kit/awd.mjs build   catalog/aws-kit/specs/dns.mjs
 //
 // Authoring notes: nodes are placed by CENTER with nd(); wires are explicit H/V polylines built with P() from node
-// ports (R/L/T/B); text uses the kit's `notes`, group `note` and wire `label` (raw `extra` only draws shapes such as
-// legend dots and the red unhealthy mark). Documentation address ranges (192.0.2.0/24, 198.51.100.0/24,
+// ports (R/L/T/B); text uses the kit's `notes`, group `note` and wire `label`, packet keys the kit's `legend` and the
+// unhealthy endpoint the kit's `marks` (no raw `extra`). Documentation address ranges (192.0.2.0/24, 198.51.100.0/24,
 // 203.0.113.0/24) stand in for public IPs. "Route 53 VPC Resolver" is the current name of Route 53 Resolver.
 
 // ---- icon ids ----
@@ -40,17 +40,8 @@ const seq = (t0, len, items, gap = 0) => items.map((it, i) => ({ ...it, t: [f3(t
 // request leg (left to right, orange) and response leg (blue)
 const fw = (wire, o = {}) => ({ wire, ...o });
 const bk = (wire, o = {}) => ({ wire, reverse: true, kind: 'pk-2', ...o });
-const RED = '#DD344C';
-// raw shapes (the kit has no node-level fail mark or legend dots)
-const dot = (x, y, kind) => `<circle cx="${x}" cy="${y}" r="3.4" fill="var(--awd-${kind})"/>`;
-const xmark = (cx, cy, r = 7.5) =>
-  `<circle cx="${cx}" cy="${cy}" r="${r}" fill="${RED}"/><path d="M${cx - 3},${cy - 3} L${cx + 3},${cy + 3} M${cx + 3},${cy - 3} L${cx - 3},${cy + 3}" stroke="#fff" stroke-width="1.7" fill="none"/>`;
-const timed = (a, b, dur, svg) =>
-  `<g class="anim" opacity="0">${svg}<animate attributeName="opacity" dur="${dur}s" repeatCount="indefinite" calcMode="discrete" values="0;1;0" keyTimes="0;${String(f3(a)).replace(/^0\./, '.')};${String(f3(b)).replace(/^0\./, '.')}"/></g>`;
-const legend = (x, y, ...items) => ({
-  extra: items.map(([kind], i) => dot(x, y + i * 14, kind)).join(''),
-  notes: items.map(([, text], i) => ({ x: x + 9, y: y + 3 + i * 14, text, anchor: 'start' })),
-});
+// the kit legend: one row per [packet kind, wording], 13px apart (x, y: the first row's text baseline)
+const legend = (x, y, ...items) => ({ x, y, items: items.map(([kind, label]) => ({ kind, label })) });
 
 // ---------------------------------------------------------------------------------------------
 // dns-resolution: how a public name resolves (wide)
@@ -68,7 +59,6 @@ const resolution = (() => {
   ];
   const alb = nd('alb', ALB, 700, 322, 'Application Load Balancer');
   const ec2 = nd('ec2', EC2S, 860, 322, 'Amazon EC2 instances');
-  const lg = legend(16, 392, ['pk', 'Query'], ['pk2', 'Referral or answer']);
   return {
     id: 'dns-resolution',
     name: 'How a public name resolves',
@@ -118,9 +108,8 @@ const resolution = (() => {
       { x: 206, y: 262, text: 'Cached: example.com A\n203.0.113.10, TTL 60 s', anchor: 'start', t: [0.4, 0.72] },
       { x: 206, y: 262, text: 'Second query inside the TTL: answered from cache', anchor: 'start', kind: 'label', t: [0.73, 0.98] },
       { x: 206, y: 275, text: 'No root, TLD or Route 53 lookups needed', anchor: 'start', t: [0.73, 0.98] },
-      ...lg.notes,
     ],
-    extra: lg.extra,
+    legend: legend(13, 395, ['pk', 'Query'], ['pk-2', 'Referral or answer']),
   };
 })();
 
@@ -273,18 +262,19 @@ const multivalue = (() => {
       ...['h0', 'h1', 'h2', 'h3'].map((w) => ({ wire: w, kind: 'pk-2', t: [0.30, 0.35] })),
       ...['h0', 'h1', 'h2'].map((w, i) => ({ wire: w, reverse: true, kind: 'pk-2', t: [0.36, 0.41], ...(i === 0 ? { ring: 'r53' } : {}) })),
       // the fourth endpoint stops answering
-      { wire: 'h3', kind: 'pk-bad', t: [0.48, 0.56] },
+      { wire: 'h3', kind: 'pk-bad', t: [0.48, 0.56], ring: 'e3' },
       // second query: three healthy records
       ...seq(0.66, 0.05, [fw('q', { ring: 'r53' }), bk('q', { ring: 'users' })], 0.01),
       ...seq(0.80, 0.1, [fw('c', { ring: 'e0' })]),
     ],
     notes: [
       { x: 232, y: 36, text: 'Answer: 4 healthy records\n192.0.2.10  192.0.2.11\n192.0.2.12  192.0.2.13', anchor: 'start', t: [0.1, 0.66] },
-      { x: 232, y: 36, text: 'Answer: 3 healthy records\n192.0.2.10  192.0.2.11\n192.0.2.12', anchor: 'start', t: [0.73, 0.99] },
+      // the dropped record is the point of the diagram: the failed check and the shorter answer stay in still frames
+      { x: 232, y: 36, text: 'Answer: 3 healthy records\n192.0.2.10  192.0.2.11\n192.0.2.12', anchor: 'start', t: [0.73, 0.99], still: true },
       { x: 232, y: 120, text: 'health checks', anchor: 'start' },
-      { x: 232, y: 68, text: '192.0.2.13 failed its health check', kind: 'warn', anchor: 'start', t: [0.6, 0.99] },
+      { x: 232, y: 68, text: '192.0.2.13 failed its health check', kind: 'warn', anchor: 'start', t: [0.6, 0.99], still: true },
     ],
-    extra: timed(0.58, 0.99, 10, xmark(446, 212)),
+    marks: [{ on: 'e3', t: [0.58, 0.99], still: true }],
   };
 })();
 
@@ -352,7 +342,6 @@ const hybrid = (() => {
   const res = nd('res', RES, 740, 236, 'Route 53 VPC Resolver', { wrap: 12, sub: '10.0.0.2' });
   const phz = nd('phz', HZ, 880, 236, 'Private hosted zone', { wrap: 14, sub: 'aws.example.com' });
   const rv = (wire, o = {}) => ({ wire, reverse: true, ...o });
-  const lg = legend(16, 404, ['pk', 'Query'], ['pk2', 'Answer']);
   return {
     id: 'dns-hybrid',
     name: 'Hybrid DNS with Resolver endpoints',
@@ -409,9 +398,8 @@ const hybrid = (() => {
       { x: 236, y: 306, text: 'Inbound: on-premises\nresolves aws.example.com', t: [0.02, 0.5] },
       { x: 236, y: 306, text: 'Outbound: AWS resolves\ncorp.example.com', t: [0.52, 0.98] },
       { x: 740, y: 312, text: 'Forwarding rule:\ncorp.example.com >\n10.1.1.10, 10.1.1.11' },
-      ...lg.notes,
     ],
-    extra: lg.extra,
+    legend: legend(13, 407, ['pk', 'Query'], ['pk-2', 'Answer']),
   };
 })();
 
@@ -434,7 +422,6 @@ const sharedRules = (() => {
   const dx = nd('dx', DX, 772, 300, 'AWS Direct Connect', { wrap: 14 });
   const dns = nd('dns', SERVERS, 882, 300, 'On-premises DNS servers', { wrap: 14, sub: '10.1.1.10' });
   const rv = (wire, o = {}) => ({ wire, reverse: true, ...o });
-  const lg = legend(36, 402, ['pk', 'Query'], ['pk2', 'Answer or share']);
   return {
     id: 'dns-shared-rules',
     name: 'Centralized DNS with AWS RAM and Profiles',
@@ -486,8 +473,7 @@ const sharedRules = (() => {
         bk('q', { ring: 'resa' }), bk('e', { ring: 'ec2a' }),
       ], 0.004),
     ],
-    notes: [...lg.notes],
-    extra: lg.extra,
+    legend: legend(33, 405, ['pk', 'Query'], ['pk-2', 'Answer or share']),
   };
 })();
 

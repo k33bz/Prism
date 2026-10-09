@@ -65,11 +65,16 @@
         { "x": 552, "y": 195, "text": "Alias answers return the ALB addresses with TTL 60 s", "anchor": "start" },
         { "x": 206, "y": 262, "text": "Cached: example.com A\n203.0.113.10, TTL 60 s", "anchor": "start", "t": [0.4, 0.72] },
         { "x": 206, "y": 262, "text": "Second query inside the TTL: answered from cache", "kind": "label", "anchor": "start", "t": [0.73, 0.98] },
-        { "x": 206, "y": 275, "text": "No root, TLD or Route 53 lookups needed", "anchor": "start", "t": [0.73, 0.98] },
-        { "x": 25, "y": 395, "text": "Query", "anchor": "start" },
-        { "x": 25, "y": 409, "text": "Referral or answer", "anchor": "start" }
+        { "x": 206, "y": 275, "text": "No root, TLD or Route 53 lookups needed", "anchor": "start", "t": [0.73, 0.98] }
       ],
-      "extra": "<circle cx=\"16\" cy=\"392\" r=\"3.4\" fill=\"var(--awd-pk)\"/><circle cx=\"16\" cy=\"406\" r=\"3.4\" fill=\"var(--awd-pk2)\"/>"
+      "legend": {
+        "x": 13,
+        "y": 395,
+        "items": [
+          { "kind": "pk", "label": "Query" },
+          { "kind": "pk-2", "label": "Referral or answer" }
+        ]
+      }
     },
     {
       "id": "dns-weighted",
@@ -250,18 +255,20 @@
         { "wire": "h0", "t": [0.36, 0.41], "reverse": true, "kind": "pk-2", "ring": "r53" },
         { "wire": "h1", "t": [0.36, 0.41], "reverse": true, "kind": "pk-2" },
         { "wire": "h2", "t": [0.36, 0.41], "reverse": true, "kind": "pk-2" },
-        { "wire": "h3", "t": [0.48, 0.56], "kind": "pk-bad" },
+        { "wire": "h3", "t": [0.48, 0.56], "kind": "pk-bad", "ring": "e3" },
         { "wire": "q", "t": [0.66, 0.71], "ring": "r53" },
         { "wire": "q", "t": [0.72, 0.77], "reverse": true, "kind": "pk-2", "ring": "users" },
         { "wire": "c", "t": [0.8, 0.9], "ring": "e0" }
       ],
       "notes": [
         { "x": 232, "y": 36, "text": "Answer: 4 healthy records\n192.0.2.10  192.0.2.11\n192.0.2.12  192.0.2.13", "anchor": "start", "t": [0.1, 0.66] },
-        { "x": 232, "y": 36, "text": "Answer: 3 healthy records\n192.0.2.10  192.0.2.11\n192.0.2.12", "anchor": "start", "t": [0.73, 0.99] },
+        { "x": 232, "y": 36, "text": "Answer: 3 healthy records\n192.0.2.10  192.0.2.11\n192.0.2.12", "anchor": "start", "t": [0.73, 0.99], "still": true },
         { "x": 232, "y": 120, "text": "health checks", "anchor": "start" },
-        { "x": 232, "y": 68, "text": "192.0.2.13 failed its health check", "kind": "warn", "anchor": "start", "t": [0.6, 0.99] }
+        { "x": 232, "y": 68, "text": "192.0.2.13 failed its health check", "kind": "warn", "anchor": "start", "t": [0.6, 0.99], "still": true }
       ],
-      "extra": "<g class=\"anim\" opacity=\"0\"><circle cx=\"446\" cy=\"212\" r=\"7.5\" fill=\"#DD344C\"/><path d=\"M443,209 L449,215 M449,209 L443,215\" stroke=\"#fff\" stroke-width=\"1.7\" fill=\"none\"/><animate attributeName=\"opacity\" dur=\"10s\" repeatCount=\"indefinite\" calcMode=\"discrete\" values=\"0;1;0\" keyTimes=\"0;.58;.99\"/></g>"
+      "marks": [
+        { "on": "e3", "t": [0.58, 0.99], "still": true }
+      ]
     },
     {
       "id": "dns-private-zone",
@@ -394,11 +401,16 @@
         { "x": 92, "y": 314, "text": "Conditional forwarder:\naws.example.com >\n10.0.1.10, 10.0.2.10" },
         { "x": 236, "y": 306, "text": "Inbound: on-premises\nresolves aws.example.com", "t": [0.02, 0.5] },
         { "x": 236, "y": 306, "text": "Outbound: AWS resolves\ncorp.example.com", "t": [0.52, 0.98] },
-        { "x": 740, "y": 312, "text": "Forwarding rule:\ncorp.example.com >\n10.1.1.10, 10.1.1.11" },
-        { "x": 25, "y": 407, "text": "Query", "anchor": "start" },
-        { "x": 25, "y": 421, "text": "Answer", "anchor": "start" }
+        { "x": 740, "y": 312, "text": "Forwarding rule:\ncorp.example.com >\n10.1.1.10, 10.1.1.11" }
       ],
-      "extra": "<circle cx=\"16\" cy=\"404\" r=\"3.4\" fill=\"var(--awd-pk)\"/><circle cx=\"16\" cy=\"418\" r=\"3.4\" fill=\"var(--awd-pk2)\"/>"
+      "legend": {
+        "x": 13,
+        "y": 407,
+        "items": [
+          { "kind": "pk", "label": "Query" },
+          { "kind": "pk-2", "label": "Answer" }
+        ]
+      }
     },
     {
       "id": "dns-shared-rules",
@@ -477,11 +489,14 @@
         { "wire": "q", "t": [0.824, 0.872], "reverse": true, "kind": "pk-2", "ring": "resa" },
         { "wire": "e", "t": [0.876, 0.924], "reverse": true, "kind": "pk-2", "ring": "ec2a" }
       ],
-      "notes": [
-        { "x": 45, "y": 405, "text": "Query", "anchor": "start" },
-        { "x": 45, "y": 419, "text": "Answer or share", "anchor": "start" }
-      ],
-      "extra": "<circle cx=\"36\" cy=\"402\" r=\"3.4\" fill=\"var(--awd-pk)\"/><circle cx=\"36\" cy=\"416\" r=\"3.4\" fill=\"var(--awd-pk2)\"/>"
+      "legend": {
+        "x": 33,
+        "y": 405,
+        "items": [
+          { "kind": "pk", "label": "Query" },
+          { "kind": "pk-2", "label": "Answer or share" }
+        ]
+      }
     },
     {
       "id": "dns-firewall",
