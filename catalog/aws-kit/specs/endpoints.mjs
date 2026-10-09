@@ -99,10 +99,10 @@ D.push((() => {
       { id: 'q', d: P(R(pl), L(sqs)), both: true },
     ],
     steps: [
-      { n: 1, at: 'dns', f: 0.5, dy: -11 },
-      { n: 2, at: 'sA', f: 0.2, dy: -11 },
-      { n: 3, at: 'eA', f: 0.5, dy: -11 },
-      { n: 4, at: 'q', f: 0.5, dy: -11 },
+      { n: 1, at: 'dns', f: 0.5, dy: -11, text: 'Each spoke instance resolves sqs.us-east-1.amazonaws.com. The private hosted zone associated with its VPC returns the endpoint IPs 10.0.1.25 and 10.0.2.25.' },
+      { n: 2, at: 'sA', f: 0.2, dy: -11, text: 'The instance sends the request to an endpoint IP. The spoke VPC route table sends it to AWS Transit Gateway, which forwards it to the shared services VPC attachment.' },
+      { n: 3, at: 'eA', f: 0.5, dy: -11, text: 'The Transit Gateway attachment in the shared services VPC passes the request to the interface endpoint network interface in the endpoint subnet.' },
+      { n: 4, at: 'q', f: 0.5, dy: -11, text: 'The interface endpoint sends the request to Amazon SQS over AWS PrivateLink, and the response returns the same way to the spoke instance.' },
     ],
     timeline: fit([
       { wire: 'dns', t: [0.03, 0.1], ring: 'phz' }, { wire: 'dnsb', t: [0.03, 0.1] },
@@ -178,10 +178,10 @@ D.push((() => {
       { id: 'bad2', d: P([540, 278], [590, 278], T(gwe)), hot: true, dashed: true },
     ],
     steps: [
-      { n: 1, at: 'q0', f: 0.5, dx: 11, dy: 0 },
-      { n: 2, at: 'h2', f: 0.08, dy: -11 },
-      { n: 3, at: 's2', f: 0.5, dy: -11 },
-      { n: 4, at: 'g2', f: 0.62, dy: 11 },
+      { n: 1, at: 'q0', f: 0.5, dx: 11, dy: 0, text: 'The on-premises client asks the on-premises DNS forwarder for the S3 name, and the forwarder sends the query to the Route 53 VPC Resolver inbound endpoint.' },
+      { n: 2, at: 'h2', f: 0.08, dy: -11, text: 'The query crosses AWS Direct Connect or AWS Site-to-Site VPN to the inbound endpoint, and the Route 53 VPC Resolver answers with the S3 interface endpoint IPs.' },
+      { n: 3, at: 's2', f: 0.5, dy: -11, text: 'The client sends its HTTPS request over the same link to the S3 interface endpoint, which carries it to Amazon S3 over AWS PrivateLink.' },
+      { n: 4, at: 'g2', f: 0.62, dy: 11, text: 'Instances in the VPC reach Amazon S3 through the S3 gateway endpoint, a route table target. Traffic from on-premises cannot use the gateway endpoint.' },
     ],
     timeline: fit([
       { wire: 'q0', t: [0.03, 0.06] }, { wire: 'q1', t: [0.06, 0.09] },
@@ -241,9 +241,9 @@ D.push((() => {
       { id: 'n2', d: P([300, 220], [404, 220], B(data)), hot: true, dashed: true },
     ],
     steps: [
-      { n: 1, at: 'g1', f: 0.5 },
-      { n: 2, at: 'a1', f: 0.3, dx: -11, dy: 0 },
-      { n: 3, at: 'n1', f: 0.45 },
+      { n: 1, at: 'g1', f: 0.5, text: 'The instance requests an object in analytics-data through the S3 gateway endpoint. The endpoint policy and the bucket policy both allow it, and the response returns.' },
+      { n: 2, at: 'a1', f: 0.3, dx: -11, dy: 0, text: 'The endpoint policy denies a request from the instance to other-bucket, because it allows only analytics-data.' },
+      { n: 3, at: 'n1', f: 0.45, text: 'The bucket policy denies a request from the internet to analytics-data, because it does not arrive through the endpoint (aws:SourceVpce).' },
     ],
     timeline: fit([
       { wire: 'g1', t: [0.04, 0.09], ring: 'gwe' }, { wire: 'trunk', t: [0.09, 0.12] }, { wire: 'b', t: [0.12, 0.2], ring: 'data' },
@@ -296,9 +296,9 @@ D.push((() => {
       { id: 'n', d: P(R(net), [350, 60], T(api)), hot: true, dashed: true, label: 'from the internet', labelAt: 0.3, labelDy: 12 },
     ],
     steps: [
-      { n: 1, at: 'g1', f: 0.5 },
-      { n: 2, at: 'g3', f: 0.5, dy: -11 },
-      { n: 3, at: 'n', f: 0.5, dy: -11 },
+      { n: 1, at: 'g1', f: 0.5, text: 'The instance calls the private API. Private DNS resolves the execute-api name to the interface endpoint, which receives the request.' },
+      { n: 2, at: 'g3', f: 0.5, dy: -11, text: 'AWS PrivateLink carries the request to Amazon API Gateway. The resource policy allows this endpoint (aws:SourceVpce), and AWS Lambda returns the response.' },
+      { n: 3, at: 'n', f: 0.5, dy: -11, text: 'Amazon API Gateway refuses a call from the internet with 403 Forbidden, because it does not arrive through the interface endpoint.' },
     ],
     timeline: fit([
       { wire: 'g1', t: [0.04, 0.09], ring: 'enp' }, { wire: 'g2', t: [0.09, 0.14], ring: 'pl' }, { wire: 'g3', t: [0.14, 0.2], ring: 'api' },
@@ -359,10 +359,10 @@ D.push((() => {
       { id: 'e4', d: P(R(ep4), L(cwl)), both: true, label: 'awslogs driver', labelAt: 0.4 },
     ],
     steps: [
-      { n: 1, at: 'w1', f: 0.8, dy: -11 },
-      { n: 2, at: 'w2', f: 0.8, dy: -11 },
-      { n: 3, at: 'w3', f: 0.8, dy: -11 },
-      { n: 4, at: 'w4', f: 0.8, dy: -11 },
+      { n: 1, at: 'w1', f: 0.8, dy: -11, text: 'The Amazon ECS task gets an authorization token from Amazon ECR through the ecr.api interface endpoint.' },
+      { n: 2, at: 'w2', f: 0.8, dy: -11, text: 'The task pulls the image manifest from the private repository through the ecr.dkr interface endpoint.' },
+      { n: 3, at: 'w3', f: 0.8, dy: -11, text: 'The task downloads the image layers from Amazon S3 through the S3 gateway endpoint, a route table target.' },
+      { n: 4, at: 'w4', f: 0.8, dy: -11, text: 'The awslogs log driver sends container logs to Amazon CloudWatch Logs through the logs interface endpoint.' },
     ],
     timeline: fit([
       ...leg('w1', 'e1', 0.03, 'ep1', 'ecr', 'task'),
@@ -407,10 +407,10 @@ D.push((() => {
       { id: 'op', d: P(R(op), [424, 264], B(svc)), both: true, label: 'AWS Management Console or AWS CLI', labelAt: 0.3 },
     ],
     steps: [
-      { n: 1, at: 'a1', f: 0.8, dy: -11 },
-      { n: 2, at: 'a2', f: 0.8, dy: 11 },
-      { n: 3, at: 'op', f: 0.93, dy: 0 },
-      { n: 4, at: 'b2', f: 0.45, dy: 11 },
+      { n: 1, at: 'a1', f: 0.8, dy: -11, text: 'The SSM Agent on the instance connects to AWS Systems Manager through the ssm interface endpoint.' },
+      { n: 2, at: 'a2', f: 0.8, dy: 11, text: 'The agent opens a control channel to Session Manager through the ssmmessages interface endpoint and keeps it open.' },
+      { n: 3, at: 'op', f: 0.93, dy: 0, text: 'An operator starts a session from the AWS Management Console or AWS CLI, and Session Manager receives the request.' },
+      { n: 4, at: 'b2', f: 0.45, dy: 11, text: 'Session Manager reaches the agent over its open channel, and the session output returns through the ssmmessages endpoint to the operator. No inbound port is opened.' },
     ],
     timeline: fit([
       { wire: 'a1', t: [0.03, 0.08], ring: 'ep1' }, { wire: 'b1', t: [0.08, 0.14], ring: 'svc' },
@@ -460,10 +460,10 @@ D.push((() => {
       { id: 'r2', d: P(T(ram), [414, 102], R(rep)), dashed: true },
     ],
     steps: [
-      { n: 1, at: 'r1', f: 0.5, dy: -11 },
-      { n: 2, at: 'g1', f: 0.5 },
-      { n: 3, at: 'g2', f: 0.78, dy: 0 },
-      { n: 4, at: 'g3', f: 0.5 },
+      { n: 1, at: 'r1', f: 0.5, dy: -11, text: 'The provider account shares the resource configuration for its Amazon RDS database through AWS RAM, and the consumer account creates a resource endpoint for it.' },
+      { n: 2, at: 'g1', f: 0.5, text: 'The instance in the consumer VPC connects to the database through the resource endpoint.' },
+      { n: 3, at: 'g2', f: 0.78, dy: 0, text: 'AWS PrivateLink carries the connection from the resource endpoint to the resource gateway in the provider VPC.' },
+      { n: 4, at: 'g3', f: 0.5, text: 'The resource gateway forwards the connection to the Amazon RDS database on port 3306, and the response returns the same way.' },
     ],
     timeline: fit([
       { wire: 'r1', t: [0.03, 0.1], kind: 'pk-2', ring: 'ram' }, { wire: 'r2', t: [0.1, 0.18], kind: 'pk-2', ring: 'rep' },
