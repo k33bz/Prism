@@ -1,77 +1,34 @@
 // Databases family for the AWS Architecture kit. Build: node catalog/aws-kit/awd.mjs build catalog/aws-kit/specs/databases.mjs
-// Spec-local helpers emit raw SVG into `extra` for the few things the kit has no primitive for
-// (endpoint pills, caption swaps, storage bars). Every <animate> uses the diagram's own dur, so each
-// diagram still has exactly one clock. Overlays that replace static text carry class "anim", so under
-// reduced motion they are hidden and the static diagram stays complete.
+// Endpoints are pill nodes, cluster volumes are database-toned frames with their copies as nodes,
+// caption swaps are a standing note with an off window plus a timed note, and arrival pulses on the
+// copies are timeline rings. `extra` keeps only the min/max range bracket in db-serverless.
+import { box } from '../place.mjs';
 
-const r2 = (n) => Math.round(n * 100) / 100;
-const pc = (n) => String(r2(n)).replace(/^0\./, '.');
-const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-
-// Build the helper set for a diagram clock of `dur` seconds.
-function kit(dur) {
-  const D = `${dur}s`;
-  const win = (a, b, inner) => `<g class="anim" opacity="0">${inner}<animate attributeName="opacity" dur="${D}" repeatCount="indefinite" calcMode="discrete" values="0;1;0" keyTimes="0;${pc(a)};${pc(b)}"/></g>`;
-  // text block: lines centered (anchor 'middle') or left/right aligned, one tspan per line
-  const text = (x, y, lines, o = {}) => {
-    const ls = Array.isArray(lines) ? lines : [lines];
-    const st = `${o.anchor ? `text-anchor:${o.anchor};` : ''}${o.size ? `font-size:${o.size}px;` : ''}${o.weight ? `font-weight:${o.weight};` : ''}${o.fill ? `fill:${o.fill};` : ''}`;
-    const cls = o.cls || (o.anchor ? '' : 't-c');
-    return `<text${cls ? ` class="${cls}"` : ''}${st ? ` style="${st}"` : ''} x="${r2(x)}" y="${r2(y)}">${ls.map((l, i) => `<tspan x="${r2(x)}"${i ? ` dy="${o.lh || 11}"` : ''}>${esc(l)}</tspan>`).join('')}</text>`;
-  };
-  // opaque patch (panel color, plus an optional tint to match a tinted group) that hides static text under it
-  const patch = (x, y, w, h, tint) => `<rect x="${r2(x)}" y="${r2(y)}" width="${r2(w)}" height="${r2(h)}" style="fill:var(--awd-panel)"/>${tint ? `<rect x="${r2(x)}" y="${r2(y)}" width="${r2(w)}" height="${r2(h)}" fill="${tint}"/>` : ''}`;
-  // endpoint pill (a DNS name is not a service, so it is drawn as a labelled pill, not an icon)
-  const pill = (cx, cy, w, h, lines, o = {}) => {
-    const ls = Array.isArray(lines) ? lines : [lines];
-    const y0 = cy + 3.2 - (ls.length - 1) * 5;
-    return `<rect x="${r2(cx - w / 2)}" y="${r2(cy - h / 2)}" width="${w}" height="${h}" rx="${Math.min(h / 2, 14)}" style="fill:var(--awd-panel2);stroke:var(--awd-wire);stroke-width:1.25"/>`
-      + text(cx, y0, ls[0], { size: o.size || 9, weight: 700 })
-      + ls.slice(1).map((l, i) => text(cx, y0 + 10 * (i + 1), l, { size: 8, weight: 500, fill: 'var(--awd-muted)' })).join('');
-  };
-  // arrival pulse on an arbitrary point (for things drawn in extra, which the kit timeline cannot ring)
-  const pulse = (cx, cy, r0, t, kind) => {
-    const t1 = Math.max(0.001, t - 0.001), t2 = Math.min(0.995, t + 0.12);
-    return `<circle class="${kind === 'pk-2' ? 'ring-2' : 'ring'}" cx="${r2(cx)}" cy="${r2(cy)}" r="${r0}" opacity="0"><animate attributeName="opacity" dur="${D}" repeatCount="indefinite" values="0;0;.9;0;0" keyTimes="0;${pc(t1)};${pc(t)};${pc(t2)};1"/><animate attributeName="r" dur="${D}" repeatCount="indefinite" values="${r0};${r0};${r0};${r2(r0 * 1.45)};${r2(r0 * 1.45)}" keyTimes="0;${pc(t1)};${pc(t)};${pc(t2)};1"/></circle>`;
-  };
-  return { win, text, patch, pill, pulse };
-}
-
-// the official generic Database icon (dark/light colorway pair) for things drawn inside `extra`
-const dbIco = (x, y, s) => `<use class="cw-d" href="#aws-res-database-dark" x="${r2(x)}" y="${r2(y)}" width="${s}" height="${s}"/><use class="cw-l" href="#aws-res-database-light" x="${r2(x)}" y="${r2(y)}" width="${s}" height="${s}"/>`;
-
-const TINT_PRIV = 'rgba(0,164,166,.10)'; // matches the kit's private-subnet fill, for patches inside subnets
+// an endpoint (a DNS name, not a service) as a pill node placed by center
+const pill = (id, cx, cy, w, h, label, o = {}) => box(id, cx, cy, w, h, label, { kind: 'pill', ...o });
+// the official generic Database icon as one copy of the data on a cluster volume, placed by center
+const copy = (id, cx, cy, s) => ({ id, icon: 'aws-res-database', x: cx - s / 2, y: cy - s / 2, size: s });
+// a cluster volume: a solid database-toned frame (its copies are ordinary nodes inside it)
+const volume = (x, y, w, h, label = '') => ({ kind: 'gen', x, y, w, h, label, tone: 'database', fill: true, dashed: false });
 
 // ---------------------------------------------------------------------------------------------
 // db-multiaz: Amazon RDS Multi-AZ (instance deployment) with failover
 // ---------------------------------------------------------------------------------------------
 function multiAz() {
-  const K = kit(9);
   // geometry
   const azA = { x: 196, y: 84, w: 252, h: 78 }, azB = { x: 196, y: 188, w: 252, h: 78 };
   const subA = { x: 204, y: 106, w: 236, h: 50 }, subB = { x: 204, y: 210, w: 236, h: 50 };
   const ix = 326; // db icon x (right part of the subnet, clear of the subnet label)
   const pA = { x: ix, y: subA.y + 5 }, pB = { x: ix, y: subB.y + 5 };
   const cx = ix + 20, cyA = pA.y + 20, cyB = pB.y + 20;
-  const pillC = { x: 145, y: 183, w: 74, h: 30 };
-  const wApp = 'M84,183 H104';
-  const wPrim = `M${pillC.x},${pillC.y - 15} V${cyA} H${ix - 4}`;
-  const wStby = `M${pillC.x},${pillC.y + 15} V${cyB} H${ix - 4}`;
+  const ep = { cx: 145, cy: 183, w: 74, h: 30 };
+  const wPrim = `M${ep.cx},${ep.cy - 15} V${cyA} H${ix - 4}`;
+  const wStby = `M${ep.cx},${ep.cy + 15} V${cyB} H${ix - 4}`;
   const wSync = `M${cx},${pA.y + 42} V${pB.y - 4}`;
-
-  const extra = [
-    // the DB instance endpoint (a DNS name, so a labelled pill rather than an icon)
-    K.pill(pillC.x, pillC.y, pillC.w, pillC.h, ['DB instance', 'endpoint']),
-    // side labels for the two DB instances (inside the subnets, right of the icons)
-    K.text(ix + 46, cyA - 2, ['Primary', 'DB instance'], { anchor: 'start' }),
-    K.text(ix + 46, cyB - 2, ['Standby', 'DB instance'], { anchor: 'start' }),
-    K.win(0.66, 0.97, K.patch(ix + 44, cyB - 12, 66, 26, TINT_PRIV) + K.text(ix + 46, cyB - 2, ['Primary', '(promoted)'], { anchor: 'start', fill: 'var(--awd-pk)' })),
-    // wire label: synchronous replication (right-aligned left of the vertical wire, inside the AZ gap)
-    K.text(cx - 8, 178.5, 'Synchronous replication', { cls: 't-wire', anchor: 'end' }),
-    // narration (left zone)
-    K.text(34, 98, ['The endpoint CNAME points to', 'the primary. Every write is', 'replicated synchronously.'], { anchor: 'start', size: 8.5, fill: 'var(--awd-muted)', lh: 10.5 }),
-    K.win(0.66, 0.97, K.patch(30, 88, 162, 40) + K.text(34, 98, ['AZ a fails: RDS promotes the', 'standby and flips the endpoint', 'CNAME (typically 60 to 120 s).'], { anchor: 'start', size: 8.5, fill: 'var(--awd-pk)', lh: 10.5 })),
-  ].join('');
+  // the standby's side label, one note per line so it matches the primary's node label; it swaps
+  // to "Primary (promoted)" while AZ a is down
+  const side = (y, text, o) => ({ x: ix + 46, y, text, kind: 'label', anchor: 'start', ...o });
+  const fail = [0.66, 0.97];
 
   return {
     id: 'db-multiaz',
@@ -88,19 +45,21 @@ function multiAz() {
     ],
     nodes: [
       { id: 'app', icon: 'aws-res-ec2-instance', x: 40, y: 163, label: 'Application' },
-      { id: 'primary', icon: 'aws-res-aurora-rds-instance', x: pA.x, y: pA.y },
+      pill('ep', ep.cx, ep.cy, ep.w, ep.h, 'DB instance endpoint', { wrap: 12 }),
+      { id: 'primary', icon: 'aws-res-aurora-rds-instance', x: pA.x, y: pA.y, label: 'Primary DB instance', labelPos: 'r', wrap: 10 },
       { id: 'standby', icon: 'aws-res-aurora-rds-instance', x: pB.x, y: pB.y },
     ],
     wires: [
-      { id: 'w-app', d: wApp },
+      { id: 'w-app', from: 'app', to: 'ep' },
       { id: 'w-prim', d: wPrim },
       { id: 'w-stby', d: wStby, dashed: true },
-      { id: 'w-sync', d: wSync },
+      { id: 'w-sync', d: wSync, label: 'Synchronous replication', labelAnchor: 'end', labelDx: -8, labelDy: -3.5 },
     ],
     steps: [
       { n: 1, at: 'w-app', f: 0.5, text: 'The application connects to the DB instance endpoint, a DNS name whose CNAME points to the primary DB instance.' },
       { n: 2, x: 157, y: 150, text: 'The connection reaches the primary DB instance in Availability Zone a, which serves all reads and writes.' },
-      { n: 3, x: 357, y: 175, text: 'The primary replicates each write synchronously to the standby in Availability Zone b. If AZ a fails, RDS promotes the standby and points the endpoint CNAME to it.' },
+      { n: 3, x: 357, y: 175, text: 'The primary replicates each write synchronously to the standby DB instance in Availability Zone b, which serves no traffic while the primary is healthy.' },
+      { n: 4, x: 157, y: 216, text: 'If Availability Zone a fails, RDS promotes the standby to primary and points the endpoint CNAME to it, typically within 60 to 120 seconds. The application reconnects through the same endpoint.' },
     ],
     timeline: [
       { wire: 'w-app', t: [0.03, 0.10] },
@@ -117,7 +76,13 @@ function multiAz() {
       { fade: 'w-sync', t: [0.52, 0.97] },
       { glow: 'w-stby', t: [0.66, 0.97] },
     ],
-    extra,
+    notes: [
+      side(cyB - 2, 'Standby DB', { off: fail }), side(cyB + 9, 'instance', { off: fail }),
+      side(cyB - 2, 'Primary', { tone: 'request', t: fail }), side(cyB + 9, '(promoted)', { tone: 'request', t: fail }),
+      // narration (left zone), swapped during the outage
+      { x: 34, y: 98, text: 'The endpoint CNAME points to\nthe primary. Every write is\nreplicated synchronously.', anchor: 'start', size: 8.5, off: fail },
+      { x: 34, y: 98, text: 'AZ a fails: RDS promotes the\nstandby and flips the endpoint\nCNAME (typically 60 to 120 s).', anchor: 'start', size: 8.5, tone: 'request', t: fail },
+    ],
   };
 }
 
@@ -125,12 +90,10 @@ function multiAz() {
 // db-cluster: RDS Multi-AZ DB cluster (one writer, two readable standbys, three AZs)
 // ---------------------------------------------------------------------------------------------
 function cluster() {
-  const K = kit(9);
   const colX = [100, 219, 338], colW = 112, cx = colX.map((x) => x + 56);
   const azY = 128, azH = 134, icY = 156, lblY = icY + 52;
-  const cP = { x: 160, y: 106, w: 96, h: 28 };      // cluster endpoint pill
+  const cP = { x: 160, y: 106, w: 96, h: 28 };      // cluster endpoint pill (center)
   const rP = { x: 334.5, y: 80, w: 180, h: 28 };    // reader endpoint pill (spans the two reader columns)
-  const wAppC = `M86,106 H${cP.x - cP.w / 2 - 4}`;
   const wAppR = `M86,106 H96 V${rP.y} H${rP.x - rP.w / 2 - 4}`;
   const wCW = `M${cx[0]},${cP.y + cP.h / 2} V${icY - 4}`;
   const wRb = `M${cx[1]},${rP.y + rP.h / 2} V${icY - 4}`;
@@ -139,12 +102,6 @@ function cluster() {
   const yr = 228, up = lblY + 9;
   const rb = `M${cx[0]},${up} V${yr} H${cx[1]} V${up}`;
   const rc = `M${cx[0]},${up} V${yr} H${cx[2]} V${up}`;
-
-  const extra = [
-    K.pill(cP.x, cP.y, cP.w, cP.h, ['Cluster endpoint', 'read/write']),
-    K.pill(rP.x, rP.y, rP.w, rP.h, ['Reader endpoint', 'read-only, load balanced']),
-    K.text(cx[1], yr + 14, ['Semisynchronous', 'replication'], { cls: 't-wire' }),
-  ].join('');
 
   return {
     id: 'db-cluster',
@@ -161,12 +118,14 @@ function cluster() {
     ],
     nodes: [
       { id: 'app', icon: 'aws-res-ec2-instance', x: 42, y: 86, label: 'Application' },
+      pill('cep', cP.x, cP.y, cP.w, cP.h, 'Cluster endpoint', { sub: 'read/write', wrap: 20 }),
+      pill('rep', rP.x, rP.y, rP.w, rP.h, 'Reader endpoint', { sub: 'read-only, load balanced' }),
       { id: 'writer', icon: 'aws-res-aurora-rds-instance', x: cx[0] - 20, y: icY, label: 'Writer DB instance', wrap: 20 },
       { id: 'rd1', icon: 'aws-res-aurora-rds-instance', x: cx[1] - 20, y: icY, label: 'Reader DB instance', wrap: 20 },
       { id: 'rd2', icon: 'aws-res-aurora-rds-instance', x: cx[2] - 20, y: icY, label: 'Reader DB instance', wrap: 20 },
     ],
     wires: [
-      { id: 'w-appc', d: wAppC }, { id: 'w-appr', d: wAppR },
+      { id: 'w-appc', from: 'app', to: 'cep' }, { id: 'w-appr', d: wAppR },
       { id: 'w-cw', d: wCW }, { id: 'w-rb', d: wRb }, { id: 'w-rc', d: wRc },
       { id: 'rep-b', d: rb, dashed: true }, { id: 'rep-c', d: rc, dashed: true },
     ],
@@ -186,152 +145,161 @@ function cluster() {
       { wire: 'w-appr', t: [0.69, 0.77] },
       { wire: 'w-rc', t: [0.78, 0.86], ring: 'rd2' },
     ],
-    extra,
+    notes: [
+      { x: cx[1], y: yr + 14, text: 'Semisynchronous\nreplication', size: 8.5 },
+    ],
   };
 }
 
 // ---------------------------------------------------------------------------------------------
-// db-aurora: Aurora cluster, writer + readers over one shared cluster volume (six copies, two per AZ)
+// db-aurora: Aurora cluster in a VPC, writer + readers over one shared cluster volume (six copies, two per AZ)
 // ---------------------------------------------------------------------------------------------
 function aurora() {
-  const K = kit(8);
   const colX = [100, 219, 338], colW = 112, cx = colX.map((x) => x + 56);
-  const azY = 110, azH = 166, icY = 138, lblY = icY + 52;
-  const barY = 222, barH = 46;
-  const cP = { x: 160, y: 88, w: 96, h: 28 };
-  const rP = { x: 334.5, y: 64, w: 180, h: 28 };
-  const wAppC = `M86,88 H${cP.x - cP.w / 2 - 4}`;
-  const wAppR = `M86,88 H96 V${rP.y} H${rP.x - rP.w / 2 - 4}`;
+  const azY = 124, azH = 144, icY = 148, lblY = icY + 52;
+  const barY = 226, barH = 36, cs = 24;
+  const cP = { x: 160, y: 102, w: 96, h: 26 };
+  const rP = { x: 334.5, y: 78, w: 180, h: 26 };
+  const wAppR = `M86,${cP.y} H96 V${rP.y} H${rP.x - rP.w / 2 - 4}`;
   const wCW = `M${cx[0]},${cP.y + cP.h / 2} V${icY - 4}`;
   const wRb = `M${cx[1]},${rP.y + rP.h / 2} V${icY - 4}`;
   const wRc = `M${cx[2]},${rP.y + rP.h / 2} V${icY - 4}`;
-  const wWrite = `M${cx[0]},${lblY + 8} V${barY - 3}`;
+  const wWrite = `M${cx[0]},${lblY + 8} V${barY - 4}`;
   const wRead1 = `M${cx[1]},${barY - 2} V${lblY + 8}`;
   const wRead2 = `M${cx[2]},${barY - 2} V${lblY + 8}`;
-  const copyY = barY + 11, cs = 24;
-  const copies = []; // [cx, cy] of the six copies, two per AZ
-  for (let i = 0; i < 3; i++) { copies.push([cx[i] - 15, copyY + cs / 2], [cx[i] + 15, copyY + cs / 2]); }
-
-  const extra = [
-    K.pill(cP.x, cP.y, cP.w, cP.h, ['Cluster endpoint', 'writer']),
-    K.pill(rP.x, rP.y, rP.w, rP.h, ['Reader endpoint', 'load balances the readers']),
-    // the cluster volume: one bar crossing the three AZ columns (opaque so the AZ borders pass behind it)
-    `<rect x="${colX[0] + 4}" y="${barY}" width="${colX[2] + colW - 4 - (colX[0] + 4)}" height="${barH}" rx="6" style="fill:color-mix(in srgb,#C925D1 16%,var(--awd-panel));stroke:#C925D1;stroke-width:1.4"/>`,
-    ...copies.map(([x, y]) => dbIco(x - cs / 2, y - cs / 2, cs)),
-    K.text(94, barY + 17, ['Aurora cluster', 'volume'], { anchor: 'end', size: 9.5, weight: 700, lh: 11 }),
-    K.text(94, barY + 41, '6 copies, 3 AZs', { anchor: 'end', size: 8.5, fill: 'var(--awd-muted)' }),
-    // the write fans out to all six copies, staggered by AZ
-    ...[0, 1, 2].map((i) => K.pulse(cx[i] - 15, copyY + cs / 2, 14, 0.30 + 0.015 * i, 'pk-2') + K.pulse(cx[i] + 15, copyY + cs / 2, 14, 0.30 + 0.015 * i, 'pk-2')),
-  ].join('');
+  const copyCy = barY + barH / 2;
+  // the six copies, two per AZ column
+  const copies = [0, 1, 2].flatMap((i) => [copy(`copy${2 * i}`, cx[i] - 15, copyCy, cs), copy(`copy${2 * i + 1}`, cx[i] + 15, copyCy, cs)]);
 
   return {
     id: 'db-aurora',
     name: 'Amazon Aurora DB Cluster',
-    desc: 'A writer and two readers in three Availability Zones share one cluster volume that keeps six copies of the data, two per AZ. Packets show a write fanning out to all six copies, then reads served from the same volume.',
+    desc: 'A writer and two readers in three Availability Zones of a VPC share one cluster volume that keeps six copies of the data, two per AZ. Packets show a write fanning out to all six copies, then reads served from the same volume.',
     w: 480, h: 300, dur: 8,
+    // the volume frame has no header (no label, no icon), so its copies sit centered in it
+    lintAllow: ['header-band:node copy'],
     groups: [
       { kind: 'cloud', x: 8, y: 8, w: 464, h: 284 },
       { kind: 'region', x: 16, y: 34, w: 448, h: 250, label: 'Region' },
+      { kind: 'vpc', x: 24, y: 60, w: 432, h: 216 },
       { kind: 'az', x: colX[0], y: azY, w: colW, h: azH, label: 'AZ a' },
       { kind: 'az', x: colX[1], y: azY, w: colW, h: azH, label: 'AZ b' },
       { kind: 'az', x: colX[2], y: azY, w: colW, h: azH, label: 'AZ c' },
+      // the cluster volume crosses the three AZ columns
+      volume(colX[0] + 4, barY, colX[2] + colW - 4 - (colX[0] + 4), barH),
     ],
     nodes: [
-      { id: 'app', icon: 'aws-res-ec2-instance', x: 42, y: 68, label: 'Application' },
+      { id: 'app', icon: 'aws-res-ec2-instance', x: 42, y: cP.y - 20, label: 'Application' },
+      pill('cep', cP.x, cP.y, cP.w, cP.h, 'Cluster endpoint', { sub: 'writer', wrap: 20 }),
+      pill('rep', rP.x, rP.y, rP.w, rP.h, 'Reader endpoint', { sub: 'load balances the readers' }),
       { id: 'writer', icon: 'aws-res-aurora-instance-alternate', x: cx[0] - 20, y: icY, label: 'Writer DB instance', wrap: 20 },
       { id: 'rd1', icon: 'aws-res-aurora-instance-alternate', x: cx[1] - 20, y: icY, label: 'Reader DB instance', wrap: 20 },
       { id: 'rd2', icon: 'aws-res-aurora-instance-alternate', x: cx[2] - 20, y: icY, label: 'Reader DB instance', wrap: 20 },
+      ...copies,
     ],
     wires: [
-      { id: 'w-appc', d: wAppC }, { id: 'w-appr', d: wAppR },
+      { id: 'w-appc', from: 'app', to: 'cep' }, { id: 'w-appr', d: wAppR },
       { id: 'w-cw', d: wCW }, { id: 'w-rb', d: wRb }, { id: 'w-rc', d: wRc },
       { id: 'w-write', d: wWrite },
       { id: 'w-read1', d: wRead1, dashed: true }, { id: 'w-read2', d: wRead2, dashed: true },
     ],
     steps: [
-      { n: 1, x: 100, y: 98, text: 'The application sends writes to the cluster endpoint, which always connects to the writer DB instance.' },
-      { n: 2, x: 168, y: 210, text: 'The writer DB instance writes to the shared Aurora cluster volume, which keeps six copies of the data, two in each of three AZs.' },
-      { n: 3, x: 150, y: 53, text: 'The application reads through the reader endpoint, which load balances across the reader DB instances. They read from the same cluster volume.' },
+      { n: 1, x: 100, y: 113, text: 'The application sends writes to the cluster endpoint, which always connects to the writer DB instance.' },
+      { n: 2, x: 168, y: 214, text: 'The writer DB instance writes to the shared Aurora cluster volume, which keeps six copies of the data, two in each of three AZs.' },
+      { n: 3, x: 226, y: 90, text: 'The application reads through the reader endpoint, which load balances across the reader DB instances. They read from the same cluster volume.' },
     ],
     timeline: [
       { wire: 'w-appc', t: [0.04, 0.10] },
       { wire: 'w-cw', t: [0.11, 0.19], ring: 'writer' },
       { wire: 'w-write', t: [0.21, 0.29], kind: 'pk-2' },
+      // the write fans out to all six copies, staggered by AZ
+      ...copies.map((c, k) => { const t = 0.30 + 0.015 * Math.floor(k / 2); return { ring: c.id, t: [t - 0.01, t], kind: 'pk-2' }; }),
       { wire: 'w-appr', t: [0.44, 0.51] },
       { wire: 'w-rb', t: [0.52, 0.59], ring: 'rd1' },
       { wire: 'w-rc', t: [0.52, 0.60], ring: 'rd2' },
       { wire: 'w-read1', t: [0.63, 0.71], kind: 'pk-2', ring: 'rd1' },
       { wire: 'w-read2', t: [0.63, 0.72], kind: 'pk-2', ring: 'rd2' },
     ],
-    extra,
+    notes: [
+      { x: 96, y: barY + 14, text: 'Aurora cluster\nvolume', kind: 'label', anchor: 'end', size: 9.5, weight: 'bold' },
+      { x: 96, y: barY + 34, text: '6 copies, 3 AZs', anchor: 'end', size: 8.5 },
+    ],
   };
 }
 
 // ---------------------------------------------------------------------------------------------
-// db-serverless: Aurora Serverless v2 capacity (ACUs) following load, using the kit's appear effect
+// db-serverless: an application tier in a VPC querying an Aurora Serverless v2 writer whose capacity
+// (ACUs) follows the load, using the kit's appear effect
 // ---------------------------------------------------------------------------------------------
 function serverless() {
-  const K = kit(9);
-  const ts = 22, tileX = (k) => 212 + 30 * k, tileY = 105;
-  const ctr = (tileX(0) + tileX(7) + ts) / 2; // centre of the tile row
-  const mutedC = (x, y, t, size = 8.5) => K.text(x, y, t, { anchor: 'middle', size, fill: 'var(--awd-muted)' });
-  const tiles = Array.from({ length: 8 }, (_, k) => ({ id: 't' + k, icon: 'aws-svc-aurora', x: tileX(k), y: tileY, size: ts }));
-  // tile k (2..7) is shown while capacity is at least k+1 tiles: nested windows, rising then falling
-  const appear = [[0.12, 0.90], [0.18, 0.84], [0.24, 0.78], [0.30, 0.72], [0.36, 0.66], [0.42, 0.60]].map((t, i) => ({ appear: 't' + (i + 2), t, ghost: true }));
-  // request load: sparse, ramping, dense at the peak, then easing off
+  const ts = 22, n = 7, tileX = (k) => 240 + 28 * k, tileY = 129;
+  const x0 = tileX(0), x1 = tileX(n - 1) + ts, ctr = (x0 + x1) / 2; // tile row and its centre
+  const tiles = Array.from({ length: n }, (_, k) => ({ id: 't' + k, icon: 'aws-svc-aurora', x: tileX(k), y: tileY, size: ts }));
+  // tile k (2..6) is shown while capacity is at least k+1 tiles: nested windows, rising then falling
+  const appear = [[0.12, 0.90], [0.19, 0.83], [0.26, 0.76], [0.33, 0.69], [0.40, 0.62]].map((t, i) => ({ appear: 't' + (i + 2), t, ghost: true }));
+  // request load: sparse, ramping, dense at the peak, then easing off; each request crosses the
+  // application (first half of its window) to the writer (second half)
   const load = [[0.03, 0.10], [0.15, 0.22], [0.21, 0.28], [0.26, 0.33], [0.30, 0.37], [0.34, 0.41], [0.38, 0.45], [0.41, 0.48],
     [0.44, 0.51], [0.47, 0.54], [0.50, 0.57], [0.53, 0.60], [0.62, 0.69], [0.68, 0.75], [0.74, 0.81], [0.82, 0.89]];
   const ringAt = new Set([0, 4, 8, 12, 15]);
-  const cap = (a, b, t) => K.win(a, b, K.patch(ctr - 112, 157, 224, 14) + K.text(ctr, 166, t, { anchor: 'middle', size: 8.5, fill: 'var(--awd-pk)' }));
-  const extra = [
-    mutedC(ctr, 98, 'Capacity in ACUs, adjusted in 0.5 ACU steps'),
-    // configured capacity range: bracket under the tiles with min / max
-    `<path class="w" d="M${tileX(0)},129 V134 H${tileX(7) + ts} V129" style="stroke-width:1"/>`,
-    K.text(tileX(0), 146, 'min', { anchor: 'start', size: 8.5, fill: 'var(--awd-muted)' }),
-    K.text(tileX(7) + ts, 146, 'max', { anchor: 'end', size: 8.5, fill: 'var(--awd-muted)' }),
-    // shared cluster volume under the writer (storage is separate from compute)
-    `<rect x="108" y="184" width="332" height="24" rx="6" style="fill:color-mix(in srgb,#C925D1 16%,var(--awd-panel));stroke:#C925D1;stroke-width:1.4"/>`,
-    K.text(274, 200, 'Cluster volume: shared storage that grows automatically', { anchor: 'middle', size: 9, weight: 600 }),
-    // load narration: static base text, swapped over by the live phases
-    K.text(ctr, 166, 'Capacity follows the load, between min and max', { anchor: 'middle', size: 8.5, fill: 'var(--awd-muted)' }),
-    cap(0.005, 0.12, 'Low load: minimum capacity'),
-    cap(0.12, 0.40, 'Load rising: capacity scales up in place'),
-    cap(0.40, 0.62, 'Peak load: capacity at its maximum'),
-    cap(0.62, 0.90, 'Load falling: capacity scales back down'),
-    cap(0.90, 0.995, 'Low load: minimum capacity'),
-  ].join('');
+  const mid = (a, b) => Math.round((a + b) * 500) / 1000;
+  // load narration: the standing caption gives way to the live phases for the whole cycle
+  const phase = (a, b, text) => ({ x: ctr, y: 190, text, size: 8.5, tone: 'request', t: [a, b] });
+  const volY = 216, gY = 84, gH = volY + 24 + 10 - gY;
 
   return {
     id: 'db-serverless',
     name: 'Amazon Aurora Serverless v2 Scaling',
-    desc: 'An Aurora Serverless v2 writer scales its capacity in ACUs in place, between a configured minimum and maximum, while storage stays on the shared cluster volume. Capacity tiles appear as the load rises and drop away as it falls.',
-    w: 480, h: 242, dur: 9,
+    desc: 'Users reach an application in a VPC that queries an Aurora Serverless v2 writer, which scales its capacity in ACUs in place, between a configured minimum and maximum, while storage stays on the shared cluster volume. Capacity tiles appear as the load rises and drop away as it falls.',
+    w: 480, h: gY + gH + 32, dur: 9,
     groups: [
-      { kind: 'cloud', x: 76, y: 8, w: 396, h: 226 },
-      { kind: 'region', x: 84, y: 34, w: 380, h: 192, label: 'Region' },
-      { kind: 'gen', x: 92, y: 60, w: 364, h: 158, label: 'Aurora DB cluster' },
+      { kind: 'cloud', x: 60, y: 8, w: 412, h: gY + gH + 16 },
+      { kind: 'region', x: 68, y: 34, w: 396, h: gY + gH - 18, label: 'Region' },
+      { kind: 'vpc', x: 76, y: 60, w: 380, h: gY + gH - 52 },
+      { kind: 'gen', x: 160, y: gY, w: 288, h: gH, label: 'Aurora DB cluster' },
+      // shared cluster volume under the writer (storage is separate from compute)
+      volume(172, volY, 264, 24, 'Cluster volume: shared storage that grows automatically'),
     ],
     nodes: [
-      { id: 'users', icon: 'aws-res-users', x: 8, y: 96, label: 'Users' },
-      { id: 'writer', icon: 'aws-res-aurora-instance-alternate', x: 130, y: 96, label: 'Writer DB instance', wrap: 20, sub: 'db.serverless' },
+      { id: 'users', icon: 'aws-res-users', x: 8, y: 120, label: 'Users' },
+      { id: 'app', icon: 'aws-res-ec2-instance', x: 92, y: 120, label: 'Application' },
+      { id: 'writer', icon: 'aws-res-aurora-instance-alternate', x: 176, y: 120, label: 'Writer DB instance', wrap: 10, sub: 'db.serverless' },
       ...tiles,
     ],
     wires: [
-      { id: 'w-in', d: 'M52,116 H126' },
-      { id: 'w-vol', d: 'M150,167 V181' },
+      { id: 'w-in', from: 'users', to: 'app' },
+      { id: 'w-app', from: 'app', to: 'writer' },
+      { id: 'w-vol', d: `M196,200 V${volY - 3}` },
     ],
     steps: [
-      { n: 1, x: 62, y: 104, text: 'Users send requests to the writer DB instance. As the load rises and falls, Aurora Serverless v2 scales its capacity in place between the minimum and maximum ACUs.' },
-      { n: 2, x: 164, y: 174, text: 'The writer DB instance reads and writes the shared cluster volume. Storage is separate from compute and grows automatically.' },
+      { n: 1, at: 'w-app', f: 0.3, text: 'Users send requests to the application on Amazon EC2 in the VPC, which sends its queries to the Aurora Serverless v2 writer DB instance.' },
+      { n: 2, x: 228, y: 140, text: 'As the load rises and falls, Aurora Serverless v2 scales the writer\'s capacity in place, in 0.5 ACU steps, between the minimum and maximum ACUs.' },
+      { n: 3, x: 210, y: 206, text: 'The writer DB instance reads and writes the shared cluster volume. Storage is separate from compute and grows automatically.' },
     ],
     timeline: [
-      ...load.map((t, i) => ({ wire: 'w-in', t, ...(ringAt.has(i) ? { ring: 'writer' } : {}) })),
+      ...load.flatMap((t, i) => [
+        { wire: 'w-in', t: [t[0], mid(t[0], t[1])] },
+        { wire: 'w-app', t: [mid(t[0], t[1]), t[1]], ...(ringAt.has(i) ? { ring: 'writer' } : {}) },
+      ]),
       { wire: 'w-vol', t: [0.30, 0.36], kind: 'pk-2' },
       { wire: 'w-vol', t: [0.50, 0.56], kind: 'pk-2' },
       { wire: 'w-vol', t: [0.70, 0.76], kind: 'pk-2' },
     ],
     effects: appear,
-    extra,
+    notes: [
+      { x: ctr, y: 122, text: 'Capacity in ACUs, adjusted in 0.5 ACU steps', size: 8.5 },
+      { x: x0, y: 170, text: 'min', anchor: 'start', size: 8.5 },
+      { x: x1, y: 170, text: 'max', anchor: 'end', size: 8.5 },
+      { x: ctr, y: 190, text: 'Capacity follows the load, between min and max', size: 8.5, off: [0.005, 0.995] },
+      phase(0.005, 0.12, 'Low load: minimum capacity'),
+      phase(0.12, 0.40, 'Load rising: capacity scales up in place'),
+      phase(0.40, 0.62, 'Peak load: capacity at its maximum'),
+      phase(0.62, 0.90, 'Load falling: capacity scales back down'),
+      phase(0.90, 0.995, 'Low load: minimum capacity'),
+    ],
+    // the min/max range bracket under the capacity tiles: a dimension line, not a connection, so it is
+    // not a wire, and the kit has no bracket primitive
+    extra: `<path class="w" d="M${x0},${tileY + 24} V${tileY + 29} H${x1} V${tileY + 24}" style="stroke-width:1"/>`,
   };
 }
 
@@ -339,17 +307,8 @@ function serverless() {
 // db-proxy: RDS Proxy pooling connections from a Lambda fleet
 // ---------------------------------------------------------------------------------------------
 function proxy() {
-  const K = kit(8);
   const lx = 56, ls = 26, lcy = [131, 163, 195, 227], bus = 150, pcy = 179;
   const stub = (i) => `M${lx + ls + 2},${lcy[i]} H${bus} V${pcy}`;   // four stubs share the trunk into the proxy
-  const muted = (x, y, t, anchor = 'middle') => K.text(x, y, t, { anchor, size: 8.5, fill: 'var(--awd-muted)' });
-  const extra = [
-    K.text(276, 58, ['AWS Secrets', 'Manager'], { anchor: 'start' }),
-    muted(258, 122, 'credentials', 'start'),
-    K.text(lx + ls / 2, 252, ['AWS Lambda', 'functions'], { anchor: 'middle' }),
-    muted(142, 121, 'Many app connections'),
-    muted(326, 165, 'Pooled connections'),
-  ].join('');
   const L = [0, 1, 2, 3];
   return {
     id: 'db-proxy',
@@ -362,16 +321,17 @@ function proxy() {
       { kind: 'vpc', x: 24, y: 92, w: 432, h: 184 },
     ],
     nodes: [
-      { id: 'sec', icon: 'aws-svc-secrets-manager', x: 230, y: 42 },
-      ...L.map((i) => ({ id: 'l' + i, icon: 'aws-svc-lambda', x: lx, y: lcy[i] - ls / 2, size: ls })),
+      { id: 'sec', icon: 'aws-svc-secrets-manager', x: 230, y: 42, label: 'AWS Secrets Manager', labelPos: 'r', wrap: 11 },
+      // the bottom function carries the label for the whole fleet
+      ...L.map((i) => ({ id: 'l' + i, icon: 'aws-svc-lambda', x: lx, y: lcy[i] - ls / 2, size: ls, ...(i === 3 ? { label: 'AWS Lambda functions', wrap: 11 } : {}) })),
       { id: 'proxy', icon: 'aws-res-rds-proxy-instance-alternate', x: 230, y: 159, label: 'Amazon RDS Proxy', sub: 'connection pooling' },
       { id: 'db', icon: 'aws-res-aurora-rds-instance', x: 380, y: 159, label: 'RDS or Aurora DB instance' },
     ],
     wires: [
-      { id: 'sec', d: 'M250,84 V155', dashed: true },
+      { id: 'sec', d: 'M250,84 V155', dashed: true, label: 'credentials', labelAnchor: 'start', labelDx: 8, labelDy: 2.5 },
       ...L.map((i) => ({ id: 's' + i, d: stub(i), arrow: false })),
       { id: 'merge', d: `M${bus},${pcy} H226` },
-      { id: 'o1', d: 'M276,173 H376' },
+      { id: 'o1', d: 'M276,173 H376', label: 'Pooled connections', labelDy: -8 },
       { id: 'o2', d: 'M276,185 H376' },
     ],
     steps: [
@@ -391,7 +351,9 @@ function proxy() {
       { wire: 'merge', t: [0.66, 0.74], kind: 'pk-2', reverse: true },
       ...L.map((i) => ({ wire: 's' + i, t: [0.72 + 0.01 * i, 0.80 + 0.01 * i], kind: 'pk-2', reverse: true, ring: 'l' + i })),
     ],
-    extra,
+    notes: [
+      { x: 142, y: 121, text: 'Many app connections' },
+    ],
   };
 }
 
@@ -399,16 +361,8 @@ function proxy() {
 // db-cache: ElastiCache cache-aside in front of RDS (a miss, then a hit)
 // ---------------------------------------------------------------------------------------------
 function cache() {
-  const K = kit(10);
-  const mutedS = (x, y, lines) => K.text(x, y, lines, { anchor: 'start', size: 8.5, fill: 'var(--awd-muted)', lh: 10.5 });
-  const note = (a, b, lines) => K.win(a, b, K.patch(96, 222, 150, 38) + K.text(100, 232, lines, { anchor: 'start', size: 8.5, fill: 'var(--awd-pk)', lh: 10.5 }));
-  const extra = [
-    K.text(308, 114, 'GET / SET with TTL', { cls: 't-wire' }),
-    K.text(308, 204, 'SQL query on a miss', { cls: 't-wire' }),
-    mutedS(100, 232, ['Cache-aside: read the cache first,', 'query RDS only on a miss, then', 'fill the cache for the next read.']),
-    note(0.005, 0.60, ['Request 1, cache miss: read', 'RDS, then fill the cache.']),
-    note(0.60, 0.995, ['Request 2, cache hit: answered', 'from memory, RDS not touched.']),
-  ].join('');
+  // the cache-aside caption, swapped for the live request narration through the whole cycle
+  const say = (text, o) => ({ x: 100, y: 232, text, anchor: 'start', size: 8.5, ...o });
   return {
     id: 'db-cache',
     name: 'Amazon ElastiCache Cache-Aside',
@@ -427,8 +381,9 @@ function cache() {
     ],
     wires: [
       { id: 'u-app', d: 'M58,156 H146' },
-      { id: 'a-cache', d: 'M194,148 H260 V102 H356' },
-      { id: 'a-db', d: 'M194,164 H260 V210 H356' },
+      // labels at x 308 on the last run (66 + 46 + 48 of 208 along the path)
+      { id: 'a-cache', d: 'M194,148 H260 V102 H356', label: 'GET / SET with TTL', labelAt: 160 / 208, labelDy: 12 },
+      { id: 'a-db', d: 'M194,164 H260 V210 H356', label: 'SQL query on a miss', labelAt: 160 / 208, labelDy: -6 },
     ],
     steps: [
       { n: 1, x: 121, y: 144, text: 'Users send a request to the application.' },
@@ -450,7 +405,11 @@ function cache() {
       { wire: 'a-cache', t: [0.77, 0.84], kind: 'pk-2', reverse: true },
       { wire: 'u-app', t: [0.85, 0.90], kind: 'pk-2', reverse: true },
     ],
-    extra,
+    notes: [
+      say('Cache-aside: read the cache first,\nquery RDS only on a miss, then\nfill the cache for the next read.', { off: [0.005, 0.995] }),
+      say('Request 1, cache miss: read\nRDS, then fill the cache.', { tone: 'request', t: [0.005, 0.60] }),
+      say('Request 2, cache hit: answered\nfrom memory, RDS not touched.', { tone: 'request', t: [0.60, 0.995] }),
+    ],
   };
 }
 
@@ -458,11 +417,6 @@ function cache() {
 // db-ddb-global: DynamoDB global tables, active-active between two Regions
 // ---------------------------------------------------------------------------------------------
 function ddbGlobal() {
-  const K = kit(10);
-  const extra = [
-    K.text(348, 161.5, 'Asynchronous replication', { cls: 't-wire', anchor: 'end' }),
-    K.text(380, 161.5, 'Last writer wins', { cls: 't-wire', anchor: 'start' }),
-  ].join('');
   const row = (suffix, cy) => ([
     { id: 'users-' + suffix, icon: 'aws-res-users', x: 14, y: cy - 20, label: 'Users' },
     { id: 'fn-' + suffix, icon: 'aws-svc-lambda', x: 164, y: cy - 20, label: 'AWS Lambda' },
@@ -482,7 +436,7 @@ function ddbGlobal() {
     wires: [
       { id: 'ua', d: 'M58,82 H160' }, { id: 'fa', d: 'M208,82 H340' },
       { id: 'ub', d: 'M58,218 H160' }, { id: 'fb', d: 'M208,218 H340' },
-      { id: 'repl', d: 'M364,134 V194', both: true, dashed: true },
+      { id: 'repl', d: 'M364,134 V194', both: true, dashed: true, label: 'Asynchronous replication', labelAnchor: 'end', labelDx: -16, labelDy: -2.5 },
     ],
     steps: [
       { n: 1, at: 'ua', f: 0.5, dy: -12, text: 'Users in us-east-1 call AWS Lambda, which writes to the local replica of the Amazon DynamoDB global table.' },
@@ -497,7 +451,9 @@ function ddbGlobal() {
       { wire: 'fb', t: [0.57, 0.64], ring: 'tbl-b' },
       { wire: 'repl', t: [0.66, 0.78], kind: 'pk-2', reverse: true, ring: 'tbl-a' },
     ],
-    extra,
+    notes: [
+      { x: 380, y: 161.5, text: 'Last writer wins', anchor: 'start' },
+    ],
   };
 }
 
@@ -505,11 +461,9 @@ function ddbGlobal() {
 // db-replicas (wide): in-Region read replicas plus a cross-Region read replica, asynchronous replication
 // ---------------------------------------------------------------------------------------------
 function replicas() {
-  const K = kit(10);
   const colX = [118, 288, 458], colW = 160, cx = colX.map((x) => x + 80);
   const azY = 156, azH = 120, icY = 184;
   const xrAz = { x: 740, w: 188 }, xrCx = xrAz.x + 94;
-  const mutedC = (x, y, t) => K.text(x, y, t, { anchor: 'middle', size: 8.5, fill: 'var(--awd-muted)' });
   // application wires: staircase lanes above the AZ frames, drops land on each icon from the top
   const wWrite = `M86,142 H${cx[0]} V${icY - 4}`;
   const wReadB = `M86,130 H110 V110 H${cx[1]} V${icY - 4}`;
@@ -519,14 +473,6 @@ function replicas() {
   const r1 = `M${cx[0]},268 V282 H${cx[1]} V256`;
   const r2 = `M${cx[0]},268 V282 H${cx[2]} V256`;
   const r3 = `M${cx[0]},268 V282 H${xrCx} V268`;
-  const extra = [
-    mutedC(300, 121, 'reads'),
-    mutedC(330, 91, 'reads'),
-    mutedC(781, 125, 'reads'),
-    K.text(cx[1], 300, 'Asynchronous replication', { cls: 't-wire' }),
-    K.text(780, 300, 'Cross-Region replication', { cls: 't-wire' }),
-    K.text(742, 93, ['Promote the replica to a standalone', 'DB instance for disaster recovery.'], { anchor: 'start', size: 8.5, fill: 'var(--awd-muted)', lh: 10.5 }),
-  ].join('');
   return {
     id: 'db-replicas',
     name: 'Amazon RDS Read Replicas',
@@ -550,7 +496,11 @@ function replicas() {
       { id: 'xr', icon: 'aws-res-aurora-rds-instance', x: xrCx - 20, y: icY, label: 'Cross-Region read replica', sub: 'read-only' },
     ],
     wires: [
-      { id: 'w-wr', d: wWrite }, { id: 'w-rb', d: wReadB }, { id: 'w-rc', d: wReadC }, { id: 'w-rx', d: wReadX },
+      { id: 'w-wr', d: wWrite },
+      // "reads" labels at x 300 under the y 110 lane, x 330 over the y 96 lane, x 781 over the y 130 lane
+      { id: 'w-rb', d: wReadB, label: 'reads', labelAt: 234 / 372, labelDy: 11 },
+      { id: 'w-rc', d: wReadC, label: 'reads', labelAt: 266 / 558 },
+      { id: 'w-rx', d: wReadX, label: 'reads', labelAt: 53 / 156 },
       { id: 'r1', d: r1, dashed: true }, { id: 'r2', d: r2, dashed: true }, { id: 'r3', d: r3, dashed: true },
     ],
     steps: [
@@ -568,7 +518,11 @@ function replicas() {
       { wire: 'w-rc', t: [0.64, 0.75], ring: 'rep2' },
       { wire: 'w-rx', t: [0.72, 0.82], ring: 'xr' },
     ],
-    extra,
+    notes: [
+      { x: cx[1], y: 300, text: 'Asynchronous replication' },
+      { x: 780, y: 300, text: 'Cross-Region replication' },
+      { x: 742, y: 93, text: 'Promote the replica to a standalone\nDB instance for disaster recovery.', anchor: 'start', size: 8.5 },
+    ],
   };
 }
 
@@ -576,53 +530,41 @@ function replicas() {
 // db-aurora-global (wide): storage-level replication to a secondary Region, then managed failover
 // ---------------------------------------------------------------------------------------------
 function auroraGlobal() {
-  const K = kit(11);
-  const mutedS = (x, y, lines, anchor = 'start') => K.text(x, y, lines, { anchor, size: 8.5, fill: 'var(--awd-muted)', lh: 10.5 });
   const icY = 154, ly = 206;                       // instance icon top, label baseline
   const barY = 232, barH = 46, cs = 22;
-  const bar = (x, w) => `<rect x="${x}" y="${barY}" width="${w}" height="${barH}" rx="6" style="fill:color-mix(in srgb,#C925D1 16%,var(--awd-panel));stroke:#C925D1;stroke-width:1.4"/>`;
-  const copies = (x, w) => Array.from({ length: 6 }, (_, k) => [x + w / 2 - 120 + 48 * k, barY + barH / 2]);
   const A = { x: 170, w: 320 }, B = { x: 602, w: 320 };
-  const cA = copies(A.x, A.w), cB = copies(B.x, B.w);
+  // six copies per cluster volume, spread across the volume
+  const copies = (p, v) => Array.from({ length: 6 }, (_, k) => copy(`copy-${p}${k}`, v.x + v.w / 2 - 120 + 48 * k, barY + barH / 2, cs));
+  const cA = copies('a', A), cB = copies('b', B);
   const wRA = 'M538,72 V88 H390 V150';
   const wRB = 'M554,72 V88 H840 V150';
-  const note = (a, b, lines, fill) => K.win(a, b, K.patch(86, 62, 250, 24) + K.text(90, 70, lines, { anchor: 'start', size: 8.5, fill, lh: 10.5 }));
-  const extra = [
-    K.text(572, 48, ['Amazon', 'Route 53'], { anchor: 'start' }),
-    // narration under the Users wire: base text, replaced during the outage
-    mutedS(90, 70, ['Writes go to the primary Region; the secondary', 'Region replicates from storage and serves reads.']),
-    note(0.50, 0.995, ['Primary Region outage: the secondary cluster is', 'promoted and Route 53 sends writes to eu-west-1.'], 'var(--awd-pk)'),
-    // cluster volumes with six copies each
-    bar(A.x, A.w), bar(B.x, B.w),
-    ...cA.map(([x, y]) => dbIco(x - cs / 2, y - cs / 2, cs)), ...cB.map(([x, y]) => dbIco(x - cs / 2, y - cs / 2, cs)),
-    K.text(A.x + A.w / 2, 298, 'Cluster volume: 6 copies across 3 AZs', { anchor: 'middle', size: 8.5, fill: 'var(--awd-muted)' }),
-    K.text(B.x + B.w / 2, 298, 'Cluster volume: 6 copies across 3 AZs', { anchor: 'middle', size: 8.5, fill: 'var(--awd-muted)' }),
-    // replication lag annotation around the storage-level wire
-    K.text(546, 229, ['Storage-level', 'replication'], { cls: 't-wire', lh: 10.5 }),
-    K.text(546, 277, ['typical lag', 'under 1 s'], { cls: 't-wire', lh: 10.5 }),
-    // the secondary reader becomes the writer: cover and replace its label
-    K.win(0.64, 0.995, K.patch(782, 196, 116, 14) + K.text(840, ly, 'Writer (promoted)', { fill: 'var(--awd-pk)' })),
-    // replicated changes land on the six copies of the secondary volume (staggered pulses)
-    ...cB.map(([x, y], k) => K.pulse(x, y, 13, 0.38 + 0.006 * k, 'pk-2')),
-  ].join('');
+  const out = [0.50, 0.995];
+  const say = (text, o) => ({ x: 90, y: 70, text, anchor: 'start', size: 8.5, ...o });
+  const promoted = [0.64, 0.995];
   return {
     id: 'db-aurora-global',
     name: 'Amazon Aurora Global Database',
     desc: 'The primary Region cluster replicates at the storage layer to a secondary Region, typically with under one second of lag, and a managed failover or switchover promotes the secondary. Packets show replication, then a Region outage, the promotion and Route 53 redirecting writes.',
     wide: true, w: 960, h: 340, dur: 11,
+    // the volume frames have no header (no label, no icon), so their copies sit centered in them
+    lintAllow: ['header-band:node copy'],
     groups: [
       { kind: 'cloud', x: 76, y: 8, w: 876, h: 324 },
       { kind: 'gen', x: 148, y: 100, w: 796, h: 222, label: 'Aurora global database' },
       { kind: 'region', id: 'reg-a', x: 158, y: 126, w: 344, h: 188, label: 'us-east-1 (primary)' },
       { kind: 'region', x: 590, y: 126, w: 344, h: 188, label: 'eu-west-1 (secondary)' },
+      // the cluster volume of each Region, six copies each
+      volume(A.x, barY, A.w, barH), volume(B.x, barY, B.w, barH),
     ],
     nodes: [
       { id: 'users', icon: 'aws-res-users', x: 12, y: 30, label: 'Users' },
-      { id: 'r53', icon: 'aws-svc-route-53', x: 526, y: 30 },
+      { id: 'r53', icon: 'aws-svc-route-53', x: 526, y: 30, label: 'Amazon Route 53', labelPos: 'r', wrap: 8 },
       { id: 'rA', icon: 'aws-res-aurora-instance-alternate', x: 230, y: icY, label: 'Reader DB instance', wrap: 20 },
       { id: 'wA', icon: 'aws-res-aurora-instance-alternate', x: 370, y: icY, label: 'Writer DB instance', wrap: 20 },
       { id: 'rB1', icon: 'aws-res-aurora-instance-alternate', x: 660, y: icY, label: 'Reader DB instance', wrap: 20 },
-      { id: 'rB2', icon: 'aws-res-aurora-instance-alternate', x: 820, y: icY, label: 'Reader DB instance', wrap: 20 },
+      // its label is a note below: it swaps to "Writer (promoted)" after the failover
+      { id: 'rB2', icon: 'aws-res-aurora-instance-alternate', x: 820, y: icY },
+      ...cA, ...cB,
     ],
     wires: [
       { id: 'w-u', d: 'M56,50 H522' },
@@ -632,7 +574,7 @@ function auroraGlobal() {
       { id: 'w-ra1', d: 'M250,229 V216', dashed: true },
       { id: 'w-rb1', d: 'M680,229 V216', dashed: true },
       { id: 'w-rb2', d: 'M840,229 V216', dashed: true },
-      { id: 'w-rep', d: 'M494,255 H598' },
+      { id: 'w-rep', d: 'M494,255 H598', label: 'Storage-level\nreplication', labelDy: -26 },
     ],
     steps: [
       { n: 1, x: 220, y: 39, text: 'Users reach the database through Amazon Route 53, which sends writes to the writer DB instance in the primary Region, us-east-1.' },
@@ -644,6 +586,8 @@ function auroraGlobal() {
       { wire: 'w-ra', t: [0.10, 0.18], ring: 'wA' },
       { wire: 'w-wa', t: [0.19, 0.24], kind: 'pk-2' },
       { wire: 'w-rep', t: [0.26, 0.38], kind: 'pk-2' },
+      // replicated changes land on the six copies of the secondary volume (staggered rings)
+      ...cB.map((c, k) => { const t = Math.round((0.38 + 0.006 * k) * 1000) / 1000; return { ring: c.id, t: [t - 0.005, t], kind: 'pk-2' }; }),
       { wire: 'w-ra', t: [0.52, 0.60], kind: 'pk-bad' },
       { wire: 'w-u', t: [0.68, 0.73] },
       { wire: 'w-rb', t: [0.74, 0.84], ring: 'rB2' },
@@ -654,7 +598,17 @@ function auroraGlobal() {
       { fade: 'w-rep', t: [0.52, 0.97] },
       { glow: 'w-rb', t: [0.66, 0.97] },
     ],
-    extra,
+    notes: [
+      // narration under the Users wire, replaced during the outage
+      say('Writes go to the primary Region; the secondary\nRegion replicates from storage and serves reads.', { off: out }),
+      say('Primary Region outage: the secondary cluster is\npromoted and Route 53 sends writes to eu-west-1.', { tone: 'request', t: out }),
+      { x: A.x + A.w / 2, y: 298, text: 'Cluster volume: 6 copies across 3 AZs', size: 8.5 },
+      { x: B.x + B.w / 2, y: 298, text: 'Cluster volume: 6 copies across 3 AZs', size: 8.5 },
+      { x: 546, y: 277, text: 'typical lag\nunder 1 s', size: 8.5 },
+      // the secondary reader becomes the writer
+      { x: 840, y: ly, text: 'Reader DB instance', kind: 'label', off: promoted },
+      { x: 840, y: ly, text: 'Writer (promoted)', kind: 'label', tone: 'request', t: promoted },
+    ],
   };
 }
 
@@ -662,17 +616,7 @@ function auroraGlobal() {
 // db-dms (wide): on premises -> DMS replication instance -> Aurora, full load then CDC; SCT optional
 // ---------------------------------------------------------------------------------------------
 function dms() {
-  const K = kit(11);
-  const mutedC = (x, y, t) => K.text(x, y, t, { anchor: 'middle', size: 8.5, fill: 'var(--awd-muted)' });
-  const phase = (a, b, t) => K.win(a, b, K.patch(481, 162, 140, 14, TINT_PRIV) + K.text(551, 172, t, { anchor: 'middle', size: 8.5, fill: 'var(--awd-pk)' }));
-  const extra = [
-    mutedC(551, 172, 'Full load, then CDC'),
-    phase(0.26, 0.53, 'Full load'),
-    phase(0.53, 0.995, 'Ongoing replication (CDC)'),
-    K.text(300, 163, ['Direct Connect', 'or VPN'], { cls: 't-wire', lh: 10 }),
-    mutedC(133, 176, 'reads schema'),
-    mutedC(500, 85, 'applies the converted schema'),
-  ].join('');
+  const phase = (text, o) => ({ x: 551, y: 172, text, size: 8.5, ...o });
   return {
     id: 'db-dms',
     name: 'AWS Database Migration Service',
@@ -696,9 +640,10 @@ function dms() {
       { id: 'rd', icon: 'aws-res-aurora-instance-alternate', x: 827, y: 162, label: 'Aurora reader DB instance' },
     ],
     wires: [
-      { id: 'w-sct-src', d: 'M80,182 H186', dashed: true },
-      { id: 'w-sct-tgt', d: 'M56,158 V90 H650 V158', dashed: true },
-      { id: 'w-link', d: 'M234,182 H426' },
+      { id: 'w-sct-src', d: 'M80,182 H186', dashed: true, label: 'reads schema', labelDy: -6 },
+      // label at x 500 on the top run (68 + 444 of 730 along the path)
+      { id: 'w-sct-tgt', d: 'M56,158 V90 H650 V158', dashed: true, label: 'applies the converted schema', labelAt: 512 / 730 },
+      { id: 'w-link', d: 'M234,182 H426', label: 'Direct Connect\nor VPN', labelAt: 66 / 192, labelDy: -19 },
       { id: 'w-dms', d: 'M476,182 H626' },
     ],
     steps: [
@@ -716,7 +661,12 @@ function dms() {
       { wire: 'w-link', t: [0.77, 0.85], kind: 'pk-2' },
       { wire: 'w-dms', t: [0.86, 0.94], kind: 'pk-2', ring: 'tgt' },
     ],
-    extra,
+    notes: [
+      // the migration phase under the DMS wire: the standing caption gives way to the live phase
+      phase('Full load, then CDC', { off: [0.26, 0.995] }),
+      phase('Full load', { tone: 'request', t: [0.26, 0.53] }),
+      phase('Ongoing replication (CDC)', { tone: 'request', t: [0.53, 0.995] }),
+    ],
   };
 }
 

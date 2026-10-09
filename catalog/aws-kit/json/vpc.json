@@ -13,13 +13,13 @@
       "groups": [
         { "kind": "cloud", "x": 84, "y": 8, "w": 868, "h": 408 },
         { "kind": "region", "x": 96, "y": 34, "w": 844, "h": 374, "label": "Region" },
-        { "kind": "vpc", "x": 108, "y": 60, "w": 820, "h": 340, "label": "VPC" },
+        { "kind": "vpc", "x": 108, "y": 60, "w": 820, "h": 340, "label": "VPC", "note": "10.0.0.0/16" },
         { "kind": "az", "x": 120, "y": 158, "w": 378, "h": 234, "label": "Availability Zone A" },
         { "kind": "az", "x": 538, "y": 158, "w": 378, "h": 234, "label": "Availability Zone B" },
-        { "kind": "pub", "x": 132, "y": 180, "w": 354, "h": 98, "label": "Public subnet" },
-        { "kind": "priv", "x": 132, "y": 286, "w": 354, "h": 94, "label": "Private subnet" },
-        { "kind": "pub", "x": 550, "y": 180, "w": 354, "h": 98, "label": "Public subnet" },
-        { "kind": "priv", "x": 550, "y": 286, "w": 354, "h": 94, "label": "Private subnet" }
+        { "kind": "pub", "x": 132, "y": 180, "w": 354, "h": 98, "label": "Public subnet", "note": "10.0.0.0/24" },
+        { "kind": "priv", "x": 132, "y": 286, "w": 354, "h": 94, "label": "Private subnet", "note": "10.0.10.0/24" },
+        { "kind": "pub", "x": 550, "y": 180, "w": 354, "h": 98, "label": "Public subnet", "note": "10.0.1.0/24" },
+        { "kind": "priv", "x": 550, "y": 286, "w": 354, "h": 94, "label": "Private subnet", "note": "10.0.11.0/24" }
       ],
       "nodes": [
         { "id": "net", "icon": "aws-res-internet", "x": 12, "y": 72, "label": "Internet" },
@@ -68,7 +68,14 @@
         { "wire": "o2b", "t": [0.652, 0.797], "kind": "pk-2" },
         { "wire": "net", "t": [0.809, 0.93], "reverse": true, "kind": "pk-2", "ring": "net" }
       ],
-      "extra": "<circle cx=\"16\" cy=\"178\" r=\"3.4\" fill=\"var(--awd-pk)\"/><text x=\"25\" y=\"181.4\">Inbound</text><circle cx=\"16\" cy=\"194\" r=\"3.4\" fill=\"var(--awd-pk2)\"/><text x=\"25\" y=\"197.4\">Outbound</text><text class=\"t-sub\" text-anchor=\"end\" x=\"920\" y=\"74\">10.0.0.0/16</text><text class=\"t-sub\" text-anchor=\"end\" x=\"478\" y=\"194\">10.0.0.0/24</text><text class=\"t-sub\" text-anchor=\"end\" x=\"478\" y=\"300\">10.0.10.0/24</text><text class=\"t-sub\" text-anchor=\"end\" x=\"896\" y=\"194\">10.0.1.0/24</text><text class=\"t-sub\" text-anchor=\"end\" x=\"896\" y=\"300\">10.0.11.0/24</text>"
+      "legend": {
+        "x": 12.6,
+        "y": 181.4,
+        "items": [
+          { "kind": "pk", "label": "Inbound" },
+          { "kind": "pk-2", "label": "Outbound" }
+        ]
+      }
     },
     {
       "id": "vp-peering",
@@ -79,9 +86,9 @@
       "dur": 8,
       "groups": [
         { "kind": "cloud", "x": 8, "y": 8, "w": 464, "h": 286 },
-        { "kind": "vpc", "x": 20, "y": 38, "w": 184, "h": 98, "label": "VPC A" },
-        { "kind": "vpc", "x": 20, "y": 188, "w": 184, "h": 98, "label": "VPC C" },
-        { "kind": "vpc", "x": 276, "y": 38, "w": 184, "h": 248, "label": "VPC B" }
+        { "kind": "vpc", "x": 20, "y": 38, "w": 184, "h": 98, "label": "VPC A", "note": "10.0.0.0/16" },
+        { "kind": "vpc", "x": 20, "y": 188, "w": 184, "h": 98, "label": "VPC C", "note": "10.2.0.0/16" },
+        { "kind": "vpc", "x": 276, "y": 38, "w": 184, "h": 248, "label": "VPC B", "note": "10.1.0.0/16" }
       ],
       "nodes": [
         { "id": "ea", "icon": "aws-res-ec2-instance", "x": 140, "y": 68, "size": 32, "label": "Amazon EC2" },
@@ -104,7 +111,8 @@
       "steps": [
         { "n": 1, "at": "w1a", "f": 0.3, "dy": -12, "text": "An Amazon EC2 instance in VPC A sends traffic for 10.1.0.0/16, which its route table sends to peering connection pcx-1." },
         { "n": 2, "at": "w1b", "f": 0.45, "dx": 11, "dy": 0, "text": "The traffic crosses pcx-1 privately to the instance in VPC B, whose route for 10.0.0.0/16 returns the response over the same connection." },
-        { "n": 3, "at": "bl1", "f": 0.5, "dx": -11, "dy": 0, "text": "VPC C peers only with VPC B, through pcx-2. VPC B does not forward traffic from VPC A to VPC C, because peering is not transitive." }
+        { "n": 3, "at": "w2a", "f": 0.3, "dy": -12, "text": "An instance in VPC C reaches VPC B over its own peering connection: its route table sends 10.1.0.0/16 to pcx-2, and VPC B routes 10.2.0.0/16 back over pcx-2." },
+        { "n": 4, "at": "bl1", "f": 0.5, "dx": -11, "dy": 0, "text": "VPC B does not forward traffic from VPC A to VPC C, because peering is not transitive: VPC A and VPC C would need a peering connection of their own." }
       ],
       "timeline": [
         { "wire": "w1a", "t": [0.042, 0.115] },
@@ -114,9 +122,16 @@
         { "wire": "w2a", "t": [0.493, 0.566] },
         { "wire": "w2b", "t": [0.566, 0.661], "ring": "eb" },
         { "wire": "w1a", "t": [0.713, 0.776], "kind": "pk-bad" },
-        { "wire": "w1b", "t": [0.776, 0.86], "kind": "pk-bad" }
+        { "wire": "w1b", "t": [0.776, 0.86], "kind": "pk-bad", "ring": "eb" }
       ],
-      "extra": "<text class=\"t-sub\" text-anchor=\"end\" x=\"196\" y=\"52\">10.0.0.0/16</text><text class=\"t-sub\" text-anchor=\"end\" x=\"196\" y=\"202\">10.2.0.0/16</text><text class=\"t-sub\" text-anchor=\"end\" x=\"452\" y=\"52\">10.1.0.0/16</text><text class=\"t-c t-sub\" x=\"410\" y=\"211\">10.2.0.0/16 > pcx-2</text><circle cx=\"112\" cy=\"162\" r=\"7.5\" fill=\"#DD344C\"/><path d=\"M109,159 L115,165 M115,159 L109,165\" stroke=\"#fff\" stroke-width=\"1.7\" fill=\"none\"/><text x=\"124\" y=\"160\" style=\"fill:#DD344C;font-size:8.5px;font-weight:600\">No transitive</text><text x=\"124\" y=\"171\" style=\"fill:#DD344C;font-size:8.5px;font-weight:600\">peering</text><circle class=\"anim\" cx=\"338\" cy=\"161\" r=\"17.6\" fill=\"none\" stroke=\"#DD344C\" stroke-width=\"1.6\" opacity=\"0\"><animate attributeName=\"opacity\" dur=\"8s\" repeatCount=\"indefinite\" values=\"0;0;.9;0;0\" keyTimes=\"0;.859;.86;.96;1\"/><animate attributeName=\"r\" dur=\"8s\" repeatCount=\"indefinite\" values=\"17.6;17.6;17.6;29.92;29.92\" keyTimes=\"0;.859;.86;.96;1\"/></circle><g class=\"anim\" opacity=\"0\"><text x=\"324\" y=\"228\" style=\"fill:#DD344C;font-size:8.5px;font-weight:600\">A to C is not</text><text x=\"324\" y=\"239\" style=\"fill:#DD344C;font-size:8.5px;font-weight:600\">forwarded by B</text><animate attributeName=\"opacity\" dur=\"8s\" repeatCount=\"indefinite\" calcMode=\"discrete\" values=\"0;1;0\" keyTimes=\"0;.86;.985\"/></g>"
+      "notes": [
+        { "x": 410, "y": 211, "text": "10.2.0.0/16 > pcx-2", "size": 9 },
+        { "x": 124, "y": 160, "text": "No transitive\npeering", "kind": "warn", "anchor": "start", "size": 8.5 },
+        { "x": 324, "y": 228, "text": "A to C is not\nforwarded by B", "kind": "warn", "anchor": "start", "t": [0.86, 0.985], "size": 8.5 }
+      ],
+      "marks": [
+        { "x": 112, "y": 162 }
+      ]
     },
     {
       "id": "vp-endpoints",
@@ -152,7 +167,7 @@
       ],
       "steps": [
         { "n": 1, "at": "e1", "f": 0.5, "text": "Traffic from the Amazon EC2 instance to Amazon S3 or DynamoDB matches the service prefix lists in the subnet route table." },
-        { "n": 2, "at": "e3", "f": 0.72, "text": "The route table sends it to the gateway endpoints, which deliver it to Amazon S3 and Amazon DynamoDB without an internet gateway or NAT gateway." },
+        { "n": 2, "at": "e3", "f": 0.72, "dy": 11, "text": "The route table sends it to the gateway endpoints, which deliver it to Amazon S3 and Amazon DynamoDB without an internet gateway or NAT gateway." },
         { "n": 3, "at": "i1", "f": 0.5, "dx": 11, "dy": 0, "text": "For other services, the instance sends traffic to an interface endpoint, a network interface with a private IP address in the subnet." },
         { "n": 4, "at": "i3", "f": 0.5, "text": "AWS PrivateLink carries the traffic from the interface endpoint to Amazon SQS over the AWS network." }
       ],
@@ -165,7 +180,14 @@
         { "wire": "i2", "t": [0.651, 0.824], "kind": "pk-2", "ring": "pl" },
         { "wire": "i3", "t": [0.824, 0.93], "kind": "pk-2", "ring": "sqs" }
       ],
-      "extra": "<circle cx=\"132\" cy=\"45\" r=\"3.4\" fill=\"var(--awd-pk)\"/><text x=\"141\" y=\"48.4\">Gateway endpoints path</text><circle cx=\"280\" cy=\"45\" r=\"3.4\" fill=\"var(--awd-pk2)\"/><text x=\"289\" y=\"48.4\">PrivateLink path</text>"
+      "legend": {
+        "x": 312.6,
+        "y": 45.4,
+        "items": [
+          { "kind": "pk", "label": "Gateway endpoints path" },
+          { "kind": "pk-2", "label": "PrivateLink path" }
+        ]
+      }
     },
     {
       "id": "vp-tgw",
@@ -179,9 +201,9 @@
         { "kind": "dc", "x": 8, "y": 120, "w": 140, "h": 184, "label": "Corporate data center" },
         { "kind": "cloud", "x": 250, "y": 8, "w": 702, "h": 392 },
         { "kind": "region", "x": 262, "y": 34, "w": 678, "h": 358, "label": "Region" },
-        { "kind": "vpc", "x": 560, "y": 50, "w": 368, "h": 100, "label": "Production VPC" },
-        { "kind": "vpc", "x": 560, "y": 162, "w": 368, "h": 100, "label": "Development VPC" },
-        { "kind": "vpc", "x": 560, "y": 274, "w": 368, "h": 100, "label": "Shared services VPC" }
+        { "kind": "vpc", "x": 560, "y": 50, "w": 368, "h": 100, "label": "Production VPC", "note": "10.1.0.0/16" },
+        { "kind": "vpc", "x": 560, "y": 162, "w": 368, "h": 100, "label": "Development VPC", "note": "10.2.0.0/16" },
+        { "kind": "vpc", "x": 560, "y": 274, "w": 368, "h": 100, "label": "Shared services VPC", "note": "10.3.0.0/16" }
       ],
       "nodes": [
         { "id": "srv", "icon": "aws-res-servers", "x": 58, "y": 148, "size": 40, "label": "Servers" },
@@ -226,12 +248,19 @@
         { "wire": "tC", "t": [0.781, 0.856], "kind": "pk-2", "ring": "ac" },
         { "wire": "iC", "t": [0.868, 0.93], "kind": "pk-2", "ring": "wc" }
       ],
-      "extra": "<circle cx=\"16\" cy=\"336\" r=\"3.4\" fill=\"var(--awd-pk)\"/><text x=\"25\" y=\"339.4\">On-premises to VPC</text><circle cx=\"16\" cy=\"352\" r=\"3.4\" fill=\"var(--awd-pk2)\"/><text x=\"25\" y=\"355.4\">VPC to VPC</text><text class=\"t-sub\" text-anchor=\"end\" x=\"920\" y=\"64\">10.1.0.0/16</text><text class=\"t-sub\" text-anchor=\"end\" x=\"920\" y=\"176\">10.2.0.0/16</text><text class=\"t-sub\" text-anchor=\"end\" x=\"920\" y=\"288\">10.3.0.0/16</text>"
+      "legend": {
+        "x": 12.6,
+        "y": 339.4,
+        "items": [
+          { "kind": "pk", "label": "On-premises to VPC" },
+          { "kind": "pk-2", "label": "VPC to VPC" }
+        ]
+      }
     },
     {
       "id": "vp-inspection",
       "name": "Centralized inspection with Network Firewall",
-      "desc": "Spoke VPCs send traffic to the Transit Gateway, which hands it to an inspection VPC where an AWS Network Firewall endpoint in each AZ inspects it. East-west traffic (orange) is inspected and returned to the transit gateway for the other spoke; north-south traffic (blue) continues through a NAT gateway and the internet gateway.",
+      "desc": "Spoke VPCs send traffic to the Transit Gateway, which hands it to an inspection VPC where an AWS Network Firewall endpoint in each AZ inspects it. Two transit gateway route tables keep every flow on that path: the spoke route table sends all spoke traffic to the inspection VPC, and the firewall route table returns inspected traffic to the spokes. East-west traffic (orange) is inspected and returned to the transit gateway for the other spoke; north-south traffic (blue) continues through a NAT gateway and the internet gateway.",
       "wide": true,
       "w": 960,
       "h": 404,
@@ -239,9 +268,9 @@
       "groups": [
         { "kind": "cloud", "x": 8, "y": 8, "w": 866, "h": 388 },
         { "kind": "region", "x": 20, "y": 34, "w": 842, "h": 354, "label": "Region" },
-        { "kind": "vpc", "x": 32, "y": 84, "w": 164, "h": 132, "label": "Spoke VPC A" },
-        { "kind": "vpc", "x": 32, "y": 234, "w": 164, "h": 132, "label": "Spoke VPC B" },
-        { "kind": "vpc", "x": 330, "y": 52, "w": 524, "h": 328, "label": "Inspection VPC" },
+        { "kind": "vpc", "x": 32, "y": 84, "w": 164, "h": 132, "label": "Spoke VPC A", "note": "10.1.0.0/16" },
+        { "kind": "vpc", "x": 32, "y": 234, "w": 164, "h": 132, "label": "Spoke VPC B", "note": "10.2.0.0/16" },
+        { "kind": "vpc", "x": 330, "y": 52, "w": 524, "h": 328, "label": "Inspection VPC", "note": "10.0.0.0/16" },
         { "kind": "az", "x": 342, "y": 76, "w": 412, "h": 142, "label": "Availability Zone A" },
         { "kind": "az", "x": 342, "y": 226, "w": 412, "h": 142, "label": "Availability Zone B" },
         { "kind": "priv", "x": 354, "y": 98, "w": 116, "h": 112, "label": "TGW subnet" },
@@ -257,7 +286,8 @@
         { "id": "eb", "icon": "aws-res-ec2-instance", "x": 56, "y": 284, "size": 32, "label": "Amazon EC2" },
         { "id": "ab", "icon": "aws-res-transit-gateway-attachment", "x": 130, "y": 284, "size": 32, "label": "Attachment" },
         { "id": "tgw", "icon": "aws-svc-transit-gateway", "x": 238, "y": 201, "size": 48, "label": "AWS Transit Gateway" },
-        { "id": "trt", "icon": "aws-res-route-53-route-table", "x": 246, "y": 310, "size": 32, "label": "TGW route table", "sub": "0.0.0.0/0 > inspection" },
+        { "id": "srt", "icon": "aws-res-route-53-route-table", "x": 246, "y": 62, "size": 32, "label": "Spoke route table", "wrap": 20, "sub": "0.0.0.0/0 > inspection" },
+        { "id": "frt", "icon": "aws-res-route-53-route-table", "x": 246, "y": 298, "size": 32, "label": "Firewall route table", "wrap": 20, "sub": "10.1.0.0/16 > spoke A" },
         { "id": "eia", "icon": "aws-res-transit-gateway-attachment", "x": 396, "y": 134, "size": 32, "label": "TGW attachment", "sub": "appliance mode" },
         { "id": "fwa", "icon": "aws-res-network-firewall-endpoints", "x": 528, "y": 134, "size": 32, "label": "Firewall endpoint" },
         { "id": "nata", "icon": "aws-res-vpc-nat-gateway", "x": 664, "y": 134, "size": 32, "label": "NAT gateway" },
@@ -281,35 +311,53 @@
         { "id": "ga", "d": "M700,150 H806 V201" },
         { "id": "gb", "d": "M700,300 H766 V225 H782" },
         { "id": "gn", "d": "M830,225 H896", "both": true },
-        { "id": "rt", "d": "M262,279 V306", "dashed": true, "arrow": false }
+        { "id": "rts", "d": "M262,134 V197", "dashed": true, "arrow": false },
+        { "id": "rtf", "d": "M262,279 V294", "dashed": true, "arrow": false }
       ],
       "steps": [
-        { "n": 1, "at": "sa", "f": 0.5, "dx": 11, "dy": 0, "text": "Spoke VPC A sends traffic by its default route through its attachment to AWS Transit Gateway." },
+        { "n": 1, "at": "sa", "f": 0.5, "dx": 11, "dy": 0, "text": "Spoke VPC A sends traffic by its default route through its attachment to AWS Transit Gateway. The spoke attachments are associated with the spoke route table, whose only route, 0.0.0.0/0, points to the inspection VPC attachment." },
         { "n": 2, "at": "fa", "f": 0.5, "text": "The transit gateway sends the traffic to the inspection VPC. Appliance mode keeps each flow in one AZ, where the AWS Network Firewall endpoint inspects it." },
-        { "n": 3, "at": "sb", "f": 0.5, "dx": -11, "dy": 0, "text": "The firewall returns allowed east-west traffic to the transit gateway, which delivers it to Spoke VPC B." },
-        { "n": 4, "at": "fb", "f": 0.5, "text": "Internet-bound traffic from Spoke VPC B also goes to the inspection VPC, here to the firewall endpoint in Availability Zone B." },
+        { "n": 3, "at": "sb", "f": 0.5, "dx": -11, "dy": 0, "text": "The firewall returns allowed traffic to the transit gateway. The inspection VPC attachment is associated with the firewall route table, which holds the spoke VPC routes, so the traffic goes on to Spoke VPC B; spoke-to-spoke traffic never bypasses the firewall." },
+        { "n": 4, "at": "fb", "f": 0.5, "text": "Internet-bound traffic from Spoke VPC B follows the same spoke route table to the inspection VPC, here to the firewall endpoint in Availability Zone B." },
         { "n": 5, "at": "gb", "f": 0.5, "dx": 11, "dy": 0, "text": "Inspected traffic leaves through the NAT gateway in the public subnet and the internet gateway to the internet." }
       ],
       "timeline": [
         { "wire": "sa", "t": [0.038, 0.096] },
+        { "t": [0.089, 0.096], "ring": "srt" },
         { "wire": "ta", "t": [0.102, 0.159], "ring": "eia" },
         { "wire": "fa", "t": [0.166, 0.223], "ring": "fwa" },
         { "wire": "fa", "t": [0.229, 0.287], "reverse": true, "ring": "eia" },
         { "wire": "ta", "t": [0.293, 0.35], "reverse": true, "ring": "tgw" },
+        { "t": [0.344, 0.35], "ring": "frt" },
         { "wire": "sb", "t": [0.357, 0.414], "reverse": true, "ring": "ab" },
         { "wire": "sb", "t": [0.535, 0.592], "kind": "pk-2" },
+        { "t": [0.586, 0.592], "kind": "pk-2", "ring": "srt" },
         { "wire": "tb", "t": [0.599, 0.656], "kind": "pk-2", "ring": "eib" },
         { "wire": "fb", "t": [0.662, 0.72], "kind": "pk-2", "ring": "fwb" },
         { "wire": "nb", "t": [0.726, 0.783], "kind": "pk-2", "ring": "natb" },
         { "wire": "gb", "t": [0.79, 0.847], "kind": "pk-2", "ring": "igw" },
         { "wire": "gn", "t": [0.854, 0.93], "kind": "pk-2", "ring": "net" }
       ],
-      "extra": "<circle cx=\"886\" cy=\"70\" r=\"3.4\" fill=\"var(--awd-pk)\"/><text x=\"895\" y=\"73.4\">East-west</text><circle cx=\"886\" cy=\"86\" r=\"3.4\" fill=\"var(--awd-pk2)\"/><text x=\"895\" y=\"89.4\">North-south</text><text class=\"t-sub\" text-anchor=\"end\" x=\"188\" y=\"98\">10.1.0.0/16</text><text class=\"t-sub\" text-anchor=\"end\" x=\"188\" y=\"248\">10.2.0.0/16</text><text class=\"t-sub\" text-anchor=\"end\" x=\"846\" y=\"66\">10.0.0.0/16</text><text class=\"t-sub\" text-anchor=\"end\" x=\"188\" y=\"208\">0.0.0.0/0 > tgw</text><text class=\"t-sub\" text-anchor=\"end\" x=\"188\" y=\"358\">0.0.0.0/0 > tgw</text>"
+      "notes": [
+        { "x": 262, "y": 128, "text": "associated: spoke VPCs", "size": 9 },
+        { "x": 262, "y": 364, "text": "10.2.0.0/16 > spoke B", "size": 9 },
+        { "x": 262, "y": 375, "text": "associated: inspection VPC", "size": 9 },
+        { "x": 188, "y": 208, "text": "0.0.0.0/0 > tgw", "anchor": "end", "size": 9 },
+        { "x": 188, "y": 358, "text": "0.0.0.0/0 > tgw", "anchor": "end", "size": 9 }
+      ],
+      "legend": {
+        "x": 882.6,
+        "y": 73.4,
+        "items": [
+          { "kind": "pk", "label": "East-west" },
+          { "kind": "pk-2", "label": "North-south" }
+        ]
+      }
     },
     {
       "id": "vp-egress",
       "name": "Centralized egress",
-      "desc": "Spoke VPCs have no NAT gateways of their own: a default route sends internet-bound traffic to the Transit Gateway, which forwards it to an egress VPC with a NAT gateway in each AZ and one internet gateway. Outbound requests (orange) leave through the NAT gateways and responses (blue) return the same way.",
+      "desc": "Spoke VPCs have no NAT gateways of their own: a default route sends internet-bound traffic to the Transit Gateway, whose spoke route table forwards it to an egress VPC with a NAT gateway in each AZ and one internet gateway, and blackholes 10.0.0.0/8 so spokes cannot reach each other. Outbound requests (orange) leave through the NAT gateways and responses (blue) return through the egress route table to each spoke.",
       "wide": true,
       "w": 960,
       "h": 416,
@@ -317,10 +365,10 @@
       "groups": [
         { "kind": "cloud", "x": 8, "y": 8, "w": 866, "h": 400 },
         { "kind": "region", "x": 20, "y": 34, "w": 842, "h": 366, "label": "Region" },
-        { "kind": "vpc", "x": 32, "y": 56, "w": 164, "h": 100, "label": "Spoke VPC A" },
-        { "kind": "vpc", "x": 32, "y": 164, "w": 164, "h": 100, "label": "Spoke VPC B" },
-        { "kind": "vpc", "x": 32, "y": 272, "w": 164, "h": 100, "label": "Spoke VPC C" },
-        { "kind": "vpc", "x": 380, "y": 52, "w": 470, "h": 340, "label": "Egress VPC" },
+        { "kind": "vpc", "x": 32, "y": 56, "w": 164, "h": 100, "label": "Spoke VPC A", "note": "10.1.0.0/16" },
+        { "kind": "vpc", "x": 32, "y": 164, "w": 164, "h": 100, "label": "Spoke VPC B", "note": "10.2.0.0/16" },
+        { "kind": "vpc", "x": 32, "y": 272, "w": 164, "h": 100, "label": "Spoke VPC C", "note": "10.3.0.0/16" },
+        { "kind": "vpc", "x": 380, "y": 52, "w": 470, "h": 340, "label": "Egress VPC", "note": "10.0.0.0/16" },
         { "kind": "az", "x": 392, "y": 76, "w": 360, "h": 148, "label": "Availability Zone A" },
         { "kind": "az", "x": 392, "y": 232, "w": 360, "h": 148, "label": "Availability Zone B" },
         { "kind": "priv", "x": 404, "y": 98, "w": 150, "h": 116, "label": "TGW subnet" },
@@ -336,7 +384,8 @@
         { "id": "e3", "icon": "aws-res-ec2-instance", "x": 56, "y": 306, "size": 32, "label": "Amazon EC2" },
         { "id": "a3", "icon": "aws-res-transit-gateway-attachment", "x": 130, "y": 306, "size": 32, "label": "Attachment" },
         { "id": "tgw", "icon": "aws-svc-transit-gateway", "x": 258, "y": 190, "size": 48, "label": "AWS Transit Gateway" },
-        { "id": "trt", "icon": "aws-res-route-53-route-table", "x": 266, "y": 306, "size": 32, "label": "TGW route table", "sub": "0.0.0.0/0 > egress VPC" },
+        { "id": "srt", "icon": "aws-res-route-53-route-table", "x": 266, "y": 60, "size": 32, "label": "Spoke route table", "wrap": 20, "sub": "0.0.0.0/0 > egress VPC" },
+        { "id": "ert", "icon": "aws-res-route-53-route-table", "x": 266, "y": 290, "size": 32, "label": "Egress route table", "wrap": 20, "sub": "10.1.0.0/16 > spoke A" },
         { "id": "ena", "icon": "aws-res-transit-gateway-attachment", "x": 454, "y": 134, "size": 32, "label": "TGW attachment" },
         { "id": "nata", "icon": "aws-res-vpc-nat-gateway", "x": 639, "y": 134, "size": 32, "label": "NAT gateway" },
         { "id": "enb", "icon": "aws-res-transit-gateway-attachment", "x": 454, "y": 290, "size": 32, "label": "TGW attachment" },
@@ -348,28 +397,30 @@
         { "id": "i1", "d": "M92,106 H126", "arrow": false },
         { "id": "i2", "d": "M92,214 H126", "arrow": false },
         { "id": "i3", "d": "M92,322 H126", "arrow": false },
-        { "id": "s1", "d": "M166,106 H232 V200 H254", "both": true },
+        { "id": "s1", "d": "M166,106 H216 V200 H254", "both": true },
         { "id": "s2", "d": "M166,214 H254", "both": true },
-        { "id": "s3", "d": "M166,322 H232 V228 H254", "both": true },
-        { "id": "ta", "d": "M310,200 H340 V150 H450", "both": true },
-        { "id": "tb", "d": "M310,228 H340 V306 H450", "both": true },
+        { "id": "s3", "d": "M166,322 H216 V228 H254", "both": true },
+        { "id": "ta", "d": "M310,200 H352 V150 H450", "both": true },
+        { "id": "tb", "d": "M310,228 H352 V306 H450", "both": true },
         { "id": "na", "d": "M490,150 H635", "both": true },
         { "id": "nb", "d": "M490,306 H635", "both": true },
         { "id": "ga", "d": "M675,150 H816 V204", "both": true },
         { "id": "gb", "d": "M675,306 H766 V228 H792", "both": true },
         { "id": "gn", "d": "M840,228 H896", "both": true },
-        { "id": "rt", "d": "M282,268 V302", "dashed": true, "arrow": false }
+        { "id": "rts", "d": "M282,142 V186", "dashed": true, "arrow": false },
+        { "id": "rte", "d": "M282,268 V286", "dashed": true, "arrow": false }
       ],
       "steps": [
-        { "n": 1, "at": "s1", "f": 0.5, "dx": 11, "dy": 0, "text": "Instances in the spoke VPCs send internet-bound traffic by the default route through their attachments to AWS Transit Gateway." },
-        { "n": 2, "at": "ta", "f": 0.5, "dx": 11, "dy": 0, "text": "The transit gateway route table sends 0.0.0.0/0 to the egress VPC attachment, which has a TGW subnet in each Availability Zone." },
+        { "n": 1, "at": "s1", "f": 0.6, "dx": 11, "dy": 0, "text": "Instances in the spoke VPCs send internet-bound traffic by the default route through their attachments to AWS Transit Gateway." },
+        { "n": 2, "at": "ta", "f": 0.5, "dx": 11, "dy": 0, "text": "The spoke attachments are associated with the spoke route table, which sends 0.0.0.0/0 to the egress VPC attachment (a TGW subnet in each Availability Zone) and blackholes 10.0.0.0/8, so spokes cannot reach each other through the egress VPC." },
         { "n": 3, "at": "na", "f": 0.2, "text": "The TGW subnet route table sends the traffic to the NAT gateway in the same Availability Zone." },
         { "n": 4, "at": "ga", "f": 0.75, "text": "The NAT gateway translates the source address and sends the traffic to the internet gateway. Its subnet routes 10.0.0.0/8 back to the transit gateway." },
-        { "n": 5, "at": "gn", "f": 0.8, "text": "The internet gateway sends the traffic to the internet. Responses return through the same NAT gateway and the transit gateway to the spoke." }
+        { "n": 5, "at": "gn", "f": 0.8, "text": "The internet gateway sends the traffic to the internet. Responses return through the same NAT gateway to the transit gateway, where the egress VPC attachment is associated with the egress route table, whose propagated spoke routes lead back to each spoke." }
       ],
       "timeline": [
         { "wire": "s1", "t": [0.034, 0.092] },
         { "wire": "s3", "t": [0.034, 0.092] },
+        { "t": [0.086, 0.092], "ring": "srt" },
         { "wire": "ta", "t": [0.103, 0.161], "ring": "ena" },
         { "wire": "tb", "t": [0.103, 0.161], "ring": "enb" },
         { "wire": "na", "t": [0.172, 0.241], "ring": "nata" },
@@ -384,15 +435,39 @@
         { "wire": "nb", "t": [0.7, 0.769], "reverse": true, "kind": "pk-2", "ring": "enb" },
         { "wire": "ta", "t": [0.781, 0.85], "reverse": true, "kind": "pk-2", "ring": "tgw" },
         { "wire": "tb", "t": [0.781, 0.85], "reverse": true, "kind": "pk-2" },
+        { "t": [0.844, 0.85], "kind": "pk-2", "ring": "ert" },
         { "wire": "s1", "t": [0.861, 0.93], "reverse": true, "kind": "pk-2", "ring": "a1" },
         { "wire": "s3", "t": [0.861, 0.93], "reverse": true, "kind": "pk-2", "ring": "a3" }
       ],
-      "extra": "<circle cx=\"886\" cy=\"70\" r=\"3.4\" fill=\"var(--awd-pk)\"/><text x=\"895\" y=\"73.4\">Outbound</text><circle cx=\"886\" cy=\"86\" r=\"3.4\" fill=\"var(--awd-pk2)\"/><text x=\"895\" y=\"89.4\">Return</text><text class=\"t-sub\" text-anchor=\"end\" x=\"188\" y=\"70\">10.1.0.0/16</text><text class=\"t-sub\" text-anchor=\"end\" x=\"188\" y=\"178\">10.2.0.0/16</text><text class=\"t-sub\" text-anchor=\"end\" x=\"188\" y=\"286\">10.3.0.0/16</text><text class=\"t-sub\" text-anchor=\"end\" x=\"842\" y=\"66\">10.0.0.0/16</text><text class=\"t-sub\" text-anchor=\"end\" x=\"188\" y=\"148\">0.0.0.0/0 > tgw</text><text class=\"t-sub\" text-anchor=\"end\" x=\"188\" y=\"256\">0.0.0.0/0 > tgw</text><text class=\"t-sub\" text-anchor=\"end\" x=\"188\" y=\"364\">0.0.0.0/0 > tgw</text><text class=\"t-c t-sub\" x=\"479\" y=\"204\">0.0.0.0/0 > nat</text><text class=\"t-c t-sub\" x=\"479\" y=\"360\">0.0.0.0/0 > nat</text><text class=\"t-c t-sub\" x=\"655\" y=\"195\">0.0.0.0/0 > igw</text><text class=\"t-c t-sub\" x=\"655\" y=\"206\">10.0.0.0/8 > tgw</text><text class=\"t-c t-sub\" x=\"655\" y=\"351\">0.0.0.0/0 > igw</text><text class=\"t-c t-sub\" x=\"655\" y=\"362\">10.0.0.0/8 > tgw</text>"
+      "notes": [
+        { "x": 282, "y": 126, "text": "10.0.0.0/8 > blackhole", "size": 9 },
+        { "x": 282, "y": 137, "text": "associated: spoke VPCs", "size": 9 },
+        { "x": 282, "y": 356, "text": "10.2.0.0/16 > spoke B", "size": 9 },
+        { "x": 282, "y": 367, "text": "10.3.0.0/16 > spoke C", "size": 9 },
+        { "x": 282, "y": 378, "text": "associated: egress VPC", "size": 9 },
+        { "x": 188, "y": 148, "text": "0.0.0.0/0 > tgw", "anchor": "end", "size": 9 },
+        { "x": 188, "y": 256, "text": "0.0.0.0/0 > tgw", "anchor": "end", "size": 9 },
+        { "x": 188, "y": 364, "text": "0.0.0.0/0 > tgw", "anchor": "end", "size": 9 },
+        { "x": 479, "y": 204, "text": "0.0.0.0/0 > nat", "size": 9 },
+        { "x": 479, "y": 360, "text": "0.0.0.0/0 > nat", "size": 9 },
+        { "x": 655, "y": 195, "text": "0.0.0.0/0 > igw", "size": 9 },
+        { "x": 655, "y": 206, "text": "10.0.0.0/8 > tgw", "size": 9 },
+        { "x": 655, "y": 351, "text": "0.0.0.0/0 > igw", "size": 9 },
+        { "x": 655, "y": 362, "text": "10.0.0.0/8 > tgw", "size": 9 }
+      ],
+      "legend": {
+        "x": 882.6,
+        "y": 73.4,
+        "items": [
+          { "kind": "pk", "label": "Outbound" },
+          { "kind": "pk-2", "label": "Return" }
+        ]
+      }
     },
     {
       "id": "vp-hybrid",
       "name": "Direct Connect with VPN backup",
-      "desc": "On-premises traffic normally takes AWS Direct Connect, through a transit VIF and a Direct Connect gateway to the Transit Gateway. When the Direct Connect location fails, BGP withdraws its routes and the traffic (requests orange, responses blue) fails over to the Site-to-Site VPN attached to the same transit gateway.",
+      "desc": "On-premises traffic normally takes AWS Direct Connect, through a transit VIF and a Direct Connect gateway (a global resource) to the Transit Gateway in the Region. When the Direct Connect location fails, BGP withdraws its routes and the traffic (requests orange, responses blue) fails over to the Site-to-Site VPN attached to the same transit gateway.",
       "wide": true,
       "w": 960,
       "h": 340,
@@ -401,35 +476,35 @@
         { "kind": "dc", "x": 8, "y": 52, "w": 140, "h": 214, "label": "Corporate data center" },
         { "kind": "gen", "id": "dxloc", "x": 200, "y": 52, "w": 160, "h": 104, "label": "Direct Connect location" },
         { "kind": "cloud", "x": 410, "y": 8, "w": 542, "h": 324 },
-        { "kind": "region", "x": 422, "y": 34, "w": 506, "h": 290, "label": "Region" },
-        { "kind": "vpc", "x": 732, "y": 116, "w": 184, "h": 130, "label": "VPC" }
+        { "kind": "region", "x": 462, "y": 160, "w": 466, "h": 164, "label": "Region" },
+        { "kind": "vpc", "x": 732, "y": 186, "w": 184, "h": 114, "label": "VPC", "note": "10.0.0.0/16" }
       ],
       "nodes": [
         { "id": "srv", "icon": "aws-res-servers", "x": 58, "y": 80, "size": 40, "label": "Servers" },
-        { "id": "rtr", "icon": "aws-res-vpc-customer-gateway", "x": 62, "y": 190, "size": 32, "label": "Customer gateway" },
+        { "id": "rtr", "icon": "aws-res-vpc-customer-gateway", "x": 62, "y": 190, "size": 32, "label": "Customer router", "sub": "VPN customer gateway" },
         { "id": "dx", "icon": "aws-svc-direct-connect", "x": 260, "y": 80, "size": 40, "label": "AWS Direct Connect" },
         { "id": "net", "icon": "aws-res-internet", "x": 260, "y": 242, "size": 40, "label": "Internet" },
         { "id": "dxgw", "icon": "aws-res-direct-connect-gateway", "x": 500, "y": 80, "size": 40, "label": "Direct Connect gateway" },
         { "id": "vpn", "icon": "aws-svc-site-to-site-vpn", "x": 500, "y": 242, "size": 40, "label": "AWS Site-to-Site VPN", "wrap": 16 },
-        { "id": "tgw", "icon": "aws-svc-transit-gateway", "x": 632, "y": 157, "size": 48, "label": "AWS Transit Gateway" },
-        { "id": "att", "icon": "aws-res-transit-gateway-attachment", "x": 766, "y": 165, "size": 32, "label": "TGW attachment" },
-        { "id": "ec2", "icon": "aws-res-ec2-instances", "x": 856, "y": 165, "size": 32, "label": "Amazon EC2 instances" }
+        { "id": "tgw", "icon": "aws-svc-transit-gateway", "x": 632, "y": 214, "size": 48, "label": "AWS Transit Gateway" },
+        { "id": "att", "icon": "aws-res-transit-gateway-attachment", "x": 766, "y": 222, "size": 32, "label": "TGW attachment" },
+        { "id": "ec2", "icon": "aws-res-ec2-instances", "x": 856, "y": 222, "size": 32, "label": "Amazon EC2 instances" }
       ],
       "wires": [
         { "id": "w0", "d": "M78,137 V186", "both": true },
         { "id": "d1", "d": "M98,198 H170 V100 H256", "both": true },
         { "id": "d2", "d": "M304,100 H496", "both": true, "label": "Transit VIF", "labelAt": 0.81 },
-        { "id": "d3", "d": "M544,100 H592 V173 H628", "both": true },
+        { "id": "d3", "d": "M544,100 H592 V230 H628", "both": true },
         { "id": "v1", "d": "M98,214 H190 V262 H256", "dashed": true, "both": true },
         { "id": "v2", "d": "M304,262 H496", "dashed": true, "both": true, "label": "IPsec VPN tunnels", "labelAt": 0.27 },
-        { "id": "v3", "d": "M544,262 H592 V189 H628", "dashed": true, "both": true },
-        { "id": "t1", "d": "M684,181 H762", "both": true },
-        { "id": "t2", "d": "M802,181 H852", "both": true }
+        { "id": "v3", "d": "M544,262 H592 V246 H628", "dashed": true, "both": true },
+        { "id": "t1", "d": "M684,238 H762", "both": true },
+        { "id": "t2", "d": "M802,238 H852", "both": true }
       ],
       "steps": [
-        { "n": 1, "at": "d1", "f": 0.6, "dx": 11, "dy": 0, "text": "On-premises servers send traffic from the customer gateway over AWS Direct Connect, the primary path." },
-        { "n": 2, "at": "d3", "f": 0.5, "dx": 11, "dy": 0, "text": "A transit VIF carries it to the Direct Connect gateway, which forwards it to AWS Transit Gateway and the Amazon EC2 instances in the VPC." },
-        { "n": 3, "at": "v3", "f": 0.5, "dx": 11, "dy": 0, "text": "When the Direct Connect location fails, BGP withdraws its routes and the traffic fails over to AWS Site-to-Site VPN on the same transit gateway." }
+        { "n": 1, "at": "d1", "f": 0.6, "dx": 11, "dy": 0, "text": "On-premises servers send traffic through the customer router over AWS Direct Connect, the primary path." },
+        { "n": 2, "at": "d3", "f": 0.38317757009345793, "dx": 11, "dy": 0, "text": "A transit VIF carries it to the Direct Connect gateway, a global resource outside the Region, which forwards it to AWS Transit Gateway and the Amazon EC2 instances in the VPC." },
+        { "n": 3, "at": "v3", "f": 0.5, "dx": 11, "dy": 0, "text": "When the Direct Connect location fails, BGP withdraws its routes and the traffic fails over to AWS Site-to-Site VPN on the same transit gateway, with the customer router as the VPN customer gateway device." }
       ],
       "timeline": [
         { "wire": "w0", "t": [0.03, 0.05] },
@@ -466,7 +541,18 @@
         { "glow": "v2", "t": [0.5, 0.95] },
         { "glow": "v3", "t": [0.5, 0.95] }
       ],
-      "extra": "<circle cx=\"16\" cy=\"292\" r=\"3.4\" fill=\"var(--awd-pk)\"/><text x=\"25\" y=\"295.4\">Request</text><circle cx=\"16\" cy=\"308\" r=\"3.4\" fill=\"var(--awd-pk2)\"/><text x=\"25\" y=\"311.4\">Response</text><text class=\"t-sub\" text-anchor=\"start\" x=\"154\" y=\"94\">Primary</text><text class=\"t-sub\" text-anchor=\"start\" x=\"198\" y=\"256\">Backup</text><text class=\"t-sub\" text-anchor=\"end\" x=\"908\" y=\"130\">10.0.0.0/16</text>"
+      "notes": [
+        { "x": 154, "y": 94, "text": "Primary", "anchor": "start", "size": 9 },
+        { "x": 198, "y": 256, "text": "Backup", "anchor": "start", "size": 9 }
+      ],
+      "legend": {
+        "x": 12.6,
+        "y": 295.4,
+        "items": [
+          { "kind": "pk", "label": "Request" },
+          { "kind": "pk-2", "label": "Response" }
+        ]
+      }
     },
     {
       "id": "vp-shared",
@@ -478,7 +564,7 @@
       "groups": [
         { "kind": "cloud", "x": 8, "y": 8, "w": 464, "h": 268 },
         { "kind": "acct", "x": 88, "y": 34, "w": 304, "h": 234, "label": "Network account (VPC owner)" },
-        { "kind": "vpc", "x": 100, "y": 134, "w": 280, "h": 126, "label": "VPC 10.0.0.0/16" },
+        { "kind": "vpc", "x": 100, "y": 134, "w": 280, "h": 126, "label": "VPC 10.0.0.0/16", "note": "local route: 10.0.0.0/16" },
         { "kind": "priv", "x": 112, "y": 158, "w": 124, "h": 94, "label": "Shared subnet" },
         { "kind": "priv", "x": 244, "y": 158, "w": 124, "h": 94, "label": "Shared subnet" }
       ],
@@ -508,41 +594,40 @@
         { "wire": "lb", "t": [0.292, 0.425], "ring": "ecb" },
         { "wire": "ab", "t": [0.558, 0.717], "ring": "ecb" },
         { "wire": "ab", "t": [0.771, 0.93], "reverse": true, "kind": "pk-2", "ring": "eca" }
-      ],
-      "extra": "<text class=\"t-sub\" text-anchor=\"end\" x=\"372\" y=\"148\">local route: 10.0.0.0/16</text>"
+      ]
     },
     {
       "id": "vp-client-vpn",
       "name": "AWS Client VPN",
-      "desc": "A remote client opens a TLS tunnel to the Client VPN endpoint (orange), which authenticates the user against an identity provider (blue) and then forwards traffic through a network interface in the associated subnet to private instances and databases.",
+      "desc": "A remote client opens a TLS tunnel to the Client VPN endpoint (orange), a Regional resource that authenticates the user against an identity provider (blue) and then forwards traffic through its network interface in the associated subnet to private instances and databases.",
       "w": 480,
       "h": 284,
       "dur": 8,
       "groups": [
         { "kind": "cloud", "x": 84, "y": 8, "w": 388, "h": 270 },
         { "kind": "region", "x": 96, "y": 34, "w": 364, "h": 236, "label": "Region" },
-        { "kind": "vpc", "x": 108, "y": 130, "w": 340, "h": 132, "label": "VPC" },
-        { "kind": "priv", "x": 216, "y": 154, "w": 224, "h": 100, "label": "Private subnet 10.0.1.0/24" }
+        { "kind": "vpc", "x": 212, "y": 130, "w": 236, "h": 132, "label": "VPC", "note": "10.0.0.0/16" },
+        { "kind": "priv", "x": 224, "y": 154, "w": 216, "h": 100, "label": "Private subnet 10.0.1.0/24" }
       ],
       "nodes": [
         { "id": "cl", "icon": "aws-res-client", "x": 14, "y": 178, "size": 40, "label": "Remote client", "wrap": 8 },
-        { "id": "idp", "icon": "aws-svc-iam-identity-center", "x": 148, "y": 56, "size": 40, "label": "AWS IAM Identity Center", "wrap": 16 },
-        { "id": "ep", "icon": "aws-svc-client-vpn", "x": 148, "y": 178, "size": 40, "label": "AWS Client VPN endpoint" },
-        { "id": "eni", "icon": "aws-res-vpc-elastic-network-interface", "x": 246, "y": 182, "size": 32, "label": "Network interface", "wrap": 16 },
-        { "id": "ec2", "icon": "aws-res-ec2-instance", "x": 314, "y": 182, "size": 32, "label": "Amazon EC2" },
-        { "id": "rds", "icon": "aws-svc-rds", "x": 382, "y": 182, "size": 32, "label": "Amazon RDS" }
+        { "id": "idp", "icon": "aws-svc-iam-identity-center", "x": 140, "y": 56, "size": 40, "label": "AWS IAM Identity Center", "wrap": 16 },
+        { "id": "ep", "icon": "aws-svc-client-vpn", "x": 140, "y": 178, "size": 40, "label": "AWS Client VPN endpoint" },
+        { "id": "eni", "icon": "aws-res-vpc-elastic-network-interface", "x": 250, "y": 182, "size": 32, "label": "Network interface", "wrap": 16 },
+        { "id": "ec2", "icon": "aws-res-ec2-instance", "x": 318, "y": 182, "size": 32, "label": "Amazon EC2" },
+        { "id": "rds", "icon": "aws-svc-rds", "x": 386, "y": 182, "size": 32, "label": "Amazon RDS" }
       ],
       "wires": [
-        { "id": "tls", "d": "M58,198 H144", "both": true, "label": "TLS", "labelAt": 0.1 },
-        { "id": "auth", "d": "M168,126 V174", "dashed": true, "both": true },
-        { "id": "as", "d": "M192,198 H242" },
-        { "id": "ae", "d": "M282,198 H310" },
-        { "id": "ad", "d": "M350,198 H378" }
+        { "id": "tls", "d": "M58,198 H136", "both": true, "label": "TLS", "labelAt": 0.1 },
+        { "id": "auth", "d": "M160,126 V174", "dashed": true, "both": true },
+        { "id": "as", "d": "M184,198 H246" },
+        { "id": "ae", "d": "M286,198 H314" },
+        { "id": "ad", "d": "M354,198 H382" }
       ],
       "steps": [
         { "n": 1, "at": "tls", "f": 0.7, "text": "A remote client opens a TLS connection to the AWS Client VPN endpoint." },
         { "n": 2, "at": "auth", "f": 0.5, "dx": 11, "dy": 0, "text": "The Client VPN endpoint authenticates the user through SAML federation with AWS IAM Identity Center." },
-        { "n": 3, "at": "as", "f": 0.74, "dy": -12, "text": "The endpoint forwards authorized traffic through its network interface in the associated subnet to the private Amazon EC2 instance and the Amazon RDS database." }
+        { "n": 3, "at": "as", "f": 0.23, "dy": -12, "text": "The endpoint is associated with the subnet through a network interface it creates there, and forwards authorized traffic through it to the private Amazon EC2 instance and the Amazon RDS database." }
       ],
       "timeline": [
         { "wire": "tls", "t": [0.058, 0.203], "ring": "ep" },
@@ -552,7 +637,9 @@
         { "wire": "ae", "t": [0.727, 0.828], "ring": "ec2" },
         { "wire": "ad", "t": [0.828, 0.93], "ring": "rds" }
       ],
-      "extra": "<text class=\"t-sub\" text-anchor=\"end\" x=\"440\" y=\"144\">10.0.0.0/16</text><text class=\"t-sub\" text-anchor=\"start\" x=\"176\" y=\"170\">SAML</text>"
+      "notes": [
+        { "x": 168, "y": 170, "text": "SAML", "anchor": "start", "size": 9 }
+      ]
     },
     {
       "id": "vp-privatelink",
