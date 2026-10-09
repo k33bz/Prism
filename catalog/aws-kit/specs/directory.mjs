@@ -34,9 +34,9 @@ D.push({
     { id: 'w3', from: 'dca', to: 'dcb', both: true, dashed: true },
   ],
   steps: [
-    { n: 1, at: 'w1a', f: 0.18 }, { n: 1, at: 'w1b', f: 0.18 },
-    { n: 2, at: 'w2a' }, { n: 2, at: 'w2b' },
-    { n: 3, at: 'w3', f: 0.15 },
+    { n: 1, at: 'w1a', f: 0.18, text: 'AWS Systems Manager sends the domain join command to the Windows EC2 instances in both Availability Zones.' }, { n: 1, at: 'w1b', f: 0.18 },
+    { n: 2, at: 'w2a', text: 'Each Windows EC2 instance joins corp.example.com through one of the directory domain controllers.' }, { n: 2, at: 'w2b' },
+    { n: 3, at: 'w3', f: 0.15, text: 'The domain controllers replicate the new computer accounts to each other, and the instances report the result to AWS Systems Manager.' },
   ],
   timeline: [
     { wire: 'w1a', t: [0.05, 0.19], ring: 'eca' }, { wire: 'w1b', t: [0.05, 0.19], ring: 'ecb' },
@@ -84,7 +84,9 @@ D.push({
     { id: 'rep', from: 'dc1', to: 'dc2', both: true, dashed: true },
   ],
   steps: [
-    { n: 1, at: 'trust', f: 0.25, dy: 11 }, { n: 2, at: 'trust', f: 0.42, dy: 11 }, { n: 3, at: 'trust', f: 0.59, dy: 11 },
+    { n: 1, at: 'trust', f: 0.25, dy: 11, text: 'Each directory resolves the domain of the other forest through its DNS conditional forwarder, over AWS Site-to-Site VPN or AWS Direct Connect.' },
+    { n: 2, at: 'trust', f: 0.42, dy: 11, text: 'On-premises Active Directory and AWS Managed Microsoft AD establish and verify the two-way forest trust.' },
+    { n: 3, at: 'trust', f: 0.59, dy: 11, text: 'Users in each forest authenticate to resources in the other forest across the trust. AWS Managed Microsoft AD replicates to its second domain controller.' },
   ],
   timeline: [
     { wire: 'trust', t: [0.05, 0.17], kind: 'pk-2', ring: 'dc1' }, { wire: 'trust', t: [0.05, 0.17], reverse: true, kind: 'pk-2', ring: 'onp' },
@@ -128,7 +130,9 @@ D.push({
     { id: 't1', from: 'ad', to: 'onp', dashed: true },
   ],
   steps: [
-    { n: 1, at: 'u1', f: 0.5, dy: 0 }, { n: 2, at: 'a1', dx: 13, dy: 0 }, { n: 3, at: 't1', f: 0.11, dy: 0 },
+    { n: 1, at: 'u1', f: 0.5, dy: 0, text: 'On-premises users sign in to the Windows EC2 instance with their corp.example.com credentials over VPN or Direct Connect.' },
+    { n: 2, at: 'a1', dx: 13, dy: 0, text: 'The Windows EC2 instance passes the sign-in to AWS Managed Microsoft AD, the domain it is joined to.' },
+    { n: 3, at: 't1', f: 0.11, dy: 0, text: 'AWS Managed Microsoft AD follows the one-way trust to the on-premises domain controllers, which validate the credentials. The reply returns to the user.' },
   ],
   timeline: [
     { wire: 'u1', t: [0.04, 0.14], ring: 'ec2' },
@@ -175,9 +179,9 @@ D.push({
     { id: 'w5', from: 'adc', to: 'onp', both: true },
   ],
   steps: [
-    { n: 1, at: 'w1', f: 0.2, dy: 0 }, { n: 1, at: 'w2', f: 0.3, dy: 0 },
-    { n: 2, at: 'w3', f: 0.62, dy: 0 }, { n: 2, at: 'w4', f: 0.82, dy: 0 },
-    { n: 3, at: 'w5', f: 0.2, dy: 0 },
+    { n: 1, at: 'w1', f: 0.2, dy: 0, text: 'Users sign in to Amazon WorkSpaces or the AWS Management Console with their corp.example.com credentials.' }, { n: 1, at: 'w2', f: 0.3, dy: 0 },
+    { n: 2, at: 'w3', f: 0.62, dy: 0, text: 'Amazon WorkSpaces and the AWS Management Console send the sign-in request to AD Connector in the VPC.' }, { n: 2, at: 'w4', f: 0.82, dy: 0 },
+    { n: 3, at: 'w5', f: 0.2, dy: 0, text: 'AD Connector proxies the request to on-premises Active Directory over VPN or Direct Connect and returns the reply, without caching directory data.' },
   ],
   timeline: [
     { wire: 'w1', t: [0.04, 0.14], ring: 'ws' }, { wire: 'w2', t: [0.04, 0.14], ring: 'con' },
@@ -235,10 +239,10 @@ D.push({
     { id: 'drep', from: 'dc1', to: 'dc2', both: true, dashed: true },
   ],
   steps: [
-    { n: 1, at: 'tgt', dx: 13, dy: 0 },
-    { n: 2, x: 232, y: 270 },
-    { n: 3, x: 232, y: 150 },
-    { n: 4, at: 'val1', dx: 13, dy: 0 },
+    { n: 1, at: 'tgt', dx: 13, dy: 0, text: 'The domain-joined client gets a Kerberos ticket-granting ticket (TGT) from the on-premises domain controllers.' },
+    { n: 2, x: 232, y: 270, text: 'On-premises Active Directory refers the client across the one-way forest trust, and AWS Managed Microsoft AD issues a service ticket for SQL Server.' },
+    { n: 3, x: 232, y: 150, text: 'The client connects to the Amazon RDS for SQL Server primary with Windows Authentication, and the primary replicates synchronously to the standby.' },
+    { n: 4, at: 'val1', dx: 13, dy: 0, text: 'Amazon RDS for SQL Server validates the service ticket that AWS Managed Microsoft AD issued and accepts the connection.' },
   ],
   timeline: [
     { wire: 'tgt', t: [0.04, 0.12], ring: 'onp' },
@@ -291,7 +295,9 @@ D.push({
     { id: 'rep', from: 'dc1', to: 'dc2', both: true, dashed: true },
   ],
   steps: [
-    { n: 1, x: 78, y: 206 }, { n: 2, x: 78, y: 161 }, { n: 3, at: 'val1', dx: 13, dy: 0 },
+    { n: 1, x: 78, y: 206, text: 'The domain-joined client requests a Kerberos ticket for the database from AWS Managed Microsoft AD.' },
+    { n: 2, x: 78, y: 161, text: 'The client connects to the Aurora writer with the Kerberos ticket instead of a database password.' },
+    { n: 3, at: 'val1', dx: 13, dy: 0, text: 'The Aurora writer validates the ticket that AWS Managed Microsoft AD issued and accepts the connection. The domain controllers replicate between Availability Zones.' },
   ],
   timeline: [
     { wire: 'tkt', t: [0.04, 0.16], ring: 'dc1' },
@@ -340,7 +346,9 @@ D.push({
     { id: 'rep', from: 'dc1', to: 'dc2', both: true, dashed: true },
   ],
   steps: [
-    { n: 1, x: 78, y: 206 }, { n: 2, x: 78, y: 161 }, { n: 3, at: 'val1', dx: 13, dy: 0 },
+    { n: 1, x: 78, y: 206, text: 'The domain-joined client requests a Kerberos ticket for the file system from AWS Managed Microsoft AD.' },
+    { n: 2, x: 78, y: 161, text: 'The client connects to the SMB share on the preferred file server, which replicates writes synchronously to the standby file server.' },
+    { n: 3, at: 'val1', dx: 13, dy: 0, text: 'The preferred file server validates the ticket that AWS Managed Microsoft AD issued and grants access to the share. The domain controllers replicate between Availability Zones.' },
   ],
   timeline: [
     { wire: 'tkt', t: [0.04, 0.16], ring: 'dc1' },
@@ -388,7 +396,8 @@ D.push({
     { id: 'rep', from: 'dc1', to: 'dc2', both: true, dashed: true },
   ],
   steps: [
-    { n: 1, x: 78, y: 226 }, { n: 2, at: 'val1', dx: 13, dy: 0 },
+    { n: 1, x: 78, y: 226, text: 'Users sign in to Amazon WorkSpaces with their Active Directory credentials.' },
+    { n: 2, at: 'val1', dx: 13, dy: 0, text: 'Amazon WorkSpaces validates the credentials against AWS Managed Microsoft AD, then streams the desktop session to the user.' },
   ],
   timeline: [
     { wire: 'sign', t: [0.05, 0.19], ring: 'ws1' },
@@ -430,7 +439,9 @@ D.push({
     { id: 'j2', d: 'M218,126 H132', both: true },
   ],
   steps: [
-    { n: 1, x: 240, y: 41 }, { n: 2, x: 320, y: 126 }, { n: 3, x: 160, y: 126 },
+    { n: 1, x: 240, y: 41, text: 'The shared services account shares its AWS Managed Microsoft AD directory with the workload account through AWS Organizations.' },
+    { n: 2, x: 320, y: 126, text: 'Windows EC2 instances in the workload account send a domain join request over the VPC peering connection or transit gateway.' },
+    { n: 3, x: 160, y: 126, text: 'AWS Managed Microsoft AD joins the instances to corp.example.com, and the reply returns over the same path.' },
   ],
   timeline: [
     { wire: 'share', t: [0.05, 0.20], kind: 'pk-2' },
@@ -484,7 +495,9 @@ D.push({
     { id: 'rep', from: 'dc1', to: 'dc2', both: true, dashed: true },
   ],
   steps: [
-    { n: 1, x: 150, y: 70 }, { n: 2, x: 150, y: 230 }, { n: 3, at: 'v1', dx: 13, dy: 0 },
+    { n: 1, x: 150, y: 70, text: 'AWS Managed Microsoft AD (aws.example.com) trusts the corporate forest, corp.example.com, through a one-way trust over AWS Site-to-Site VPN.' },
+    { n: 2, x: 150, y: 230, text: 'AWS Managed Microsoft AD trusts the subsidiary forest, subsidiary.example.net, through a separate one-way trust over AWS Direct Connect.' },
+    { n: 3, at: 'v1', dx: 13, dy: 0, text: 'Users from both forests authenticate across their trusts and access domain-joined Windows resources. The domain controllers replicate between Availability Zones.' },
   ],
   timeline: [
     { wire: 'a2', t: [0.05, 0.12] }, { wire: 'a1', t: [0.125, 0.20], ring: 'fa' },
