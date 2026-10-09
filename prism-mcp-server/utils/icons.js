@@ -5,12 +5,27 @@
 // A store pointed at catalog/manifest.json reads catalog/aws-icons/aws-icons.json beside it instead.
 // Same icons either way. Official colorway pairs (x-dark + x-light, or x-dark + x) are addressed by
 // their base id, like the kit does, and resolve to the dark or light variant on request.
+//
+// Names resolve through catalog/aws-icons/resolve.mjs, the resolver awd.mjs and the importers use
+// (aliases, draw.io / Mermaid / PlantUML / diagrams / CloudFormation / Terraform crosswalks, status of
+// retired icons). The sprite carries names and aliases only, so with Prism.html the store also merges
+// the metadata of catalog/aws-icons/aws-icons.json beside it (xref, rules, short names, status) when
+// that file is there. Without resolve.mjs (the server copied out of the repo) search falls back to
+// word-start matching and resolve_aws_icon reports 'unavailable'.
 
 import fs from 'node:fs';
 import path from 'node:path';
 
+let RESOLVER = null;
+try { RESOLVER = await import(new URL('../../catalog/aws-icons/resolve.mjs', import.meta.url).href); } catch { /* standalone install */ }
+
 export const ICON_KINDS = ['service', 'resource', 'group', 'category'];
+export const RESOLVE_FROM = ['text', 'drawio', 'mermaid', 'plantuml', 'diagrams', 'cfn', 'tf'];
+export const RESOLVE_PREFER = ['service', 'resource', 'node', 'group'];
 const KIND_RANK = { service: 0, resource: 1, group: 2, category: 3 };
+// overlay fields of aws-icons.json (catalog/aws-icons/overlay.mjs) carried into the icon map
+const META_FIELDS = ['short', 'status', 'endOfSupport', 'note', 'renamedTo', 'duplicateOf', 'primary', 'prefer', 'xref'];
+const metaOf = (ic) => Object.fromEntries(META_FIELDS.filter((f) => ic[f] != null).map((f) => [f, ic[f]]));
 
 const unesc = (s) => String(s).replace(/&quot;/g, '"').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
 const escAttr = (s) => String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
@@ -49,27 +64,54 @@ export function parseIconStore(store) {
   for (const [id, ic] of Object.entries((store && store.icons) || {})) {
     icons.set(id, {
       id, name: ic.name || id, kind: ic.kind || '', category: ic.category || '',
-      service: ic.service || null, aliases: ic.aliases || [], viewBox: ic.viewBox, svg: ic.svg,
+      service: ic.service || null, aliases: ic.aliases || [], ...metaOf(ic), viewBox: ic.viewBox, svg: ic.svg,
     });
   }
   return icons.size ? icons : null;
 }
 
-/** Load the icons that belong with a catalog file. { source, icons } or null when there are none. */
+/** Copy the store's aliases and overlay metadata onto sprite icons (the store is the newer source). */
+export function mergeIconMeta(icons, store) {
+  for (const [id, ic] of Object.entries((store && store.icons) || {})) {
+    const s = icons.get(id);
+    if (s) Object.assign(s, { aliases: ic.aliases || s.aliases }, metaOf(ic));
+  }
+  return icons;
+}
+
+/**
+ * Load the icons that belong with a catalog file: { source, icons, rules } or null when there are none.
+ * Prism.html: its sprite, plus the metadata of catalog/aws-icons/aws-icons.json beside it when present.
+ * manifest.json: aws-icons/aws-icons.json beside it.
+ */
 export function loadIcons(catalogPath) {
   try {
+    const dir = path.dirname(catalogPath);
+    const json = [path.join(dir, 'aws-icons', 'aws-icons.json'), path.join(dir, 'catalog', 'aws-icons', 'aws-icons.json')].find((f) => fs.existsSync(f));
+    const read = () => { try { return JSON.parse(fs.readFileSync(json, 'utf8')); } catch { return null; } };
     const ext = path.extname(catalogPath).toLowerCase();
     if (ext === '.html' || ext === '.htm') {
       const icons = parseSprite(fs.readFileSync(catalogPath, 'utf8'));
-      if (icons) return { source: `${catalogPath} (#awd-sprite)`, icons };
+      if (icons) {
+        const store = json ? read() : null;
+        if (store) mergeIconMeta(icons, store);
+        return { source: `${catalogPath} (#awd-sprite)${store ? ` + metadata ${json}` : ''}`, icons, rules: (store && store.rules) || null };
+      }
     }
-    const json = path.join(path.dirname(catalogPath), 'aws-icons', 'aws-icons.json');
-    if (fs.existsSync(json)) {
-      const icons = parseIconStore(JSON.parse(fs.readFileSync(json, 'utf8')));
-      if (icons) return { source: json, icons };
+    if (json) {
+      const store = read();
+      const icons = parseIconStore(store);
+      if (icons) return { source: json, icons, rules: store.rules || null };
     }
   } catch { /* unreadable or malformed: no icons */ }
   return null;
+}
+
+/** The shared name resolver over a loaded icon pack (cached on it), or null without resolve.mjs. */
+export function iconResolver(pack) {
+  if (!pack) return null;
+  if (pack.resolver === undefined) pack.resolver = RESOLVER ? RESOLVER.createResolver({ icons: pack.icons, rules: pack.rules || {} }) : null;
+  return pack.resolver;
 }
 
 /** The official colorway pair an id belongs to: { base, dark, light } or null. */
@@ -81,12 +123,13 @@ export function colorwayPair(icons, id) {
 }
 
 /**
- * Search by words over id, name, service, category and aliases (every word must match). Colorway
- * pairs collapse into one result keyed by the base id. Ranked: exact name or short id first, then
- * services, resources, groups, categories; shorter names first within a rank.
+ * Search by words over id, name, service, category and aliases (every word must start a word there:
+ * "lamb" finds Lambda, "ecr" does not find secrets-manager). Colorway pairs collapse into one result
+ * keyed by the base id. Ranked: exact name or short id first, then services, resources, groups,
+ * categories; shorter names first within a rank. The fallback when resolve.mjs is not available.
  */
 export function searchIcons(icons, { query = '', kind = null, limit = 25, offset = 0 } = {}) {
-  const words = String(query).toLowerCase().split(/\s+/).filter(Boolean);
+  const words = String(query).toLowerCase().split(/[^a-z0-9]+/).filter(Boolean);
   const q = words.join(' ');
   const seen = new Set();
   const hits = [];
@@ -95,8 +138,8 @@ export function searchIcons(icons, { query = '', kind = null, limit = 25, offset
     const key = pair ? pair.base : ic.id;
     if (seen.has(key)) continue;
     if (kind && ic.kind !== kind) continue;
-    const hay = [key, ic.name, ic.service || '', ic.category, ...ic.aliases].join(' ').toLowerCase();
-    if (!words.every((w) => hay.includes(w))) continue;
+    const hay = [key, ic.name, ic.service || '', ic.category, ...ic.aliases].join(' ').toLowerCase().split(/[^a-z0-9]+/);
+    if (!words.every((w) => hay.some((h) => h.startsWith(w)))) continue;
     seen.add(key);
     const exact = q && (ic.name.toLowerCase() === q || ic.name.toLowerCase().replace(/^(amazon|aws) /, '') === q ||
       key.replace(/^aws-(svc|res|grp|cat)-/, '') === words.join('-') || ic.aliases.includes(q));

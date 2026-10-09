@@ -8,7 +8,7 @@ import { compose, composeWithTemplate, availableTemplates } from '../utils/compo
 import { validateFacet, validateComposition } from '../utils/validate.js';
 import { THEMES, THEME_IDS, TOKEN_META, BASE_TOKENS, getTheme, usesTokens, themeRootCss, isThemeSensitive, themeIdList, themesSummary } from '../utils/themes.js';
 import { CollectionError, toExportSchema } from '../utils/collections.js';
-import { ICON_KINDS, searchIcons, suggestIcons, resolveIcon, colorwayPair, iconSvg, iconSymbol } from '../utils/icons.js';
+import { ICON_KINDS, RESOLVE_FROM, RESOLVE_PREFER, searchIcons, suggestIcons, resolveIcon, colorwayPair, iconSvg, iconSymbol, iconResolver } from '../utils/icons.js';
 
 export class ToolError extends Error {
   constructor(message, { code = 'tool_error', data = null } = {}) {
@@ -62,6 +62,30 @@ function iconPack(store) {
     throw new ToolError('No AWS icons ship with this catalog: point the server at Prism.html, or at a manifest.json with aws-icons/aws-icons.json beside it', { code: 'unavailable' });
   }
   return pack;
+}
+
+/** Lifecycle fields of an icon (retired, end of support, renamed, duplicate), when it has any. */
+function iconStatus(ic, R) {
+  if (!ic || !(ic.status || ic.renamedTo || ic.duplicateOf)) return {};
+  const warnings = R ? R.resolve(ic.id).warnings : [`${ic.name}: ${ic.status || 'renamed'}`];
+  return {
+    ...(ic.status ? { status: ic.status } : {}), ...(ic.endOfSupport ? { endOfSupport: ic.endOfSupport } : {}),
+    ...(ic.renamedTo ? { renamedTo: ic.renamedTo } : {}), ...(ic.duplicateOf ? { duplicateOf: ic.duplicateOf } : {}),
+    warnings,
+  };
+}
+
+/** One search result row: base id, names, kind, colorways, lifecycle. */
+function iconItem(icons, e, score) {
+  const pair = colorwayPair(icons, e.id);
+  return {
+    id: e.id, name: e.name, ...(e.short ? { short: e.short } : {}), kind: e.kind, category: e.category,
+    ...(e.service ? { service: e.service } : {}),
+    ...(e.aliases && e.aliases.length ? { aliases: e.aliases } : {}),
+    ...(pair ? { colorways: { dark: pair.dark, light: pair.light } } : {}),
+    ...(e.status ? { status: e.status } : {}), ...(e.renamedTo ? { renamedTo: e.renamedTo } : {}), ...(e.duplicateOf ? { duplicateOf: e.duplicateOf } : {}),
+    ...(score != null ? { score } : {}),
+  };
 }
 
 // --- shared schema fragments ---
@@ -1049,13 +1073,14 @@ export function buildTools() {
       },
     },
 
-    // ============================== AWS ARCHITECTURE ICONS (2) ==============================
+    // ============================== AWS ARCHITECTURE ICONS (3) ==============================
     // The official AWS Architecture Icons behind the AWS Architecture gallery, read from the
     // gallery's embedded sprite in Prism.html (or catalog/aws-icons/aws-icons.json). The gallery's
     // own diagrams already carry their icons in get_effect html; these tools serve new diagrams.
+    // Ranking and name resolution come from catalog/aws-icons/resolve.mjs, shared with awd.mjs.
     {
       name: 'search_aws_icons',
-      description: 'Search the official AWS Architecture Icons that ship with Prism (services, resources, group frames, categories) by words over name, id, service, category and aliases, e.g. "lambda", "managed microsoft ad", "nat gateway". Every word must match. Colorway pairs (separate artwork for dark and light backgrounds) collapse into one result keyed by the base id. Use get_aws_icon for the SVG.',
+      description: 'Search the official AWS Architecture Icons that ship with Prism (services, resources, group frames, categories) by words over name, id, service, category, aliases and crosswalk names, e.g. "lambda", "managed microsoft ad", "nat gateway", "ALB", "AWS::S3::Bucket". Every word must match a whole word or the start of one, so "ecr" does not find Secrets Manager. Exact names, abbreviations and old names (S3, NACL, DAX, Elasticsearch, QuickSight) rank first. Colorway pairs (separate artwork for dark and light backgrounds) collapse into one result keyed by the base id; retired and renamed icons carry status. Use resolve_aws_icon to pick one icon for a name, get_aws_icon for the SVG.',
       inputSchema: {
         type: 'object',
         properties: {
@@ -1072,7 +1097,49 @@ export function buildTools() {
           throw new ToolError(`kind must be one of: ${ICON_KINDS.join(', ')}`, { code: 'invalid_argument' });
         }
         const limit = Math.min(200, nonNegInt(a.limit, 25));
-        return { source: pack.source, ...searchIcons(pack.icons, { query: a.query || '', kind: a.kind || null, limit, offset: nonNegInt(a.offset, 0) }) };
+        const offset = nonNegInt(a.offset, 0);
+        const R = iconResolver(pack);
+        if (!R) return { source: pack.source, ...searchIcons(pack.icons, { query: a.query || '', kind: a.kind || null, limit, offset }) };
+        const hits = R.search(a.query || '', { kind: a.kind || null });
+        const items = hits.slice(offset, offset + limit).map((h) => iconItem(pack.icons, h.entry, a.query ? h.score : undefined));
+        return { source: pack.source, total: hits.length, offset, count: items.length, items };
+      },
+    },
+    {
+      name: 'resolve_aws_icon',
+      description: 'Pick the one official AWS icon for a name from any source: free text ("S3 bucket", "ALB", "Security Group", "Aurora PostgreSQL"), a draw.io style or shape (resIcon=mxgraph.aws4.lambda, mxgraph.aws4.internet_gateway), a Mermaid/Iconify key (aws:simple-storage-service), a PlantUML macro (LambdaLambdaFunction, VPCGroup), a Python diagrams class (compute.Lambda), a CloudFormation type (AWS::Lambda::Function) or a Terraform type (aws_lb). Returns the icon id and name, kind "node" or "group" (a frame, with the awd group kind: vpc, pub, priv, sg, az, region, asg, acct, dc...), a 0..1 confidence, how it matched, ranked candidates and warnings (retired or renamed services, a missing property, an ambiguous name). id is null when nothing is good enough. CloudFormation/Terraform icons that depend on a property take props, e.g. {"Type":"network"} for ELBv2, {"Engine":"postgres","MultiAZ":true} for RDS (adds the standby icon).',
+      inputSchema: {
+        type: 'object',
+        properties: {
+          query: { type: 'string', description: 'The name to resolve.' },
+          from: { type: 'string', enum: RESOLVE_FROM, description: 'Source vocabulary (default text; CloudFormation, Terraform, draw.io and Mermaid forms are also recognised in text).' },
+          props: { type: 'object', additionalProperties: { type: ['string', 'number', 'boolean'] }, description: 'Resource properties for property picks: Type, Engine, MultiAZ, FileSystemType, load_balancer_type, engine, multi_az, MapPublicIpOnLaunch, strokeColor.' },
+          prefer: { type: 'string', enum: RESOLVE_PREFER, description: 'Override the default: service or resource icon, node icon or group frame.' },
+        },
+        required: ['query'],
+        additionalProperties: false,
+      },
+      handler: (a, { store }) => {
+        const pack = iconPack(store);
+        if (typeof a.query !== 'string' || !a.query.trim()) throw new ToolError('query is required', { code: 'invalid_argument' });
+        if (a.from != null && !RESOLVE_FROM.includes(a.from)) throw new ToolError(`from must be one of: ${RESOLVE_FROM.join(', ')}`, { code: 'invalid_argument' });
+        if (a.prefer != null && !RESOLVE_PREFER.includes(a.prefer)) throw new ToolError(`prefer must be one of: ${RESOLVE_PREFER.join(', ')}`, { code: 'invalid_argument' });
+        if (a.props != null && (typeof a.props !== 'object' || Array.isArray(a.props) || Object.values(a.props).some((v) => v != null && typeof v === 'object'))) {
+          throw new ToolError('props must be an object of string, number or boolean values', { code: 'invalid_argument' });
+        }
+        const R = iconResolver(pack);
+        if (!R) throw new ToolError('Icon name resolution needs catalog/aws-icons/resolve.mjs: run the server from the Prism repository', { code: 'unavailable' });
+        const r = R.resolve(a.query, { from: a.from || 'text', props: a.props || {}, prefer: a.prefer });
+        const nm = (id) => { const e = id && R.info(id); return e ? e.short || e.name : null; };
+        return {
+          query: a.query, from: r.from || a.from || 'text',
+          id: r.id, ...(r.id ? { name: nm(r.id) } : {}), ...(r.kind ? { kind: r.kind } : {}), ...(r.group ? { group: r.group } : {}),
+          ...(r.role ? { role: r.role } : {}), ...(r.confidence != null ? { confidence: r.confidence } : {}), ...(r.how ? { how: r.how } : {}),
+          ...(r.standby ? { standby: r.standby } : {}), ...(r.status ? { status: r.status } : {}),
+          candidates: r.candidates.map((c) => ({ id: c.id, name: nm(c.id), score: c.score })),
+          warnings: r.warnings,
+          source: pack.source,
+        };
       },
     },
     {
@@ -1093,15 +1160,21 @@ export function buildTools() {
         const pack = iconPack(store);
         if (typeof a.id !== 'string' || !a.id.trim()) throw new ToolError('id is required', { code: 'invalid_argument' });
         const icon = resolveIcon(pack.icons, a.id.trim(), a.colorway === 'dark' ? 'dark' : 'light');
+        const R = iconResolver(pack);
         if (!icon) {
-          throw new ToolError(`Unknown AWS icon id: ${a.id}`, { code: 'not_found', data: { suggestions: suggestIcons(pack.icons, a.id) } });
+          // near matches: the resolver's picks for the id read as a name, then any-word matches
+          const plain = a.id.trim().replace(/^aws-(svc|res|grp|cat)-/, '').replace(/-(dark|light)$/, '');
+          const near = R ? [...R.resolve(plain).candidates.map((c) => c.id), ...R.search(plain).slice(0, 5).map((h) => h.id)] : [];
+          const suggestions = [...new Set([...near, ...suggestIcons(pack.icons, a.id)])].slice(0, 5);
+          throw new ToolError(`Unknown AWS icon id: ${a.id}`, { code: 'not_found', data: { suggestions } });
         }
         const pair = colorwayPair(pack.icons, icon.id);
         const symbol = a.format === 'symbol';
         return {
-          id: icon.id, name: icon.name, kind: icon.kind, category: icon.category,
+          id: icon.id, name: icon.name, ...(icon.short ? { short: icon.short } : {}), kind: icon.kind, category: icon.category,
           ...(icon.service ? { service: icon.service } : {}),
           ...(pair ? { colorways: { dark: pair.dark, light: pair.light } } : {}),
+          ...iconStatus(icon, R),
           viewBox: icon.viewBox,
           format: symbol ? 'symbol' : 'svg',
           markup: symbol ? iconSymbol(icon) : iconSvg(icon, Math.min(1024, Math.max(8, nonNegInt(a.size, 48)))),
