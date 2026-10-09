@@ -4,7 +4,8 @@ Diagrams for Prism's **AWS Architecture** gallery are written as **specs** (plai
 same data as JSON: see [JSON specs](#json-specs)) and compiled to self-contained SVG by
 `catalog/aws-kit/awd.mjs`. The output uses the **official AWS Architecture Icons** (embedded once
 as a sprite, referenced by id), official group frames, numbered steps, and motion on **one clock per
-diagram** (SMIL: no runtime JS). Styling lives in `catalog/drafts/aws.css`. The exemplar is `catalog/aws-kit/specs/example.mjs`: read it first.
+diagram** (SMIL: no runtime JS). Styling lives in `catalog/drafts/aws.css`. The exemplar is
+`catalog/aws-kit/specs/example.mjs`: read it first.
 
 ## Workflow
 ```bash

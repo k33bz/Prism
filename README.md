@@ -168,7 +168,7 @@ Options:
 
 Logs go to **stderr** (stdout is reserved for the JSON-RPC channel), so they never corrupt the MCP protocol stream. Verbosity is also settable via `PRISM_MCP_LOG_LEVEL`. A `--port` flag is accepted but ignored — this build is stdio-only; add an HTTP/SSE transport by implementing one against `PrismMCPServer`.
 
-### The 31 tools
+### The 33 tools
 
 | Group | Tools |
 |---|---|
@@ -179,6 +179,7 @@ Logs go to **stderr** (stdout is reserved for the JSON-RPC channel), so they nev
 | **Catalog management (3)** | `get_catalog_metadata` · `export_collection` (`bundle`/`document`/`schema`) · `get_token_reference` |
 | **AWS icons (2)** | `search_aws_icons` · `get_aws_icon` (the official AWS Architecture Icons, as standalone SVG or sprite symbols) |
 | **Collections & favorites (6)** | `list_collections` · `get_collection` · `create_collection` · `add_to_collection` · `remove_from_collection` · `delete_collection` |
+| **AWS diagrams (2)** | `build_diagram` (a JSON diagram spec to a standalone SVG and the gallery svg, with the kit's checks) · `get_diagram_spec` (any gallery diagram's JSON spec) |
 
 `compose` merges HTML, deduplicates CSS rules, collapses `:root` token blocks, validates the output, and reports size savings. **Collections** are named, disk-backed sets of effects that persist across sessions (stored in `prism-mcp-server/collections.json`, which is git-ignored); export one with `export_collection { collectionId, format: "schema" }` to hand it to the Prism.html UI. Full parameter schemas come back from `tools/list`, and one example call per tool lives in [`prism-mcp-server/examples/`](./prism-mcp-server/examples).
 
@@ -367,10 +368,10 @@ The MCP server's `compose` / `compose_with_template` tools do all of this for yo
 .
 ├── Prism.html              ← the whole tool: UI + all galleries + the JSON island
 ├── README.md               ← you are here
-├── prism-mcp-server/       ← the MCP server (zero-dependency Node, 31 tools)
+├── prism-mcp-server/       ← the MCP server (zero-dependency Node, 33 tools)
 │   ├── cli.js                 prism-mcp CLI (start / info / tools / help)
 │   ├── index.js               PrismMCPServer (JSON-RPC dispatch) + StdioTransport
-│   ├── tools/index.js         the 31 tool definitions
+│   ├── tools/index.js         the 33 tool definitions
 │   ├── utils/                 catalog store, collections, themes mirror, AWS icons, css/compose/validate, logger
 │   ├── examples/              per-tool example calls + Claude Desktop / Anthropic API configs
 │   ├── test/                  Node-native test suite (156 tests)
@@ -389,7 +390,8 @@ The MCP server's `compose` / `compose_with_template` tools do all of this for yo
 │   ├── _scaffold.mjs / _rescaffold.mjs / _splice.mjs / _splice_page.mjs   build and splice gallery templates from drafts/
 │   ├── _scaffold_ds.mjs / _gen_system.mjs / _merge_spectrum.mjs           theme packs: profile → registry + MCP mirror → 100 facets → Spectrums
 │   ├── aws-icons/             the official AWS Architecture Icons: JSON store, sprite, build script, NOTICE
-│   ├── aws-kit/               AWS diagram kit: awd.mjs (spec to SVG), build-gallery.mjs, one spec per family
+│   ├── aws-kit/               AWS diagram kit: awd.mjs (spec to SVG), build-gallery.mjs, one spec per family,
+│   │                          spec.schema.json + spec.mjs (JSON specs), json/ (each family as JSON)
 │   ├── drafts/                gallery sources (body + css) for the drafts-built galleries
 │   ├── profiles/              one profile per theme (palette, type, radius)
 │   └── additions/             generated facet batches merged into the galleries
