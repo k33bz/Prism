@@ -1,10 +1,11 @@
 # AWS Architecture kit: authoring guide
 
-Diagrams for Prism's **AWS Architecture** gallery are written as **specs** (plain JS data) and
-compiled to self-contained SVG by `catalog/aws-kit/awd.mjs`. The output uses the **official AWS
-Architecture Icons** (embedded once as a sprite, referenced by id), official group frames, numbered
-steps, and motion on **one clock per diagram** (SMIL: no runtime JS). Styling lives in
-`catalog/drafts/aws.css`. The exemplar is `catalog/aws-kit/specs/example.mjs`: read it first.
+Diagrams for Prism's **AWS Architecture** gallery are written as **specs** (plain JS data, or the
+same data as JSON: see [JSON specs](#json-specs)) and compiled to self-contained SVG by
+`catalog/aws-kit/awd.mjs`. The output uses the **official AWS Architecture Icons** (embedded once
+as a sprite, referenced by id), official group frames, numbered steps, and motion on **one clock per
+diagram** (SMIL: no runtime JS). Styling lives in `catalog/drafts/aws.css`. The exemplar is
+`catalog/aws-kit/specs/example.mjs`: read it first.
 
 ## Workflow
 ```bash
@@ -12,7 +13,12 @@ node catalog/aws-kit/awd.mjs icons lambda              # find icon ids (matches 
 node catalog/aws-kit/awd.mjs preview catalog/aws-kit/specs/<family>.mjs        # dark preview + validation
 node catalog/aws-kit/awd.mjs preview catalog/aws-kit/specs/<family>.mjs light  # light preview
 node catalog/aws-kit/awd.mjs build   catalog/aws-kit/specs/<family>.mjs        # -> catalog/drafts/<family>.aws.html
+node catalog/aws-kit/awd.mjs export-json catalog/aws-kit/specs/<family>.mjs   # -> catalog/aws-kit/json/<family>.json
+node catalog/aws-kit/awd.mjs svg catalog/aws-kit/json/<family>.json <diagram id> --theme light --out x.svg   # one standalone .svg
 ```
+`build` and `preview` take a `.json` family as well as a `.mjs` one; `build --out <file>` writes
+somewhere other than `catalog/drafts/`. After editing a family `.mjs`, run `export-json` for it too
+(the tests fail while `json/` is stale).
 Screenshot a preview (SMIL advances under the virtual-time budget; take 2 budgets to see motion):
 ```bash
 "/c/Program Files (x86)/Microsoft/Edge/Application/msedge.exe" --headless=new --disable-gpu --hide-scrollbars \
@@ -39,17 +45,19 @@ each diagram's referenced `<symbol>`s into its catalog `html`, so MCP output sta
 ```js
 export default {
   section: { id: 'serverless', title: 'SERVERLESS' },          // id -> drafts/<id>.aws.html, title -> <h3>
+  // a JSON family file also carries version: 1
   diagrams: [{
     id: 'sl-api',            // unique across the WHOLE gallery: prefix with your family code (sl-, tt-, ds-, db-, mr-, vp-, tg-, ep-, dns-)
     name: 'Serverless REST API',   // tile title
-    desc: '1-2 plain sentences: what the architecture is and what animates. No em dashes.',
+    desc: '1-2 plain sentences: what the architecture is and what animates. No em dashes.',   // also the svg <desc>
+    aria: 'optional aria-label (default: name)',  ctype: 'diagram-arch',  ref: 'svg.awd',      // optional tile metadata
     wide: false,             // true -> tile spans 2 columns: use w:960
     full: false,             // true -> tile spans the whole row: w up to 1400, h up to 900 (imports, 3 AZs)
     w: 480, h: 236,          // viewBox. Normal: w 480, h <= 300. Wide: w 960, h <= 440.
     lintAllow: [],           // accepted lint findings: '<code>' or '<code>:<start of message>' (say why in a comment)
     dur: 6,                  // seconds; the single clock every animation in this diagram shares (6-10)
     groups:  [ { kind, x, y, w, h, label?, id?, icon?:false|'<icon id>', note?, align?:'left'|'center' } ],   // draw OUTER groups first
-    nodes:   [ { id, icon, x, y, size?:40, label?, wrap?:14, sub? } ],
+    nodes:   [ { id, icon /* or [darkId, lightId] */, x, y, size?:40, label?, wrap?:14, sub? } ],
     wires:   [ { id, from, to } | { id, d:'M..H..V..' } ,  dashed?, both?, flow?, label?, labelAt?:0.5, labelDx?, labelDy?:-5, labelAnchor?, via?, arrow?:false, hot? ],
     steps:   [ { n, at:'<wire id>', f?:0.5, dx?, dy?:-11 } | { n, x, y } ],
     timeline:[ { wire?, t:[a,b], reverse?, kind?:'pk'|'pk-2'|'pk-bad', ring?:'<node id>', r? } ],
@@ -115,7 +123,45 @@ diagram shows, as under reduced motion. `preview <spec> [light] still` writes su
 reference (wire end, step `at`, ring, effect target) names nothing, a window is outside
 `0 < a < b < 1`, an enumeration (`kind`, `anchor`, `labelAnchor`, `align`) is unknown, or `extra`
 holds script, `on*=` handlers, `foreignObject`/`style`/`iframe`, or an `href`/`url()` that is not a
-`#fragment`. Tests: `node --test catalog/aws-kit/awd.test.mjs`.
+`#fragment`. A `.json` family is also checked against `spec.schema.json` first, so a typo such as
+`lable` fails with `diagrams[0].nodes[2].lable: unknown property (did you mean label?)`.
+Tests: `node --test catalog/aws-kit/awd.test.mjs`.
+
+## JSON specs
+`catalog/aws-kit/spec.schema.json` (JSON Schema 2020-12) describes a family file
+`{ version: 1, section: { id, title }, diagrams: [...] }` and every field the generator reads; the
+kit checks (`checkSpec`) add what a schema cannot say (references resolve, ids are unique, icon ids
+exist, `b > a` in windows, safe `extra`). `catalog/aws-kit/spec.mjs` validates the subset of JSON
+Schema the schema uses (no dependencies; an unsupported keyword in the schema is an error) and
+writes the canonical form. `catalog/aws-kit/json/<family>.json` holds the canonical export of each
+family `.mjs` (and the example): known keys in schema order, nulls dropped, keys the generator does
+not read dropped and reported (`cx`/`cy` from node helpers, timeline `tag`), 2-space indent with one
+node, wire or timeline entry per line. Building from the JSON gives byte-identical output to building
+from the `.mjs` (tested). The `.mjs` files stay the authored source for now; the JSON is what tools,
+importers and the MCP (`get_diagram_spec`, `build_diagram`) read and write.
+
+## Semantic markup
+The generated SVG says what it draws, without changing any coordinate, class or draw order:
+- the `<svg>` starts with `<title>` (the diagram name) and `<desc>` (its `desc`);
+- every drawn node is wrapped in `<g class="awd-n" data-node="<id>" data-icon="<icon>">` with a
+  `<title>` holding its label (or the icon name when it has none). A node with an `appear` effect is
+  drawn more than once (ghost, still and animated copies), so it has one wrapper per copy; the
+  wrappers carry no `id`, which keeps every id in the page unique;
+- wires that name their ends carry `data-from` / `data-to` (wires with an explicit `d` do not).
+Find a node with `svg.querySelectorAll('.awd-n[data-node="apigw"]')`.
+
+## Standalone SVG
+`standalone(spec, { theme: 'auto'|'light'|'dark', still: false })` (CLI: `svg <spec> <diagram id>
+[--theme light|dark|auto] [--still] [--out file]`, stdout without `--out`; the id may carry the
+catalog's `aws-` prefix) returns one self-contained SVG document for files, `<img src>`, READMEs and
+slides: `xmlns`, `width`/`height` from the viewBox, the kit CSS (the diagram rules of `aws.css`,
+without the gallery chrome) inlined in `<style><![CDATA[...]]>`, only the `<symbol>`s it uses in
+`<defs>`, and the canonical spec as JSON in `<metadata id="awd-spec" data-version="1">`. `theme`
+light or dark sets `data-mode` on the root (and a matching `color-scheme`, so a browser paints a dark
+canvas behind a dark export); `auto` follows `prefers-color-scheme`. `still` sets `data-still`: no
+packets or rings, the complete static diagram (the still is the healthy state; failure windows are
+not shown). SMIL keeps running inside `<img>` in Chromium browsers. For a page that switches themes,
+export a light and a dark file and pick with `<picture>`.
 
 **Placement helpers** (`catalog/aws-kit/place.mjs`, imported by the vpc, transit, endpoints and dns
 specs): `centered(size)` makes a node factory that places icons by center and keeps `cx`/`cy` on the
@@ -151,8 +197,8 @@ count. It agrees with a headless-Edge measurement of the gallery (0 static defec
 - Use the official service/resource names in labels (e.g. "AWS Managed Microsoft AD", "Amazon Aurora").
 
 ## Rules for parallel authors
-- Write ONLY your own files: `catalog/aws-kit/specs/<family>.mjs`, its previews/screenshots, and the
-  built `catalog/drafts/<family>.aws.html`. Do NOT edit `awd.mjs`, `aws.css`, `Prism.html`, the icon
+- Write ONLY your own files: `catalog/aws-kit/specs/<family>.mjs`, its previews/screenshots, the
+  built `catalog/drafts/<family>.aws.html` and its export `catalog/aws-kit/json/<family>.json`. Do NOT edit `awd.mjs`, `aws.css`, `Prism.html`, the icon
   store, or other families' files. If the kit lacks something, use `extra` and report it.
 - Descriptions: plain sentences, no em dashes, no marketing; say what animates.
 - Section titles: a spaced dash or an em/en dash starts a subtitle that the catalog drops from the

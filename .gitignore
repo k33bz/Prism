@@ -5,6 +5,8 @@ catalog/.chrome-*/
 # regenerates (the sprite-bearing body/template and the icon-library section)
 catalog/aws-kit/specs/*.html
 catalog/aws-kit/specs/*.png
+catalog/aws-kit/json/*.html
+catalog/aws-kit/json/*.png
 catalog/drafts/aws.body.html
 catalog/drafts/aws.tpl.html
 catalog/drafts/icons.aws.html

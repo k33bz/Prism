@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "section": { "id": "example", "title": "KIT EXAMPLE" },
+  "diagrams": [
+    {
+      "id": "sx-api",
+      "name": "Serverless REST API",
+      "desc": "A request flows from users through Amazon API Gateway to an AWS Lambda function that reads Amazon DynamoDB, then the response returns along the same path. Numbered steps, official icons, one 6s clock.",
+      "w": 480,
+      "h": 236,
+      "dur": 6,
+      "groups": [
+        { "kind": "cloud", "x": 84, "y": 8, "w": 388, "h": 220 },
+        { "kind": "region", "x": 100, "y": 40, "w": 356, "h": 172, "label": "Region" }
+      ],
+      "nodes": [
+        { "id": "users", "icon": "aws-res-users", "x": 18, "y": 98, "label": "Users" },
+        { "id": "apigw", "icon": "aws-svc-api-gateway", "x": 140, "y": 98, "label": "Amazon API Gateway" },
+        { "id": "fn", "icon": "aws-svc-lambda", "x": 258, "y": 98, "label": "AWS Lambda" },
+        { "id": "ddb", "icon": "aws-svc-dynamodb", "x": 376, "y": 98, "label": "Amazon DynamoDB" }
+      ],
+      "wires": [
+        { "id": "p1", "from": "users", "to": "apigw" },
+        { "id": "p2", "from": "apigw", "to": "fn" },
+        { "id": "p3", "from": "fn", "to": "ddb" }
+      ],
+      "steps": [
+        { "n": 1, "at": "p1", "f": 0.76 },
+        { "n": 2, "at": "p2" },
+        { "n": 3, "at": "p3" }
+      ],
+      "timeline": [
+        { "wire": "p1", "t": [0.05, 0.17], "ring": "apigw" },
+        { "wire": "p2", "t": [0.19, 0.31], "ring": "fn" },
+        { "wire": "p3", "t": [0.33, 0.45], "ring": "ddb" },
+        { "wire": "p3", "t": [0.55, 0.66], "reverse": true, "kind": "pk-2", "ring": "fn" },
+        { "wire": "p2", "t": [0.68, 0.79], "reverse": true, "kind": "pk-2", "ring": "apigw" },
+        { "wire": "p1", "t": [0.81, 0.92], "reverse": true, "kind": "pk-2", "ring": "users" }
+      ]
+    }
+  ]
+}

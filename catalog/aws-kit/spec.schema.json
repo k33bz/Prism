@@ -1,0 +1,180 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Prism AWS Architecture kit: diagram family",
+  "description": "A family file (catalog/aws-kit/json/<family>.json): one gallery section of diagrams compiled by catalog/aws-kit/awd.mjs. Describes every field the generator reads; checkSpec() in awd.mjs adds what a schema cannot say (references resolve, ids are unique, icon ids exist, 0 < a < b < 1, extra is safe). See catalog/drafts/AWS_KIT.md. Uses only the JSON Schema subset that catalog/aws-kit/spec.mjs validates.",
+  "type": "object",
+  "properties": {
+    "version": { "const": 1, "description": "Spec format version." },
+    "section": { "$ref": "#/$defs/section" },
+    "diagrams": { "type": "array", "items": { "$ref": "#/$defs/diagram" } }
+  },
+  "required": ["version", "section", "diagrams"],
+  "additionalProperties": false,
+  "$defs": {
+    "id": { "type": "string", "pattern": "^[A-Za-z0-9_-]+$" },
+    "kebab": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
+    "num": { "type": "number" },
+    "size": { "type": "number", "exclusiveMinimum": 0 },
+    "anchor": { "enum": ["start", "middle", "end"] },
+    "window": {
+      "description": "[a, b]: a window on the diagram clock as fractions of dur, 0 < a < b < 1.",
+      "type": "array",
+      "items": { "type": "number", "exclusiveMinimum": 0, "exclusiveMaximum": 1 },
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "section": {
+      "type": "object",
+      "properties": {
+        "id": { "$ref": "#/$defs/kebab", "description": "Names the build output: catalog/drafts/<id>.aws.html." },
+        "title": { "type": "string", "description": "Section heading. A spaced dash or an em/en dash starts a subtitle the catalog drops from the category." }
+      },
+      "required": ["id", "title"],
+      "additionalProperties": false
+    },
+    "diagram": {
+      "type": "object",
+      "properties": {
+        "id": { "$ref": "#/$defs/kebab", "description": "Unique across the whole gallery; prefixed with the family code (sl-, tt-, ds-, db-, mr-, vp-, tg-, ep-, dns-). The catalog id is aws-<id>." },
+        "name": { "type": "string", "description": "Tile title; also the svg <title> and the default aria-label." },
+        "desc": { "type": "string", "description": "One or two plain sentences: the architecture and what animates. Also the svg <desc>." },
+        "aria": { "type": "string", "description": "aria-label override (default: name)." },
+        "ctype": { "type": "string", "description": "Tile data-ctype (default diagram-arch)." },
+        "ref": { "type": "string", "description": "Tile reference label (default svg.awd)." },
+        "wide": { "type": "boolean", "description": "Tile spans 2 columns (use w 960)." },
+        "full": { "type": "boolean", "description": "Tile spans the whole row (viewBox up to 1400 x 900)." },
+        "lintAllow": { "type": "array", "items": { "type": "string" }, "description": "Accepted lint findings: '<code>' or '<code>:<start of message>'." },
+        "w": { "$ref": "#/$defs/size", "description": "viewBox width (default 480)." },
+        "h": { "$ref": "#/$defs/size", "description": "viewBox height (default 240)." },
+        "dur": { "$ref": "#/$defs/size", "description": "Seconds: the single clock every animation in the diagram shares (default 6)." },
+        "groups": { "type": "array", "items": { "$ref": "#/$defs/group" }, "description": "Frames, drawn in order: outer groups first." },
+        "nodes": { "type": "array", "items": { "$ref": "#/$defs/node" } },
+        "wires": { "type": "array", "items": { "$ref": "#/$defs/wire" } },
+        "steps": { "type": "array", "items": { "$ref": "#/$defs/step" } },
+        "timeline": { "type": "array", "items": { "$ref": "#/$defs/timelineEntry" } },
+        "effects": { "type": "array", "items": { "$ref": "#/$defs/effect" } },
+        "notes": { "type": "array", "items": { "$ref": "#/$defs/note" } },
+        "extra": { "type": "string", "description": "Raw SVG appended last. No script, on* handlers, foreignObject/style/iframe/object/embed, javascript: URLs, or href/url() that is not a #fragment." }
+      },
+      "required": ["id", "name"],
+      "additionalProperties": false
+    },
+    "group": {
+      "type": "object",
+      "properties": {
+        "kind": { "enum": ["cloud", "region", "az", "vpc", "pub", "priv", "sg", "asg", "acct", "dc", "server", "ec2", "spot", "gen"] },
+        "id": { "$ref": "#/$defs/id", "description": "Needed when an effect targets the group (fail)." },
+        "x": { "$ref": "#/$defs/num" },
+        "y": { "$ref": "#/$defs/num" },
+        "w": { "$ref": "#/$defs/num" },
+        "h": { "$ref": "#/$defs/num" },
+        "label": { "type": "string", "description": "Header text (default: the kind's official name; empty for gen)." },
+        "icon": { "type": ["string", "boolean"], "description": "Corner icon: an icon id, or false for none (default: the kind's group icon)." },
+        "note": { "type": "string", "description": "Right-aligned on the top edge: a CIDR, a route summary, an account id." },
+        "align": { "enum": ["left", "center"], "description": "Header alignment (default: centered for frames without an icon)." }
+      },
+      "required": ["kind", "x", "y", "w", "h"],
+      "additionalProperties": false
+    },
+    "node": {
+      "type": "object",
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "icon": {
+          "description": "Icon id from catalog/aws-icons/aws-icons.json (aws-svc-*, aws-res-*). A base id with -dark/-light colorways swaps with the theme; [dark, light] names the pair explicitly.",
+          "anyOf": [
+            { "type": "string" },
+            { "type": "array", "items": { "type": "string" }, "minItems": 2, "maxItems": 2 }
+          ]
+        },
+        "x": { "$ref": "#/$defs/num" },
+        "y": { "$ref": "#/$defs/num" },
+        "size": { "$ref": "#/$defs/size", "description": "Icon size (default 40)." },
+        "label": { "type": "string", "description": "Official name, centered under the icon." },
+        "wrap": { "$ref": "#/$defs/size", "description": "Label wrap width in characters (default 14)." },
+        "sub": { "type": "string", "description": "Muted second line under the label." }
+      },
+      "required": ["id", "icon", "x", "y"],
+      "additionalProperties": false
+    },
+    "wire": {
+      "type": "object",
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "from": { "$ref": "#/$defs/id", "description": "Source node id (auto-routed when d is absent)." },
+        "to": { "$ref": "#/$defs/id", "description": "Target node id." },
+        "d": { "type": "string", "pattern": "^[MHVL\\d.,\\s-]+$", "description": "Explicit path: M, H, V, L and numbers only." },
+        "via": { "$ref": "#/$defs/num", "description": "Pins the elbow of an auto-routed wire (x for a horizontal route, y for a vertical one)." },
+        "dashed": { "type": "boolean", "description": "Async, optional or logical path." },
+        "both": { "type": "boolean", "description": "Bidirectional: a head at both ends." },
+        "flow": { "type": "boolean", "description": "Continuous stream (CSS dash motion)." },
+        "hot": { "type": "boolean", "description": "Red wire and head: a blocked or failing path." },
+        "arrow": { "type": "boolean", "description": "false draws no heads." },
+        "label": { "type": "string" },
+        "labelAt": { "type": "number", "minimum": 0, "maximum": 1, "description": "Label position along the path (default 0.5)." },
+        "labelDx": { "$ref": "#/$defs/num", "description": "Sideways nudge of the label." },
+        "labelDy": { "$ref": "#/$defs/num", "description": "Vertical nudge of the label (default -5, above)." },
+        "labelAnchor": { "$ref": "#/$defs/anchor" }
+      },
+      "required": ["id"],
+      "anyOf": [{ "required": ["d"] }, { "required": ["from", "to"] }],
+      "additionalProperties": false
+    },
+    "step": {
+      "type": "object",
+      "properties": {
+        "n": { "type": ["integer", "string"], "description": "Badge text." },
+        "at": { "$ref": "#/$defs/id", "description": "Wire id the badge sits on." },
+        "f": { "type": "number", "minimum": 0, "maximum": 1, "description": "Position along the wire (default 0.5)." },
+        "dx": { "$ref": "#/$defs/num" },
+        "dy": { "$ref": "#/$defs/num", "description": "Default -11 (above the wire)." },
+        "x": { "$ref": "#/$defs/num", "description": "Free position, when not on a wire." },
+        "y": { "$ref": "#/$defs/num" }
+      },
+      "required": ["n"],
+      "anyOf": [{ "required": ["at"] }, { "required": ["x", "y"] }],
+      "additionalProperties": false
+    },
+    "timelineEntry": {
+      "type": "object",
+      "properties": {
+        "wire": { "$ref": "#/$defs/id", "description": "Moves a packet along this wire during t." },
+        "t": { "$ref": "#/$defs/window" },
+        "reverse": { "type": "boolean", "description": "Runs the wire backwards." },
+        "kind": { "enum": ["pk", "pk-2", "pk-bad"], "description": "pk request (default), pk-2 response or replication, pk-bad failed traffic." },
+        "ring": { "$ref": "#/$defs/id", "description": "Node that pulses a ring at the end of t." },
+        "r": { "$ref": "#/$defs/size", "description": "Packet radius (default 3.4)." }
+      },
+      "required": ["t"],
+      "anyOf": [{ "required": ["wire"] }, { "required": ["ring"] }],
+      "additionalProperties": false
+    },
+    "effect": {
+      "type": "object",
+      "properties": {
+        "appear": { "$ref": "#/$defs/id", "description": "Node shown only during t (scale-out / scale-in)." },
+        "fail": { "$ref": "#/$defs/id", "description": "Group id that turns red with an X during t." },
+        "fade": { "$ref": "#/$defs/id", "description": "Wire dimmed during t (traffic drained)." },
+        "glow": { "$ref": "#/$defs/id", "description": "Wire highlighted during t (traffic rerouted)." },
+        "t": { "$ref": "#/$defs/window" },
+        "ghost": { "type": "boolean", "description": "appear only: a 30% copy marks the slot outside t." }
+      },
+      "required": ["t"],
+      "anyOf": [{ "required": ["appear"] }, { "required": ["fail"] }, { "required": ["fade"] }, { "required": ["glow"] }],
+      "additionalProperties": false
+    },
+    "note": {
+      "type": "object",
+      "properties": {
+        "x": { "$ref": "#/$defs/num" },
+        "y": { "$ref": "#/$defs/num" },
+        "text": { "type": "string", "description": "\\n breaks lines." },
+        "kind": { "enum": ["caption", "label", "warn"], "description": "caption muted (default), label ink, warn red." },
+        "anchor": { "$ref": "#/$defs/anchor" },
+        "t": { "$ref": "#/$defs/window", "description": "Shows the note only during this window." }
+      },
+      "required": ["x", "y", "text"],
+      "additionalProperties": false
+    }
+  }
+}
