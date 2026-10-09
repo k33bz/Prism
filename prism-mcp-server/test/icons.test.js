@@ -5,7 +5,7 @@ import assert from 'node:assert/strict';
 import path from 'node:path';
 import fs from 'node:fs';
 import { fileURLToPath } from 'node:url';
-import { parseSprite, parseIconStore, searchIcons, resolveIcon, colorwayPair, iconSvg, iconSymbol, loadIcons } from '../utils/icons.js';
+import { parseSprite, parseIconStore, mergeIconMeta, searchIcons, resolveIcon, colorwayPair, iconSvg, iconSymbol, loadIcons, iconResolver } from '../utils/icons.js';
 import { toolCtx } from './helper.js';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
@@ -128,4 +128,70 @@ test('the real Prism.html embeds the full icon sprite', { skip: !fs.existsSync(P
   assert.ok(pack.icons.size >= 800, `expected the full package, got ${pack.icons.size}`);
   for (const id of ['aws-svc-lambda', 'aws-svc-dynamodb', 'aws-res-users-dark', 'aws-grp-region']) assert.ok(pack.icons.has(id), id);
   assert.ok(searchIcons(pack.icons, { query: 'managed microsoft ad' }).total >= 1);
+});
+
+test('fallback search matches word starts, not substrings', () => {
+  const icons = parseSprite(SPRITE_HTML);
+  assert.equal(searchIcons(icons, { query: 'irectory' }).total, 0);   // inside a word
+  assert.equal(searchIcons(icons, { query: 'direct' }).items[0].id, 'aws-svc-directory-service');
+  assert.equal(searchIcons(icons, { query: 'lamb' }).items[0].id, 'aws-svc-lambda');
+});
+
+test('parseIconStore and mergeIconMeta carry the overlay metadata', () => {
+  const store = { icons: { 'aws-svc-workdocs': { name: 'Amazon WorkDocs', kind: 'service', category: 'Business', aliases: ['docs'], status: 'retired', endOfSupport: '2025-04-25', xref: { drawio: ['workdocs'] }, viewBox: '0 0 48 48', svg: '<rect/>' } } };
+  const ic = parseIconStore(store).get('aws-svc-workdocs');
+  assert.deepEqual([ic.status, ic.endOfSupport, ic.xref.drawio[0]], ['retired', '2025-04-25', 'workdocs']);
+  const icons = parseSprite(SPRITE_HTML);
+  mergeIconMeta(icons, { icons: { 'aws-svc-lambda': { aliases: ['serverless functions'], short: 'Lambda', xref: { cfn: ['AWS::Lambda::Function'] } }, 'aws-svc-nope': { short: 'x' } } });
+  assert.deepEqual(icons.get('aws-svc-lambda').aliases, ['serverless functions']);
+  assert.equal(icons.get('aws-svc-lambda').short, 'Lambda');
+  assert.equal(icons.has('aws-svc-nope'), false);
+});
+
+test('resolve_aws_icon tool: names, vocabularies, groups, bad arguments (fixture sprite)', () => {
+  const ctx = iconCtx();
+  const r = ctx.call('resolve_aws_icon', { query: 'AWS Lambda' });
+  assert.deepEqual([r.id, r.name, r.kind, r.from], ['aws-svc-lambda', 'AWS Lambda', 'node', 'text']);
+  assert.ok(r.confidence > 0.9 && Array.isArray(r.candidates) && Array.isArray(r.warnings));
+  assert.equal(r.candidates[0].name, 'AWS Lambda');
+  assert.equal(ctx.call('resolve_aws_icon', { query: 'LambdaLambdaFunction', from: 'plantuml' }).id, 'aws-res-lambda-lambda-function');
+  assert.equal(ctx.call('resolve_aws_icon', { query: 'aws-res-users-dark' }).id, 'aws-res-users');
+  const sg = ctx.call('resolve_aws_icon', { query: 'Security Group' });
+  assert.deepEqual([sg.id, sg.kind, sg.group], [null, 'group', 'sg']);
+  assert.equal(ctx.call('resolve_aws_icon', { query: 'no such thing at all' }).id, null);
+  for (const bad of [{}, { query: '' }, { query: 'x', from: 'visio' }, { query: 'x', prefer: 'best' }, { query: 'x', props: ['Type'] }, { query: 'x', props: { Type: { a: 1 } } }]) {
+    const e = ctx.callSafe('resolve_aws_icon', bad);
+    assert.equal(e.ok, false);
+    assert.equal(e.error.code, 'invalid_argument', JSON.stringify(bad));
+  }
+});
+
+test('the real catalog: resolver ranking, crosswalks and retired icons through the tools', { skip: !fs.existsSync(PRISM_HTML) }, () => {
+  const ctx = toolCtx();
+  ctx.store._icons = loadIcons(PRISM_HTML);
+  const pack = ctx.store._icons;
+  assert.match(pack.source, /metadata .*aws-icons\.json/);   // sprite names plus the store's crosswalks and status
+  assert.ok(pack.rules && pack.rules.cfn);
+  assert.ok(iconResolver(pack));
+  const ecr = ctx.call('search_aws_icons', { query: 'ecr' });
+  assert.equal(ecr.items[0].id, 'aws-svc-elastic-container-registry');
+  assert.ok(!ecr.items.some((x) => x.id.includes('secrets')), 'ecr must not match secrets-manager');
+  for (const [q, want] of [['AWS::Lambda::Function', 'aws-svc-lambda'], ['ElasticLoadBalancingV2', 'aws-svc-elastic-load-balancing'], ['quicksight', 'aws-svc-quick'], ['elasticsearch', 'aws-svc-opensearch-service'], ['dax', 'aws-res-dynamodb-accelerator'], ['nacl', 'aws-res-vpc-network-access-control-list']]) {
+    assert.equal(ctx.call('search_aws_icons', { query: q, limit: 1 }).items[0].id, want, q);
+    assert.equal(ctx.call('resolve_aws_icon', { query: q }).id, want, q);
+  }
+  const lb = ctx.call('resolve_aws_icon', { query: 'AWS::ElasticLoadBalancingV2::LoadBalancer', props: { Type: 'network' } });
+  assert.deepEqual([lb.id, lb.from], ['aws-res-elastic-load-balancing-network-load-balancer', 'cfn']);
+  const rds = ctx.call('resolve_aws_icon', { query: 'aws_db_instance', from: 'tf', props: { engine: 'postgres', multi_az: true } });
+  assert.equal(rds.standby, 'aws-res-aurora-postgresql-instance-alternate');
+  assert.equal(ctx.call('resolve_aws_icon', { query: 'mxgraph.aws4.internet_gateway', from: 'drawio' }).id, 'aws-res-vpc-internet-gateway');
+  const wd = ctx.call('get_aws_icon', { id: 'aws-svc-workdocs' });
+  assert.equal(wd.status, 'retired');
+  assert.ok(wd.warnings.some((w) => /shut down/.test(w)));
+  assert.equal(ctx.call('get_aws_icon', { id: 'aws-svc-lambda' }).status, undefined);
+  const mesh = ctx.call('search_aws_icons', { query: 'app mesh', kind: 'service' });
+  assert.equal(mesh.items[0].status, 'end-of-support');
+  const miss = ctx.callSafe('get_aws_icon', { id: 'aws-svc-elasticsearch' });
+  assert.equal(miss.error.code, 'not_found');
+  assert.ok(miss.error.data.suggestions.includes('aws-svc-opensearch-service'));
 });

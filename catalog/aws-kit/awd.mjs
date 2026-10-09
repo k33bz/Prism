@@ -501,14 +501,25 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url) && process.argv[2] === 'icons') {
-  // icon search: node catalog/aws-kit/awd.mjs icons <words...>   (matches id, name, service, category, aliases)
-  const q = process.argv.slice(3).join(' ').toLowerCase().split(/\s+/).filter(Boolean);
-  const rows = Object.entries(ICONS).filter(([id, ic]) => {
-    const hay = [id, ic.name, ic.service || '', ic.category, (ic.aliases || []).join(' ')].join(' ').toLowerCase();
-    return q.every((w) => hay.includes(w));
-  });
-  for (const [id, ic] of rows.slice(0, 60)) console.log(`${id.padEnd(58)} ${ic.kind.padEnd(9)} ${ic.name}${ic.service ? '  [' + ic.service + ']' : ''}`);
-  console.log(`${rows.length} match(es)${rows.length > 60 ? ' (first 60 shown)' : ''}. Colorway pairs: use the base id without -dark/-light and the generator swaps per theme.`);
+  // icon search: node catalog/aws-kit/awd.mjs icons <words...> [--from drawio|mermaid|plantuml|diagrams|cfn|tf] [--prop K=V]
+  // ranked by the shared resolver (catalog/aws-icons/resolve.mjs): aliases, crosswalks, word starts
+  const { resolveIcon, searchIcons } = await import('../aws-icons/resolve.mjs');
+  const args = process.argv.slice(3), opts = { props: {} }, words = [];
+  for (let i = 0; i < args.length; i++) {
+    if (args[i] === '--from') opts.from = args[++i];
+    else if (args[i] === '--prop') { const [k, ...v] = String(args[++i]).split('='); opts.props[k] = v.join('='); }
+    else words.push(args[i]);
+  }
+  const q = words.join(' ');
+  const best = resolveIcon(q, opts);
+  if (best.id) console.log(`best: ${best.id} (${best.kind}${best.group ? ', group ' + best.group : ''}, confidence ${best.confidence}, ${best.how})`);
+  for (const w of best.warnings || []) console.log(`  warning: ${w}`);
+  const rows = searchIcons(q);
+  for (const r of rows.slice(0, 40)) {
+    const e = r.entry;
+    console.log(`${r.id.padEnd(58)} ${e.kind.padEnd(9)} ${e.short || e.name}${e.service ? '  [' + e.service + ']' : ''}${e.status ? '  (' + e.status + ')' : ''}`);
+  }
+  console.log(`${rows.length} match(es)${rows.length > 40 ? ' (first 40 shown)' : ''}. Colorway pairs: use the base id without -dark/-light and the generator swaps per theme.`);
   process.exit(0);
 }
 

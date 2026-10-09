@@ -10,6 +10,7 @@ diagram** (SMIL: no runtime JS). Styling lives in `catalog/drafts/aws.css`. The 
 ## Workflow
 ```bash
 node catalog/aws-kit/awd.mjs icons lambda              # find icon ids (matches id/name/service/aliases)
+node catalog/aws-icons/resolve.mjs "S3 bucket"          # one icon id for any name (see "Resolving icon names")
 node catalog/aws-kit/awd.mjs preview catalog/aws-kit/specs/<family>.mjs        # dark preview + validation
 node catalog/aws-kit/awd.mjs preview catalog/aws-kit/specs/<family>.mjs light  # light preview
 node catalog/aws-kit/awd.mjs build   catalog/aws-kit/specs/<family>.mjs        # -> catalog/drafts/<family>.aws.html
@@ -178,6 +179,47 @@ inside a frame's 22px header), `label-lines` (more than 2), `tile-size`. Info: `
 keeps one size per diagram), `text-over-text` (a timed caption over static text, usually a swap).
 `node catalog/aws-kit/awd.mjs lint <spec> [diagram id] [--info]` prints them; `preview` prints a
 count. It agrees with a headless-Edge measurement of the gallery (0 static defects in both).
+
+## Resolving icon names
+`catalog/aws-icons/resolve.mjs` maps any name for an AWS thing to one icon id. `awd.mjs`, the importers
+and the MCP server (`resolve_aws_icon`, `search_aws_icons`) share it; no deps.
+```bash
+node catalog/aws-icons/resolve.mjs "S3 bucket"                     # aws-res-simple-storage-service-bucket
+node catalog/aws-icons/resolve.mjs AWS::ElasticLoadBalancingV2::LoadBalancer --prop Type=network
+node catalog/aws-icons/resolve.mjs mxgraph.aws4.internet_gateway --from drawio
+node catalog/aws-icons/resolve.mjs "Security Group" --json        # kind group, group sg: a frame
+```
+```js
+import { resolveIcon } from '../aws-icons/resolve.mjs';
+resolveIcon('AWS::RDS::DBInstance', { props: { Engine: 'postgres', MultiAZ: true } });
+// { id: 'aws-res-aurora-postgresql-instance', kind: 'node', confidence: 1, how: 'rule+Engine',
+//   standby: 'aws-res-aurora-postgresql-instance-alternate', candidates: [...], warnings: [] }
+```
+- `from`: `text` (default), `drawio`, `mermaid`, `plantuml`, `diagrams`, `cfn`, `tf`. In text, CloudFormation
+  and Terraform types, draw.io styles and Mermaid keys are recognised by their shape. Below confidence 0.5
+  the result is `{ id: null, candidates, warnings }`: show the candidates, do not guess.
+- Words match whole (plural-folded), never as substrings; abbreviations and old names come from the
+  store's `aliases` (S3, ALB, NLB, ECR, DAX, NACL, SSO, Elasticsearch, Kinesis Firehose, QuickSight).
+  `_alt` names resolve to the alternate colorway (AWS's own typo id `-aternate` included), and `-dark`/
+  `-light` ids to the base id: pass base ids, the generator swaps the artwork per theme.
+- Service vs resource: draw.io `resIcon` tiles are services and bare `mxgraph.aws4.*` shapes resources;
+  PlantUML, Mermaid pack keys and `diagrams` classes name exact icons. Text, CloudFormation and Terraform
+  pick the resource icon, except a Lambda function, DynamoDB table, SQS queue or SNS topic, which the kit
+  draws with the service icon (store field `prefer`). A service plus a word with no icon of its own
+  ("EKS cluster", "KMS key") gets the service icon. `prefer: 'resource' | 'service'` overrides.
+- Containers (security group, Availability Zone, VPC, subnets, Region, Auto Scaling group, account,
+  corporate data center, AWS Cloud) return `kind: 'group'` with the awd group kind; `prefer: 'node'` gives
+  the node icon where one exists, `prefer: 'group'` turns anything into a frame (`gen` with its icon).
+- CloudFormation/Terraform property picks: ELBv2 `Type`, RDS `Engine` and `MultiAZ` (adds `standby`),
+  ElastiCache `Engine`, FSx `FileSystemType`, `aws_lb.load_balancer_type`, `aws_db_instance.engine`. Types
+  that are relationships or folded into a node return `role: 'edge' | 'attr' | 'meta'` and no icon.
+- Retired, end-of-support, renamed and duplicate icons still resolve, with a warning and `status`. Labels:
+  use the store's `short` name when there is one ("Amazon S3", "AWS Site-to-Site VPN", "Route 53 VPC
+  Resolver").
+- The data is `catalog/aws-icons/overlay.mjs` (aliases, short names, status, per-vocabulary `xref` names,
+  property rules), merged into `aws-icons.json` by `build_icons.mjs`; after editing it run
+  `node catalog/aws-icons/build_icons.mjs --overlay-only`. Coverage on the interop evaluators' inputs:
+  `node catalog/aws-icons/coverage.mjs`; tests: `node --test catalog/aws-icons/resolve.test.mjs`.
 
 ## Layout rules (the bar is "looks like an official AWS reference architecture")
 - 16px padding inside groups; leave 22px at the top of a group for its corner icon + label.

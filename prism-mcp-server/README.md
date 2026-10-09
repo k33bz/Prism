@@ -67,7 +67,7 @@ Add the server to your `claude_desktop_config.json` (see `examples/claude_deskto
 }
 ```
 
-Restart Claude Desktop; the 33 Prism tools appear in the tools menu.
+Restart Claude Desktop; the 35 Prism tools appear in the tools menu.
 
 ## Use with the Anthropic API
 
@@ -75,7 +75,7 @@ The Messages API accepts local MCP servers via the `mcp_servers` parameter (stdi
 
 ---
 
-## Tools (34)
+## Tools (35)
 
 ### Discovery & search (11)
 | Tool | Purpose |
@@ -132,13 +132,14 @@ The Messages API accepts local MCP servers via the `mcp_servers` parameter (stdi
 | `export_collection` | Export a self-contained bundle from a saved `collectionId`, an explicit set of `ids`, or a whole gallery. `format`: `bundle` (CSS+HTML, default), `document` (full `<html>`), or `schema` (portable `prism-collection-1.0` JSON, saved collections only). |
 | `get_token_reference` | Canonical CSS token reference (tokens.css + token purposes + recolor classes). |
 
-### AWS Architecture Icons (2)
-The official AWS Architecture Icons behind the AWS Architecture gallery, read from the gallery's embedded sprite in `Prism.html` (or `catalog/aws-icons/aws-icons.json` beside a manifest). The gallery's own diagrams already carry their icons in `get_effect` html; these serve new diagrams.
+### AWS Architecture Icons (3)
+The official AWS Architecture Icons behind the AWS Architecture gallery, read from the gallery's embedded sprite in `Prism.html` (or `catalog/aws-icons/aws-icons.json` beside a manifest). The sprite carries names and aliases; with `Prism.html` the server also merges the metadata of `catalog/aws-icons/aws-icons.json` beside it (crosswalks, short names, status) when that file is present. Names resolve through `catalog/aws-icons/resolve.mjs`, the resolver `awd.mjs` and the importers use; a server copied out of the repository falls back to word-start search. The gallery's own diagrams already carry their icons in `get_effect` html; these serve new diagrams.
 
 | Tool | Purpose |
 |------|---------|
-| `search_aws_icons` | Search icons by words over name, id, service, category and aliases (`query`, optional `kind`: service, resource, group, category; `limit`, `offset`). Dark/light colorway pairs collapse into one result keyed by the base id. |
-| `get_aws_icon` | One icon, unmodified, as standalone SVG (`format: "svg"`, `size`) or as a `<symbol>` for a page sprite. A colorway base id returns the light-background artwork unless `colorway: "dark"`. Unknown ids return `not_found` with suggestions. |
+| `search_aws_icons` | Search icons by words over name, id, service, category, aliases and crosswalk names (`query`, optional `kind`: service, resource, group, category; `limit`, `offset`). Words match whole words or word starts (`ecr` never finds Secrets Manager); exact names, abbreviations and old names (S3, NACL, DAX, Elasticsearch, QuickSight) rank first. Dark/light colorway pairs collapse into one result keyed by the base id; retired and renamed icons carry `status`. |
+| `resolve_aws_icon` | Pick one icon for a name from any source: free text, draw.io styles, Mermaid/Iconify keys, PlantUML macros, Python `diagrams` classes, CloudFormation or Terraform types (`query`, optional `from`, `props` for property picks such as `{"Type":"network"}` or `{"Engine":"postgres","MultiAZ":true}`, `prefer`: service, resource, node, group). Returns `id` and `name`, `kind` node or group (with the awd frame kind: vpc, pub, priv, sg, az...), `confidence` 0..1, `how`, ranked `candidates`, `warnings` (retired, renamed, missing property, ambiguous); `id` is null when nothing is good enough. |
+| `get_aws_icon` | One icon, unmodified, as standalone SVG (`format: "svg"`, `size`) or as a `<symbol>` for a page sprite. A colorway base id returns the light-background artwork unless `colorway: "dark"`. Retired, end-of-support and renamed icons include `status` and `warnings`. Unknown ids return `not_found` with suggestions. |
 
 ### Collections & favorites (6)
 Saved, named sets of effects that persist across sessions (disk-backed JSON). Constraints: name ≤50 chars & unique, description ≤200 chars, ≤5 tags, ≤50 components; duplicate ids are collapsed.
@@ -184,7 +185,7 @@ prism-mcp-server/
 ├── index.js          # PrismMCPServer (JSON-RPC dispatch) + StdioTransport
 ├── cli.js            # prism-mcp CLI (start / info / tools / help)
 ├── tools/
-│   └── index.js      # the 33 tool definitions (name, description, schema, handler)
+│   └── index.js      # the 35 tool definitions (name, description, schema, handler)
 ├── utils/
 │   ├── catalog.js    # CatalogStore: load island/manifest, index, hot reload, runtime facets
 │   ├── collections.js# CollectionStore: disk-backed named sets + prism-collection-1.0 export
@@ -192,11 +193,11 @@ prism-mcp-server/
 │   ├── compose.js    # composition engine + layout templates
 │   ├── validate.js   # facet + composition validation
 │   ├── themes.js     # canonical theme token maps (variant matrix) — mirrors Prism.html THEMES
-│   ├── icons.js      # AWS Architecture Icons: sprite/store parsing, search, colorway resolution
+│   ├── icons.js      # AWS Architecture Icons: sprite/store parsing, search, colorways, the shared name resolver
 │   ├── diagrams.js   # AWS kit beside the catalog: build diagram specs, serve the gallery's specs
 │   └── logger.js     # stderr logger (never pollutes the stdio JSON-RPC channel)
 ├── examples/         # one example request/response per tool + integration configs
-└── test/             # node:test integration + unit tests (165 tests)
+└── test/             # node:test integration + unit tests (171 tests)
 ```
 
 **Server model.** `new PrismMCPServer(catalogPath, opts)` builds the tool registry and a `CatalogStore`. `await server.load()` reads + indexes the catalog. `server.connect(transport)` wires a transport; `StdioTransport` implements newline-delimited JSON-RPC on stdin/stdout. The transport is pluggable — implement `onMessage(cb)` / `send(obj)` to add HTTP/SSE.
@@ -213,7 +214,7 @@ prism-mcp-server/
 node --test          # or: npm test
 ```
 
-165 tests cover every tool (incl. the advanced-search & variant-matrix tools, the `themeSensitive` facet, the 6 Collections tools + `export_collection` formats, the 2 AWS icon tools against a fixture sprite and the real one, and the 2 AWS diagram tools against the real kit and gallery specs), the CSS/compose/validate utilities, the canonical theme token maps (the two Cloudscape modes), the `CollectionStore`, the JSON-RPC protocol layer, and loading the real `Prism.html` island.
+171 tests cover every tool (incl. the advanced-search & variant-matrix tools, the `themeSensitive` facet, the 6 Collections tools + `export_collection` formats, the 3 AWS icon tools against a fixture sprite and the real one, and the 3 AWS diagram tools against the real kit and gallery specs), the CSS/compose/validate utilities, the canonical theme token maps (the two Cloudscape modes), the `CollectionStore`, the JSON-RPC protocol layer, and loading the real `Prism.html` island.
 
 ---
 

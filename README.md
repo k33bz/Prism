@@ -168,7 +168,7 @@ Options:
 
 Logs go to **stderr** (stdout is reserved for the JSON-RPC channel), so they never corrupt the MCP protocol stream. Verbosity is also settable via `PRISM_MCP_LOG_LEVEL`. A `--port` flag is accepted but ignored — this build is stdio-only; add an HTTP/SSE transport by implementing one against `PrismMCPServer`.
 
-### The 34 tools
+### The 35 tools
 
 | Group | Tools |
 |---|---|
@@ -177,7 +177,7 @@ Logs go to **stderr** (stdout is reserved for the JSON-RPC channel), so they nev
 | **Composition (3)** | `compose` · `compose_with_template` (`stack`/`row`/`grid`/`card`) · `validate_composition` |
 | **Content creation (3)** | `create_facet` · `update_facet` · `validate_facet` |
 | **Catalog management (3)** | `get_catalog_metadata` · `export_collection` (`bundle`/`document`/`schema`) · `get_token_reference` |
-| **AWS icons (2)** | `search_aws_icons` · `get_aws_icon` (the official AWS Architecture Icons, as standalone SVG or sprite symbols) |
+| **AWS icons (3)** | `search_aws_icons` · `get_aws_icon` (the official AWS Architecture Icons, as standalone SVG or sprite symbols) · `resolve_aws_icon` (draw.io, Mermaid, PlantUML, Python diagrams, CloudFormation or Terraform names to an icon id) |
 | **Collections & favorites (6)** | `list_collections` · `get_collection` · `create_collection` · `add_to_collection` · `remove_from_collection` · `delete_collection` |
 | **AWS diagrams (3)** | `build_diagram` (a JSON diagram spec to a standalone SVG and the gallery svg, with the kit's checks and layout lint) · `lint_diagram` (layout findings for a spec or a gallery diagram) · `get_diagram_spec` (any gallery diagram's JSON spec) |
 
@@ -368,7 +368,7 @@ The MCP server's `compose` / `compose_with_template` tools do all of this for yo
 .
 ├── Prism.html              ← the whole tool: UI + all galleries + the JSON island
 ├── README.md               ← you are here
-├── prism-mcp-server/       ← the MCP server (zero-dependency Node, 34 tools)
+├── prism-mcp-server/       ← the MCP server (zero-dependency Node, 35 tools)
 │   ├── cli.js                 prism-mcp CLI (start / info / tools / help)
 │   ├── index.js               PrismMCPServer (JSON-RPC dispatch) + StdioTransport
 │   ├── tools/index.js         the 33 tool definitions

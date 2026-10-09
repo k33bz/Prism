@@ -502,24 +502,43 @@ Result:
 
 ## AWS Architecture Icons
 
-The official AWS Architecture Icons behind the AWS Architecture gallery (read from its embedded sprite).
+The official AWS Architecture Icons behind the AWS Architecture gallery (read from its embedded sprite, plus the crosswalks and status in `catalog/aws-icons/aws-icons.json`).
 
 ### `search_aws_icons`
 Request:
 ```json
-{ "name": "search_aws_icons", "arguments": { "query": "users", "limit": 5 } }
+{ "name": "search_aws_icons", "arguments": { "query": "users", "limit": 2 } }
 ```
-Result (dark/light colorway pairs collapse into one base id):
+Result (dark/light colorway pairs collapse into one base id; `score` ranks exact names and aliases first):
 ```json
 {
-  "source": "…/Prism.html (#awd-sprite)",
-  "total": 1, "offset": 0, "count": 1,
+  "source": "…/Prism.html (#awd-sprite) + metadata …/catalog/aws-icons/aws-icons.json",
+  "total": 6, "offset": 0, "count": 2,
   "items": [
     { "id": "aws-res-users", "name": "Users", "kind": "resource", "category": "General Icons",
-      "colorways": { "dark": "aws-res-users-dark", "light": "aws-res-users-light" } }
+      "colorways": { "dark": "aws-res-users-dark", "light": "aws-res-users-light" }, "score": 1.95 },
+    { "id": "aws-res-user", "name": "User", "kind": "resource", "category": "General Icons",
+      "colorways": { "dark": "aws-res-user-dark", "light": "aws-res-user-light" }, "score": 0.83 }
   ]
 }
 ```
+
+### `resolve_aws_icon`
+Request (a CloudFormation type with the properties that pick its icon):
+```json
+{ "name": "resolve_aws_icon", "arguments": { "query": "AWS::RDS::DBInstance", "props": { "Engine": "postgres", "MultiAZ": true } } }
+```
+Result (`standby` is the alternate-colorway icon for the Multi-AZ standby):
+```json
+{
+  "query": "AWS::RDS::DBInstance", "from": "cfn",
+  "id": "aws-res-aurora-postgresql-instance", "name": "Amazon Aurora PostgreSQL Instance", "kind": "node",
+  "confidence": 1, "how": "rule+Engine", "standby": "aws-res-aurora-postgresql-instance-alternate",
+  "candidates": [ { "id": "aws-res-aurora-postgresql-instance", "name": "Amazon Aurora PostgreSQL Instance", "score": 1 } ],
+  "warnings": [], "source": "…"
+}
+```
+A container name returns a frame: `{ "query": "Security Group" }` gives `"id": null, "kind": "group", "group": "sg"` (the awd frame kind; security groups have no icon). Other forms: `"ALB"`, `"mxgraph.aws4.internet_gateway"` (`from: "drawio"`), `"aws:simple-storage-service-bucket"`, `"LambdaLambdaFunction"` (`from: "plantuml"`), `"compute.Lambda"` (`from: "diagrams"`), `"aws_lb"` with `{ "load_balancer_type": "network" }`.
 
 ### `get_aws_icon`
 Request:
@@ -535,6 +554,8 @@ Result (artwork unmodified; `format: "symbol"` returns a `<symbol>` for a page s
   "source": "…/Prism.html (#awd-sprite)"
 }
 ```
+A retired, end-of-support or renamed icon adds its lifecycle, for example `aws-svc-app-mesh`:
+`"status": "end-of-support", "endOfSupport": "2026-09-30", "warnings": ["AWS App Mesh reached end of support on 2026-09-30 (migrate to Amazon VPC Lattice or Amazon ECS Service Connect)"]`.
 An unknown id fails with `code: "not_found"` and `data.suggestions` (near matches).
 
 ---
