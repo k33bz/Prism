@@ -176,8 +176,6 @@ function aurora() {
     name: 'Amazon Aurora DB Cluster',
     desc: 'A writer and two readers in three Availability Zones of a VPC share one cluster volume that keeps six copies of the data, two per AZ. Packets show a write fanning out to all six copies, then reads served from the same volume.',
     w: 480, h: 300, dur: 8,
-    // the volume frame has no header (no label, no icon), so its copies sit centered in it
-    lintAllow: ['header-band:node copy'],
     groups: [
       { kind: 'cloud', x: 8, y: 8, w: 464, h: 284 },
       { kind: 'region', x: 16, y: 34, w: 448, h: 250, label: 'Region' },
@@ -546,8 +544,6 @@ function auroraGlobal() {
     name: 'Amazon Aurora Global Database',
     desc: 'The primary Region cluster replicates at the storage layer to a secondary Region, typically with under one second of lag, and a managed failover or switchover promotes the secondary. Packets show replication, then a Region outage, the promotion and Route 53 redirecting writes.',
     wide: true, w: 960, h: 340, dur: 11,
-    // the volume frames have no header (no label, no icon), so their copies sit centered in them
-    lintAllow: ['header-band:node copy'],
     groups: [
       { kind: 'cloud', x: 76, y: 8, w: 876, h: 324 },
       { kind: 'gen', x: 148, y: 100, w: 796, h: 222, label: 'Aurora global database' },

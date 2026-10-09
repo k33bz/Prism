@@ -220,10 +220,11 @@
     },
     "legend": {
       "type": "object",
-      "description": "Key drawn inside the diagram from (x, y), one row per item; items default to the packet kinds the timeline uses.",
+      "description": "Key drawn inside the diagram from (x, y), one row per item (or one line with row); items default to the packet kinds the timeline uses.",
       "properties": {
         "x": { "$ref": "#/$defs/num" },
         "y": { "$ref": "#/$defs/num" },
+        "row": { "type": "boolean", "description": "All items on one line instead of one per row." },
         "items": {
           "type": "array",
           "items": {

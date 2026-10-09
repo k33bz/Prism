@@ -176,7 +176,7 @@ export function checkSpec(spec) {
   }
   if (spec.legend != null) {
     const L = spec.legend, w = `${at} legend`;
-    okNum(L.x, w + '.x'); okNum(L.y, w + '.y');
+    okNum(L.x, w + '.x'); okNum(L.y, w + '.y'); okBool(L, ['row'], w);
     for (const [i, it] of (L.items || []).entries()) { okEnum(it.kind, LEGEND, `${w}.items[${i}].kind`); if (it.label != null) okText(it.label, `${w}.items[${i}].label`, 60); }
   }
   if (spec.extra != null) okExtra(spec.extra, `${at} extra`);
@@ -484,8 +484,11 @@ export function diagram(spec) {
     const L = spec.legend, rows = [];
     const used = new Set((spec.timeline || []).filter((e) => e.wire).map((e) => e.kind || 'pk'));
     const items = L.items || ['pk', 'pk-2', 'pk-bad'].filter((k) => used.has(k)).map((kind) => ({ kind }));
+    // one row per item, or with row:true one line, each item after the last one's label
+    let lx = L.x
     items.forEach((it, i) => {
-      const y = L.y + i * 13, x = L.x;
+      const y = L.row ? L.y : L.y + i * 13, x = L.row ? lx : L.x;
+      lx += 13 + textW(it.label || LEGEND[it.kind], 8.5) + 14;
       const sw = it.kind === 'wire' || it.kind === 'dashed' ? `<path class="w${it.kind === 'dashed' ? ' w-d' : ''}" d="M${r2(x - 1)},${r2(y - 3)} H${r2(x + 9)}"/>`
         : it.kind === 'blocked' ? `<circle cx="${r2(x + 4)}" cy="${r2(y - 3)}" r="4.2" fill="#DD344C"/>`
         : `<circle class="lg-${it.kind}" cx="${r2(x + 3.4)}" cy="${r2(y - 3)}" r="3.4"/>`;

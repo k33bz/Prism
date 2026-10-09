@@ -219,7 +219,9 @@ export function lint(spec, svg) {
   for (const n of spec.nodes || []) {
     if (n.kind) continue;
     const s = n.size || 40, cx = n.x + s / 2, cy = n.y + s / 2;
-    const own = (spec.groups || []).filter((g) => cx > g.x && cx < g.x + g.w && cy > g.y && cy < g.y + g.h).sort((a, b) => a.w * a.h - b.w * b.h)[0];
+    // only frames that draw a header (a label or an icon) have a band to keep clear
+    const hasHeader = (g) => (g.label != null ? g.label !== '' : g.kind !== 'gen') || typeof g.icon === 'string' || (g.icon !== false && !['az', 'sg', 'gen'].includes(g.kind));
+    const own = (spec.groups || []).filter((g) => cx > g.x && cx < g.x + g.w && cy > g.y && cy < g.y + g.h && hasHeader(g)).sort((a, b) => a.w * a.h - b.w * b.h)[0];
     if (own && n.y < own.y + 22 && n.y + s > own.y) add('warn', 'header-band', `node ${n.id} sits in the ${own.kind} frame's 22px header band`, { x0: n.x, y0: n.y, x1: n.x + s, y1: n.y + s });
   }
   // AWS deck: labels at most 2 lines; one icon size per diagram
