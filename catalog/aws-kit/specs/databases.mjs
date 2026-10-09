@@ -98,9 +98,9 @@ function multiAz() {
       { id: 'w-sync', d: wSync },
     ],
     steps: [
-      { n: 1, at: 'w-app', f: 0.5 },
-      { n: 2, x: 157, y: 150 },
-      { n: 3, x: 357, y: 175 },
+      { n: 1, at: 'w-app', f: 0.5, text: 'The application connects to the DB instance endpoint, a DNS name whose CNAME points to the primary DB instance.' },
+      { n: 2, x: 157, y: 150, text: 'The connection reaches the primary DB instance in Availability Zone a, which serves all reads and writes.' },
+      { n: 3, x: 357, y: 175, text: 'The primary replicates each write synchronously to the standby in Availability Zone b. If AZ a fails, RDS promotes the standby and points the endpoint CNAME to it.' },
     ],
     timeline: [
       { wire: 'w-app', t: [0.03, 0.10] },
@@ -171,9 +171,9 @@ function cluster() {
       { id: 'rep-b', d: rb, dashed: true }, { id: 'rep-c', d: rc, dashed: true },
     ],
     steps: [
-      { n: 1, x: 100, y: 116 },
-      { n: 2, x: 360, y: 240 },
-      { n: 3, x: 226, y: 91 },
+      { n: 1, x: 100, y: 116, text: 'The application sends writes to the cluster endpoint, which connects to the writer DB instance in AZ a.' },
+      { n: 2, x: 360, y: 240, text: 'The writer replicates each change semisynchronously to both reader DB instances and commits once at least one of them acknowledges it.' },
+      { n: 3, x: 226, y: 91, text: 'The application sends read-only queries to the reader endpoint, which load balances them across the two reader DB instances.' },
     ],
     timeline: [
       { wire: 'w-appc', t: [0.03, 0.10] },
@@ -249,9 +249,9 @@ function aurora() {
       { id: 'w-read1', d: wRead1, dashed: true }, { id: 'w-read2', d: wRead2, dashed: true },
     ],
     steps: [
-      { n: 1, x: 100, y: 98 },
-      { n: 2, x: 168, y: 210 },
-      { n: 3, x: 150, y: 53 },
+      { n: 1, x: 100, y: 98, text: 'The application sends writes to the cluster endpoint, which always connects to the writer DB instance.' },
+      { n: 2, x: 168, y: 210, text: 'The writer DB instance writes to the shared Aurora cluster volume, which keeps six copies of the data, two in each of three AZs.' },
+      { n: 3, x: 150, y: 53, text: 'The application reads through the reader endpoint, which load balances across the reader DB instances. They read from the same cluster volume.' },
     ],
     timeline: [
       { wire: 'w-appc', t: [0.04, 0.10] },
@@ -321,8 +321,8 @@ function serverless() {
       { id: 'w-vol', d: 'M150,167 V181' },
     ],
     steps: [
-      { n: 1, x: 62, y: 104 },
-      { n: 2, x: 164, y: 174 },
+      { n: 1, x: 62, y: 104, text: 'Users send requests to the writer DB instance. As the load rises and falls, Aurora Serverless v2 scales its capacity in place between the minimum and maximum ACUs.' },
+      { n: 2, x: 164, y: 174, text: 'The writer DB instance reads and writes the shared cluster volume. Storage is separate from compute and grows automatically.' },
     ],
     timeline: [
       ...load.map((t, i) => ({ wire: 'w-in', t, ...(ringAt.has(i) ? { ring: 'writer' } : {}) })),
@@ -375,9 +375,9 @@ function proxy() {
       { id: 'o2', d: 'M276,185 H376' },
     ],
     steps: [
-      { n: 1, x: 235, y: 108 },
-      { n: 2, at: 'merge', f: 0.5, dy: -11 },
-      { n: 3, x: 326, y: 197 },
+      { n: 1, x: 235, y: 108, text: 'Amazon RDS Proxy retrieves the database credentials from AWS Secrets Manager.' },
+      { n: 2, at: 'merge', f: 0.5, dy: -11, text: 'AWS Lambda functions open many connections to RDS Proxy instead of connecting to the database directly.' },
+      { n: 3, x: 326, y: 197, text: 'RDS Proxy multiplexes the requests over a few pooled, reused connections to the RDS or Aurora DB instance and returns each response to its function.' },
     ],
     timeline: [
       { wire: 'sec', t: [0.02, 0.09], kind: 'pk-2', ring: 'proxy' },
@@ -431,9 +431,9 @@ function cache() {
       { id: 'a-db', d: 'M194,164 H260 V210 H356' },
     ],
     steps: [
-      { n: 1, x: 121, y: 144 },
-      { n: 2, x: 300, y: 91 },
-      { n: 3, x: 300, y: 222 },
+      { n: 1, x: 121, y: 144, text: 'Users send a request to the application.' },
+      { n: 2, x: 300, y: 91, text: 'The application reads the key from Amazon ElastiCache first. On a cache hit, it answers from memory without touching the database.' },
+      { n: 3, x: 300, y: 222, text: 'On a cache miss, the application queries the Amazon RDS DB instance, then writes the result to ElastiCache with a TTL for the next read.' },
     ],
     timeline: [
       // request 1: a miss
@@ -485,9 +485,9 @@ function ddbGlobal() {
       { id: 'repl', d: 'M364,134 V194', both: true, dashed: true },
     ],
     steps: [
-      { n: 1, at: 'ua', f: 0.5, dy: -12 },
-      { n: 2, x: 364, y: 157 },
-      { n: 3, at: 'ub', f: 0.5, dy: -12 },
+      { n: 1, at: 'ua', f: 0.5, dy: -12, text: 'Users in us-east-1 call AWS Lambda, which writes to the local replica of the Amazon DynamoDB global table.' },
+      { n: 2, x: 364, y: 157, text: 'DynamoDB replicates each change asynchronously to the replica in the other Region. Concurrent updates to the same item resolve by last writer wins.' },
+      { n: 3, at: 'ub', f: 0.5, dy: -12, text: 'Users in eu-west-1 write to their local replica the same way, and DynamoDB replicates those changes back to us-east-1.' },
     ],
     timeline: [
       { wire: 'ua', t: [0.03, 0.09] },
@@ -554,10 +554,10 @@ function replicas() {
       { id: 'r1', d: r1, dashed: true }, { id: 'r2', d: r2, dashed: true }, { id: 'r3', d: r3, dashed: true },
     ],
     steps: [
-      { n: 1, x: 150, y: 131 },
-      { n: 2, x: 296, y: 297 },
-      { n: 3, x: 710, y: 297 },
-      { n: 4, x: 551, y: 128 },
+      { n: 1, x: 150, y: 131, text: 'The application sends writes to the source DB instance in AZ a, the only read/write instance.' },
+      { n: 2, x: 296, y: 297, text: 'The source DB instance replicates changes asynchronously to read replicas in AZ b and AZ c.' },
+      { n: 3, x: 710, y: 297, text: 'The source DB instance also replicates asynchronously to a cross-Region read replica in eu-west-1, which can be promoted to a standalone DB instance for disaster recovery.' },
+      { n: 4, x: 551, y: 128, text: 'The application sends read-only queries to the read replicas, and an application in eu-west-1 reads from the cross-Region read replica.' },
     ],
     timeline: [
       { wire: 'w-wr', t: [0.03, 0.12], ring: 'src' },
@@ -635,9 +635,9 @@ function auroraGlobal() {
       { id: 'w-rep', d: 'M494,255 H598' },
     ],
     steps: [
-      { n: 1, x: 220, y: 39 },
-      { n: 2, x: 546, y: 255 },
-      { n: 3, x: 700, y: 77 },
+      { n: 1, x: 220, y: 39, text: 'Users reach the database through Amazon Route 53, which sends writes to the writer DB instance in the primary Region, us-east-1.' },
+      { n: 2, x: 546, y: 255, text: 'The writer commits to the primary cluster volume, and Aurora replicates it at the storage layer to eu-west-1, typically with under one second of lag.' },
+      { n: 3, x: 700, y: 77, text: 'When us-east-1 fails, a global database failover promotes the secondary cluster in eu-west-1, and Route 53 sends writes to its new writer DB instance.' },
     ],
     timeline: [
       { wire: 'w-u', t: [0.03, 0.09] },
@@ -702,9 +702,9 @@ function dms() {
       { id: 'w-dms', d: 'M476,182 H626' },
     ],
     steps: [
-      { n: 1, x: 133, y: 193 },
-      { n: 2, x: 398, y: 171 },
-      { n: 3, x: 551, y: 193 },
+      { n: 1, x: 133, y: 193, text: 'The optional AWS Schema Conversion Tool reads the source schema, converts it and applies the converted schema to the Aurora target.' },
+      { n: 2, x: 398, y: 171, text: 'The AWS DMS replication instance connects to the source database over AWS Direct Connect or a VPN and reads its data.' },
+      { n: 3, x: 551, y: 193, text: 'AWS DMS loads the existing data into the Aurora writer DB instance as a full load, then keeps applying ongoing changes with change data capture (CDC).' },
     ],
     timeline: [
       { wire: 'w-sct-src', t: [0.03, 0.08], kind: 'pk-2', ring: 'src' },
