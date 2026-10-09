@@ -21,6 +21,7 @@ const VGW = 'aws-res-vpc-vpn-gateway';
 const TGW = 'aws-svc-transit-gateway';
 const TGWA = 'aws-res-transit-gateway-attachment';
 const DX = 'aws-svc-direct-connect';
+const DXGW = 'aws-res-direct-connect-gateway';
 const RAM = 'aws-svc-resource-access-manager';
 const KMS = 'aws-svc-key-management-service';
 const CWL = 'aws-res-cloudwatch-logs';
@@ -37,6 +38,8 @@ const nd = centered(40);
 const f3 = (n) => Math.round(n * 1000) / 1000;
 // consecutive equal windows starting at t0 (len each, gap between), one per item
 const seq = (t0, len, items, gap = 0) => items.map((it, i) => ({ ...it, t: [f3(t0 + i * (len + gap)), f3(t0 + i * (len + gap) + len)] }));
+// consecutive windows of their own lengths starting at t0: [[item, len], ...] (a long wire gets a longer window)
+const chain = (t0, gap, legs) => { let t = t0; return legs.map(([it, len]) => { const e = { ...it, t: [f3(t), f3(t + len)] }; t += len + gap; return e; }); };
 // request leg (left to right, orange) and response leg (blue)
 const fw = (wire, o = {}) => ({ wire, ...o });
 const bk = (wire, o = {}) => ({ wire, reverse: true, kind: 'pk-2', ...o });
@@ -118,24 +121,27 @@ const resolution = (() => {
 // ---------------------------------------------------------------------------------------------
 const weighted = (() => {
   const users = nd('users', USERS, 30, 150, 'Users', { size: 36 });
-  const r53 = nd('r53', R53, 130, 150, 'Amazon Route 53', { wrap: 8, sub: 'weighted routing' });
+  // Route 53 only answers the DNS query; it is not in the request path, so it sits apart from the requests
+  const r53 = nd('r53', R53, 130, 66, 'Amazon Route 53', { wrap: 8, sub: 'weighted routing' });
   const alb1 = nd('alb1', ALB, 300, 100, 'Application Load Balancer', { size: 32 });
   const ec1 = nd('ec1', EC2S, 410, 100, 'Amazon EC2', { size: 32, sub: 'app v1' });
   const alb2 = nd('alb2', ALB, 300, 208, 'Application Load Balancer', { size: 32 });
   const ec2 = nd('ec2', EC2S, 410, 208, 'Amazon EC2', { size: 32, sub: 'app v2' });
-  // one query = users -> Route 53 -> chosen ALB -> instances; each phase picks a different mix of v1 / v2
+  // one user = DNS query to Route 53, the answer back (blue), then the request straight to the ALB in the answer
+  // and on to its instances; each phase picks a different mix of v1 / v2
   const query = (t0, p, alb, ec, w) => [
-    { wire: 'u', t: [f3(t0), f3(t0 + 0.02)] },
-    { wire: p, t: [f3(t0 + 0.02), f3(t0 + 0.05)], ring: alb },
-    { wire: w, t: [f3(t0 + 0.05), f3(t0 + 0.07)], ring: ec },
+    { wire: 'dq', t: [f3(t0), f3(t0 + 0.016)], ring: 'r53' },
+    { wire: 'dq', t: [f3(t0 + 0.017), f3(t0 + 0.033)], reverse: true, kind: 'pk-2', ring: 'users' },
+    { wire: p, t: [f3(t0 + 0.034), f3(t0 + 0.062)], ring: alb },
+    { wire: w, t: [f3(t0 + 0.063), f3(t0 + 0.078)], ring: ec },
   ];
   const one = (p) => (p === 'p1' ? ['p1', 'alb1', 'ec1', 'w1'] : ['p2', 'alb2', 'ec2', 'w2']);
   const mix = (start, order) => order.flatMap((p, i) => query(start + i * 0.08, ...one(p)));
   return {
     id: 'dns-weighted',
     name: 'Weighted routing for a canary',
-    desc: 'Two weighted alias records with the same name point at a stable and a canary load balancer stack. Route 53 answers in proportion to the weights: 90 / 10 first, then 50 / 50, then 0 / 100 once the canary is promoted. The animation shifts the weights and the share of queries going to each stack.',
-    w: 480, h: 282, dur: 10,
+    desc: 'Two weighted alias records with the same name point at a stable and a canary load balancer stack. Route 53 answers each DNS lookup (dashed) in proportion to the weights: 90 / 10 first, then 50 / 50, then 0 / 100 once the canary is promoted. Users then connect directly to the load balancer in the answer. The animation shifts the weights and the share of users going to each stack.',
+    w: 480, h: 282, dur: 12,
     groups: [
       { kind: 'cloud', x: 70, y: 8, w: 402, h: 266 },
       { kind: 'region', x: 246, y: 34, w: 218, h: 232, label: 'us-east-1' },
@@ -144,18 +150,20 @@ const weighted = (() => {
     ],
     nodes: [users, r53, alb1, ec1, alb2, ec2],
     wires: [
-      { id: 'u', d: P(R(users), L(r53)) },
-      { id: 'p1', d: P(R(r53, -6), [176, 144], [176, 100], L(alb1)) },
-      { id: 'p2', d: P(R(r53, 6), [176, 156], [176, 208], L(alb2)) },
+      // the DNS lookup: query and answer between the users and Route 53
+      { id: 'dq', d: P(T(users), [30, 66], L(r53)), dashed: true, both: true },
+      // the requests go from the users to the load balancer in the answer, not through Route 53
+      { id: 'p1', d: P(R(users, -6), [176, 144], [176, 100], L(alb1)) },
+      { id: 'p2', d: P(R(users, 6), [176, 156], [176, 208], L(alb2)) },
       { id: 'w1', d: P(R(alb1), L(ec1)) },
       { id: 'w2', d: P(R(alb2), L(ec2)) },
     ],
     steps: [
-      { n: 1, at: 'u', f: 0.5, dy: -11, text: 'Users look up the application name. Amazon Route 53 holds two weighted alias records for it, with set identifiers v1 and v2.' },
-      { n: 2, at: 'p1', f: 0.55, dy: 12, text: 'Route 53 answers with the stable or the canary load balancer in proportion to the weights: 90/10, then 50/50, then 0/100 at cutover.' },
-      { n: 3, at: 'w1', f: 0.5, dy: -11, text: 'Users connect to the Application Load Balancer in the answer, which sends their requests to the v1 or v2 instances.' },
+      { n: 1, at: 'dq', f: 0.22, dx: 11, dy: 0, text: 'Users look up the application name. Amazon Route 53 holds two weighted alias records for it, with set identifiers v1 and v2.' },
+      { n: 2, at: 'dq', f: 0.87, dy: -11, text: 'Route 53 answers with the stable or the canary load balancer in proportion to the weights: 90/10, then 50/50, then 0/100 at cutover.' },
+      { n: 3, at: 'p1', f: 0.75, dy: 12, text: 'Users connect directly to the Application Load Balancer in the answer, which sends their requests to the v1 or v2 instances. Route 53 is not in the request path.' },
     ],
-        timeline: [
+    timeline: [
       ...mix(0.02, ['p1', 'p1', 'p1', 'p2']),
       ...mix(0.36, ['p1', 'p2', 'p1', 'p2']),
       ...mix(0.70, ['p2', 'p2', 'p2']),
@@ -165,11 +173,11 @@ const weighted = (() => {
       { glow: 'p2', t: [0.72, 0.99] },
     ],
     notes: [
-      // weights per phase, beside the two answer wires
-      { x: 211, y: 94, text: 'weight 90', t: [0.02, 0.34] }, { x: 211, y: 202, text: 'weight 10', t: [0.02, 0.34] },
+      // weights per phase, beside the two request wires; the canary weights also stand in still frames
+      { x: 211, y: 94, text: 'weight 90', t: [0.02, 0.34], still: true }, { x: 211, y: 202, text: 'weight 10', t: [0.02, 0.34], still: true },
       { x: 211, y: 94, text: 'weight 50', t: [0.36, 0.68] }, { x: 211, y: 202, text: 'weight 50', t: [0.36, 0.68] },
       { x: 211, y: 94, text: 'weight 0', t: [0.70, 0.99] }, { x: 211, y: 202, text: 'weight 100', t: [0.70, 0.99] },
-      { x: 130, y: 232, text: 'Canary: 90 / 10', kind: 'label', t: [0.02, 0.34] },
+      { x: 130, y: 232, text: 'Canary: 90 / 10', kind: 'label', t: [0.02, 0.34], still: true },
       { x: 130, y: 232, text: 'Ramp up: 50 / 50', kind: 'label', t: [0.36, 0.68] },
       { x: 130, y: 232, text: 'Cutover: 0 / 100', kind: 'label', t: [0.70, 0.99] },
       { x: 130, y: 250, text: 'Two records, same name,\nset identifiers v1 and v2' },
@@ -181,45 +189,55 @@ const weighted = (() => {
 // dns-geo: geolocation routing with a default record
 // ---------------------------------------------------------------------------------------------
 const geo = (() => {
-  const UY = [54, 114, 174, 234];
+  const UY = [38, 98, 158, 218];
   const subs = ['North America', 'South America', 'Europe', 'Asia'];
-  const us = UY.map((y, i) => nd('u' + i, USERS, 30, y, 'Users', { size: 32, sub: subs[i] }));
-  const r53 = nd('r53', R53, 140, 152, 'Amazon Route 53', { wrap: 8, sub: 'geolocation' });
+  const us = UY.map((y, i) => nd('u' + i, USERS, 48, y, 'Users', { size: 32, sub: subs[i] }));
+  // Route 53 only answers the DNS queries; it sits below the request paths, reached by a lookup lane left of the users
+  const r53 = nd('r53', R53, 130, 266, 'Amazon Route 53', { size: 32, wrap: 16, sub: 'geolocation routing', labelPos: 'r' });
   const RY = [68, 152, 236];
   const albs = RY.map((y, i) => nd('alb' + i, ALB, 360, y, 'Application Load Balancer', { size: 32, wrap: 30 }));
-  const lane = 70;
-  const uw = (i) => P(R(us[i], 0, 4), [lane, UY[i]], [lane, 152], L(r53));
+  const lane = 14, elbow = 180;
+  // DNS lookup (dashed, both ways): users' left side, down the lane, into Route 53
+  const lw = (i) => P(L(us[i]), [lane, UY[i]], [lane, r53.cy], L(r53));
+  // request: from the users straight to the load balancer in the answer
+  const rq = (i, y) => P(R(us[i]), [elbow, UY[i]], [elbow, y], [L(albs[0])[0], y]);
+  const lookup = (i, t0) => [
+    { wire: 'u' + i, t: [f3(t0), f3(t0 + 0.06)], ring: 'r53' },
+    { wire: 'u' + i, t: [f3(t0 + 0.065), f3(t0 + 0.125)], reverse: true, kind: 'pk-2', ring: 'u' + i },
+  ];
   return {
     id: 'dns-geo',
     name: 'Geolocation routing',
-    desc: 'Route 53 matches the location of the query to a geolocation record: North America and a Default record go to us-east-1, Europe to eu-west-1 and Asia to ap-southeast-1. A South America query has no record of its own, so the Default record answers. The animation sends one query from each location.',
-    w: 480, h: 292, dur: 10,
+    desc: 'Route 53 matches the location each DNS lookup (dashed) comes from to a geolocation record: North America and a Default record answer with us-east-1, Europe with eu-west-1 and Asia with ap-southeast-1. A South America query has no record of its own, so the Default record answers. Users then connect directly to the load balancer in the answer. The animation runs one lookup and one request from each location.',
+    w: 480, h: 300, dur: 12,
     groups: [
-      { kind: 'cloud', x: 84, y: 8, w: 388, h: 276 },
+      { kind: 'cloud', x: 84, y: 8, w: 388, h: 284 },
       { kind: 'region', x: 262, y: 30, w: 202, h: 76, label: 'us-east-1' },
       { kind: 'region', x: 262, y: 114, w: 202, h: 76, label: 'eu-west-1' },
       { kind: 'region', x: 262, y: 198, w: 202, h: 76, label: 'ap-southeast-1' },
     ],
     nodes: [...us, r53, ...albs],
     wires: [
-      ...us.map((_, i) => ({ id: 'u' + i, d: uw(i) })),
-      { id: 'gNA', d: P(R(r53, -14), [196, 138], [196, 62], L(albs[0], -6)), label: 'NA', labelAt: 0.82 },
-      { id: 'gDEF', d: P(R(r53, -8), [210, 144], [210, 74], L(albs[0], 6)), dashed: true, label: 'Default', labelAt: 0.6, labelDy: 11 },
-      { id: 'gEU', d: P(R(r53), L(albs[1])), label: 'EU', labelAt: 0.82 },
-      { id: 'gAS', d: P(R(r53, 12), [196, 164], [196, 236], L(albs[2])), label: 'AS', labelAt: 0.82 },
+      ...us.map((_, i) => ({ id: 'u' + i, d: lw(i), dashed: true, both: true })),
+      { id: 'gNA', d: rq(0, 62), label: 'NA record', labelAt: 0.85 },
+      { id: 'gDEF', d: rq(1, 74), label: 'Default record', labelAt: 0.6, labelDy: 11 },
+      { id: 'gEU', d: P(R(us[2], -6), L(albs[1])), label: 'EU record', labelAt: 0.85 },
+      { id: 'gAS', d: rq(3, 236), label: 'AS record', labelAt: 0.85 },
     ],
     steps: [
-      { n: 1, at: 'u2', f: 0.45, dy: -11, text: 'Users in Europe query the application name, and Amazon Route 53 matches the location of the query to the Europe geolocation record.' },
-      { n: 2, at: 'gEU', f: 0.55, dy: -11, text: 'Route 53 answers with the eu-west-1 load balancer. North America and the Default record, which serves South America, go to us-east-1; Asia goes to ap-southeast-1.' },
+      { n: 1, at: 'u2', f: 0.725, dy: 11, text: 'Users in Europe send a DNS query for the application name, and Amazon Route 53 matches the location of the query to the Europe geolocation record.' },
+      { n: 2, at: 'u2', f: 0.945, dy: -11, text: 'Route 53 answers with the eu-west-1 load balancer. North America and the Default record, which serves South America, answer with us-east-1; Asia with ap-southeast-1.' },
+      { n: 3, at: 'gEU', f: 0.5, dy: -11, text: 'The users connect directly to the Application Load Balancer in eu-west-1. Route 53 only answers the query; it is not in the request path.' },
     ],
-        timeline: [
-      ...seq(0.03, 0.07, [fw('u0', { ring: 'r53' }), fw('gNA', { ring: 'alb0' })], 0.01),
-      ...seq(0.27, 0.07, [fw('u1', { ring: 'r53' }), fw('gDEF', { ring: 'alb0' })], 0.01),
-      ...seq(0.51, 0.07, [fw('u2', { ring: 'r53' }), fw('gEU', { ring: 'alb1' })], 0.01),
-      ...seq(0.75, 0.07, [fw('u3', { ring: 'r53' }), fw('gAS', { ring: 'alb2' })], 0.01),
+    timeline: [
+      // per location: query, answer (blue), then the request to the load balancer in the answer
+      ...[['gNA', 'alb0'], ['gDEF', 'alb0'], ['gEU', 'alb1'], ['gAS', 'alb2']].flatMap(([w, alb], i) => {
+        const t0 = 0.03 + i * 0.235;
+        return [...lookup(i, t0), { wire: w, t: [f3(t0 + 0.13), f3(t0 + 0.2)], ring: alb }];
+      }),
     ],
     notes: [
-      { x: 140, y: 222, text: 'No SA record,\nso Default answers', t: [0.28, 0.5] },
+      { x: 142, y: 120, text: 'No SA record,\nso Default answers', t: [0.27, 0.49] },
     ],
   };
 })();
@@ -419,17 +437,20 @@ const sharedRules = (() => {
   const att = nd('att', TGWA, 396, 288, 'TGW attachment', { size: 32, wrap: 16 });
   const ob = nd('ob', ENI, 488, 288, 'Outbound endpoint', { size: 32, wrap: 18, sub: 'ENIs in 2 AZs' });
   const ib = nd('ib', ENI, 596, 288, 'Inbound endpoint', { size: 32, wrap: 18, sub: 'ENIs in 2 AZs' });
-  const dx = nd('dx', DX, 772, 300, 'AWS Direct Connect', { wrap: 14 });
-  const dns = nd('dns', SERVERS, 882, 300, 'On-premises DNS servers', { wrap: 14, sub: '10.1.1.10' });
+  // Transit Gateway reaches Direct Connect through a Direct Connect gateway (a global resource: in the AWS Cloud,
+  // outside the Region) and a transit VIF
+  const dxgw = nd('dxgw', DXGW, 766, 300, 'Direct Connect gateway', { wrap: 14 });
+  const dx = nd('dx', DX, 882, 300, 'AWS Direct Connect', { wrap: 14 });
+  const dns = nd('dns', SERVERS, 882, 170, 'On-premises DNS servers', { wrap: 14, sub: '10.1.1.10' });
   const rv = (wire, o = {}) => ({ wire, reverse: true, ...o });
   return {
     id: 'dns-shared-rules',
     name: 'Centralized DNS with AWS RAM and Profiles',
-    desc: 'A networking account owns the Resolver endpoints, the forwarding rule and the private hosted zone, bundles them in a Route 53 Profile and shares it with spoke accounts through AWS RAM (dashed). Spoke VPCs attach to a Transit Gateway. A spoke query for corp.example.com is forwarded by the shared rule through the central outbound endpoint and over Direct Connect to the on-premises DNS servers. The animation shares the Profile, then forwards one query and returns the answer.',
+    desc: 'A networking account owns the Resolver endpoints in its hub VPC and shares a Route 53 Profile with the spoke accounts through AWS RAM (dashed). The Profile holds the forwarding rule, the private hosted zone and a DNS Firewall rule group, and applies them to the spoke VPCs it is associated with. Spoke VPCs attach to a Transit Gateway. A spoke query for corp.example.com is forwarded by the shared rule through the central outbound endpoint, then through a Direct Connect gateway and a transit VIF to the on-premises DNS servers. The animation shares the Profile, then forwards one query and returns the answer.',
     wide: true, w: 960, h: 440, dur: 10,
     groups: [
-      { kind: 'dc', x: 812, y: 230, w: 140, h: 150 },
-      { kind: 'cloud', x: 8, y: 8, w: 730, h: 424 },
+      { kind: 'dc', x: 812, y: 120, w: 140, h: 120 },
+      { kind: 'cloud', x: 8, y: 8, w: 798, h: 424 },
       { kind: 'region', x: 20, y: 34, w: 706, h: 390, label: 'Region' },
       { kind: 'acct', x: 32, y: 58, w: 204, h: 150, label: 'Spoke account A' },
       { kind: 'vpc', x: 44, y: 82, w: 180, h: 118, label: 'Spoke VPC', note: '10.1.0.0/16' },
@@ -439,7 +460,7 @@ const sharedRules = (() => {
       { kind: 'gen', x: 348, y: 82, w: 356, h: 104, icon: R53, label: 'Route 53 Profile' },
       { kind: 'vpc', x: 348, y: 208, w: 356, h: 162, label: 'Hub VPC', note: '10.0.0.0/16' },
     ],
-    nodes: [ec2a, resa, ec2b, resb, ram, tgw, rule, phz, fwg, att, ob, ib, dx, dns],
+    nodes: [ec2a, resa, ec2b, resb, ram, tgw, rule, phz, fwg, att, ob, ib, dxgw, dx, dns],
     wires: [
       { id: 'sa', d: P(L(ram, 6), [244, 78], [244, 100], [226, 100]), dashed: true },
       { id: 'sb', d: P(L(ram, -6), [244, 66], [244, 270], [226, 270]), dashed: true },
@@ -450,8 +471,9 @@ const sharedRules = (() => {
       { id: 'qr', d: P(B(rule), [400, 196], [488, 196], T(ob)) },
       { id: 'qe', d: P(L(ob), R(att)), both: true },
       { id: 'th', d: P(R(tgw), [322, 220], [322, 288], L(att)), both: true },
-      { id: 'tx', d: P(B(tgw), [284, 404], [772, 404], B(dx)), both: true },
-      { id: 'xd', d: P(R(dx), L(dns)), both: true },
+      { id: 'tx', d: P(B(tgw), [284, 404], [766, 404], B(dxgw)), both: true },
+      { id: 'gd', d: P(R(dxgw), L(dx)), both: true, label: 'transit VIF', labelAt: 0.62 },
+      { id: 'xd', d: P(T(dx), B(dns)), both: true },   // up into the data center: its header stays clear
       { id: 'aa', d: P([210, 200], [210, 220], L(tgw)), both: true },
       { id: 'ab', d: P([210, 256], [210, 220], L(tgw)), both: true },
       { id: 'ib', d: P(B(ib), [596, 340], [396, 340], B(att)), dashed: true, both: true, label: 'on-premises queries', labelAt: 0.5, labelDy: 12 },
@@ -461,17 +483,18 @@ const sharedRules = (() => {
       { n: 2, at: 'e', f: 0.5, dy: -11, text: 'An instance in spoke account A queries the Route 53 VPC Resolver in its VPC for a name in corp.example.com.' },
       { n: 3, at: 'q', f: 0.6, dy: 12, text: 'The Resolver matches the forwarding rule for corp.example.com, which the Profile applies to the spoke VPC.' },
       { n: 4, at: 'qr', f: 0.88, dx: 11, dy: 0, text: 'The rule sends the query out of the outbound endpoint in the hub VPC, through the TGW attachment to AWS Transit Gateway.' },
-      { n: 5, at: 'tx', f: 0.62, dy: -11, text: 'AWS Transit Gateway carries the query over AWS Direct Connect to the on-premises DNS servers, and the answer returns the same way to the instance.' },
+      { n: 5, at: 'tx', f: 0.62, dy: -11, text: 'AWS Transit Gateway sends the query to its associated Direct Connect gateway, which carries it over a transit VIF on AWS Direct Connect to the on-premises DNS servers. The answer returns the same way to the instance.' },
     ],
-        timeline: [
+    timeline: [
       { wire: 'sb', t: [0.03, 0.12], kind: 'pk-2' }, { wire: 'sa', t: [0.03, 0.12], kind: 'pk-2' },
-      ...seq(0.2, 0.048, [
-        fw('e', { ring: 'resa' }), fw('q', { ring: 'rule' }), fw('qr', { ring: 'ob' }), fw('qe', { ring: 'att' }),
-        rv('th', { ring: 'tgw' }), fw('tx', { ring: 'dx' }), fw('xd', { ring: 'dns' }),
-        { wire: 'xd', reverse: true, kind: 'pk-2', ring: 'dx' }, { wire: 'tx', reverse: true, kind: 'pk-2', ring: 'tgw' },
-        { wire: 'th', kind: 'pk-2', ring: 'att' }, bk('qe', { ring: 'ob' }), bk('qr', { ring: 'rule' }),
-        bk('q', { ring: 'resa' }), bk('e', { ring: 'ec2a' }),
-      ], 0.004),
+      ...chain(0.18, 0.004, [
+        [fw('e', { ring: 'resa' }), 0.04], [fw('q', { ring: 'rule' }), 0.04], [fw('qr', { ring: 'ob' }), 0.04], [fw('qe', { ring: 'att' }), 0.04],
+        [rv('th', { ring: 'tgw' }), 0.04], [fw('tx', { ring: 'dxgw' }), 0.07], [fw('gd', { ring: 'dx' }), 0.035], [fw('xd', { ring: 'dns' }), 0.035],
+        [{ wire: 'xd', reverse: true, kind: 'pk-2', ring: 'dx' }, 0.035], [{ wire: 'gd', reverse: true, kind: 'pk-2', ring: 'dxgw' }, 0.035],
+        [{ wire: 'tx', reverse: true, kind: 'pk-2', ring: 'tgw' }, 0.07],
+        [{ wire: 'th', kind: 'pk-2', ring: 'att' }, 0.04], [bk('qe', { ring: 'ob' }), 0.04], [bk('qr', { ring: 'rule' }), 0.04],
+        [bk('q', { ring: 'resa' }), 0.04], [bk('e', { ring: 'ec2a' }), 0.04],
+      ]),
     ],
     legend: legend(33, 405, ['pk', 'Query'], ['pk-2', 'Answer or share']),
   };
