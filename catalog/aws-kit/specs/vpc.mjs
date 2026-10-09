@@ -1,6 +1,7 @@
 // VPC & hybrid networking family: vp-* diagrams. Build: node catalog/aws-kit/awd.mjs preview catalog/aws-kit/specs/vpc.mjs
 // Authoring note: coordinates are computed with small helpers (node centers, edge ports, H/V paths) so every diagram sits on an
-// explicit grid. Raw SVG in `extra` is used only for: legend dots, right-aligned CIDR text on group headers, red "blocked" marks.
+// explicit grid. Legends, CIDRs on group headers (group note), route captions (notes), blocked marks and red rings use the kit's
+// primitives; no diagram needs `extra`.
 
 // ---- icon ids ----
 const IGW = 'aws-res-vpc-internet-gateway';
@@ -31,39 +32,17 @@ const NET = 'aws-res-internet';
 import { wrapLines, lblH, R, L, T, B, Bi, P, centered } from '../place.mjs';
 // node by CENTER (cx, cy); default 32px icon
 const nd = centered(32);
-// raw-SVG helpers (spec `extra` escape hatch)
-const dot = (x, y, kind, text) =>
-  `<circle cx="${x}" cy="${y}" r="3.4" fill="var(--awd-${kind})"/><text x="${x + 9}" y="${y + 3.4}">${text}</text>`;
-const cidr = (g, text) =>
-  `<text class="t-sub" text-anchor="end" x="${g.x + g.w - 8}" y="${g.y + 14}">${text}</text>`;
-const foot = (g, text) =>
-  `<text class="t-sub" text-anchor="end" x="${g.x + g.w - 8}" y="${g.y + g.h - 8}">${text}</text>`;
-const note = (x, y, text, anchor = 'start') =>
-  `<text class="t-sub" text-anchor="${anchor}" x="${x}" y="${y}">${text}</text>`;
-const noteC = (x, y, text) =>
-  `<text class="t-c t-sub" x="${x}" y="${y}">${text}</text>`;
-const RED = '#DD344C';
-const redText = (x, y, text) =>
-  `<text x="${x}" y="${y}" style="fill:${RED};font-size:8.5px;font-weight:600">${text}</text>`;
-const xmark = (cx, cy, r = 7.5) =>
-  `<circle cx="${cx}" cy="${cy}" r="${r}" fill="${RED}"/><path d="M${cx - 3},${cy - 3} L${cx + 3},${cy + 3} M${cx + 3},${cy - 3} L${cx - 3},${cy + 3}" stroke="#fff" stroke-width="1.7" fill="none"/>`;
+// a caption in the group-note style (9px muted): route lines, protocol names
+const sub = (x, y, text, anchor) => ({ x, y, text, size: 9, ...(anchor ? { anchor } : {}) });
+// a caption on a group's bottom edge, right-aligned (the group note sits on the top edge only)
+const foot = (g, text) => sub(g.x + g.w - 8, g.y + g.h - 8, text, 'end');
+// the in-diagram key: swatch centers at (x, y), (x, y + 13)...
+const legend = (x, y, ...items) => ({ x: x - 3.4, y: y + 3.4, items: items.map(([kind, label]) => ({ kind, label })) });
 // rescale a timeline so its last window ends at `end` of the clock (keeps the idle tail short and every window ordered)
 const fit = (tl, end = 0.93) => {
   const k = end / Math.max(...tl.map((e) => e.t[1]));
   const r = (n) => Math.round(n * k * 1000) / 1000;
   return tl.map((e) => ({ ...e, t: [r(e.t[0]), r(e.t[1])] }));
-};
-const timed = (a, b, dur, svg) => {
-  const f = (n) => String(Math.round(n * 1000) / 1000).replace(/^0\./, '.');
-  return `<g class="anim" opacity="0">${svg}<animate attributeName="opacity" dur="${dur}s" repeatCount="indefinite" calcMode="discrete" values="0;1;0" keyTimes="0;${f(a)};${f(b)}"/></g>`;
-};
-// one-shot pulse ring on the diagram clock (fraction t of dur seconds)
-const pulse = (cx, cy, r0, t, dur, color = RED) => {
-  const f = (n) => String(Math.round(n * 1000) / 1000).replace(/^0\./, '.');
-  const t2 = Math.min(0.995, t + 0.1);
-  return `<circle class="anim" cx="${cx}" cy="${cy}" r="${r0}" fill="none" stroke="${color}" stroke-width="1.6" opacity="0">` +
-    `<animate attributeName="opacity" dur="${dur}s" repeatCount="indefinite" values="0;0;.9;0;0" keyTimes="0;${f(t - 0.001)};${f(t)};${f(t2)};1"/>` +
-    `<animate attributeName="r" dur="${dur}s" repeatCount="indefinite" values="${r0};${r0};${r0};${r0 * 1.7};${r0 * 1.7}" keyTimes="0;${f(t - 0.001)};${f(t)};${f(t2)};1"/></circle>`;
 };
 
 // ---------------------------------------------------------------------------------------------
@@ -98,13 +77,13 @@ const standard = (() => {
     groups: [
       { kind: 'cloud', x: 84, y: 8, w: 868, h: 408 },
       { kind: 'region', x: 96, y: 34, w: 844, h: 374, label: 'Region' },
-      { kind: 'vpc', ...VPC, label: 'VPC' },
+      { kind: 'vpc', ...VPC, label: 'VPC', note: '10.0.0.0/16' },
       { kind: 'az', ...AZA, label: 'Availability Zone A' },
       { kind: 'az', ...AZB, label: 'Availability Zone B' },
-      { kind: 'pub', ...PUBA, label: 'Public subnet' },
-      { kind: 'priv', ...PRVA, label: 'Private subnet' },
-      { kind: 'pub', ...PUBB, label: 'Public subnet' },
-      { kind: 'priv', ...PRVB, label: 'Private subnet' },
+      { kind: 'pub', ...PUBA, label: 'Public subnet', note: '10.0.0.0/24' },
+      { kind: 'priv', ...PRVA, label: 'Private subnet', note: '10.0.10.0/24' },
+      { kind: 'pub', ...PUBB, label: 'Public subnet', note: '10.0.1.0/24' },
+      { kind: 'priv', ...PRVB, label: 'Private subnet', note: '10.0.11.0/24' },
     ],
     nodes,
     wires: [
@@ -140,12 +119,7 @@ const standard = (() => {
       { wire: 'o2b', t: [0.54, 0.66], kind: 'pk-2' },
       { wire: 'net', t: [0.67, 0.77], reverse: true, kind: 'pk-2', ring: 'net' },
     ], 0.93),
-    extra: [
-      dot(16, 178, 'pk', 'Inbound'), dot(16, 194, 'pk2', 'Outbound'),
-      cidr(VPC, '10.0.0.0/16'),
-      cidr(PUBA, '10.0.0.0/24'), cidr(PRVA, '10.0.10.0/24'),
-      cidr(PUBB, '10.0.1.0/24'), cidr(PRVB, '10.0.11.0/24'),
-    ].join(''),
+    legend: legend(16, 178, ['pk', 'Inbound'], ['pk-2', 'Outbound']),
   };
 })();
 
@@ -169,9 +143,9 @@ const peering = (() => {
     w: 480, h: 300, dur: 8,
     groups: [
       { kind: 'cloud', x: 8, y: 8, w: 464, h: 286 },
-      { kind: 'vpc', ...A, label: 'VPC A' },
-      { kind: 'vpc', ...C, label: 'VPC C' },
-      { kind: 'vpc', ...BV, label: 'VPC B' },
+      { kind: 'vpc', ...A, label: 'VPC A', note: '10.0.0.0/16' },
+      { kind: 'vpc', ...C, label: 'VPC C', note: '10.2.0.0/16' },
+      { kind: 'vpc', ...BV, label: 'VPC B', note: '10.1.0.0/16' },
     ],
     nodes: [ea, ra, ec, rc, p1, p2, eb, rb],
     wires: [
@@ -185,7 +159,8 @@ const peering = (() => {
     steps: [
       { n: 1, at: 'w1a', f: 0.3, dy: -12, text: 'An Amazon EC2 instance in VPC A sends traffic for 10.1.0.0/16, which its route table sends to peering connection pcx-1.' },
       { n: 2, at: 'w1b', f: 0.45, dx: 11, dy: 0, text: 'The traffic crosses pcx-1 privately to the instance in VPC B, whose route for 10.0.0.0/16 returns the response over the same connection.' },
-      { n: 3, at: 'bl1', f: 0.5, dx: -11, dy: 0, text: 'VPC C peers only with VPC B, through pcx-2. VPC B does not forward traffic from VPC A to VPC C, because peering is not transitive.' },
+      { n: 3, at: 'w2a', f: 0.3, dy: -12, text: 'An instance in VPC C reaches VPC B over its own peering connection: its route table sends 10.1.0.0/16 to pcx-2, and VPC B routes 10.2.0.0/16 back over pcx-2.' },
+      { n: 4, at: 'bl1', f: 0.5, dx: -11, dy: 0, text: 'VPC B does not forward traffic from VPC A to VPC C, because peering is not transitive: VPC A and VPC C would need a peering connection of their own.' },
     ],
     timeline: fit([
       { wire: 'w1a', t: [0.04, 0.11] },
@@ -195,16 +170,15 @@ const peering = (() => {
       { wire: 'w2a', t: [0.47, 0.54] },
       { wire: 'w2b', t: [0.54, 0.63], ring: 'eb' },
       { wire: 'w1a', t: [0.68, 0.74], kind: 'pk-bad' },
-      { wire: 'w1b', t: [0.74, 0.82], kind: 'pk-bad' },
+      // the A-to-C attempt dies at VPC B: a red ring when it arrives
+      { wire: 'w1b', t: [0.74, 0.82], kind: 'pk-bad', ring: 'eb' },
     ], 0.86),
-    extra: [
-      cidr(A, '10.0.0.0/16'), cidr(C, '10.2.0.0/16'), cidr(BV, '10.1.0.0/16'),
-      noteC(410, 211, '10.2.0.0/16 > pcx-2'),
-      xmark(112, 162),
-      redText(124, 160, 'No transitive'), redText(124, 171, 'peering'),
-      pulse(338, 161, 17.6, 0.86, 8),
-      timed(0.86, 0.985, 8, redText(324, 228, 'A to C is not') + redText(324, 239, 'forwarded by B')),
-    ].join(''),
+    marks: [{ x: 112, y: 162 }],
+    notes: [
+      sub(410, 211, '10.2.0.0/16 > pcx-2'),   // the second route of VPC B's route table
+      { x: 124, y: 160, text: 'No transitive\npeering', kind: 'warn', anchor: 'start', size: 8.5 },
+      { x: 324, y: 228, text: 'A to C is not\nforwarded by B', kind: 'warn', anchor: 'start', size: 8.5, t: [0.86, 0.985] },
+    ],
   };
 })();
 
@@ -245,7 +219,7 @@ const endpoints = (() => {
     ],
     steps: [
       { n: 1, at: 'e1', f: 0.5, text: 'Traffic from the Amazon EC2 instance to Amazon S3 or DynamoDB matches the service prefix lists in the subnet route table.' },
-      { n: 2, at: 'e3', f: 0.72, text: 'The route table sends it to the gateway endpoints, which deliver it to Amazon S3 and Amazon DynamoDB without an internet gateway or NAT gateway.' },
+      { n: 2, at: 'e3', f: 0.72, dy: 11, text: 'The route table sends it to the gateway endpoints, which deliver it to Amazon S3 and Amazon DynamoDB without an internet gateway or NAT gateway.' },
       { n: 3, at: 'i1', f: 0.5, dx: 11, dy: 0, text: 'For other services, the instance sends traffic to an interface endpoint, a network interface with a private IP address in the subnet.' },
       { n: 4, at: 'i3', f: 0.5, text: 'AWS PrivateLink carries the traffic from the interface endpoint to Amazon SQS over the AWS network.' },
     ],
@@ -258,7 +232,8 @@ const endpoints = (() => {
       { wire: 'i2', t: [0.49, 0.62], kind: 'pk-2', ring: 'pl' },
       { wire: 'i3', t: [0.62, 0.7], kind: 'pk-2', ring: 'sqs' },
     ], 0.93),
-    extra: dot(132, 45, 'pk', 'Gateway endpoints path') + dot(280, 45, 'pk2', 'PrivateLink path'),
+    // in the Region header band, right of the VPC (the kit legend stacks its rows)
+    legend: legend(316, 42, ['pk', 'Gateway endpoints path'], ['pk-2', 'PrivateLink path']),
   };
 })();
 
@@ -337,11 +312,10 @@ const shared = (() => {
     groups: [
       { kind: 'cloud', x: 8, y: 8, w: 464, h: 268 },
       { kind: 'acct', ...NA, label: 'Network account (VPC owner)' },
-      { kind: 'vpc', ...V, label: 'VPC 10.0.0.0/16' },
+      { kind: 'vpc', ...V, label: 'VPC 10.0.0.0/16', note: 'local route: 10.0.0.0/16' },
       { kind: 'priv', ...S1, label: 'Shared subnet' },
       { kind: 'priv', ...S2, label: 'Shared subnet' },
     ],
-    extra: cidr(V, 'local route: 10.0.0.0/16'),
     nodes: [ram, wa, wb, eca, ecb],
     wires: [
       { id: 'sa', d: P(L(ram), [48, 80], T(wa)), dashed: true, label: 'share subnets', labelAt: 0.3 },
@@ -370,23 +344,25 @@ const shared = (() => {
 // vp-client-vpn: AWS Client VPN
 // ---------------------------------------------------------------------------------------------
 const clientVpn = (() => {
-  const V = { x: 108, y: 130, w: 340, h: 132 };
-  const SUB = { x: 216, y: 154, w: 224, h: 100 };
+  // the Client VPN endpoint is a Regional resource: it sits in the Region, outside the VPC, and reaches
+  // the VPC through the network interface it creates in its associated subnet
+  const V = { x: 212, y: 130, w: 236, h: 132 };
+  const SUB = { x: 224, y: 154, w: 216, h: 100 };
   const cl = nd('cl', 'aws-res-client', 34, 198, 'Remote client', { size: 40, wrap: 8 });
-  const idp = nd('idp', 'aws-svc-iam-identity-center', 168, 76, 'AWS IAM Identity Center', { size: 40, wrap: 16 });
-  const ep = nd('ep', 'aws-svc-client-vpn', 168, 198, 'AWS Client VPN endpoint', { size: 40 });
-  const eni = nd('eni', ENI, 262, 198, 'Network interface', { wrap: 16 });
-  const ec2 = nd('ec2', EC2, 330, 198, 'Amazon EC2');
-  const rds = nd('rds', RDS, 398, 198, 'Amazon RDS');
+  const idp = nd('idp', 'aws-svc-iam-identity-center', 160, 76, 'AWS IAM Identity Center', { size: 40, wrap: 16 });
+  const ep = nd('ep', 'aws-svc-client-vpn', 160, 198, 'AWS Client VPN endpoint', { size: 40 });
+  const eni = nd('eni', ENI, 266, 198, 'Network interface', { wrap: 16 });
+  const ec2 = nd('ec2', EC2, 334, 198, 'Amazon EC2');
+  const rds = nd('rds', RDS, 402, 198, 'Amazon RDS');
   return {
     id: 'vp-client-vpn',
     name: 'AWS Client VPN',
-    desc: 'A remote client opens a TLS tunnel to the Client VPN endpoint (orange), which authenticates the user against an identity provider (blue) and then forwards traffic through a network interface in the associated subnet to private instances and databases.',
+    desc: 'A remote client opens a TLS tunnel to the Client VPN endpoint (orange), a Regional resource that authenticates the user against an identity provider (blue) and then forwards traffic through its network interface in the associated subnet to private instances and databases.',
     w: 480, h: 284, dur: 8,
     groups: [
       { kind: 'cloud', x: 84, y: 8, w: 388, h: 270 },
       { kind: 'region', x: 96, y: 34, w: 364, h: 236, label: 'Region' },
-      { kind: 'vpc', ...V, label: 'VPC' },
+      { kind: 'vpc', ...V, label: 'VPC', note: '10.0.0.0/16' },
       { kind: 'priv', ...SUB, label: 'Private subnet 10.0.1.0/24' },
     ],
     nodes: [cl, idp, ep, eni, ec2, rds],
@@ -400,7 +376,7 @@ const clientVpn = (() => {
     steps: [
       { n: 1, at: 'tls', f: 0.7, text: 'A remote client opens a TLS connection to the AWS Client VPN endpoint.' },
       { n: 2, at: 'auth', f: 0.5, dx: 11, dy: 0, text: 'The Client VPN endpoint authenticates the user through SAML federation with AWS IAM Identity Center.' },
-      { n: 3, at: 'as', f: 0.74, dy: -12, text: 'The endpoint forwards authorized traffic through its network interface in the associated subnet to the private Amazon EC2 instance and the Amazon RDS database.' },
+      { n: 3, at: 'as', f: 0.23, dy: -12, text: 'The endpoint is associated with the subnet through a network interface it creates there, and forwards authorized traffic through it to the private Amazon EC2 instance and the Amazon RDS database.' },
     ],
     timeline: fit([
       { wire: 'tls', t: [0.04, 0.14], ring: 'ep' },
@@ -410,7 +386,7 @@ const clientVpn = (() => {
       { wire: 'ae', t: [0.5, 0.57], ring: 'ec2' },
       { wire: 'ad', t: [0.57, 0.64], ring: 'rds' },
     ], 0.93),
-    extra: cidr(V, '10.0.0.0/16') + note(176, 170, 'SAML'),
+    notes: [sub(ep.cx + 8, 170, 'SAML', 'start')],
   };
 })();
 
@@ -440,9 +416,9 @@ const tgwHub = (() => {
       { kind: 'dc', ...DC, label: 'Corporate data center' },
       { kind: 'cloud', x: 250, y: 8, w: 702, h: 392 },
       { kind: 'region', x: 262, y: 34, w: 678, h: 358, label: 'Region' },
-      { kind: 'vpc', ...VA, label: 'Production VPC' },
-      { kind: 'vpc', ...VB, label: 'Development VPC' },
-      { kind: 'vpc', ...VC, label: 'Shared services VPC' },
+      { kind: 'vpc', ...VA, label: 'Production VPC', note: '10.1.0.0/16' },
+      { kind: 'vpc', ...VB, label: 'Development VPC', note: '10.2.0.0/16' },
+      { kind: 'vpc', ...VC, label: 'Shared services VPC', note: '10.3.0.0/16' },
     ],
     nodes: [srv, cgw, vpn, tgw, trt, aa, ab, ac, wa, wb, wc],
     wires: [
@@ -475,10 +451,7 @@ const tgwHub = (() => {
       { wire: 'tC', t: [0.63, 0.69], kind: 'pk-2', ring: 'ac' },
       { wire: 'iC', t: [0.7, 0.75], kind: 'pk-2', ring: 'wc' },
     ], 0.93),
-    extra: [
-      dot(16, 336, 'pk', 'On-premises to VPC'), dot(16, 352, 'pk2', 'VPC to VPC'),
-      cidr(VA, '10.1.0.0/16'), cidr(VB, '10.2.0.0/16'), cidr(VC, '10.3.0.0/16'),
-    ].join(''),
+    legend: legend(16, 336, ['pk', 'On-premises to VPC'], ['pk-2', 'VPC to VPC']),
   };
 })();
 
@@ -497,7 +470,11 @@ const inspection = (() => {
   const ea = nd('ea', EC2, 72, 150, 'Amazon EC2'), aa = nd('aa', TGWA, 146, 150, 'Attachment');
   const eb = nd('eb', EC2, 72, 300, 'Amazon EC2'), ab = nd('ab', TGWA, 146, 300, 'Attachment');
   const tgw = nd('tgw', TGW, 262, 225, 'AWS Transit Gateway', { size: 48 });
-  const trt = nd('trt', RT, 262, 326, 'TGW route table', { sub: '0.0.0.0/0 > inspection' });
+  // two TGW route tables, so no flow can skip the firewall: the spoke attachments look up the spoke
+  // table (everything to the inspection VPC), the inspection attachment looks up the firewall table
+  // (the spoke VPC routes)
+  const srt = nd('srt', RT, 262, 78, 'Spoke route table', { wrap: 20, sub: '0.0.0.0/0 > inspection' });
+  const frt = nd('frt', RT, 262, 314, 'Firewall route table', { wrap: 20, sub: '10.1.0.0/16 > spoke A' });
   const eia = nd('eia', TGWA, 412, 150, 'TGW attachment', { sub: 'appliance mode' }), fwa = nd('fwa', NFW_EP, 544, 150, 'Firewall endpoint'), nata = nd('nata', NAT, 680, 150, 'NAT gateway');
   const eib = nd('eib', TGWA, 412, 300, 'TGW attachment', { sub: 'appliance mode' }), fwb = nd('fwb', NFW_EP, 544, 300, 'Firewall endpoint'), natb = nd('natb', NAT, 680, 300, 'NAT gateway');
   const igw = nd('igw', IGW, 806, 225, 'Internet gateway', { size: 40 });
@@ -505,19 +482,19 @@ const inspection = (() => {
   return {
     id: 'vp-inspection',
     name: 'Centralized inspection with Network Firewall',
-    desc: 'Spoke VPCs send traffic to the Transit Gateway, which hands it to an inspection VPC where an AWS Network Firewall endpoint in each AZ inspects it. East-west traffic (orange) is inspected and returned to the transit gateway for the other spoke; north-south traffic (blue) continues through a NAT gateway and the internet gateway.',
+    desc: 'Spoke VPCs send traffic to the Transit Gateway, which hands it to an inspection VPC where an AWS Network Firewall endpoint in each AZ inspects it. Two transit gateway route tables keep every flow on that path: the spoke route table sends all spoke traffic to the inspection VPC, and the firewall route table returns inspected traffic to the spokes. East-west traffic (orange) is inspected and returned to the transit gateway for the other spoke; north-south traffic (blue) continues through a NAT gateway and the internet gateway.',
     wide: true, w: 960, h: 404, dur: 10,
     groups: [
       { kind: 'cloud', x: 8, y: 8, w: 866, h: 388 },
       { kind: 'region', x: 20, y: 34, w: 842, h: 354, label: 'Region' },
-      { kind: 'vpc', ...SA, label: 'Spoke VPC A' },
-      { kind: 'vpc', ...SB, label: 'Spoke VPC B' },
-      { kind: 'vpc', ...IV, label: 'Inspection VPC' },
+      { kind: 'vpc', ...SA, label: 'Spoke VPC A', note: '10.1.0.0/16' },
+      { kind: 'vpc', ...SB, label: 'Spoke VPC B', note: '10.2.0.0/16' },
+      { kind: 'vpc', ...IV, label: 'Inspection VPC', note: '10.0.0.0/16' },
       { kind: 'az', ...AZA, label: 'Availability Zone A' },
       { kind: 'az', ...AZB, label: 'Availability Zone B' },
       ...row(98), ...row(248),
     ],
-    nodes: [ea, aa, eb, ab, tgw, trt, eia, fwa, nata, eib, fwb, natb, igw, net],
+    nodes: [ea, aa, eb, ab, tgw, srt, frt, eia, fwa, nata, eib, fwb, natb, igw, net],
     wires: [
       { id: 'ia', d: P(R(ea), L(aa)), arrow: false },
       { id: 'ib', d: P(R(eb), L(ab)), arrow: false },
@@ -532,34 +509,40 @@ const inspection = (() => {
       { id: 'ga', d: P(R(nata), [806, 150], T(igw)) },
       { id: 'gb', d: P(R(natb), [766, 300], [766, 225], L(igw)) },
       { id: 'gn', d: P(R(igw), L(net)), both: true },
-      { id: 'rt', d: P(B(tgw), T(trt)), dashed: true, arrow: false },
+      // the transit gateway's two route tables (the spoke table's line starts below its caption lines)
+      { id: 'rts', d: P([262, 134], T(tgw)), dashed: true, arrow: false },
+      { id: 'rtf', d: P(B(tgw), T(frt)), dashed: true, arrow: false },
     ],
     steps: [
-      { n: 1, at: 'sa', f: 0.5, dx: 11, dy: 0, text: 'Spoke VPC A sends traffic by its default route through its attachment to AWS Transit Gateway.' },
+      { n: 1, at: 'sa', f: 0.5, dx: 11, dy: 0, text: 'Spoke VPC A sends traffic by its default route through its attachment to AWS Transit Gateway. The spoke attachments are associated with the spoke route table, whose only route, 0.0.0.0/0, points to the inspection VPC attachment.' },
       { n: 2, at: 'fa', f: 0.5, text: 'The transit gateway sends the traffic to the inspection VPC. Appliance mode keeps each flow in one AZ, where the AWS Network Firewall endpoint inspects it.' },
-      { n: 3, at: 'sb', f: 0.5, dx: -11, dy: 0, text: 'The firewall returns allowed east-west traffic to the transit gateway, which delivers it to Spoke VPC B.' },
-      { n: 4, at: 'fb', f: 0.5, text: 'Internet-bound traffic from Spoke VPC B also goes to the inspection VPC, here to the firewall endpoint in Availability Zone B.' },
+      { n: 3, at: 'sb', f: 0.5, dx: -11, dy: 0, text: 'The firewall returns allowed traffic to the transit gateway. The inspection VPC attachment is associated with the firewall route table, which holds the spoke VPC routes, so the traffic goes on to Spoke VPC B; spoke-to-spoke traffic never bypasses the firewall.' },
+      { n: 4, at: 'fb', f: 0.5, text: 'Internet-bound traffic from Spoke VPC B follows the same spoke route table to the inspection VPC, here to the firewall endpoint in Availability Zone B.' },
       { n: 5, at: 'gb', f: 0.5, dx: 11, dy: 0, text: 'Inspected traffic leaves through the NAT gateway in the public subnet and the internet gateway to the internet.' },
     ],
     timeline: fit([
       { wire: 'sa', t: [0.03, 0.075] },
+      { ring: 'srt', t: [0.07, 0.075] },   // spoke attachment: the spoke route table sends it to inspection
       { wire: 'ta', t: [0.08, 0.125], ring: 'eia' },
       { wire: 'fa', t: [0.13, 0.175], ring: 'fwa' },
       { wire: 'fa', t: [0.18, 0.225], reverse: true, ring: 'eia' },
       { wire: 'ta', t: [0.23, 0.275], reverse: true, ring: 'tgw' },
+      { ring: 'frt', t: [0.27, 0.275] },   // inspection attachment: the firewall route table sends it to spoke B
       { wire: 'sb', t: [0.28, 0.325], reverse: true, ring: 'ab' },
       { wire: 'sb', t: [0.42, 0.465], kind: 'pk-2' },
+      { ring: 'srt', t: [0.46, 0.465], kind: 'pk-2' },
       { wire: 'tb', t: [0.47, 0.515], kind: 'pk-2', ring: 'eib' },
       { wire: 'fb', t: [0.52, 0.565], kind: 'pk-2', ring: 'fwb' },
       { wire: 'nb', t: [0.57, 0.615], kind: 'pk-2', ring: 'natb' },
       { wire: 'gb', t: [0.62, 0.665], kind: 'pk-2', ring: 'igw' },
       { wire: 'gn', t: [0.67, 0.73], kind: 'pk-2', ring: 'net' },
     ], 0.93),
-    extra: [
-      dot(886, 70, 'pk', 'East-west'), dot(886, 86, 'pk2', 'North-south'),
-      cidr(SA, '10.1.0.0/16'), cidr(SB, '10.2.0.0/16'), cidr(IV, '10.0.0.0/16'),
+    notes: [
+      sub(262, 128, 'associated: spoke VPCs'),
+      sub(262, 364, '10.2.0.0/16 > spoke B'), sub(262, 375, 'associated: inspection VPC'),
       foot(SA, '0.0.0.0/0 > tgw'), foot(SB, '0.0.0.0/0 > tgw'),
-    ].join(''),
+    ],
+    legend: legend(886, 70, ['pk', 'East-west'], ['pk-2', 'North-south']),
   };
 })();
 
@@ -578,7 +561,11 @@ const egress = (() => {
   const at = (i, cy) => nd('a' + i, TGWA, 146, cy, 'Attachment');
   const e1 = ec(1, 106), a1 = at(1, 106), e2 = ec(2, 214), a2 = at(2, 214), e3 = ec(3, 322), a3 = at(3, 322);
   const tgw = nd('tgw', TGW, 282, 214, 'AWS Transit Gateway', { size: 48 });
-  const trt = nd('trt', RT, 282, 322, 'TGW route table', { sub: '0.0.0.0/0 > egress VPC' });
+  // two TGW route tables (the AWS centralized egress pattern): the spoke attachments look up the spoke
+  // table (default route to the egress VPC, 10.0.0.0/8 blackholed so spokes cannot reach each other
+  // through the NAT gateways), the egress attachment looks up the egress table (the spoke routes)
+  const srt = nd('srt', RT, 282, 76, 'Spoke route table', { wrap: 20, sub: '0.0.0.0/0 > egress VPC' });
+  const ert = nd('ert', RT, 282, 306, 'Egress route table', { wrap: 20, sub: '10.1.0.0/16 > spoke A' });
   const ena = nd('ena', TGWA, 470, 150, 'TGW attachment'), nata = nd('nata', NAT, 655, 150, 'NAT gateway');
   const enb = nd('enb', TGWA, 470, 306, 'TGW attachment'), natb = nd('natb', NAT, 655, 306, 'NAT gateway');
   const igw = nd('igw', IGW, 816, 228, 'Internet gateway', { size: 40 });
@@ -586,45 +573,48 @@ const egress = (() => {
   return {
     id: 'vp-egress',
     name: 'Centralized egress',
-    desc: 'Spoke VPCs have no NAT gateways of their own: a default route sends internet-bound traffic to the Transit Gateway, which forwards it to an egress VPC with a NAT gateway in each AZ and one internet gateway. Outbound requests (orange) leave through the NAT gateways and responses (blue) return the same way.',
+    desc: 'Spoke VPCs have no NAT gateways of their own: a default route sends internet-bound traffic to the Transit Gateway, whose spoke route table forwards it to an egress VPC with a NAT gateway in each AZ and one internet gateway, and blackholes 10.0.0.0/8 so spokes cannot reach each other. Outbound requests (orange) leave through the NAT gateways and responses (blue) return through the egress route table to each spoke.',
     wide: true, w: 960, h: 416, dur: 10,
     groups: [
       { kind: 'cloud', x: 8, y: 8, w: 866, h: 400 },
       { kind: 'region', x: 20, y: 34, w: 842, h: 366, label: 'Region' },
-      { kind: 'vpc', ...SP[0], label: 'Spoke VPC A' },
-      { kind: 'vpc', ...SP[1], label: 'Spoke VPC B' },
-      { kind: 'vpc', ...SP[2], label: 'Spoke VPC C' },
-      { kind: 'vpc', ...EV, label: 'Egress VPC' },
+      { kind: 'vpc', ...SP[0], label: 'Spoke VPC A', note: '10.1.0.0/16' },
+      { kind: 'vpc', ...SP[1], label: 'Spoke VPC B', note: '10.2.0.0/16' },
+      { kind: 'vpc', ...SP[2], label: 'Spoke VPC C', note: '10.3.0.0/16' },
+      { kind: 'vpc', ...EV, label: 'Egress VPC', note: '10.0.0.0/16' },
       { kind: 'az', ...AZA, label: 'Availability Zone A' },
       { kind: 'az', ...AZB, label: 'Availability Zone B' },
       ...row(98), ...row(254),
     ],
-    nodes: [e1, a1, e2, a2, e3, a3, tgw, trt, ena, nata, enb, natb, igw, net],
+    nodes: [e1, a1, e2, a2, e3, a3, tgw, srt, ert, ena, nata, enb, natb, igw, net],
     wires: [
       { id: 'i1', d: P(R(e1), L(a1)), arrow: false },
       { id: 'i2', d: P(R(e2), L(a2)), arrow: false },
       { id: 'i3', d: P(R(e3), L(a3)), arrow: false },
-      { id: 's1', d: P(R(a1), [232, 106], [232, 200], L(tgw, -14)), both: true },
+      { id: 's1', d: P(R(a1), [216, 106], [216, 200], L(tgw, -14)), both: true },
       { id: 's2', d: P(R(a2), L(tgw)), both: true },
-      { id: 's3', d: P(R(a3), [232, 322], [232, 228], L(tgw, 14)), both: true },
-      { id: 'ta', d: P(R(tgw, -14), [340, 200], [340, 150], L(ena)), both: true },
-      { id: 'tb', d: P(R(tgw, 14), [340, 228], [340, 306], L(enb)), both: true },
+      { id: 's3', d: P(R(a3), [216, 322], [216, 228], L(tgw, 14)), both: true },
+      { id: 'ta', d: P(R(tgw, -14), [352, 200], [352, 150], L(ena)), both: true },
+      { id: 'tb', d: P(R(tgw, 14), [352, 228], [352, 306], L(enb)), both: true },
       { id: 'na', d: P(R(ena), L(nata)), both: true },
       { id: 'nb', d: P(R(enb), L(natb)), both: true },
       { id: 'ga', d: P(R(nata), [816, 150], T(igw)), both: true },
       { id: 'gb', d: P(R(natb), [766, 306], [766, 228], L(igw)), both: true },
       { id: 'gn', d: P(R(igw), L(net)), both: true },
-      { id: 'rt', d: P(B(tgw), T(trt)), dashed: true, arrow: false },
+      // the transit gateway's two route tables (the spoke table's line starts below its caption lines)
+      { id: 'rts', d: P([282, 142], T(tgw)), dashed: true, arrow: false },
+      { id: 'rte', d: P(B(tgw), T(ert)), dashed: true, arrow: false },
     ],
     steps: [
-      { n: 1, at: 's1', f: 0.5, dx: 11, dy: 0, text: 'Instances in the spoke VPCs send internet-bound traffic by the default route through their attachments to AWS Transit Gateway.' },
-      { n: 2, at: 'ta', f: 0.5, dx: 11, dy: 0, text: 'The transit gateway route table sends 0.0.0.0/0 to the egress VPC attachment, which has a TGW subnet in each Availability Zone.' },
+      { n: 1, at: 's1', f: 0.6, dx: 11, dy: 0, text: 'Instances in the spoke VPCs send internet-bound traffic by the default route through their attachments to AWS Transit Gateway.' },
+      { n: 2, at: 'ta', f: 0.5, dx: 11, dy: 0, text: 'The spoke attachments are associated with the spoke route table, which sends 0.0.0.0/0 to the egress VPC attachment (a TGW subnet in each Availability Zone) and blackholes 10.0.0.0/8, so spokes cannot reach each other through the egress VPC.' },
       { n: 3, at: 'na', f: 0.2, text: 'The TGW subnet route table sends the traffic to the NAT gateway in the same Availability Zone.' },
       { n: 4, at: 'ga', f: 0.75, text: 'The NAT gateway translates the source address and sends the traffic to the internet gateway. Its subnet routes 10.0.0.0/8 back to the transit gateway.' },
-      { n: 5, at: 'gn', f: 0.8, text: 'The internet gateway sends the traffic to the internet. Responses return through the same NAT gateway and the transit gateway to the spoke.' },
+      { n: 5, at: 'gn', f: 0.8, text: 'The internet gateway sends the traffic to the internet. Responses return through the same NAT gateway to the transit gateway, where the egress VPC attachment is associated with the egress route table, whose propagated spoke routes lead back to each spoke.' },
     ],
     timeline: fit([
       { wire: 's1', t: [0.03, 0.08] }, { wire: 's3', t: [0.03, 0.08] },
+      { ring: 'srt', t: [0.075, 0.08] },   // spoke attachments: the spoke route table sends it to the egress VPC
       { wire: 'ta', t: [0.09, 0.14], ring: 'ena' }, { wire: 'tb', t: [0.09, 0.14], ring: 'enb' },
       { wire: 'na', t: [0.15, 0.21], ring: 'nata' }, { wire: 'nb', t: [0.15, 0.21], ring: 'natb' },
       { wire: 'ga', t: [0.22, 0.28], ring: 'igw' }, { wire: 'gb', t: [0.22, 0.28] },
@@ -633,16 +623,19 @@ const egress = (() => {
       { wire: 'ga', t: [0.54, 0.6], reverse: true, kind: 'pk-2', ring: 'nata' }, { wire: 'gb', t: [0.54, 0.6], reverse: true, kind: 'pk-2', ring: 'natb' },
       { wire: 'na', t: [0.61, 0.67], reverse: true, kind: 'pk-2', ring: 'ena' }, { wire: 'nb', t: [0.61, 0.67], reverse: true, kind: 'pk-2', ring: 'enb' },
       { wire: 'ta', t: [0.68, 0.74], reverse: true, kind: 'pk-2', ring: 'tgw' }, { wire: 'tb', t: [0.68, 0.74], reverse: true, kind: 'pk-2' },
+      { ring: 'ert', t: [0.735, 0.74], kind: 'pk-2' },   // egress attachment: the egress route table sends it to the spoke
       { wire: 's1', t: [0.75, 0.81], reverse: true, kind: 'pk-2', ring: 'a1' }, { wire: 's3', t: [0.75, 0.81], reverse: true, kind: 'pk-2', ring: 'a3' },
     ], 0.93),
-    extra: [
-      dot(886, 70, 'pk', 'Outbound'), dot(886, 86, 'pk2', 'Return'),
-      cidr(SP[0], '10.1.0.0/16'), cidr(SP[1], '10.2.0.0/16'), cidr(SP[2], '10.3.0.0/16'), cidr(EV, '10.0.0.0/16'),
+    notes: [
+      sub(282, 126, '10.0.0.0/8 > blackhole'), sub(282, 137, 'associated: spoke VPCs'),
+      sub(282, 356, '10.2.0.0/16 > spoke B'), sub(282, 367, '10.3.0.0/16 > spoke C'), sub(282, 378, 'associated: egress VPC'),
       foot(SP[0], '0.0.0.0/0 > tgw'), foot(SP[1], '0.0.0.0/0 > tgw'), foot(SP[2], '0.0.0.0/0 > tgw'),
-      noteC(479, 204, '0.0.0.0/0 > nat'), noteC(479, 360, '0.0.0.0/0 > nat'),
-      noteC(655, 195, '0.0.0.0/0 > igw'), noteC(655, 206, '10.0.0.0/8 > tgw'),
-      noteC(655, 351, '0.0.0.0/0 > igw'), noteC(655, 362, '10.0.0.0/8 > tgw'),
-    ].join(''),
+      // subnet route tables of the egress VPC
+      sub(479, 204, '0.0.0.0/0 > nat'), sub(479, 360, '0.0.0.0/0 > nat'),
+      sub(655, 195, '0.0.0.0/0 > igw'), sub(655, 206, '10.0.0.0/8 > tgw'),
+      sub(655, 351, '0.0.0.0/0 > igw'), sub(655, 362, '10.0.0.0/8 > tgw'),
+    ],
+    legend: legend(886, 70, ['pk', 'Outbound'], ['pk-2', 'Return']),
   };
 })();
 
@@ -652,46 +645,50 @@ const egress = (() => {
 const hybrid = (() => {
   const DC = { x: 8, y: 52, w: 140, h: 214 };
   const DXL = { x: 200, y: 52, w: 160, h: 104, id: 'dxloc' };
-  const V = { x: 732, y: 116, w: 184, h: 130 };
+  // the Direct Connect gateway is a global resource: inside the AWS Cloud, above the Region frame
+  const REG = { x: 462, y: 160, w: 466, h: 164 };
+  const V = { x: 732, y: 186, w: 184, h: 114 };
   const srv = nd('srv', 'aws-res-servers', 78, 100, 'Servers', { size: 40 });
-  const rtr = nd('rtr', CGW, 78, 206, 'Customer gateway');
+  // the on-premises router terminates Direct Connect and, on the VPN path, is the customer gateway device
+  const rtr = nd('rtr', CGW, 78, 206, 'Customer router', { sub: 'VPN customer gateway' });
   const dx = nd('dx', DX, 280, 100, 'AWS Direct Connect', { size: 40 });
   const net = nd('net', NET, 280, 262, 'Internet', { size: 40 });
   const dxgw = nd('dxgw', DXGW, 520, 100, 'Direct Connect gateway', { size: 40 });
   const vpn = nd('vpn', S2S, 520, 262, 'AWS Site-to-Site VPN', { size: 40, wrap: 16 });
-  const tgw = nd('tgw', TGW, 656, 181, 'AWS Transit Gateway', { size: 48 });
-  const att = nd('att', TGWA, 782, 181, 'TGW attachment');
-  const ec2 = nd('ec2', EC2S, 872, 181, 'Amazon EC2 instances');
+  const tgw = nd('tgw', TGW, 656, 238, 'AWS Transit Gateway', { size: 48 });
+  const att = nd('att', TGWA, 782, 238, 'TGW attachment');
+  const ec2 = nd('ec2', EC2S, 872, 238, 'Amazon EC2 instances');
   const fw = (wire, a, b, o = {}) => ({ wire, t: [a, b], ...o });          // request, left to right
   const bk = (wire, a, b, o = {}) => ({ wire, t: [a, b], reverse: true, kind: 'pk-2', ...o }); // response, right to left
   return {
     id: 'vp-hybrid',
     name: 'Direct Connect with VPN backup',
-    desc: 'On-premises traffic normally takes AWS Direct Connect, through a transit VIF and a Direct Connect gateway to the Transit Gateway. When the Direct Connect location fails, BGP withdraws its routes and the traffic (requests orange, responses blue) fails over to the Site-to-Site VPN attached to the same transit gateway.',
+    desc: 'On-premises traffic normally takes AWS Direct Connect, through a transit VIF and a Direct Connect gateway (a global resource) to the Transit Gateway in the Region. When the Direct Connect location fails, BGP withdraws its routes and the traffic (requests orange, responses blue) fails over to the Site-to-Site VPN attached to the same transit gateway.',
     wide: true, w: 960, h: 340, dur: 10,
     groups: [
       { kind: 'dc', ...DC, label: 'Corporate data center' },
       { kind: 'gen', ...DXL, label: 'Direct Connect location' },
       { kind: 'cloud', x: 410, y: 8, w: 542, h: 324 },
-      { kind: 'region', x: 422, y: 34, w: 506, h: 290, label: 'Region' },
-      { kind: 'vpc', ...V, label: 'VPC' },
+      { kind: 'region', ...REG, label: 'Region' },
+      { kind: 'vpc', ...V, label: 'VPC', note: '10.0.0.0/16' },
     ],
     nodes: [srv, rtr, dx, net, dxgw, vpn, tgw, att, ec2],
     wires: [
       { id: 'w0', d: P(B(srv), T(rtr)), both: true },
       { id: 'd1', d: P(R(rtr, -8), [170, 198], [170, 100], L(dx)), both: true },
       { id: 'd2', d: P(R(dx), L(dxgw)), both: true, label: 'Transit VIF', labelAt: 0.81 },
-      { id: 'd3', d: P(R(dxgw), [592, 100], [592, 173], L(tgw, -8)), both: true },
+      { id: 'd3', d: P(R(dxgw), [592, 100], [592, 230], L(tgw, -8)), both: true },
       { id: 'v1', d: P(R(rtr, 8), [190, 214], [190, 262], L(net)), dashed: true, both: true },
       { id: 'v2', d: P(R(net), L(vpn)), dashed: true, both: true, label: 'IPsec VPN tunnels', labelAt: 0.27 },
-      { id: 'v3', d: P(R(vpn), [592, 262], [592, 189], L(tgw, 8)), dashed: true, both: true },
+      { id: 'v3', d: P(R(vpn), [592, 262], [592, 246], L(tgw, 8)), dashed: true, both: true },
       { id: 't1', d: P(R(tgw), L(att)), both: true },
       { id: 't2', d: P(R(att), L(ec2)), both: true },
     ],
     steps: [
-      { n: 1, at: 'd1', f: 0.6, dx: 11, dy: 0, text: 'On-premises servers send traffic from the customer gateway over AWS Direct Connect, the primary path.' },
-      { n: 2, at: 'd3', f: 0.5, dx: 11, dy: 0, text: 'A transit VIF carries it to the Direct Connect gateway, which forwards it to AWS Transit Gateway and the Amazon EC2 instances in the VPC.' },
-      { n: 3, at: 'v3', f: 0.5, dx: 11, dy: 0, text: 'When the Direct Connect location fails, BGP withdraws its routes and the traffic fails over to AWS Site-to-Site VPN on the same transit gateway.' },
+      { n: 1, at: 'd1', f: 0.6, dx: 11, dy: 0, text: 'On-premises servers send traffic through the customer router over AWS Direct Connect, the primary path.' },
+      // on the vertical run, above the Region frame (48 + 34 of the path's 214)
+      { n: 2, at: 'd3', f: 82 / 214, dx: 11, dy: 0, text: 'A transit VIF carries it to the Direct Connect gateway, a global resource outside the Region, which forwards it to AWS Transit Gateway and the Amazon EC2 instances in the VPC.' },
+      { n: 3, at: 'v3', f: 0.5, dx: 11, dy: 0, text: 'When the Direct Connect location fails, BGP withdraws its routes and the traffic fails over to AWS Site-to-Site VPN on the same transit gateway, with the customer router as the VPN customer gateway device.' },
     ],
     effects: [
       { fail: 'dxloc', t: [0.47, 0.95] },
@@ -710,12 +707,8 @@ const hybrid = (() => {
       bk('t2', 0.73, 0.755, { ring: 'att' }), bk('t1', 0.755, 0.78, { ring: 'tgw' }), bk('v3', 0.78, 0.82, { ring: 'vpn' }),
       bk('v2', 0.82, 0.87, { ring: 'net' }), bk('v1', 0.87, 0.91, { ring: 'rtr' }), bk('w0', 0.91, 0.93, { ring: 'srv' }),
     ],
-    extra: [
-      dot(16, 292, 'pk', 'Request'), dot(16, 308, 'pk2', 'Response'),
-      noteC(172, 94, 'Primary').replace('class="t-c t-sub"', 'class="t-sub" text-anchor="start"').replace('x="172"', 'x="154"'),
-      note(198, 256, 'Backup'),
-      cidr(V, '10.0.0.0/16'),
-    ].join(''),
+    notes: [sub(154, 94, 'Primary', 'start'), sub(198, 256, 'Backup', 'start')],
+    legend: legend(16, 292, ['pk', 'Request'], ['pk-2', 'Response']),
   };
 })();
 
