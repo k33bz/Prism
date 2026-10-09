@@ -113,12 +113,12 @@ const classic = (() => {
     nodes: nodes(),
     wires: wires(),
     steps: [
-      { n: 1, at: 'w1', f: 0.2 },
-      { n: 2, at: 'w2' },
-      { n: 3, at: 'w3', f: 0.3 },
-      { n: 4, at: 'w5a', f: 0.12 },
-      { n: 5, at: 'w6a', f: 0.8 },
-      { x: COL.db, y: 241, n: 6 },
+      { n: 1, at: 'w1', f: 0.2, text: 'Users look up the application domain name in Amazon Route 53.' },
+      { n: 2, at: 'w2', text: 'Amazon Route 53 answers with an alias record that points to the Amazon CloudFront distribution.' },
+      { n: 3, at: 'w3', f: 0.3, text: 'Amazon CloudFront, with AWS WAF inspecting requests, forwards the request through the internet gateway to the Application Load Balancer.' },
+      { n: 4, at: 'w5a', f: 0.12, text: 'The Application Load Balancer routes the request to a healthy Amazon EC2 instance in the Auto Scaling group.' },
+      { n: 5, at: 'w6a', f: 0.8, text: 'The EC2 instance reads and writes data on the Amazon RDS primary DB instance.' },
+      { x: COL.db, y: 241, n: 6, text: 'Amazon RDS replicates each write synchronously to the standby in Availability Zone b, and the response returns to users.' },
     ],
     timeline: seq(0.03, 0.96, [
       { wire: 'w1', ring: 'r53' }, { wire: 'w2', ring: 'cf' }, { wire: 'w3', ring: 'igw' },
@@ -156,10 +156,10 @@ const azFail = (() => {
     // the standby is the failover target: a dashed path from the AZ b instances, lit by effects.glow at promotion
     wires: [...wires(), { id: 'w6n', d: wn, dashed: true }],
     steps: [
-      { x: 866, y: 85, n: 1 },
-      { x: 440, y: 147, n: 2 },
-      { x: 440, y: 303, n: 3 },
-      { x: 770, y: ROW_B - 14, n: 4 },
+      { x: 866, y: 85, n: 1, text: 'Availability Zone a becomes unavailable, and the request in flight to it fails.' },
+      { x: 440, y: 147, n: 2, text: 'The Application Load Balancer marks the targets in Availability Zone a unhealthy and stops routing requests to that zone.' },
+      { x: 440, y: 303, n: 3, text: 'The Application Load Balancer sends all requests to the EC2 instances in Availability Zone b.' },
+      { x: 770, y: ROW_B - 14, n: 4, text: 'Amazon RDS fails over: the standby in Availability Zone b becomes the primary, and the DB endpoint now resolves to it.' },
     ],
     timeline: [
       // normal operation: both AZs serve traffic
@@ -253,8 +253,10 @@ const cache = (() => {
       { id: 'w4', from: 'ec2', to: 'rds', via: 322, both: true },
     ],
     steps: [
-      { n: 1, at: 'w1', f: 0.76 }, { n: 2, at: 'w2', f: 0.22 },
-      { n: 3, at: 'w3', f: 0.84 }, { n: 4, at: 'w4', f: 0.84 },
+      { n: 1, at: 'w1', f: 0.76, text: 'Users send requests to the Application Load Balancer in the public subnet.' },
+      { n: 2, at: 'w2', f: 0.22, text: 'The Application Load Balancer forwards each request to the Amazon EC2 instance in the private subnet.' },
+      { n: 3, at: 'w3', f: 0.84, text: 'The EC2 instance checks Amazon ElastiCache first. On a cache hit, it returns the cached result to users.' },
+      { n: 4, at: 'w4', f: 0.84, text: 'The EC2 instance reads Amazon RDS on a cache miss, writes the result to ElastiCache and returns it to users.' },
     ],
     timeline: tl,
     extra: [
@@ -302,10 +304,10 @@ const scale = (() => {
       { id: 'w5', d: 'M391,224 H332', dashed: true },
     ],
     steps: [
-      { n: 1, at: 'w3', f: 0.835 },
-      { n: 2, at: 'w4', f: 0.5, dx: 13, dy: 0 },
-      { n: 3, at: 'w5', f: 0.3 },
-      { n: 4, at: 'a3', f: 0.9 },
+      { n: 1, at: 'w3', f: 0.835, text: 'Amazon EC2 sends CPU utilization for the instances to Amazon CloudWatch, and the high CPU alarm goes into the ALARM state.' },
+      { n: 2, at: 'w4', f: 0.5, dx: 13, dy: 0, text: 'The CloudWatch alarm triggers the scale-out policy in Amazon EC2 Auto Scaling.' },
+      { n: 3, at: 'w5', f: 0.3, text: 'Amazon EC2 Auto Scaling launches two new instances into the Auto Scaling group.' },
+      { n: 4, at: 'a3', f: 0.9, text: 'Amazon EC2 Auto Scaling registers the new instances with the load balancer, which sends traffic to all four once they pass health checks.' },
     ],
     timeline: [
       // steady load on the two original instances
@@ -375,7 +377,9 @@ const nat = (() => {
       { id: 'n3', from: 'igw', to: 'net' },
     ],
     steps: [
-      { n: 1, at: 'e1a', f: 0.24 }, { n: 2, at: 'n2a', f: 0.12 }, { n: 3, at: 'n3', f: 0.48 },
+      { n: 1, at: 'e1a', f: 0.24, text: 'Amazon EC2 instances in each private subnet send internet-bound traffic through the 0.0.0.0/0 route to the NAT gateway in the same Availability Zone.' },
+      { n: 2, at: 'n2a', f: 0.12, text: 'The NAT gateway replaces the source address with its own and sends the traffic to the internet gateway.' },
+      { n: 3, at: 'n3', f: 0.48, text: 'The internet gateway sends the traffic to the internet, and replies return through the same NAT gateway to the instance.' },
     ],
     timeline: seq(0.03, 0.97, [
       { wire: 'e1a', ring: 'natA' }, { wire: 'n2a', ring: 'igw' }, { wire: 'n3', ring: 'net' },
@@ -423,7 +427,11 @@ const ecs = (() => {
       { id: 'w3', d: `M315,${CY} H349` },
       { id: 'w0', d: 'M306,95 V141', dashed: true },
     ],
-    steps: [{ n: 1, at: 'w1', f: 0.76 }, { n: 2, at: 'w2', f: 0.3 }, { n: 3, at: 'w3', f: 0.5 }],
+    steps: [
+      { n: 1, at: 'w1', f: 0.76, text: 'Users send requests to the Application Load Balancer in the public subnet.' },
+      { n: 2, at: 'w2', f: 0.3, text: 'The Application Load Balancer forwards each request to an AWS Fargate task in the Amazon ECS service.' },
+      { n: 3, at: 'w3', f: 0.5, text: 'The Fargate task sends writes to the Aurora writer and reads to the Aurora reader.' },
+    ],
     timeline: seq(0.03, 0.97, [
       { wire: 'w0', kind: 'pk-2', ring: 't1' },
       null,
@@ -480,8 +488,9 @@ const blueGreen = (() => {
       { id: 'wg', d: `M152,${ALB_Y} H196 V${cy(Y.green)} H215` },
     ],
     steps: [
-      { n: 1, at: 'w1', f: 0.8 },
-      { x: 196, y: (ALB_Y + cy(Y.blue)) / 2, n: 2 }, { x: 196, y: (ALB_Y + cy(Y.green)) / 2, n: 3 },
+      { n: 1, at: 'w1', f: 0.8, text: 'Users send requests to the Application Load Balancer, which forwards them to two weighted target groups.' },
+      { x: 196, y: (ALB_Y + cy(Y.blue)) / 2, n: 2, text: 'The Application Load Balancer sends the blue target group (v1) its weighted share of requests: 100%, then 50%, then 0%.' },
+      { x: 196, y: (ALB_Y + cy(Y.green)) / 2, n: 3, text: 'The Application Load Balancer shifts requests to the green target group (v2) as its weight rises to 50% and then 100%.' },
     ],
     timeline: [
       { wire: 'w1', t: [0.03, 0.07], ring: 'alb' }, { wire: 'wb', t: [0.08, 0.13], ring: 'b1' },
