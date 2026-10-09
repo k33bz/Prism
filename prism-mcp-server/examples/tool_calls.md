@@ -704,8 +704,7 @@ Result (`svg` is a complete .svg file; `html` is the bare gallery `<svg class="a
 ```json
 {
   "id": "x-ddb",
-  "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" class=\"awd\" viewBox=\"0 0 480 240\" width=\"480\" height=\"240\" role=\"img\" aria-label=\"Lambda and DynamoDB\" data-mode=\"light\"><title>Lambda and DynamoDB</title><desc>…</desc><metadata id=\"awd-spec\" data-version=\"1\">…</metadata><style>…</style><defs>…</defs>…</svg>
-",
+  "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" class=\"awd\" viewBox=\"0 0 480 240\" width=\"480\" height=\"240\" role=\"img\" aria-label=\"Lambda and DynamoDB\" data-mode=\"light\"><title>Lambda and DynamoDB</title><desc>…</desc><metadata id=\"awd-spec\" data-version=\"1\">…</metadata><style>…</style><defs>…</defs>…</svg>\n",
   "html": "<svg class=\"awd\" viewBox=\"0 0 480 240\" role=\"img\" aria-label=\"Lambda and DynamoDB\">…<g class=\"awd-n\" data-node=\"fn\" data-icon=\"aws-svc-lambda\"><title>AWS Lambda</title>…</g>…</svg>",
   "errors": []
 }
