@@ -22,15 +22,22 @@ Nothing in the artwork. `build_icons.mjs` only:
   official Dark and Light colorway variants where the package provides them;
 - strips XML declarations, comments, `<title>` elements and unreferenced Sketch layer ids;
 - namespaces the ids that are referenced (clip paths) per icon so they cannot collide in a sprite;
-- rounds coordinates to 2 decimals (sub-pixel at any practical render size) and removes whitespace.
+- rounds coordinates to 2 decimals (sub-pixel at any practical render size) and removes whitespace;
+- merges Prism's own metadata from `overlay.mjs` into `aws-icons.json`: aliases, short display names,
+  lifecycle status (retired, end of support, renamed, duplicate) and crosswalks from draw.io, Mermaid,
+  PlantUML, Python diagrams, CloudFormation and Terraform names. Ids stay as the package names them,
+  including its typo `aws-res-aurora-rds-instance-aternate` and its duplicate service ids.
 
 ## Rebuilding
 
 ```bash
 # unzip the package from the page above, then:
 node catalog/aws-icons/build_icons.mjs <unzipped Icon-package directory>
+# after editing overlay.mjs (no package needed; artwork and sprite untouched):
+node catalog/aws-icons/build_icons.mjs --overlay-only
 ```
 
 Ids follow `aws-svc-<service>`, `aws-res-<service>-<resource>`, `aws-grp-<group>` and
 `aws-cat-<category>`, with `-dark` / `-light` suffixes for colorway pairs. Search them with
-`node catalog/aws-kit/awd.mjs icons <words>` or in the gallery's icon library.
+`node catalog/aws-kit/awd.mjs icons <words>` or in the gallery's icon library, and resolve any name
+("S3 bucket", `AWS::Lambda::Function`, `mxgraph.aws4.nat_gateway`) with `node catalog/aws-icons/resolve.mjs <name>`.

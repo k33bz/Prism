@@ -3,13 +3,76 @@
 // group 32 (+ Dark), category 48. Artwork is NOT altered: only metadata is stripped, unreferenced
 // Sketch layer ids are dropped, referenced ids (clipPath) are namespaced per icon, and coordinates
 // are rounded to 2 decimals (sub-pixel at any practical render size).
+// Prism metadata (aliases, short names, status, source-vocabulary crosswalks) comes from overlay.mjs and is
+// merged in on every build, so a package refresh keeps it.
 // Usage: node catalog/aws-icons/build_icons.mjs <unzipped Icon-package dir>  (writes aws-icons.json + aws-icons.svg here)
+//        node catalog/aws-icons/build_icons.mjs --overlay-only   (re-applies overlay.mjs to the existing aws-icons.json:
+//                                                                 no package needed, artwork and sprite untouched)
 import fs from 'node:fs';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { META, XREF } from './overlay.mjs';
 
-const HERE = path.dirname(new URL(import.meta.url).pathname.replace(/^\//, ''));
-const PKG = path.resolve(process.argv[2] || path.join(HERE, 'pkg'));   // unzipped AWS Icon-package dir
+const HERE = path.dirname(fileURLToPath(import.meta.url));
 const OUT = HERE;   // writes aws-icons.json + aws-icons.svg next to this script
+
+// ---- overlay: per-icon fields from META, xref names from XREF; object entries become store.rules. Idempotent:
+// earlier overlay fields are dropped first, so overlay.mjs is the only source of this metadata.
+const OVERLAY_FIELDS = ['short', 'aliases', 'status', 'endOfSupport', 'note', 'renamedTo', 'duplicateOf', 'primary', 'prefer', 'xref'];
+function applyOverlay(store) {
+  const icons = store.icons;
+  const bad = [];
+  // a colorway base id (aws-res-users, aws-grp-cloud) stands for every artwork of the pair
+  const targets = (id) => [id, id + '-dark', id + '-light'].filter((v) => Object.hasOwn(icons, v));
+  const need = (id, where) => { if (id && !targets(id).length) bad.push(`${where}: ${id}`); };
+  for (const ic of Object.values(icons)) for (const f of OVERLAY_FIELDS) delete ic[f];
+  for (const [id, meta] of Object.entries(META)) {
+    need(id, 'META');
+    for (const f of ['renamedTo', 'duplicateOf', 'primary']) need(meta[f], `META ${id}.${f}`);
+    for (const v of targets(id)) Object.assign(icons[v], structuredClone(meta));
+  }
+  const rules = {};
+  for (const [vocab, table] of Object.entries(XREF)) {
+    for (const [name, v] of Object.entries(table)) {
+      const ids = typeof v === 'string' ? [v] : [v.icon, ...Object.values(v.map || {}).map((m) => (typeof m === 'string' ? m : m.icon))];
+      for (const id of ids) need(id, `XREF.${vocab} ${name}`);
+      if (typeof v !== 'string') (rules[vocab] ||= {})[name] = v;
+      // a plain id, or the default of a property pick, is that icon's name in the vocabulary
+      const on = typeof v === 'string' ? v : (v.by && v.icon && !v.group && !v.role ? v.icon : null);
+      for (const t of on ? targets(on) : []) ((icons[t].xref ||= {})[vocab] ||= []).push(name);
+    }
+  }
+  if (bad.length) throw new Error('overlay.mjs names ids the icon store does not have:\n  ' + bad.join('\n  '));
+  // stable key order: package fields, overlay fields, artwork last
+  for (const [id, ic] of Object.entries(icons)) {
+    for (const list of Object.values(ic.xref || {})) list.sort();
+    const { viewBox, svg, ...rest } = ic;
+    icons[id] = { ...rest, viewBox, svg };
+  }
+  const { name, source, note, count } = store;
+  const overlay = 'Prism metadata from overlay.mjs: aliases, short names, status, crosswalks (xref, rules). Ids and artwork as AWS ships them.';
+  return { name, source, note, count, overlay, rules, icons };
+}
+const overlaySummary = (store) => {
+  const ics = Object.values(store.icons);
+  const n = (f) => ics.filter((ic) => ic[f] != null).length;
+  const xr = {};
+  for (const ic of ics) for (const [v, l] of Object.entries(ic.xref || {})) xr[v] = (xr[v] || 0) + l.length;
+  return `overlay (counts include both artworks of a colorway pair): aliases ${n('aliases')}, short ${n('short')}, status ${n('status')}, ` +
+    `renamedTo ${n('renamedTo')}, duplicateOf ${n('duplicateOf')}; xref names ${JSON.stringify(xr)}; ` +
+    `rules ${JSON.stringify(Object.fromEntries(Object.entries(store.rules).map(([k, v]) => [k, Object.keys(v).length])))}`;
+};
+
+if (process.argv[2] === '--overlay-only') {
+  const file = path.join(OUT, 'aws-icons.json');
+  const store = applyOverlay(JSON.parse(fs.readFileSync(file, 'utf8')));
+  fs.writeFileSync(file, JSON.stringify(store));
+  console.log(`aws-icons.json: ${store.count} icons, ${fs.statSync(file).size} bytes`);
+  console.log(overlaySummary(store));
+  process.exit(0);
+}
+
+const PKG = path.resolve(process.argv[2] || path.join(HERE, 'pkg'));   // unzipped AWS Icon-package dir
 fs.mkdirSync(OUT, { recursive: true });
 
 const walk = (d) => fs.readdirSync(d, { withFileTypes: true }).flatMap((e) => {
@@ -111,28 +174,14 @@ for (const p of picked) {
   };
 }
 
-// common short aliases for search (S3, EC2, RDS...): derived, not hand-curated per icon
-const ALIASES = {
-  'simple-storage-service': ['s3'], 'elastic-compute-cloud': ['ec2'], 'ec2': ['ec2'],
-  'rds': ['rds', 'relational database'], 'simple-queue-service': ['sqs'], 'simple-notification-service': ['sns'],
-  'identity-and-access-management': ['iam'], 'key-management-service': ['kms'], 'virtual-private-cloud': ['vpc'],
-  'elastic-load-balancing': ['elb', 'alb', 'nlb'], 'elastic-container-service': ['ecs'],
-  'elastic-kubernetes-service': ['eks'], 'directory-service': ['ad', 'active directory', 'managed microsoft ad'],
-};
-for (const [id, ic] of Object.entries(icons)) {
-  const key = id.replace(/^aws-(svc|res|grp|cat)-/, '').replace(/-(dark|light)$/, '');
-  const hit = Object.keys(ALIASES).find((k) => key === k);
-  if (hit && ic.kind === 'service') ic.aliases = ALIASES[hit];
-}
-
 const sorted = Object.fromEntries(Object.entries(icons).sort(([a], [b]) => a.localeCompare(b)));
-const store = {
+const store = applyOverlay({
   name: 'prism-aws-icons',
   source: 'AWS Architecture Icons, Icon-package_07312026 (Q3 2026 release), https://aws.amazon.com/architecture/icons/',
   note: 'Icons are AWS property, used to create architecture diagrams per AWS guidance. Artwork unmodified (metadata stripped, ids namespaced, coordinates rounded to 2 decimals).',
   count: Object.keys(sorted).length,
   icons: sorted,
-};
+});
 fs.writeFileSync(path.join(OUT, 'aws-icons.json'), JSON.stringify(store));
 const sprite = '<svg xmlns="http://www.w3.org/2000/svg" style="display:none">' +
   Object.entries(sorted).map(([id, ic]) => `<symbol id="${id}" viewBox="${ic.viewBox}">${ic.svg}</symbol>`).join('') + '</svg>';
@@ -145,4 +194,4 @@ console.log('icons:', store.count, JSON.stringify(byKind));
 console.log('raw selected bytes:', rawBytes, '| json:', fs.statSync(path.join(OUT, 'aws-icons.json')).size, '| sprite:', sprite.length);
 console.log('collisions:', collisions.length ? collisions.join('; ') : 'none');
 console.log('sample ids:', Object.keys(sorted).filter((k) => /lambda|dynamodb|directory|aurora-instance$|^aws-svc-rds|vpc|region|users|office|load-bal|identity-and|nat|internet-gateway|endpoint/.test(k)).join(' '));
-console.log('aliased:', Object.entries(sorted).filter(([, ic]) => ic.aliases).map(([k, ic]) => `${k}=${ic.aliases.join('/')}`).join(' '));
+console.log(overlaySummary(store));
