@@ -1387,17 +1387,18 @@ export function buildTools() {
     },
     {
       name: 'export_diagram',
-      description: 'Export an AWS kit diagram (a gallery id such as aws-tt-classic, or a spec) to draw.io (.drawio XML that opens in diagrams.net with the official AWS shapes; the Prism spec rides on a hidden layer so a re-import restores the animation), Mermaid (a flowchart with AWS icon shapes, or architecture-beta when the layout is a consistent grid), a standalone SVG (animated, the static diagram, or frozen at one moment of its clock for slides and documents) or a storyboard (one still per numbered step, with its step text). Returns { to, text }, or { to, frames: [{ n, at, text, svg }] } for a storyboard.',
+      description: 'Export an AWS kit diagram (a gallery id such as aws-tt-classic, or a spec) to draw.io (.drawio XML that opens in diagrams.net with the official AWS shapes; the Prism spec rides on a hidden layer so a re-import restores the animation), Mermaid (a flowchart with AWS icon shapes, or architecture-beta when the layout is a consistent grid), a standalone SVG (animated, the static diagram, or frozen at one moment of its clock for slides and documents), a PNG of such a moment (drawn by headless Chrome or Edge on the server) or a storyboard (one still per numbered step, with its step text). Returns { to, text }; { to, at, width, height, base64 } for a PNG; { to, frames: [{ n, at, text, svg }] } for a storyboard.',
       inputSchema: {
         type: 'object',
         properties: {
           id: { type: 'string', description: 'A gallery diagram id, e.g. aws-tt-classic or tt-classic.' },
           spec: { type: 'object', description: 'A diagram spec instead of an id.' },
-          to: { type: 'string', enum: ['drawio', 'mermaid', 'svg', 'storyboard'], description: 'Target format.' },
+          to: { type: 'string', enum: ['drawio', 'mermaid', 'svg', 'png', 'storyboard'], description: 'Target format.' },
           dialect: { type: 'string', enum: ['flowchart', 'architecture-beta'], description: 'Mermaid only (default flowchart).' },
-          theme: { type: 'string', enum: ['auto', 'light', 'dark'], description: 'SVG only.' },
+          theme: { type: 'string', enum: ['auto', 'light', 'dark'], description: 'SVG, PNG (default light) and storyboard.' },
           still: { type: 'boolean', description: 'SVG only: the complete static diagram, no packets.' },
-          at: { anyOf: [{ type: 'number', minimum: 0, exclusiveMaximum: 1 }, { type: 'string', enum: ['poster'] }], description: "SVG only: freeze the animation at this fraction of the clock (packets where they are, failed frames red), or 'poster' for the moment the spec names. No animation is left." },
+          at: { anyOf: [{ type: 'number', minimum: 0, exclusiveMaximum: 1 }, { type: 'string', enum: ['poster'] }], description: "SVG and PNG: freeze the animation at this fraction of the clock (packets where they are, failed frames red), or 'poster' for the moment the spec names (a PNG's default). No animation is left." },
+          scale: { type: 'number', minimum: 0.5, maximum: 4, description: 'PNG only: device pixels per diagram unit (default 2).' },
         },
         required: ['to'],
         additionalProperties: false,
@@ -1415,13 +1416,16 @@ export function buildTools() {
         const errs = kit.spec.validateDiagram(spec);
         if (errs.length) throw new ToolError('spec does not match the schema', { code: 'invalid_argument', data: { errors: errs.map((e) => `${e.path}: ${e.message}`) } });
         const imp = await importers(kit);
-        if (a.at != null && a.to !== 'svg') throw new ToolError('at applies to svg exports only', { code: 'invalid_argument' });
+        if (a.at != null && a.to !== 'svg' && a.to !== 'png') throw new ToolError('at applies to svg and png exports only', { code: 'invalid_argument' });
+        if (a.scale != null && (a.to !== 'png' || !(typeof a.scale === 'number' && a.scale >= 0.5 && a.scale <= 4))) throw new ToolError('scale is for png exports, from 0.5 to 4', { code: 'invalid_argument' });
         if (a.at != null && a.at !== 'poster' && !(typeof a.at === 'number' && a.at >= 0 && a.at < 1)) throw new ToolError("at must be a fraction of the clock in [0, 1) or 'poster'", { code: 'invalid_argument' });
         try {
-          const out = await imp.exportDiagram(spec, { to: a.to, dialect: a.dialect, theme: a.theme, still: a.still === true, at: a.at });
+          const out = await imp.exportDiagram(spec, { to: a.to, dialect: a.dialect, theme: a.theme, still: a.still === true, at: a.at, scale: a.scale });
+          if (a.to === 'png') return { to: out.to, at: out.at, width: out.width, height: out.height, base64: out.png.toString('base64') };
           // the frames carry their own svg; the HTML page would repeat them all as base64
           return a.to === 'storyboard' ? { to: out.to, frames: out.frames } : out;
         } catch (err) {
+          if (a.to === 'png' && /No Chrome|ENOENT|wrote no image/.test(err.message)) throw new ToolError(`PNG export needs a Chromium-family browser on the server: ${err.message.split('\n')[0]}`, { code: 'unavailable' });
           throw new ToolError(`Export failed: ${err.message}`, { code: 'export_failed' });
         }
       },

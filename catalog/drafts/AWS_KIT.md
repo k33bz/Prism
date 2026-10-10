@@ -227,8 +227,13 @@ steps storyboards in order (a test holds this).
 CLI: `node catalog/aws-kit/frame.mjs <family spec> <diagram id> [--at 0.5|poster] [--theme light|dark]
 [--out file.svg]`, or `--storyboard <dir>` for one svg per step and an `index.html` that shows them
 with their step texts. `exportDiagram(spec, { to: 'svg', at })` and `{ to: 'storyboard' }` (frames,
-plus a self-contained HTML page) do the same, and so does the MCP tool `export_diagram`. For a PNG,
-screenshot the svg in headless Edge as in the Workflow section.
+plus a self-contained HTML page) do the same, and so does the MCP tool `export_diagram`.
+
+**PNG**: `catalog/aws-kit/png.mjs` rasterizes a frame with headless Chrome or Edge (`catalog/_chrome.mjs`
+finds one; `PRISM_CHROME` overrides): `toPng(spec, { at: 'poster', theme: 'light', scale: 2 })`
+returns `{ png, width, height }` in about a second. CLI: `node catalog/aws-kit/png.mjs <family spec>
+<diagram id> [--at 0.5|poster] [--theme light|dark] [--scale 2] --out file.png`; also
+`exportDiagram(spec, { to: 'png' })` and `export_diagram` with `to: 'png'` (base64).
 
 **Placement helpers** (`catalog/aws-kit/place.mjs`, imported by the vpc, transit, endpoints and dns
 specs): `centered(size)` makes a node factory that places icons by center and keeps `cx`/`cy` on the

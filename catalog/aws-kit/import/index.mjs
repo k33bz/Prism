@@ -6,6 +6,7 @@
 //   const { text } = await exportDiagram(spec, { to: 'drawio' });
 //   const { text } = await exportDiagram(spec, { to: 'svg', at: 0.5 });   // a still at mid-cycle (frame.mjs)
 //   const { frames } = await exportDiagram(spec, { to: 'storyboard' });   // one still per numbered step
+//   const { png } = await exportDiagram(spec, { to: 'png', at: 'poster' }); // a Buffer (headless Chrome or Edge)
 //
 // CLI: node catalog/aws-kit/import/index.mjs <file> [--from auto|drawio|mermaid|plantuml|d2] [--id x]
 //        [--out spec.json] [--svg out.svg] [--at 0.5|poster] [--theme light|dark|auto]
@@ -49,9 +50,10 @@ export async function importDiagram(content, opts = {}) {
 /**
  * Export a kit diagram spec: to drawio (.drawio XML), mermaid (flowchart, or dialect architecture-beta),
  * svg (standalone; still: the static diagram; at: a fraction of the clock or 'poster', frozen there) or
- * storyboard ({ frames: [{ n, at, text, svg }] }, one still per numbered step, and text: an HTML page).
+ * storyboard ({ frames: [{ n, at, text, svg }] }, one still per numbered step, and text: an HTML page)
+ * or png ({ png, width, height }: the frame at `at`, default the poster, light by default, at `scale`).
  */
-export async function exportDiagram(spec, { to = 'drawio', dialect, theme, still, at } = {}) {
+export async function exportDiagram(spec, { to = 'drawio', dialect, theme, still, at, scale } = {}) {
   if (to === 'drawio') {
     const m = await load('drawio');
     const fn = m.toDrawio || (await load('drawio-export').catch(() => ({}))).toDrawio;
@@ -64,11 +66,16 @@ export async function exportDiagram(spec, { to = 'drawio', dialect, theme, still
     const { standalone } = await import(new URL('../awd.mjs', import.meta.url).href);
     return { to, text: standalone(spec, { theme: theme || 'auto', still: !!still }) };
   }
+  if (to === 'png') {
+    const { toPng } = await import(new URL('../png.mjs', import.meta.url).href);
+    const moment = at ?? 'poster';
+    return { to, at: moment, ...(await toPng(spec, { at: moment, theme: theme && theme !== 'auto' ? theme : 'light', scale: scale ?? 2 })) };
+  }
   if (to === 'storyboard') {
     const frames = (await import(new URL('../frame.mjs', import.meta.url).href)).storyboard(spec, { theme: theme || 'auto' });
     return { to, frames, text: storyboardHtml(spec, frames) };
   }
-  throw new Error(`cannot export to ${JSON.stringify(to)}: drawio, mermaid, svg or storyboard`);
+  throw new Error(`cannot export to ${JSON.stringify(to)}: drawio, mermaid, svg, png or storyboard`);
 }
 
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');

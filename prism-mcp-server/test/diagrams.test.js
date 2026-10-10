@@ -168,5 +168,13 @@ test('export_diagram: a still frozen at a moment, and a storyboard', async () =>
   assert.ok(sb.frames.every((f) => f.svg.startsWith('<svg ') && typeof f.at === 'number' && f.text));
   assert.equal(sb.text, undefined);
   await assert.rejects(call('export_diagram', { id: 'tt-az-fail', to: 'svg', at: 1.5 }), (e) => e instanceof ToolError && e.code === 'invalid_argument');
-  await assert.rejects(call('export_diagram', { id: 'tt-az-fail', to: 'drawio', at: 0.5 }), (e) => e instanceof ToolError && /svg exports only/.test(e.message));
+  await assert.rejects(call('export_diagram', { id: 'tt-az-fail', to: 'drawio', at: 0.5 }), (e) => e instanceof ToolError && /svg and png exports only/.test(e.message));
+  await assert.rejects(call('export_diagram', { id: 'tt-az-fail', to: 'svg', scale: 2 }), (e) => e instanceof ToolError && e.code === 'invalid_argument');
+});
+
+test('export_diagram: a PNG of the poster moment (needs Chrome or Edge on the machine)', async (t) => {
+  const out = await call('export_diagram', { id: 'tt-az-fail', to: 'png', scale: 1 }).catch((e) => e);
+  if (out instanceof ToolError && out.code === 'unavailable') return t.skip('no Chrome or Edge');
+  assert.deepEqual([out.to, out.at, out.width, out.height], ['png', 'poster', 960, 426]);
+  assert.equal(Buffer.from(out.base64, 'base64').subarray(1, 4).toString('latin1'), 'PNG');
 });

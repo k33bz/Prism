@@ -90,3 +90,16 @@ test('exportDiagram: an svg at a moment, and a storyboard page', async () => {
   assert.match(sb.text, /alt="Step 4: Amazon RDS fails over/);
   await assert.rejects(exportDiagram(d, { to: 'svg', at: 2 }), /fraction of the clock/);
 });
+
+// PNG needs a Chromium-family browser; without one these skip
+const browser = await import('../_chrome.mjs').then((m) => { try { return m.resolveChrome(); } catch { return null; } });
+test('png: the poster as an image at twice the size, and the dark theme', { skip: !browser && 'no Chrome or Edge' }, async () => {
+  const { toPng } = await import('./png.mjs');
+  const d = await byId('three-tier', 'tt-az-fail');
+  const { png, width, height } = await toPng(d);
+  assert.deepEqual(png.subarray(1, 4).toString('latin1'), 'PNG');
+  assert.deepEqual([width, height], [1920, 852]);
+  const out = await exportDiagram(await byId('serverless', 'sl-api'), { to: 'png', at: 0.2, theme: 'dark', scale: 1 });
+  assert.deepEqual([out.to, out.at, out.width, out.height], ['png', 0.2, 480, 270]);
+  await assert.rejects(toPng(d, { scale: 9 }), /scale/);
+});
