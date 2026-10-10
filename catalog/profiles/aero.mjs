@@ -27,7 +27,8 @@ export default {
       '--ink': '#0b3550',
       '--muted': '#3f6b86',
       // contrast: --dim #7aa3bd -> #7099b3; dim/panel 2.69 -> 3.05:1 (floor 3), dim/card 2.69 -> 3.05:1 (floor 3)
-      '--dim': '#7099b3',
+      // contrast: --dim #7099b3 -> #678fa9; dim/bg 2.67 -> 3.03:1 (floor 3), dim/panel2 2.85 -> 3.23:1 (floor 3); held on --bg and --panel2 as well
+      '--dim': '#678fa9',
       // contrast: --accent #2fb0ff -> #007cbb; accent/panel 2.39 -> 4.56:1 (floor 4.5), accent/bg 2.10 -> 4.00:1 (floor 3), #fff/accent 2.39 -> 4.56:1 (floor 4.5); aqua darkened on its own hue
       '--accent': '#007cbb',
       '--accent-rgb': '0,124,187',

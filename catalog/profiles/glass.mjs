@@ -27,9 +27,11 @@ export default {
       // control boundary of inputs, checkboxes, radios, switches: --line's hue moved to 3:1 on bg/panel/panel2/card (WCAG 1.4.11)
       '--control-line': '#898a8e',
       '--ink': '#1c1c1e',
-      '--muted': '#6e6e73',
+      // contrast: --muted #6e6e73 -> #6d6d72; muted/bg 4.45 -> 4.51:1 (floor 4.5); held on --bg and --panel2 as well
+      '--muted': '#6d6d72',
       // contrast: --dim #aeaeb2 -> #8e8e93; dim/panel 2.13 -> 3.15:1 (floor 3), dim/card 2.16 -> 3.18:1 (floor 3); Apple systemGray
-      '--dim': '#8e8e93',
+      // contrast: --dim #8e8e93 -> #8a8a8f; dim/bg 2.86 -> 3.01:1 (floor 3); held on --bg and --panel2 as well
+      '--dim': '#8a8a8f',
       // contrast: --accent #007aff -> #016fea; accent/panel 3.88 -> 4.54:1 (floor 4.5), #fff/accent 4.02 -> 4.71:1 (floor 4.5); systemBlue darkened on its own hue; the high-contrast #0040dd overshoots
       '--accent': '#016fea',
       '--accent-rgb': '1,111,234',

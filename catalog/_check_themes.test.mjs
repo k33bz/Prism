@@ -216,6 +216,28 @@ test('negative control: a surface too light for the current recipe is a gated fa
   assert.equal(rows.find((r) => r.pair === 'chip:info/panel').pass, true);
 });
 
+test('muted and dim are held on every text surface, as derive.mjs solves them', () => {
+  for (const tok of ['muted', 'dim']) for (const s of ['bg', 'panel', 'panel2', 'card']) {
+    const p = PAIRS.find((x) => x.id === `${tok}/${s}`);
+    assert.ok(p, `${tok}/${s} is a pair`);
+    assert.equal(p.floor, tok === 'muted' ? 4.5 : 3);
+    assert.equal(severityOf(p, 'light'), 'fail');
+  }
+  // Duolingo Light as it was: muted and dim tuned on --panel/--card only
+  const was = { id: 'x-light', mode: 'light', tokens: { '--bg': '#f7f7f7', '--panel': '#ffffff', '--panel2': '#fbfbfb', '--card': '#ffffff', '--ink': '#3c3c3c', '--muted': '#767676', '--dim': '#949494' } };
+  const pairs = PAIRS.filter((p) => p.fg === '--muted' || p.fg === '--dim');
+  const rows = auditTheme(was, {}, pairs);
+  const by = (id) => rows.find((r) => r.pair === id);
+  // negative control: the --panel and --card pairs it was tuned on pass, the new surfaces fail
+  for (const id of ['muted/panel', 'muted/card', 'dim/panel', 'dim/card']) assert.equal(by(id).pass, true, id);
+  for (const id of ['muted/bg', 'muted/panel2', 'dim/bg', 'dim/panel2']) assert.deepEqual([by(id).pass, by(id).severity], [false, 'fail'], id);
+  near(by('muted/panel2').ratio, 4.39);
+  near(by('dim/bg').ratio, 2.83);
+  // the solved values clear all four
+  const now = auditTheme({ ...was, tokens: { ...was.tokens, '--muted': '#717171', '--dim': '#8f8f8f' } }, {}, pairs);
+  now.forEach((r) => assert.equal(r.pass, true, `${r.pair} ${r.ratio}`));
+});
+
 /* ------------------------------------------- scaffolder precedence + loaders */
 test('a token the palette declares beats the tokenProfile-derived chrome token', () => {
   const profile = {

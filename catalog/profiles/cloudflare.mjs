@@ -25,7 +25,8 @@ export default {
       '--control-line': '#8b8d92',
       '--ink': '#1c1e24',
       '--muted': '#5b6270',
-      '--dim': '#8a919e',
+      // contrast: --dim #8a919e -> #868d9a; dim/panel2 2.88 -> 3.03:1 (floor 3); held on --bg and --panel2 as well
+      '--dim': '#868d9a',
       // contrast: --accent #f6821f -> #b95d04; accent/panel 2.58 -> 4.54:1 (floor 4.5), accent/bg 2.45 -> 4.30:1 (floor 3), #fff/accent 2.58 -> 4.54:1 (floor 4.5); Cloudflare orange darkened on its own hue
       '--accent': '#b95d04',
       '--accent-rgb': '185,93,4',

@@ -115,10 +115,12 @@ export function contrast(fgIn, bgIn) {
    ink      body text everywhere: shell rail/titles on --panel, page on --bg, tile
             text on --panel/--card, menus/toasts/tabs/avatars on --panel2. 4.5.
    muted    secondary text at 11-13px: rail links (fallback), breadcrumbs, tile
-            .desc on --panel, facet card <p> on --card. Normal-size text, 4.5.
+            .desc on --panel, facet card <p> on --card, card and row captions on
+            --panel2, page metadata on --bg. Normal-size text, 4.5 on all four.
    dim      only ever secondary or incidental text: rail footer (11px), crumb
             separators, timestamps, placeholders, pending/disabled steps,
-            captions (357 uses in Prism.html, none of them body copy). 3.0.
+            captions (357 uses in Prism.html, none of them body copy), on any of
+            the four surfaces (server-rack labels sit on --panel2). 3.0.
    accent   as TEXT: rail .sr-tag, active rail link, current sub-link, tile .ref
             label (11-13px). 4.5 on --panel. Facet labels: see facets below.
             as UI: the focus ring (2px outline), input focus border, loader bar,
@@ -153,11 +155,15 @@ export function contrast(fgIn, bgIn) {
 export const FLOOR = { text: 4.5, ui: 3 };
 const ROLES = ['info', 'pos', 'warn', 'neg', 'crit'];
 export const INK_TOKENS = ['accent', ...ROLES].map((r) => `--${r}-ink`);
+// The surfaces text is painted on (theme-engine/derive.mjs TEXT_SURFACES).
+const TEXT_SURFACES = ['bg', 'panel', 'panel2', 'card'];
 
 export const PAIRS = [
-  ...['bg', 'panel', 'panel2', 'card'].map((s) => ({ id: `ink/${s}`, fg: '--ink', bg: `--${s}`, floor: FLOOR.text, kind: 'text' })),
-  ...['panel', 'card'].map((s) => ({ id: `muted/${s}`, fg: '--muted', bg: `--${s}`, floor: FLOOR.text, kind: 'text' })),
-  ...['panel', 'card'].map((s) => ({ id: `dim/${s}`, fg: '--dim', bg: `--${s}`, floor: FLOOR.ui, kind: 'secondary text' })),
+  ...TEXT_SURFACES.map((s) => ({ id: `ink/${s}`, fg: '--ink', bg: `--${s}`, floor: FLOOR.text, kind: 'text' })),
+  // muted and dim on every text surface, as theme-engine/derive.mjs solves them: facets paint
+  // both on --panel2 and --bg too (rack labels, card captions, page-level metadata)
+  ...TEXT_SURFACES.map((s) => ({ id: `muted/${s}`, fg: '--muted', bg: `--${s}`, floor: FLOOR.text, kind: 'text' })),
+  ...TEXT_SURFACES.map((s) => ({ id: `dim/${s}`, fg: '--dim', bg: `--${s}`, floor: FLOOR.ui, kind: 'secondary text' })),
   { id: 'accent/panel', fg: '--accent', bg: '--panel', floor: FLOOR.text, kind: 'text' },
   { id: 'accent/bg', fg: '--accent', bg: '--bg', floor: FLOOR.ui, kind: 'ui' },
   ...['accent', ...ROLES].map((r) => ({ id: `${r}-ink/${r}`, fg: `--${r}-ink`, fgFallback: '#ffffff', bg: `--${r}`, floor: FLOOR.text, kind: 'text on fill' })),

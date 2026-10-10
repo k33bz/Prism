@@ -33,7 +33,9 @@ export default {
       // control boundary of inputs, checkboxes, radios, switches: --line's hue moved to 3:1 on bg/panel/panel2/card (WCAG 1.4.11)
       '--control-line': '#8b8d93',
       // contrast: --dim #9aa2b1 -> #8c94a3; dim/panel 2.57 -> 3.05:1 (floor 3), dim/card 2.57 -> 3.05:1 (floor 3)
-      '--ink': '#14233c', '--muted': '#6b7385', '--dim': '#8c94a3',          // Monzo navy ink family
+      // contrast: --muted #6b7385 -> #687082; muted/panel2 4.32 -> 4.51:1 (floor 4.5); held on --bg and --panel2 as well
+      // contrast: --dim #8c94a3 -> #858d9c; dim/bg 2.95 -> 3.22:1 (floor 3), dim/panel2 2.77 -> 3.03:1 (floor 3); held on --bg and --panel2 as well
+      '--ink': '#14233c', '--muted': '#687082', '--dim': '#858d9c',          // Monzo navy ink family
       // contrast: --accent #ff4f40 -> #e12e24; accent/panel 3.26 -> 4.55:1 (floor 4.5), #fff/accent 3.26 -> 4.55:1 (floor 4.5); Hot Coral darkened on its own hue
       '--accent': '#e12e24', '--accent-rgb': '225,46,36', '--accent2': '#ff4f40',   // Hot Coral
       // contrast: --info #00a4b3 -> #03828e; info/panel 3.02 -> 4.58:1 (floor 4.5), #fff/info 3.02 -> 4.58:1 (floor 4.5)

@@ -62,9 +62,9 @@ const TOKENS_CSS = ':root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#
   + '--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;'
   + '--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;'
   + '--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}'
-  + '.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}'
-  + '.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}'
-  + '.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}';
+  + '.c-crit{--c:var(--crit);--c-rgb:var(--crit-rgb)}.c-neg{--c:var(--neg);--c-rgb:var(--neg-rgb)}'
+  + '.c-warn{--c:var(--warn);--c-rgb:var(--warn-rgb)}.c-pos{--c:var(--pos);--c-rgb:var(--pos-rgb)}'
+  + '.c-info{--c:var(--info);--c-rgb:var(--info-rgb)}.c-accent{--c:var(--accent);--c-rgb:var(--accent-rgb)}';
 // A gallery's own :root custom properties travel with a facet unless tokens.css owns the name.
 const TOKEN_NAMES = [...new Set(TOKENS_CSS.match(/--[\w-]+(?=\s*:)/g))];
 

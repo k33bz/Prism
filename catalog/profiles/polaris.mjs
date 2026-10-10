@@ -29,7 +29,8 @@ export default {
       '--bg': '#f6f6f7', '--panel': '#ffffff', '--panel2': '#fafbfb', '--card': '#ffffff', '--line': '#e1e3e5',
       // control boundary of inputs, checkboxes, radios, switches: --line's hue moved to 3:1 on bg/panel/panel2/card (WCAG 1.4.11)
       '--control-line': '#8d8f91',
-      '--ink': '#202223', '--muted': '#6d7175', '--dim': '#8c9196',              // ink / subdued / disabled
+      // contrast: --dim #8c9196 -> #8a8f94; dim/bg 2.94 -> 3.02:1 (floor 3); held on --bg and --panel2 as well
+      '--ink': '#202223', '--muted': '#6d7175', '--dim': '#8a8f94',              // ink / subdued / disabled
       '--accent': '#008060', '--accent-rgb': '0,128,96', '--accent2': '#008060', // action green (both roles)
       '--info': '#2c6ecb', '--info-rgb': '44,110,203',                           // Polaris interactive blue
       '--pos': '#007f5f', '--pos-rgb': '0,127,95',                               // success green
