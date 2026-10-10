@@ -883,6 +883,8 @@ export function importInfra(resources, ctx, opts = {}) {
     const key = actorOf.has(a) ? `actor:${a}` : keyOf(a) ? into(keyOf(a)) : null;
     if (!key) return { error: `${ref} names nothing in the ${src === 'tf' ? 'plan' : 'template'} or the sidecar's actors` };
     let reps = replicasOf.get(key) || [];
+    // an Aurora cluster is drawn as its instances: Cluster@writer, Cluster@reader
+    if (!reps.length && K(byKey.get(key) || { type: '' }) === 'dbCluster') reps = ofKind('db').filter((d) => refs(d, 'db.cluster')[0] === key).flatMap((d) => replicasOf.get(d.key) || []);
     if (!reps.length) return { error: `${ref}: ${key} is not drawn (${(cls.get(key) || {}).as || 'unknown'}${(cls.get(key) || {}).why ? `: ${cls.get(key).why}` : ''})` };
     if (q) {
       const m = /^az(\d+)$/.exec(q);

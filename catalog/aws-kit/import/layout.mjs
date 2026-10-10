@@ -1010,6 +1010,8 @@ export function placeLabels(model, geo, wires, align, badgeOf) {
     if (!inCanvas(b)) s += 5000;
     for (const ic of O.icons) if (hitB(b, grow(ic, -2))) s += 1000;
     for (const t of O.texts) if (hitB(b, t, 0.5)) s += 1000;
+    // flush against a node's label the two read as one phrase ("s3:GetObject db"): prefer 6px of air
+    for (const t of O.texts) if (t.id && !hitB(b, t, 0.5) && hitB(b, t, 6)) s += 25;
     if (onBorder(b, O.frames)) s += 800;
     s += wireThrough(b, wires, w.id) * 900;
     for (const t of taken) if (hitB(b, t, 1)) s += 1000;

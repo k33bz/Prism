@@ -22,7 +22,8 @@ const wireBy = (spec, from, to) => spec.wires.find((w) => w.from === from && w.t
 
 test('every tf fixture imports to a spec that passes checkSpec, the schema and lint', () => {
   assert.ok(fixtures.length >= 2, fixtures.join(', '));
-  for (const f of fixtures) for (const [what, o] of [['plain', {}], ['guess', { story: 'guess' }]]) {
+  const sidecarOf = (f) => { const p = path.join(FIX, f.replace(/\.json$/, '.flows.json')); return fs.existsSync(p) ? JSON.parse(fs.readFileSync(p, 'utf8')) : null; };
+  for (const f of fixtures) for (const [what, o] of [['plain', {}], ['guess', { story: 'guess' }], ...(sidecarOf(f) ? [['sidecar', { flows: sidecarOf(f) }], ...(sidecarOf(f).stories || []).map((s) => [`story ${s.id}`, { flows: sidecarOf(f), story: s.id }])] : [])]) {
     const { spec, report } = imp(f, o);
     const label = `${f} (${what})`;
     assert.doesNotThrow(() => checkSpec(spec), label);
@@ -85,6 +86,50 @@ test('the Terraform plan draws the same architecture as the CloudFormation webap
     return { alb: c(/Application Load Balancer/), nat: c(/NAT gateway/), ec2: c(/EC2 instance/), rds: c(/^RDS (primary|standby)$/), s3: c(/S3 bucket/), az: s.groups.filter((g) => g.kind === 'az').length, asg: s.groups.filter((g) => g.kind === 'asg').length };
   };
   assert.deepEqual(shape(tf), shape(cfn));
+});
+
+test('anchors carry one sidecar across Terraform and CloudFormation', () => {
+  const tfSide = JSON.parse(read('tf-webapp-plan.flows.json'));
+  const tf = imp('tf-webapp-plan.json', { flows: tfSide });
+  assert.deepEqual(tf.report.issues.filter((i) => i.code === 'sidecar'), []);
+  assert.ok(tf.spec.nodes.some((n) => n.id === 'LoadBalancer-az1') && tf.spec.nodes.some((n) => n.id === 'Database-standby'), 'anchors name the nodes');
+  // the CloudFormation webapp's own sidecar, whose refs are logical ids, works on the plan through the anchors
+  const cfnSide = JSON.parse(read('cfn-webapp.flows.json'));
+  const both = imp('tf-webapp-plan.json', { flows: { ...cfnSide, anchors: tfSide.anchors } });
+  const cfn = fromCloudFormation(read('cfn-webapp.yaml'), { file: 'cfn-webapp', flows: cfnSide });
+  const legs = (s) => { const w = new Map(s.wires.map((x) => [x.id, x])); return s.timeline.map((t) => [w.get(t.wire).from, w.get(t.wire).to, t.kind || 'pk', !!t.reverse, t.ring, t.t]); };
+  assert.deepEqual(legs(both.spec), legs(cfn.spec));
+  assert.ok(tf.report.ledger.some((l) => l.via === 'sidecar' && /aws_cloudwatch_metric_alarm\.cpu .* is hidden by the sidecar/.test(l.fact)));
+});
+
+test('for_each instances: keys pair the instances with their subnets', () => {
+  const R = (address, type, name, index, values) => ({ address, mode: 'managed', type, name, ...(index != null ? { index } : {}), provider_name: 'registry.terraform.io/hashicorp/aws', schema_version: 0, values, sensitive_values: {} });
+  const plan = {
+    format_version: '1.2',
+    planned_values: { root_module: { resources: [
+      R('aws_vpc.main', 'aws_vpc', 'main', null, { cidr_block: '10.9.0.0/16' }),
+      R('aws_subnet.app["eu-west-1a"]', 'aws_subnet', 'app', 'eu-west-1a', { availability_zone: 'eu-west-1a', cidr_block: '10.9.1.0/24' }),
+      R('aws_subnet.app["eu-west-1b"]', 'aws_subnet', 'app', 'eu-west-1b', { availability_zone: 'eu-west-1b', cidr_block: '10.9.2.0/24' }),
+      R('aws_instance.web["eu-west-1a"]', 'aws_instance', 'web', 'eu-west-1a', { instance_type: 't3.micro' }),
+      R('aws_instance.web["eu-west-1b"]', 'aws_instance', 'web', 'eu-west-1b', { instance_type: 't3.micro' }),
+      R('aws_instance.ops', 'aws_instance', 'ops', null, { instance_type: 't3.micro' }),
+    ] } },
+    configuration: { root_module: { resources: [
+      { address: 'aws_vpc.main', mode: 'managed', type: 'aws_vpc', name: 'main', expressions: { cidr_block: { constant_value: '10.9.0.0/16' } } },
+      { address: 'aws_subnet.app', mode: 'managed', type: 'aws_subnet', name: 'app', expressions: { vpc_id: { references: ['aws_vpc.main.id', 'aws_vpc.main'] }, availability_zone: { references: ['each.key'] } }, for_each_expression: { references: ['var.azs'] } },
+      { address: 'aws_instance.web', mode: 'managed', type: 'aws_instance', name: 'web', expressions: { subnet_id: { references: ['aws_subnet.app', 'each.key'] } }, for_each_expression: { references: ['aws_subnet.app'] } },
+      { address: 'aws_instance.ops', mode: 'managed', type: 'aws_instance', name: 'ops', expressions: { subnet_id: { references: ['aws_subnet.app["eu-west-1b"].id', 'aws_subnet.app["eu-west-1b"]', 'aws_subnet.app'] } } },
+    ] } },
+  };
+  const { spec, report } = fromTerraform(plan, { id: 'tf-foreach' });
+  assert.equal(errors(report.issues).length, 0);
+  const parent = (id) => { const n = spec.nodes.find((x) => x.id === id); return spec.groups.filter((g) => g.kind === 'priv' && n.x >= g.x && n.x <= g.x + g.w && n.y >= g.y && n.y <= g.y + g.h).map((g) => g.id); };
+  assert.deepEqual(parent('instance-web-eu-west-1a'), ['subnet-app-eu-west-1a']);
+  assert.deepEqual(parent('instance-web-eu-west-1b'), ['subnet-app-eu-west-1b']);
+  assert.deepEqual(parent('instance-ops'), ['subnet-app-eu-west-1b'], 'an explicit key names one instance');
+  assert.deepEqual(spec.groups.filter((g) => g.kind === 'az').map((g) => g.note), ['eu-west-1a', 'eu-west-1b']);
+  assert.ok(report.ledger.some((l) => l.kind === 'assumed' && /aws_subnet\.app\["eu-west-1a"\] is a private subnet: no route table is associated/.test(l.fact)));
+  assert.equal(spec.groups.find((g) => g.kind === 'region').label, 'eu-west-1', 'the Region from the AZ names');
 });
 
 test('a state without configuration: edges from ids and ARNs that match', () => {

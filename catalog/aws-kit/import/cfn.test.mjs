@@ -225,6 +225,11 @@ test('the sidecar compiles to the expected timeline with story()', () => {
   // the JSON template and the sidecar as text give the same timeline
   const j = imp('cfn-webapp.json', { flows: JSON.stringify(flows()) });
   assert.deepEqual(j.spec.timeline, spec.timeline);
+  // the template may carry the sidecar in its Metadata
+  const t = loadTemplate(read('cfn-webapp.yaml'));
+  const inMeta = fromCloudFormation({ ...t, Metadata: { 'Prism::Flows': flows() } }, { id: 'cfn-webapp' });
+  assert.deepEqual(inMeta.spec.timeline, spec.timeline);
+  assert.ok(inMeta.report.issues.some((i) => i.code === 'sidecar' && /Metadata/.test(i.message)));
   // a step that names nothing is reported and skipped
   const bad = webapp({ flows: { flows: [{ id: 'x', steps: [{ from: 'Users', to: 'Nope' }, { from: 'InternetGateway', to: 'LoadBalancer@az3' }, { from: 'LoadBalancer@az2', to: 'AppAsg@az2' }] }], actors: [{ id: 'Users' }] } });
   assert.ok(bad.report.issues.some((i) => i.code === 'sidecar' && /Nope names nothing/.test(i.message)));
@@ -364,6 +369,11 @@ test('Parameters and Conditions: defaults, overrides, NoValue, FindInMap, Import
   assert.ok(dev.report.issues.some((i) => i.code === 'import-value' && /shared-alerts-topic-arn/.test(i.message)));
   assert.ok(dev.report.issues.some((i) => i.code === 'kit-gap' && /isolated-subnet/.test(i.message)));
   assert.ok(dev.report.ledger.some((l) => /^AppSubnetA sits in AZ position 1: !Select \[0, !Ref AvailabilityZones\]/.test(l.fact)));
+  // a cluster's instances answer to Cluster@writer and Cluster@reader
+  const q = imp('cfn-conditions.yaml', { params: { EnvType: 'prod' }, flows: { actors: [{ id: 'Ops', to: ['InternalAlb@az1'] }], flows: [{ id: 'f', steps: [{ from: 'AppInstanceA', to: 'DbCluster@writer' }, { from: 'AppInstanceB', to: 'DbCluster@reader', kind: 'async' }] }] } });
+  assert.deepEqual(q.report.issues.filter((i) => i.code === 'sidecar'), []);
+  assert.deepEqual(q.spec.timeline.map((t) => t.ring), ['DbWriter', 'DbReader']);
+  assert.ok(wireBy(q.spec, 'Ops', 'InternalAlb-az1'), 'an actor wired with to');
   // NoValue drops a property; FindInMap reads the mapping
   const t = loadTemplate(read('cfn-conditions.yaml'));
   assert.deepEqual(t.Resources.AppInstanceA.Properties.InstanceType, { 'Fn::FindInMap': ['Sizing', { Ref: 'EnvType' }, 'Instance'] });
