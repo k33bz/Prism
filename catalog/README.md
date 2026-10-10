@@ -125,6 +125,11 @@ hand-author instead, add `palette: { dark: {…}, light: {…} }`. `tokenProfile
 tokens like `radius`/`font`) flows into the emitted facet-gen stub; `homeUrl`/`ticket` are
 advisory. See `catalog/profiles/sample-scaffold.mjs`.
 
+To start from a brand color with a complete, contrast-checked palette for both modes instead,
+derive the profile: `node catalog/theme-engine/derive.mjs --accent '#0078d4' --name Acme --profile acme.mjs`
+prints a report of every contrast pair and writes a profile this scaffolder takes as is. See
+[`theme-engine/README.md`](theme-engine/README.md).
+
 It idempotently patches four things:
 
 1. **`Prism.html` `THEME_REGISTRY`** — adds `<dsShort>-dark` + `<dsShort>-light` entries
