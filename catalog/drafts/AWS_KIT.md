@@ -250,6 +250,16 @@ resolveIcon('AWS::RDS::DBInstance', { props: { Engine: 'postgres', MultiAZ: true
   `node catalog/aws-icons/build_icons.mjs --overlay-only`. Coverage on the interop evaluators' inputs:
   `node catalog/aws-icons/coverage.mjs`; tests: `node --test catalog/aws-icons/resolve.test.mjs`.
 
+## Import and export, any format
+`catalog/aws-kit/import/index.mjs` is the one entry point: `importDiagram(content, { from: 'auto' })` detects
+draw.io (plain, compressed, `.drawio.svg`, `.drawio.png`), Mermaid, PlantUML or D2 and returns
+`{ spec, report: { from, issues, unmapped, tile, lint } }`; `exportDiagram(spec, { to: 'drawio' | 'mermaid' | 'svg' })`
+returns `{ to, text }`. CLI: `node catalog/aws-kit/import/index.mjs <file> [--from x] [--id x] [--out spec.json] [--svg out.svg]`.
+The MCP server exposes both as `import_diagram` and `export_diagram`. Importers animate the order a
+source gives with `story(hops, { reply })` (`catalog/aws-kit/story.mjs`), which authors can use too: an
+ordered list of hops becomes even windows on the clock, arrival rings, numbered steps and, with
+`reply`, the response legs. The per-format details follow.
+
 ## Importing and exporting draw.io
 `catalog/aws-kit/import/drawio.mjs` turns a draw.io (diagrams.net) diagram into one kit spec, and
 `drawio-export.mjs` writes a spec back as a `.drawio` file. No deps.

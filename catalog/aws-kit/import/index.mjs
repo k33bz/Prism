@@ -34,14 +34,13 @@ const load = (name) => import(new URL(`./${name}.mjs`, import.meta.url).href);
 export async function importDiagram(content, opts = {}) {
   const from = !opts.from || opts.from === 'auto' ? detectFormat(content, opts.file) : opts.from;
   if (!FORMATS.includes(from)) throw new Error(`cannot tell the format${opts.file ? ` of ${opts.file}` : ''}: pass from (one of ${FORMATS.join(', ')})`);
+  // the importers name a diagram after its source file: the file's own name, not its folder or extension
+  if (opts.file) opts = { ...opts, file: path.basename(String(opts.file)).replace(/\.(drawio\.(svg|png)|[^.]+)$/i, '') };
   let out;
   if (from === 'drawio') out = (await load('drawio')).fromDrawio(content, opts);
-  else {
-    const m = await load('mermaid');
-    const fn = from === 'mermaid' ? m.fromMermaid : from === 'plantuml' ? m.fromPlantUml : m.fromD2;
-    if (typeof fn !== 'function') throw new Error(`importing ${from} is not supported yet`);
-    out = fn(String(content), opts);
-  }
+  else if (from === 'mermaid') out = (await load('mermaid')).fromMermaid(String(content), opts);
+  else if (from === 'plantuml') out = (await load('plantuml')).fromPlantUml(String(content), opts);
+  else out = (await load('d2')).fromD2(String(content), opts);
   return { ...out, report: { ...out.report, from } };
 }
 
@@ -71,7 +70,7 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
   const content = from === 'drawio' && !/\.png$/i.test(file) ? raw.toString('utf8') : from === 'drawio' ? raw : raw.toString('utf8');
   const { spec, report } = await importDiagram(content, { from, file, id: opt('--id'), name: opt('--name') });
   const n = (s) => report.issues.filter((i) => i.severity === s).length;
-  console.log(`${report.from}: ${spec.id} ${spec.w}x${spec.h} (${report.tile || 'tile'}), ${(spec.nodes || []).length} nodes, ${(spec.groups || []).length} groups, ${(spec.wires || []).length} wires, ${(spec.steps || []).length} steps; ${n('error')} error, ${n('warn')} warn, ${n('info')} info; ${(report.unmapped || []).length} unmapped`);
+  console.log(`${report.from}: ${spec.id} ${spec.w}x${spec.h} (${report.tile?.size || report.tile || 'tile'}), ${(spec.nodes || []).length} nodes, ${(spec.groups || []).length} groups, ${(spec.wires || []).length} wires, ${(spec.steps || []).length} steps; ${n('error')} error, ${n('warn')} warn, ${n('info')} info; ${(report.unmapped || []).length} unmapped`);
   for (const i of report.issues.filter((x) => x.severity !== 'info')) console.log(`  ${i.severity.padEnd(5)} ${i.code.padEnd(16)} ${i.message}`);
   if (opt('--out')) fs.writeFileSync(opt('--out'), JSON.stringify(spec, null, 2) + '\n');
   if (opt('--svg')) fs.writeFileSync(opt('--svg'), (await exportDiagram(spec, { to: 'svg', theme: opt('--theme') })).text);

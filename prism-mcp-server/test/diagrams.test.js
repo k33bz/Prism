@@ -123,3 +123,38 @@ test('build_diagram returns lint findings with the drawing', async () => {
   assert.ok(r.svg);
   assert.ok(r.lint.some((f) => f.code === 'text-on-border'));
 });
+
+// ---- import_diagram / export_diagram against the real importers ----
+import fs from 'node:fs';
+const FIX = path.join(KIT, 'import', 'fixtures');
+const fixture = (f) => fs.readFileSync(path.join(FIX, f), 'utf8');
+
+test('import_diagram: draw.io, Mermaid, PlantUML and D2 sources become lint-clean kit specs with an svg', async () => {
+  for (const [file, from] of [['three-tier.drawio', 'drawio'], ['three-tier.compressed.drawio', 'drawio'], ['mmd-serverless-arch.mmd', 'mermaid'], ['mmd-threetier-flow.mmd', 'mermaid'], ['puml-three-tier.puml', 'plantuml'], ['d2-steps.d2', 'd2']]) {
+    if (!fs.existsSync(path.join(FIX, file))) continue;
+    const r = await call('import_diagram', { content: fixture(file) });
+    assert.equal(r.report.from, from, file);
+    assert.match(r.svg, /^<svg xmlns="http:\/\/www\.w3\.org\/2000\/svg" class="awd"/, file);
+    assert.ok(r.spec.nodes.length > 0, file);
+    const lint = await call('lint_diagram', { spec: r.spec });
+    assert.equal(lint.counts.error, 0, `${file}: ${JSON.stringify(lint.findings.filter((f) => f.severity === 'error'))}`);
+  }
+  const png = fs.readFileSync(path.join(FIX, 'embed.drawio.png'));
+  const fromPng = await call('import_diagram', { contentBase64: png.toString('base64') });
+  assert.equal(fromPng.report.from, 'drawio');
+  await assert.rejects(call('import_diagram', { content: 'hello world' }), (e) => e instanceof ToolError && /format/.test(e.message));
+  await assert.rejects(call('import_diagram', {}), (e) => e instanceof ToolError && /exactly one/.test(e.message));
+});
+
+test('export_diagram: a gallery diagram to draw.io (and back, animation restored), Mermaid and svg', async () => {
+  const dio = await call('export_diagram', { id: 'aws-tt-classic', to: 'drawio' });
+  assert.match(dio.text, /^<mxfile /);
+  const back = await call('import_diagram', { content: dio.text });
+  const orig = await call('get_diagram_spec', { id: 'tt-classic' });
+  assert.equal(back.spec.timeline.length, orig.spec.timeline.length);
+  const mmd = await call('export_diagram', { id: 'tt-classic', to: 'mermaid' });
+  assert.match(mmd.text, /^(---[\s\S]*?---\s*)?(%%.*\n)*\s*flowchart /m);
+  const svg = await call('export_diagram', { spec: orig.spec, to: 'svg', theme: 'dark', still: true });
+  assert.match(svg.text, /data-mode="dark" data-still=""/);
+  await assert.rejects(call('export_diagram', { id: 'tt-classic', to: 'visio' }), (e) => e instanceof ToolError);
+});
