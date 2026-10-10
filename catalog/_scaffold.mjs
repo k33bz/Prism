@@ -36,9 +36,9 @@ const HEAD = `<style>
   --accent:#ff9900;--accent-rgb:255,153,0;
   --cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%);
 }
-.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}
-.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}
-.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}
+.c-crit{--c:var(--crit);--c-rgb:var(--crit-rgb)}.c-neg{--c:var(--neg);--c-rgb:var(--neg-rgb)}
+.c-warn{--c:var(--warn);--c-rgb:var(--warn-rgb)}.c-pos{--c:var(--pos);--c-rgb:var(--pos-rgb)}
+.c-info{--c:var(--info);--c-rgb:var(--info-rgb)}.c-accent{--c:var(--accent);--c-rgb:var(--accent-rgb)}
 *{box-sizing:border-box}
 body{margin:0;background:radial-gradient(1100px 600px at 85% -10%,rgba(255,153,0,.05),transparent 60%),var(--bg);
   color:var(--ink);font:14px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;padding-bottom:90px}

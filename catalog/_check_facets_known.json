@@ -1,7 +1,8 @@
 {
-  "note": "Facets the per-facet gate tolerates. reduced-motion gaps were systemically fixed 2026-09-07 (extractor now auto-injects animation:none under prefers-reduced-motion into every standalone facet). The one remaining entry is a metadata quirk, not a render/a11y bug. Regenerate: node catalog/_check_facets.mjs --update-baseline",
+  "note": "Facets the per-facet gate tolerates. ids: failures reported but not gated (reduced-motion gaps were systemically fixed 2026-09-07; the one remaining entry is a metadata quirk, not a render/a11y bug). Regenerate: node catalog/_check_facets.mjs --update-baseline. contrast: facet id -> why its low-contrast text is a design choice (a string tolerates every run of the facet; {\"why\": ..., \"els\": [element labels as the report prints them]} only those runs). Empty: every facet clears its floor in the default configs.",
   "generated": "2026-09-07",
   "ids": [
     "notify-avatar-shapes-2d"
-  ]
+  ],
+  "contrast": {}
 }

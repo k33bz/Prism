@@ -1,5 +1,5 @@
 /* ============================================================================
-   Per-facet render / animation / config gate (headless Chrome, CDP, no deps).
+   Per-facet render / animation / theme gate (headless Chrome, CDP, no deps).
    ----------------------------------------------------------------------------
    For each targeted facet, renders the SAME self-contained sample the showcase
    builds (tokens + effect CSS + HTML + any needs-JS initializer) and asserts,
@@ -11,9 +11,25 @@
                               (checked on elements AND ::before/::after pseudos).
      dark + reduced motion  -> no console error, and any animation seen above is
                               actually stopped (prefers-reduced-motion is effective).
-     light theme + motion   -> renders with substance, no console error
-                              (catches token/colour breakage under the light theme;
-                               light tokens are read live from the shell).
+     <theme> + motion       -> one per registry theme asked for (default: Cloudscape
+                              Light). The facet is re-skinned the way the shell
+                              re-skins a gallery frame: the theme's :root block from
+                              Prism.html's THEME_REGISTRY after the facet CSS, and
+                              data-ds / data-mode / data-theme / color-scheme on the
+                              root. Asserts no console error, substance kept (a facet
+                              that renders in dark must not vanish), and legible text:
+                              every rendered text run (elements, SVG text, ::before /
+                              ::after content, form values, placeholders) must reach
+                              its WCAG contrast floor against the pixels actually
+                              painted under its glyphs (see _facet_probe.mjs).
+
+   Text contrast is measured in dark + motion too (it runs as a baseline even when
+   "dark" is not asked for) and reported, but only the themed configs fail on it, and
+   only where the theme breaks the text: a run below its floor in a theme fails unless
+   the same run (element and text) is also below its floor in dark and the theme keeps
+   at least 90% of the dark ratio (or loses no more than 0.3 of it). Those are the facet's own design (a label over a
+   ring, --dim on --panel2), reported as "shared with dark" and tracked by the dark
+   report, not theme breakage. --strict fails on them too.
 
    Exits non-zero if any targeted facet fails, so it can gate like _check_ds.
 
@@ -22,10 +38,18 @@
      node catalog/_check_facets.mjs --all           # every browsable (non-spectrum) facet
      node catalog/_check_facets.mjs --author crazy54
      node catalog/_check_facets.mjs --gallery menus
+     node catalog/_check_facets.mjs --id obsidian-tag-distribution-orbit   # comma list ok
      node catalog/_check_facets.mjs --sample 30     # first N of the target set (smoke)
+     node catalog/_check_facets.mjs --theme duolingo-light       # one registry theme
+     node catalog/_check_facets.mjs --themes dark,acorn-dark,glass-light
+                                                    # "dark" = the dark+motion/reduced pair;
+                                                    # default: dark,cloudscape-light
+     node catalog/_check_facets.mjs --strict        # themed runs fail even when dark is as low
      node catalog/_check_facets.mjs --json          # machine-readable report
-     node catalog/_check_facets.mjs --url http://localhost:8799/Prism.html  # for light tokens
-   Honors PRISM_HTML for the manifest/tokens source. ============================ */
+     node catalog/_check_facets.mjs --url http://localhost:8799/Prism.html
+                                                    # Cloudscape Light tokens read live
+                                                    # from a running shell instead
+   Honors PRISM_HTML (the theme registry source) and PRISM_CHROME. ===================== */
 import { spawn } from 'node:child_process';
 import { readFileSync, writeFileSync } from 'node:fs';
 import { resolve, dirname } from 'node:path';
@@ -33,6 +57,8 @@ import { fileURLToPath } from 'node:url';
 import { mkdtempSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { resolveChrome, closeBrowser } from './_chrome.mjs';
+import { themeById, tokenMap, themedDoc, openWindowTab, measureText } from './_facet_probe.mjs';
+import { parseColor, toHex } from './theme-engine/color.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const argv = process.argv.slice(2);
@@ -40,47 +66,62 @@ const opt = (n, d) => { const i = argv.indexOf(n); return i >= 0 ? argv[i + 1] :
 const flag = n => argv.includes(n);
 const JSON_OUT = flag('--json');
 const SAMPLE = opt('--sample') ? parseInt(opt('--sample'), 10) : 0;
-const URL = opt('--url', 'http://localhost:8799/Prism.html');
+const URL = opt('--url');
+const STRICT = flag('--strict');
+const PRISM_HTML = process.env.PRISM_HTML ? resolve(process.env.PRISM_HTML) : resolve(HERE, '../Prism.html');
+const THEME_IDS = (opt('--themes') || opt('--theme') || 'dark,cloudscape-light').split(',').map(s => s.trim()).filter(Boolean);
 const PORT = 9500 + Math.floor(Math.random() * 400);
+const VIEW = { width: 900, height: 1400 };
 
 const manifest = JSON.parse(readFileSync(resolve(HERE, 'manifest.json'), 'utf8'));
 const EFFECTS = manifest.effects || [];
 const TOKENS_DARK = (manifest.tokens && manifest.tokens.css) || '';
 const INITS = manifest.initializers || {};
 
-// Known-issue baseline: ids listed here are legacy reduced-motion gaps we haven't
-// remediated yet. The gate reports them but does NOT fail on them, so it blocks NEW
-// regressions immediately while the backlog is tracked. `--update-baseline` rewrites it.
+// Known-issue baseline: `ids` are facets the gate reports but does NOT fail on, so it
+// blocks NEW regressions while a backlog is tracked (`--update-baseline` rewrites them).
+// `contrast` maps a facet id to the reason its low-contrast text is a design choice
+// (a string tolerates the whole facet; {why, els:[...]} only those element labels).
 const KNOWN_PATH = resolve(HERE, '_check_facets_known.json');
-let KNOWN_SET = new Set();
-try { KNOWN_SET = new Set((JSON.parse(readFileSync(KNOWN_PATH, 'utf8')).ids) || []); } catch {}
+let KNOWN = {};
+try { KNOWN = JSON.parse(readFileSync(KNOWN_PATH, 'utf8')); } catch {}
+const KNOWN_SET = new Set(KNOWN.ids || []);
+const CONTRAST_OK = KNOWN.contrast || {};
 const UPDATE_BASELINE = flag('--update-baseline');
 
 // ---- target set ----
 let target = EFFECTS.filter(e => e.gallery !== 'spectrums');
 if (opt('--gallery')) target = target.filter(e => e.gallery === opt('--gallery'));
+if (opt('--id')) { const ids = new Set(opt('--id').split(',')); target = target.filter(e => ids.has(e.id)); }
 if (opt('--author')) target = target.filter(e => e.author === opt('--author'));
-else if (!flag('--all')) target = target.filter(e => e.author === 'k33bz');
+else if (!flag('--all') && !opt('--id')) target = target.filter(e => e.author === 'k33bz');
 if (SAMPLE) target = target.slice(0, SAMPLE);
 
-// ---- token names (for reading the live light-theme values) ----
+// ---- configs ----
+const html = readFileSync(PRISM_HTML, 'utf8');
+const CONFIGS = [];
+for (const id of THEME_IDS) {
+  if (id === 'dark') {
+    CONFIGS.push({ key: 'dark+motion', reduced: false, theme: null, contrast: true, gate: false });
+    CONFIGS.push({ key: 'dark+reduced', reduced: true, theme: null, contrast: false, gate: false });
+  } else {
+    let theme;
+    try { theme = themeById(html, id); } catch (err) { console.error('check-facets: ' + err.message); process.exit(2); }
+    CONFIGS.push({ key: id, reduced: false, theme, contrast: true, gate: true });
+  }
+}
+// a themed run is judged against the same run in dark: measure dark even when not asked
+if (!CONFIGS.some(c => c.key === 'dark+motion')) CONFIGS.unshift({ key: 'dark+motion', reduced: false, theme: null, contrast: true, gate: false, baseline: true });
+// A theme inherits the dark design's low text when it keeps >= 90% of the dark ratio or loses no
+// more than 0.3 of it (near 1:1 the ratio is noise: 1.0 and 1.2 are both a label on top of a shape).
+const SHARE = 0.9, SHARE_ABS = 0.3;
 const TOKEN_NAMES = [...new Set((TOKENS_DARK.match(/--[a-z0-9-]+(?=\s*:)/gi) || []))];
 
-function esc(s){ return (s||'').replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c])); }
-function sampleDoc(e, tokensCss){
-  const initKey = e.needsJs;
-  const init = initKey && INITS[initKey] && INITS[initKey].js;
-  const js = init ? `<script>\n${init}\n</script>` : '';
-  const bg = e.usableAsBackground ? ' bg' : '';
-  return `<!DOCTYPE html><html><head><meta charset="utf-8">
-<style id="prism-tokens">${tokensCss}</style>
-<style id="shell">html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 system-ui,sans-serif}
-body{min-height:100vh;box-sizing:border-box;padding:24px;display:flex;align-items:center;justify-content:center}
-.stage{position:relative;overflow:hidden;box-sizing:border-box;width:320px;min-height:120px;padding:24px 16px;display:flex;align-items:center;justify-content:center;background:var(--panel);border:1px solid var(--line);border-radius:14px}
-.stage.bg{padding:0}</style>
-<style id="effect-css">${e.css || ''}</style></head>
-<body><div class="stage${bg}" id="stage">${e.html || ''}</div>${js}</body></html>`;
-}
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const proc = spawn(resolveChrome(), ['--headless=new','--disable-gpu','--no-first-run','--no-default-browser-check','--force-color-profile=srgb','--hide-scrollbars',
+  // every config runs in its own window at once: keep them all at full speed
+  '--disable-background-timer-throttling','--disable-renderer-backgrounding','--disable-backgrounding-occluded-windows',
+  '--window-size='+VIEW.width+','+VIEW.height,'--remote-debugging-port='+PORT,'--user-data-dir='+mkdtempSync(tmpdir()+'/pcf-'),'about:blank'], { stdio:'ignore' });
 
 // in-page probe (stringified); returns {substance, anim, names}
 const PROBE = `(function(){
@@ -114,102 +155,132 @@ const PROBE = `(function(){
   }
   return {substance:sub, anim:anim, names:Object.keys(names)};
 })()`;
+async function runConfig(tab, cfg) {
+  await tab.send('Emulation.setEmulatedMedia', { features: [{ name:'prefers-reduced-motion', value: cfg.reduced ? 'reduce' : 'no-preference' }] });
+  const dim = cfg.theme ? tokenMap(cfg.theme.css)['--dim'] : tokenMap(TOKENS_DARK)['--dim'];
+  const out = {};
+  for (const e of target) {
+    const init = e.needsJs && INITS[e.needsJs] && INITS[e.needsJs].js;
+    tab.errs = [];
+    await tab.ev(`document.open();document.write(${JSON.stringify(themedDoc(e, { tokensCss: TOKENS_DARK, theme: cfg.theme, init }))});document.close();`);
+    await sleep(45);
+    const probe = await tab.ev(PROBE) || { substance:false, anim:0, names:[] };
+    const err = tab.errs.slice();
+    let text = [], textErr = '';
+    if (cfg.contrast) { try { text = await measureText(tab, { dim }); } catch (x) { textErr = String(x && x.message || x).slice(0, 120); } }
+    out[e.id] = { err, substance: probe.substance, anim: probe.anim, names: probe.names, text, textErr };
+  }
+  return out;
+}
 
-const sleep = ms => new Promise(r => setTimeout(r, ms));
-const proc = spawn(resolveChrome(), ['--headless=new','--disable-gpu','--no-first-run','--no-default-browser-check','--force-color-profile=srgb','--window-size=900,700','--remote-debugging-port='+PORT,'--user-data-dir='+mkdtempSync(tmpdir()+'/pcf-'),'about:blank'], { stdio:'ignore' });
-const pending = new Map(); let id = 0, ws;
-let errBuf = [];
-const send = (m, p={}) => new Promise(res => { const i = ++id; pending.set(i, res); ws.send(JSON.stringify({ id:i, method:m, params:p })); });
-const ev = async (x) => { const r = await send('Runtime.evaluate', { expression:x, returnByValue:true, awaitPromise:true }); return r && r.result && r.result.value; };
+const fmtColor = c => { const p = parseColor(c); return p ? toHex(p) + (p.a < 1 ? '@' + Math.round(p.a * 100) + '%' : '') : c; };
+const fmtRun = (it, key) => `${it.ratio}:1 < ${it.floor} [${key}] "${it.text}" ${it.el} (${fmtColor(it.color)}${it.op < 1 ? ' x' + it.op : ''} on ${it.bg})`;
+function tolerated(id, it) {
+  const k = CONTRAST_OK[id];
+  if (!k) return false;
+  if (typeof k === 'string') return true;
+  return !k.els || k.els.includes(it.el);
+}
 
 (async () => {
-  let tgt; for (let i=0;i<50;i++){ try{ const j=await (await fetch(`http://localhost:${PORT}/json`)).json(); tgt=j.find(t=>t.type==='page'); if(tgt) break; }catch{} await sleep(150); }
-  if(!tgt){ console.error('no devtools target'); await closeBrowser(PORT, proc); process.exit(2); }
-  const { WebSocket } = globalThis;
-  ws = new WebSocket(tgt.webSocketDebuggerUrl);
-  await new Promise((r,j)=>{ ws.onopen=r; ws.onerror=j; });
-  ws.onmessage = e => { const m = JSON.parse(e.data);
-    if (m.id && pending.has(m.id)) { pending.get(m.id)(m.result); pending.delete(m.id); }
-    if (m.method === 'Runtime.consoleAPICalled' && m.params.type === 'error') errBuf.push((m.params.args||[]).map(a=>a.value||a.description||'').join(' ').slice(0,160));
-    if (m.method === 'Runtime.exceptionThrown') errBuf.push('EXC: ' + (m.params.exceptionDetails && (m.params.exceptionDetails.exception && m.params.exceptionDetails.exception.description || m.params.exceptionDetails.text) || 'error').slice(0,160));
-  };
-  await send('Page.enable'); await send('Runtime.enable');
+  let ver; for (let i=0;i<60;i++){ try{ ver=await (await fetch(`http://localhost:${PORT}/json/version`)).json(); if(ver) break; }catch{} await sleep(150); }
+  if(!ver){ console.error('no devtools endpoint'); await closeBrowser(PORT, proc); process.exit(2); }
+  // one window per config, all running at once
+  const tabs = [];
+  for (let i = 0; i < CONFIGS.length; i++) tabs.push(await openWindowTab(PORT, VIEW));
 
-  // ---- read live light-theme tokens from the shell (best-effort) ----
-  let TOKENS_LIGHT = '';
-  try {
-    await send('Page.navigate', { url: URL }); await sleep(2600);
-    await ev(`(function(){var b=[].slice.call(document.querySelectorAll('button')).find(function(x){return /Explore the new look|Close/.test(x.textContent||'');});if(b)b.click();document.querySelectorAll('[role=dialog],.modal').forEach(function(e){e.remove();});})()`);
-    const clicked = await ev(`(function(){var b=[].slice.call(document.querySelectorAll('button,a')).find(function(x){return (x.textContent||'').trim()==='Light'||/☀|Light/.test(x.textContent||'');});if(b){b.click();return true;}return false;})()`);
-    await sleep(500);
-    const vals = await ev(`(function(){var cs=getComputedStyle(document.documentElement);return ${JSON.stringify(TOKEN_NAMES)}.map(function(n){return n+':'+cs.getPropertyValue(n).trim();}).filter(function(s){return s.split(':')[1];}).join(';');})()`);
-    if (clicked && vals && /--panel:/.test(vals)) TOKENS_LIGHT = ':root{' + vals + '}';
-  } catch {}
-  const haveLight = !!TOKENS_LIGHT;
-
-  const CONFIGS = [
-    { key:'dark+motion',  tokens:TOKENS_DARK,  reduced:false },
-    { key:'dark+reduced', tokens:TOKENS_DARK,  reduced:true },
-  ];
-  if (haveLight) CONFIGS.push({ key:'light+motion', tokens:TOKENS_LIGHT, reduced:false });
-
-  await send('Page.navigate', { url:'about:blank' }); await sleep(150);
-
-  const rows = {}; // id -> {e, motionAnim, res:{configKey:{err,substance,anim,names}}}
-  for (const cfg of CONFIGS) {
-    await send('Emulation.setEmulatedMedia', { features: cfg.reduced ? [{ name:'prefers-reduced-motion', value:'reduce' }] : [{ name:'prefers-reduced-motion', value:'no-preference' }] });
-    for (const e of target) {
-      const html = sampleDoc(e, cfg.tokens);
-      errBuf = [];
-      await ev(`document.open();document.write(${JSON.stringify(html)});document.close();`);
-      await sleep(45);
-      const probe = await ev(PROBE) || { substance:false, anim:0, names:[] };
-      (rows[e.id] || (rows[e.id] = { e, res:{} })).res[cfg.key] = { err:errBuf.slice(), substance:probe.substance, anim:probe.anim, names:probe.names };
-    }
+  // ---- legacy override: Cloudscape Light tokens read live from a running shell ----
+  let urlNote = '';
+  if (URL) {
+    const cl = CONFIGS.find(c => c.theme && c.theme.id === 'cloudscape-light');
+    const tab = tabs[0];
+    try {
+      await tab.send('Page.navigate', { url: URL }); await sleep(2600);
+      await tab.ev(`(function(){var b=[].slice.call(document.querySelectorAll('button')).find(function(x){return /Explore the new look|Close/.test(x.textContent||'');});if(b)b.click();document.querySelectorAll('[role=dialog],.modal').forEach(function(e){e.remove();});})()`);
+      const clicked = await tab.ev(`(function(){var b=[].slice.call(document.querySelectorAll('button,a')).find(function(x){return (x.textContent||'').trim()==='Light'||/☀|Light/.test(x.textContent||'');});if(b){b.click();return true;}return false;})()`);
+      await sleep(500);
+      const vals = await tab.ev(`(function(){var cs=getComputedStyle(document.documentElement);return ${JSON.stringify(TOKEN_NAMES)}.map(function(n){return n+':'+cs.getPropertyValue(n).trim();}).filter(function(s){return s.split(':')[1];}).join(';');})()`);
+      if (cl && clicked && vals && /--panel:/.test(vals)) { cl.theme = { ...cl.theme, css: ':root{' + vals + '}' }; urlNote = `  (cloudscape-light tokens read live from ${URL})`; }
+      else urlNote = `  (live tokens unavailable at ${URL}; cloudscape-light from the registry)`;
+    } catch { urlNote = `  (live tokens unavailable at ${URL}; cloudscape-light from the registry)`; }
+    await tab.send('Page.navigate', { url:'about:blank' }); await sleep(150);
   }
+
+  const t0 = Date.now();
+  const per = await Promise.all(CONFIGS.map((cfg, i) => runConfig(tabs[i], cfg)));
+  const byCfg = {}; CONFIGS.forEach((c, i) => { byCfg[c.key] = per[i]; });
 
   // ---- evaluate assertions ----
   const isAuto = e => (e.interaction||'').indexOf('auto-play') !== -1;
   const results = [];
-  for (const idk of Object.keys(rows)) {
-    const { e, res } = rows[idk];
-    const fails = [], warns = [];
-    const dm = res['dark+motion'], dr = res['dark+reduced'], lm = res['light+motion'];
-    if (dm) {
+  const counts = {}; CONFIGS.filter(c => c.contrast).forEach(c => { counts[c.key] = { facets: 0, runs: 0, gated: 0, shared: 0, tolerated: 0 }; });
+  for (const e of target) {
+    const fails = [], warns = [], contrast = {};
+    const dm = byCfg['dark+motion'] && byCfg['dark+motion'][e.id], dr = byCfg['dark+reduced'] && byCfg['dark+reduced'][e.id];
+    const darkGate = CONFIGS.some(c => c.key === 'dark+motion' && !c.baseline);
+    const darkLow = dm ? dm.text.filter(it => it.ratio < it.floor) : [];
+    const shared = it => darkLow.some(d => d.el === it.el && d.text === it.text && (it.ratio >= d.ratio * SHARE || d.ratio - it.ratio <= SHARE_ABS));
+    if (dm && darkGate) {
       if (dm.err.length) fails.push('console error (dark): ' + dm.err[0]);
-      if (!dm.substance) fails.push('no substance (dark) — renders blank/empty');
+      if (!dm.substance) fails.push('no substance (dark): renders blank/empty');
       if (isAuto(e) && dm.anim === 0) fails.push('auto-play but no running animation');
     }
     if (dr) {
       if (dr.err.length) fails.push('console error (reduced): ' + dr.err[0]);
       if (dm && dm.anim > 0 && dr.anim > 0) fails.push('reduced-motion did not stop animation (' + dr.anim + ' still running: ' + dr.names.join(',') + ')');
     }
-    if (lm) {
-      if (lm.err.length) fails.push('console error (light): ' + lm.err[0]);
-      if (!lm.substance) warns.push('no substance under light theme');
+    for (const cfg of CONFIGS) {
+      const r = byCfg[cfg.key][e.id];
+      if (cfg.theme) {
+        if (r.err.length) fails.push(`console error (${cfg.key}): ` + r.err[0]);
+        if (!r.substance) (dm && dm.substance ? fails : warns).push(`no substance under ${cfg.key}` + (dm && dm.substance ? ' (renders in dark)' : ''));
+      }
+      if (!cfg.contrast) continue;
+      if (r.textErr) (cfg.gate ? warns : []).push(`text contrast not measured under ${cfg.key}: ${r.textErr}`);
+      const low = r.text.filter(it => it.ratio < it.floor);
+      if (!low.length) continue;
+      const sh = it => cfg.gate && shared(it);
+      contrast[cfg.key] = low.map(it => ({ el: it.el, text: it.text, ratio: it.ratio, floor: it.floor, color: fmtColor(it.color), op: it.op, bg: it.bg, size: it.size, kind: it.kind, ...(sh(it) ? { shared: true } : {}) }));
+      const c = counts[cfg.key]; c.facets++; c.runs += low.length;
+      if (!cfg.gate) continue; // dark: the baseline, in the JSON report and the summary count
+      const judged = STRICT ? low : low.filter(it => !sh(it));
+      c.shared += low.length - judged.length;
+      const open = judged.filter(it => !tolerated(e.id, it));
+      c.tolerated += judged.length - open.length;
+      if (!open.length) continue;
+      c.gated += open.length;
+      const msg = `low text contrast: ` + open.slice(0, 3).map(it => fmtRun(it, cfg.key)).join('; ') + (open.length > 3 ? ` (+${open.length - 3} more)` : '');
+      fails.push(msg);
     }
-    results.push({ id:e.id, name:e.name, gallery:e.gallery, interaction:e.interaction, author:e.author, pass: fails.length===0, fails, warns });
+    results.push({ id:e.id, name:e.name, gallery:e.gallery, interaction:e.interaction, author:e.author, pass: fails.length===0, fails, warns, contrast });
   }
 
   const failed = results.filter(r => !r.pass);
   const newFails = failed.filter(r => !KNOWN_SET.has(r.id));
   const knownFails = failed.filter(r => KNOWN_SET.has(r.id));
   const warned = results.filter(r => r.pass && r.warns.length);
-  try { ws.close(); } catch {} await closeBrowser(PORT, proc);
+  for (const t of tabs) t.close();
+  await closeBrowser(PORT, proc);
+  const secs = Math.round((Date.now() - t0) / 1000);
 
   if (UPDATE_BASELINE) {
     const ids = failed.map(r => r.id).sort();
-    writeFileSync(KNOWN_PATH, JSON.stringify({ note: 'Legacy reduced-motion / render gaps the per-facet gate tolerates until remediated. Regenerate: node catalog/_check_facets.mjs --update-baseline', generated: new Date().toISOString().slice(0,10), ids }, null, 2) + '\n');
+    const next = { ...KNOWN, note: KNOWN.note || 'Facets the per-facet gate tolerates. Regenerate ids: node catalog/_check_facets.mjs --update-baseline', generated: new Date().toISOString().slice(0,10), ids };
+    writeFileSync(KNOWN_PATH, JSON.stringify(next, null, 2) + '\n');
     console.log(`baseline updated: ${ids.length} known-failing facets -> ${KNOWN_PATH}`);
     process.exit(0);
   }
 
-  if (JSON_OUT) { console.log(JSON.stringify({ total:results.length, failed:failed.length, newFails:newFails.length, knownFails:knownFails.length, warned:warned.length, configs:CONFIGS.map(c=>c.key), results }, null, 2)); process.exit(newFails.length ? 1 : 0); }
+  if (JSON_OUT) { console.log(JSON.stringify({ total:results.length, failed:failed.length, newFails:newFails.length, knownFails:knownFails.length, warned:warned.length, configs:CONFIGS.map(c=>c.key), contrast:counts, seconds:secs, results }, null, 2)); process.exit(newFails.length ? 1 : 0); }
 
-  console.log(`\ncheck-facets: ${results.length} facets · configs: ${CONFIGS.map(c=>c.key).join(', ')}${haveLight?'':'  (light tokens unavailable — dark only)'}`);
-  if (newFails.length) { console.log(`\n✗ ${newFails.length} NEW failure(s) — not in the baseline:`); newFails.forEach(r => console.log(`  ✗ ${r.name}  (${r.id}, ${r.interaction})\n      ${r.fails.join('\n      ')}`)); }
+  console.log(`\ncheck-facets: ${results.length} facets · configs: ${CONFIGS.map(c=>c.key).join(', ')}${urlNote} · ${secs}s`);
+  for (const [k, c] of Object.entries(counts)) {
+    const cf = CONFIGS.find(x => x.key === k);
+    console.log(`  text contrast ${k}: ${c.runs} low run(s) in ${c.facets} facet(s)` + (cf.gate ? `: ${c.gated} failing, ${c.shared} shared with dark${STRICT ? ' (strict: failing too)' : ''}, ${c.tolerated} tolerated` : ` (${cf.baseline ? 'baseline for the themes' : 'reported'}, not gated)`));
+  }
+  if (newFails.length) { console.log(`\n✗ ${newFails.length} NEW failure(s), not in the baseline:`); newFails.forEach(r => console.log(`  ✗ ${r.name}  (${r.id}, ${r.interaction})\n      ${r.fails.join('\n      ')}`)); }
   if (knownFails.length) console.log(`\n· ${knownFails.length} known legacy gaps tolerated (catalog/_check_facets_known.json).`);
-  if (warned.length) { console.log(`\n⚠ ${warned.length} warnings:`); warned.slice(0,40).forEach(r => console.log(`  ⚠ ${r.name} — ${r.warns.join('; ')}`)); }
-  if (!newFails.length) console.log(`\n✓ GATE PASS: no new render/animation/reduced-motion regressions across ${CONFIGS.length} configs (${knownFails.length} known gaps tracked).`);
+  if (warned.length) { console.log(`\n⚠ ${warned.length} warnings:`); warned.slice(0,40).forEach(r => console.log(`  ⚠ ${r.name}: ${r.warns.join('; ')}`)); if (warned.length > 40) console.log(`  ... ${warned.length - 40} more (--json for all)`); }
+  if (!newFails.length) console.log(`\n✓ GATE PASS: no new render/animation/reduced-motion/theme regressions across ${CONFIGS.length} configs (${knownFails.length} known gaps tracked).`);
   process.exit(newFails.length ? 1 : 0);
 })();

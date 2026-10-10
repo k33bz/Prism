@@ -417,7 +417,7 @@ node catalog/_embed-catalog.mjs       # embeds the fresh manifest into the #pris
 node catalog/_smoke.mjs               # island + shell scripts still parse
 node catalog/_check_ds.mjs            # theme-pack gate (add --only <pack> for one)
 node catalog/_sync_counts.mjs         # README badges and counts
-node catalog/_check_facets.mjs        # per-facet render / animation / reduced-motion gate across dark, reduced-motion and light (author k33bz by default; --all for everything)
+node catalog/_check_facets.mjs        # per-facet render / animation / reduced-motion gate across dark, reduced-motion and Cloudscape Light, with text contrast (author k33bz by default; --all for everything; --themes <ids> for any registry theme)
 ```
 
 > Requires Node 18+ and Google Chrome or Edge for the extractor and the per-facet gate (headless, over the DevTools Protocol, no packages). With MCP hot reload on, a running server re-reads `Prism.html` automatically.
