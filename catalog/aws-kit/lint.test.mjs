@@ -57,3 +57,15 @@ test('every gallery diagram passes lint without errors', async () => {
     for (const d of mod.diagrams) assert.deepEqual(lint(d).filter((x) => x.severity === 'error'), [], `${f} ${d.id}`);
   }
 });
+
+test('story: hops become even windows, rings and numbered steps; reply replays them as responses', async () => {
+  const { story } = await import('./story.mjs');
+  const { timeline, steps } = story([{ wire: 'a', ring: 'n2', back: 'n1', text: 'one' }, { wire: 'b', ring: 'n3', back: 'n2' }], { reply: true, start: 0.1, end: 0.9, gap: 0 });
+  assert.deepEqual(timeline, [
+    { wire: 'a', t: [0.1, 0.3], ring: 'n2' }, { wire: 'b', t: [0.3, 0.5], ring: 'n3' },
+    { wire: 'b', t: [0.5, 0.7], reverse: true, kind: 'pk-2', ring: 'n2' }, { wire: 'a', t: [0.7, 0.9], reverse: true, kind: 'pk-2', ring: 'n1' },
+  ]);
+  assert.deepEqual(steps, [{ n: 1, at: 'a', f: 0.5, text: 'one' }, { n: 2, at: 'b', f: 0.5 }]);
+  assert.deepEqual(story([]), { timeline: [], steps: [] });
+  assert.throws(() => story(Array.from({ length: 200 }, (_, i) => ({ wire: 'w' + i })), { gap: 0.01 }), /do not fit/);
+});
