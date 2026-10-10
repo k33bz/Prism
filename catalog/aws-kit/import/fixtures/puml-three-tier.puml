@@ -1,0 +1,29 @@
+@startuml
+' prism: name Three-tier web app (PlantUML)
+' prism: flow users>alb>web>db>web>alb>users
+!define AWSPuml https://raw.githubusercontent.com/awslabs/aws-icons-for-plantuml/v23.1/dist
+!include AWSPuml/AWSCommon.puml
+!include AWSPuml/Groups/all.puml
+!include AWSPuml/NetworkingContentDelivery/ElasticLoadBalancingApplicationLoadBalancer.puml
+!include AWSPuml/Compute/EC2Instance.puml
+!include AWSPuml/Database/RDS.puml
+left to right direction
+actor "Users" as users
+AWSCloudGroup(cloud) {
+  VPCGroup(vpc, "VPC 10.0.0.0/16") {
+    PublicSubnetGroup(pub, "Public subnet") {
+      ElasticLoadBalancingApplicationLoadBalancer(alb, "Application Load Balancer", "HTTPS")
+    }
+    PrivateSubnetGroup(app, "Private subnet") {
+      EC2Instance(web, "Amazon EC2", "web tier")
+    }
+    PrivateSubnetGroup(data, "Private subnet") {
+      RDS(db, "Amazon RDS", "MySQL")
+    }
+  }
+}
+users -right-> alb
+alb -right-> web
+web -right-> db
+note right of db : Multi-AZ standby not shown
+@enduml

@@ -1,0 +1,20 @@
+direction: right
+users: Users {
+  icon: https://icons.terrastruct.com/aws/General/Users.svg
+}
+cloud: AWS Cloud {
+  region: us-east-1 {
+    apigw: Amazon API Gateway {
+      icon: https://icons.terrastruct.com/aws/Networking%20&%20Content%20Delivery/Amazon-API-Gateway.svg
+    }
+    fn: AWS Lambda {
+      icon: https://icons.terrastruct.com/aws/Compute/AWS-Lambda.svg
+    }
+    ddb: Amazon DynamoDB {
+      icon: https://icons.terrastruct.com/aws/Database/Amazon-DynamoDB.svg
+    }
+  }
+}
+users -> apigw: 1 HTTPS
+apigw -> fn: 2 invoke
+fn -> ddb: 3 GetItem

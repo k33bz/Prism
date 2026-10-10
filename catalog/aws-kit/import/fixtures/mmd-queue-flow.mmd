@@ -1,0 +1,16 @@
+flowchart LR
+    %% prism: name Order processing with a queue
+    %% prism: flow client>api>fn>q>worker>db
+    %% prism: step 1: The client posts an order to the API.
+    %% prism: step 2: API Gateway invokes the intake function.
+    %% prism: step 3: The function sends the order to an SQS queue and returns at once.
+    %% prism: step 4: A worker function polls the queue.
+    %% prism: step 5: The worker writes the order to Aurora.
+    client([Mobile client]) --> api[API Gateway]
+    subgraph region["us-west-2"]
+        api --> fn[Lambda]
+        fn --> q[Amazon SQS queue]
+        q --> worker[Lambda worker]
+        worker --> db[(Amazon Aurora)]
+        q -.->|after 3 tries| dlq[Dead-letter queue]
+    end

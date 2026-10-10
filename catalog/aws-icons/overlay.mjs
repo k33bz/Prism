@@ -77,8 +77,8 @@ export const META = {
   'aws-svc-elastic-disaster-recovery': { short: 'AWS Elastic Disaster Recovery (AWS DRS)', aliases: ['drs', 'cloudendure disaster recovery'] },
   // ---- databases
   'aws-svc-rds': { aliases: ['relational database', 'relational database service'], primary: 'aws-res-aurora-rds-instance' },
-  'aws-res-aurora-rds-instance': { aliases: ['rds instance', 'db instance', 'rds db instance'] },
-  'aws-res-aurora-rds-instance-aternate': { aliases: ['aurora rds instance alternate', 'rds instance alternate', 'rds standby'] },   // AWS package typo: "aternate"
+  'aws-res-aurora-rds-instance': { aliases: ['rds instance', 'db instance', 'rds db instance', 'rds primary', 'rds primary instance', 'primary db instance'] },
+  'aws-res-aurora-rds-instance-aternate': { aliases: ['aurora rds instance alternate', 'rds instance alternate', 'rds standby', 'rds standby instance', 'standby db instance'] },   // AWS package typo: "aternate"
   'aws-res-aurora-mysql-instance': { aliases: ['mysql', 'rds mysql', 'rds for mysql', 'mysql instance'] },
   'aws-res-aurora-postgresql-instance': { aliases: ['postgresql', 'postgres', 'rds postgresql', 'rds postgres', 'rds for postgresql', 'postgresql instance'] },
   'aws-res-aurora-mariadb-instance': { aliases: ['mariadb', 'rds mariadb', 'rds for mariadb'] },
@@ -158,7 +158,7 @@ export const META = {
   'aws-res-app-mesh-virtual-service': { status: 'end-of-support', endOfSupport: '2026-09-30' },
   // ---- application integration
   'aws-svc-simple-queue-service': { short: 'Amazon SQS', aliases: ['sqs'], primary: 'aws-res-simple-queue-service-queue', prefer: 'service' },
-  'aws-res-simple-queue-service-queue': { aliases: ['sqs queue', 'queue'] },
+  'aws-res-simple-queue-service-queue': { aliases: ['sqs queue', 'queue', 'dead letter queue', 'dead-letter queue', 'dlq'] },
   'aws-svc-simple-notification-service': { short: 'Amazon SNS', aliases: ['sns'], primary: 'aws-res-simple-notification-service-topic', prefer: 'service' },
   'aws-res-simple-notification-service-topic': { aliases: ['sns topic', 'topic'] },
   'aws-svc-eventbridge': { aliases: ['event bridge', 'cloudwatch events'], primary: 'aws-res-eventbridge-rule' },

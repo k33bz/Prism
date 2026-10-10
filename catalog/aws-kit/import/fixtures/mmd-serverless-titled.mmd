@@ -1,0 +1,12 @@
+architecture-beta
+    service users(aws:users)[Users]
+    group cloud(cloud)[AWS Cloud]
+    group region(aws:region)["us-east-1"] in cloud
+    service apigw(aws:api-gateway)[Amazon API Gateway] in region
+    service fn(aws:lambda)[AWS Lambda] in region
+    service ddb(aws:dynamodb)[Amazon DynamoDB] in region
+    service cw(aws:cloudwatch)[Amazon CloudWatch] in region
+    users:R <-["1: HTTPS"]-> L:apigw
+    apigw:R <-["2: invoke"]-> L:fn
+    fn:R <-["3: GetItem"]-> L:ddb
+    fn:B -[logs]-> T:cw

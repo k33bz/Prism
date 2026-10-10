@@ -1,0 +1,11 @@
+architecture-beta
+    %% the two edges into rds disagree: one puts it right of app, the other below cache
+    group vpc(aws:virtual-private-cloud)[VPC]
+    service app(aws:ec2-instance)[App server] in vpc
+    service cache(aws:elasticache)[Amazon ElastiCache] in vpc
+    service rds(aws:rds)[Amazon RDS] in vpc
+    service s3(aws:simple-storage-service)[Amazon S3]
+    app:R --> L:rds
+    app:B --> T:cache
+    cache:B --> T:rds
+    align row app s3

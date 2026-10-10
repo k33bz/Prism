@@ -1,0 +1,16 @@
+flowchart TD
+    users([Users]) --> igw[Internet Gateway]
+    subgraph aws["AWS Cloud"]
+      subgraph vpc["VPC 10.0.0.0/16"]
+        igw
+        subgraph aza["Availability Zone a"]
+          albA[ALB] --> ec2A[EC2 Instance] --> rdsA[(RDS Primary)]
+        end
+        subgraph azb["Availability Zone b"]
+          albB[ALB] --> ec2B[EC2 Instance] --> rdsB[(RDS Standby)]
+        end
+        igw --> albA
+        igw --> albB
+        rdsA <-.->|replication| rdsB
+      end
+    end

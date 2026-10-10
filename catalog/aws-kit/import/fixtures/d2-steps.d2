@@ -1,0 +1,30 @@
+# prism: name Image upload pipeline
+direction: right
+user: Users {shape: person}
+aws: AWS Cloud {
+  s3: Amazon S3 bucket {
+    icon: https://icons.terrastruct.com/aws/Storage/Amazon-Simple-Storage-Service-S3_Bucket.svg
+  }
+  fn: Resize function {
+    icon: https://icons.terrastruct.com/aws/Compute/AWS-Lambda.svg
+  }
+  thumbs: Thumbnails bucket {
+    icon: https://icons.terrastruct.com/aws/Storage/Amazon-Simple-Storage-Service-S3_Bucket.svg
+  }
+  sns: Amazon SNS
+}
+steps: {
+  1: {
+    label: Users upload an image to the S3 bucket.
+    user -> aws.s3: PUT
+  }
+  2: {
+    label: The S3 event invokes the resize function.
+    aws.s3 -> aws.fn: event
+  }
+  3: {
+    label: The function writes thumbnails and publishes a notice.
+    aws.fn -> aws.thumbs: thumbnail
+    aws.fn -> aws.sns: notify {style.stroke-dash: 3}
+  }
+}

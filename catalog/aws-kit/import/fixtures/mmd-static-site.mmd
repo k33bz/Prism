@@ -1,0 +1,17 @@
+---
+title: Static website with an API
+---
+flowchart LR
+    %% prism: step 1: Users load the site from Amazon CloudFront, which serves cached copies from edge locations.
+    %% prism: step 2: On a cache miss CloudFront fetches the files from the Amazon S3 bucket through origin access control.
+    %% prism: step 3: The page calls the API on Amazon API Gateway, which invokes an AWS Lambda function.
+    %% prism: step 4: The function reads and writes items in Amazon DynamoDB.
+    %% prism: dur 9
+    users([Users]) -->|1: HTTPS| cf[Amazon CloudFront]
+    subgraph aws[AWS Cloud]
+        cf -->|2: OAC| s3[(S3 bucket)]
+        cf -->|3: /api| apigw[Amazon API Gateway]
+        apigw --> fn[AWS Lambda] -->|4: query| ddb[(Amazon DynamoDB)]
+        fn -.->|logs| cw[Amazon CloudWatch]
+    end
+    idp[Corporate IdP] -.->|SAML| apigw

@@ -1,0 +1,22 @@
+flowchart TD
+    %% prism: kind onprem=dc tgwz=gen
+    %% prism: icon idp=box
+    subgraph onprem[Head office]
+        idp[Okta]
+        cgw[Customer gateway]
+    end
+    subgraph cloud[AWS Cloud]
+        subgraph tgwz[Transit hub]
+            tgw[AWS Transit Gateway]
+        end
+        subgraph vpcA["VPC A 10.1.0.0/16"]
+            appA[Amazon EC2]
+        end
+        subgraph vpcB["VPC B 10.2.0.0/16"]
+            appB[Amazon EC2]
+        end
+    end
+    cgw ==>|1: Site-to-Site VPN| tgw
+    tgw -->|2| appA
+    tgw -->|3| appB
+    idp -.-> cloud

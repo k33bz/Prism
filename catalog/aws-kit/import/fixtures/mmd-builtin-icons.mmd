@@ -1,0 +1,9 @@
+architecture-beta
+    group api(cloud)[AWS Cloud]
+    service db(database)[Amazon RDS] in api
+    service s3(disk)[Amazon S3] in api
+    service web(server)[Amazon EC2] in api
+    service net(internet)[Users]
+    net:R --> L:web
+    web:R --> L:db
+    web:B --> T:s3

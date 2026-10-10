@@ -1,0 +1,12 @@
+flowchart LR
+    users([Users]) -->|1: HTTPS| apigw[Amazon API Gateway]
+    subgraph aws["AWS Cloud"]
+        subgraph region["us-east-1"]
+            apigw -->|2: invoke| fn[AWS Lambda]
+            fn -->|3: GetItem| ddb[(Amazon DynamoDB)]
+            apigw -.->|authorize| cog[Amazon Cognito]
+            fn -.->|logs| cw[Amazon CloudWatch]
+        end
+    end
+    classDef svc fill:#f90,stroke:#333;
+    class apigw,fn,ddb svc;
