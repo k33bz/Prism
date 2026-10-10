@@ -186,7 +186,7 @@ const F = {
   'vpce.subnets': ['SubnetIds', 'subnet_ids'], 'vpce.rts': ['RouteTableIds', 'route_table_ids'], 'vpce.type': ['VpcEndpointType', 'vpc_endpoint_type'],
   'vpce.service': ['ServiceName', 'service_name'], 'vpce.vpc': ['VpcId', 'vpc_id'], 'vpce.sgs': ['SecurityGroupIds', 'security_group_ids'],
   'tgwAttach.subnets': ['SubnetIds', 'subnet_ids'], 'tgwAttach.vpc': ['VpcId', 'vpc_id'],
-  'rule.targets': ['Targets.Arn', null], 'ruleTarget.rule': [null, 'rule'], 'ruleTarget.arn': [null, 'arn'], 'rule.schedule': ['ScheduleExpression', 'schedule_expression'],
+  'rule.targets': ['Targets.Arn', null], 'ruleTarget.rule': [null, 'rule'], 'ruleTarget.arn': [null, 'arn'], 'rule.schedule': ['ScheduleExpression', 'schedule_expression'], 'rule.bus': ['EventBusName', 'event_bus_name'],
   'schedule.target': ['Target.Arn', 'target.arn'], 'pipe.source': ['Source', 'source'], 'pipe.target': ['Target', 'target'],
   'snsSub.topic': ['TopicArn', 'topic_arn'], 'snsSub.endpoint': ['Endpoint', 'endpoint'], 'topic.subs': ['Subscription.Endpoint', null],
   'bucket.notif': [['NotificationConfiguration.LambdaConfigurations.Function', 'NotificationConfiguration.QueueConfigurations.Queue', 'NotificationConfiguration.TopicConfigurations.Topic'], null],
@@ -338,6 +338,7 @@ export function importInfra(resources, ctx, opts = {}) {
     if (r.helper) { setCls(r.key, 'folded', r.helperWhy || 'CDK helper', r.helperOf || null); continue; }
     if (hidden.has(r.key)) { setCls(r.key, 'dropped', 'hidden by the sidecar'); led('dropped', `${r.key} (${r.type}) is hidden by the sidecar`, r.key, { via: 'sidecar' }); continue; }
     if (merged.has(r.key)) { setCls(r.key, 'folded', `merged into ${merged.get(r.key)} by the sidecar`, merged.get(r.key)); led('derived', `${r.key} is drawn as part of ${merged.get(r.key)} (sidecar merge)`, [r.key, merged.get(r.key)], { via: 'sidecar' }); continue; }
+    if ((/^Custom::/.test(r.type) || r.type === 'AWS::CloudFormation::CustomResource') && !shown.has(r.key)) { setCls(r.key, 'dropped', 'a custom resource'); led('dropped', `${r.key} (${r.type}) is a custom resource: deploy-time logic, not architecture`, r.key); continue; }
     if (k === 'ops' && !shown.has(r.key)) { setCls(r.key, 'dropped', 'operational'); led('dropped', `${r.key} (${r.type}) is operational, not architecture; not drawn (list it under the sidecar's "show" to draw it)`, r.key); continue; }
     if (['vpc', 'subnet'].includes(k)) { setCls(r.key, 'group', k); continue; }
     if (k === 'asg') { setCls(r.key, 'group', 'asg'); continue; }
@@ -762,7 +763,7 @@ export function importInfra(resources, ctx, opts = {}) {
   // event sources (asynchronous: dashed)
   const ev = (a, b, via, what) => { if (drawn(a) && drawn(b)) addEdge(a, b, { kind: 'async', evidence: [via, a, b].flat(), fact: `${a} ${what} ${b}` }); };
   for (const m of ofKind('esm')) { const s = refs(m, 'esm.source')[0], f = refs(m, 'esm.fn')[0]; if (s && f) ev(s, f, m.key, 'feeds (event source mapping)'); }
-  for (const rr of ofKind('rule')) for (const t of refs(rr, 'rule.targets')) ev(rr.key, t, rr.key, 'targets');
+  for (const rr of ofKind('rule')) { for (const t of refs(rr, 'rule.targets')) ev(rr.key, t, rr.key, 'targets'); for (const b of refs(rr, 'rule.bus')) ev(b, rr.key, rr.key, 'routes events to'); }
   for (const t of ofKind('ruleTarget')) { const rr = refs(t, 'ruleTarget.rule')[0], a = refs(t, 'ruleTarget.arn')[0]; if (rr && a) ev(rr, a, t.key, 'targets'); }
   for (const s of ofKind('snsSub')) { const tp = refs(s, 'snsSub.topic')[0], e = refs(s, 'snsSub.endpoint')[0]; if (tp && e) ev(tp, e, s.key, 'delivers to'); }
   for (const tp of ofKind('topic')) for (const e of refs(tp, 'topic.subs')) ev(tp.key, e, tp.key, 'delivers to');
@@ -1074,6 +1075,8 @@ export function importInfra(resources, ctx, opts = {}) {
   // placeholders: subnets of one AZ get the same height
   for (const w of nodeEdges) {
     const e = { id: w.id, a: w.a.startsWith('subnet:') ? gid.get(w.a.slice(7)) : w.a, b: w.b, aHead: false, bHead: true, dashed: ['async', 'iam', 'egress', 'replication', 'dns', 'assoc'].includes(w.kind), label: w.label || null, src: w.id };
+    // a DNS alias or a WAF association is not a hop: in a layered layout it keeps its ends in one tier
+    if (w.kind === 'dns' || w.kind === 'assoc') ir.directives.peer.push([e.a, e.b]);
     if (w.kind === 'replication') {
       ir.directives.peer.push([w.a, w.b]);
       // primary to standby straight down (or up) between the AZ rows
@@ -1115,6 +1118,8 @@ export function importInfra(resources, ctx, opts = {}) {
   const nodeByNid = new Map(nodes.map((n) => [n.nid, n]));
   const cellsFn = subnets.size || nodes.some((n) => n.place === 'vpc') ? (model) => azRowCells(model, { nodes, nodeByNid, subnets, frames, gid, sortedSubnets, nodeEdges, vpcs, clusterWriter }) : null;
 
+  const WEAK = new Set(['iam', 'egress', 'dns', 'replication', 'assoc']);
+  const wireKind0 = new Map(nodeEdges.map((w) => [w.id, w.kind]));
   const planFn = (model) => {
     const edgeOf = new Map(model.edges.map((e) => [e.src, e]));
     const P = { channel: 'none', hops: [], reply: false, texts: new Map() };
@@ -1157,14 +1162,16 @@ export function importInfra(resources, ctx, opts = {}) {
       }
     } else if (guess) {
       P.channel = 'bfs';
-      const entry = actorNodes[0] ? actorNodes[0].nid : [...model.nodes.keys()].find((id) => model.edges.some((e) => e.a === id) && !model.edges.some((e) => e.b === id));
+      const strong = model.edges.filter((e) => !WEAK.has(wireKind0.get(e.src)));
+      const entry = actorNodes[0] ? actorNodes[0].nid : [...model.nodes.keys()].find((id) => strong.some((e) => e.a === id) && !strong.some((e) => e.b === id));
+      if (!entry) irIssue(ir, 'info', 'story-guess', null, 'story guess: no internet-facing entry and no source of requests or events to walk from; drawn without animation');
       if (entry) {
         const seen = new Set([entry]), q = [entry];
         let n = 0;
         while (q.length && n < 12) {
           const u = q.shift();
           for (const e of model.edges) {
-            if (e.dashed || e.a !== u || seen.has(e.b)) continue;
+            if (WEAK.has(wireKind0.get(e.src)) || e.a !== u || seen.has(e.b)) continue;
             const nb = nodeByNid.get(e.b);
             // one representative path: the first AZ's replica of a resource drawn per AZ
             if (nb && nb.az && nb.az > 1 && (replicasOf.get(nb.key) || []).some((x) => x.az === 1)) continue;
@@ -1175,8 +1182,9 @@ export function importInfra(resources, ctx, opts = {}) {
           }
         }
         P.hops = P.hops.filter(Boolean);
-        for (const h of [...P.hops].reverse()) P.hops.push({ ...h, reverse: true, ring: h.back, back: h.ring, kind: 'pk-2', step: false });
-        if (P.hops.length) irIssue(ir, 'info', 'story-guess', entry, `no sidecar flow: packets follow a breadth-first guess from ${entry} along the solid edges (first AZ only); write a flows sidecar to set the order`);
+        // responses come back along the synchronous hops; an asynchronous hop has none
+        for (const h of [...P.hops].reverse()) if (wireKind0.get(h.edge.src) !== 'async') P.hops.push({ ...h, reverse: true, ring: h.back, back: h.ring, kind: 'pk-2', step: false });
+        if (P.hops.length) irIssue(ir, 'info', 'story-guess', entry, `no sidecar flow: packets follow a breadth-first guess from ${entry} along the request and event edges (first AZ only, IAM, DNS and egress edges skipped); write a flows sidecar to set the order`);
       }
     }
     P.hops = P.hops.filter(Boolean);
@@ -1216,7 +1224,8 @@ export function importInfra(resources, ctx, opts = {}) {
   }
   if (!spec.effects || !spec.effects.length) delete spec.effects;
   // the kit's checks again, after the post-layout edits
-  const issuesOut = report.issues.filter((x) => x.code !== 'spec' && x.code !== 'schema');
+  // the IR's own "unmapped" warning repeats unmapped-type for the boxes this module asked for
+  const issuesOut = report.issues.filter((x) => x.code !== 'spec' && x.code !== 'schema' && x.code !== 'unmapped');
   try { checkSpec(spec); } catch (err) { issuesOut.push({ severity: 'error', code: 'spec', element: spec.id, message: String(err.message || err) }); }
   for (const e of validateDiagram(spec)) issuesOut.push({ severity: 'error', code: 'schema', element: e.path, message: e.message });
   const lintOut = lintSpec(spec);
@@ -1358,24 +1367,26 @@ function azRowCells(model, ctx) {
   for (const v of vpcKeys) { for (const az of azs(v)) { bandRow.set(`${v}|${az}`, row); row += B; } row += 1; }
   const vpcRows = (v) => { const rs = azs(v).map((az) => bandRow.get(`${v}|${az}`)); return rs.length ? [Math.min(...rs), Math.max(...rs) + B - 1] : [0, 0]; };
   for (const id of slots.keys()) cells.set(id, [colOf.get(id), bandRow.get(`${vpcOf(id)}|${azOf(id)}`) + slots.get(id)]);
-  // subnets of one AZ band share its height: a zero-size placeholder in a shorter subnet's last row
-  const allRows = [...cells.values()].map((c) => c[1]);
+  // the subnets of one tier span the same columns in every AZ, and the subnets of one AZ band share its
+  // height: zero-size placeholders at the corners a subnet's own nodes leave empty
   for (const g of model.groups.values()) {
     if (g.kind !== 'pub' && g.kind !== 'priv') continue;
     const s = [...subnets.values()].find((x) => gid.get(x.key) === g.id);
     if (!s) continue;
     const r0 = bandRow.get(`${s.vpc}|${s.azPos}`);
-    const mine = g.desc.filter((id) => cells.has(id));
     const last = r0 + B - 1;
-    const cs = mine.map((id) => cells.get(id));
-    const c0 = cs.length ? Math.min(...cs.map((c) => c[0])) : (tierCols.get(s.tier) || [{ col: lastVpcCol }])[0].col;
-    for (const r of [r0, last]) if (!cs.some((c) => c[1] === r)) {
-      const pid = `${g.id}-row${r}`;
+    const tc = tierCols.get(s.tier) || [{ col: lastVpcCol }];
+    const c0 = tc[0].col, c1 = tc[tc.length - 1].col;
+    const cs = g.desc.filter((id) => cells.has(id)).map((id) => cells.get(id));
+    const corners = [];
+    if (!cs.some((c) => c[0] === c0) || !cs.some((c) => c[1] === r0)) corners.push([c0, r0]);
+    if (!cs.some((c) => c[0] === c1) || !cs.some((c) => c[1] === last)) corners.push([c1, last]);
+    for (const [c, r] of corners) {
+      const pid = `${g.id}-c${c}r${r}`;
       if (!model.nodes.has(pid)) { model.nodes.set(pid, { id: pid, src: pid, junction: true, placeholder: true, parent: g.id, decl: model.nodes.size, fw: 0, up: 0, down: 0, iw: 0, ih: 0, lblH: 0, lblW: 0, lines: [] }); for (let p = g.id; p; p = model.groups.get(p) && model.groups.get(p).parent) { const G = model.groups.get(p); if (G) G.desc.push(pid); } g.kids.nodes.push(pid); }
-      cells.set(pid, [c0, r]);
+      cells.set(pid, [c, r]);
     }
   }
-  void allRows;
   // VPC-level gateways: centred on their VPC's bands
   for (const v of vpcKeys.length ? vpcKeys : [null]) {
     const [a, b] = v ? vpcRows(v) : [0, 0];
