@@ -9,7 +9,8 @@ import { lightEffect } from '../utils/catalog.js';
 import { loadKit, buildDiagram, lintDiagram, diagramSpecs, findDiagramSpec, suggestDiagrams } from '../utils/diagrams.js';
 import { compose, composeWithTemplate, availableTemplates } from '../utils/compose.js';
 import { validateFacet, validateComposition } from '../utils/validate.js';
-import { THEMES, THEME_IDS, TOKEN_META, BASE_TOKENS, getTheme, usesTokens, themeRootCss, isThemeSensitive, themeIdList, themesSummary } from '../utils/themes.js';
+import { THEMES, THEME_IDS, TOKEN_META, BASE_TOKENS, getTheme, baseTokensFor, usesTokens, themeRootCss, isThemeSensitive, themeIdList, themesSummary } from '../utils/themes.js';
+import { loadEngine } from '../utils/theme-engine.js';
 import { CollectionError, toExportSchema } from '../utils/collections.js';
 import { ICON_KINDS, RESOLVE_FROM, RESOLVE_PREFER, searchIcons, suggestIcons, resolveIcon, colorwayPair, iconSvg, iconSymbol, iconResolver } from '../utils/icons.js';
 
@@ -605,6 +606,98 @@ export function buildTools() {
         return { theme: { id: t.id, name: t.name, mode: t.mode }, overrides: t.overrides, ...page };
       },
     },
+
+    // ============================== THEMES (2) ==============================
+    // Theme derivation: brand inputs in, a complete contrast-safe token palette for both color
+    // modes out (catalog/theme-engine/derive.mjs, found beside the catalog file), and a contrast
+    // audit for any token map.
+    {
+      name: 'derive_theme',
+      description: 'Derive a complete Prism theme from brand inputs: every theme token (surfaces, text, accent, status colors with their -rgb triplets, gradient, elevation, radius scale, font, density, top-nav chrome, plus --accent-ink for text on accent fills) for dark and light mode, contrast-safe by construction. The accent keeps its hue; its OKLCH lightness moves per mode only when it misses a floor (4.5:1 text on the panels, 3:1 UI on bg, readable ink on accent fills; 7:1 text with contrast AAA). Neutrals keep the brand hue at low chroma; status colors use the conventional hues at the accent\'s chroma and one shared lightness. Deterministic. Returns { name, dark, light, css: { dark, light } (paste-ready :root blocks), report: { pairs: [{ mode, fg, bg, ratio, floor, pass, apca }], failures, moved (inputs it had to move, with a message such as "accent #ffd400 too light for text on a light panel: darkened to #897000, L 0.88 to 0.55"), notes, summary } }. A mode not requested is null. To ship it as a pack: catalog/theme-engine/derive.mjs --profile out.mjs, then catalog/_scaffold_ds.mjs.',
+      inputSchema: {
+        type: 'object',
+        properties: {
+          accent: { type: 'string', description: 'Brand accent, #rgb or #rrggbb.' },
+          name: { type: 'string', description: 'Theme name (default "Custom"), used in the css comments and report.' },
+          secondary: { type: 'string', description: 'Optional second brand color for --accent2 (gradient partner), #hex. Defaults to the accent.' },
+          neutral: { type: 'string', description: 'Surface tint: brand (default: the accent hue at low chroma), cool, warm, neutral (near grey), or a #hex whose hue and tint strength are used.' },
+          mode: { type: 'string', enum: ['both', 'dark', 'light'], description: 'Color modes to derive (default both).' },
+          contrast: { type: 'string', enum: ['AA', 'AAA'], description: 'WCAG level for the floors (default AA).' },
+          radius: { type: ['number', 'string'], description: 'Base (md) corner radius in px, e.g. 6 or "6px" (default 8). sm/lg/xl follow at x0.5/x1.5/x2.' },
+          density: { type: ['number', 'string'], description: 'compact, comfortable (default), spacious, or a number 0.8 to 1.3 for --dens.' },
+          font: { type: 'string', description: 'CSS font-family list for --font (default the system stack).' },
+        },
+        required: ['accent'],
+        additionalProperties: false,
+      },
+      handler: async (a, { store }) => {
+        const eng = await themeEngine(store);
+        let d;
+        try { d = eng.derive.deriveTheme(a); } catch (err) { throw new ToolError(err.message, { code: 'invalid_argument' }); }
+        const name = d.report.input.name;
+        return {
+          name,
+          dark: d.dark,
+          light: d.light,
+          css: { dark: d.dark ? eng.derive.rootCss(d.dark, `${name} dark`) : null, light: d.light ? eng.derive.rootCss(d.light, `${name} light`) : null },
+          report: d.report,
+        };
+      },
+    },
+    {
+      name: 'check_theme_contrast',
+      description: 'Check a theme token map against the contrast floors derive_theme uses: ink, muted (4.5:1 text) and dim (3:1) on bg/panel/panel2/card; accent and the five status colors as text on panel/panel2/card and as UI on bg; ink on accent fills (--accent-ink, or #fff when absent, the ink Prism\'s generated facets use); accent2 as UI; top-nav ink and dim; line as an unscored decorative pair. Pass tokens (a partial or full map of --token: value; rgba surfaces are composited over --bg) or theme (a shipped theme id). Missing tokens are filled from the Cloudscape base of the mode, as Prism layers a pack over it (fill: false to check only what you pass). mode is inferred from the surfaces when omitted. Returns { mode, contrast, pass, checked, failures, pairs: [{ fg, bg, fgValue, bgValue, ratio, floor, pass, apca }], skipped, filledFromBase }.',
+      inputSchema: {
+        type: 'object',
+        properties: {
+          tokens: { type: 'object', description: 'Token map, e.g. { "--bg": "#0f1621", "--panel": "#192534", "--accent": "#539fe5" }.' },
+          theme: { type: 'string', enum: THEME_IDS, description: 'A shipped theme id to check instead of tokens.' },
+          mode: { type: 'string', enum: ['dark', 'light'], description: 'Color mode (default: inferred from the surfaces).' },
+          contrast: { type: 'string', enum: ['AA', 'AAA'], description: 'WCAG level (default AA).' },
+          fill: { type: 'boolean', default: true, description: 'Fill missing tokens from the Cloudscape base of the mode (default true).' },
+        },
+        additionalProperties: false,
+      },
+      handler: async (a, { store }) => {
+        if ((a.tokens == null) === (a.theme == null)) throw new ToolError('pass exactly one of tokens or theme', { code: 'invalid_argument' });
+        if (a.mode != null && !['dark', 'light'].includes(a.mode)) throw new ToolError('mode must be dark or light', { code: 'invalid_argument' });
+        if (a.contrast != null && !['AA', 'AAA'].includes(a.contrast)) throw new ToolError('contrast must be AA or AAA', { code: 'invalid_argument' });
+        let tokens = a.tokens;
+        let mode = a.mode;
+        if (a.theme != null) {
+          const t = getTheme(a.theme);
+          if (!t) throw new ToolError(`No theme "${a.theme}"`, { code: 'not_found', data: { themes: THEME_IDS } });
+          tokens = t.tokens;
+          mode = mode || t.mode;
+        }
+        if (typeof tokens === 'string') {
+          try { tokens = JSON.parse(tokens); } catch (err) { throw new ToolError(`tokens is not valid JSON: ${err.message}`, { code: 'invalid_argument' }); }
+        }
+        if (!tokens || typeof tokens !== 'object' || Array.isArray(tokens)) throw new ToolError('tokens must be an object of --token: value', { code: 'invalid_argument' });
+        const keys = Object.keys(tokens);
+        if (keys.length > 200) throw new ToolError('tokens has more than 200 entries', { code: 'invalid_argument' });
+        const bad = keys.filter((k) => !/^--[a-z0-9-]+$/i.test(k) || typeof tokens[k] !== 'string' || tokens[k].length > 400);
+        if (bad.length) throw new ToolError('every token must be a --name with a string value (at most 400 characters)', { code: 'invalid_argument', data: { invalid: bad.slice(0, 20) } });
+        const eng = await themeEngine(store);
+        mode = mode || eng.derive.inferMode(tokens);
+        const filledFromBase = [];
+        let full = tokens;
+        if (a.fill !== false) {
+          const base = baseTokensFor(mode);
+          full = { ...base, ...tokens };
+          for (const k of Object.keys(base)) if (!(k in tokens)) filledFromBase.push(k);
+        }
+        let r;
+        try { r = eng.derive.checkContrast(full, { mode, contrast: a.contrast || 'AA' }); } catch (err) { throw new ToolError(err.message, { code: 'invalid_argument' }); }
+        return {
+          mode: r.mode, contrast: r.contrast, pass: r.pass,
+          checked: r.pairs.filter((p) => p.floor != null).length,
+          failures: r.failures, pairs: r.pairs, skipped: r.skipped, filledFromBase,
+        };
+      },
+    },
+
+    // ============================== DISCOVERY (continued) ==============================
     {
       name: 'list_galleries',
       description: 'List all galleries with their id, title and effect count.',
@@ -1450,6 +1543,18 @@ async function diagramKit(store) {
     throw new ToolError(`The AWS kit is not reachable from the catalog at ${store.filePath}: expected catalog/aws-kit/awd.mjs next to Prism.html, or aws-kit/awd.mjs next to catalog/manifest.json (a full Prism checkout)`, { code: 'unavailable' });
   }
   return kit;
+}
+
+/** The theme engine beside the loaded catalog, or a structured 'unavailable' error. */
+async function themeEngine(store) {
+  let eng = null;
+  try { eng = await loadEngine(store.filePath); } catch (err) {
+    throw new ToolError(`The theme engine beside ${store.filePath} failed to load: ${err.message}`, { code: 'unavailable' });
+  }
+  if (!eng) {
+    throw new ToolError(`The theme engine is not reachable from the catalog at ${store.filePath}: expected catalog/theme-engine/derive.mjs next to Prism.html, or theme-engine/derive.mjs next to catalog/manifest.json (a full Prism checkout)`, { code: 'unavailable' });
+  }
+  return eng;
 }
 
 function escapeHtml(s) {

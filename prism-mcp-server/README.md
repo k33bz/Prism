@@ -67,7 +67,7 @@ Add the server to your `claude_desktop_config.json` (see `examples/claude_deskto
 }
 ```
 
-Restart Claude Desktop; the 37 Prism tools appear in the tools menu.
+Restart Claude Desktop; the 39 Prism tools appear in the tools menu.
 
 ## Use with the Anthropic API
 
@@ -75,7 +75,7 @@ The Messages API accepts local MCP servers via the `mcp_servers` parameter (stdi
 
 ---
 
-## Tools (37)
+## Tools (39)
 
 ### Discovery & search (11)
 | Tool | Purpose |
@@ -110,6 +110,14 @@ The Messages API accepts local MCP servers via the `mcp_servers` parameter (stdi
 | `get_variants_for_theme` | Components rendered under a single theme, each with the token values it uses; supports gallery/componentType/spectrum/tag + `themeSensitiveOnly` filters + pagination. |
 
 > **Variants are token-swaps, not copies.** A "variant" is the same component under a different `:root` token set — the exact mechanism Prism's live theme engine uses. Rendering a variant = component `html` + `css` + the chosen theme's token overrides. This is why one payload yields every theme variant without multiplying storage.
+
+### Themes (2)
+Theme derivation with the engine in `catalog/theme-engine/` (zero-dependency ES modules), found beside the catalog file the same way as the AWS kit: `catalog/theme-engine/` next to `Prism.html`, or `theme-engine/` next to `catalog/manifest.json`. Without it both tools return `unavailable`.
+
+| Tool | Purpose |
+|------|---------|
+| `derive_theme` | Brand inputs (`accent`, optional `name`, `secondary`, `neutral`: brand, cool, warm, neutral or a hex, `mode`, `contrast`: AA or AAA, `radius`, `density`, `font`) in; every theme token for dark and light out, plus `--accent-ink` for text on accent fills. The accent keeps its hue and only its OKLCH lightness moves, per mode, when it misses a floor (4.5:1 text on the panels, 3:1 UI on bg, a readable ink on fills; 7:1 text at AAA). Neutrals keep the brand hue at low chroma; status colors take the conventional hues at the accent's chroma and one shared lightness. Deterministic. Returns `{ name, dark, light, css: { dark, light }, report }`; `report` lists every checked pair (`ratio`, `floor`, `pass`, APCA `apca`) and every moved input with a message such as `accent #ffd400 too light for text on a light panel: darkened to #897000, L 0.88 to 0.55`. |
+| `check_theme_contrast` | Audit a token map (`tokens`, partial or full; rgba surfaces are composited) or a shipped `theme` against the same pairs and floors. Missing tokens are filled from the Cloudscape base of the `mode` (inferred when omitted) the way Prism layers a pack, unless `fill: false`. Returns `{ mode, contrast, pass, checked, failures, pairs, skipped, filledFromBase }`. |
 
 ### Composition (3)
 | Tool | Purpose |
@@ -154,7 +162,7 @@ Saved, named sets of effects that persist across sessions (disk-backed JSON). Co
 
 > Export a saved collection for the Prism.html UI with `export_collection { collectionId, format: "schema" }` — the resulting `prism-collection-1.0` JSON is the cross-surface bridge between the MCP server and the in-browser Collections panel.
 
-### AWS Architecture diagrams (2)
+### AWS Architecture diagrams (5)
 Diagrams as data. A diagram is a JSON spec (schema: `catalog/aws-kit/spec.schema.json`, reference: `catalog/drafts/AWS_KIT.md`) compiled by the same AWS kit that builds the gallery (`catalog/aws-kit/awd.mjs`), found beside the catalog file: `catalog/aws-kit/` next to `Prism.html`, or `aws-kit/` next to `catalog/manifest.json`. Without it both tools return `unavailable`.
 
 | Tool | Purpose |
@@ -187,7 +195,7 @@ prism-mcp-server/
 ├── index.js          # PrismMCPServer (JSON-RPC dispatch) + StdioTransport
 ├── cli.js            # prism-mcp CLI (start / info / tools / help)
 ├── tools/
-│   └── index.js      # the 37 tool definitions (name, description, schema, handler)
+│   └── index.js      # the 39 tool definitions (name, description, schema, handler)
 ├── utils/
 │   ├── catalog.js    # CatalogStore: load island/manifest, index, hot reload, runtime facets
 │   ├── collections.js# CollectionStore: disk-backed named sets + prism-collection-1.0 export
@@ -197,9 +205,10 @@ prism-mcp-server/
 │   ├── themes.js     # canonical theme token maps (variant matrix) — mirrors Prism.html THEMES
 │   ├── icons.js      # AWS Architecture Icons: sprite/store parsing, search, colorways, the shared name resolver
 │   ├── diagrams.js   # AWS kit beside the catalog: build diagram specs, serve the gallery's specs
+│   ├── theme-engine.js # theme engine beside the catalog (catalog/theme-engine): derive_theme, check_theme_contrast
 │   └── logger.js     # stderr logger (never pollutes the stdio JSON-RPC channel)
 ├── examples/         # one example request/response per tool + integration configs
-└── test/             # node:test integration + unit tests (171 tests)
+└── test/             # node:test integration + unit tests (181 tests)
 ```
 
 **Server model.** `new PrismMCPServer(catalogPath, opts)` builds the tool registry and a `CatalogStore`. `await server.load()` reads + indexes the catalog. `server.connect(transport)` wires a transport; `StdioTransport` implements newline-delimited JSON-RPC on stdin/stdout. The transport is pluggable — implement `onMessage(cb)` / `send(obj)` to add HTTP/SSE.
@@ -216,7 +225,7 @@ prism-mcp-server/
 node --test          # or: npm test
 ```
 
-171 tests cover every tool (incl. the advanced-search & variant-matrix tools, the `themeSensitive` facet, the 6 Collections tools + `export_collection` formats, the 3 AWS icon tools against a fixture sprite and the real one, and the 3 AWS diagram tools against the real kit and gallery specs), the CSS/compose/validate utilities, the canonical theme token maps (the two Cloudscape modes), the `CollectionStore`, the JSON-RPC protocol layer, and loading the real `Prism.html` island.
+181 tests cover every tool (incl. the advanced-search & variant-matrix tools, the `themeSensitive` facet, the 6 Collections tools + `export_collection` formats, the 3 AWS icon tools against a fixture sprite and the real one, the AWS diagram tools against the real kit and gallery specs, and the 2 theme tools against the real engine), the CSS/compose/validate utilities, the canonical theme token maps (the two Cloudscape modes), the `CollectionStore`, the JSON-RPC protocol layer, and loading the real `Prism.html` island.
 
 ---
 
