@@ -2303,11 +2303,12 @@
       "gallery": "charts",
       "category": "Log Viewers & Streams",
       "ref": ".log-summary",
-      "classes": [],
+      "classes": [
+        "cx-lvl"
+      ],
       "params": [],
       "tags": [
-        "charts",
-        "self-contained"
+        "charts"
       ],
       "componentType": "chart-bar",
       "interaction": "static",
@@ -3613,11 +3614,12 @@
       "gallery": "charts",
       "category": "Advanced Visualizations",
       "ref": ".treemap",
-      "classes": [],
+      "classes": [
+        "cx-tmap"
+      ],
       "params": [],
       "tags": [
-        "charts",
-        "self-contained"
+        "charts"
       ],
       "componentType": "chart-bar",
       "interaction": "static",
@@ -3964,11 +3966,12 @@
       "gallery": "charts",
       "category": "Rank & Flow Diagrams",
       "ref": "treemap grid",
-      "classes": [],
+      "classes": [
+        "cx-tmap"
+      ],
       "params": [],
       "tags": [
-        "charts",
-        "self-contained"
+        "charts"
       ],
       "componentType": "chart-flow",
       "interaction": "static",
@@ -4377,6 +4380,7 @@
       "category": "More Plot Types",
       "ref": ".mp-pyramid",
       "classes": [
+        "cx-pyr",
         "mp-rise"
       ],
       "params": [],
@@ -4779,6 +4783,7 @@
       "category": "More Plot Types",
       "ref": ".mp-nestedtree",
       "classes": [
+        "cx-ntree",
         "mp-fade"
       ],
       "params": [],
@@ -25175,7 +25180,9 @@
       "gallery": "lab",
       "category": "Liquid & Fluid",
       "ref": "dual wave layers",
-      "classes": [],
+      "classes": [
+        "lab-lfg-v"
+      ],
       "params": [],
       "tags": [
         "lab",
@@ -29060,6 +29067,7 @@
         "ptitle",
         "tdot",
         "pbody",
+        "ai-term",
         "cap"
       ],
       "params": [
@@ -42481,7 +42489,8 @@
       "category": "Composite Inputs",
       "ref": ".code-editor",
       "classes": [
-        "inp-label"
+        "inp-label",
+        "in-codeed"
       ],
       "params": [],
       "tags": [
