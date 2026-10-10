@@ -48,14 +48,18 @@ const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replac
    `motion` names the keyframes so the reduced-motion block can target [class].  */
 
 // A compact palette of accent "roles" that map onto Prism global tokens so facets
-// recolor with the active theme. Each variant => one facet instance.
+// recolor with the active theme. Each variant => one facet instance. `ink` is the
+// role's on-fill token: the text/glyph color painted ON a var(tok) fill (button
+// label, count badge, checkbox tick). Themes define it per mode (#fff where white
+// passes 4.5:1 on the fill, a near-black ink where it does not, typically dark
+// mode); the #fff fallback keeps a theme without the token rendering as before.
 const VARIANTS = [
-  { key: 'accent', tok: '--accent', rgb: '--accent-rgb', label: 'Primary' },
-  { key: 'info', tok: '--info', rgb: '--info-rgb', label: 'Info' },
-  { key: 'pos', tok: '--pos', rgb: '--pos-rgb', label: 'Success' },
-  { key: 'warn', tok: '--warn', rgb: '--warn-rgb', label: 'Warning' },
-  { key: 'neg', tok: '--neg', rgb: '--neg-rgb', label: 'Danger' },
-  { key: 'crit', tok: '--crit', rgb: '--crit-rgb', label: 'Critical' },
+  { key: 'accent', tok: '--accent', rgb: '--accent-rgb', ink: '--accent-ink', label: 'Primary' },
+  { key: 'info', tok: '--info', rgb: '--info-rgb', ink: '--info-ink', label: 'Info' },
+  { key: 'pos', tok: '--pos', rgb: '--pos-rgb', ink: '--pos-ink', label: 'Success' },
+  { key: 'warn', tok: '--warn', rgb: '--warn-rgb', ink: '--warn-ink', label: 'Warning' },
+  { key: 'neg', tok: '--neg', rgb: '--neg-rgb', ink: '--neg-ink', label: 'Danger' },
+  { key: 'crit', tok: '--crit', rgb: '--crit-rgb', ink: '--crit-ink', label: 'Critical' },
 ];
 
 // The 8 canonical component types the spectrum galleries use.
@@ -66,9 +70,9 @@ const ARCHETYPES = [
     title: 'Pill Button', desc: 'A rounded token-filled button with a soft pulsing glow — the system\'s primary call-to-action.',
     css: (ns) => [
       `@keyframes ${ns}BtnPulse{0%,100%{box-shadow:0 0 0 0 rgba(var(--_rgb),.5)}50%{box-shadow:0 0 0 6px rgba(var(--_rgb),0)}}`,
-      `.${ns}-btn{display:inline-flex;align-items:center;gap:8px;padding:9px 18px;border-radius:var(--${ns}-radius,999px);background:var(--_c);color:#fff;font-weight:700;border:0;animation:${ns}BtnPulse 2.4s ease-in-out infinite}`,
+      `.${ns}-btn{display:inline-flex;align-items:center;gap:8px;padding:9px 18px;border-radius:var(--${ns}-radius,999px);background:var(--_c);color:var(--_ink,#fff);font-weight:700;border:0;animation:${ns}BtnPulse 2.4s ease-in-out infinite}`,
     ],
-    html: (ns, v) => `<button class="${ns}-btn" style="--_c:var(${v.tok});--_rgb:var(${v.rgb})">${esc(v.label)}</button>`,
+    html: (ns, v) => `<button class="${ns}-btn" style="--_c:var(${v.tok});--_rgb:var(${v.rgb});--_ink:var(${v.ink},#fff)">${esc(v.label)}</button>`,
   },
   {
     slug: 'toggle', ctype: 'button', interact: 'toggle auto-play', motion: 'TgKnob',
@@ -167,9 +171,9 @@ const ARCHETYPES = [
     title: 'Count Badge', desc: 'A number badge that pops on a heartbeat, tinted by the token color. Notification counter object.',
     css: (ns) => [
       `@keyframes ${ns}BadgePop{0%,100%{transform:scale(1)}30%{transform:scale(1.25)}}`,
-      `.${ns}-badge{display:inline-grid;place-items:center;min-width:22px;height:22px;padding:0 6px;border-radius:999px;background:var(--_c);color:#fff;font-size:11px;font-weight:800;animation:${ns}BadgePop 2s ease-in-out infinite}`,
+      `.${ns}-badge{display:inline-grid;place-items:center;min-width:22px;height:22px;padding:0 6px;border-radius:999px;background:var(--_c);color:var(--_ink,#fff);font-size:11px;font-weight:800;animation:${ns}BadgePop 2s ease-in-out infinite}`,
     ],
-    html: (ns, v) => `<span class="${ns}-badge" style="--_c:var(${v.tok})">9</span>`,
+    html: (ns, v) => `<span class="${ns}-badge" style="--_c:var(${v.tok});--_ink:var(${v.ink},#fff)">9</span>`,
   },
   {
     slug: 'tab', ctype: 'segmented-control', interact: 'toggle auto-play', motion: 'TabSlide',
@@ -216,9 +220,9 @@ const ARCHETYPES = [
     css: (ns) => [
       `@keyframes ${ns}CheckIn{0%,20%{clip-path:inset(0 100% 0 0)}60%,100%{clip-path:inset(0 0 0 0)}}`,
       `.${ns}-check{position:relative;width:22px;height:22px;border-radius:6px;background:var(--_c);display:grid;place-items:center}`,
-      `.${ns}-check::after{content:"✓";color:#fff;font-size:14px;font-weight:900;animation:${ns}CheckIn 2.4s ease-in-out infinite}`,
+      `.${ns}-check::after{content:"✓";color:var(--_ink,#fff);font-size:14px;font-weight:900;animation:${ns}CheckIn 2.4s ease-in-out infinite}`,
     ],
-    html: (ns, v) => `<div class="${ns}-check" style="--_c:var(${v.tok})"></div>`,
+    html: (ns, v) => `<div class="${ns}-check" style="--_c:var(${v.tok});--_ink:var(${v.ink},#fff)"></div>`,
   },
   {
     slug: 'slider', ctype: 'input', interact: 'auto-play', motion: 'SliderThumb',

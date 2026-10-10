@@ -34,17 +34,20 @@ export default {
       '--info-rgb': '25,103,210',
       '--pos': '#188038',
       '--pos-rgb': '24,128,56',
-      '--warn': '#e37400',
-      '--warn-rgb': '227,116,0',
+      // contrast: --warn #e37400 -> #b95d00; warn/panel 3.10 -> 4.54:1 (floor 4.5), #fff/warn 3.10 -> 4.54:1 (floor 4.5); Google orange darkened on its own hue
+      '--warn': '#b95d00',
+      '--warn-rgb': '185,93,0',
       '--neg': '#d93025',
       '--neg-rgb': '217,48,37',
       '--crit': '#9334e6',
       '--crit-rgb': '147,52,230',
       '--cardgrad': 'linear-gradient(157deg,rgba(26,115,232,.06),rgba(26,115,232,0) 55%)',
       '--font': '"Google Sans", Roboto, "Segoe UI", system-ui, -apple-system, sans-serif',
-      '--r-sm': '4px',
+      // drift: --r-sm 4px -> 2px, the value Prism.html ships (this palette value never reached the shell)
+      '--r-sm': '2px',
       '--r-md': '4px',
-      '--r-lg': '8px',
+      // drift: --r-lg 8px -> 6px, the value Prism.html ships (this palette value never reached the shell)
+      '--r-lg': '6px',
       '--r-xl': '8px',
       '--elev-1': '0 1px 2px rgba(60,64,67,.3),0 1px 3px 1px rgba(60,64,67,.15)',
       '--elev-2': '0 1px 3px rgba(60,64,67,.3),0 4px 8px 3px rgba(60,64,67,.15)',
@@ -58,6 +61,13 @@ export default {
       '--cs-topnav-ink': '#202124',
       '--cs-topnav-dim': '#5f6368',
       '--cs-topnav-hover': 'rgba(26,115,232,.08)',
+      // on-fill inks (new; same #fff the generator painted before): 4.51-5.42:1 on accent/info/pos/warn/neg/crit (floor 4.5)
+      '--accent-ink': '#ffffff',
+      '--info-ink': '#ffffff',
+      '--pos-ink': '#ffffff',
+      '--warn-ink': '#ffffff',
+      '--neg-ink': '#ffffff',
+      '--crit-ink': '#ffffff',
     },
     dark: {
       '--bg': '#202124',
@@ -83,9 +93,11 @@ export default {
       '--crit-rgb': '197,138,249',
       '--cardgrad': 'linear-gradient(157deg,rgba(138,180,248,.08),rgba(138,180,248,0) 55%)',
       '--font': '"Google Sans", Roboto, "Segoe UI", system-ui, -apple-system, sans-serif',
-      '--r-sm': '4px',
+      // drift: --r-sm 4px -> 2px, the value Prism.html ships (this palette value never reached the shell)
+      '--r-sm': '2px',
       '--r-md': '4px',
-      '--r-lg': '8px',
+      // drift: --r-lg 8px -> 6px, the value Prism.html ships (this palette value never reached the shell)
+      '--r-lg': '6px',
       '--r-xl': '8px',
       '--elev-1': '0 1px 2px rgba(0,0,0,.5),0 1px 3px 1px rgba(0,0,0,.3)',
       '--elev-2': '0 1px 3px rgba(0,0,0,.5),0 4px 8px 3px rgba(0,0,0,.35)',
@@ -99,6 +111,13 @@ export default {
       '--cs-topnav-ink': '#e8eaed',
       '--cs-topnav-dim': '#9aa0a6',
       '--cs-topnav-hover': 'rgba(138,180,248,.1)',
+      // on-fill inks (new; the generator painted literal #fff on these fills): #fff 1.40-2.72:1 -> ink 5.92-11.48:1 on accent/info/pos/warn/neg/crit (floor 4.5)
+      '--accent-ink': '#202124',
+      '--info-ink': '#202124',
+      '--pos-ink': '#202124',
+      '--warn-ink': '#202124',
+      '--neg-ink': '#202124',
+      '--crit-ink': '#202124',
     },
   },
   tokenProfile: {

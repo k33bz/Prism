@@ -13,6 +13,7 @@ export default {
   dsShort: 'aero',
   homeUrl: 'https://en.wikipedia.org/wiki/Frutiger_Aero',
   ticket: 'fork-themes-2026-09',
+  skin: true,                   // shell skin only: no facet family, so the scaffolder does not register it in systems.json
   accent: '#2fb0ff',
   palette: {
     light: {
@@ -23,20 +24,27 @@ export default {
       '--line': '#b9dff5',
       '--ink': '#0b3550',
       '--muted': '#3f6b86',
-      '--dim': '#7aa3bd',
-      '--accent': '#2fb0ff',
-      '--accent-rgb': '47,176,255',
+      // contrast: --dim #7aa3bd -> #7099b3; dim/panel 2.69 -> 3.05:1 (floor 3), dim/card 2.69 -> 3.05:1 (floor 3)
+      '--dim': '#7099b3',
+      // contrast: --accent #2fb0ff -> #007cbb; accent/panel 2.39 -> 4.56:1 (floor 4.5), accent/bg 2.10 -> 4.00:1 (floor 3), #fff/accent 2.39 -> 4.56:1 (floor 4.5); aqua darkened on its own hue
+      '--accent': '#007cbb',
+      '--accent-rgb': '0,124,187',
       '--accent2': '#7ee03e',
-      '--info': '#1f8bff',
-      '--info-rgb': '31,139,255',
-      '--pos': '#5cc93a',
-      '--pos-rgb': '92,201,58',
-      '--warn': '#ffb020',
-      '--warn-rgb': '255,176,32',
-      '--neg': '#ff5c5c',
-      '--neg-rgb': '255,92,92',
-      '--crit': '#b06cff',
-      '--crit-rgb': '176,108,255',
+      // contrast: --info #1f8bff -> #0475e1; info/panel 3.39 -> 4.53:1 (floor 4.5), #fff/info 3.39 -> 4.53:1 (floor 4.5)
+      '--info': '#0475e1',
+      '--info-rgb': '4,117,225',
+      // contrast: --pos #5cc93a -> #2d8801; pos/panel 2.13 -> 4.53:1 (floor 4.5), #fff/pos 2.13 -> 4.53:1 (floor 4.5)
+      '--pos': '#2d8801',
+      '--pos-rgb': '45,136,1',
+      // contrast: --warn #ffb020 -> #a06c05; warn/panel 1.83 -> 4.52:1 (floor 4.5), #fff/warn 1.83 -> 4.52:1 (floor 4.5)
+      '--warn': '#a06c05',
+      '--warn-rgb': '160,108,5',
+      // contrast: --neg #ff5c5c -> #da373e; neg/panel 3.03 -> 4.57:1 (floor 4.5), #fff/neg 3.03 -> 4.57:1 (floor 4.5)
+      '--neg': '#da373e',
+      '--neg-rgb': '218,55,62',
+      // contrast: --crit #b06cff -> #9751e3; crit/panel 3.26 -> 4.56:1 (floor 4.5), #fff/crit 3.26 -> 4.56:1 (floor 4.5)
+      '--crit': '#9751e3',
+      '--crit-rgb': '151,81,227',
       '--cardgrad': 'linear-gradient(180deg,rgba(255,255,255,.85),rgba(255,255,255,.25) 48%,rgba(255,255,255,0) 52%)',
       '--font': '"Segoe UI", Frutiger, "Frutiger Linotype", Tahoma, Verdana, sans-serif',
       '--r-sm': '10px',
@@ -53,8 +61,16 @@ export default {
       '--cs-topnav-bg': '#1f6fb2',
       '--cs-topnav-line': '#3d8fd6',
       '--cs-topnav-ink': '#ffffff',
-      '--cs-topnav-dim': '#cfe6fa',
+      // contrast: --cs-topnav-dim #cfe6fa -> #dff0fe; topnav-dim/topnav-bg 4.11 -> 4.54:1 (floor 4.5)
+      '--cs-topnav-dim': '#dff0fe',
       '--cs-topnav-hover': 'rgba(255,255,255,.18)',
+      // on-fill inks (new; same #fff the generator painted before): 4.52-4.57:1 on accent/info/pos/warn/neg/crit (floor 4.5)
+      '--accent-ink': '#ffffff',
+      '--info-ink': '#ffffff',
+      '--pos-ink': '#ffffff',
+      '--warn-ink': '#ffffff',
+      '--neg-ink': '#ffffff',
+      '--crit-ink': '#ffffff',
     },
     dark: {
       '--bg': '#052a44',
@@ -74,10 +90,12 @@ export default {
       '--pos-rgb': '140,240,90',
       '--warn': '#ffc23d',
       '--warn-rgb': '255,194,61',
-      '--neg': '#ff6b6b',
-      '--neg-rgb': '255,107,107',
-      '--crit': '#c084fc',
-      '--crit-rgb': '192,132,252',
+      // contrast: --neg #ff6b6b -> #fe7876; neg/panel 4.20 -> 4.53:1 (floor 4.5)
+      '--neg': '#fe7876',
+      '--neg-rgb': '254,120,118',
+      // contrast: --crit #c084fc -> #c387ff; crit/panel 4.41 -> 4.57:1 (floor 4.5)
+      '--crit': '#c387ff',
+      '--crit-rgb': '195,135,255',
       '--cardgrad': 'linear-gradient(180deg,rgba(255,255,255,.22),rgba(255,255,255,.04) 48%,rgba(255,255,255,0) 52%)',
       '--font': '"Segoe UI", Frutiger, "Frutiger Linotype", Tahoma, Verdana, sans-serif',
       '--r-sm': '10px',
@@ -96,6 +114,13 @@ export default {
       '--cs-topnav-ink': '#eaf7ff',
       '--cs-topnav-dim': '#a8cde6',
       '--cs-topnav-hover': 'rgba(255,255,255,.14)',
+      // on-fill inks (new; the generator painted literal #fff on these fills): #fff 1.43-2.57:1 -> ink 5.74-10.36:1 on accent/info/pos/warn/neg/crit (floor 4.5)
+      '--accent-ink': '#052a44',
+      '--info-ink': '#052a44',
+      '--pos-ink': '#052a44',
+      '--warn-ink': '#052a44',
+      '--neg-ink': '#052a44',
+      '--crit-ink': '#052a44',
     },
   },
   tokenProfile: {

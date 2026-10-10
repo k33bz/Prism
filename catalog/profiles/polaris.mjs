@@ -31,10 +31,30 @@ export default {
       '--accent': '#008060', '--accent-rgb': '0,128,96', '--accent2': '#008060', // action green (both roles)
       '--info': '#2c6ecb', '--info-rgb': '44,110,203',                           // Polaris interactive blue
       '--pos': '#007f5f', '--pos-rgb': '0,127,95',                               // success green
-      '--warn': '#b98900', '--warn-rgb': '185,137,0',                            // warning amber (readable hue of #ffc453)
+      // contrast: --warn #b98900 -> #916a00; warn/panel 3.16 -> 4.92:1 (floor 4.5), #fff/warn 3.16 -> 4.92:1 (floor 4.5); Polaris text-warning
+      '--warn': '#916a00', '--warn-rgb': '145,106,0',                            // warning amber (readable hue of #ffc453)
       '--neg': '#d72c0d', '--neg-rgb': '215,44,13',                              // critical / danger red
       '--crit': '#bf0711', '--crit-rgb': '191,7,17',                             // deeper critical red
       '--cardgrad': 'linear-gradient(157deg,rgba(0,128,96,.06),rgba(0,128,96,0) 55%)',
+      // font, feel and top-bar tokens as shipped in Prism.html POLARIS_LIGHT_CSS (2026-10 drift
+      // fix: they were hand-added to Prism.html and themes.js and never lived here)
+      '--elev-1': '0 1px 3px rgba(0,0,0,.08)',
+      '--elev-2': '0 4px 16px rgba(0,0,0,.12)',
+      '--dur': '.2s',
+      '--ease': 'cubic-bezier(.25,.8,.25,1)',
+      '--head-w': '600',
+      '--cs-topnav-bg': '#1a1c1d',
+      '--cs-topnav-line': '#3f4246',
+      '--cs-topnav-ink': '#e3e5e7',
+      '--cs-topnav-dim': '#b5bcc2',
+      '--cs-topnav-hover': 'rgba(255,255,255,.08)',
+      // on-fill inks (new; same #fff the generator painted before): 4.92-6.45:1 on accent/info/pos/warn/neg/crit (floor 4.5)
+      '--accent-ink': '#ffffff',
+      '--info-ink': '#ffffff',
+      '--pos-ink': '#ffffff',
+      '--warn-ink': '#ffffff',
+      '--neg-ink': '#ffffff',
+      '--crit-ink': '#ffffff',
     },
     // Dark: Polaris dark surfaces — #0b0c0d ground, #202223 panels, #3f4246
     // border, light ink #e3e5e7. Accent green is held per brand; semantic hues
@@ -42,13 +62,33 @@ export default {
     dark: {
       '--bg': '#0b0c0d', '--panel': '#202223', '--panel2': '#1a1c1d', '--card': '#202223', '--line': '#3f4246',
       '--ink': '#e3e5e7', '--muted': '#999fa4', '--dim': '#71767a',
-      '--accent': '#008060', '--accent-rgb': '0,128,96', '--accent2': '#008060', // action green (both roles)
+      // contrast: --accent #008060 -> #309978; accent/panel 3.24 -> 4.53:1 (floor 4.5); Polaris green lightened on its own hue for dark surfaces
+      '--accent': '#309978', '--accent-rgb': '48,153,120', '--accent2': '#008060', // action green (both roles)
       '--info': '#4b9bff', '--info-rgb': '75,155,255',                           // brightened interactive blue
       '--pos': '#4ade80', '--pos-rgb': '74,222,128',                             // brightened success green
       '--warn': '#e6b800', '--warn-rgb': '230,184,0',                            // brightened warning amber
       '--neg': '#ff6b52', '--neg-rgb': '255,107,82',                             // brightened danger red
       '--crit': '#ff5470', '--crit-rgb': '255,84,112',                           // brightened critical red/magenta
       '--cardgrad': 'linear-gradient(157deg,rgba(0,128,96,.08),rgba(0,128,96,0) 55%)',
+      // font, feel and top-bar tokens as shipped in Prism.html POLARIS_DARK_CSS (2026-10 drift
+      // fix: they were hand-added to Prism.html and themes.js and never lived here)
+      '--elev-1': '0 1px 3px rgba(0,0,0,.5)',
+      '--elev-2': '0 4px 16px rgba(0,0,0,.55)',
+      '--dur': '.2s',
+      '--ease': 'cubic-bezier(.25,.8,.25,1)',
+      '--head-w': '600',
+      '--cs-topnav-bg': '#1a1c1d',
+      '--cs-topnav-line': '#3f4246',
+      '--cs-topnav-ink': '#e3e5e7',
+      '--cs-topnav-dim': '#999fa4',
+      '--cs-topnav-hover': 'rgba(255,255,255,.08)',
+      // on-fill inks (new; the generator painted literal #fff on these fills): #fff 1.74-3.53:1 -> ink 5.55-11.24:1 on accent/info/pos/warn/neg/crit (floor 4.5)
+      '--accent-ink': '#0b0c0d',
+      '--info-ink': '#0b0c0d',
+      '--pos-ink': '#0b0c0d',
+      '--warn-ink': '#0b0c0d',
+      '--neg-ink': '#0b0c0d',
+      '--crit-ink': '#0b0c0d',
     },
   },
 

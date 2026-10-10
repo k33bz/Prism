@@ -80,6 +80,13 @@ export default {
       // real M3 state layer (primary @ 8%), not a neutral wash.
       '--cs-topnav-bg': '#f3edf7', '--cs-topnav-line': '#cac4d0', '--cs-topnav-ink': '#1c1b1f',
       '--cs-topnav-dim': '#49454f', '--cs-topnav-hover': 'rgba(103,80,164,.08)',
+      // on-fill inks (new; same #fff the generator painted before): 6.44-6.54:1 on accent/info/pos/warn/neg/crit (floor 4.5)
+      '--accent-ink': '#ffffff',
+      '--info-ink': '#ffffff',
+      '--pos-ink': '#ffffff',
+      '--warn-ink': '#ffffff',
+      '--neg-ink': '#ffffff',
+      '--crit-ink': '#ffffff',
     },
     // Dark — M3 baseline dark scheme. Same tint ramp, darker tones; primary
     // lightens to #d0bcff (M3 flips primary to tone 80 in dark).
@@ -100,6 +107,13 @@ export default {
       // topnav chrome — dark M3 top app bar; state layer is dark-mode primary @ 8%
       '--cs-topnav-bg': '#211f26', '--cs-topnav-line': '#49454f', '--cs-topnav-ink': '#e6e1e5',
       '--cs-topnav-dim': '#cac4d0', '--cs-topnav-hover': 'rgba(208,188,255,.08)',
+      // on-fill inks (new; the generator painted literal #fff on these fills): #fff 1.70-1.72:1 -> ink 7.66-10.09:1 on accent/info/pos/warn/neg/crit (floor 4.5); M3 on-primary/on-error/on-tertiary for accent/neg/crit, --bg for the extension roles
+      '--accent-ink': '#381e72',
+      '--info-ink': '#1c1b1f',
+      '--pos-ink': '#1c1b1f',
+      '--warn-ink': '#1c1b1f',
+      '--neg-ink': '#601410',
+      '--crit-ink': '#492532',
     },
   },
 

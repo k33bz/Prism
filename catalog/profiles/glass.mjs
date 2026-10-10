@@ -15,6 +15,7 @@ export default {
   dsShort: 'glass',
   homeUrl: 'https://developer.apple.com/design/',
   ticket: 'fork-themes-2026-09',
+  skin: true,                   // shell skin only: no facet family, so the scaffolder does not register it in systems.json
   accent: '#0a84ff',
   palette: {
     light: {
@@ -25,20 +26,27 @@ export default {
       '--line': 'rgba(0,0,0,.08)',
       '--ink': '#1c1c1e',
       '--muted': '#6e6e73',
-      '--dim': '#aeaeb2',
-      '--accent': '#007aff',
-      '--accent-rgb': '0,122,255',
+      // contrast: --dim #aeaeb2 -> #8e8e93; dim/panel 2.13 -> 3.15:1 (floor 3), dim/card 2.16 -> 3.18:1 (floor 3); Apple systemGray
+      '--dim': '#8e8e93',
+      // contrast: --accent #007aff -> #016fea; accent/panel 3.88 -> 4.54:1 (floor 4.5), #fff/accent 4.02 -> 4.71:1 (floor 4.5); systemBlue darkened on its own hue; the high-contrast #0040dd overshoots
+      '--accent': '#016fea',
+      '--accent-rgb': '1,111,234',
       '--accent2': '#5ac8fa',
-      '--info': '#32ade6',
-      '--info-rgb': '50,173,230',
-      '--pos': '#34c759',
-      '--pos-rgb': '52,199,89',
-      '--warn': '#ff9f0a',
-      '--warn-rgb': '255,159,10',
-      '--neg': '#ff3b30',
-      '--neg-rgb': '255,59,48',
-      '--crit': '#af52de',
-      '--crit-rgb': '175,82,222',
+      // contrast: --info #32ade6 -> #037cab; info/panel 2.46 -> 4.53:1 (floor 4.5), #fff/info 2.54 -> 4.69:1 (floor 4.5)
+      '--info': '#037cab',
+      '--info-rgb': '3,124,171',
+      // contrast: --pos #34c759 -> #018631; pos/panel 2.14 -> 4.55:1 (floor 4.5), #fff/pos 2.22 -> 4.71:1 (floor 4.5); the high-contrast systemGreen #248a3d is 4.2:1 on this panel
+      '--pos': '#018631',
+      '--pos-rgb': '1,134,49',
+      // contrast: --warn #ff9f0a -> #a66500; warn/panel 1.98 -> 4.52:1 (floor 4.5), #fff/warn 2.06 -> 4.68:1 (floor 4.5)
+      '--warn': '#a66500',
+      '--warn-rgb': '166,101,0',
+      // contrast: --neg #ff3b30 -> #d70015; neg/panel 3.42 -> 5.20:1 (floor 4.5), #fff/neg 3.55 -> 5.38:1 (floor 4.5); Apple high-contrast systemRed
+      '--neg': '#d70015',
+      '--neg-rgb': '215,0,21',
+      // contrast: --crit #af52de -> #8944ab; crit/panel 3.99 -> 5.83:1 (floor 4.5), #fff/crit 4.13 -> 6.04:1 (floor 4.5); Apple high-contrast systemPurple
+      '--crit': '#8944ab',
+      '--crit-rgb': '137,68,171',
       '--cardgrad': 'linear-gradient(135deg,rgba(255,255,255,.9),rgba(255,255,255,.35) 60%)',
       '--font': '-apple-system, "SF Pro Text", "SF Pro Display", "Helvetica Neue", system-ui, sans-serif',
       '--r-sm': '14px',
@@ -57,6 +65,13 @@ export default {
       '--cs-topnav-ink': '#1c1c1e',
       '--cs-topnav-dim': '#6e6e73',
       '--cs-topnav-hover': 'rgba(0,0,0,.05)',
+      // on-fill inks (new; same #fff the generator painted before): 4.68-6.04:1 on accent/info/pos/warn/neg/crit (floor 4.5)
+      '--accent-ink': '#ffffff',
+      '--info-ink': '#ffffff',
+      '--pos-ink': '#ffffff',
+      '--warn-ink': '#ffffff',
+      '--neg-ink': '#ffffff',
+      '--crit-ink': '#ffffff',
     },
     dark: {
       '--bg': '#0a0a0f',
@@ -98,6 +113,13 @@ export default {
       '--cs-topnav-ink': '#f5f5f7',
       '--cs-topnav-dim': '#a1a1aa',
       '--cs-topnav-hover': 'rgba(255,255,255,.12)',
+      // on-fill inks (new; the generator painted literal #fff on these fills): #fff 1.41-3.65:1 -> ink 5.42-13.99:1 on accent/info/pos/warn/neg/crit (floor 4.5)
+      '--accent-ink': '#0a0a0f',
+      '--info-ink': '#0a0a0f',
+      '--pos-ink': '#0a0a0f',
+      '--warn-ink': '#0a0a0f',
+      '--neg-ink': '#0a0a0f',
+      '--crit-ink': '#0a0a0f',
     },
   },
   tokenProfile: {
