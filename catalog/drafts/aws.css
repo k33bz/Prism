@@ -154,3 +154,7 @@
 .awd[data-still] .pk,.awd[data-still] .pk-2,.awd[data-still] .pk-bad,.awd[data-still] .ring,.awd[data-still] .ring-2,.awd[data-still] .ring-bad,.awd[data-still] .anim{display:none}
 [data-still] .awd .awd-static,.awd[data-still] .awd-static{display:inline}
 [data-still] .awd .w-flow,.awd[data-still] .w-flow{animation:none}
+/* a frozen frame (catalog/aws-kit/frame.mjs) draws its packets and rings where they are at that moment:
+   they are part of the picture, so no motion setting hides them, and nothing moves */
+.awd.awd-frame .pk,.awd.awd-frame .pk-2,.awd.awd-frame .pk-bad,.awd.awd-frame .ring,.awd.awd-frame .ring-2,.awd.awd-frame .ring-bad{display:inline}
+.awd.awd-frame .w-flow{animation:none}

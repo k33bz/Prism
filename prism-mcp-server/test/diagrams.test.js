@@ -158,3 +158,15 @@ test('export_diagram: a gallery diagram to draw.io (and back, animation restored
   assert.match(svg.text, /data-mode="dark" data-still=""/);
   await assert.rejects(call('export_diagram', { id: 'tt-classic', to: 'visio' }), (e) => e instanceof ToolError);
 });
+
+test('export_diagram: a still frozen at a moment, and a storyboard', async () => {
+  const fr = await call('export_diagram', { id: 'tt-az-fail', to: 'svg', at: 0.64, theme: 'light' });
+  assert.match(fr.text, /class="awd awd-frame"[^>]*data-mode="light"/);
+  assert.doesNotMatch(fr.text, /<animate/);
+  const sb = await call('export_diagram', { id: 'aws-tt-az-fail', to: 'storyboard' });
+  assert.deepEqual(sb.frames.map((f) => f.n), [1, 2, 3, 4]);
+  assert.ok(sb.frames.every((f) => f.svg.startsWith('<svg ') && typeof f.at === 'number' && f.text));
+  assert.equal(sb.text, undefined);
+  await assert.rejects(call('export_diagram', { id: 'tt-az-fail', to: 'svg', at: 1.5 }), (e) => e instanceof ToolError && e.code === 'invalid_argument');
+  await assert.rejects(call('export_diagram', { id: 'tt-az-fail', to: 'drawio', at: 0.5 }), (e) => e instanceof ToolError && /svg exports only/.test(e.message));
+});

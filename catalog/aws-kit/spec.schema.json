@@ -47,6 +47,7 @@
         "w": { "$ref": "#/$defs/size", "description": "viewBox width (default 480)." },
         "h": { "$ref": "#/$defs/size", "description": "viewBox height (default 240)." },
         "dur": { "$ref": "#/$defs/size", "description": "Seconds: the single clock every animation in the diagram shares (default 6)." },
+        "poster": { "type": "number", "minimum": 0, "exclusiveMaximum": 1, "description": "The moment of the clock (a fraction in [0, 1)) a still export shows: frame(spec, 'poster'). Omitted: the plain still diagram." },
         "groups": { "type": "array", "items": { "$ref": "#/$defs/group" }, "description": "Frames, drawn in order: outer groups first." },
         "nodes": { "type": "array", "items": { "$ref": "#/$defs/node" } },
         "wires": { "type": "array", "items": { "$ref": "#/$defs/wire" } },

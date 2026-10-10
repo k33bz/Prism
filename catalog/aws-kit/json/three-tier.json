@@ -233,6 +233,7 @@
       "w": 960,
       "h": 426,
       "dur": 10,
+      "poster": 0.64,
       "groups": [
         { "kind": "cloud", "x": 84, "y": 8, "w": 868, "h": 410 },
         { "kind": "region", "x": 292, "y": 30, "w": 644, "h": 374, "label": "Region" },

@@ -140,7 +140,7 @@ const azFail = (() => {
     id: 'tt-az-fail',
     name: 'Availability Zone failure and failover',
     desc: 'Traffic first spreads across both AZs. When Availability Zone a fails, the load balancer stops routing to it, all requests shift to the instances in AZ b, and Amazon RDS fails over so the standby in AZ b becomes the primary.',
-    wide: true, w: 960, h: 426, dur: DUR,
+    wide: true, w: 960, h: 426, dur: DUR, poster: 0.64,
     groups: groups(),
     nodes: nodes(),
     // the standby is the failover target: a dashed path from the AZ b instances, lit by effects.glow at promotion

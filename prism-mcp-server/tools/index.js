@@ -1387,16 +1387,17 @@ export function buildTools() {
     },
     {
       name: 'export_diagram',
-      description: 'Export an AWS kit diagram (a gallery id such as aws-tt-classic, or a spec) to draw.io (.drawio XML that opens in diagrams.net with the official AWS shapes; the Prism spec rides on a hidden layer so a re-import restores the animation), Mermaid (a flowchart with AWS icon shapes, or architecture-beta when the layout is a consistent grid) or a standalone SVG. Returns { to, text }.',
+      description: 'Export an AWS kit diagram (a gallery id such as aws-tt-classic, or a spec) to draw.io (.drawio XML that opens in diagrams.net with the official AWS shapes; the Prism spec rides on a hidden layer so a re-import restores the animation), Mermaid (a flowchart with AWS icon shapes, or architecture-beta when the layout is a consistent grid), a standalone SVG (animated, the static diagram, or frozen at one moment of its clock for slides and documents) or a storyboard (one still per numbered step, with its step text). Returns { to, text }, or { to, frames: [{ n, at, text, svg }] } for a storyboard.',
       inputSchema: {
         type: 'object',
         properties: {
           id: { type: 'string', description: 'A gallery diagram id, e.g. aws-tt-classic or tt-classic.' },
           spec: { type: 'object', description: 'A diagram spec instead of an id.' },
-          to: { type: 'string', enum: ['drawio', 'mermaid', 'svg'], description: 'Target format.' },
+          to: { type: 'string', enum: ['drawio', 'mermaid', 'svg', 'storyboard'], description: 'Target format.' },
           dialect: { type: 'string', enum: ['flowchart', 'architecture-beta'], description: 'Mermaid only (default flowchart).' },
           theme: { type: 'string', enum: ['auto', 'light', 'dark'], description: 'SVG only.' },
           still: { type: 'boolean', description: 'SVG only: the complete static diagram, no packets.' },
+          at: { anyOf: [{ type: 'number', minimum: 0, exclusiveMaximum: 1 }, { type: 'string', enum: ['poster'] }], description: "SVG only: freeze the animation at this fraction of the clock (packets where they are, failed frames red), or 'poster' for the moment the spec names. No animation is left." },
         },
         required: ['to'],
         additionalProperties: false,
@@ -1414,7 +1415,13 @@ export function buildTools() {
         const errs = kit.spec.validateDiagram(spec);
         if (errs.length) throw new ToolError('spec does not match the schema', { code: 'invalid_argument', data: { errors: errs.map((e) => `${e.path}: ${e.message}`) } });
         const imp = await importers(kit);
-        try { return await imp.exportDiagram(spec, { to: a.to, dialect: a.dialect, theme: a.theme, still: a.still === true }); } catch (err) {
+        if (a.at != null && a.to !== 'svg') throw new ToolError('at applies to svg exports only', { code: 'invalid_argument' });
+        if (a.at != null && a.at !== 'poster' && !(typeof a.at === 'number' && a.at >= 0 && a.at < 1)) throw new ToolError("at must be a fraction of the clock in [0, 1) or 'poster'", { code: 'invalid_argument' });
+        try {
+          const out = await imp.exportDiagram(spec, { to: a.to, dialect: a.dialect, theme: a.theme, still: a.still === true, at: a.at });
+          // the frames carry their own svg; the HTML page would repeat them all as base64
+          return a.to === 'storyboard' ? { to: out.to, frames: out.frames } : out;
+        } catch (err) {
           throw new ToolError(`Export failed: ${err.message}`, { code: 'export_failed' });
         }
       },

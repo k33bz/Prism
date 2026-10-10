@@ -58,6 +58,7 @@ export default {
     w: 480, h: 236,          // viewBox. Normal: w 480, h <= 300. Wide: w 960, h <= 440.
     lintAllow: [],           // accepted lint findings: '<code>' or '<code>:<start of message>' (say why in a comment)
     dur: 6,                  // seconds; the single clock every animation in this diagram shares (6-10)
+    poster: 0.64,            // optional: the moment (a fraction of the clock) a still export shows; see Frames
     groups:  [ { kind, x, y, w, h, label?, id?, icon?:false|'<icon id>', note?, align?:'left'|'center', tone?, fill?, dashed? } ],   // draw OUTER groups first
     nodes:   [ { id, icon /* or [darkId, lightId] */, x, y, size?:40, label?, wrap?:14, sub?, labelPos?:'b'|'r'|'l'|'t' }
              | { id, kind:'box'|'pill', x, y, w, h, label?, sub?, tone? } ],
@@ -193,6 +194,27 @@ packets or rings, the complete static diagram (the still is the healthy state; f
 not shown). SMIL keeps running inside `<img>` in Chromium browsers. For a page that switches themes,
 export a light and a dark file and pick with `<picture>`.
 
+## Frames and storyboards
+A still shows the healthy diagram; slides, PNGs, print and most document tools play no SMIL, so a
+failure story has nothing to show there. `catalog/aws-kit/frame.mjs` evaluates the animation at a
+moment instead: `frame(spec, at, { theme })` returns a standalone SVG with no animation left, where
+packets sit where they are on their wires, rings have their size, failed frames are red with their X,
+drained wires are dim, and timed captions, marks and swaps show what they show at that moment. `at` is
+a fraction of the clock in [0, 1), or `'poster'`: the spec's own `poster` moment (without one, the
+plain still). Pick a poster where the story is told: `tt-az-fail` uses 0.64, the failover done.
+
+`storyboard(spec, { theme })` returns one frame per numbered step, `[{ n, at, text, svg }]`, for a
+deck or a printed runbook: a step on a wire is shown when its packet travels that wire, a free badge
+at the first event near it (a packet, a frame failing, a wire draining or lighting up, a node
+appearing), always in step order; hops that run together share a moment. Every gallery diagram with
+steps storyboards in order (a test holds this).
+
+CLI: `node catalog/aws-kit/frame.mjs <family spec> <diagram id> [--at 0.5|poster] [--theme light|dark]
+[--out file.svg]`, or `--storyboard <dir>` for one svg per step and an `index.html` that shows them
+with their step texts. `exportDiagram(spec, { to: 'svg', at })` and `{ to: 'storyboard' }` (frames,
+plus a self-contained HTML page) do the same, and so does the MCP tool `export_diagram`. For a PNG,
+screenshot the svg in headless Edge as in the Workflow section.
+
 **Placement helpers** (`catalog/aws-kit/place.mjs`, imported by the vpc, transit, endpoints and dns
 specs): `centered(size)` makes a node factory that places icons by center and keeps `cx`/`cy` on the
 node; `R`, `L`, `T`, `B` (below the label) and `Bi` (below the icon) give a node's edge ports;
@@ -254,7 +276,9 @@ resolveIcon('AWS::RDS::DBInstance', { props: { Engine: 'postgres', MultiAZ: true
 `catalog/aws-kit/import/index.mjs` is the one entry point: `importDiagram(content, { from: 'auto' })` detects
 draw.io (plain, compressed, `.drawio.svg`, `.drawio.png`), Mermaid, PlantUML or D2 and returns
 `{ spec, report: { from, issues, unmapped, tile, lint } }`; `exportDiagram(spec, { to: 'drawio' | 'mermaid' | 'svg' })`
-returns `{ to, text }`. CLI: `node catalog/aws-kit/import/index.mjs <file> [--from x] [--id x] [--out spec.json] [--svg out.svg]`.
+returns `{ to, text }`; `to: 'svg'` takes `at` for a frozen frame and `to: 'storyboard'` returns
+`frames` (see Frames and storyboards). CLI: `node catalog/aws-kit/import/index.mjs <file> [--from x]
+[--id x] [--out spec.json] [--svg out.svg] [--at 0.5|poster]`.
 The MCP server exposes both as `import_diagram` and `export_diagram`. Importers animate the order a
 source gives with `story(hops, { reply })` (`catalog/aws-kit/story.mjs`), which authors can use too: an
 ordered list of hops becomes even windows on the clock, arrival rings, numbered steps and, with

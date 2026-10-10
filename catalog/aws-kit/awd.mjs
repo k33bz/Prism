@@ -104,6 +104,7 @@ export function checkSpec(spec) {
   const id = spec.id; if (!/^[a-z][a-z0-9-]*$/.test(String(id))) fail('diagram', 'id must be kebab/alnum: ' + JSON.stringify(id));
   const at = `diagram ${id}`;
   okOptNum(spec, ['w', 'h', 'dur'], at);
+  if (spec.poster != null && !(typeof spec.poster === 'number' && spec.poster >= 0 && spec.poster < 1)) fail(at, 'poster must be a fraction of the clock in [0, 1)');
   const nodeIds = new Set(), wireIds = new Set(), groupIds = new Set();
   for (const [i, g] of (spec.groups || []).entries()) {
     const w = `${at} group[${i}]`;

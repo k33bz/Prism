@@ -4,9 +4,11 @@
 //   import { importDiagram, exportDiagram, detectFormat } from './import/index.mjs';
 //   const { spec, report } = await importDiagram(text, { from: 'auto', id: 'my-api' });
 //   const { text } = await exportDiagram(spec, { to: 'drawio' });
+//   const { text } = await exportDiagram(spec, { to: 'svg', at: 0.5 });   // a still at mid-cycle (frame.mjs)
+//   const { frames } = await exportDiagram(spec, { to: 'storyboard' });   // one still per numbered step
 //
 // CLI: node catalog/aws-kit/import/index.mjs <file> [--from auto|drawio|mermaid|plantuml|d2] [--id x]
-//        [--out spec.json] [--svg out.svg] [--theme light|dark|auto]
+//        [--out spec.json] [--svg out.svg] [--at 0.5|poster] [--theme light|dark|auto]
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -44,8 +46,12 @@ export async function importDiagram(content, opts = {}) {
   return { ...out, report: { ...out.report, from } };
 }
 
-/** Export a kit diagram spec: to drawio (.drawio XML), mermaid (flowchart, or dialect architecture-beta) or svg (standalone). */
-export async function exportDiagram(spec, { to = 'drawio', dialect, theme, still } = {}) {
+/**
+ * Export a kit diagram spec: to drawio (.drawio XML), mermaid (flowchart, or dialect architecture-beta),
+ * svg (standalone; still: the static diagram; at: a fraction of the clock or 'poster', frozen there) or
+ * storyboard ({ frames: [{ n, at, text, svg }] }, one still per numbered step, and text: an HTML page).
+ */
+export async function exportDiagram(spec, { to = 'drawio', dialect, theme, still, at } = {}) {
   if (to === 'drawio') {
     const m = await load('drawio');
     const fn = m.toDrawio || (await load('drawio-export').catch(() => ({}))).toDrawio;
@@ -53,18 +59,33 @@ export async function exportDiagram(spec, { to = 'drawio', dialect, theme, still
     return { to, text: fn(spec) };
   }
   if (to === 'mermaid') return { to, text: (await load('mermaid')).toMermaid(spec, dialect ? { dialect } : {}) };
+  if (to === 'svg' && at != null) return { to, at, text: (await import(new URL('../frame.mjs', import.meta.url).href)).frame(spec, at, { theme: theme || 'auto' }) };
   if (to === 'svg') {
     const { standalone } = await import(new URL('../awd.mjs', import.meta.url).href);
     return { to, text: standalone(spec, { theme: theme || 'auto', still: !!still }) };
   }
-  throw new Error(`cannot export to ${JSON.stringify(to)}: drawio, mermaid or svg`);
+  if (to === 'storyboard') {
+    const frames = (await import(new URL('../frame.mjs', import.meta.url).href)).storyboard(spec, { theme: theme || 'auto' });
+    return { to, frames, text: storyboardHtml(spec, frames) };
+  }
+  throw new Error(`cannot export to ${JSON.stringify(to)}: drawio, mermaid, svg or storyboard`);
+}
+
+const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+
+/** A storyboard as one self-contained page: each frame an <img> of its own svg, so frames keep their own ids. */
+export function storyboardHtml(spec, frames) {
+  const img = (fr) => `<img src="data:image/svg+xml;base64,${Buffer.from(fr.svg).toString('base64')}" alt="Step ${esc(fr.n)}: ${esc(fr.text)}">`;
+  return `<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(spec.name || spec.id)}</title>` +
+    '<style>:root{color-scheme:light dark}body{font:15px/1.5 Arial,sans-serif;max-width:1000px;margin:24px auto;padding:0 16px}ol{list-style:none;padding:0}li{margin:0 0 40px}img{width:100%;height:auto}h2{font-size:17px;margin:0 0 8px}</style>' +
+    `<h1>${esc(spec.name || spec.id)}</h1><ol>${frames.map((fr) => `<li><h2>${esc(fr.n)}. ${esc(fr.text)}</h2>${img(fr)}</li>`).join('')}</ol>\n`;
 }
 
 // ---- CLI ----
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   const [file, ...rest] = process.argv.slice(2);
   const opt = (k) => { const i = rest.indexOf(k); return i >= 0 ? rest[i + 1] : undefined; };
-  if (!file) { console.error('usage: index.mjs <file> [--from auto|drawio|mermaid|plantuml|d2] [--id x] [--out spec.json] [--svg out.svg] [--theme light|dark|auto]'); process.exit(1); }
+  if (!file) { console.error('usage: index.mjs <file> [--from auto|drawio|mermaid|plantuml|d2] [--id x] [--out spec.json] [--svg out.svg] [--at 0.5|poster] [--theme light|dark|auto]'); process.exit(1); }
   const raw = fs.readFileSync(file);
   const from = opt('--from') || detectFormat(raw, file);
   const content = from === 'drawio' && !/\.png$/i.test(file) ? raw.toString('utf8') : from === 'drawio' ? raw : raw.toString('utf8');
@@ -73,5 +94,5 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
   console.log(`${report.from}: ${spec.id} ${spec.w}x${spec.h} (${report.tile?.size || report.tile || 'tile'}), ${(spec.nodes || []).length} nodes, ${(spec.groups || []).length} groups, ${(spec.wires || []).length} wires, ${(spec.steps || []).length} steps; ${n('error')} error, ${n('warn')} warn, ${n('info')} info; ${(report.unmapped || []).length} unmapped`);
   for (const i of report.issues.filter((x) => x.severity !== 'info')) console.log(`  ${i.severity.padEnd(5)} ${i.code.padEnd(16)} ${i.message}`);
   if (opt('--out')) fs.writeFileSync(opt('--out'), JSON.stringify(spec, null, 2) + '\n');
-  if (opt('--svg')) fs.writeFileSync(opt('--svg'), (await exportDiagram(spec, { to: 'svg', theme: opt('--theme') })).text);
+  if (opt('--svg')) fs.writeFileSync(opt('--svg'), (await exportDiagram(spec, { to: 'svg', theme: opt('--theme'), at: opt('--at') })).text);
 }
