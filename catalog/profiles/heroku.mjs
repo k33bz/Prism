@@ -31,7 +31,8 @@ export default {
       // control boundary of inputs, checkboxes, radios, switches: --line's hue moved to 3:1 on bg/panel/panel2/card (WCAG 1.4.11)
       '--control-line': '#8e8a95',
       // contrast: --dim #a49db3 -> #9891a7; dim/panel 2.61 -> 3.02:1 (floor 3), dim/card 2.61 -> 3.02:1 (floor 3)
-      '--ink': '#2a2734', '--muted': '#6f6a7d', '--dim': '#9891a7',
+      // contrast: --dim #9891a7 -> #90899f; dim/bg 2.88 -> 3.2:1 (floor 3), dim/panel2 2.71 -> 3:1 (floor 3); held on --bg and --panel2 as well
+      '--ink': '#2a2734', '--muted': '#6f6a7d', '--dim': '#90899f',
       '--accent': '#79589f', '--accent-rgb': '121,88,159', '--accent2': '#79589f',  // Purple3
       // contrast: --info #6f7bd6 -> #636ec8; info/panel 3.83 -> 4.57:1 (floor 4.5), #fff/info 3.83 -> 4.57:1 (floor 4.5)
       '--info': '#636ec8', '--info-rgb': '99,110,200',                    // blue-violet

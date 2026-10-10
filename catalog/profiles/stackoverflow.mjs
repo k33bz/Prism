@@ -32,7 +32,8 @@ export default {
       // control boundary of inputs, checkboxes, radios, switches: --line's hue moved to 3:1 on bg/panel/panel2/card (WCAG 1.4.11)
       '--control-line': '#8a8c8f',
       // contrast: --dim #9fa6ad -> #838c95; dim/panel 2.46 -> 3.41:1 (floor 3), dim/card 2.46 -> 3.41:1 (floor 3); Stacks black-400
-      '--ink': '#232629', '--muted': '#6a737c', '--dim': '#838c95',                 // black-750 / black-500 / black-350
+      // contrast: --muted #6a737c -> #666f78; muted/panel2 4.3 -> 4.56:1 (floor 4.5); held on --bg and --panel2 as well
+      '--ink': '#232629', '--muted': '#666f78', '--dim': '#838c95',                 // black-750 / black-500 / black-350
       // contrast: --accent #f48024 -> #bb5c04; accent/panel 2.64 -> 4.52:1 (floor 4.5), accent/bg 2.50 -> 4.29:1 (floor 3), #fff/accent 2.64 -> 4.52:1 (floor 4.5); SO orange darkened on its own hue
       '--accent': '#bb5c04', '--accent-rgb': '187,92,4', '--accent2': '#f48024',  // SO Orange
       '--info': '#0074cc', '--info-rgb': '0,116,204',                               // SO blue link (blue-500)

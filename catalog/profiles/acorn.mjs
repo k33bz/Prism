@@ -36,7 +36,8 @@ export default {
       '--bg': '#f9f9fb', '--panel': '#ffffff', '--panel2': '#f0f0f4', '--card': '#ffffff', '--line': '#cfcfd8',
       // control boundary of inputs, checkboxes, radios, switches: --line's hue moved to 3:1 on bg/panel/panel2/card (WCAG 1.4.11)
       '--control-line': '#8b8a93',
-      '--ink': '#15141a', '--muted': '#5b5b66', '--dim': '#8f8f9d',                  // fg / fg-muted / fg-subtle
+      // contrast: --dim #8f8f9d -> #898997; dim/panel2 2.81 -> 3.03:1 (floor 3); held on --bg and --panel2 as well
+      '--ink': '#15141a', '--muted': '#5b5b66', '--dim': '#898997',                  // fg / fg-muted / fg-subtle
       // contrast: --accent #ff7139 -> #cc3d00; accent/panel 2.74 -> 4.96:1 (floor 4.5), accent/bg 2.60 -> 4.72:1 (floor 3), #fff/accent 2.74 -> 4.96:1 (floor 4.5); Photon orange-70 (orange-60 #e25920 is 3.7:1)
       '--accent': '#cc3d00', '--accent-rgb': '204,61,0', '--accent2': '#ff7139',    // orange-50 (brand)
       '--info': '#0060df', '--info-rgb': '0,96,223',                                 // blue-60 (interactive)

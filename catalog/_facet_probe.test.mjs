@@ -22,7 +22,7 @@ test('token reader: every registry theme, Cloudscape Light as the shell applies 
   const cl = themeById(HTML, 'cloudscape-light');
   assert.equal(cl.mode, 'light'); assert.equal(cl.ds, 'cloudscape');
   const k = tokenMap(cl.css);
-  assert.equal(k['--bg'], '#f2f3f3'); assert.equal(k['--ink'], '#16191f'); assert.equal(k['--dim'], '#8995a4');
+  assert.equal(k['--bg'], '#f2f3f3'); assert.equal(k['--ink'], '#16191f'); assert.equal(k['--dim'], '#828d9c');
   // the font stack keeps its quotes and commas
   assert.match(k['--font'], /"Segoe UI"/);
   assert.equal(tokenMap(themeById(HTML, 'acorn-dark').css)['--bg'], '#1c1b22');

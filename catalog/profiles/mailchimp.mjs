@@ -35,7 +35,8 @@ export default {
       // control boundary of inputs, checkboxes, radios, switches: --line's hue moved to 3:1 on bg/panel/panel2/card (WCAG 1.4.11)
       '--control-line': '#918b80',
       // contrast: --dim #a89f90 -> #9c9385; dim/panel 2.62 -> 3.03:1 (floor 3), dim/card 2.62 -> 3.03:1 (floor 3)
-      '--ink': '#241c15', '--muted': '#6b6357', '--dim': '#9c9385',        // Peppercorn family
+      // contrast: --dim #9c9385 -> #948b7e; dim/bg 2.88 -> 3.19:1 (floor 3), dim/panel2 2.71 -> 3.01:1 (floor 3); held on --bg and --panel2 as well
+      '--ink': '#241c15', '--muted': '#6b6357', '--dim': '#948b7e',        // Peppercorn family
       // contrast: --accent #ffe01b -> #877605; accent/panel 1.32 -> 4.54:1 (floor 4.5), accent/bg 1.25 -> 4.32:1 (floor 3), #fff/accent 1.32 -> 4.54:1 (floor 4.5); Cavendish yellow cannot be text or carry #fff on white; deepest gold on the same hue that does (dark mode keeps #ffe01b)
       '--accent': '#877605', '--accent-rgb': '135,118,5', '--accent2': '#ffe01b',  // Cavendish gold / Cavendish Yellow
       '--info': '#007c89', '--info-rgb': '0,124,137',                       // Mailchimp teal

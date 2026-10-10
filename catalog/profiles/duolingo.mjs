@@ -34,7 +34,9 @@ export default {
       // text — Eel/Wolf/Hare (Duolingo never uses pure black)
       // contrast: --muted #777777 -> #767676; muted/panel 4.48 -> 4.54:1 (floor 4.5), muted/card 4.48 -> 4.54:1 (floor 4.5)
       // contrast: --dim #afafaf -> #949494; dim/panel 2.19 -> 3.03:1 (floor 3), dim/card 2.19 -> 3.03:1 (floor 3)
-      '--ink': '#3c3c3c', '--muted': '#767676', '--dim': '#949494',
+      // contrast: --muted #767676 -> #717171; muted/bg 4.24 -> 4.56:1 (floor 4.5), muted/panel2 4.39 -> 4.72:1 (floor 4.5); held on --bg and --panel2 as well
+      // contrast: --dim #949494 -> #8f8f8f; dim/bg 2.83 -> 3.02:1 (floor 3), dim/panel2 2.93 -> 3.13:1 (floor 3); held on --bg and --panel2 as well
+      '--ink': '#3c3c3c', '--muted': '#717171', '--dim': '#8f8f8f',
       // brand roles
       // contrast: --accent #58cc02 -> #347f02; accent/panel 2.09 -> 5.02:1 (floor 4.5), accent/bg 1.95 -> 4.69:1 (floor 3), #fff/accent 2.09 -> 5.02:1 (floor 4.5); Feather Green darkened on its own hue; Tree Frog #58a700 is only 3.0:1
       '--accent': '#347f02', '--accent-rgb': '52,127,2', '--accent2': '#58cc02',   // Feather Green
