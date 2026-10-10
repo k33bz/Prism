@@ -702,7 +702,7 @@
       "css": ".kpi .l { font-family: ui-monospace, Menlo, monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); }\n.delta.up { color: var(--pos); background: rgba(var(--pos-rgb),.13); }\n.delta.down { color: var(--neg); background: rgba(var(--neg-rgb),.13); }\n.delta.flat { color: var(--muted); background: rgba(255, 255, 255, 0.06); }\n.unit { font-size: 22px; font-weight: 700; color: var(--muted); }\n.scx-kpirow { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; width: 260px; }\n.scx-kpic { background: var(--card); background-image: var(--cardgrad); border: 1px solid var(--line); border-radius: 11px; padding: 11px 13px; }\n.scx-kpic .l { font-size: 9.5px; text-transform: uppercase; letter-spacing: 0.4px; color: var(--muted); }\n.scx-kpic .v { font-size: 25px; font-weight: 800; line-height: 1.1; margin-top: 3px; font-variant-numeric: tabular-nums; }\n.scx-kpic .d { font-size: 11px; font-weight: 800; margin-top: 3px; }\n.scx-kpic .d.up { color: var(--pos); }\n.scx-kpic .d.down { color: var(--neg); }\n.scx-kpic .d.flat { color: var(--muted); }\n.nch-candle .up { color: var(--pos); }\n.n3d-cards .card .v { font-size: 22px; font-weight: 800; color: var(--c,var(--info)); margin-top: 2px; }\n.n3d-cone .d { position: absolute; left: 50%; top: 50%; border-radius: 50%; background: linear-gradient(135deg,var(--crit),var(--accent)); animation: 0.7s ease-out 0s 1 normal both running ncx2Fade; }\n@keyframes ncx2Fade { \n  0% { opacity: 0; }\n  100% { opacity: 1; }\n}\n@media (prefers-reduced-motion:reduce){.n3d-cone .d{animation:none!important}}",
       "galleryTitle": "Charts & Metrics",
       "addedOn": "2026-07-13",
-      "updatedOn": "2026-07-28",
+      "updatedOn": "2026-10-10",
       "author": "crazy54",
       "role": "data-display",
       "a11y": {
@@ -2348,7 +2348,7 @@
       "css": ".logstream .sl { display: flex; gap: 9px; padding: 1px 0px; animation: 0.35s ease-out 0s 1 normal none running logIn; }\n.logstream .sl .ts { color: var(--dim); }\n.logstream .sl .lv { font-weight: 700; min-width: 38px; }\n.logstream .sl .lv.info { color: var(--info); }\n.logstream .sl .lv.warn { color: var(--warn); }\n.logstream .sl .lv.err { color: var(--neg); }\n.logstream .sl .lv.ok { color: var(--pos); }\n.logstream .sl .m { color: rgb(198, 210, 226); flex: 1 1 0%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }\n.rag-g { --rag: var(--pos); --rag-rgb: var(--pos-rgb); }\n.rag-score { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 14px 22px; border-radius: 16px; background: rgba(var(--rag-rgb),.10); border: 1px solid var(--rag); min-width: 140px; }\n.rag-score .sv { font-size: 46px; font-weight: 800; line-height: 1; color: var(--rag); font-variant-numeric: tabular-nums; }\n.rag-score .sl { font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); }\n.rag-score .sb { font-size: 11px; font-weight: 800; color: var(--rag); text-transform: uppercase; letter-spacing: 0.5px; }\n@keyframes logIn { \n  0% { opacity: 0; transform: translateY(6px); }\n  100% { opacity: 1; transform: none; }\n}\n@media (prefers-reduced-motion:reduce){.logstream .sl{animation:none!important}}",
       "galleryTitle": "Charts & Metrics",
       "addedOn": "2026-07-13",
-      "updatedOn": "2026-07-28",
+      "updatedOn": "2026-10-10",
       "author": "crazy54",
       "role": "input",
       "a11y": {
@@ -2398,7 +2398,7 @@
       "css": ".logstream .sl { display: flex; gap: 9px; padding: 1px 0px; animation: 0.35s ease-out 0s 1 normal none running logIn; }\n.logstream .sl .ts { color: var(--dim); }\n.logstream .sl .lv { font-weight: 700; min-width: 38px; }\n.logstream .sl .lv.info { color: var(--info); }\n.logstream .sl .lv.warn { color: var(--warn); }\n.logstream .sl .lv.err { color: var(--neg); }\n.logstream .sl .lv.ok { color: var(--pos); }\n.logstream .sl .m { color: rgb(198, 210, 226); flex: 1 1 0%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }\n.rag-y { --rag: var(--warn); --rag-rgb: var(--warn-rgb); }\n.rag-score { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 14px 22px; border-radius: 16px; background: rgba(var(--rag-rgb),.10); border: 1px solid var(--rag); min-width: 140px; }\n.rag-score .sv { font-size: 46px; font-weight: 800; line-height: 1; color: var(--rag); font-variant-numeric: tabular-nums; }\n.rag-score .sl { font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); }\n.rag-score .sb { font-size: 11px; font-weight: 800; color: var(--rag); text-transform: uppercase; letter-spacing: 0.5px; }\n@keyframes logIn { \n  0% { opacity: 0; transform: translateY(6px); }\n  100% { opacity: 1; transform: none; }\n}\n@media (prefers-reduced-motion:reduce){.logstream .sl{animation:none!important}}",
       "galleryTitle": "Charts & Metrics",
       "addedOn": "2026-07-13",
-      "updatedOn": "2026-07-28",
+      "updatedOn": "2026-10-10",
       "author": "crazy54",
       "role": "input",
       "a11y": {
@@ -2448,7 +2448,7 @@
       "css": ".logstream .sl { display: flex; gap: 9px; padding: 1px 0px; animation: 0.35s ease-out 0s 1 normal none running logIn; }\n.logstream .sl .ts { color: var(--dim); }\n.logstream .sl .lv { font-weight: 700; min-width: 38px; }\n.logstream .sl .lv.info { color: var(--info); }\n.logstream .sl .lv.warn { color: var(--warn); }\n.logstream .sl .lv.err { color: var(--neg); }\n.logstream .sl .lv.ok { color: var(--pos); }\n.logstream .sl .m { color: rgb(198, 210, 226); flex: 1 1 0%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }\n.rag-r { --rag: var(--neg); --rag-rgb: var(--neg-rgb); }\n.rag-score { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 14px 22px; border-radius: 16px; background: rgba(var(--rag-rgb),.10); border: 1px solid var(--rag); min-width: 140px; }\n.rag-score .sv { font-size: 46px; font-weight: 800; line-height: 1; color: var(--rag); font-variant-numeric: tabular-nums; }\n.rag-score .sl { font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); }\n.rag-score .sb { font-size: 11px; font-weight: 800; color: var(--rag); text-transform: uppercase; letter-spacing: 0.5px; }\n@keyframes logIn { \n  0% { opacity: 0; transform: translateY(6px); }\n  100% { opacity: 1; transform: none; }\n}\n@media (prefers-reduced-motion:reduce){.logstream .sl{animation:none!important}}",
       "galleryTitle": "Charts & Metrics",
       "addedOn": "2026-07-13",
-      "updatedOn": "2026-07-28",
+      "updatedOn": "2026-10-10",
       "author": "crazy54",
       "role": "input",
       "a11y": {
@@ -2756,7 +2756,7 @@
       "css": ".logstream .sl { display: flex; gap: 9px; padding: 1px 0px; animation: 0.35s ease-out 0s 1 normal none running logIn; }\n.logstream .sl .ts { color: var(--dim); }\n.logstream .sl .lv { font-weight: 700; min-width: 38px; }\n.logstream .sl .lv.info { color: var(--info); }\n.logstream .sl .lv.warn { color: var(--warn); }\n.logstream .sl .lv.err { color: var(--neg); }\n.logstream .sl .lv.ok { color: var(--pos); }\n.logstream .sl .m { color: rgb(198, 210, 226); flex: 1 1 0%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }\n.rag-r { --rag: var(--neg); --rag-rgb: var(--neg-rgb); }\n.rag-y { --rag: var(--warn); --rag-rgb: var(--warn-rgb); }\n.rag-g { --rag: var(--pos); --rag-rgb: var(--pos-rgb); }\n.rag-score { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 14px 22px; border-radius: 16px; background: rgba(var(--rag-rgb),.10); border: 1px solid var(--rag); min-width: 140px; }\n.rag-score .sv { font-size: 46px; font-weight: 800; line-height: 1; color: var(--rag); font-variant-numeric: tabular-nums; }\n.rag-score .sl { font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); }\n.rag-score .sb { font-size: 11px; font-weight: 800; color: var(--rag); text-transform: uppercase; letter-spacing: 0.5px; }\n@keyframes logIn { \n  0% { opacity: 0; transform: translateY(6px); }\n  100% { opacity: 1; transform: none; }\n}\n@media (prefers-reduced-motion:reduce){.logstream .sl{animation:none!important}}",
       "galleryTitle": "Charts & Metrics",
       "addedOn": "2026-07-13",
-      "updatedOn": "2026-07-28",
+      "updatedOn": "2026-10-10",
       "author": "crazy54",
       "role": "data-display",
       "a11y": {
@@ -3263,7 +3263,7 @@
       "css": ".draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animation: 1.6s ease-out 0s 1 normal forwards running draw; }\n@keyframes draw { \n  100% { stroke-dashoffset: 0; }\n}\n@keyframes rag-blink { \n  50% { opacity: 0.25; }\n}\n@media (prefers-reduced-motion: reduce){.draw, .scx-slope-line, .scx-bump path { stroke-dashoffset: 0; }}\n@media (prefers-reduced-motion:reduce){.draw,[style*=\"animation\"][style*=\"rag-blink\"]{animation:none!important}}",
       "galleryTitle": "Charts & Metrics",
       "addedOn": "2026-07-13",
-      "updatedOn": "2026-07-28",
+      "updatedOn": "2026-10-10",
       "author": "crazy54",
       "role": "data-display",
       "a11y": {
@@ -4540,7 +4540,7 @@
       "css": ".spin3d { transform-box: view-box; transform-origin: center center; animation: 18s linear 0s infinite normal none running spin3dRot; }\n@keyframes spin3dRot { \n  100% { transform: rotate(360deg); }\n}\n@keyframes rag-blink { \n  50% { opacity: 0.25; }\n}\n@media (prefers-reduced-motion:reduce){.spin3d,[style*=\"animation\"][style*=\"rag-blink\"]{animation:none!important}}",
       "galleryTitle": "Charts & Metrics",
       "addedOn": "2026-07-13",
-      "updatedOn": "2026-07-28",
+      "updatedOn": "2026-10-10",
       "author": "crazy54",
       "role": "data-display",
       "a11y": {
@@ -5356,7 +5356,7 @@
       "css": ".lv-gauge { position: relative; width: 150px; height: 96px; }\n.lv-gauge .gv { position: absolute; bottom: 2px; left: 0px; right: 0px; text-align: center; font-style: normal; font-variant: tabular-nums; font-size-adjust: none; font-language-override: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-weight: 800; font-stretch: normal; font-size: 22px; line-height: normal; font-family: ui-monospace, Menlo, monospace; }\n.lv-gauge .needle { transform-box: fill-box; transform-origin: center bottom; transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); }\n.ncx2-arcgauge .needle { transform-origin: 75px 82px; animation: 2.8s ease-in-out 0s infinite normal none running ncx2Needle; }\n@keyframes ncx2Needle { \n  0%, 100% { transform: rotate(-72deg); }\n  50% { transform: rotate(58deg); }\n}\n@media (prefers-reduced-motion:reduce){.ncx2-arcgauge .needle{animation:none!important}}",
       "galleryTitle": "Charts & Metrics",
       "addedOn": "2026-07-13",
-      "updatedOn": "2026-07-28",
+      "updatedOn": "2026-10-10",
       "author": "crazy54",
       "role": "data-display",
       "a11y": {
@@ -5607,7 +5607,7 @@
       "css": ".lv-stackbars { display: flex; align-items: flex-end; gap: 5px; height: 96px; width: 100%; justify-content: center; }\n.lv-stackbars .col { width: 20px; display: flex; flex-direction: column-reverse; border-radius: 3px; overflow: hidden; transition: height 0.4s; }\n.lv-stackbars .col > span { display: block; transition: height 0.5s cubic-bezier(0.4, 1, 0.4, 1); }\n.nch-marimekko .col { display: flex; flex-direction: column; gap: 3px; }\n.nch-marimekko .col i { border-radius: 2px; transform-origin: center top; animation: 0.8s ease-out 0s 1 normal both running nchGrow; }\n@keyframes nchGrow { \n  0% { transform: scaleY(0); }\n  100% { transform: scaleY(1); }\n}\n.n3d-stack .col { position: absolute; bottom: 0px; width: 30px; transform-style: preserve-3d; }\n@media (prefers-reduced-motion:reduce){.nch-marimekko .col i{animation:none!important}}",
       "galleryTitle": "Charts & Metrics",
       "addedOn": "2026-07-13",
-      "updatedOn": "2026-07-28",
+      "updatedOn": "2026-10-10",
       "author": "crazy54",
       "role": "data-display",
       "a11y": {
@@ -46785,7 +46785,7 @@
       "css": ":root { --teal: #2ec6d6; --gray: #5b6678; }\n.magnify .lens { transform-box: view-box; transform-origin: 59px 59px; animation: 3.4s ease-in-out 0s infinite normal none running magScan; }\n@keyframes magScan { \n  0% { transform: translate(-14px, -10px); }\n  25% { transform: translate(14px, -6px); }\n  50% { transform: translate(10px, 12px); }\n  75% { transform: translate(-12px, 8px); }\n  100% { transform: translate(-14px, -10px); }\n}\n@media (prefers-reduced-motion:reduce){.magnify .lens{animation:none!important}}",
       "galleryTitle": "Animated Objects",
       "addedOn": "2026-07-13",
-      "updatedOn": "2026-07-28",
+      "updatedOn": "2026-10-10",
       "author": "crazy54",
       "role": "media",
       "a11y": {
@@ -56298,7 +56298,7 @@
       "css": ".prism-rail a.sr-link.active { background: rgba(255, 153, 0, 0.14); color: rgb(255, 255, 255); border-left-color: rgb(255, 153, 0); }\n.inp-label { font-size: 11px; color: var(--muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; display: block; }\n.inp-hint { font-size: 10.5px; color: var(--dim); margin-top: 5px; }\n.chip { padding: 7px 14px; border-radius: 20px; border: 1px solid var(--line); background: var(--panel2); color: var(--muted); font-size: 12px; font-weight: 600; cursor: pointer; transition: 0.15s; user-select: none; }\n.chip:hover { border-color: var(--muted); color: var(--ink); }\n.chip.active { border-color: var(--accent); background: rgba(var(--accent-rgb),.12); color: var(--accent); }\n.color-swatch.active { border-color: var(--accent); box-shadow: 0 0 10px rgba(var(--accent-rgb),.4); }\n.us-step.active .us-ico { background: rgba(var(--accent-rgb),.15); color: var(--accent); animation: 0.8s linear 0s infinite normal none running spinico; }\n.when-presets { display: flex; flex-wrap: wrap; gap: 8px; width: 100%; }\n@keyframes spinico { \n  100% { transform: rotate(360deg); }\n}\n@media (prefers-reduced-motion:reduce){.us-step.active .us-ico{animation:none!important}}",
       "galleryTitle": "Input Methods",
       "addedOn": "2026-07-13",
-      "updatedOn": "2026-07-28",
+      "updatedOn": "2026-10-10",
       "author": "crazy54",
       "role": "input",
       "a11y": {
@@ -57074,7 +57074,7 @@
       "css": ".nin2-flipnum { display: flex; align-items: center; gap: 14px; }\n.nin2-flipnum button { width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--line); background: var(--panel2); color: var(--ink); font-size: 20px; cursor: pointer; transition: 0.15s; }\n.nin2-flipnum button:hover { border-color: var(--accent); color: var(--accent); }\n.nin2-flipnum .nin2-dig { width: 64px; height: 64px; perspective: 300px; }\n.nin2-flipnum .nin2-card { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; font: 800 30px ui-monospace, Menlo, monospace; display: flex; align-items: center; justify-content: center; border-radius: 12px; background: linear-gradient(180deg,var(--panel2),var(--panel)); border: 1px solid var(--line); color: var(--accent); }\n.nin2-flipnum .nin2-card.nin2-roll { animation: 0.35s ease 0s 1 normal none running nin2Roll; }\n@keyframes nin2Roll { \n  0% { transform: rotateX(0deg); }\n  50% { transform: rotateX(-90deg); }\n  100% { transform: rotateX(0deg); }\n}\n@media (prefers-reduced-motion: reduce){.nin2-drop .nin2-di, .nin2-chips .nin2-chip, .nin2-flipnum .nin2-card.nin2-roll, .nin2-heart.nin2-liked .nin2-hi, .nin2-heart.nin2-liked .nin2-burst i { animation: auto ease 0s 1 normal none running none !important; }}\n@media (prefers-reduced-motion:reduce){.nin2-flipnum .nin2-card.nin2-roll{animation:none!important}}",
       "galleryTitle": "Input Methods",
       "addedOn": "2026-07-13",
-      "updatedOn": "2026-07-28",
+      "updatedOn": "2026-10-10",
       "author": "crazy54",
       "role": "navigation",
       "a11y": {
@@ -65714,7 +65714,7 @@
       "css": ".ts-svg { display: block; margin: 0px auto; overflow: visible; }\n.ts-svg text { font-weight: 800; font-size: 15px; fill: var(--c); }\n.ts-svg .grad-fill { fill: url(\"#tsGrad\"); }\n.ts-smil-still { display: none; }\n@media (prefers-reduced-motion: reduce){.ts-smil { display: none; }.ts-smil-still { display: inline; }}",
       "galleryTitle": "Text Shapes",
       "addedOn": "2026-07-13",
-      "updatedOn": "2026-07-28",
+      "updatedOn": "2026-10-10",
       "author": "crazy54",
       "role": "decorative",
       "a11y": {
@@ -65760,7 +65760,7 @@
       "css": ".ts-svg { display: block; margin: 0px auto; overflow: visible; }\n.ts-svg text { font-weight: 800; font-size: 15px; fill: var(--c); }\n.ts-svg .grad-fill { fill: url(\"#tsGrad\"); }\n.ts-smil-still { display: none; }\n@media (prefers-reduced-motion: reduce){.ts-smil { display: none; }.ts-smil-still { display: inline; }}",
       "galleryTitle": "Text Shapes",
       "addedOn": "2026-07-13",
-      "updatedOn": "2026-07-28",
+      "updatedOn": "2026-10-10",
       "author": "crazy54",
       "role": "decorative",
       "a11y": {
@@ -67301,7 +67301,7 @@
       "css": ".ts-smil-still { display: none; }\n@media (prefers-reduced-motion: reduce){.ts-smil { display: none; }.ts-smil-still { display: inline; }}\n.nsh2-svg { display: block; margin: 0px auto; overflow: visible; }\n.nsh2-svg text { font-weight: 800; font-size: 15px; }",
       "galleryTitle": "Text Shapes",
       "addedOn": "2026-07-13",
-      "updatedOn": "2026-07-28",
+      "updatedOn": "2026-10-10",
       "author": "crazy54",
       "role": "decorative",
       "a11y": {
@@ -67341,7 +67341,7 @@
       "css": ".ts-smil-still { display: none; }\n@media (prefers-reduced-motion: reduce){.ts-smil { display: none; }.ts-smil-still { display: inline; }}\n.nsh2-svg { display: block; margin: 0px auto; overflow: visible; }\n.nsh2-svg text { font-weight: 800; font-size: 15px; }",
       "galleryTitle": "Text Shapes",
       "addedOn": "2026-07-13",
-      "updatedOn": "2026-07-28",
+      "updatedOn": "2026-10-10",
       "author": "crazy54",
       "role": "decorative",
       "a11y": {
@@ -67382,7 +67382,7 @@
       "css": ".ts-smil-still { display: none; }\n@media (prefers-reduced-motion: reduce){.ts-smil { display: none; }.ts-smil-still { display: inline; }}\n.nsh2-svg { display: block; margin: 0px auto; overflow: visible; }\n.nsh2-svg text { font-weight: 800; font-size: 15px; }",
       "galleryTitle": "Text Shapes",
       "addedOn": "2026-07-13",
-      "updatedOn": "2026-07-28",
+      "updatedOn": "2026-10-10",
       "author": "crazy54",
       "role": "decorative",
       "a11y": {
@@ -74146,7 +74146,7 @@
       "css": ".arch-svg { display: block; width: 100%; height: 100%; overflow: visible; font: 700 9px ui-sans-serif, system-ui, sans-serif; }\n.arch-svg text { fill: var(--ink); text-anchor: middle; dominant-baseline: middle; }\n.arch-conn .arch-svg .arch-ln { stroke: var(--line); stroke-width: 2; fill: none; }\n.arch-conn .arch-svg .arch-flow { stroke: var(--info); stroke-width: 2; fill: none; stroke-linecap: round; stroke-dasharray: 7, 7; animation: 1.1s linear 0s infinite normal none running archDash; }\n.arch-dnode { fill: var(--card); stroke: rgba(var(--info-rgb),.7); stroke-width: 1.4; }\n.arch-dnode.arch-pos { stroke: var(--pos); }\n.arch-dnode.arch-warn { stroke: var(--warn); }\n.arch-dnode.arch-neg { stroke: var(--neg); }\n.arch-dedge { stroke: var(--line); stroke-width: 1.6; fill: none; }\n.arch-diamond { fill: rgba(var(--warn-rgb),.14); stroke: var(--warn); stroke-width: 1.4; }\n.arch-state { fill: rgba(var(--info-rgb),.13); stroke: var(--info); stroke-width: 1.4; }\n.arch-state.arch-active { fill: rgba(var(--pos-rgb),.2); stroke: var(--pos); animation: 3s ease-in-out 0s infinite normal none running archBreathS; }\n@keyframes archDash { \n  100% { stroke-dashoffset: -32; }\n}\n@keyframes archBreathS { \n  0%, 100% { filter: drop-shadow(0 0 0 rgba(var(--pos-rgb),0)); }\n  50% { filter: drop-shadow(0 0 6px rgba(var(--pos-rgb),.7)); }\n}\n@media (prefers-reduced-motion:reduce){.arch-conn .arch-svg .arch-flow,.arch-state.arch-active{animation:none!important}}",
       "galleryTitle": "Architecture Diagrams",
       "addedOn": "2026-07-14",
-      "updatedOn": "2026-07-28",
+      "updatedOn": "2026-10-10",
       "author": "crazy54",
       "role": "data-display",
       "a11y": {
@@ -89147,7 +89147,7 @@
       "css": ".obs { --ob: var(--c,var(--crit)); --ob-rgb: var(--c-rgb,var(--crit-rgb)); font-size: 12.5px; color: var(--ink); }\n.obs-canvas { width: 280px; max-width: 100%; height: 108px; border: 1px solid var(--line); border-radius: 10px; background-color: rgb(12, 16, 27); background-image: radial-gradient(rgba(var(--ob-rgb),.22) .8px,transparent .9px); background-size: 12px 12px; position: relative; overflow: hidden; }\n.obs-thought-path svg { position: absolute; inset: 0px; width: 100%; height: 100%; }\n.obs-thought-path path { fill: none; stroke: var(--ob); stroke-width: 1.5; stroke-linecap: round; stroke-dasharray: 5, 5; animation: 1.1s linear 0s infinite normal none running obsFlowDash; }\n.obs-thought-path circle { fill: var(--panel2); stroke: var(--ob); stroke-width: 1.5; animation: 4s ease 0s infinite normal none running obsTipPop; }\n.obs-thought-path .traveler { fill: rgb(255, 255, 255); stroke: none; filter: drop-shadow(0 0 5px var(--ob)); }\n@keyframes obsTipPop { \n  0%, 100% { r: 3; }\n  10%, 16% { r: 4.6; fill: var(--ob); }\n  28% { r: 3; }\n}\n@keyframes obsFlowDash { \n  100% { stroke-dashoffset: -9; }\n}\n@media (prefers-reduced-motion: reduce){.obs-thought-path .traveler { display: none; }}\n@media (prefers-reduced-motion:reduce){.obs-thought-path path,.obs-thought-path circle{animation:none!important}}",
       "galleryTitle": "Obsidian Facets",
       "addedOn": "2026-07-31",
-      "updatedOn": null,
+      "updatedOn": "2026-10-10",
       "author": "crazy54",
       "role": "decorative",
       "a11y": {
