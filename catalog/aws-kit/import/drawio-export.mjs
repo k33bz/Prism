@@ -189,8 +189,9 @@ export function exportDrawio(source, { scale = 1.2 } = {}) {
     cell(G.id, { prism_kind: 'group', prism_index: G.i, prism_group: g.kind, prism_id: g.id, prism_icon: typeof g.icon === 'string' ? g.icon : null, prism_tone: g.tone, prism_fill: g.fill ? '1' : null, prism_dashed: g.dashed != null ? (g.dashed ? '1' : '0') : null, prism_align: g.align },
       html(label), groupStyle(g), G.b, parentOf(G.b, G.i));
     if (g.note) {
-      const w = textWidth(g.note, 9) + 10;
-      cell(`${G.id}-note`, { prism_kind: 'gnote' }, html(g.note), 'text;html=1;align=right;verticalAlign=middle;resizable=0;points=[];autosize=0;strokeColor=none;fillColor=none;fontSize=10;fontColor=#545B64;', { x: g.x + g.w - 6 - w, y: g.y + 3, w, h: 14 }, G);
+      // one line, or two (the IPv6 CIDR of a dual-stack frame under the IPv4 one)
+      const lines = [].concat(g.note).map(String), w = Math.max(...lines.map((l) => textWidth(l, 9))) + 10;
+      cell(`${G.id}-note`, { prism_kind: 'gnote' }, lines.map(html).join('<br>'), 'text;html=1;align=right;verticalAlign=top;resizable=0;points=[];autosize=0;strokeColor=none;fillColor=none;fontSize=10;fontColor=#545B64;', { x: g.x + g.w - 6 - w, y: g.y + 3, w, h: 14 + 11 * (lines.length - 1) }, G);
     }
   }
   // nodes

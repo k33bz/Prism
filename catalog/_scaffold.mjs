@@ -53,7 +53,7 @@ h3.sec{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--
 .tile .stage{padding:26px 18px;min-height:130px;display:flex;align-items:center;justify-content:center;background:repeating-linear-gradient(135deg,rgba(255,255,255,.012) 0 10px,transparent 10px 20px);position:relative}
 .tile .meta{padding:12px 14px;border-top:1px solid var(--line)}
 .tile .nm{font-weight:700;font-size:13.5px}
-.tile .ref{font-family:ui-monospace,Menlo,monospace;font-size:11.5px;color:var(--accent);background:var(--panel2);border:1px solid var(--line);border-radius:6px;padding:2px 7px;display:inline-block;margin-top:6px}
+/* accent mixed 25% toward --ink: 4.5:1 on --panel2 in every theme (plain accent is 3.66:1 in acorn-dark) */.tile .ref{font-family:ui-monospace,Menlo,monospace;font-size:11.5px;color:color-mix(in srgb,var(--accent) 75%,var(--ink));background:var(--panel2);border:1px solid var(--line);border-radius:6px;padding:2px 7px;display:inline-block;margin-top:6px}
 .tile .desc{color:var(--muted);font-size:12px;margin-top:8px}
 .tile .row{display:flex;gap:8px;margin-top:10px}
 .tile .copy{flex:1;background:var(--panel2);border:1px solid var(--line);color:var(--ink);border-radius:8px;padding:7px;font-size:12px;cursor:pointer;transition:.15s;font-family:inherit}

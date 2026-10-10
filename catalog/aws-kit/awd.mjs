@@ -721,7 +721,7 @@ function previewHtml(sectionHtml, mode, still) {
 h3.sec{font-size:12px;text-transform:uppercase;letter-spacing:.12em;color:var(--dim);border-bottom:1px solid var(--line);padding-bottom:8px}
 .gallery{display:grid;gap:18px}.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column}
 .tile .stage{display:flex;align-items:center;justify-content:center}.tile .meta{padding:10px 14px;border-top:1px solid var(--line)}
-.tile .nm{font-weight:700}.tile .ref{font:11px ui-monospace,monospace;color:var(--accent)}.tile .desc{color:var(--muted);font-size:12px}.tile .copy{display:none}
+.tile .nm{font-weight:700}.tile .ref{font:11px ui-monospace,monospace;color:color-mix(in srgb,var(--accent) 75%,var(--ink))}.tile .desc{color:var(--muted);font-size:12px}.tile .copy{display:none}
 ${css}</style></head><body>${sprite}${sectionHtml}</body></html>`;
 }
 

@@ -894,9 +894,9 @@ function convert(model, doc, pi, opts, add, unmapped, meta) {
       N.push({ c, n, src: c.box, isBox: true });
     } else if (k.t === 'text') {
       // CIDR or a short right-aligned text on a frame's top band: that frame's note
-      const host = G.map((g, i) => [g, i]).filter(([g]) => c.box.x >= g.box.x - 2 && c.box.x + c.box.w <= g.box.x + g.box.w + 4 && c.box.y >= g.box.y - 4 && c.box.y + c.box.h <= g.box.y + 30)
+      const host = G.map((g, i) => [g, i]).filter(([g]) => c.box.x >= g.box.x - 2 && c.box.x + c.box.w <= g.box.x + g.box.w + 4 && c.box.y >= g.box.y - 4 && c.box.y + c.box.h <= g.box.y + (k.gnote ? 48 : 30))
         .sort((a, b) => a[0].box.w * a[0].box.h - b[0].box.w * b[0].box.h)[0];
-      if (host && !host[0].g.note && (k.gnote || (!k.prism && (/^[\d./:a-f]+(\s*\(.*\))?$/i.test(k.label) || (k.align === 'right' && k.label.length <= 24)) && !k.label.includes('\n')))) { host[0].g.note = k.label; continue; }
+      if (host && !host[0].g.note && (k.gnote || (!k.prism && (/^[\d./:a-f]+(\s*\(.*\))?$/i.test(k.label) || (k.align === 'right' && k.label.length <= 24)) && !k.label.includes('\n')))) { const ln = k.label.split('\n').map((x) => x.trim()).filter(Boolean); host[0].g.note = k.gnote && ln.length > 1 ? ln.slice(0, 2) : k.label; continue; }
       if (k.note && typeof k.note === 'object' && k.note.text) {
         // a note Prism exported: its own fields, the place from the drawing
         const nt = pick(k.note, ['text', 'kind', 'anchor', 'tone', 'size', 'weight', 'caps']);
@@ -1026,7 +1026,7 @@ function convert(model, doc, pi, opts, add, unmapped, meta) {
     x.header = !!label || hasIcon;
     const lw = label ? textWidth(label, 10) : 0;
     x.labelEnd = (hasIcon ? 25 : 6) + lw + 6;
-    const nw = g.note ? textWidth(g.note, 9) + 12 : 0;
+    const nw = g.note ? Math.max(...[].concat(g.note).map((l) => textWidth(l, 9))) + 12 : 0;
     x.noteW = nw; x.centered = ICONLESS.has(g.kind) && !hasIcon && g.align !== 'left';
     x.minW = Math.max(60, (ICONLESS.has(g.kind) && !hasIcon ? lw + 24 : x.labelEnd) + nw + 6);
     if (x.header && !(ICONLESS.has(g.kind) && !hasIcon)) els.push({ kind: 'head', g: i, groups: [], ext: () => ({ l: 0, r: x.labelEnd, u: 0, d: 19, core: 0 }) });
@@ -1321,7 +1321,7 @@ function textOwners(spec) {
   for (const n of spec.nodes || []) { if (n.label) for (const l of n.kind ? wrap(n.label, Math.max(8, Math.floor((n.w - 12) / 5.6))) : wrap(n.label, n.wrap || 14)) addL(l, { t: 'node', id: n.id }); if (n.sub) addL(n.sub, { t: 'node', id: n.id }); }
   for (const w of spec.wires || []) if (w.label) addL(w.label, { t: 'wlabel', id: w.id });
   (spec.notes || []).forEach((nt, i) => addL(nt.caps ? nt.text.toUpperCase() : nt.text, { t: 'note', i }));
-  (spec.groups || []).forEach((g, i) => { addL(g.label != null ? g.label : GROUP_LABEL[g.kind] || '', { t: 'group', i }); if (g.note) addL(g.note, { t: 'gnote', i }); });
+  (spec.groups || []).forEach((g, i) => { addL(g.label != null ? g.label : GROUP_LABEL[g.kind] || '', { t: 'group', i }); if (g.note) addL([].concat(g.note).join('\n'), { t: 'gnote', i }); });
   return own;
 }
 function knobs(f, spec, ctx) {
