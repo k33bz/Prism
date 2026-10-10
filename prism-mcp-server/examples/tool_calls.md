@@ -297,6 +297,50 @@ Result:
 
 ---
 
+## Themes
+
+Brand inputs in, a complete contrast-safe token palette for both color modes
+out, from the engine in `catalog/theme-engine/` (found beside the catalog file).
+
+### `derive_theme`
+Request:
+```json
+{ "name": "derive_theme", "arguments": { "name": "Sunny", "accent": "#ffd400" } }
+```
+Result (abridged: `dark` and `light` carry every theme token, `report.pairs` every checked pair):
+```json
+{
+  "name": "Sunny",
+  "dark":  { "--bg": "#19160a", "--accent": "#ffd400", "--accent-ink": "#110f0a", "…": "…" },
+  "light": { "--accent": "#897000", "--warn": "#9b6700", "…": "…" },
+  "css": { "dark": ":root{ /* Sunny dark */
+  --bg: #19160a;
+  … }", "light": ":root{ /* Sunny light */ … }" },
+  "report": {
+    "pairs": [ { "mode": "light", "fg": "--accent", "bg": "--panel", "kind": "text", "fgValue": "#897000", "bgValue": "#ffffff", "ratio": 4.79, "floor": 4.5, "pass": true, "apca": 73.1 }, "…" ],
+    "failures": [],
+    "moved": [ { "mode": "light", "token": "--accent", "input": "#ffd400", "output": "#897000", "L": [0.88, 0.55],
+                 "message": "accent #ffd400 too light for text on a light panel: darkened to #897000, L 0.88 to 0.55" } ],
+    "notes": [ "dark: accent #ffd400 needs dark ink (#110f0a); components that hardcode #fff on var(--accent) read at 1.43:1, use var(--accent-ink)" ],
+    "summary": { "checked": 82, "failing": 0, "ok": true, "minRatio": { "text": 4.51, "ui": 4.43, "tertiary": 3.02 } }
+  }
+}
+```
+
+### `check_theme_contrast`
+Request (a partial map; the rest is filled from the Cloudscape base of the inferred mode):
+```json
+{ "name": "check_theme_contrast", "arguments": { "tokens": { "--bg": "#f7f7f7", "--panel": "#ffffff", "--accent": "#58cc02" } } }
+```
+Result (abridged):
+```json
+{
+  "mode": "light", "contrast": "AA", "pass": false, "checked": 39,
+  "failures": [ "…", { "mode": "light", "fg": "--accent", "bg": "--panel", "kind": "text", "fgValue": "#58cc02", "bgValue": "#ffffff", "ratio": 2.09, "floor": 4.5, "pass": false, "apca": 40.4 }, "…" ],
+  "pairs": [ "…" ], "skipped": [], "filledFromBase": [ "--panel2", "--card", "--line", "--ink", "…" ]
+}
+```
+
 ## Composition
 
 ### `compose`

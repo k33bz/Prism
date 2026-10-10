@@ -39,7 +39,7 @@ It serves two audiences from the same source of truth:
 
 ## Install the MCP server
 
-The [Model Context Protocol](https://modelcontextprotocol.io) lets an AI agent call tools over a well-defined resource. The bundled server exposes Prism's catalog as **29 tools** — discovery, composition, facet creation, and saved collections — so an agent can go from *"give me a pulsing KPI card with a wind background"* to **discovered, composed, deduplicated, validated HTML/CSS** in one turn.
+The [Model Context Protocol](https://modelcontextprotocol.io) lets an AI agent call tools over a well-defined resource. The bundled server exposes Prism's catalog as **39 tools** — discovery, composition, facet creation, saved collections, AWS icons and diagrams, and theme derivation — so an agent can go from *"give me a pulsing KPI card with a wind background"* to **discovered, composed, deduplicated, validated HTML/CSS** in one turn.
 
 It has **zero runtime dependencies** (pure Node.js ≥ 18) and speaks MCP JSON-RPC 2.0 over **stdio** — the transport Claude Desktop, Claude Code, and the Anthropic API use to launch a local MCP server as a subprocess.
 
@@ -60,7 +60,7 @@ There is **nothing to `npm install`** — the server has no dependencies. It run
 # Print catalog stats and exit (no server) — confirms it can read Prism.html
 node cli.js info --catalog ../Prism.html
 
-# List the 29 tools it exposes
+# List the 39 tools it exposes
 node cli.js tools
 
 # Run the server over stdio (Ctrl-C to stop). This is what a client launches.
@@ -89,13 +89,13 @@ Use **absolute paths** everywhere below — clients launch the server from their
 claude mcp add prism -- node /ABS/PATH/prism/prism-mcp-server/cli.js start --catalog /ABS/PATH/prism/Prism.html
 ```
 
-Then `claude mcp list` should show `prism`, and the 29 tools become available in your session. Remove it with `claude mcp remove prism`.
+Then `claude mcp list` should show `prism`, and the 39 tools become available in your session. Remove it with `claude mcp remove prism`.
 </details>
 
 <details>
 <summary><b>Claude Desktop</b></summary>
 
-Add the block below to your `claude_desktop_config.json`, then **restart Claude Desktop**. The 21 Prism tools appear in the tools menu.
+Add the block below to your `claude_desktop_config.json`, then **restart Claude Desktop**. The 39 Prism tools appear in the tools menu.
 
 - **macOS:** `~/Library/Application Support/Claude/claude_desktop_config.json`
 - **Windows:** `%APPDATA%\Claude\claude_desktop_config.json`
@@ -168,11 +168,12 @@ Options:
 
 Logs go to **stderr** (stdout is reserved for the JSON-RPC channel), so they never corrupt the MCP protocol stream. Verbosity is also settable via `PRISM_MCP_LOG_LEVEL`. A `--port` flag is accepted but ignored — this build is stdio-only; add an HTTP/SSE transport by implementing one against `PrismMCPServer`.
 
-### The 37 tools
+### The 39 tools
 
 | Group | Tools |
 |---|---|
 | **Discovery (11)** | `list_effects` · `search_effects` · `get_effect` · `list_galleries` · `get_catalog_stats` · `get_available_filters` · `list_filter_values` · `get_theme_variants` · `get_theme_palette` · `get_component_variants` · `get_variants_for_theme` |
+| **Themes (2)** | `derive_theme` (brand accent in, a complete contrast-safe token palette for dark and light out, with a report of every checked pair and any input it moved) · `check_theme_contrast` (audit any token map or shipped theme against the same floors) |
 | **Saved searches (3)** | `create_saved_search` · `get_saved_searches` · `execute_saved_search` (in-memory, per server process) |
 | **Composition (3)** | `compose` · `compose_with_template` (`stack`/`row`/`grid`/`card`) · `validate_composition` |
 | **Content creation (3)** | `create_facet` · `update_facet` · `validate_facet` |
@@ -301,6 +302,8 @@ Eighteen authored galleries, plus special views. Every element carries a name, i
 
 Prism ships **16 themes, each in dark and light** (32 entries in the theme registry, mirrored into the MCP server). It is built in the **AWS Cloudscape** design language and defaults to two color modes: **Cloudscape Dark** (the default) and **Cloudscape Light**. Toggle between them from the top navigation bar. The theme picker also carries the design-system packs (Duolingo, Mailchimp, Stack Overflow, Monzo, Heroku, Polaris, Primer, Ant Design, Acorn, Material 3, **Cloudflare Orange**, **Google Cloud Console**, **Fluent (Azure)**), each with a gated 100-facet family in the Spectrums gallery, and two skin-only themes with no facet family of their own: **Frutiger Aero** and **Liquid Glass**. Every theme ships in dark and light. The mode override reskins the entire tool — shell *and* every gallery — by swapping a shared set of CSS custom properties (`--accent`, `--info`, `--pos`, `--bg`, `--ink` …), so every element re-themes at once. Your choice persists across sessions.
 
+To start a new theme from a brand color, derive it instead of hand-tuning it: `node catalog/theme-engine/derive.mjs --accent '#0078d4' --css` prints both modes' `:root` blocks and a report of every contrast pair, and `--profile out.mjs` writes a pack profile for `_scaffold_ds.mjs`. The MCP server exposes the same engine as `derive_theme` and `check_theme_contrast`. See [`catalog/theme-engine/README.md`](./catalog/theme-engine/README.md).
+
 ---
 
 ## 🧩 The JSON island
@@ -368,13 +371,13 @@ The MCP server's `compose` / `compose_with_template` tools do all of this for yo
 .
 ├── Prism.html              ← the whole tool: UI + all galleries + the JSON island
 ├── README.md               ← you are here
-├── prism-mcp-server/       ← the MCP server (zero-dependency Node, 37 tools)
+├── prism-mcp-server/       ← the MCP server (zero-dependency Node, 39 tools)
 │   ├── cli.js                 prism-mcp CLI (start / info / tools / help)
 │   ├── index.js               PrismMCPServer (JSON-RPC dispatch) + StdioTransport
-│   ├── tools/index.js         the 33 tool definitions
+│   ├── tools/index.js         the 39 tool definitions
 │   ├── utils/                 catalog store, collections, themes mirror, AWS icons, css/compose/validate, logger
 │   ├── examples/              per-tool example calls + Claude Desktop / Anthropic API configs
-│   ├── test/                  Node-native test suite (156 tests)
+│   ├── test/                  Node-native test suite (181 tests)
 │   └── README.md              server internals & architecture
 ├── catalog/                ← the catalog + the maintenance pipeline
 │   ├── manifest.json          full catalog (mirror of the island)
@@ -394,6 +397,7 @@ The MCP server's `compose` / `compose_with_template` tools do all of this for yo
 │   │                          spec.schema.json + spec.mjs (JSON specs), json/ (each family as JSON)
 │   ├── drafts/                gallery sources (body + css) for the drafts-built galleries
 │   ├── profiles/              one profile per theme (palette, type, radius)
+│   ├── theme-engine/          derive a theme from brand inputs: OKLCH/WCAG/APCA math, contrast-safe dark + light palettes, pack profile export
 │   └── additions/             generated facet batches merged into the galleries
     ├── build.mjs              records every effect headlessly (Firefox BiDi or Chromium CDP, no deps) + ffmpeg
     ├── browsers.mjs           the two raw wire-protocol drivers behind one tiny interface
