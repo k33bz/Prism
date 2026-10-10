@@ -18,6 +18,7 @@ import { mkdtempSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { resolveChrome, closeBrowser } from './_chrome.mjs';
 import { CSS_SOURCE_FNS } from './_css-source.mjs';
+import { STANDALONE_FNS } from './_standalone-css.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const OUT = HERE;
@@ -54,13 +55,27 @@ const GALLERIES = [
   { gallery: 'spectrums', title: 'Spectrums' },
 ];
 
+// Global tokens every standalone copy shares (manifest.tokens.css, included once per page).
+const TOKENS_CSS = ':root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;'
+  + '--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;'
+  + '--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;'
+  + '--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;'
+  + '--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;'
+  + '--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}'
+  + '.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}'
+  + '.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}'
+  + '.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}';
+// A gallery's own :root custom properties travel with a facet unless tokens.css owns the name.
+const TOKEN_NAMES = [...new Set(TOKENS_CSS.match(/--[\w-]+(?=\s*:)/g))];
+
 // This function is serialized and evaluated INSIDE the gallery iframe. It is a
 // faithful port of extract-manifest.mjs's extractInPage, but reads styles from
 // the iframe document passed as `d` (the CDP evaluate runs in the top frame, so
 // we resolve the iframe doc first and pass it in via a wrapper below).
-const EXTRACT_FN = `function extractInPage(gallery, d){
+const EXTRACT_FN = `function extractInPage(gallery, d, tokenNames, templateText){
   var docStyleSheets = d.styleSheets;
   ${CSS_SOURCE_FNS}
+  ${STANDALONE_FNS}
   // Chromium serializes a var() shorthand's longhands as "prop: ;" when the same block also
   // sets one of them (background + background-size, animation + animation-delay), so
   // cssText silently drops the value. Only those rules are rebuilt, from the declarations
@@ -112,6 +127,9 @@ const EXTRACT_FN = `function extractInPage(gallery, d){
     var classes=new Set();
     (html.match(/class="([^"]*)"/g)||[]).forEach(function(m){m.replace(/class="|"/g,'').split(/\\s+/).forEach(function(c){if(c)classes.add(c);});});
     var rulesOut=[]; var kf=new Set(); var animSel=new Set();
+    // keyframes named only in an inline style="animation:..." (lab-fade-in, the scx bars):
+    // no class rule mentions them, so they are looked up by name as well
+    var inlineKf=inlineAnimationNames(html), inlineSet=new Set(inlineKf), kfFound=new Set();
     function scanAnims(text){
       (text.match(/animation(?:-name)?:\\s*[^;}]+/g)||[]).forEach(function(a){
         a.split(/[\\s:,]+/).forEach(function(t){
@@ -133,7 +151,7 @@ const EXTRACT_FN = `function extractInPage(gallery, d){
           if(hit){ var txt=authored(rule); rulesOut.push(txt); scanAnims(txt); if(/animation(-name)?\\s*:/.test(txt)) animSel.add(rule.selectorText); }
         }
       }
-      for(var rk=0; rk<rules.length; rk++){ if(rules[rk].type===7 && kf.has(rules[rk].name)) rulesOut.push(authored(rules[rk])); }
+      for(var rk=0; rk<rules.length; rk++){ if(rules[rk].type===7 && (kf.has(rules[rk].name)||inlineSet.has(rules[rk].name))){ rulesOut.push(authored(rules[rk])); kfFound.add(rules[rk].name); } }
       // @media blocks (prefers-reduced-motion, responsive) whose child selectors reference
       // this facet's classes — carry them so a standalone copy keeps its reduced-motion /
       // responsive behaviour instead of silently animating through prefers-reduced-motion.
@@ -161,11 +179,42 @@ const EXTRACT_FN = `function extractInPage(gallery, d){
     // Ensure standalone copies respect prefers-reduced-motion: disable every animated selector
     // under the media query. Always emitted (idempotent where a section block already stops them)
     // because some section blocks only reset transform/opacity, and an unrelated :hover rule setting
-    // animation-name:none must not be mistaken for reduced-motion handling.
-    if(kf.size>0 && animSel.size>0){
-      rulesOut.push('@media (prefers-reduced-motion:reduce){'+[...animSel].join(',')+'{animation:none!important}}');
+    // animation-name:none must not be mistaken for reduced-motion handling. Inline animations
+    // join the same block: the galleries stop them with a page-wide "*" rule no facet carries.
+    // SVG SMIL (<animate>, <animateMotion>) is out of reach here: CSS cannot pause a SMIL
+    // timeline, so a gallery hides its SMIL-driven parts (and shows a still twin where the part
+    // is content) in its own prefers-reduced-motion rule, which the @media carry above brings.
+    var rmSel=(kf.size>0 && animSel.size>0)?[...animSel]:[];
+    rmSel=rmSel.concat(inlineAnimationSelectors(inlineKf));
+    if(rmSel.length){
+      rulesOut.push('@media (prefers-reduced-motion:reduce){'+rmSel.join(',')+'{animation:none!important}}');
     }
-    return {css:[...new Set(rulesOut)].join('\\n'), classes:[...classes], keyframes:[...kf]};
+    var css=[...new Set(rulesOut)].join('\\n');
+    // the gallery's own :root custom properties this copy reads, ahead of the rules that use them
+    var rootRule=rootVarsRule(rootDecls(), css+'\\n'+html, tokenNames);
+    if(rootRule) css=rootRule+(css?'\\n'+css:'');
+    var keyframes=[...kf].concat(inlineKf.filter(function(n){ return !kf.has(n) && kfFound.has(n); }));
+    return {css:css, classes:[...classes], keyframes:keyframes};
+  }
+  // [name, value] for every custom property set by a top-level :root rule of the gallery's own
+  // stylesheets, in source order. A sheet is the gallery's own when its text is in the page
+  // template: the shell also injects theme tokens (--crit-ink...) into every frame, and those
+  // follow the active theme, so a copy must not freeze them.
+  var rootDeclList=null;
+  function rootDecls(){
+    if(rootDeclList) return rootDeclList;
+    rootDeclList=[];
+    for(var si=0; si<docStyleSheets.length; si++){
+      var own=docStyleSheets[si].ownerNode;
+      if(!own || own.localName!=='style' || templateText.indexOf(own.textContent)<0) continue;
+      var rules; try{rules=docStyleSheets[si].cssRules;}catch(e){continue;}
+      for(var ri=0; rules && ri<rules.length; ri++){
+        var r=rules[ri]; if(r.type!==1 || r.selectorText!==':root') continue;
+        // a custom property keeps its authored text, line breaks included: fold those to a space
+        for(var pi=0; pi<r.style.length; pi++){ var p=r.style[pi]; if(p.indexOf('--')===0) rootDeclList.push([p, r.style.getPropertyValue(p).trim().replace(/\\s*\\n\\s*/g,' ')]); }
+      }
+    }
+    return rootDeclList;
   }
   function paramsFor(html, css){
     var params={};
@@ -338,7 +387,8 @@ try {
       ${EXTRACT_FN}
       var f=document.getElementById('gv'); var d=f&&f.contentDocument;
       if(!d) return JSON.stringify({err:'no iframe doc'});
-      try { return JSON.stringify(extractInPage(${JSON.stringify(g.gallery)}, d)); }
+      var tpl=document.getElementById('pg-'+${JSON.stringify(g.gallery)});
+      try { return JSON.stringify(extractInPage(${JSON.stringify(g.gallery)}, d, ${JSON.stringify(TOKEN_NAMES)}, tpl?tpl.textContent:'')); }
       catch(e){ return JSON.stringify({err:String(e&&e.message||e)}); }
     })()`;
     const r = await send('Runtime.evaluate', { expression: expr, returnByValue: true });
@@ -367,15 +417,7 @@ try {
 
   // Reuse the same tokens + usage blocks as the original manifest (kept identical).
   const tokens = {
-    css: ':root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;'
-      + '--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;'
-      + '--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;'
-      + '--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;'
-      + '--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;'
-      + '--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}'
-      + '.c-crit{--c:var(--crit);--c-rgb:200,121,255}.c-neg{--c:var(--neg);--c-rgb:248,81,73}'
-      + '.c-warn{--c:var(--warn);--c-rgb:224,165,43}.c-pos{--c:var(--pos);--c-rgb:63,185,80}'
-      + '.c-info{--c:var(--info);--c-rgb:68,147,248}.c-accent{--c:var(--accent);--c-rgb:255,153,0}',
+    css: TOKENS_CSS,
     note: 'Include once globally. Effects read --c/--c-rgb for color and --bg/--ink/etc for theming.',
   };
 
