@@ -117,7 +117,7 @@ const KINDS = {
     'aws_s3_bucket_ownership_controls', 'aws_s3_bucket_lifecycle_configuration', 'aws_s3_bucket_acl', 'aws_s3_bucket_cors_configuration',
     'aws_s3_bucket_website_configuration', 'aws_sqs_queue_policy', 'aws_sns_topic_policy', 'aws_network_acl', 'aws_network_acl_rule',
     'aws_network_acl_association', 'aws_vpc_dhcp_options', 'aws_vpc_dhcp_options_association', 'aws_acm_certificate', 'aws_acm_certificate_validation',
-    'aws_route53_health_check', 'aws_lambda_permission_x'],
+    'aws_route53_health_check'],
 };
 const TYPE_KIND = new Map();
 for (const [k, ts] of Object.entries(KINDS)) for (const t of ts) if (!TYPE_KIND.has(t)) TYPE_KIND.set(t, k);
@@ -200,7 +200,6 @@ const F = {
   'r53zone.name': ['Name', 'name'],
   'cf.origins': ['DistributionConfig.Origins.DomainName', 'origin.domain_name'], 'cf.waf': ['DistributionConfig.WebACLId', 'web_acl_id'],
   'wafAssoc.res': ['ResourceArn', 'resource_arn'], 'wafAssoc.acl': ['WebACLArn', 'web_acl_arn'], 'waf.scope': ['Scope', 'scope'],
-  'ga.listeners': [null, null],
   'role.policies': ['Policies.PolicyDocument', 'inline_policy.policy'], 'role.managed': ['ManagedPolicyArns', 'managed_policy_arns'],
   'policy.doc': ['PolicyDocument', 'policy'], 'policy.roles': ['Roles', 'role'],
   'policyAttach.role': [null, 'role'], 'policyAttach.policy': [null, 'policy_arn'],
@@ -402,8 +401,7 @@ export function importInfra(resources, ctx, opts = {}) {
     if (hk) { const k2 = { public: 'pub', private: 'priv', isolated: 'iso' }[hk] || hk; if (['pub', 'priv', 'iso'].includes(k2)) { kind = k2; flavor = { pub: 'public', priv: 'private', iso: 'isolated' }[k2]; how = 'the sidecar says so (group_hints)'; viaSide = true; } }
     const assumed = !viaSide && !rt && !(s.tags || {})['aws-cdk:subnet-type'];
     const phrase = { public: 'a public subnet', 'private with egress': 'a private subnet with egress', private: 'a private subnet', isolated: 'an isolated subnet' }[flavor] || `a ${flavor} subnet`;
-    const e = led(assumed ? 'assumed' : 'derived', `${s.key} is ${phrase}: ${how}`, ev, assumed ? { ask: `Which route table does ${s.key} use in the deployed VPC?` } : viaSide ? { via: 'sidecar' } : {});
-    void e;
+    led(assumed ? 'assumed' : 'derived', `${s.key} is ${phrase}: ${how}`, ev, assumed ? { ask: `Which route table does ${s.key} use in the deployed VPC?` } : viaSide ? { via: 'sidecar' } : {});
     subnets.set(s.key, { key: s.key, r: s, vpc, cidr: val(s, 'subnet.cidr') || null, kind, flavor, egress, rt, az: s.az || null, azPos: null, tier: null });
   }
 
@@ -473,7 +471,6 @@ export function importInfra(resources, ctx, opts = {}) {
     return ellipsis(n);
   };
   const overrides = (key) => (side ? Object.entries(side.overrides).filter(([k]) => keyOf(k.split('@')[0]) === key).map(([k, v]) => ({ q: k.split('@')[1] || null, v })) : []);
-  const dataPrimary = new Map();  // key -> az of the primary
   const clusterWriter = new Map(); // an Aurora reader -> its cluster's writer: request edges go to the writer
 
   // which AZ the sidecar pins a replica to
@@ -580,8 +577,11 @@ export function importInfra(resources, ctx, opts = {}) {
       const cluster = k === 'db' ? refs(r, 'db.cluster')[0] : null;
       const azs = per.map(([az]) => az);
       const pinned = pinOf(r.key, 'primary') || pinOf(r.key, null);
+      // an explicit AvailabilityZone names the AZ when the subnets carry AZ names
       const lit = k === 'db' ? val(r, 'db.az') : null;
-      let pAz = pinned || azs[0];
+      const litAz = typeof lit === 'string' ? [...azNameOf.entries()].find(([, nm]) => nm === lit)?.[0] : null;
+      const fixed = pinned || (litAz && azs.includes(litAz) ? litAz : null);
+      let pAz = fixed || azs[0];
       if (cluster) {
         const sibs = ofKind('db').filter((d) => refs(d, 'db.cluster')[0] === cluster && cls.get(d.key).as === 'node');
         const i = sibs.indexOf(r);
@@ -598,6 +598,7 @@ export function importInfra(resources, ctx, opts = {}) {
       const base = baseOf(r);
       const cn = r.cond ? r.cond(pathsOf(r, k === 'db' ? 'db.multiAz' : 'cache.multiAz')[0]) : null;
       const evidence = [r.key, ...((cn && cn.from) || [])];
+      const maProp = pathsOf(r, k === 'db' ? 'db.multiAz' : 'cache.multiAz')[0];
       if (multi && azs.length > 1) {
         const sAz = azs.find((a) => a !== pAz);
         const ssk = per.find(([az]) => az === sAz)[1];
@@ -605,15 +606,15 @@ export function importInfra(resources, ctx, opts = {}) {
         mk({ nid: `${base}-primary`, qual: 'primary', az: pAz, subnet: sk, place: 'subnet', label: `${svc} primary` });
         const sb = mk({ nid: `${base}-standby`, qual: 'standby', az: sAz, subnet: ssk, place: 'subnet', label: `${svc} ${k === 'db' ? 'standby' : 'replica'}` });
         if (k === 'db' && res.standby) sb.icon = res.standby;
-        dataPrimary.set(r.key, pAz);
-        const how = (cn && cn.how) || `${k === 'db' ? 'MultiAZ' : 'MultiAZEnabled'} is true`;
+        const how = (cn && cn.how) || `${maProp} is true`;
         led(cn && cn.assumed ? 'assumed' : 'derived', `${r.key} is Multi-AZ: ${how}`, evidence, cn && cn.assumed ? { ask: cn.ask || `Is ${r.key} Multi-AZ in the deployed stack?` } : cn && cn.via ? { via: cn.via } : {});
         led(pinned ? 'derived' : 'assumed', `${r.key}'s primary is drawn in Availability Zone ${pAz} and the ${k === 'db' ? 'standby' : 'replica'} in Availability Zone ${sAz}${pinned ? ' (sidecar pin)' : `: the ${src === 'tf' ? 'plan' : 'template'} never says which AZ holds the primary; ${svc} picks it at deploy time`}`, r.key, pinned ? { via: 'sidecar' } : { ask: `Which AZ holds ${r.key}'s primary today?` });
       } else {
-        const z = lit && subnets.size ? pAz : pAz;
+        const z = pAz;
         mk({ az: z, subnet: per.find(([az]) => az === z)[1], place: 'subnet' });
-        if (multi === false && (cn || val(r, 'db.multiAz') != null)) led(cn && cn.assumed ? 'assumed' : 'derived', `${r.key} is single-AZ: ${(cn && cn.how) || 'MultiAZ is false'}`, evidence, cn && cn.assumed ? { ask: cn.ask || `Is ${r.key} single-AZ in the deployed stack?` } : {});
-        if (azs.length > 1 && !pinned) led('assumed', `${r.key} is drawn in Availability Zone ${z}; its subnets span ${azs.length} AZs and the ${src === 'tf' ? 'plan' : 'template'} does not say which one it runs in`, r.key, { ask: `Which AZ does ${r.key} run in?` });
+        if (multi === false && (cn || val(r, 'db.multiAz') != null)) led(cn && cn.assumed ? 'assumed' : 'derived', `${r.key} is single-AZ: ${(cn && cn.how) || `${maProp} is false`}`, evidence, cn && cn.assumed ? { ask: cn.ask || `Is ${r.key} single-AZ in the deployed stack?` } : {});
+        if (!pinned && litAz && z === litAz) led('derived', `${r.key} runs in ${lit} (its AvailabilityZone), drawn in Availability Zone ${z}`, r.key);
+        else if (azs.length > 1 && !pinned) led('assumed', `${r.key} is drawn in Availability Zone ${z}; its subnets span ${azs.length} AZs and the ${src === 'tf' ? 'plan' : 'template'} does not say which one it runs in`, r.key, { ask: `Which AZ does ${r.key} run in?` });
       }
       continue;
     }
@@ -932,7 +933,6 @@ export function importInfra(resources, ctx, opts = {}) {
     if (p && s) addWire(p, s, { kind: 'replication', label: null, evidence: [key], fact: null });
   }
   // sidecar steps: resolve, find (or add) the wire
-  const usedFlow = [];
   for (const f of flowsWanted) {
     const steps = [];
     for (const st of f.steps) {
