@@ -10,7 +10,7 @@ import { checkSpec, diagram, section, standalone, stepTexts, tile, validate } fr
 import { SCHEMA, canonical, canonicalDiagram, toJson, validateDiagram, validateFamily } from './spec.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
-const FAMILIES = ['serverless', 'three-tier', 'directory', 'databases', 'regions', 'vpc', 'transit', 'endpoints', 'dns'];
+const FAMILIES = ['serverless', 'three-tier', 'directory', 'databases', 'regions', 'vpc', 'transit', 'endpoints', 'dns', 'ipv6'];
 const load = async (f) => (await import(pathToFileURL(path.join(HERE, 'specs', f + '.mjs')).href)).default;
 const readLf = (p) => fs.readFileSync(p, 'utf8').replace(/\r\n/g, '\n');
 const base = () => ({ id: 'x-probe', nodes: [{ id: 'a', icon: 'aws-svc-lambda', x: 0, y: 0 }, { id: 'b', icon: 'aws-svc-dynamodb', x: 120, y: 0 }] });
