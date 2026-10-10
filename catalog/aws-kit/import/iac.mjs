@@ -487,7 +487,7 @@ export function importInfra(resources, ctx, opts = {}) {
     const sn = refs(r, 'asg.subnets');
     const per = subnetsByAz(sn);
     const min = val(r, 'asg.min'), max = val(r, 'asg.max'), des = val(r, 'asg.desired');
-    led('derived', `${r.key} is an Auto Scaling group across ${sn.join(', ') || 'no subnets in the stack'}; drawn as one frame per AZ with one instance each (Min ${min ?? '?'}, Max ${max ?? '?'}, Desired ${des ?? '?'}; the running count is not in the ${src === 'tf' ? 'plan' : 'template'})`, [r.key, ...sn]);
+    led('derived', `${r.key} is an Auto Scaling group across ${sn.join(', ') || 'no subnets in the stack'}; drawn with one instance per AZ (Min ${min ?? '?'}, Max ${max ?? '?'}, Desired ${des ?? '?'}; the running count is not in the ${src === 'tf' ? 'plan' : 'template'})`, [r.key, ...sn]);
     const icon = 'aws-res-ec2-instance';
     const label = 'EC2 instance';
     const placements = per.length ? per : [[null, null]];
@@ -1223,6 +1223,25 @@ export function importInfra(resources, ctx, opts = {}) {
     for (const nid of appearing) spec.effects.push({ appear: nid, t: [0.3, 0.9], ghost: true });
   }
   if (!spec.effects || !spec.effects.length) delete spec.effects;
+  // One Auto Scaling group spans its AZs, as the gallery draws it: when the per-AZ frames of a group
+  // line up in one column, they become a single frame from the first to the last, drawn after the
+  // subnet frames it crosses. Kept only when the kit lint finds no new errors; else one per AZ stays.
+  const errs = () => lintSpec(spec).filter((x) => x.severity === 'error').length;
+  for (const key of new Set(frames.map((f) => f.key))) {
+    const mine = frames.filter((f) => f.key === key);
+    const gs = mine.map((f) => spec.groups.find((g) => g.id === f.gid));
+    if (gs.length < 2 || gs.some((g) => !g) || gs.some((g) => Math.abs(g.x - gs[0].x) > 0.5 || Math.abs(g.w - gs[0].w) > 0.5)) continue;
+    const before = errs(), saved = spec.groups;
+    const top = Math.min(...gs.map((g) => g.y)), bottom = Math.max(...gs.map((g) => g.y + g.h));
+    const one = { ...gs[0], id: gs[0].id.replace(/-az\d+-asg$/, '-asg'), y: top, h: bottom - top };
+    if (spec.groups.some((g) => g.id === one.id && !gs.includes(g))) one.id = gs[0].id;
+    spec.groups = [...spec.groups.filter((g) => !gs.includes(g)), one];
+    // a centered AZ header can land on the spanning frame: the AZ frames then title on the left
+    if (errs() > before) spec.groups = spec.groups.map((g) => (g.kind === 'az' ? { ...g, align: 'left' } : g));
+    if (errs() > before) { spec.groups = saved; continue; }
+    for (const f of mine) f.gid = one.id;
+    led('derived', `${key} is drawn as one Auto Scaling group frame across ${mine.length} AZs`, [key]);
+  }
   // the kit's checks again, after the post-layout edits
   // the IR's own "unmapped" warning repeats unmapped-type for the boxes this module asked for
   const issuesOut = report.issues.filter((x) => x.code !== 'spec' && x.code !== 'schema' && x.code !== 'unmapped');

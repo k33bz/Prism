@@ -190,7 +190,11 @@ test('the webapp drawing: AZ rows, tiers as columns, replicas per AZ', () => {
   assert.equal(n('Database-standby').icon, 'aws-res-aurora-postgresql-instance-alternate');
   assert.equal(n('Users').x < g('cloud').x, true, 'users outside the AWS Cloud');
   assert.ok(n('AssetsBucket').x > g('Vpc').x + g('Vpc').w, 'S3 beside the VPC');
-  assert.equal(spec.groups.filter((x) => x.kind === 'asg').length, 2);
+  // one Auto Scaling group frame across both AZ rows, around both instances
+  const asg = spec.groups.filter((x) => x.kind === 'asg');
+  assert.deepEqual(asg.map((x) => x.id), ['AppAsg-asg']);
+  for (const id of ['AppAsg-az1', 'AppAsg-az2']) { const m = n(id); assert.ok(m.x >= asg[0].x && m.y >= asg[0].y && m.y + 40 <= asg[0].y + asg[0].h, `${id} inside the ASG frame`); }
+  assert.ok(g('az1').align === 'left' && g('az2').align === 'left', 'AZ titles move left, off the spanning frame');
   assert.equal(wireBy(spec, 'LoadBalancer-az1', 'AppAsg-az1').label, ':8080');
   assert.equal(wireBy(spec, 'AppAsg-az2', 'Database-primary').label, ':5432');
   assert.ok(!wireBy(spec, 'LoadBalancer-az1', 'AppAsg-az2'), 'no cross-AZ load balancer wire');
@@ -265,7 +269,7 @@ test('sidecar stories: az-fail replays the request through the other AZ, asg-sca
   const app = s.spec.effects.filter((e) => e.appear);
   assert.deepEqual(app.map((e) => e.appear), ['AppAsg-az1-2', 'AppAsg-az2-2']);
   assert.ok(app.every((e) => e.ghost));
-  const fr = s.spec.groups.find((g) => g.id === 'AppAsg-az1-asg'), n2 = s.spec.nodes.find((n) => n.id === 'AppAsg-az1-2');
+  const fr = s.spec.groups.find((g) => g.kind === 'asg' && /^AppAsg-(az1-)?asg$/.test(g.id)), n2 = s.spec.nodes.find((n) => n.id === 'AppAsg-az1-2');
   assert.ok(n2.x >= fr.x && n2.y + 40 <= fr.y + fr.h, 'the new instance sits in the ASG frame');
   assert.equal(webapp({ flows: flows(), story: 'nope' }).report.issues.find((i) => i.code === 'story').severity, 'warn');
 });

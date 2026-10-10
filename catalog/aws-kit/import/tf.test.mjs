@@ -83,7 +83,9 @@ test('the Terraform plan draws the same architecture as the CloudFormation webap
   const tf = imp('tf-webapp-plan.json').spec, cfn = fromCloudFormation(read('cfn-webapp.yaml'), { file: 'cfn-webapp' }).spec;
   const shape = (s) => {
     const c = (re) => s.nodes.filter((n) => re.test(n.label)).length;
-    return { alb: c(/Application Load Balancer/), nat: c(/NAT gateway/), ec2: c(/EC2 instance/), rds: c(/^RDS (primary|standby)$/), s3: c(/S3 bucket/), az: s.groups.filter((g) => g.kind === 'az').length, asg: s.groups.filter((g) => g.kind === 'asg').length };
+    return { alb: c(/Application Load Balancer/), nat: c(/NAT gateway/), ec2: c(/EC2 instance/), rds: c(/^RDS (primary|standby)$/), s3: c(/S3 bucket/), az: s.groups.filter((g) => g.kind === 'az').length,
+      // one group, whether it draws as one frame across the AZs or (when that would cross header text) one per AZ
+      asg: new Set(s.groups.filter((g) => g.kind === 'asg').map((g) => g.id.replace(/-az\d+-asg$/, '-asg'))).size };
   };
   assert.deepEqual(shape(tf), shape(cfn));
 });
