@@ -14,7 +14,7 @@ import { newIr, issue, directive, cleanText, buildSpec } from './ir.mjs';
 // tokens: strings, braces, separators, words; comments dropped (directives kept)
 function lex(text, ir) {
   const out = [];
-  const src = String(text).replace(/\r\n?/g, '\n');
+  const src = String(text).replace(/^﻿/, '').replace(/\r\n?/g, '\n');
   let i = 0, line = 1;
   while (i < src.length) {
     const c = src[i];

@@ -9,7 +9,8 @@
 //              layered(): flowchart, D2 and undirected PlantUML. Longest-path layers, barycenter sweeps
 //              that keep each group contiguous (sibling groups in declaration order), container packing
 //              so no group box ever holds a node that is not in it, the peer-edge rule (replication
-//              between twins does not count as a hop), then fan-out centering.
+//              between twins does not count as a hop), then fork centering (a lone frame moves as a
+//              block) and straight feeds into forks.
 //   2. tracks  geometry(): column widths from icons and labels, rows from icons and label blocks, the
 //              kit's 16px padding and 22px header chained through nested groups, label-aware column
 //              gaps, extra room for step badges, title widths, header clearance for wires entering a
@@ -403,7 +404,46 @@ export function layered(model) {
       break;
     }
   }
-  for (const pass of [byLayer, [...byLayer].reverse()]) for (const id of pass) {
+  // a leaf frame in one slot (an ALB alone in its public subnet over two app servers) centres as a block
+  const fitsBlock = (gid, members, delta) => {
+    const own = new Set(members);
+    for (const id of members) {
+      const s = S.get(id) + delta;
+      if (s < 0) return false;
+      for (const g of anc(id)) { if (g === gid) continue; const [a, b] = spanOf(g); if (s < a || s > b) return false; }
+      for (const o of ids) if (!own.has(o) && layer.get(o) === layer.get(id) && Math.abs(S.get(o) - s) < 1) return false;
+      for (const g of groups.keys()) {
+        if (g === gid || anc(id).includes(g) || !groups.get(g).desc.some((x) => S.has(x) && !own.has(x))) continue;
+        const [l0, l1] = layersOf(g), [a, b] = spanOf(g);
+        if (layer.get(id) >= l0 && layer.get(id) <= l1 && s > a - 1 && s < b + 1) return false;
+      }
+    }
+    return true;
+  };
+  const leaves = [...groups.values()].filter((g) => g.desc.some((x) => S.has(x)) && !g.kids.groups.some((h) => groups.has(h) && groups.get(h).desc.some((x) => S.has(x))));
+  for (const g of leaves.sort((a, b) => b.depth - a.depth)) {
+    const members = g.desc.filter((x) => S.has(x)), own = new Set(members);
+    const slots = new Set(members.map((x) => S.get(x)));
+    if (slots.size !== 1) continue;
+    const s0 = [...slots][0];
+    for (const side of [solidS, solidP]) {
+      const ss = [...new Set(members.flatMap((x) => side.get(x)).filter((x) => !own.has(x)).map((x) => S.get(x)))];
+      if (ss.length < 2) continue;
+      const c = Math.round(((Math.min(...ss) + Math.max(...ss)) / 2) * 2) / 2;
+      if (c !== s0 && fitsBlock(g.id, members, c - s0)) for (const x of members) S.set(x, c);
+      break;
+    }
+  }
+  // straight feeds: walking back from the last layer, a node with one successor (and at most one
+  // predecessor) lines up with it, so a chain into a centred fork stays straight; then leaves line up
+  // with their one predecessor
+  for (const id of [...byLayer].reverse()) {
+    const s1 = succs.get(id), p1 = preds.get(id);
+    if (s1.length !== 1 || p1.length > 1) continue;
+    const s = S.get(s1[0]);
+    if (s !== S.get(id) && fits(id, s)) S.set(id, s);
+  }
+  for (const id of byLayer) {
     const n = allN(id);
     if (n.length !== 1) continue;
     const s = S.get(n[0]);
@@ -415,6 +455,7 @@ export function layered(model) {
     const ll = model.dir === 'RL' || model.dir === 'BT' ? maxL - l : l;
     pos.set(id, model.dir === 'LR' || model.dir === 'RL' ? [ll, s] : [s, ll]);
   }
+  model.layerOf = layer;   // the router keeps hops between neighbouring layers on the flow's sides
   normalize(pos);
   return pos;
 }
@@ -472,7 +513,13 @@ export function geometry(model, cells, ex, opts = {}) {
   for (const g of groups.values()) {
     const cs = g.desc.filter((id) => cell.has(id)).map((id) => cell.get(id));
     if (!cs.length) continue;
-    gb.set(g.id, { c0: Math.min(...cs.map((p) => Math.floor(p[0]))), c1: Math.max(...cs.map((p) => Math.ceil(p[0]))), r0: Math.min(...cs.map((p) => Math.floor(p[1]))), r1: Math.max(...cs.map((p) => Math.ceil(p[1]))) });
+    const b = { c0: Math.min(...cs.map((p) => Math.floor(p[0]))), c1: Math.max(...cs.map((p) => Math.ceil(p[0]))), r0: Math.min(...cs.map((p) => Math.floor(p[1]))), r1: Math.max(...cs.map((p) => Math.ceil(p[1]))) };
+    // a frame centred between two tracks (all members on one half-track): sized from its content
+    const xs = new Set(cs.map((p) => p[0])), ys = new Set(cs.map((p) => p[1]));
+    const real = g.desc.filter((id) => cell.has(id)).map((id) => nodes.get(id));
+    if (xs.size === 1 && !Number.isInteger([...xs][0])) { b.fx = [...xs][0]; b.fw = Math.max(0, ...real.map((n) => n.fw)); }
+    if (ys.size === 1 && !Number.isInteger([...ys][0])) { b.fy = [...ys][0]; b.up = Math.max(0, ...real.map((n) => n.up)); b.down = Math.max(0, ...real.map((n) => n.down)); }
+    gb.set(g.id, b);
   }
   const kidsIn = (gid) => groups.get(gid).kids.groups.filter((h) => gb.has(h));
   const chainOf = (side, k) => {
@@ -488,7 +535,10 @@ export function geometry(model, cells, ex, opts = {}) {
   };
   const fL = chainOf('l', 'c0'), fR = chainOf('r', 'c1'), fT = chainOf('t', 'r0'), fB = chainOf('b', 'r1');
   const padL = Array(C).fill(0), padR = Array(C).fill(0), padT = Array(R).fill(0), padB = Array(R).fill(0);
-  for (const [gid, b] of gb) { padL[b.c0] = Math.max(padL[b.c0], fL(gid)); padR[b.c1] = Math.max(padR[b.c1], fR(gid)); padT[b.r0] = Math.max(padT[b.r0], fT(gid)); padB[b.r1] = Math.max(padB[b.r1], fB(gid)); }
+  for (const [gid, b] of gb) {
+    if (b.fx == null) { padL[b.c0] = Math.max(padL[b.c0], fL(gid)); padR[b.c1] = Math.max(padR[b.c1], fR(gid)); }
+    if (b.fy == null) { padT[b.r0] = Math.max(padT[b.r0], fT(gid)); padB[b.r1] = Math.max(padB[b.r1], fB(gid)); }
+  }
 
   // label-aware gaps: a straight wire between neighbouring tracks needs room for its label and badge in
   // the stretch between the frames it crosses
@@ -563,8 +613,10 @@ export function geometry(model, cells, ex, opts = {}) {
   }
   const rects = new Map();
   for (const [gid, b] of gb) {
-    const x0 = left[b.c0] - fL(gid), x1 = left[b.c1] + colW[b.c1] + fR(gid);
-    const y0 = top[b.r0] - fT(gid), y1 = top[b.r1] + rowH[b.r1] + fB(gid);
+    let x0 = left[b.c0] - fL(gid), x1 = left[b.c1] + colW[b.c1] + fR(gid);
+    let y0 = top[b.r0] - fT(gid), y1 = top[b.r1] + rowH[b.r1] + fB(gid);
+    if (b.fx != null) { const a = axisX(b.fx); x0 = a - Math.ceil(b.fw / 2) - fL(gid); x1 = a + Math.ceil(b.fw / 2) + fR(gid); }
+    if (b.fy != null) { const a = axisY(b.fy); y0 = a - b.up - fT(gid); y1 = a + Math.ceil(b.down) + fB(gid); }
     rects.set(gid, { x: x0, y: y0, w: x1 - x0, h: y1 - y0 });
   }
   // channels: the free middle of each gap between tracks, where wires turn
@@ -601,7 +653,7 @@ function portsOf(model, geo, end, side, other, head, wantOff) {
     const toward = (s === 'R' && dx > 0) || (s === 'L' && dx < 0) || (s === 'B' && dy > 0) || (s === 'T' && dy < 0);
     const major = Math.abs(dx) >= Math.abs(dy) ? isH(s) : !isH(s);
     if (!toward) return Math.abs(isH(s) ? dx : dy) < 1 ? 30 : 60;
-    return (major ? 0 : 10) + (isH(s) === flowH ? 0 : 18);
+    return (major ? 0 : 10) + (isH(s) === flowH ? 0 : 40);
   };
   if (end.kind === 'group') {
     const R = geo.rects.get(end.id);
@@ -695,6 +747,46 @@ export function routeAll(model, geo, opts = {}) {
   for (const p of geo.pos.values()) { addLine(allX, p.cx); addLine(allY, p.cy); }
   for (const R of geo.rects.values()) { if (R.x - 8 > 2) addLine(allX, R.x - 8); if (R.y - 8 > 2) addLine(allY, R.y - 8); addLine(allX, Math.min(geo.W - 2, R.x + R.w + 8)); addLine(allY, Math.min(geo.H - 2, R.y + R.h + 8)); }
 
+  // the sides a layered hop must use: to the next layer, out on the flow's exit side and in on its entry side
+  const flowSides = (e) => {
+    const flip = e.aHead && !e.bHead, s = flip ? e.b : e.a, t = flip ? e.a : e.b;
+    if (model.sided || !model.layerOf || !nodes.has(s) || !nodes.has(t) || e.sa || e.sb || e.a === e.b) return null;
+    if (nodes.get(s).junction || nodes.get(t).junction) return null;
+    const la = model.layerOf.get(s), lb = model.layerOf.get(t);
+    if (la == null || lb !== la + 1) return null;
+    return { s, t, fs: { LR: 'R', RL: 'L', TD: 'B', BT: 'T' }[model.dir], ft: { LR: 'L', RL: 'R', TD: 'T', BT: 'B' }[model.dir] };
+  };
+  // wires of different styles (solid, dashed) meeting at one port are spread along that side, so a dashed
+  // wire never runs on top of a solid one; wires of one style share the port (a fork, a merge)
+  const styleOff = new Map();
+  const portGroups = new Map();
+  for (const e of edges) {
+    const f = flowSides(e);
+    if (!f) continue;
+    for (const [node, side, role, other] of [[f.s, f.fs, 's', f.t], [f.t, f.ft, 't', f.s]]) {
+      const k = `${node}|${side}`;
+      if (!portGroups.has(k)) portGroups.set(k, []);
+      portGroups.get(k).push({ e, role, other, dashed: !!e.dashed });
+    }
+  }
+  for (const [k, list] of portGroups) {
+    const styles = [...new Set(list.map((x) => x.dashed))];
+    if (styles.length < 2) continue;
+    const side = k.split('|').pop(), vert = isH(side);
+    const at = (x) => { const p = geo.pos.get(x.other); return p ? (vert ? p.cy : p.cx) : 0; };
+    const parts = styles.map((d) => ({ d, list: list.filter((x) => x.dashed === d) })).sort((a, b) => a.list.reduce((s, x) => s + at(x), 0) / a.list.length - b.list.reduce((s, x) => s + at(x), 0) / b.list.length);
+    parts.forEach((p, j) => { for (const x of p.list) styleOff.set(`${x.e.id}|${x.role}`, (j - (parts.length - 1) / 2) * 10); });
+  }
+  // the far end follows when its port carries only this wire, so a straight wire stays straight
+  for (const e of edges) {
+    const f = flowSides(e);
+    if (!f) continue;
+    for (const [mine, far, node, side] of [['s', 't', f.t, f.ft], ['t', 's', f.s, f.fs]]) {
+      const o = styleOff.get(`${e.id}|${mine}`);
+      if (o != null && !styleOff.has(`${e.id}|${far}`) && (portGroups.get(`${node}|${side}`) || []).length === 1) styleOff.set(`${e.id}|${far}`, o);
+    }
+  }
+
   for (const e of edges) {
     const endOf = (id, groupSide) => (nodes.has(id) ? { kind: 'node', id, groupSide } : { kind: 'group', id });
     const A = endOf(e.a, e.aGroup), Bn = endOf(e.b, e.bGroup);
@@ -708,7 +800,12 @@ export function routeAll(model, geo, opts = {}) {
     const cs = flip ? cb : ca, ct = flip ? ca : cb;
     const headS = e.aHead && e.bHead, headT = e.aHead || e.bHead;
     if (e.a === e.b && A.kind === 'node') { wires.push(selfLoop(e, geo.pos.get(e.a), nodes.get(e.a))); continue; }
-    const starts = portsOf(model, geo, S, ss, ct, headS, off), targets = portsOf(model, geo, Tn, ts, cs, headT, off);
+    // layered: a hop to the next layer leaves on the flow's exit side and enters on its entry side (a fork
+    // becomes a bus, a merge comes in from one side), as dagre and the AWS deck draw it
+    const fl = flowSides(e);
+    const fs = fl ? fl.fs : ss, ft = fl ? fl.ft : ts;
+    const offS = off + (styleOff.get(`${e.id}|s`) || 0), offT = off + (styleOff.get(`${e.id}|t`) || 0);
+    const starts = portsOf(model, geo, S, fs, ct, headS, offS), targets = portsOf(model, geo, Tn, ft, cs, headT, offT);
     if (!starts.length || !targets.length) { say(model, 'warn', 'route', e.id, `edge "${e.src}" has an end that is not drawn; skipped`); continue; }
     const xs = new Set(allX), ys = new Set(allY);
     for (const p of [...starts, ...targets]) { addLine(xs, p.pt[0]); addLine(ys, p.pt[1]); }
@@ -724,7 +821,7 @@ export function routeAll(model, geo, opts = {}) {
       }
       // a wire down through a title is repaired by header clearance (the frame's content moves right),
       // so it costs less than a detour; along a title, or through a corner icon, it stays costly
-      for (const s of soft) if (segHits(x1, y1, x2, y2, s.b)) c += s.header && x1 === x2 ? 120 : s.pen;
+      for (const s of soft) if (segHits(x1, y1, x2, y2, s.b)) c += s.header && x1 === x2 ? 30 : s.pen;
       const hz = y1 === y2;
       for (const R of borders) {
         if (hz) {

@@ -293,7 +293,8 @@ that mentions it, as in Mermaid), and links to a subgraph id (the wire ends on t
 `class`, `style`, `linkStyle`, `click` and `~~~` are ignored (the kit's theme sets colors). Thick links draw as
 normal wires. Without sides, a layered layout places the nodes: longest-path layers in the flowchart's direction,
 groups kept contiguous (sibling groups in declaration order, so AZ a comes before AZ b), barycenter ordering,
-container packing (a frame never holds a node that is not in it), forks centered between their branches. A
+container packing (a frame never holds a node that is not in it), forks centered between their branches (a frame
+alone in its slot, such as an ALB in its public subnet, centers as a block), and chains straightened into them. A
 both-headed edge between twins (same icon) or a dashed both-headed edge is a peer edge (replication, sync): same
 tier, not a hop. A layered drawing that fits no tile in its direction is tried in the other one (reported).
 
@@ -315,7 +316,8 @@ exists nested (`apigw` for `cloud.region.apigw`) joins the nested shape (real D2
 
 **Icons** come from the explicit icon, then the label, through `resolveIcon` (Mermaid pack keys such as
 `aws:lambda`, Prism pack keys `aws:svc-lambda` exactly, PlantUML macros, D2 file names, free text such as "ALB",
-"RDS Primary", "Dead-letter queue"). Mermaid's generic built-ins (`cloud`, `database`, `disk`, `internet`,
+"RDS Primary", "Dead-letter queue"; when the whole name matches nothing, its last word or two may, exactly:
+"Order queue", "Image bucket", "Payment function", reported). Mermaid's generic built-ins (`cloud`, `database`, `disk`, `internet`,
 `server`) defer to the title. Anything unresolved becomes a `kind: 'box'` node (a `pill` for a stadium shape)
 and an `unmapped` entry with the closest candidates. A node without a label takes the icon's official short
 name; a `<br>` in a label starts the sub line. Wire labels over 18 characters break into two lines.
@@ -360,7 +362,9 @@ and frames of one kind over the same columns (or rows) get the same size. The ti
 normal 480x300, wide 960x440 (gaps stretched to use the width), full up to 1400x900; larger is reported
 (`tile-size`). Wires are orthogonal M/H/V routes from the kit's ports (place.mjs `R`, `L`, `T`, `B` below the
 label), searched over the channel lines between tracks: other nodes block, titles and corner icons cost, wires
-avoid running along borders or on top of each other (a shared trunk from one port is fine). Labels and badges
+avoid running along borders or on top of each other (a shared trunk from one port is fine). In a layered layout a
+hop to the next layer leaves on the flow's exit side and enters on its entry side, so a fork draws as a bus and
+a merge comes in from one side; a dashed and a solid wire at one port are spread apart. Labels and badges
 go to the clearest spot along their wire, measured the way lint measures (Arial advance widths).
 
 **Export.** `toMermaid(spec)` writes a `flowchart LR`: subgraphs by containment, nodes as

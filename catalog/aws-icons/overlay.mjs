@@ -34,7 +34,7 @@ export const META = {
   'aws-svc-ec2-auto-scaling': { aliases: ['ec2 autoscaling', 'autoscaling'] },
   'aws-svc-auto-scaling': { short: 'AWS Auto Scaling' },
   'aws-svc-ec2-image-builder': { aliases: ['image builder'] },
-  'aws-svc-lambda': { aliases: ['aws lambda', 'lambda functions'], primary: 'aws-res-lambda-function', prefer: 'service' },
+  'aws-svc-lambda': { aliases: ['aws lambda', 'lambda functions', 'function', 'functions', 'serverless function'], primary: 'aws-res-lambda-function', prefer: 'service' },
   'aws-svc-elastic-beanstalk': { aliases: ['beanstalk', 'eb'], primary: 'aws-res-elastic-beanstalk-application' },
   'aws-svc-app-runner': { aliases: ['apprunner'] },
   'aws-svc-serverless-application-repository': { aliases: ['sar'] },

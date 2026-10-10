@@ -25,7 +25,7 @@ export function parsePlantUml(text) {
   const stack = [];
   const ids = new Map();   // alias -> node or group
   let block = null, ignored = 0;
-  const lines = String(text).replace(/\r\n?/g, '\n').split('\n');
+  const lines = String(text).replace(/^﻿/, '').replace(/\r\n?/g, '\n').split('\n');
   const parent = () => (stack.length ? stack[stack.length - 1] : null);
   const addNode = (n) => { if (ids.has(n.id)) { issue(ir, 'warn', 'parse', n.id, `${n.id} is declared twice; kept the first`); return ids.get(n.id); } n.parent = parent(); ir.nodes.push(n); ids.set(n.id, n); return n; };
   const addGroup = (g, open) => { g.parent = parent(); ir.groups.push(g); ids.set(g.id, g); if (open) stack.push(g.id); };

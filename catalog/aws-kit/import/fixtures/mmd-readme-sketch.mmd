@@ -1,0 +1,14 @@
+flowchart TD
+  User --> CF[CloudFront]
+  CF --> ALB
+  subgraph VPC
+    subgraph Public
+      ALB
+    end
+    subgraph Private
+      EC2a[EC2] & EC2b[EC2]
+      RDS[(RDS)]
+    end
+  end
+  ALB --> EC2a & EC2b
+  EC2a & EC2b --> RDS

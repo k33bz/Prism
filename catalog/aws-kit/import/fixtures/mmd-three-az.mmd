@@ -1,0 +1,24 @@
+architecture-beta
+    %% prism: name Three AZs behind one ALB
+    %% prism: flow users>alb>j>web2
+    service users(internet)[Users]
+    group vpc(aws:virtual-private-cloud)["VPC 10.0.0.0/16"]
+    group a1(cloud)["Availability Zone 1"] in vpc
+    group a2(cloud)["Availability Zone 2"] in vpc
+    group a3(cloud)["Availability Zone 3"] in vpc
+    service alb(aws:elastic-load-balancing-application-load-balancer)[Application Load Balancer] in vpc
+    junction j in vpc
+    service web1(aws:ec2-instance)[Web server] in a1
+    service web2(aws:ec2-instance)[Web server] in a2
+    service web3(aws:ec2-instance)[Web server] in a3
+    service db1(aws:aurora)[Aurora writer] in a1
+    service db2(aws:aurora)[Aurora reader] in a2
+    service db3(aws:aurora)[Aurora reader] in a3
+    users:R --> L:alb
+    alb:R -- L:j
+    j:R --> L:web2
+    j:T --> B:web1
+    j:B --> T:web3
+    web1:R --> L:db1
+    web2:R --> L:db2
+    web3:R --> L:db3

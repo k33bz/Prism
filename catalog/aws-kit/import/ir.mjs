@@ -125,7 +125,16 @@ function fromLabel(text) {
   if (!t) return null;
   let r = resolveIcon(t);
   if (r.kind === 'group') r = resolveIcon(t, { prefer: 'node' });
-  return r.id && r.kind === 'node' && r.confidence >= 0.5 ? { icon: r.id, how: `label (${r.how})`, confidence: r.confidence, warnings: r.warnings } : null;
+  if (r.id && r.kind === 'node' && r.confidence >= 0.5) return { icon: r.id, how: `label (${r.how})`, confidence: r.confidence, warnings: r.warnings };
+  // the head noun of a free-text name ("Order queue", "Image bucket", "Alerts topic"), exact matches only
+  const words = t.split(/\s+/).filter(Boolean);
+  for (const k of [2, 1]) {
+    if (words.length <= k) continue;
+    const head = words.slice(-k).join(' ');
+    const h = resolveIcon(head);
+    if (h.id && h.kind === 'node' && h.confidence > 0.9) return { icon: h.id, how: `label head "${head}" (${h.how})`, confidence: 0.6, warnings: [`"${t}" matched by its last word${k > 1 ? 's' : ''} "${head}"`] };
+  }
+  return null;
 }
 function resolveNode(n, ir) {
   const over = ir.directives.icon[n.id];

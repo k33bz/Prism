@@ -141,6 +141,37 @@ test('layered layout keeps sibling groups in declaration order and the request p
   assert.equal(y('users'), y('apigw')); assert.equal(y('apigw'), y('fn')); assert.equal(y('fn'), y('ddb'));
 });
 
+test('layered layout: a lone frame centres over its fork, feeds run straight, next-layer hops draw as a bus', () => {
+  const { spec } = importFile('mmd-readme-sketch.mmd');
+  const n = (id) => spec.nodes.find((x) => x.id === id), g = (id) => spec.groups.find((x) => x.id === id);
+  const mid = (n('EC2a').x + n('EC2b').x) / 2 + 20;
+  // the ALB's subnet moved as a block: the ALB is centred over both servers, and its frame is sized from its
+  // content (wider on the left only by the clearance for the wire entering through its title)
+  assert.equal(n('ALB').x + 20, mid);
+  assert.ok(g('Public').w < g('Private').w && g('Public').x > g('Private').x && g('Public').x + g('Public').w < g('Private').x + g('Private').w);
+  assert.equal(n('CF').x, n('ALB').x); assert.equal(n('User').x, n('CF').x);
+  // both branches of the fork come down into the top of their server (a bus), the merge into RDS from above
+  for (const id of ['EC2a', 'EC2b', 'RDS']) for (const w of spec.wires.filter((x) => x.to === id)) assert.equal(Number(w.d.match(/V([\d.]+)$/)[1]), n(id).y - 4, `${w.id} enters ${id} from the top`);
+  // a dashed and a solid wire at one port are spread apart
+  const d = importFile('d2-steps.d2').spec;
+  const startY = (w) => Number(w.d.match(/^M[\d.]+,([\d.]+)/)[1]);
+  const [solid, dashed] = ['thumbs', 'sns'].map((t) => d.wires.find((w) => w.to === t));
+  assert.notEqual(startY(solid), startY(dashed));
+  assert.match(solid.d, /^M[\d.]+,([\d.]+) H[\d.]+$/, 'the solid wire stays straight');
+});
+
+test('free-text names: the whole name, else its head noun when that matches exactly', () => {
+  const { spec, report } = importFile('mmd-event-driven.mmd');
+  const icon = (id) => spec.nodes.find((x) => x.id === id).icon;
+  for (const id of ['intake', 'pay', 'inv', 'mailer']) assert.equal(icon(id), 'aws-svc-lambda', id);
+  assert.equal(icon('sfn'), 'aws-svc-step-functions');
+  assert.deepEqual(report.unmapped.map((u) => u.element), ['web']);
+  const r = fromMermaid('flowchart LR\n a[Order queue] --> b[Image bucket] --> c[Orders table] --> d[Auth service]');
+  const kinds = r.spec.nodes.map((x) => x.icon || x.kind);
+  assert.deepEqual(kinds, ['aws-svc-simple-queue-service', 'aws-res-simple-storage-service-bucket', 'box', 'box']);
+  assert.ok(r.report.issues.some((x) => x.code === 'icon' && /"Order queue" matched by its last word "queue"/.test(x.message)));
+});
+
 test('group kinds: title, id, icon; directives override', () => {
   const kinds = (spec) => Object.fromEntries(spec.groups.map((g) => [g.id, g.kind]));
   assert.deepEqual(kinds(importFile('mmd-threetier-arch.mmd').spec), { cloud: 'cloud', region: 'region', vpc: 'vpc', aza: 'az', azb: 'az', puba: 'pub', appa: 'priv', dba: 'priv', pubb: 'pub', appb: 'priv', dbb: 'priv' });
