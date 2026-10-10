@@ -37,6 +37,24 @@ export default {
       '--neg': '#cf222e', '--neg-rgb': '207,34,46',                              // danger.fg
       '--crit': '#8250df', '--crit-rgb': '130,80,223',                           // done.fg
       '--cardgrad': 'linear-gradient(157deg,rgba(9,105,218,.06),rgba(9,105,218,0) 55%)',
+      // font, feel and top-bar tokens as shipped in Prism.html PRIMER_LIGHT_CSS (2026-10 drift
+      // fix: they were hand-added to Prism.html and themes.js and never lived here)
+      '--elev-2': '0 8px 24px rgba(66,74,83,.12)',
+      '--dur': '.08s',
+      '--head-w': '600',
+      '--dens': '.95',
+      '--cs-topnav-bg': '#24292f',
+      '--cs-topnav-line': '#444c56',
+      '--cs-topnav-ink': '#ffffff',
+      '--cs-topnav-dim': '#d0d7de',
+      '--cs-topnav-hover': 'rgba(255,255,255,.08)',
+      // on-fill inks (new; same #fff the generator painted before): 4.87-5.36:1 on accent/info/pos/warn/neg/crit (floor 4.5)
+      '--accent-ink': '#ffffff',
+      '--info-ink': '#ffffff',
+      '--pos-ink': '#ffffff',
+      '--warn-ink': '#ffffff',
+      '--neg-ink': '#ffffff',
+      '--crit-ink': '#ffffff',
     },
     // Dark: canvas.default #0d1117 ground, canvas.subtle #161b22 panels, Primer's
     // dark border + fg scale, and the brighter dark-mode semantic fg tokens
@@ -51,6 +69,24 @@ export default {
       '--neg': '#f85149', '--neg-rgb': '248,81,73',                              // danger.fg
       '--crit': '#a371f7', '--crit-rgb': '163,113,247',                          // done.fg
       '--cardgrad': 'linear-gradient(157deg,rgba(47,129,247,.08),rgba(47,129,247,0) 55%)',
+      // font, feel and top-bar tokens as shipped in Prism.html PRIMER_DARK_CSS (2026-10 drift
+      // fix: they were hand-added to Prism.html and themes.js and never lived here)
+      '--elev-2': '0 8px 24px rgba(1,4,9,.8)',
+      '--dur': '.08s',
+      '--head-w': '600',
+      '--dens': '.95',
+      '--cs-topnav-bg': '#010409',
+      '--cs-topnav-line': '#30363d',
+      '--cs-topnav-ink': '#e6edf3',
+      '--cs-topnav-dim': '#7d8590',
+      '--cs-topnav-hover': 'rgba(255,255,255,.06)',
+      // on-fill inks (new; the generator painted literal #fff on these fills): #fff 2.52-3.75:1 -> ink 5.05-7.50:1 on accent/info/pos/warn/neg/crit (floor 4.5)
+      '--accent-ink': '#0d1117',
+      '--info-ink': '#0d1117',
+      '--pos-ink': '#0d1117',
+      '--warn-ink': '#0d1117',
+      '--neg-ink': '#0d1117',
+      '--crit-ink': '#0d1117',
     },
   },
 

@@ -24,7 +24,8 @@ export default {
       '--line': '#edebe9',
       '--ink': '#323130',
       '--muted': '#605e5c',
-      '--dim': '#a19f9d',
+      // contrast: --dim #a19f9d -> #8a8886; dim/panel 2.64 -> 3.53:1 (floor 3), dim/card 2.64 -> 3.53:1 (floor 3); Fluent neutralSecondaryAlt
+      '--dim': '#8a8886',
       '--accent': '#0078d4',
       '--accent-rgb': '0,120,212',
       '--accent2': '#2b88d8',
@@ -32,8 +33,9 @@ export default {
       '--info-rgb': '0,78,140',
       '--pos': '#107c10',
       '--pos-rgb': '16,124,16',
-      '--warn': '#c87400',
-      '--warn-rgb': '200,116,0',
+      // contrast: --warn #c87400 -> #ad6405; warn/panel 3.53 -> 4.56:1 (floor 4.5), #fff/warn 3.53 -> 4.56:1 (floor 4.5)
+      '--warn': '#ad6405',
+      '--warn-rgb': '173,100,5',
       '--neg': '#a4262c',
       '--neg-rgb': '164,38,44',
       '--crit': '#5c2e91',
@@ -42,7 +44,8 @@ export default {
       '--font': '"Segoe UI", "Segoe UI Web (West European)", -apple-system, system-ui, sans-serif',
       '--r-sm': '2px',
       '--r-md': '2px',
-      '--r-lg': '4px',
+      // drift: --r-lg 4px -> 3px, the value Prism.html ships (this palette value never reached the shell)
+      '--r-lg': '3px',
       '--r-xl': '4px',
       '--elev-1': '0 1.6px 3.6px rgba(0,0,0,.132),0 .3px .9px rgba(0,0,0,.108)',
       '--elev-2': '0 6.4px 14.4px rgba(0,0,0,.132),0 1.2px 3.6px rgba(0,0,0,.108)',
@@ -56,6 +59,13 @@ export default {
       '--cs-topnav-ink': '#ffffff',
       '--cs-topnav-dim': '#c7e0f4',
       '--cs-topnav-hover': 'rgba(255,255,255,.12)',
+      // on-fill inks (new; same #fff the generator painted before): 4.53-9.31:1 on accent/info/pos/warn/neg/crit (floor 4.5)
+      '--accent-ink': '#ffffff',
+      '--info-ink': '#ffffff',
+      '--pos-ink': '#ffffff',
+      '--warn-ink': '#ffffff',
+      '--neg-ink': '#ffffff',
+      '--crit-ink': '#ffffff',
     },
     dark: {
       '--bg': '#1b1a19',
@@ -83,7 +93,8 @@ export default {
       '--font': '"Segoe UI", "Segoe UI Web (West European)", -apple-system, system-ui, sans-serif',
       '--r-sm': '2px',
       '--r-md': '2px',
-      '--r-lg': '4px',
+      // drift: --r-lg 4px -> 3px, the value Prism.html ships (this palette value never reached the shell)
+      '--r-lg': '3px',
       '--r-xl': '4px',
       '--elev-1': '0 1.6px 3.6px rgba(0,0,0,.5),0 .3px .9px rgba(0,0,0,.4)',
       '--elev-2': '0 6.4px 14.4px rgba(0,0,0,.55),0 1.2px 3.6px rgba(0,0,0,.4)',
@@ -97,6 +108,13 @@ export default {
       '--cs-topnav-ink': '#f3f2f1',
       '--cs-topnav-dim': '#c8c6c4',
       '--cs-topnav-hover': 'rgba(40,153,245,.12)',
+      // on-fill inks (new; the generator painted literal #fff on these fills): #fff 1.55-3.01:1 -> ink 5.76-11.24:1 on accent/info/pos/warn/neg/crit (floor 4.5)
+      '--accent-ink': '#1b1a19',
+      '--info-ink': '#1b1a19',
+      '--pos-ink': '#1b1a19',
+      '--warn-ink': '#1b1a19',
+      '--neg-ink': '#1b1a19',
+      '--crit-ink': '#1b1a19',
     },
   },
   tokenProfile: {

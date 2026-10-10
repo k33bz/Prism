@@ -24,20 +24,45 @@ export default {
   accent: '#ffe01b',            // Cavendish Yellow — the brand primary (advisory; palette wins)
 
   palette: {
-    // Light: warm off-white paper, Peppercorn ink, yellow accent. Because pure
-    // #ffe01b is illegible as text/fill-on-white, the accent role stays yellow
-    // (used as fills/underlines behind dark ink in facets) while text contrast
-    // comes from --ink. Semantic roles use warm, high-contrast brand-adjacent hues.
+    // Light: warm off-white paper, Peppercorn ink and top bar. Pure #ffe01b is
+    // illegible as text or under #fff on white, and the shell and facets paint
+    // --accent as both (rail links, labels, button fills), so the light accent is
+    // the deepest gold on Cavendish's hue that passes; the yellow stays in
+    // --accent2 (gradient fills) and --cardgrad. Semantic roles use warm,
+    // high-contrast brand-adjacent hues.
     light: {
       '--bg': '#fbf9f4', '--panel': '#ffffff', '--panel2': '#f6f2e9', '--card': '#ffffff', '--line': '#e6e0d3',
-      '--ink': '#241c15', '--muted': '#6b6357', '--dim': '#a89f90',        // Peppercorn family
-      '--accent': '#ffe01b', '--accent-rgb': '255,224,27', '--accent2': '#ffe01b',  // Cavendish Yellow
+      // contrast: --dim #a89f90 -> #9c9385; dim/panel 2.62 -> 3.03:1 (floor 3), dim/card 2.62 -> 3.03:1 (floor 3)
+      '--ink': '#241c15', '--muted': '#6b6357', '--dim': '#9c9385',        // Peppercorn family
+      // contrast: --accent #ffe01b -> #877605; accent/panel 1.32 -> 4.54:1 (floor 4.5), accent/bg 1.25 -> 4.32:1 (floor 3), #fff/accent 1.32 -> 4.54:1 (floor 4.5); Cavendish yellow cannot be text or carry #fff on white; deepest gold on the same hue that does (dark mode keeps #ffe01b)
+      '--accent': '#877605', '--accent-rgb': '135,118,5', '--accent2': '#ffe01b',  // Cavendish gold / Cavendish Yellow
       '--info': '#007c89', '--info-rgb': '0,124,137',                       // Mailchimp teal
-      '--pos': '#3caa3c', '--pos-rgb': '60,170,60',                         // warm green
-      '--warn': '#ff9d1c', '--warn-rgb': '255,157,28',                      // Squash orange
-      '--neg': '#e0503f', '--neg-rgb': '224,80,63',                         // warm brick red
+      // contrast: --pos #3caa3c -> #098914; pos/panel 3.00 -> 4.57:1 (floor 4.5), #fff/pos 3.00 -> 4.57:1 (floor 4.5)
+      '--pos': '#098914', '--pos-rgb': '9,137,20',                         // warm green
+      // contrast: --warn #ff9d1c -> #ab6600; warn/panel 2.08 -> 4.53:1 (floor 4.5), #fff/warn 2.08 -> 4.53:1 (floor 4.5); Squash darkened on its own hue
+      '--warn': '#ab6600', '--warn-rgb': '171,102,0',                      // Squash orange
+      // contrast: --neg #e0503f -> #d24333; neg/panel 3.90 -> 4.57:1 (floor 4.5), #fff/neg 3.90 -> 4.57:1 (floor 4.5)
+      '--neg': '#d24333', '--neg-rgb': '210,67,51',                         // warm brick red
       '--crit': '#c8467c', '--crit-rgb': '200,70,124',                      // warm magenta
       '--cardgrad': 'linear-gradient(157deg,rgba(255,224,27,.10),rgba(255,224,27,0) 55%)',
+      // font, feel and top-bar tokens as shipped in Prism.html MAILCHIMP_LIGHT_CSS (2026-10 drift
+      // fix: they were hand-added to Prism.html and themes.js and never lived here)
+      '--font': 'Bitter, Rockwell, Georgia, "Times New Roman", serif',
+      '--elev-1': '0 2px 6px rgba(60,50,30,.08)',
+      '--elev-2': '0 8px 22px rgba(60,50,30,.14)',
+      '--dur': '.15s',
+      '--cs-topnav-bg': '#241c15',
+      '--cs-topnav-line': '#463b30',
+      '--cs-topnav-ink': '#f7f3ea',
+      '--cs-topnav-dim': '#c2b6a4',
+      '--cs-topnav-hover': 'rgba(255,255,255,.08)',
+      // on-fill inks (new; same #fff the generator painted before): 4.53-4.95:1 on accent/info/pos/warn/neg/crit (floor 4.5)
+      '--accent-ink': '#ffffff',
+      '--info-ink': '#ffffff',
+      '--pos-ink': '#ffffff',
+      '--warn-ink': '#ffffff',
+      '--neg-ink': '#ffffff',
+      '--crit-ink': '#ffffff',
     },
     // Dark: Peppercorn near-black surfaces (the signature Mailchimp brand ground)
     // with Cavendish yellow popping on top.
@@ -51,6 +76,24 @@ export default {
       '--neg': '#f0685a', '--neg-rgb': '240,104,90',
       '--crit': '#e069a0', '--crit-rgb': '224,105,160',
       '--cardgrad': 'linear-gradient(157deg,rgba(255,224,27,.12),rgba(255,224,27,0) 55%)',
+      // font, feel and top-bar tokens as shipped in Prism.html MAILCHIMP_DARK_CSS (2026-10 drift
+      // fix: they were hand-added to Prism.html and themes.js and never lived here)
+      '--font': 'Bitter, Rockwell, Georgia, "Times New Roman", serif',
+      '--elev-1': '0 2px 6px rgba(0,0,0,.4)',
+      '--elev-2': '0 8px 22px rgba(0,0,0,.5)',
+      '--dur': '.15s',
+      '--cs-topnav-bg': '#302720',
+      '--cs-topnav-line': '#463b30',
+      '--cs-topnav-ink': '#f7f3ea',
+      '--cs-topnav-dim': '#c2b6a4',
+      '--cs-topnav-hover': 'rgba(255,255,255,.08)',
+      // on-fill inks (new; the generator painted literal #fff on these fills): #fff 1.32-3.14:1 -> ink 5.35-12.72:1 on accent/info/pos/warn/neg/crit (floor 4.5)
+      '--accent-ink': '#241c15',
+      '--info-ink': '#241c15',
+      '--pos-ink': '#241c15',
+      '--warn-ink': '#241c15',
+      '--neg-ink': '#241c15',
+      '--crit-ink': '#241c15',
     },
   },
 
