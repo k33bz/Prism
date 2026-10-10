@@ -33,9 +33,10 @@ import * as C from './color.mjs';
 
 // Every token the engine emits, in the order of BASE_TOKENS
 // (prism-mcp-server/utils/themes.js), then the optional top-nav chrome tokens
-// the newer packs set, then --accent-ink (the solved ink for text on accent
-// fills; Prism has no token for it yet, so it rides along for components that
-// want it). The tests check this list covers TOKEN_META and BASE_TOKENS.
+// the newer packs set, then the on-fill inks (--accent-ink and one per status
+// role: the solved ink for text and glyphs painted on that fill, which the
+// generated facets read as var(--x-ink,#fff)). The tests check this list covers
+// TOKEN_META and BASE_TOKENS.
 export const TOKENS = [
   '--bg', '--panel', '--panel2', '--card', '--line', '--ink', '--muted', '--dim',
   '--accent', '--accent-rgb', '--accent2', '--info', '--info-rgb', '--pos', '--pos-rgb',
@@ -43,7 +44,7 @@ export const TOKENS = [
   '--font', '--r-sm', '--r-md', '--r-lg', '--r-xl',
   '--elev-1', '--elev-2', '--dur', '--ease', '--bd', '--head-w', '--dens',
   '--cs-topnav-bg', '--cs-topnav-line', '--cs-topnav-ink', '--cs-topnav-dim', '--cs-topnav-hover',
-  '--accent-ink',
+  '--accent-ink', '--info-ink', '--pos-ink', '--warn-ink', '--neg-ink', '--crit-ink',
 ];
 
 export const STATUS_HUES = { '--info': 250, '--pos': 145, '--warn': 75, '--neg': 27, '--crit': 305 };
@@ -71,7 +72,7 @@ export const PAIRS = [
   ['--accent', '--bg', 'ui'],
   ['--accent-ink', '--accent', 'text'],
   ['--accent2', '--bg', 'ui'], ['--accent2', '--panel', 'ui'],
-  ...STATUS.flatMap((t) => [...CONTENT_SURFACES.map((s) => [t, s, 'text']), [t, '--bg', 'ui']]),
+  ...STATUS.flatMap((t) => [...CONTENT_SURFACES.map((s) => [t, s, 'text']), [t, '--bg', 'ui'], [t + '-ink', t, 'text']]),
   ['--cs-topnav-ink', '--cs-topnav-bg', 'text'], ['--cs-topnav-dim', '--cs-topnav-bg', 'text'],
 ];
 
@@ -95,8 +96,8 @@ export function inferMode(tokens) {
 /**
  * Check a (partial or full) token map's contrast pairs. Translucent values are
  * composited: --bg over black (dark) or white (light), surfaces over --bg, and a
- * foreground over the background of its pair. When --accent-ink is absent the
- * ink on accent fills is taken as #ffffff, the ink Prism's generated facets use.
+ * foreground over the background of its pair. When an on-fill ink (--accent-ink,
+ * --info-ink, ...) is absent it is taken as #ffffff, the generated facets' fallback.
  * Pairs whose tokens are missing or unparseable are listed in `skipped`.
  * Returns { mode, contrast, pairs, failures, skipped, pass }.
  */
@@ -106,7 +107,8 @@ export function checkContrast(tokens, { mode, contrast = 'AA' } = {}) {
   const m = mode === 'dark' || mode === 'light' ? mode : inferMode(tokens);
   const floors = FLOORS[contrast];
   const backdrop = m === 'dark' ? { r: 0, g: 0, b: 0 } : { r: 255, g: 255, b: 255 };
-  const raw = (k) => (k === '--accent-ink' && tokens[k] == null ? '#ffffff' : tokens[k]);
+  const isInk = (k) => /^--(accent|info|pos|warn|neg|crit)-ink$/.test(k);
+  const raw = (k) => (isInk(k) && tokens[k] == null ? '#ffffff' : tokens[k]);
   const bgRgb = (() => { const p = C.parseColor(tokens['--bg']); return p ? C.composite(p, backdrop) : null; })();
   const opaque = (k, over) => {
     const p = C.parseColor(raw(k));
@@ -124,7 +126,7 @@ export function checkContrast(tokens, { mode, contrast = 'AA' } = {}) {
     const floor = floors[kind];
     pairs.push({
       mode: m, fg, bg, kind,
-      fgValue: fg === '--accent-ink' && tokens[fg] == null ? '#ffffff (facet default)' : C.toHex(f),
+      fgValue: isInk(fg) && tokens[fg] == null ? '#ffffff (facet default)' : C.toHex(f),
       bgValue: C.toHex(b),
       ratio: C.round(ratio, 2), floor, pass: floor == null ? null : ratio >= floor,
       apca: C.round(C.apcaContrast(f, b), 1),
@@ -315,6 +317,7 @@ function deriveMode(mode, inp, ctx) {
   const shared = dir > 0 ? Math.max(Ls, ...need) : Math.min(Ls, ...need);
   STATUS.forEach((k) => {
     t[k] = solveL({ L: shared + off(k), C: Cs, h: STATUS_HUES[k] }, dir, statusOk).hex;
+    t[k + '-ink'] = bestInk(t[k], inks, floors.text);
   });
 
   // -rgb triplets mirror their hex.
