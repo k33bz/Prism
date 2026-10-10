@@ -194,7 +194,9 @@ export function parseFlowchart(text) {
     }
     return n;
   };
-  for (const { text: raw, n: lineNo } of lines.slice(h + 1)) {
+  // statements may share the header line: graph TD; a-->b; b-->c
+  const headRest = lines[h].text.replace(/^\s*(?:flowchart|graph)(?:-elk)?(?:\s+(?:LR|RL|TD|TB|BT)\b)?\s*;?/, '');
+  for (const { text: raw, n: lineNo } of [{ text: headRest, n: lines[h].n }, ...lines.slice(h + 1)]) {
     for (const l of splitStatements(raw.trim())) {
       let m;
       if ((m = l.match(/^subgraph\s+(.+)$/))) {

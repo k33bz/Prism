@@ -22,7 +22,7 @@
 //   4. labels  placeLabels(): wire labels and step badges in clear intervals of their wire, ranked against
 //              the same boxes lint.mjs measures (Arial advance widths), with alternates kept for the lint
 //              loop in ir.mjs.
-import { wrap, P } from '../place.mjs';
+import { wrap, P, R as Rp, L as Lp, T as Tp, B as Bp } from '../place.mjs';
 import { textWidth } from '../lint.mjs';
 
 export const PAD = { l: 16, r: 16, t: 22, b: 16 };
@@ -371,7 +371,9 @@ export function layered(model) {
     for (const [n, s] of slot) slot.set(n, s - lo);
     return { L0: Math.min(...placed.map((p) => p.L0)), L1: Math.max(...placed.map((p) => p.L1)), h: Math.max(...placed.map((p) => p.off + p.h)) - lo, rel: slot };
   };
-  const S = pack(null).rel;
+  const root = pack(null);
+  if (!root) return new Map();
+  const S = root.rel;
 
   // centering: a fork sits between its branches, a single neighbour lines up with it
   const anc = (id) => chains.get(id);
@@ -624,10 +626,11 @@ function portsOf(model, geo, end, side, other, head, wantOff) {
     out.push({ pt, side: s, cost: 0, groupEdge: true });
     return out;
   }
+  // the kit's own ports (place.mjs): R, L at the icon's sides, T above it, B below its label block
+  const pn = n.boxKind ? { cx: p.cx, cy: p.cy, kind: n.boxKind, w: n.iw, h: n.ih } : { cx: p.cx, cy: p.cy, size: n.iw, label: n.label, wrap: n.wrap, sub: n.sub };
+  const PORT = { R: Rp, L: Lp, T: Tp, B: Bp };
   for (const s of side ? [side] : ['R', 'L', 'B', 'T']) {
-    const off = wantOff || 0;
-    const pt = s === 'R' ? [p.cx + n.iw / 2 + g, p.cy + off] : s === 'L' ? [p.cx - n.iw / 2 - g, p.cy + off]
-      : s === 'T' ? [p.cx + off, p.cy - n.ih / 2 - g] : [p.cx + off, p.cy + n.ih / 2 + n.lblH + g];
+    const pt = PORT[s](pn, wantOff || 0, g);
     out.push({ pt, side: s, cost: side ? 0 : facing(s, other, [p.cx, p.cy]) });
   }
   return out;
@@ -914,6 +917,8 @@ export function placeLabels(model, geo, wires, align, badgeOf) {
     for (const t of taken) if (hitB(b, t, 1)) s += 1000;
     return s;
   };
+  // a spot on a stretch another wire also runs (a shared trunk) does not say which wire it belongs to
+  const shared = (sp, w) => wires.some((o) => o !== w && o.pts.some((p, i) => { if (!i) return false; const q = o.pts[i - 1]; return sp.hz ? q[1] === p[1] && Math.abs(q[1] - sp.y) < 1.5 && sp.x > Math.min(q[0], p[0]) - 1 && sp.x < Math.max(q[0], p[0]) + 1 : q[0] === p[0] && Math.abs(q[0] - sp.x) < 1.5 && sp.y > Math.min(q[1], p[1]) - 1 && sp.y < Math.max(q[1], p[1]) + 1; }));
   const scoreBadge = (b, w) => {
     let s = 0;
     if (!inCanvas(b)) s += 5000;
@@ -936,7 +941,7 @@ export function placeLabels(model, geo, wires, align, badgeOf) {
       for (const [dx, dy] of opts) {
         const b = { x0: sp.x + dx - 7.5, y0: sp.y + dy - 7.5, x1: sp.x + dx + 7.5, y1: sp.y + dy + 7.5 };
         const pref = w.edge.label ? Math.abs(sp.f - 0.22) * 30 : sp.mid * 0.08 + Math.abs(sp.f - 0.5) * 6;
-        cands.push({ f: sp.f, dx, dy, b, score: scoreBadge(b, w) + pref + (dy > 0 || dx > 0 ? 3 : 0) + (sp.hz ? 0 : 4) });
+        cands.push({ f: sp.f, dx, dy, b, score: scoreBadge(b, w) + pref + (dy > 0 || dx > 0 ? 3 : 0) + (sp.hz ? 0 : 4) + (shared(sp, w) ? 60 : 0) });
       }
     }
     cands.sort((a, b) => a.score - b.score);
@@ -956,12 +961,12 @@ export function placeLabels(model, geo, wires, align, badgeOf) {
         const nl = String(label).split('\n').length;
         for (const dy of [-5 - 9.5 * (nl - 1), 12]) {
           const b = textBox(label, sp.x, sp.y + dy);
-          cands.push({ f: sp.f, dy: r2(dy), b, score: scoreText(b, w) + sp.mid * 0.05 + (dy > 0 ? 4 : 0) });
+          cands.push({ f: sp.f, dy: r2(dy), b, score: scoreText(b, w) + sp.mid * 0.05 + (dy > 0 ? 4 : 0) + (shared(sp, w) ? 60 : 0) });
         }
       } else {
         for (const [anchor, dx] of [['start', 6], ['end', -6]]) {
           const b = textBox(label, sp.x + dx, sp.y + 3, anchor);
-          cands.push({ f: sp.f, dx, dy: 3, anchor, b, score: scoreText(b, w) + 12 + sp.mid * 0.05 + (anchor === 'end' ? 3 : 0) });
+          cands.push({ f: sp.f, dx, dy: 3, anchor, b, score: scoreText(b, w) + 12 + sp.mid * 0.05 + (anchor === 'end' ? 3 : 0) + (shared(sp, w) ? 60 : 0) });
         }
       }
     }

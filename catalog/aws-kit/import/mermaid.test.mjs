@@ -268,7 +268,7 @@ test('icon pack: svc-/res- keys, no collisions, the committed file is current', 
   assert.ok(pack.icons['svc-lambda'] && pack.icons['res-users'] && pack.icons['res-users-dark'] && pack.icons['grp-region']);
   // the names that collide when ids are flattened without the prefix exist as both kinds
   for (const k of ['cloud9', 'ec2-auto-scaling', 'management-console', 'shield']) assert.ok(pack.icons[`svc-${k}`] && pack.icons[`res-${k}`], k);
-  const file = fs.readFileSync(PACK, 'utf8');
+  const file = fs.readFileSync(PACK, 'utf8').replace(/\r\n/g, '\n');
   assert.ok(file.length < 2.1e6, `pack is ${file.length} bytes`);
   assert.equal(file, JSON.stringify(pack) + '\n', 'regenerate with: node catalog/aws-kit/import/make-pack.mjs');
 });

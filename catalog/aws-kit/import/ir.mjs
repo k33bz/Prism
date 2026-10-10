@@ -30,7 +30,9 @@ export function newIr(dialect) {
     directives: { flow: [], kind: {}, icon: {}, steps: {}, peer: [], note: {} }, issues: [], meta: {},
   };
 }
-export const issue = (ir, severity, code, element, message) => ir.issues.push({ severity, code, element, message });
+export const issue = (ir, severity, code, element, message) => { if (!ir.issues.some((x) => x.code === code && x.element === element && x.message === message)) ir.issues.push({ severity, code, element, message }); };
+// the comment that carries directives in each dialect
+const cmt = (ir) => (ir.dialect === 'plantuml' ? "'" : ir.dialect === 'd2' ? '#' : '%%');
 
 // ---- directives: `%% prism: <key> <value>` in Mermaid, `' prism:` in PlantUML, `# prism:` in D2
 //   flow a>b>c           the request path (repeat a hop backwards for the response)
@@ -170,7 +172,7 @@ export function prepare(ir) {
     let label = g.label != null ? cleanText(g.label) : null;
     if (label && label.includes('\n')) label = label.replace(/\n/g, ' ');
     if (label != null && DEFAULT_LABEL[k.kind] != null && label.toLowerCase() === DEFAULT_LABEL[k.kind].toLowerCase()) label = null;
-    if (k.how === 'default' && (g.label || g.id)) say('info', 'group-kind', g.id, `group ${g.id} ("${g.label || g.id}") names no AWS frame; drawn as a generic group (set one with %% prism: kind ${g.id}=<kind>)`);
+    if (k.how === 'default' && (g.label || g.id)) say('info', 'group-kind', g.id, `group ${g.id} ("${g.label || g.id}") names no AWS frame; drawn as a generic group (set one with ${cmt(ir)} prism: kind ${g.id}=<kind>)`);
     if (k.kind === 'priv' && /\bsubnets?\b/i.test(g.label || '') && !/private|isolated/i.test(g.label || '') && k.how !== 'directive' && k.how !== 'explicit') say('info', 'group-kind', g.id, `"${g.label}" does not say public or private; drawn as a private subnet`);
     model.groups.set(groupIds.get(g.id), {
       id: groupIds.get(g.id), src: g.id, kind: k.kind, kindHow: k.how, label: label === '' ? null : label, icon: k.icon || null,
@@ -316,7 +318,7 @@ export function planStory(model, ir, opts = {}) {
     for (const h of plan.hops) { if (nodes.has(h.from) && nodes.get(h.from).junction && last != null) h.step = false; else { h.step = ++n; last = h; } }
     const both = plan.hops.filter((h) => h.edge.aHead && h.edge.bHead);
     for (const h of [...both].reverse()) plan.hops.push(hop(h.edge, h.to, { kind: 'pk-2', step: false }));
-    if (plan.hops.length) issue(ir, 'info', 'story-guess', entry, `no numbered edges or flow directive: packets follow a breadth-first guess from ${nm(entry)}; set the order with %% prism: flow a>b>c or number the edge labels`);
+    if (plan.hops.length) issue(ir, 'info', 'story-guess', entry, `no numbered edges or flow directive: packets follow a breadth-first guess from ${nm(entry)}; set the order with ${cmt(ir)} prism: flow a>b>c or number the edge labels`);
   }
   // step texts: directives, D2 step labels, else generated from the hop
   const gen = new Map();
@@ -332,7 +334,7 @@ export function planStory(model, ir, opts = {}) {
     if (ir.directives.steps[k]) plan.texts.set(k, ir.directives.steps[k]);
     else if (!plan.texts.has(k)) { plan.texts.set(k, `${t}.`); generated.push(k); }
   }
-  if (generated.length && plan.channel !== 'bfs') issue(ir, 'info', 'step-text', null, `step${generated.length > 1 ? 's' : ''} ${generated.join(', ')} got a generated text; write your own with %% prism: step N: text`);
+  if (generated.length && plan.channel !== 'bfs') issue(ir, 'info', 'step-text', null, `step${generated.length > 1 ? 's' : ''} ${generated.join(', ')} got a generated text; write your own with ${cmt(ir)} prism: step N: text`);
   for (const h of plan.hops) if (h.step !== false && h.step != null) h.edge.badge = true;
   return plan;
 }
@@ -379,11 +381,11 @@ export function buildSpec(ir, opts = {}) {
   let id = opts.id || ir.directives.id || null;
   if (!id || !/^[a-z][a-z0-9-]*$/.test(id)) { const k = kebab(id || opts.file || ir.title || 'imported'); id = /^[a-z]/.test(k) ? k : `mmd-${k || 'diagram'}`; }
   const realNodes = [...model.nodes.values()].filter((n) => !n.junction);
-  const names = realNodes.map((n) => n.label);
+  const names = [...new Set(realNodes.map((n) => n.label))];
   const list = (a) => (a.length <= 1 ? a.join('') : a.length === 2 ? `${a[0]} and ${a[1]}` : `${a.slice(0, -1).join(', ')} and ${a[a.length - 1]}`);
   const storyLine = { numbered: 'Packets follow the numbered steps', flow: 'Packets follow the declared request path', 'd2-steps': 'Packets follow the D2 steps', bfs: 'Packets follow a guessed request path', none: '' }[plan.channel];
   const hasReply = plan.reply || plan.hops.some((h) => h.kind === 'pk-2');
-  const desc = ir.directives.desc || ir.meta.desc || `Imported from ${DIALECT_NAME[model.dialect] || model.dialect}: ${list(names.slice(0, 6))}${names.length > 6 ? ' and more' : ''}.${storyLine ? ` ${storyLine}${hasReply ? ', and responses return the same way' : ''}.` : ''}`;
+  const desc = ir.directives.desc || ir.meta.desc || `Imported from ${DIALECT_NAME[model.dialect] || model.dialect}: ${names.length > 6 ? `${names.slice(0, 6).join(', ')} and more` : list(names)}.${storyLine ? ` ${storyLine}${hasReply ? ', and responses return the same way' : ''}.` : ''}`;
   // story legs -> timeline and steps (story.mjs), badges where layout placed them
   const { timeline, steps } = plan.hops.length ? storyOf(plan.hops.map((h) => ({ wire: h.wire, reverse: h.reverse, ring: h.ring, back: h.back, kind: h.kind, step: h.step, text: h.step !== false ? plan.texts.get(String(h.step)) : undefined })), { reply: plan.reply }) : { timeline: [], steps: [] };
   const wireById = new Map(wires.map((w) => [w.id, w]));
