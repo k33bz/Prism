@@ -88,6 +88,11 @@
 .awd .lg-pk{fill:var(--awd-pk)}
 .awd .lg-pk-2{fill:var(--awd-pk2)}
 .awd .lg-pk-bad{fill:#DD344C}
+.awd .lg-shape{fill:none;stroke:var(--awd-ink);stroke-width:1.2}
+.awd .awd-tb{fill:var(--awd-panel,#fff);stroke:var(--awd-muted);stroke-width:.8}
+.awd .t-tb{font-size:8px;fill:var(--awd-ink)}
+.awd .t-tbh,.awd .t-tbm{fill:var(--awd-muted)}
+.awd .t-tbh{font-size:7.5px}
 .awd .awd-static{display:none}   /* still copy of a node that appears on the clock (shown under reduced motion) */
 
 /* numbered step badges (AWS reference-architecture convention) */

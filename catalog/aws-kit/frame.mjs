@@ -103,7 +103,12 @@ export function freeze(svg, f) {
       if (classes(k).includes('awd-static')) return false;
       const anims = k.kids.filter((x) => SMIL.has(x.tag));
       for (const an of anims) {
-        if (an.tag === 'animateMotion') { const p = motionAt(an, f, paths); if (p) { set(k, 'cx', r2(p[0])); set(k, 'cy', r2(p[1])); } continue; }
+        if (an.tag === 'animateMotion') {
+          const p = motionAt(an, f, paths);
+          // a circle moves by its center; any other shape (the IPv6 diamond) is drawn around its origin
+          if (p && k.tag === 'circle') { set(k, 'cx', r2(p[0])); set(k, 'cy', r2(p[1])); } else if (p) set(k, 'transform', `translate(${r2(p[0])},${r2(p[1])})`);
+          continue;
+        }
         const attr = get(an, 'attributeName'), v = valueAt(an, f);
         if (attr && v != null) set(k, attr, v);
       }

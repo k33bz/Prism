@@ -23,7 +23,7 @@ export function story(hops, { start = 0.04, end = 0.93, gap = 0.01, reply = fals
   if (!Array.isArray(hops) || !hops.length) return { timeline: [], steps: [] };
   const legs = hops.map((h) => ({ ...h }));
   if (reply) {
-    for (const h of [...hops].reverse()) legs.push({ wire: h.wire, reverse: !h.reverse, kind: 'pk-2', ring: h.back, step: false });
+    for (const h of [...hops].reverse()) legs.push({ wire: h.wire, reverse: !h.reverse, kind: 'pk-2', ring: h.back, step: false, ...(h.v6 ? { v6: true } : {}) });
   }
   const room = end - start - gap * (legs.length - 1);
   if (!(room / legs.length > 0)) throw new Error(`story: ${legs.length} hops do not fit between ${start} and ${end}`);
@@ -35,7 +35,7 @@ export function story(hops, { start = 0.04, end = 0.93, gap = 0.01, reply = fals
     a += len + gap;
     return {
       wire: h.wire, t: [r3(t0), r3(t0 + len)],
-      ...(h.reverse ? { reverse: true } : {}), ...(h.kind && h.kind !== 'pk' ? { kind: h.kind } : {}), ...(h.ring != null ? { ring: h.ring } : {}),
+      ...(h.reverse ? { reverse: true } : {}), ...(h.kind && h.kind !== 'pk' ? { kind: h.kind } : {}), ...(h.ring != null ? { ring: h.ring } : {}), ...(h.v6 ? { v6: true } : {}),
     };
   });
   // one badge per request hop unless a hop says step: false; numbers run 1..n in order
@@ -108,6 +108,7 @@ export function compileFlows(spec) {
       if (f.text?.[i] && h.text == null) h.text = f.text[i];
       if (f.steps === false) h.step = false;
       if (f.kind && !h.kind) h.kind = f.kind;
+      if (f.v6 && h.v6 == null) h.v6 = true;
     });
     return hops;
   };

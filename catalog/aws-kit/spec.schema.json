@@ -57,6 +57,7 @@
         "effects": { "type": "array", "items": { "$ref": "#/$defs/effect" } },
         "notes": { "type": "array", "items": { "$ref": "#/$defs/note" } },
         "marks": { "type": "array", "items": { "$ref": "#/$defs/mark" }, "description": "Blocked X or ok check on a node, a wire or a point." },
+        "tables": { "type": "array", "items": { "$ref": "#/$defs/table" }, "description": "Rules and routes cards: security group rules, network ACL entries, route tables; rows can light up as a packet is evaluated." },
         "legend": { "$ref": "#/$defs/legend" },
         "extra": { "type": "string", "description": "Raw SVG appended last. No script, on* handlers, foreignObject/style/iframe/object/embed, javascript: URLs, or href/url() that is not a #fragment." }
       },
@@ -73,6 +74,7 @@
         "text": { "type": "array", "items": { "type": "string", "maxLength": 400 }, "description": "Step texts, one per hop." },
         "steps": { "type": "boolean", "description": "false: no numbered badges for this flow." },
         "kind": { "enum": ["pk", "pk-2", "pk-bad"] },
+        "v6": { "type": "boolean", "description": "Every hop of the flow (and its reply) carries IPv6 packets." },
         "with": { "$ref": "#/$defs/id", "description": "Run at the same time as this flow." },
         "t": { "$ref": "#/$defs/window", "description": "Pin the flow's window; default: flows share the clock in order." },
         "pace": { "enum": ["length", "even"], "description": "length (default): one speed, a long wire takes longer; even: equal windows." }
@@ -88,7 +90,8 @@
         "text": { "type": "string", "maxLength": 400 },
         "step": { "anyOf": [{ "type": "boolean" }, { "type": "number" }, { "type": "string" }] },
         "f": { "type": "number" }, "dx": { "type": "number" }, "dy": { "type": "number" },
-        "kind": { "enum": ["pk", "pk-2", "pk-bad"] }
+        "kind": { "enum": ["pk", "pk-2", "pk-bad"] },
+        "v6": { "type": "boolean" }
       },
       "required": ["wire"],
       "additionalProperties": false
@@ -107,7 +110,7 @@
         "h": { "$ref": "#/$defs/num" },
         "label": { "type": "string", "description": "Header text (default: the kind's official name; empty for gen)." },
         "icon": { "type": ["string", "boolean"], "description": "Corner icon: an icon id, or false for none (default: the kind's group icon)." },
-        "note": { "type": "string", "description": "Right-aligned on the top edge: a CIDR, a route summary, an account id." },
+        "note": { "anyOf": [{ "type": "string", "maxLength": 60 }, { "type": "array", "items": { "type": "string", "maxLength": 60 }, "minItems": 1, "maxItems": 2 }], "description": "Right-aligned on the top edge: a CIDR, a route summary, an account id. Two lines (an IPv4 and an IPv6 CIDR) put the second under the first." },
         "align": { "enum": ["left", "center"], "description": "Header alignment (default: centered for frames without an icon)." }
       },
       "required": ["kind", "x", "y", "w", "h"],
@@ -195,7 +198,8 @@
             { "type": "object", "properties": { "x": { "$ref": "#/$defs/num" }, "y": { "$ref": "#/$defs/num" }, "r": { "$ref": "#/$defs/size" } }, "required": ["x", "y"], "additionalProperties": false }
           ]
         },
-        "r": { "$ref": "#/$defs/size", "description": "Packet radius (default 3.4)." }
+        "r": { "$ref": "#/$defs/size", "description": "Packet radius (default 3.4)." },
+        "v6": { "type": "boolean", "description": "An IPv6 packet: drawn as a diamond (IPv4 packets are circles); kind still sets its color." }
       },
       "required": ["t"],
       "anyOf": [{ "required": ["wire"] }, { "required": ["ring"] }],
@@ -250,6 +254,33 @@
       "anyOf": [{ "required": ["on"] }, { "required": ["x", "y"] }],
       "additionalProperties": false
     },
+    "table": {
+      "type": "object",
+      "description": "A rules or routes card: security group rules, network ACL entries, a route table.",
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "x": { "$ref": "#/$defs/num" },
+        "y": { "$ref": "#/$defs/num" },
+        "w": { "$ref": "#/$defs/num", "description": "Minimum width; columns size to their widest cell." },
+        "title": { "type": "string", "maxLength": 80, "description": "For example sg-app inbound rules, or Route table: private subnets." },
+        "tone": { "$ref": "#/$defs/category", "description": "Color of the left stripe (security for rules, networking for routes)." },
+        "cols": { "type": "array", "items": { "type": "string", "maxLength": 30 }, "minItems": 1, "maxItems": 6, "description": "Column names, drawn in small capitals." },
+        "rows": {
+          "type": "array", "minItems": 1, "maxItems": 12,
+          "items": { "anyOf": [
+            { "type": "array", "items": { "type": "string", "maxLength": 60 }, "minItems": 1 },
+            { "type": "object", "properties": {
+                "cells": { "type": "array", "items": { "type": "string", "maxLength": 60 }, "minItems": 1 },
+                "t": { "$ref": "#/$defs/window", "description": "Light the row during this window (the rule a packet matched)." },
+                "tone": { "enum": ["ok", "bad", "muted"], "description": "ok green, bad red; without t the row stays lit. muted: an implicit rule." },
+                "still": { "type": "boolean", "description": "A lit row also shows in still frames." }
+              }, "required": ["cells"], "additionalProperties": false }
+          ] }
+        }
+      },
+      "required": ["x", "y", "title", "rows"],
+      "additionalProperties": false
+    },
     "legend": {
       "type": "object",
       "description": "Key drawn inside the diagram from (x, y), one row per item (or one line with row); items default to the packet kinds the timeline uses.",
@@ -261,7 +292,7 @@
           "type": "array",
           "items": {
             "type": "object",
-            "properties": { "kind": { "enum": ["pk", "pk-2", "pk-bad", "wire", "dashed", "blocked"] }, "label": { "type": "string" } },
+            "properties": { "kind": { "enum": ["pk", "pk-2", "pk-bad", "wire", "dashed", "blocked", "v4", "v6"] }, "label": { "type": "string" } },
             "required": ["kind"],
             "additionalProperties": false
           }

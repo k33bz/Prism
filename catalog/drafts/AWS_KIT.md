@@ -65,7 +65,8 @@ export default {
              | { id, kind:'box'|'pill', x, y, w, h, label?, sub?, tone? } ],
     wires:   [ { id, from, to } | { id, d:'M..H..V..' } ,  dashed?, both?, flow?, label?, labelAt?:0.5, labelDx?, labelDy?:-5, labelAnchor?, labelBg?, via?, arrow?:false, hot?, tone? ],
     steps:   [ { n, at:'<wire id>', f?:0.5, dx?, dy?:-11, text } | { n, x, y, text } ],
-    timeline:[ { wire?, t:[a,b], reverse?, kind?:'pk'|'pk-2'|'pk-bad', ring?:'<node id>'|{ x, y, r? }, r? } ],
+    timeline:[ { wire?, t:[a,b], reverse?, kind?:'pk'|'pk-2'|'pk-bad', ring?:'<node id>'|{ x, y, r? }, r?, v6? } ],
+    tables:  [ { id?, x, y, title, tone?, cols?:['Type','Port','Source'], rows:[ ['TCP','443','0.0.0.0/0'] | { cells, t?:[a,b], tone?:'ok'|'bad'|'muted', still? } ], w? } ],
     flows:   [ { id?, path:['<node id>', ...] | wires:['<wire id>' | { wire, reverse?, ring?, text?, step?, f?, dx?, dy?, kind? }, ...],
                  reply?, text?:['<one per hop>'], steps?:false, kind?, with?:'<flow id>', t?:[a,b], pace?:'length'|'even' } ],
     effects: [ { appear:'<node id>', t:[a,b], ghost?:true } | { fail:'<group id>', t } | { fade:'<wire id>', t } | { glow:'<wire id>', t } ],
@@ -136,6 +137,25 @@ group. place.mjs has `box(id, cx, cy, w, h, label)`, and its ports know boxes an
 `pk` = request (AWS orange), `pk-2` = response/replication (blue), `pk-bad` = failed traffic (red).
 Packet colors are fixed rather than the theme accent, so the two stay distinct in every design
 system; a page can override them with `--awd-request` / `--awd-response`.
+
+**IPv6 and dual stack**: `v6: true` on a timeline entry (or on a flow, or a flow hop) draws the packet as a
+diamond; IPv4 packets stay circles, and the color still says request, response or failed, so a
+dual-stack story reads by shape. The default legend adds an IPv4 and an IPv6 row when the timeline
+carries IPv6 (`kind: 'v4'` and `'v6'` items for a hand-picked legend). A frame's `note` may be two lines,
+`['10.0.1.0/24', '2001:db8:1200:1::/64']`: the IPv4 CIDR on the top edge as usual, the IPv6 one under it
+inside the frame. Use the documentation prefix `2001:db8::/32` (RFC 3849) for example IPv6 addresses.
+The official icon set has no egress-only internet gateway: draw it with `aws-res-vpc-internet-gateway`
+and the label "Egress-only internet gateway", as AWS's own diagrams do.
+
+**Tables** are rules and routes cards: security group rules, network ACL entries, a route table. A
+`title`, optional `cols` (small capitals) and `rows` of cells; columns size to their widest cell. A row
+`{ cells, t: [a, b], tone: 'ok' }` lights green while the packet it admits arrives, `tone: 'bad'` red for
+the deny that applied (a network ACL's numbered deny, or a security group's "no match: denied", which
+is implicit: security groups only allow); a tone without `t` keeps the row lit, `muted` reads an
+implicit rule quieter, `still: true` keeps a lit row in still frames. `tone` on the table colors its
+left stripe (`security` for rules, `networking` for routes). Put a table beside the frame it describes,
+and mark the boundary with the `sg` frame kind (the deck's red Security group frame; `label` names it,
+for example `sg-app`). Ports go on wires as labels (`TCP 443`, `:5432`).
 
 **Flows** say the story the way an architect tells it, and the generator writes the timeline:
 `{ path: ['users', 'apigw', 'fn', 'ddb'], reply: true, text: ['Users call the API.', '...', '...'] }`

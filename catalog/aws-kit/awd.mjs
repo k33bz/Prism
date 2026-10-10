@@ -17,7 +17,7 @@ import path from 'node:path';
 import { pathToFileURL, fileURLToPath } from 'node:url';
 import { VERSION, canonical, canonicalDiagram, toJson, validateFamily } from './spec.mjs';
 import { wrap } from './place.mjs';
-import { lint as lintSvg, report as lintReport } from './lint.mjs';
+import { lint as lintSvg, report as lintReport, textWidth } from './lint.mjs';
 import { compileFlows } from './story.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
@@ -64,7 +64,9 @@ const MARKS = new Set(['blocked', 'ok']);
 const SHAPES = new Set(['box', 'pill']);
 const LABEL_POS = new Set(['b', 'r', 'l', 't']);
 // legend rows: the swatch kinds and their default wording
-const LEGEND = { pk: 'Request', 'pk-2': 'Response', 'pk-bad': 'Failed or blocked', wire: 'Call or data path', dashed: 'Asynchronous or optional', blocked: 'Blocked' };
+const LEGEND = { pk: 'Request', 'pk-2': 'Response', 'pk-bad': 'Failed or blocked', wire: 'Call or data path', dashed: 'Asynchronous or optional', blocked: 'Blocked', v4: 'IPv4 packet', v6: 'IPv6 packet' };
+// table rows: a highlight (match ok, denied bad) or a quieter row (muted: an implicit rule)
+const ROW_TONES = new Set(['ok', 'bad', 'muted']);
 
 // ---- input checks. Specs may come from importers (draw.io, Mermaid, IaC), so everything that
 // lands in markup is checked here: ids are plain tokens, numbers are finite, wire paths use only
@@ -114,6 +116,8 @@ export function checkSpec(spec) {
     if (g.id != null) { okId(g.id, w); groupIds.add(g.id); }
     if (g.align != null && g.align !== 'left' && g.align !== 'center') fail(w, 'align must be left or center');
     okEnum(g.tone, CATEGORY, `${w}.tone`); okBool(g, ['fill', 'dashed'], w);
+    // note: one line on the top edge, or two (an IPv4 and an IPv6 CIDR) with the second under it
+    if (g.note != null) { const ns = [].concat(g.note); if (!ns.length || ns.length > 2) fail(`${w}.note`, 'one or two lines'); ns.forEach((x, j) => okText(x, `${w}.note[${j}]`, 60)); }
   }
   for (const n of spec.nodes || []) {
     const w = `${at} node ${n.id}`;
@@ -150,6 +154,23 @@ export function checkSpec(spec) {
     else if (e.ring != null && !nodeIds.has(e.ring)) fail(w, `unknown ring node ${JSON.stringify(e.ring)}`);
     if (e.wire == null && e.ring == null) fail(w, 'needs a wire, a ring, or both');
     if (e.kind != null && !PACKETS.has(e.kind)) fail(w, `kind must be one of ${[...PACKETS].join(', ')}`);
+    okBool(e, ['v6'], w);
+  }
+  for (const [i, tb] of (spec.tables || []).entries()) {
+    const w = `${at} table[${i}]`;
+    if (tb.id != null) okId(tb.id, w);
+    okNum(tb.x, w + '.x'); okNum(tb.y, w + '.y'); okOptNum(tb, ['w'], w); okText(tb.title, `${w}.title`, 80);
+    okEnum(tb.tone, CATEGORY, `${w}.tone`);
+    const ncol = tb.cols ? tb.cols.length : null;
+    if (tb.cols != null) { if (!Array.isArray(tb.cols) || !tb.cols.length || tb.cols.length > 6) fail(w, 'cols: 1 to 6 column names'); tb.cols.forEach((c, j) => okText(c, `${w}.cols[${j}]`, 30)); }
+    if (!Array.isArray(tb.rows) || !tb.rows.length || tb.rows.length > 12) fail(w, 'rows: 1 to 12 rows');
+    for (const [j, r] of tb.rows.entries()) {
+      const cells = Array.isArray(r) ? r : r && r.cells, rw = `${w}.rows[${j}]`;
+      if (!Array.isArray(cells) || !cells.length) fail(rw, 'a row is a list of cells, or { cells, t?, tone?, still? }');
+      if (ncol != null && cells.length !== ncol) fail(rw, `has ${cells.length} cells for ${ncol} columns`);
+      cells.forEach((c, k) => okText(String(c), `${rw}[${k}]`, 60));
+      if (!Array.isArray(r)) { if (r.t != null) okWindow(r.t, rw); okEnum(r.tone, ROW_TONES, `${rw}.tone`); okBool(r, ['still'], rw); }
+    }
   }
   const flowIds = new Set((spec.flows || []).map((f) => f && f.id).filter((x) => x != null));
   for (const [i, f] of (spec.flows || []).entries()) {
@@ -172,7 +193,7 @@ export function checkSpec(spec) {
     if (f.t != null) okWindow(f.t, w);
     if (f.with != null && (!flowIds.has(f.with) || f.with === f.id)) fail(w, `with names unknown flow ${JSON.stringify(f.with)}`);
     if (f.kind != null && !PACKETS.has(f.kind)) fail(w, `kind must be one of ${[...PACKETS].join(', ')}`);
-    okEnum(f.pace, new Set(['length', 'even']), `${w}.pace`); okBool(f, ['reply', 'steps'], w);
+    okEnum(f.pace, new Set(['length', 'even']), `${w}.pace`); okBool(f, ['reply', 'steps', 'v6'], w);
   }
   for (const [i, e] of (spec.effects || []).entries()) {
     const w = `${at} effects[${i}]`;
@@ -321,7 +342,7 @@ export function diagram(spec) {
     if (g.align || !GROUP[g.kind].center || groupIcon(g) || !groupLabel(g)) continue;
     const cx = g.x + g.w / 2, half = textW(groupLabel(g), 10) / 2 + 6;
     const band = { x: cx - half, r: cx + half, y: g.y + 2, b: g.y + 18 };
-    const noteLeft = g.note ? g.x + g.w - 6 - textW(g.note, 9) - 6 : Infinity;
+    const noteLeft = g.note ? g.x + g.w - 6 - textW([].concat(g.note)[0], 9) - 6 : Infinity;
     if (band.x < g.x + 4 || band.r > noteLeft || Object.values(paths).some((d) => crosses(d, band))) leftKinds.add(g.kind);
   }
 
@@ -340,8 +361,9 @@ export function diagram(spec) {
     if (gi) { parts.push(use(gi, g.x, g.y, 20)); tx = g.x + 25; }
     const center = g.align ? g.align === 'center' : (G.center && !gi && !leftKinds.has(g.kind));
     if (label) parts.push(`<text class="t-g${center ? ' t-gc' : ''}" x="${r2(center ? g.x + g.w / 2 : tx)}" y="${r2(g.y + 14)}">${esc(label)}</text>`);
-    // note: right-aligned on the top edge (a CIDR, a route summary, an account id)
-    if (g.note) parts.push(`<text class="t-sub" x="${r2(g.x + g.w - 6)}" y="${r2(g.y + 14)}" style="text-anchor:end">${esc(g.note)}</text>`);
+    // note: right-aligned on the top edge (a CIDR, a route summary, an account id); a second line
+    // (the IPv6 CIDR of a dual-stack subnet) sits right under it, inside the frame
+    if (g.note) [].concat(g.note).forEach((nt, j) => parts.push(`<text class="t-sub" x="${r2(g.x + g.w - 6)}" y="${r2(g.y + 14 + j * 11)}" style="text-anchor:end">${esc(nt)}</text>`));
   }
 
   // wires
@@ -435,7 +457,10 @@ export function diagram(spec) {
     if (e.wire) {
       if (!wires[e.wire]) throw new Error('timeline: unknown wire ' + e.wire);
       const kp = e.reverse ? '1;1;0;0' : '0;0;1;1';
-      parts.push(`<circle class="${e.kind || 'pk'}" r="${e.r || 3.4}" opacity="0"><animateMotion dur="${D}" repeatCount="indefinite" calcMode="linear" keyPoints="${kp}" keyTimes="0;${pct(a)};${pct(b)};1"><mpath href="#${id}-${e.wire}"/></animateMotion><animate attributeName="opacity" dur="${D}" repeatCount="indefinite" calcMode="discrete" values="0;1;0" keyTimes="0;${pct(a)};${pct(b)}"/></circle>`);
+      const motion = `<animateMotion dur="${D}" repeatCount="indefinite" calcMode="linear" keyPoints="${kp}" keyTimes="0;${pct(a)};${pct(b)};1"><mpath href="#${id}-${e.wire}"/></animateMotion><animate attributeName="opacity" dur="${D}" repeatCount="indefinite" calcMode="discrete" values="0;1;0" keyTimes="0;${pct(a)};${pct(b)}"/>`;
+      // an IPv6 packet is a diamond, an IPv4 one a circle: the version reads by shape, the color keeps request/response/failed
+      if (e.v6) { const q = r2((e.r || 3.4) * 1.4); parts.push(`<path class="${e.kind || 'pk'} pk-v6" d="M0,-${q} L${q},0 L0,${q} L-${q},0Z" opacity="0">${motion}</path>`); }
+      else parts.push(`<circle class="${e.kind || 'pk'}" r="${e.r || 3.4}" opacity="0">${motion}</circle>`);
     }
     if (e.ring) {
       // on a node, or on a point { x, y, r }; a failed packet's ring is red
@@ -484,6 +509,36 @@ export function diagram(spec) {
     else parts.push(body);
   }
 
+  // tables: a rules or routes card (security group rules, network ACL entries, a route table): a
+  // title, optional column names, rows of cells. A row may light up during t (tone ok: the rule that
+  // matched; bad: the deny that applied), stay lit (tone without t) or read quieter (muted: an
+  // implicit rule). Columns size to their widest cell with the lint's own Arial widths.
+  for (const tb of spec.tables || []) {
+    const FS = 8, HS = 7.5, TS = 8.5, PAD = 5, GAP = 9, RH = 11, TH = 14, HH = tb.cols ? 11 : 0;
+    const rows = tb.rows.map((r) => (Array.isArray(r) ? { cells: r } : r)).map((r) => ({ ...r, cells: r.cells.map(String) }));
+    const ncol = Math.max(...rows.map((r) => r.cells.length), tb.cols ? tb.cols.length : 0);
+    const colW = Array.from({ length: ncol }, (_, k) => Math.max(tb.cols ? textWidth(String(tb.cols[k] || '').toUpperCase(), HS, false, 0.4) : 0, ...rows.map((r) => textWidth(r.cells[k] || '', FS))));
+    const inner = colW.reduce((s, x) => s + x, 0) + GAP * (ncol - 1);
+    const W = Math.max(tb.w || 0, PAD * 2 + 3 + inner, PAD * 2 + 3 + textWidth(tb.title, TS, true)), Hh = TH + HH + rows.length * RH + 4;
+    const x0 = tb.x, y0 = tb.y, cx = (k) => x0 + PAD + 3 + colW.slice(0, k).reduce((s, x) => s + x, 0) + GAP * k;
+    const stripe = tb.tone ? CATEGORY[tb.tone] : 'var(--awd-muted)';
+    const out = [`<rect class="awd-tb" x="${r2(x0)}" y="${r2(y0)}" width="${r2(W)}" height="${r2(Hh)}" rx="3"/>`,
+      `<rect x="${r2(x0)}" y="${r2(y0)}" width="3" height="${r2(Hh)}" rx="1.5" style="fill:${stripe}"/>`,
+      `<text class="t-tb" x="${r2(x0 + PAD + 3)}" y="${r2(y0 + 10)}" style="font-size:${TS}px;font-weight:700">${esc(tb.title)}</text>`];
+    if (tb.cols) tb.cols.forEach((c, k) => out.push(`<text class="t-tbh" x="${r2(cx(k))}" y="${r2(y0 + TH + 7.5)}" style="font-size:${HS}px;letter-spacing:.4px">${esc(String(c).toUpperCase())}</text>`));
+    const lit = [];
+    rows.forEach((r, j) => {
+      const top = y0 + TH + HH + j * RH, base = top + 8;
+      const paint = r.tone === 'ok' ? '#3F8624' : r.tone === 'bad' ? '#DD344C' : null;
+      const hl = paint ? `<rect x="${r2(x0 + 3.5)}" y="${r2(top + 0.5)}" width="${r2(W - 4)}" height="${RH}" style="fill:${paint};fill-opacity:.16;stroke:${paint};stroke-width:.8"/>` : '';
+      if (hl && r.t) lit.push(`<g class="anim" opacity="0">${hl}${winAttr('opacity', '0;1;0', r.t[0], r.t[1])}</g>${r.still ? stillCopy(hl) : ''}`);
+      else if (hl) out.push(hl);
+      r.cells.forEach((c, k) => out.push(`<text class="t-tb${r.tone === 'muted' ? ' t-tbm' : ''}" x="${r2(cx(k))}" y="${r2(base)}" style="font-size:${FS}px">${esc(c)}</text>`));
+    });
+    // highlights go under the text they light
+    parts.push(`<g class="awd-table"${tb.id ? ` data-table="${esc(tb.id)}"` : ''}>${out.slice(0, 3).join('')}${lit.join('')}${out.slice(3).join('')}</g>`);
+  }
+
   // notes: free captions drawn on top. kind caption (muted, default) | label (ink) | warn (red);
   // tone request|response|bad|muted|ink, size (px), weight bold, caps (spaced capitals, a tier
   // heading); anchor start|middle|end; t:[a,b] shows the note only during that window (hidden under
@@ -509,7 +564,8 @@ export function diagram(spec) {
   if (spec.legend) {
     const L = spec.legend, rows = [];
     const used = new Set((spec.timeline || []).filter((e) => e.wire).map((e) => e.kind || 'pk'));
-    const items = L.items || ['pk', 'pk-2', 'pk-bad'].filter((k) => used.has(k)).map((kind) => ({ kind }));
+    const v6 = (spec.timeline || []).some((e) => e.wire && e.v6);
+    const items = L.items || [...['pk', 'pk-2', 'pk-bad'].filter((k) => used.has(k)), ...(v6 ? ['v4', 'v6'] : [])].map((kind) => ({ kind }));
     // one row per item, or with row:true one line, each item after the last one's label
     let lx = L.x
     items.forEach((it, i) => {
@@ -517,6 +573,8 @@ export function diagram(spec) {
       lx += 13 + textW(it.label || LEGEND[it.kind], 8.5) + 14;
       const sw = it.kind === 'wire' || it.kind === 'dashed' ? `<path class="w${it.kind === 'dashed' ? ' w-d' : ''}" d="M${r2(x - 1)},${r2(y - 3)} H${r2(x + 9)}"/>`
         : it.kind === 'blocked' ? `<circle cx="${r2(x + 4)}" cy="${r2(y - 3)}" r="4.2" fill="#DD344C"/>`
+        : it.kind === 'v4' ? `<circle class="lg-shape" cx="${r2(x + 3.4)}" cy="${r2(y - 3)}" r="3.4"/>`
+        : it.kind === 'v6' ? `<path class="lg-shape" d="M${r2(x + 3.4)},${r2(y - 7.6)} L${r2(x + 8)},${r2(y - 3)} L${r2(x + 3.4)},${r2(y + 1.6)} L${r2(x - 1.2)},${r2(y - 3)}Z"/>`
         : `<circle class="lg-${it.kind}" cx="${r2(x + 3.4)}" cy="${r2(y - 3)}" r="3.4"/>`;
       rows.push(`${sw}<text class="t-wire" x="${r2(x + 13)}" y="${r2(y)}" style="text-anchor:start">${esc(it.label || LEGEND[it.kind])}</text>`);
     });

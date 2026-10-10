@@ -26,7 +26,7 @@ export function textWidth(s, px, bold = false, spacing = 0) {
 }
 
 // font size per kit text class (aws.css)
-const SIZE = { 't-g': 10, 't-sub': 9, 't-wire': 8.5 };
+const SIZE = { 't-g': 10, 't-sub': 9, 't-wire': 8.5, 't-tb': 8, 't-tbh': 7.5 };
 const TILE = { normal: [480, 300], wide: [960, 440], full: [1400, 900] };
 
 // ---- a small SVG reader: our generator's markup (and checked `extra`) only ----
