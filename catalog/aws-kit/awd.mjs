@@ -521,12 +521,7 @@ export function diagram(spec) {
   // matched; bad: the deny that applied), stay lit (tone without t) or read quieter (muted: an
   // implicit rule). Columns size to their widest cell with the lint's own Arial widths.
   for (const tb of spec.tables || []) {
-    const FS = 8, HS = 7.5, TS = 8.5, PAD = 5, GAP = 9, RH = 11, TH = 14, HH = tb.cols ? 11 : 0;
-    const rows = tb.rows.map((r) => (Array.isArray(r) ? { cells: r } : r)).map((r) => ({ ...r, cells: r.cells.map(String) }));
-    const ncol = Math.max(...rows.map((r) => r.cells.length), tb.cols ? tb.cols.length : 0);
-    const colW = Array.from({ length: ncol }, (_, k) => Math.max(tb.cols ? textWidth(String(tb.cols[k] || '').toUpperCase(), HS, false, 0.4) : 0, ...rows.map((r) => textWidth(r.cells[k] || '', FS))));
-    const inner = colW.reduce((s, x) => s + x, 0) + GAP * (ncol - 1);
-    const W = Math.max(tb.w || 0, PAD * 2 + 3 + inner, PAD * 2 + 3 + textWidth(tb.title, TS, true)), Hh = TH + HH + rows.length * RH + 4;
+    const { FS, HS, TS, PAD, GAP, RH, TH, HH, rows, colW, W, H: Hh } = tableSize(tb);
     const x0 = tb.x, y0 = tb.y, cx = (k) => x0 + PAD + 3 + colW.slice(0, k).reduce((s, x) => s + x, 0) + GAP * k;
     const stripe = tb.tone ? CATEGORY[tb.tone] : 'var(--awd-muted)';
     const out = [`<rect class="awd-tb" x="${r2(x0)}" y="${r2(y0)}" width="${r2(W)}" height="${r2(Hh)}" rx="3"/>`,
@@ -609,6 +604,17 @@ export function diagram(spec) {
   const desc = [spec.desc, steps && `Steps: ${steps}`].filter(Boolean).join(' ');
   const named = `<title>${esc(spec.name || id)}</title>${desc ? `<desc>${esc(desc)}</desc>` : ''}`;
   return `<svg class="awd" viewBox="0 0 ${W} ${H}" role="img" aria-label="${aria}">${named}${parts.join('')}</svg>`;
+}
+
+/** A table's layout: its rows, column widths and box size (W x H), as the generator draws it. */
+export function tableSize(tb) {
+  const FS = 8, HS = 7.5, TS = 8.5, PAD = 5, GAP = 9, RH = 11, TH = 14, HH = tb.cols ? 11 : 0;
+  const rows = tb.rows.map((r) => (Array.isArray(r) ? { cells: r } : r)).map((r) => ({ ...r, cells: r.cells.map(String) }));
+  const ncol = Math.max(...rows.map((r) => r.cells.length), tb.cols ? tb.cols.length : 0);
+  const colW = Array.from({ length: ncol }, (_, k) => Math.max(tb.cols ? textWidth(String(tb.cols[k] || '').toUpperCase(), HS, false, 0.4) : 0, ...rows.map((r) => textWidth(r.cells[k] || '', FS))));
+  const inner = colW.reduce((s, x) => s + x, 0) + GAP * (ncol - 1);
+  const W = Math.max(tb.w || 0, PAD * 2 + 3 + inner, PAD * 2 + 3 + textWidth(tb.title, TS, true)), H = TH + HH + rows.length * RH + 4;
+  return { FS, HS, TS, PAD, GAP, RH, TH, HH, rows, colW, W, H };
 }
 
 // the numbered step texts, one per badge number (the first text given for a number), in order

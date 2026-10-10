@@ -20,6 +20,7 @@ import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { newIr, issue, directive, cleanText, buildSpec, prepare } from './ir.mjs';
 import { gridFromSides } from './layout.mjs';
+import { compileFlows } from '../story.mjs';
 import { wrap } from '../place.mjs';
 
 // ---------------------------------------------------------------------------------------------------
@@ -329,8 +330,9 @@ const endId = (x) => (x.node ? x.node.mid : x.group ? x.group.mid : x.junction.m
 const mq = (s) => String(s).replace(/"/g, '#quot;').replace(/\|/g, '#124;').replace(/\n/g, '<br>');
 const yq = (s) => JSON.stringify(String(s)).replace(/\\n/g, '<br>');
 
-export function toMermaid(spec, { dialect = 'flowchart' } = {}) {
-  if (!spec || !Array.isArray(spec.nodes)) throw new Error('toMermaid takes one diagram spec (an entry of a family\'s diagrams)');
+export function toMermaid(source, { dialect = 'flowchart' } = {}) {
+  if (!source || !Array.isArray(source.nodes)) throw new Error('toMermaid takes one diagram spec (an entry of a family\'s diagrams)');
+  const spec = compileFlows(source);   // a diagram authored with flows numbers its edges from them
   if (dialect === 'architecture-beta') return toArchitecture(spec);
   if (dialect !== 'flowchart') throw new Error(`unknown dialect ${dialect}: flowchart or architecture-beta`);
   const G = specGraph(spec);

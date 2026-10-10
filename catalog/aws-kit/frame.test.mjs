@@ -68,7 +68,7 @@ test('storyboard: one frame per step, in story order, concurrent hops sharing a 
 });
 
 test('every gallery diagram with steps storyboards in order', async () => {
-  for (const f of ['serverless', 'three-tier', 'directory', 'databases', 'regions', 'vpc', 'transit', 'endpoints', 'dns']) {
+  for (const f of ['serverless', 'three-tier', 'directory', 'databases', 'regions', 'vpc', 'security', 'ipv6', 'transit', 'endpoints', 'dns']) {
     for (const d of (await family(f)).diagrams) {
       if (!(d.steps || []).length) continue;
       const fr = storyboard(d);

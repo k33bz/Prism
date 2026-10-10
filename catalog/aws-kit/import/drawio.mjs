@@ -28,9 +28,9 @@ import fs from 'node:fs';
 import path from 'node:path';
 import zlib from 'node:zlib';
 import { fileURLToPath, pathToFileURL } from 'node:url';
-import { checkSpec, diagram, lint, standalone } from '../awd.mjs';
+import { checkSpec, diagram, lint, standalone, tableSize } from '../awd.mjs';
 import { validateDiagram, validateFamily, canonical, canonicalDiagram, toJson } from '../spec.mjs';
-import { story } from '../story.mjs';
+import { compileFlows, story } from '../story.mjs';
 import { wrap } from '../place.mjs';
 import { textWidth } from '../lint.mjs';
 import { resolveIcon, iconInfo } from '../../aws-icons/resolve.mjs';
@@ -351,6 +351,7 @@ function classify(c, model, add, unmapped) {
   if (pk === 'steplist') return { t: 'steplist', label };
   if (pk === 'legend') { let data = {}; try { data = JSON.parse(p.prism_legend || '{}'); } catch { /* defaults */ } return { t: 'legend', label, data }; }
   if (pk === 'mark') return { t: 'mark', kind: p.prism_mark === 'ok' ? 'ok' : 'blocked', on: p.prism_on };
+  if (pk === 'table') { let data = null; try { data = JSON.parse(p.prism_table || 'null'); } catch { /* drawn text only */ } return data ? { t: 'table', label, data } : { t: 'text', label, size: num(s.fontSize, 10), bold: false, align: 'left', valign: 'top', color: s.fontColor, prism: true, note: null, wraps: true }; }
   if (pk === 'step') return { t: 'badge', n: /^\d+$/.test(label) ? +label : label, text: p.tooltip };
   const shape = String(s.shape || '');
   if (pk === 'group' || shape === 'mxgraph.aws4.group' || shape === 'mxgraph.aws4.groupCenter' || s.grIcon) return awsGroup(c, label, add);
@@ -849,7 +850,7 @@ function convert(model, doc, pi, opts, add, unmapped, meta) {
   };
 
   // ---- elements
-  const G = [], N = [], NOTES = [], FREE = [], MARKS = [], LEGEND = [];
+  const G = [], N = [], NOTES = [], FREE = [], MARKS = [], LEGEND = [], TABLES = [];
   const groupsSrc = model.live.filter((c) => cls.get(c.id)?.t === 'group').sort((a, b) => b.box.w * b.box.h - a.box.w * a.box.h);
   for (const c of groupsSrc) {
     const k = cls.get(c.id);
@@ -922,6 +923,8 @@ function convert(model, doc, pi, opts, add, unmapped, meta) {
       FREE.push({ c, n: k.n, at: center(c.box) });
     } else if (k.t === 'mark') {
       MARKS.push({ c, kind: k.kind, on: k.on, at: center(c.box) });
+    } else if (k.t === 'table') {
+      TABLES.push({ c, data: k.data, ax: c.box.x, ay: c.box.y });
     } else if (k.t === 'legend') {
       // a legend Prism exported: the kit draws it again from its items, at the same place in the layout
       const items = Array.isArray(k.data.items) ? k.data.items.filter((it) => it && typeof it.kind === 'string') : null;
@@ -1052,6 +1055,12 @@ function convert(model, doc, pi, opts, add, unmapped, meta) {
     const w = x.row ? labels.reduce((a, l) => a + 27 + textWidth(l, 8.5), 0) : 13 + Math.max(0, ...labels.map((l) => textWidth(l, 8.5)));
     const h = x.row ? 10 : 13 * labels.length;
     els.push({ kind: 'note', ax: x.ax, ay: x.ay, snap: false, groups: groupsOf({ x: x.ax, y: x.ay }), ext: () => ({ l: 2, r: w, u: 9, d: h - 6, core: 0 }) });
+  });
+  // a table keeps its size (the kit's own) and moves with the layout from its top-left corner
+  TABLES.forEach((x) => {
+    x.el = els.length;
+    let size = { W: 0, H: 0 }; try { size = tableSize({ ...x.data, x: 0, y: 0 }); } catch { /* malformed: placed as a point */ }
+    els.push({ kind: 'note', ax: x.ax, ay: x.ay, snap: false, groups: groupsOf({ x: x.ax, y: x.ay }), ext: () => ({ l: 0, r: size.W, u: 0, d: size.H, core: 0 }) });
   });
   FREE.filter((b) => b.free).forEach((b) => { b.el = els.length; els.push({ kind: 'badge', ax: b.at.x, ay: b.at.y, snap: false, groups: groupsOf(b.at), ext: () => ({ l: 8, r: 8, u: 8, d: 8, core: 8 }) }); });
   const pts = W.flatMap((w) => [...w.wps, ...[w.a, w.b].filter((e) => e.pt).map((e) => e.pt)]);
@@ -1211,6 +1220,7 @@ function convert(model, doc, pi, opts, add, unmapped, meta) {
     const live2 = new Set([...(spec.nodes || []).map((n) => n.id), ...(spec.wires || []).map((w) => w.id)]);
     const marks = MARKS.map((m) => (m.on && live2.has(m.on) ? { on: m.on, ...(m.kind === 'ok' ? { kind: 'ok' } : {}) } : { x: P(m.at.x, m.at.y, false)[0], y: P(m.at.x, m.at.y, false)[1], ...(m.kind === 'ok' ? { kind: 'ok' } : {}) }));
     if (marks.length) spec.marks = marks;
+    if (TABLES.length) spec.tables = TABLES.map((x) => { const [tx, ty] = L.at(x.el); return { ...x.data, x: Math.round((tx + dxc) * 100) / 100, y: Math.round(ty * 100) / 100 }; });
     if (LEGEND.length) { const x = LEGEND[0], [lx, ly] = L.at(x.el); spec.legend = { x: lx + dxc, y: ly, ...(x.row ? { row: true } : {}), ...(x.items ? { items: x.items.map((it) => pick(it, ['kind', 'label'])) } : {}) }; }
     // step texts with no badge in the drawing (a description column only)
     for (const [n, t] of stepText) if (!spec.steps.some((s) => String(s.n) === n)) ladd('info', 'step-text-orphan', null, `step ${n} text has no badge in the drawing: "${t.slice(0, 40)}"`);
@@ -1462,7 +1472,11 @@ function restoreExact(meta, model, opts) {
     if (!w || norm(w.label) !== norm(labelOf(c))) return null;
     if (w.from != null && (cellOf(c.source) !== w.from || cellOf(c.target) !== w.to)) return null;
   }
-  if (tagged('step').length !== (spec.steps || []).length) return null;
+  // the drawing shows the compiled story: badges for the flows' steps too
+  let drawnSteps = spec.steps || [];
+  try { drawnSteps = compileFlows(spec).steps || []; } catch { return null; }
+  if (tagged('step').length !== drawnSteps.length) return null;
+  if (tagged('table').length !== (spec.tables || []).length) return null;
   const out = canonicalDiagram(spec);
   if (opts.id && /^[a-z][a-z0-9-]*$/.test(opts.id)) out.id = opts.id;
   if (opts.name) out.name = opts.name;

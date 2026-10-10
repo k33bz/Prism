@@ -8,6 +8,7 @@ import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { fromDrawio, toDrawio, exportDrawio, loadDrawio, htmlText } from './drawio.mjs';
 import { checkSpec, lint } from '../awd.mjs';
+import { compileFlows } from '../story.mjs';
 import { canonicalDiagram, validateDiagram, validateFamily } from '../spec.mjs';
 import { png, SMALL } from './fixtures/make-fixtures.mjs';
 
@@ -199,7 +200,9 @@ test('gallery round trip from the drawing alone: same counts, lint clean', () =>
   const exceptions = [];
   for (const d of GALLERY) {
     const r = fromDrawio(toDrawio(d), { restore: false });
-    const diff = ['nodes', 'groups', 'wires', 'steps'].filter((k) => count(r.spec, k) !== count(d, k)).map((k) => `${k} ${count(d, k)} -> ${count(r.spec, k)}`);
+    // a diagram authored with flows draws the steps they compile to
+    const c = compileFlows(d);
+    const diff = ['nodes', 'groups', 'wires', 'steps'].filter((k) => count(r.spec, k) !== count(c, k)).map((k) => `${k} ${count(c, k)} -> ${count(r.spec, k)}`);
     if (diff.length) exceptions.push(`${d.id}: ${diff.join(', ')}`);
     if (errors(r).length) exceptions.push(`${d.id}: ${errors(r).map((x) => x.message).join('; ')}`);
     assert.deepEqual(validateDiagram(r.spec), [], d.id);

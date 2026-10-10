@@ -17,6 +17,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { diagram, stepTexts } from '../awd.mjs';
+import { compileFlows } from '../story.mjs';
 import { canonicalDiagram, VERSION } from '../spec.mjs';
 import { wrap } from '../place.mjs';
 import { textWidth } from '../lint.mjs';
@@ -162,8 +163,10 @@ const nodeBox = (n) => (n.kind ? { x: n.x, y: n.y, w: n.w, h: n.h } : { x: n.x, 
 const labelH = (n) => (n.kind || (n.labelPos || 'b') !== 'b' ? 0 : (n.label ? 13 * wrap(n.label, n.wrap || 14).length : 0) + (n.sub ? 11 : 0));
 
 /** Export one diagram spec: { xml, counts, lost } (lost: what draw.io cannot draw; it stays in prism_spec). */
-export function exportDrawio(spec, { scale = 1.2 } = {}) {
-  const svg = diagram(spec);   // checks the spec; its markup is the geometry source
+export function exportDrawio(source, { scale = 1.2 } = {}) {
+  const svg = diagram(source);   // checks the spec; its markup is the geometry source
+  // the drawing shows the compiled story (flows become steps and packets); prism_spec keeps the source
+  const spec = compileFlows(source);
   const k = scale, S = (v) => r2(v * k);
   const top = 40;              // room above the diagram for the title (draw.io px)
   const out = [], stats = { named: 0, images: 0 };
@@ -256,6 +259,19 @@ export function exportDrawio(spec, { scale = 1.2 } = {}) {
   });
   // notes still frames show (timed ones stay in the prism spec), marks, legend
   const lost = [];
+  // tables: a card per table, its rows as an HTML table; the spec rides in prism_table, so a re-import
+  // from the drawing alone redraws it where it now sits (lit rows stay in the prism spec)
+  const tbBoxes = [...svg.matchAll(/<rect class="awd-tb" x="([-\d.]+)" y="([-\d.]+)" width="([-\d.]+)" height="([-\d.]+)"/g)].map((m) => ({ x: +m[1], y: +m[2], w: +m[3], h: +m[4] }));
+  (spec.tables || []).forEach((tb, i) => {
+    const b = tbBoxes[i]; if (!b) return;
+    const { x, y, ...data } = tb;
+    const cellsOf = (r) => (Array.isArray(r) ? r : r.cells);
+    const head = tb.cols ? `<tr>${tb.cols.map((c) => `<td style="color:#545B64;font-size:7px">${hesc(String(c).toUpperCase())}</td>`).join('')}</tr>` : '';
+    const body = tb.rows.map((r) => `<tr>${cellsOf(r).map((c) => `<td>${hesc(String(c))}</td>`).join('')}</tr>`).join('');
+    cell(`tb${i}`, { prism_kind: 'table', prism_table: JSON.stringify(data) }, `<b>${hesc(tb.title)}</b><table style="font-size:8px;border-collapse:collapse" cellpadding="1">${head}${body}</table>`,
+      `rounded=1;arcSize=4;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=6;spacingTop=1;fillColor=#FFFFFF;strokeColor=#879196;fontSize=${Math.round(8.5 * k)};fontColor=#232F3E;`, b, null);
+  });
+  if ((spec.tables || []).some((tb) => tb.rows.some((r) => !Array.isArray(r) && (r.t || r.on)))) lost.push('lit table rows');
   (spec.notes || []).forEach((nt, i) => {
     if (nt.t && !nt.still) return;
     const size = nt.size || (nt.kind === 'label' ? 10.5 : 8.5), lines = String(nt.text).split('\n').map((l) => (nt.caps ? l.toUpperCase() : l));
@@ -292,7 +308,7 @@ export function exportDrawio(spec, { scale = 1.2 } = {}) {
   const timed = (spec.notes || []).filter((n) => n.t && !n.still).length + (spec.marks || []).filter((m) => m.t && !m.still).length;
   if (timed) lost.push(`timed notes and marks (${timed})`);
   if (spec.extra) lost.push('extra markup');
-  const meta = { version: VERSION, spec: canonicalDiagram(spec) };
+  const meta = { version: VERSION, spec: canonicalDiagram(source) };
   const W = Math.ceil((spec.w || 480) * k + 40), H = Math.ceil((spec.h || 240) * k + top + 40);
   const model = `<mxGraphModel dx="${W}" dy="${H}" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="${W}" pageHeight="${H}" math="0" shadow="0"><root><mxCell id="0"/><mxCell id="1" value="Diagram" parent="0"/>`
     + out.join('')
