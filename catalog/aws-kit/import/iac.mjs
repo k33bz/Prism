@@ -13,13 +13,15 @@
 //   "VpcConfig.SubnetIds" or "vpc_config.subnet_ids" (lists are walked); refs() with no path returns every
 //   resource the record references; items(path) returns one sub-record per list element.
 // ctx: { src, title, desc, region, issues: [], ledger: [], params: [] }
-// opts: { id, name, flows (the sidecar object), story ('auto'|'none'|'guess'|<flow or story id>), width }
+// opts: { id, name, flows (the sidecar object), story ('auto'|'none'|'guess'|<flow or story id>), width,
+//         rules (security group rules as tables: true, a list of groups, or { groups, outbound }; see rulesOption) }
 import { resolveIcon, iconInfo } from '../../aws-icons/resolve.mjs';
 import { newIr, buildSpec, issue as irIssue } from './ir.mjs';
 import { checkSpec, lint as lintSpec } from '../awd.mjs';
 import { validateDiagram } from '../spec.mjs';
 import { story as storyOf } from '../story.mjs';
 import { wrap as wrapWords } from '../place.mjs';
+import { textWidth } from '../lint.mjs';
 
 // ---------------------------------------------------------------------------------------------------
 // canonical kinds: CloudFormation and Terraform types for the resources the inference reads
@@ -38,6 +40,11 @@ const KINDS = {
   sg: ['AWS::EC2::SecurityGroup', 'aws_security_group', 'aws_default_security_group'],
   sgIn: ['AWS::EC2::SecurityGroupIngress', 'aws_security_group_rule', 'aws_vpc_security_group_ingress_rule'],
   sgOut: ['AWS::EC2::SecurityGroupEgress', 'aws_vpc_security_group_egress_rule'],
+  // dual stack and rule sources: folded into the frame notes and the rules tables
+  vpcCidr: ['AWS::EC2::VPCCidrBlock', 'aws_vpc_ipv6_cidr_block_association'],
+  subnetCidr: ['AWS::EC2::SubnetCidrBlock'],
+  prefixList: ['AWS::EC2::PrefixList', 'aws_ec2_managed_prefix_list'],
+  plEntry: ['aws_ec2_managed_prefix_list_entry'],
   lb: ['AWS::ElasticLoadBalancingV2::LoadBalancer', 'aws_lb', 'aws_alb'],
   clb: ['AWS::ElasticLoadBalancing::LoadBalancer', 'aws_elb'],
   listener: ['AWS::ElasticLoadBalancingV2::Listener', 'aws_lb_listener', 'aws_alb_listener'],
@@ -140,6 +147,11 @@ const F = {
   'rule.from': ['FromPort', 'from_port'], 'rule.to': ['ToPort', 'to_port'], 'rule.proto': ['IpProtocol', ['protocol', 'ip_protocol']],
   'rule.srcSg': ['SourceSecurityGroupId', ['security_groups', 'source_security_group_id', 'referenced_security_group_id']], 'rule.cidr': [['CidrIp', 'CidrIpv6'], ['cidr_blocks', 'cidr_ipv4', 'ipv6_cidr_blocks', 'cidr_ipv6']],
   'sgIn.group': ['GroupId', 'security_group_id'], 'sgIn.type': [null, 'type'],
+  'sg.egress': ['SecurityGroupEgress', 'egress'], 'sgOut.group': ['GroupId', 'security_group_id'],
+  'vpc.ipv6': [null, 'ipv6_cidr_block'], 'vpc.ipv6amazon': [null, 'assign_generated_ipv6_cidr_block'],
+  'vpcCidr.vpc': ['VpcId', 'vpc_id'], 'vpcCidr.ipv6': ['Ipv6CidrBlock', 'ipv6_cidr_block'], 'vpcCidr.amazon': ['AmazonProvidedIpv6CidrBlock', null],
+  'subnet.ipv6': ['Ipv6CidrBlock', 'ipv6_cidr_block'], 'subnetCidr.subnet': ['SubnetId', null], 'subnetCidr.ipv6': ['Ipv6CidrBlock', null],
+  'prefixList.name': ['PrefixListName', 'name'], 'prefixList.entries': ['Entries.Cidr', 'entry.cidr'], 'plEntry.pl': [null, 'prefix_list_id'], 'plEntry.cidr': [null, 'cidr'],
   'lb.subnets': [['Subnets', 'SubnetMappings.SubnetId'], ['subnets', 'subnet_mapping.subnet_id']], 'lb.sgs': ['SecurityGroups', 'security_groups'],
   'lb.scheme': ['Scheme', 'internal'], 'lb.type': ['Type', 'load_balancer_type'],
   'clb.subnets': ['Subnets', 'subnets'], 'clb.sgs': ['SecurityGroups', 'security_groups'], 'clb.instances': ['Instances', 'instances'], 'clb.scheme': ['Scheme', 'internal'],
@@ -263,7 +275,7 @@ export function kitId(s, used, prefix = 'n') {
 
 // ---------------------------------------------------------------------------------------------------
 // the flows sidecar: what IaC cannot say (actors, request order, stories, human overrides)
-const SIDECAR_KEYS = ['version', '$schema', '_comment', 'diagram', 'name', 'desc', 'region', 'story', 'actors', 'flows', 'stories', 'hide', 'show', 'merge', 'pin', 'group_hints', 'overrides', 'anchors'];
+const SIDECAR_KEYS = ['version', '$schema', '_comment', 'diagram', 'name', 'desc', 'region', 'story', 'actors', 'flows', 'stories', 'hide', 'show', 'merge', 'pin', 'group_hints', 'overrides', 'anchors', 'rules'];
 export function normalizeSidecar(raw, issues = []) {
   if (raw == null) return null;
   let s = raw;
@@ -276,15 +288,30 @@ export function normalizeSidecar(raw, issues = []) {
   const out = {
     name: s.name || null, desc: s.desc || null, region: s.region || null, story: s.story || null,
     actors: list(s.actors).filter((a) => a && a.id).map((a) => ({ id: String(a.id), icon: a.icon || 'aws-res-users', label: a.label || null, sub: a.sub || null, side: a.side === 'right' ? 'right' : 'left', to: list(a.to).map(String) })),
-    flows: list(s.flows).filter((f) => f && Array.isArray(f.steps)).map((f, i) => ({ id: String(f.id || `flow${i + 1}`), name: f.name || null, dur: Number(f.dur) || null, response: f.response || null, steps: f.steps.filter((x) => x && x.from && x.to).map((x) => ({ from: String(x.from), to: String(x.to), label: x.label != null ? String(x.label) : null, kind: x.kind || null, text: x.text || null })) })),
+    flows: list(s.flows).filter((f) => f && Array.isArray(f.steps)).map((f, i) => ({ id: String(f.id || `flow${i + 1}`), name: f.name || null, dur: Number(f.dur) || null, response: f.response || null, v6: f.v6 === true, steps: f.steps.filter((x) => x && x.from && x.to).map((x) => ({ from: String(x.from), to: String(x.to), label: x.label != null ? String(x.label) : null, kind: x.kind || null, text: x.text || null, v6: typeof x.v6 === 'boolean' ? x.v6 : null })) })),
     stories: list(s.stories).filter((x) => x && x.id && x.template).map((x) => ({ ...x, id: String(x.id) })),
     hide: list(s.hide).map(String), show: list(s.show).map(String),
     merge: obj(s.merge), pin: obj(s.pin), group_hints: obj(s.group_hints), overrides: obj(s.overrides), anchors: obj(s.anchors),
+    rules: s.rules != null ? s.rules : null,
   };
   for (const f of list(s.flows)) if (f && !Array.isArray(f.steps)) say(`flow ${f.id || '?'} has no steps list; ignored`);
   for (const st of out.stories) if (!['az-fail', 'asg-scale'].includes(st.template)) say(`story ${st.id}: template "${st.template}" is not known (az-fail, asg-scale); ignored`);
   out.stories = out.stories.filter((x) => ['az-fail', 'asg-scale'].includes(x.template));
   return out;
+}
+
+// which security groups get rules tables (opts.rules, else the sidecar's rules): true (every group a drawn
+// resource carries, the ones the story crosses first), a list of refs ("AppSg,DbSg" on the CLI), or
+// { groups, outbound } where outbound is true (every shown group), false (none) or 'restricted' (the
+// default: only groups whose egress the source restricts)
+export function rulesOption(v) {
+  if (v == null || v === false || v === 'none') return null;
+  const outbound = (o) => (o === true || o === 'all' ? 'all' : o === false || o === 'none' ? 'none' : 'restricted');
+  if (v === true || v === 'all') return { groups: null, outbound: 'restricted' };
+  if (typeof v === 'string') return { groups: v.split(',').map((x) => x.trim()).filter(Boolean), outbound: 'restricted' };
+  if (Array.isArray(v)) return { groups: v.map(String), outbound: 'restricted' };
+  if (typeof v === 'object') return { groups: v.groups == null || v.groups === true || v.groups === 'all' ? null : [].concat(v.groups).map(String), outbound: outbound(v.outbound) };
+  return null;
 }
 
 // ---------------------------------------------------------------------------------------------------
@@ -343,6 +370,9 @@ export function importInfra(resources, ctx, opts = {}) {
     if (k === 'asg') { setCls(r.key, 'group', 'asg'); continue; }
     if (['sg', 'sgIn', 'sgOut'].includes(k)) { setCls(r.key, 'edge', 'security group rules become edges'); continue; }
     if (['rt', 'route', 'rtAssoc', 'igwAttach', 'eip'].includes(k)) { setCls(r.key, 'folded', 'routing'); continue; }
+    if (k === 'vpcCidr') { setCls(r.key, 'folded', 'a CIDR block of its VPC (the frame note)', refs(r, 'vpcCidr.vpc')[0]); continue; }
+    if (k === 'subnetCidr') { setCls(r.key, 'folded', 'an IPv6 CIDR block of its subnet (the frame note)', refs(r, 'subnetCidr.subnet')[0]); continue; }
+    if (k === 'prefixList' || k === 'plEntry') { setCls(r.key, 'folded', k === 'plEntry' ? 'an entry of a managed prefix list' : 'a managed prefix list, a security group rule source', k === 'plEntry' ? refs(r, 'plEntry.pl')[0] : null); continue; }
     if (['listener', 'listenerRule', 'tg', 'tgAttach'].includes(k)) { setCls(r.key, 'edge', 'load balancer chain'); continue; }
     if (['lt', 'lc', 'profile', 'role', 'policy', 'policyAttach', 'dbSubnetGroup', 'cacheSubnetGroup', 'redshiftSubnetGroup', 'ecsTask', 'efsMount'].includes(k)) { setCls(r.key, 'folded', k); continue; }
     if (['esm', 'perm', 'snsSub', 'ruleTarget', 's3notif', 'apiMethod', 'apiV2Int', 'wafAssoc', 'r53rec', 'r53recGroup', 'fnUrl'].includes(k)) { setCls(r.key, 'edge', k); continue; }
@@ -359,21 +389,59 @@ export function importInfra(resources, ctx, opts = {}) {
   // ---- 1. VPCs, subnets, route tables, subnet kinds
   const vpcs = ofKind('vpc').filter((r) => cls.get(r.key).as === 'group');
   for (const v of vpcs) led('derived', `${v.key} is a VPC${val(v, 'vpc.cidr') ? ` (${val(v, 'vpc.cidr')})` : ''}`, v.key);
+  // dual stack: a literal IPv6 block becomes the frame note's second line; a computed one says its size
+  const findCidrFn = (v) => {
+    if (Array.isArray(v)) { for (const x of v) { const h = findCidrFn(x); if (h) return h; } return null; }
+    if (!v || typeof v !== 'object') return null;
+    if (Array.isArray(v['Fn::Cidr'])) return v['Fn::Cidr'];
+    for (const x of Object.values(v)) { const h = findCidrFn(x); if (h) return h; }
+    return null;
+  };
+  const v6Of = (r, f) => {
+    const lit = vals(r, f).find((x) => typeof x === 'string' && x.includes(':'));
+    if (lit) return { cidr: lit };
+    // CloudFormation: !Select [i, !Cidr [<the VPC's IPv6 block>, n, bits]] is a /(128 - bits); Terraform: references only
+    const raw = r.props ? pathsOf(r, f).map((p) => r.props[p]).find((x) => x != null && typeof x === 'object') : null;
+    const fn = raw ? findCidrFn(raw) : null;
+    if (raw || refs(r, f).length) return { cidr: null, size: fn && Number(fn[2]) > 0 ? 128 - Number(fn[2]) : null };
+    return null;
+  };
+  const vpcV6 = new Map();   // vpc key -> { cidr, size, amazon, from }
+  for (const v of vpcs) {
+    const own = v6Of(v, 'vpc.ipv6');
+    if (own) vpcV6.set(v.key, { ...own, from: [v.key] });
+    else if (truthy(val(v, 'vpc.ipv6amazon'))) vpcV6.set(v.key, { cidr: null, size: 56, amazon: true, from: [v.key] });
+  }
+  for (const c of ofKind('vpcCidr')) {
+    const vk = refs(c, 'vpcCidr.vpc')[0];
+    const own = v6Of(c, 'vpcCidr.ipv6'), amazon = truthy(val(c, 'vpcCidr.amazon'));
+    // an AWS::EC2::VPCCidrBlock with only CidrBlock is a secondary IPv4 block
+    if (!vk || vpcV6.has(vk) || !(own || amazon || c.type === 'aws_vpc_ipv6_cidr_block_association' || Object.keys(c.props || {}).some((p) => /^Ipv6/.test(p)))) continue;
+    vpcV6.set(vk, own ? { ...own, from: [c.key, vk] } : { cidr: null, size: 56, amazon: true, from: [c.key, vk] });
+  }
+  for (const [vk, x] of vpcV6) led('derived', `${vk} is dual-stack: ${x.cidr ? `${x.from[0]} gives it the IPv6 block ${x.cidr}` : x.amazon ? `${x.from[0]} gives it an Amazon-provided /56 IPv6 block (assigned at deploy time)` : `its IPv6 block is computed at deploy time (${x.from[0]})`}`, x.from);
+  const v6Note = (x) => x.cidr || (x.amazon ? 'IPv6 /56 (Amazon)' : x.size ? `IPv6 /${x.size}` : 'IPv6');
+  const noteOf = (v4, x) => (x ? (v4 ? [v4, v6Note(x)] : v6Note(x)) : v4 || null);
   const subnets = new Map();
   const rtOfSubnet = new Map(), rtEvidence = new Map();
   for (const a of ofKind('rtAssoc')) { const s = refs(a, 'rtAssoc.subnet')[0], t = refs(a, 'rtAssoc.rt')[0]; if (s && t) { rtOfSubnet.set(s, t); rtEvidence.set(s, [a.key, t]); } }
-  const defaultRoute = new Map();   // rt -> { target, type, evidence }
+  const defaultRoute = new Map();   // rt -> { target, evidence, dest }: 0.0.0.0/0, else ::/0
+  const v6Route = new Map();        // rt -> { target, evidence }: ::/0 (an egress-only gateway, the internet gateway)
   const isDefault = (d) => d === '0.0.0.0/0' || d === '::/0';
+  const addDefault = (table, dest, t, evidence) => {
+    if (dest.includes('::/0') && !v6Route.has(table)) v6Route.set(table, { target: t || null, evidence });
+    if (!defaultRoute.has(table) || (dest.includes('0.0.0.0/0') && defaultRoute.get(table).dest !== '0.0.0.0/0')) defaultRoute.set(table, { target: t || null, evidence, dest: dest.includes('0.0.0.0/0') ? '0.0.0.0/0' : '::/0' });
+  };
   for (const rt of ofKind('route')) {
     const dest = vals(rt, 'route.dest'); const t = refs(rt, 'route.target')[0]; const table = refs(rt, 'route.rt')[0];
     if (!table || !dest.some(isDefault)) continue;
-    if (!defaultRoute.has(table) || dest.includes('0.0.0.0/0')) defaultRoute.set(table, { target: t || null, evidence: [rt.key, t].filter(Boolean) });
+    addDefault(table, dest, t, [rt.key, t].filter(Boolean));
   }
   for (const table of ofKind('rt')) for (const it of items(table, 'rt.routes')) {
     const dest = [...it.vals('cidr_block'), ...it.vals('ipv6_cidr_block')];
     if (!dest.some(isDefault)) continue;
     const t = ['gateway_id', 'nat_gateway_id', 'transit_gateway_id', 'vpc_endpoint_id', 'network_interface_id', 'egress_only_gateway_id'].flatMap((p) => it.refs(p))[0];
-    if (!defaultRoute.has(table.key)) defaultRoute.set(table.key, { target: t || null, evidence: [table.key, t].filter(Boolean) });
+    addDefault(table.key, dest, t, [table.key, t].filter(Boolean));
   }
   const hints = side ? side.group_hints : {};
   for (const s of ofKind('subnet')) {
@@ -384,9 +452,10 @@ export function importInfra(resources, ctx, opts = {}) {
     const tk = dr && dr.target ? K(byKey.get(dr.target) || { type: '' }) : null;
     let kind, how, flavor, egress = null;
     const ev = [s.key, ...(rtEvidence.get(s.key) || []), ...(dr ? dr.evidence : [])];
-    if (dr && tk === 'igw') { kind = 'pub'; flavor = 'public'; how = `route table ${rt} sends 0.0.0.0/0 to the internet gateway ${dr.target}`; }
-    else if (dr && tk === 'nat') { kind = 'priv'; flavor = 'private with egress'; egress = dr.target; how = `route table ${rt} sends 0.0.0.0/0 to the NAT gateway ${dr.target}`; }
-    else if (dr && dr.target) { kind = 'priv'; flavor = 'private'; egress = dr.target; how = `route table ${rt} sends 0.0.0.0/0 to ${dr.target} (${byKey.get(dr.target) ? byKey.get(dr.target).type : 'outside the stack'})`; }
+    if (dr && tk === 'igw') { kind = 'pub'; flavor = 'public'; how = `route table ${rt} sends ${dr.dest} to the internet gateway ${dr.target}`; }
+    else if (dr && tk === 'nat') { kind = 'priv'; flavor = 'private with egress'; egress = dr.target; how = `route table ${rt} sends ${dr.dest} to the NAT gateway ${dr.target}`; }
+    else if (dr && tk === 'eigw') { kind = 'priv'; flavor = 'private with egress'; how = `route table ${rt} sends ${dr.dest} to the egress-only internet gateway ${dr.target} (IPv6 out only)`; }
+    else if (dr && dr.target) { kind = 'priv'; flavor = 'private'; egress = dr.target; how = `route table ${rt} sends ${dr.dest} to ${dr.target} (${byKey.get(dr.target) ? byKey.get(dr.target).type : 'outside the stack'})`; }
     else if (dr) { kind = 'priv'; flavor = 'private'; how = `route table ${rt} has a default route to a target outside the stack`; }
     else if (rt) { kind = 'iso'; flavor = 'isolated'; how = `route table ${rt} has no default route`; }
     else {
@@ -402,7 +471,18 @@ export function importInfra(resources, ctx, opts = {}) {
     const assumed = !viaSide && !rt && !(s.tags || {})['aws-cdk:subnet-type'];
     const phrase = { public: 'a public subnet', 'private with egress': 'a private subnet with egress', private: 'a private subnet', isolated: 'an isolated subnet' }[flavor] || `a ${flavor} subnet`;
     led(assumed ? 'assumed' : 'derived', `${s.key} is ${phrase}: ${how}`, ev, assumed ? { ask: `Which route table does ${s.key} use in the deployed VPC?` } : viaSide ? { via: 'sidecar' } : {});
-    subnets.set(s.key, { key: s.key, r: s, vpc, cidr: val(s, 'subnet.cidr') || null, kind, flavor, egress, rt, az: s.az || null, azPos: null, tier: null });
+    const assoc6 = ofKind('subnetCidr').find((c) => refs(c, 'subnetCidr.subnet')[0] === s.key);
+    const ipv6 = v6Of(s, 'subnet.ipv6') || (assoc6 && v6Of(assoc6, 'subnetCidr.ipv6'));
+    if (ipv6) led('derived', `${s.key} is dual-stack: ${ipv6.cidr ? `its IPv6 CIDR is ${ipv6.cidr}` : `its IPv6 CIDR is computed at deploy time${ipv6.size ? ` (a /${ipv6.size} of the VPC's block)` : ''}`}${assoc6 ? ` (${assoc6.key})` : ''}`, [s.key, assoc6 && assoc6.key]);
+    subnets.set(s.key, { key: s.key, r: s, vpc, cidr: val(s, 'subnet.cidr') || null, ipv6, kind, flavor, egress, rt, az: s.az || null, azPos: null, tier: null });
+  }
+  // IPv6 default routes: an egress-only internet gateway lets a subnet out, never in
+  for (const s of subnets.values()) {
+    const r6 = s.rt && v6Route.get(s.rt);
+    if (!r6) continue;
+    const k6 = r6.target ? K(byKey.get(r6.target) || { type: '' }) : null;
+    const to = k6 === 'eigw' ? `the egress-only internet gateway ${r6.target}: IPv6 out only, nothing on the internet can open a connection in` : k6 === 'igw' ? `the internet gateway ${r6.target}: IPv6 in and out` : r6.target ? `${r6.target}` : 'a target outside the stack';
+    led('derived', `${s.key} sends IPv6 traffic (::/0) to ${to}`, [s.key, ...(rtEvidence.get(s.key) || []), ...r6.evidence]);
   }
 
   // ---- 2. Availability Zone positions ("Availability Zone 1/2", never a/b)
@@ -502,7 +582,8 @@ export function importInfra(resources, ctx, opts = {}) {
   for (const r of nodeRes) {
     const k = K(r);
     const res = officialIcon(r);
-    let icon = res.id;
+    // the official set has no egress-only internet gateway: AWS's own diagrams draw the internet gateway icon
+    let icon = k === 'eigw' ? 'aws-res-vpc-internet-gateway' : res.id;
     let box = null;
     if (!icon) {
       const cand = (res.candidates || []).map((c) => c.id);
@@ -510,7 +591,7 @@ export function importInfra(resources, ctx, opts = {}) {
       say('warn', 'unmapped-type', r.key, `no Prism icon for ${r.type}${res.warnings && res.warnings.length ? ` (${res.warnings[0]})` : ''}; drawn as a box${cand.length ? ` (closest: ${cand.slice(0, 3).join(', ')})` : ''}`);
       unmapped.push({ element: r.key, type: r.type, label: r.name || r.key, candidates: cand.slice(0, 3) });
     }
-    for (const w of res.warnings || []) if (icon && !/used the default|pass \w+/.test(w)) say('info', 'icon', r.key, w);
+    if (k !== 'eigw') for (const w of res.warnings || []) if (icon && !/used the default|pass \w+/.test(w)) say('info', 'icon', r.key, w);
     const label0 = icon ? officialLabel(icon) : humanType(r.type);
     let klass = KLASS[k] || 'other';
     // placement
@@ -561,8 +642,12 @@ export function importInfra(resources, ctx, opts = {}) {
     if (k === 'igw' || k === 'vgw' || k === 'eigw') {
       const att = ofKind('igwAttach').find((a) => refs(a, 'igwAttach.gw').includes(r.key));
       const vpc = (att && refs(att, 'igwAttach.vpc')[0]) || refs(r, k === 'igw' ? 'igw.vpc' : k === 'vgw' ? 'vgw.vpc' : 'eigw.vpc')[0] || (vpcs.length === 1 ? vpcs[0].key : null);
-      mk({ place: vpc ? 'vpc' : 'region', vpc, klass: 'edge' });
+      mk({ place: vpc ? 'vpc' : 'region', vpc, klass: 'edge', ...(k === 'eigw' ? { label: 'Egress-only internet gateway' } : {}) });
       if (vpc) led('derived', `${r.key} is attached to ${vpc}`, [r.key, att && att.key, vpc]);
+      if (k === 'eigw') {
+        led('derived', `${r.key} is an egress-only internet gateway (IPv6 out only), drawn with the internet gateway icon: the official set has none`, r.key);
+        say('info', 'kit-gap', r.key, 'the official icon set has no egress-only internet gateway: drawn with the internet gateway icon and labelled "Egress-only internet gateway"');
+      }
       continue;
     }
     if (GLOBAL.has(k) || (k === 'waf' && /cloudfront/i.test(String(val(r, 'waf.scope') || '')))) { mk({ place: 'global', klass: 'edge' }); continue; }
@@ -952,7 +1037,7 @@ export function importInfra(resources, ctx, opts = {}) {
         if (w.edge && w.edge.fact) w.edge.fact = w.edge.fact.replace(/; a weak edge, an ARN in a policy does not prove traffic$/, `; the sidecar's flow ${f.id} confirms the traffic`);
         if (w.edge) w.edge.via = 'sidecar';
       }
-      steps.push({ wire: w, reverse, a: A.node, b: B.node, kind: st.kind, text: st.text, label: st.label, from: st.from, to: st.to });
+      steps.push({ wire: w, reverse, a: A.node, b: B.node, kind: st.kind, text: st.text, label: st.label, from: st.from, to: st.to, v6: st.v6 != null ? st.v6 : f.v6 });
     }
     flowSteps.push({ flow: f, steps });
   }
@@ -1033,7 +1118,7 @@ export function importInfra(resources, ctx, opts = {}) {
     const g = kitId(baseOf(v), usedIds);
     gid.set(v.key, g);
     const cidr = val(v, 'vpc.cidr');
-    ir.groups.push({ id: g, kind: 'vpc', label: null, note: cidr || null, parent: 'region' });
+    ir.groups.push({ id: g, kind: 'vpc', label: null, note: noteOf(cidr, vpcV6.get(v.key)), parent: 'region' });
   }
   const azGroup = new Map();   // `${vpc}|${az}` -> group id
   const sortedSubnets = [...subnets.values()].sort((a, b) => a.azPos - b.azPos);
@@ -1052,7 +1137,7 @@ export function importInfra(resources, ctx, opts = {}) {
     if (!parent) continue;
     const g = kitId(baseOf(s.r), usedIds);
     gid.set(s.key, g);
-    ir.groups.push({ id: g, kind: s.kind === 'pub' ? 'pub' : 'priv', label: s.kind === 'iso' ? 'Isolated subnet' : null, note: s.cidr || null, parent });
+    ir.groups.push({ id: g, kind: s.kind === 'pub' ? 'pub' : 'priv', label: s.kind === 'iso' ? 'Isolated subnet' : null, note: noteOf(s.cidr, s.ipv6), parent });
   }
   for (const fr of frames) ir.groups.push({ id: fr.gid, kind: 'asg', label: null, parent: fr.subnet ? gid.get(fr.subnet) : 'region' });
   if (subnets.size && [...subnets.values()].some((s) => s.kind === 'iso')) say('info', 'kit-gap', null, 'the kit has no isolated-subnet frame: isolated subnets are drawn as private subnet frames titled "Isolated subnet"');
@@ -1135,13 +1220,13 @@ export function importInfra(resources, ctx, opts = {}) {
       for (const st of fs.steps) {
         const k = st.kind === 'replication' || st.kind === 'response' ? 'pk-2' : st.kind === 'bad' ? 'pk-bad' : undefined;
         const numbered = !(st.kind === 'replication' || st.kind === 'response');
-        const h = hop(st.wire, st.reverse, { kind: k, step: numbered ? ++n : false });
+        const h = hop(st.wire, st.reverse, { kind: k, step: numbered ? ++n : false, ...(st.v6 ? { v6: true } : {}) });
         if (!h) continue;
         P.hops.push(h);
         if (numbered) {
           req.push(h);
           const nm = (x) => x.label + (x.sub ? ` (${x.sub})` : '');
-          P.texts.set(String(n) + suffix, st.text || `${nm(st.a)} to ${nm(st.b)}${st.label ? ` on ${st.label}` : ''}.`);
+          P.texts.set(String(n) + suffix, st.text || `${nm(st.a)} to ${nm(st.b)}${st.label ? ` on ${st.label}` : ''}${st.v6 ? ' over IPv6' : ''}.`);
         }
       }
       if (fs.flow.response === 'reverse') for (const h of [...req].reverse()) P.hops.push({ ...h, reverse: !h.reverse, ring: h.back, back: h.ring, kind: 'pk-2', step: false });
@@ -1242,6 +1327,9 @@ export function importInfra(resources, ctx, opts = {}) {
     for (const f of mine) f.gid = one.id;
     led('derived', `${key} is drawn as one Auto Scaling group frame across ${mine.length} AZs`, [key]);
   }
+  // ---- 13. security group rules as tables (opt-in) and the IPv4/IPv6 key, beside the drawing
+  const rulesRep = sideCards(spec, plan, errs);
+  report.tile = { ...report.tile, size: spec.full ? 'full' : spec.wide ? 'wide' : 'normal', w: spec.w, h: spec.h };
   // the kit's checks again, after the post-layout edits
   // the IR's own "unmapped" warning repeats unmapped-type for the boxes this module asked for
   const issuesOut = report.issues.filter((x) => x.code !== 'spec' && x.code !== 'schema' && x.code !== 'unmapped');
@@ -1268,11 +1356,376 @@ export function importInfra(resources, ctx, opts = {}) {
       tile: report.tile, lint: lintOut,
       story: { channel: plan.channel, flow: chosen ? chosen.flow.id : null, template: storyTpl ? storyTpl.id : null, legs: (spec.timeline || []).length, steps: (spec.steps || []).length, available: side ? [...side.flows.map((f) => f.id), ...side.stories.map((s) => s.id)] : [] },
       resources: resourcesOut,
+      ...(rulesRep ? { rules: rulesRep } : {}),
       counts: { resources: resources.length, drawn: resourcesOut.filter((r) => r.as === 'node' || r.as === 'group').length, nodes: spec.nodes.length, groups: spec.groups.length, wires: spec.wires.length },
       icons: report.icons,
     },
   };
 
+  // Security group rules as tables, opt-in: one card per shown group and direction (inbound always; outbound
+  // as rules.outbound says), console columns, rows from the source, the default all-outbound and the
+  // implicit deny muted; the row that admits a story packet lights during that packet's window. Then the
+  // cards (and, when the story carries IPv6 packets, the IPv4/IPv6 key) go beside the drawing: a column
+  // right of it, else a band under it, growing the tile up to a full one and kept only when lint finds no
+  // new error. Groups that do not fit are left out, last first, and the report says which.
+  function sideCards(spec, plan, errs) {
+    const want = rulesOption(opts.rules !== undefined ? opts.rules : side ? side.rules : null);
+    const keyed = (spec.timeline || []).some((e) => e.v6) && !spec.legend;
+    if (!want && !keyed) return null;
+    const rep = { tables: [], omitted: [], placed: null };
+    const cards = want ? ruleCards(spec, plan, want, rep) : [];
+    // ---- placement
+    const M = 8, GAPX = 20, GAPY = 10, MAXW = 1400, MAXH = 900;
+    const sizeOf = (tb) => {
+      // the generator's own measure (awd.mjs tables): columns as wide as their widest cell
+      const rows = tb.rows.map((r) => (Array.isArray(r) ? r : r.cells).map(String));
+      const ncol = Math.max(...rows.map((r) => r.length), tb.cols ? tb.cols.length : 0);
+      const colW = Array.from({ length: ncol }, (_, k) => Math.max(tb.cols ? textWidth(String(tb.cols[k] || '').toUpperCase(), 7.5, false, 0.4) : 0, ...rows.map((r) => textWidth(r[k] || '', 8))));
+      return { w: Math.ceil(Math.max(tb.w || 0, 13 + colW.reduce((s, x) => s + x, 0) + 9 * (ncol - 1), 13 + textWidth(tb.title, 8.5, true))), h: 14 + (tb.cols ? 11 : 0) + rows.length * 11 + 4 };
+    };
+    // what the drawing covers: frames, icons and their labels, wires and their labels
+    const B = { x0: Infinity, y0: Infinity, x1: -Infinity, y1: -Infinity };
+    const grow = (x0, y0, x1, y1) => { B.x0 = Math.min(B.x0, x0); B.y0 = Math.min(B.y0, y0); B.x1 = Math.max(B.x1, x1); B.y1 = Math.max(B.y1, y1); };
+    for (const g of spec.groups) grow(g.x, g.y, g.x + g.w, g.y + g.h);
+    for (const n of spec.nodes) {
+      if (n.kind) { grow(n.x, n.y, n.x + n.w, n.y + n.h); continue; }
+      const s = n.size || 40, ls = n.label ? wrapWords(n.label, n.wrap || 14) : [];
+      const lw = Math.max(s, ...ls.map((l) => textWidth(l, 10.5)), n.sub ? textWidth(n.sub, 9) : 0);
+      grow(n.x + s / 2 - lw / 2, n.y, n.x + s / 2 + lw / 2, n.y + s + 4 + 13 * ls.length + (n.sub ? 11 : 0));
+    }
+    for (const w of spec.wires) {
+      const lw = w.label ? Math.max(...String(w.label).split('\n').map((l) => textWidth(l, 8.5))) / 2 + Math.abs(w.labelDx || 0) + 4 : 0;
+      let x = 0, y = 0;
+      for (const [, c, a, b] of String(w.d || '').matchAll(/([MHVL])\s*([-\d.]+)(?:[ ,]([-\d.]+))?/g)) {
+        if (c === 'M' || c === 'L') { x = +a; y = +b; } else if (c === 'H') x = +a; else y = +a;
+        grow(x - lw - 8, y - 14, x + lw + 8, y + 14);
+      }
+    }
+    if (!isFinite(B.x0)) { B.x0 = M; B.y0 = M; B.x1 = M; B.y1 = M; }
+    const vf = spec.groups.filter((g) => g.kind === 'vpc'), vpcTop = vf.length ? Math.min(...vf.map((g) => g.y)) : B.y0;
+    const keyRows = keyed ? (() => { const used = new Set((spec.timeline || []).map((e) => e.kind || 'pk')); return [...['pk', 'pk-2', 'pk-bad'].filter((k) => used.has(k)), 'v4', 'v6']; })() : [];
+    const keyBox = keyed ? { w: 13 + Math.max(...keyRows.map((k) => textWidth({ pk: 'Request', 'pk-2': 'Response', 'pk-bad': 'Failed or blocked', v4: 'IPv4 packet', v6: 'IPv6 packet' }[k], 8.5))), h: keyRows.length * 13 } : null;
+    // a layout of the cards (and the key under them): a column right of the drawing from the VPC's top, or a
+    // band under it from the VPC's left edge
+    // (dx: a normal or wide tile centres its drawing; one that grows into a full tile moves it to the left margin)
+    const layoutOf = (list, mode, dx = 0) => {
+      const items = list.map((c) => ({ c, ...sizeOf(c.tb) }));
+      if (keyBox) items.push({ key: true, w: keyBox.w, h: keyBox.h + 6 });
+      if (!items.length) return null;
+      const pos = [];
+      let W = dx ? Math.ceil(B.x1 + dx + M) : spec.w, H = spec.h;
+      if (mode === 'right') {
+        const top = Math.max(M, Math.round(vpcTop)), x0 = Math.ceil(B.x1 + dx + GAPX);
+        let x = x0, y = top, cw = 0;
+        const cols = [[]];
+        for (const it of items) {
+          if (y > top && y + it.h > MAXH - M) { x += cw + GAPX; y = top; cw = 0; cols.push([]); }
+          pos.push({ it, x, y }); cols[cols.length - 1].push(it);
+          y += it.h + GAPY; cw = Math.max(cw, it.w);
+          W = Math.max(W, x + cw + M); H = Math.max(H, Math.ceil(y - GAPY + M));
+        }
+        // one width per column: the cards line up
+        for (const col of cols) { const cwid = Math.max(...col.filter((i) => !i.key).map((i) => i.w), 0); for (const i of col) if (!i.key) i.w = cwid; }
+      } else {
+        const left = Math.max(M, Math.round((vf.length ? Math.min(...vf.map((g) => g.x)) : B.x0) + dx)), y0 = Math.ceil(B.y1 + 16), right = Math.max(spec.w, MAXW) - M;
+        let x = left, y = y0, rh = 0;
+        for (const it of items) {
+          if (x > left && x + it.w > right) { x = left; y += rh + GAPY; rh = 0; }
+          pos.push({ it, x, y });
+          x += it.w + GAPX; rh = Math.max(rh, it.h);
+          W = Math.max(W, x - GAPX + M); H = Math.max(H, Math.ceil(y + rh + M));
+        }
+      }
+      return { mode, dx, pos, W: Math.ceil(W), H: Math.ceil(H), fits: W <= MAXW && H <= MAXH };
+    };
+    const saved = { w: spec.w, h: spec.h, wide: spec.wide, full: spec.full };
+    const T = saved.full ? [1400, 900] : saved.wide ? [960, 440] : [480, 300];
+    const r2 = (n) => Math.round(n * 100) / 100;
+    const shiftX = (dx) => {
+      if (!dx) return;
+      for (const g of spec.groups) g.x = r2(g.x + dx);
+      for (const n of spec.nodes) n.x = r2(n.x + dx);
+      for (const w of spec.wires) if (w.d) w.d = w.d.replace(/([MHL])\s*(-?[\d.]+)/g, (m, c, x) => `${c}${r2(Number(x) + dx)}`);
+      for (const e of spec.timeline || []) if (e.ring && typeof e.ring === 'object') e.ring.x = r2(e.ring.x + dx);
+    };
+    const before = errs();
+    const apply = (L) => {
+      spec.tables = L.pos.filter((p) => !p.it.key).map((p) => ({ ...p.it.c.tb, x: p.x, y: p.y, w: p.it.w }));
+      if (!spec.tables.length) delete spec.tables;
+      const k = L.pos.find((p) => p.it.key);
+      if (k) spec.legend = { x: k.x + 2, y: k.y + 12 }; else delete spec.legend;
+      spec.w = L.W; spec.h = L.H; shiftX(L.dx);
+      // a tile that grows past its size becomes a full one (up to 1400x900)
+      if (L.W > T[0] || L.H > T[1]) { spec.full = true; delete spec.wide; }
+    };
+    const undo = (L) => { shiftX(-L.dx); delete spec.tables; delete spec.legend; spec.w = saved.w; spec.h = saved.h; for (const k of ['wide', 'full']) if (saved[k]) spec[k] = saved[k]; else delete spec[k]; };
+    let list = cards.slice(), done = null;
+    for (;;) {
+      for (const mode of ['right', 'below']) {
+        let L = layoutOf(list, mode);
+        if (L && !saved.full && (L.W > T[0] || L.H > T[1]) && B.x0 > M) L = layoutOf(list, mode, M - B.x0);
+        if (!L || !L.fits) continue;
+        apply(L);
+        if (errs() <= before) { done = L; break; }
+        undo(L);
+      }
+      if (done || !list.length) break;
+      // no room for all of them: the group the story reaches last goes first
+      const gone = list[list.length - 1].sg;
+      list = list.filter((c) => c.sg !== gone);
+      if (!rep.omitted.some((o) => o.group === gone)) rep.omitted.push({ group: gone, why: 'no room in a full tile (1400x900)' });
+    }
+    rep.placed = done ? done.mode : null;
+    if (keyed && !(done && done.pos.some((p) => p.it.key))) say('info', 'legend', null, 'no room for the IPv4/IPv6 key: IPv6 packets are diamonds, IPv4 ones circles');
+    if (keyed && !desc) spec.desc += ' IPv6 packets are diamonds, IPv4 packets circles.';
+    if (!want) return null;
+    const shown = new Set(list.map((c) => `${c.sg}|${c.dir}`));
+    rep.tables = rep.tables.filter((t) => shown.has(`${t.group}|${t.dir}`));
+    for (const o of rep.omitted) led('dropped', `${o.group}'s rules are not shown: ${o.why}`, [o.group]);
+    if (rep.omitted.length) say('info', 'rules', null, `rules tables left out: ${rep.omitted.map((o) => `${o.group} (${o.why})`).join(', ')}`);
+    for (const t of rep.tables) for (const f of t.facts) led(f.kind, f.fact, f.from, f.ask ? { ask: f.ask } : f.via ? { via: f.via } : {});
+    // a rule resource or a prefix list a table shows is accounted for there, not dropped
+    const told = new Set(rep.tables.flatMap((t) => t.facts.flatMap((f) => f.from)));
+    for (let i = ledger.length - 1; i >= 0; i--) { const l = ledger[i]; if (l.kind === 'dropped' && l.from.length === 1 && told.has(l.from[0]) && /adds nothing the diagram draws/.test(l.fact)) ledger.splice(i, 1); }
+    for (const t of rep.tables) delete t.facts;
+    if (rep.tables.length && !desc) spec.desc += ` Rules tables list the security group rules${rep.tables.some((t) => t.lit) ? '; the row that admits a request lights as its packet arrives' : ''}.`;
+    return rep;
+  }
+  function ruleCards(spec, plan, want, rep) {
+    // rule fields, CloudFormation then Terraform, on a rule resource or an inline ingress/egress item
+    const RF = {
+      proto: ['IpProtocol', ['protocol', 'ip_protocol']], from: ['FromPort', 'from_port'], to: ['ToPort', 'to_port'],
+      v4: ['CidrIp', ['cidr_blocks', 'cidr_ipv4']], v6: ['CidrIpv6', ['ipv6_cidr_blocks', 'cidr_ipv6']],
+      pl: [['SourcePrefixListId', 'DestinationPrefixListId'], ['prefix_list_ids', 'prefix_list_id']],
+      sgIn: [['SourceSecurityGroupId', 'SourceSecurityGroupName'], ['security_groups', 'source_security_group_id', 'referenced_security_group_id']],
+      sgOut: ['DestinationSecurityGroupId', ['security_groups', 'source_security_group_id', 'referenced_security_group_id']],
+      self: [null, 'self'],
+    };
+    const fp = (f) => { const p = RF[f][src === 'tf' ? 1 : 0]; return p == null ? [] : [].concat(p); };
+    const fv = (x, f) => fp(f).flatMap((p) => x.vals(p));
+    const fr = (x, f) => [...new Set(fp(f).flatMap((p) => x.refs(p)))];
+    const num = (v) => (v == null || v === '' || isNaN(Number(v)) ? null : Number(v));
+    const protoOf = (x) => { const p = String(fv(x, 'proto')[0] ?? '-1').toLowerCase(); return { '-1': 'all', all: 'all', 6: 'tcp', 17: 'udp', 1: 'icmp', 58: 'icmpv6' }[p] || p; };
+    const isSg = (k) => K(byKey.get(k) || { type: '' }) === 'sg';
+    const peersOf = (x, dir, sg) => {
+      const out = [];
+      const cid = [...fv(x, 'v4'), ...fv(x, 'v6')].filter((c) => typeof c === 'string' && c);
+      for (const c of cid) out.push({ kind: 'cidr', value: c });
+      // a CIDR that names a resource (CidrIp: !GetAtt Vpc.CidrBlock) reads that resource's block
+      if (!cid.length) for (const k of [...fr(x, 'v4'), ...fr(x, 'v6')]) { const t = byKey.get(k), tk = t && K(t); const c = tk === 'vpc' ? val(t, 'vpc.cidr') : tk === 'subnet' ? val(t, 'subnet.cidr') : null; out.push(c ? { kind: 'cidr', value: c, key: k } : { kind: 'other', key: k }); }
+      const pls = fr(x, 'pl');
+      for (const k of pls) out.push({ kind: 'pl', key: k });
+      if (!pls.length) for (const v of fv(x, 'pl')) if (typeof v === 'string' && v) out.push({ kind: 'pl', value: v });
+      const sgs = fr(x, dir === 'in' ? 'sgIn' : 'sgOut').filter(isSg);
+      for (const k of sgs) out.push({ kind: 'sg', key: k, self: k === sg });
+      if (!sgs.length) for (const v of fv(x, dir === 'in' ? 'sgIn' : 'sgOut')) if (typeof v === 'string' && v) out.push({ kind: 'sg', value: v });
+      if (truthy(fv(x, 'self')[0])) out.push({ kind: 'sg', key: sg, self: true });
+      if (!out.length) out.push({ kind: 'other' });
+      return out;
+    };
+    const all = [];   // one rule per peer: { sg, dir, proto, from, to, peer, evidence, def }
+    const add = (sg, dir, x, evidence) => { for (const peer of peersOf(x, dir, sg)) all.push({ sg, dir, proto: protoOf(x), from: num(fv(x, 'from')[0]), to: num(fv(x, 'to')[0]), peer, evidence: [...evidence, peer.key].filter(Boolean), def: null }); };
+    const groups = ofKind('sg').filter((g) => cls.get(g.key) && cls.get(g.key).as !== 'dropped');
+    const egressWhy = new Map();
+    for (const g of groups) {
+      for (const it of items(g, 'sg.ingress')) add(g.key, 'in', it, [g.key]);
+      const eg = items(g, 'sg.egress');
+      // CDK's allowAllOutbound: false writes a placeholder rule (255.255.255.255/32, ICMP 252-86) that only removes the default
+      const real = eg.filter((it) => !(fv(it, 'v4')[0] === '255.255.255.255/32' && protoOf(it) === 'icmp' && num(fv(it, 'from')[0]) === 252));
+      for (const it of real) add(g.key, 'out', it, [g.key]);
+      if (src === 'cfn' && !eg.length) {
+        // CloudFormation adds allow-all egress (IPv4, and IPv6 in a dual-stack VPC) when SecurityGroupEgress is absent
+        const vk = refs(g, 'sg.vpc')[0] || (vpcs.length === 1 ? vpcs[0].key : null);
+        for (const c of ['0.0.0.0/0', ...(vpcV6.has(vk) ? ['::/0'] : [])]) all.push({ sg: g.key, dir: 'out', proto: 'all', from: null, to: null, peer: { kind: 'cidr', value: c }, evidence: [g.key], def: 'default' });
+      } else if (eg.length && !real.length) egressWhy.set(g.key, "CDK's placeholder rule (255.255.255.255/32, ICMP 252-86) only removes the default");
+      else if (src === 'tf' && !eg.length) egressWhy.set(g.key, "Terraform removes AWS's default allow-all egress rule when it creates a group");
+    }
+    for (const r of ofKind('sgIn', 'sgOut')) {
+      const out = K(r) === 'sgOut' || (r.type === 'aws_security_group_rule' && val(r, 'sgIn.type') === 'egress');
+      const sg = refs(r, K(r) === 'sgOut' ? 'sgOut.group' : 'sgIn.group')[0];
+      if (sg && isSg(sg)) add(sg, out ? 'out' : 'in', r, [r.key, sg]);
+    }
+    // ---- what a row says: console-like Type, Protocol, Port range, Source (or Destination)
+    const NAMED = { tcp: { 22: 'SSH', 25: 'SMTP', 53: 'DNS (TCP)', 80: 'HTTP', 110: 'POP3', 143: 'IMAP', 389: 'LDAP', 443: 'HTTPS', 445: 'SMB', 465: 'SMTPS', 993: 'IMAPS', 995: 'POP3S', 1433: 'MSSQL', 1521: 'Oracle-RDS', 2049: 'NFS', 3306: 'MYSQL/Aurora', 3389: 'RDP', 5432: 'PostgreSQL', 5439: 'Redshift', 5985: 'WinRM-HTTP', 5986: 'WinRM-HTTPS' }, udp: { 53: 'DNS (UDP)' } };
+    const typeCells = (r) => {
+      const P = r.proto;
+      if (P === 'all') return ['All traffic', 'All', 'All'];
+      if (P === 'tcp' || P === 'udp') {
+        const U = P.toUpperCase();
+        if (r.from == null) return [`Custom ${U}`, U, 'All'];
+        if (r.from === 0 && r.to === 65535) return [`All ${U}`, U, '0 - 65535'];
+        if (r.to == null || r.from === r.to) return [NAMED[P][r.from] || `Custom ${U}`, U, String(r.from)];
+        return [`Custom ${U}`, U, `${r.from} - ${r.to}`];
+      }
+      if (P === 'icmp' || P === 'icmpv6') { const any = r.from == null || r.from === -1; return [`${any ? 'All' : 'Custom'} ICMP - IPv${P === 'icmp' ? 4 : 6}`, P === 'icmp' ? 'ICMP' : 'IPv6 ICMP', any ? 'All' : `type ${r.from}`]; }
+      return ['Custom protocol', String(P), 'All'];
+    };
+    const nameOf = (key) => { const r = byKey.get(key); return r ? r.anchor || r.name || r.key : key; };
+    const plName = (key) => { const r = byKey.get(key); return r ? val(r, 'prefixList.name') || nameOf(key) : key; };
+    const plCidrs = (key) => [...(byKey.has(key) ? vals(byKey.get(key), 'prefixList.entries') : []), ...ofKind('plEntry').filter((e) => refs(e, 'plEntry.pl')[0] === key).flatMap((e) => vals(e, 'plEntry.cidr'))].filter((c) => typeof c === 'string');
+    const peerCell = (r) => {
+      const p = r.peer;
+      if (p.kind === 'cidr') return `${p.value}${r.def ? ' (default)' : ''}`;
+      if (p.kind === 'sg') return p.key ? `${ellipsis(nameOf(p.key), 32)}${p.self ? ' (itself)' : ''}` : ellipsis(p.value, 40);
+      if (p.kind === 'pl') return `prefix list ${ellipsis(p.key ? plName(p.key) : p.value, 32)}`;
+      return 'not in the source';
+    };
+    const peerSays = (r) => {
+      const p = r.peer;
+      if (p.kind === 'cidr') return `${p.value}${p.value.includes(':') ? ' (IPv6)' : ''}${p.key ? ` (${p.key}'s block)` : ''}${r.def ? ', the default rule' : ''}`;
+      if (p.kind === 'sg') return p.self ? 'itself (members of the same group)' : p.key ? `the security group ${p.key}` : `the security group ${p.value}`;
+      if (p.kind === 'pl') return `the prefix list ${p.key ? `${p.key} (${plName(p.key)})` : p.value}`;
+      return `a source the ${src === 'tf' ? 'plan' : 'template'} does not resolve${p.key ? ` (${p.key})` : ''}`;
+    };
+    const says = (r) => { const c = typeCells(r); return r.proto === 'all' ? 'all traffic' : `${c[0]} (${c[1]} ${c[2]})`; };
+    // ---- which rule admits a story packet: the peer's own group, a CIDR that covers its subnet (the
+    // internet only through 0.0.0.0/0 or ::/0), a prefix list as a last resort; the port from the hop's label
+    const sgsOf = (key) => [...sgUsers].filter(([, us]) => us.some((u) => into(u.key) === into(key))).map(([g]) => g);
+    const viaOf = (g, key) => ((sgUsers.get(g) || []).find((u) => into(u.key) === into(key)) || { via: [] }).via;
+    const ipNum = (ip) => {
+      if (!ip.includes(':')) { const o = ip.split('.'); return o.length === 4 && o.every((x) => /^\d+$/.test(x)) ? o.reduce((a, x) => a * 256n + BigInt(x), 0n) : null; }
+      const [h, t] = ip.split('::'), hs = h ? h.split(':') : [], ts = t != null ? (t ? t.split(':') : []) : null;
+      const parts = ts == null ? hs : [...hs, ...Array(Math.max(0, 8 - hs.length - ts.length)).fill('0'), ...ts];
+      return parts.length === 8 && parts.every((x) => /^[0-9a-f]{1,4}$/i.test(x)) ? parts.reduce((a, x) => (a << 16n) | BigInt(parseInt(x, 16)), 0n) : null;
+    };
+    const covers = (outer, inner) => {
+      const [a, la] = String(outer).split('/'), [b, lb] = String(inner).split('/');
+      const v6 = a.includes(':'), bits = v6 ? 128 : 32;
+      if (v6 !== b.includes(':')) return false;
+      const na = ipNum(a), nb = ipNum(b), A = Number(la ?? bits), Bn = Number(lb ?? bits);
+      if (na == null || nb == null || A > Bn) return false;
+      const sh = BigInt(bits - A);
+      return na >> sh === nb >> sh;
+    };
+    const outside = (n) => !n.subnet && !(n.place === 'vpc' && !['igw', 'eigw', 'vgw'].includes(K(n.r)));
+    const netOf = (n, v6) => {
+      const s = n.subnet && subnets.get(n.subnet);
+      const vk = s ? s.vpc : n.vpc;
+      return (s && (v6 ? s.ipv6 && s.ipv6.cidr : s.cidr)) || (vk && (v6 ? vpcV6.get(vk) && vpcV6.get(vk).cidr : val(byKey.get(vk), 'vpc.cidr'))) || null;
+    };
+    const SCORE = { sg: 4, cidr: 3, any: 2, pl: 1 };
+    const admits = (r, peer, port, v6, bad) => {
+      const portOk = r.proto === 'all' || ((r.proto === 'tcp' || r.proto === 'udp') && (port == null || r.from == null || (port >= r.from && port <= (r.to ?? r.from))));
+      if (!portOk) return null;
+      const p = r.peer;
+      if (p.kind === 'sg') return p.key && sgsOf(peer.key).includes(p.key) ? 'sg' : null;
+      if (p.kind === 'cidr') {
+        if (p.value.includes(':') !== !!v6) return null;
+        if (outside(peer)) return /^(0\.0\.0\.0|::)\/0$/.test(p.value) ? 'any' : null;
+        const net = netOf(peer, v6);
+        return net && covers(p.value, net) ? 'cidr' : null;
+      }
+      if (p.kind !== 'pl') return null;
+      // a prefix list the source defines covers a subnet through its entries; an actor is not matched to them: a
+      // request takes the list as a last resort, a failed packet never
+      if (!outside(peer)) { const net = netOf(peer, v6); return net && p.key && plCidrs(p.key).some((c) => covers(c, net)) ? 'cidr' : null; }
+      return bad ? null : 'pl';
+    };
+    const match = (node, peer, dir, port, v6, bad) => {
+      let best = null;
+      for (const g of sgsOf(node.key)) for (const r of all) {
+        if (r.sg !== g || r.dir !== dir) continue;
+        const how = admits(r, peer, port, v6, bad);
+        if (how && (!best || SCORE[how] > SCORE[best.how])) best = { r, how };
+      }
+      return best;
+    };
+    const portOf = (label) => { const m = /(?:^|[\s:])(\d{1,5})(?!\d)/.exec(String(label || '').replace(/\n/g, ' ')); return m ? Number(m[1]) : null; };
+    // ---- the packets: request hops (and failed ones) with their windows; the port rides along a hop without one
+    const tl = spec.timeline || [];
+    const hops = [];
+    let carried = null;
+    plan.hops.forEach((h, i) => {
+      if (!tl[i] || (h.kind && h.kind !== 'pk-bad')) return;
+      const A = nodeByNid.get(h.from), Bn = nodeByNid.get(h.to);
+      const port = portOf(h.edge && h.edge.label) ?? carried;
+      carried = port;
+      if (A && Bn) hops.push({ A, B: Bn, port, v6: !!h.v6, bad: h.kind === 'pk-bad', t: tl[i].t });
+    });
+    // ---- which groups, in the order the story reaches them, then the other flows, then left to right
+    const order = [];
+    const push = (g) => { if (g && !order.includes(g)) order.push(g); };
+    for (const h of hops) { sgsOf(h.A.key).forEach(push); sgsOf(h.B.key).forEach(push); }
+    for (const fs of flowSteps) for (const st of fs.steps) { sgsOf(st.a.key).forEach(push); sgsOf(st.b.key).forEach(push); }
+    for (const n of [...spec.nodes].sort((a, b) => a.x - b.x || a.y - b.y)) { const x = nodeByNid.get(n.id); if (x) sgsOf(x.key).forEach(push); }
+    let picked;
+    if (want.groups) {
+      const named = [];
+      for (const g of want.groups) { const k = keyOf(g); if (k && isSg(k)) named.push(k); else say('warn', 'rules', g, `rules names ${g}, which is not a security group in the ${src === 'tf' ? 'plan' : 'template'}`); }
+      picked = [...order.filter((g) => named.includes(g)), ...named.filter((g) => !order.includes(g))];
+      for (const g of groups) if (!picked.includes(g.key)) rep.omitted.push({ group: g.key, why: `the rules option names ${want.groups.join(', ')}` });
+    } else {
+      picked = order.filter((g) => groups.some((x) => x.key === g));
+      for (const g of groups) if (!picked.includes(g.key)) rep.omitted.push({ group: g.key, why: 'no drawn resource carries it' });
+    }
+    // ---- light rows: the first window a rule admits a packet in (a row takes one window); a failed packet
+    // that no rule admits lights the implicit deny red
+    const lit = new Map(), deny = new Map(), facts = new Map();
+    const fact = (g, dir, f, from, via, ask) => { const k = `${g}|${dir}`; if (!facts.has(k)) facts.set(k, []); facts.get(k).push({ kind: ask ? 'assumed' : 'derived', fact: f, from: [...new Set(from.filter(Boolean))], via, ask }); };
+    const nm = (n) => `${n.label}${n.sub ? ` (${n.sub})` : ''}`;
+    const via = plan.channel === 'sidecar' ? 'sidecar' : undefined;
+    const outShown = (g) => want.outbound === 'all' || (want.outbound === 'restricted' && !all.some((r) => r.sg === g && r.dir === 'out' && r.proto === 'all' && r.peer.kind === 'cidr' && r.peer.value === '0.0.0.0/0'));
+    const unresolved = (g, dir) => all.some((r) => r.sg === g && r.dir === dir && r.peer.kind === 'other');
+    for (const h of hops) {
+      for (const [node, peer, dir] of [[h.B, h.A, 'in'], [h.A, h.B, 'out']]) {
+        const gs = sgsOf(node.key).filter((g) => picked.includes(g) && (dir === 'in' || outShown(g)));
+        if (!sgsOf(node.key).length || (dir === 'out' && !gs.length)) continue;
+        const m = match(node, peer, dir, h.port, h.v6, h.bad);
+        const on = h.port != null ? ` on :${h.port}` : '';
+        if (m && !h.bad) {
+          if (picked.includes(m.r.sg) && !lit.has(m.r)) {
+            lit.set(m.r, h.t);
+            fact(m.r.sg, dir, `story: ${m.r.sg}'s ${dir === 'in' ? 'inbound' : 'outbound'} rule ${says(m.r)} ${dir === 'in' ? 'from' : 'to'} ${peerSays(m.r)} admits ${nm(h.A)} to ${nm(h.B)}${on}${h.v6 ? ' over IPv6' : ''}${m.how === 'pl' ? ` (assumed: ${h.A.label} is taken to be in the prefix list)` : ''}; its row lights as the packet crosses`, [m.r.sg, ...m.r.evidence, h.A.key, h.B.key, ...viaOf(m.r.sg, node.key), ...(m.r.peer.kind === 'sg' && m.r.peer.key ? viaOf(m.r.peer.key, peer.key) : [])].filter((k) => byKey.has(k) && !k.startsWith('actor:')), via, m.how === 'pl' ? `Is ${h.A.label} in ${m.r.peer.key ? plName(m.r.peer.key) : m.r.peer.value}?` : null);
+          }
+        } else if (!m && h.bad && gs.length) {
+          const g = gs[0];
+          if (!deny.has(`${g}|${dir}`)) { deny.set(`${g}|${dir}`, h.t); fact(g, dir, `story: no ${dir === 'in' ? 'inbound' : 'outbound'} rule of ${g} admits ${nm(h.A)} to ${nm(h.B)}${on}: its implicit deny lights red`, [g], via); }
+        } else if (!m && !h.bad && !sgsOf(node.key).some((g) => unresolved(g, dir))) {
+          say('warn', 'rules', node.key, `${nm(h.A)} to ${nm(h.B)}${on}${h.v6 ? ' over IPv6' : ''}: no ${dir === 'in' ? 'inbound' : 'outbound'} rule of ${sgsOf(node.key).join(', ')} admits it (security groups only allow), yet the story sends it`);
+        }
+      }
+    }
+    // ---- the cards
+    const cards = [];
+    const MAXROWS = 12;
+    for (const g of picked) {
+      const name = ellipsis(nameOf(g), 40);
+      for (const dir of ['in', 'out']) {
+        const mine = all.filter((r) => r.sg === g && r.dir === dir);
+        if (dir === 'out' && !outShown(g)) {
+          if (mine.length) led('dropped', `${g}'s outbound rules are not shown${want.outbound === 'restricted' ? ' (unrestricted; rules { outbound: true } shows them)' : ''}: ${mine.map((r) => `${says(r)} to ${peerSays(r)}`).join('; ')}`, [g, ...mine.flatMap((r) => r.evidence)]);
+          else led('derived', `${g} has no outbound rules${egressWhy.has(g) ? `: ${egressWhy.get(g)}` : ''} (not shown)`, [g]);
+          continue;
+        }
+        const word = dir === 'in' ? 'inbound' : 'outbound';
+        let rows = mine.map((r) => ({ r, cells: [...typeCells(r), peerCell(r)] }));
+        rows.sort((a, b) => (a.r.def ? 1 : 0) - (b.r.def ? 1 : 0));
+        let more = 0;
+        if (rows.length + 1 > MAXROWS) {
+          // a table holds 12 rows: the lit ones stay, then the first ones, a "more" row and the deny
+          const keep = new Set([...new Set([...rows.filter((x) => lit.has(x.r)), ...rows])].slice(0, MAXROWS - 2));
+          const cut = rows.filter((x) => !keep.has(x));
+          more = cut.length;
+          rows = rows.filter((x) => keep.has(x));
+          led('dropped', `${more} more ${word} rule${more > 1 ? 's' : ''} of ${g} ${more > 1 ? 'are' : 'is'} not in its table (a table holds 12 rows): ${cut.map((x) => `${says(x.r)} ${dir === 'in' ? 'from' : 'to'} ${peerSays(x.r)}`).join('; ')}`, [g, ...cut.flatMap((x) => x.r.evidence)]);
+        }
+        const out = rows.map((x) => ({ cells: x.cells, ...(lit.has(x.r) ? { t: lit.get(x.r), tone: 'ok' } : x.r.def ? { tone: 'muted' } : {}) }));
+        if (more) out.push({ cells: ['...', '', '', `${more} more in the ledger`], tone: 'muted' });
+        const dk = `${g}|${dir}`;
+        out.push({ cells: ['All traffic', 'All', 'All', 'no match: denied'], ...(deny.has(dk) ? { t: deny.get(dk), tone: 'bad' } : { tone: 'muted' }) });
+        const tb = { id: kitId(`${baseOf(byKey.get(g))}-${dir}`, usedIds), title: `${name} ${word} rules`, tone: 'security', cols: ['Type', 'Protocol', 'Port range', dir === 'in' ? 'Source' : 'Destination'], rows: out };
+        const tf = [
+          ...rows.map((x, i) => ({ kind: 'derived', fact: `${g} allows ${says(x.r)} ${dir === 'in' ? 'in from' : 'out to'} ${peerSays(x.r)} (row ${i + 1} of its ${word} rules table)`, from: x.r.evidence })),
+          { kind: 'derived', fact: `${g} drops any other ${word} traffic: security groups only allow (the muted last row of its ${word} rules table)`, from: [g] },
+          ...(!mine.length && egressWhy.has(g) ? [{ kind: 'derived', fact: `${g} has no outbound rules: ${egressWhy.get(g)}`, from: [g] }] : []),
+          ...(facts.get(`${g}|${dir}`) || []),
+        ];
+        cards.push({ sg: g, dir, tb });
+        rep.tables.push({ id: tb.id, group: g, dir, rows: out.length, lit: out.filter((x) => x.t).length, facts: tf });
+      }
+    }
+    return cards;
+  }
   function officialIconLabel(r) { const reps = replicasOf.get(r.key) || []; return reps.length ? `${reps[0].label}${reps.length > 1 ? ` (${reps.length} nodes)` : ''}` : r.type; }
   function propsFor(r) {
     const k = K(r);

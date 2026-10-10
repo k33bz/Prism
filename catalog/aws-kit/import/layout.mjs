@@ -489,11 +489,14 @@ export function headerBox(g, R, align) {
   const x0 = center ? R.x + R.w / 2 - w / 2 : R.x + (groupHasIcon(g) ? 25 : 6);
   return { x0, x1: x0 + w, y0: R.y + 14 - 6.8, y1: R.y + 14 + 0.5 };
 }
-// where awd draws a group's note: right-aligned on the top edge, 9px
+// a note is one line, or two for a dual-stack frame: the IPv4 CIDR on the top edge, the IPv6 one under it
+const noteLines = (g) => (Array.isArray(g.note) ? g.note.map(String) : g.note ? [String(g.note)] : []);
+// where awd draws a group's note: right-aligned on the top edge, 9px (a second line 11px lower)
 export function noteBox(g, R) {
-  if (!g.note) return null;
-  const w = textWidth(g.note, 9), x1 = R.x + R.w - 6;
-  return { x0: x1 - w, x1, y0: R.y + 14 - 6.2, y1: R.y + 14 + 0.5 };
+  const ls = noteLines(g);
+  if (!ls.length) return null;
+  const w = Math.max(...ls.map((l) => textWidth(l, 9))), x1 = R.x + R.w - 6;
+  return { x0: x1 - w, x1, y0: R.y + 14 - 6.2, y1: R.y + (ls.length > 1 ? 25 : 14) + 0.5 };
 }
 export const centeredKind = (g) => !groupHasIcon(g) && ['az', 'sg', 'gen'].includes(g.kind);
 
@@ -554,7 +557,8 @@ export function geometry(model, cells, ex, opts = {}) {
     const lw = e.label ? Math.max(...String(e.label).split('\n').map((l) => textWidth(l, PX.wire))) + 12 : 0;
     const bw = e.badge ? 24 : 0;
     const crosses = [...gb.keys()].some((gid) => inside(e.a, gid) !== inside(e.b, gid));
-    if (A[1] === B[1] && Number.isInteger(A[1]) && Math.abs(A[0] - B[0]) === 1) {
+    // on a half row too: an actor and the VPC gateway it calls sit between two Availability Zone rows
+    if (A[1] === B[1] && Math.abs(A[0] - B[0]) === 1) {
       const c = Math.min(A[0], B[0]);
       let need = lw + bw + (lw && bw ? 4 : 0) + 6;
       if (!crosses) need -= padR[c] + padL[c + 1] + (colW[c] - nodes.get(A[0] < B[0] ? e.a : e.b).iw) / 2 + (colW[c + 1] - nodes.get(A[0] < B[0] ? e.b : e.a).iw) / 2;
@@ -1110,6 +1114,8 @@ function layoutOnce(model, opts) {
   // three-tier of a CloudFormation VPC) places the cells itself; tracks, routes and labels stay shared
   const cells = opts.cells ? opts.cells(model) : model.sided ? gridFromSides(model) : layered(model);
   const ex = { l: new Map(), r: new Map(), t: new Map(), b: new Map(), needX: new Map(), needY: new Map() };
+  // a two-line note's second line sits inside the frame: its content starts lower
+  for (const g of model.groups.values()) if (noteLines(g).length > 1) ex.t.set(g.id, 8);
   const align = new Map();
   let geo, wires, routed = null;
   for (let pass = 0; pass < 8; pass++) {
@@ -1118,7 +1124,8 @@ function layoutOnce(model, opts) {
     // titles must fit their frame
     for (const [gid, R] of geo.rects) {
       const g = model.groups.get(gid), t = groupTitle(g);
-      const need = (groupHasIcon(g) ? 25 : 8) + textWidth(t, PX.group) + (g.note ? textWidth(g.note, 9) + 14 : 0) + 8;
+      const nl = noteLines(g);
+      const need = Math.max((groupHasIcon(g) ? 25 : 8) + textWidth(t, PX.group) + (nl.length ? textWidth(nl[0], 9) + 14 : 0) + 8, nl.length > 1 ? textWidth(nl[1], 9) + 14 : 0);
       if (R.w + 0.5 < need) { const d = Math.ceil((need - R.w) / 2); ex.l.set(gid, (ex.l.get(gid) || 0) + d); ex.r.set(gid, (ex.r.get(gid) || 0) + d); changed = true; }
     }
     if (changed) continue;

@@ -575,21 +575,24 @@ node catalog/aws-kit/import/index.mjs webapp.yaml --flows webapp.flows.json --le
 node catalog/aws-kit/import/cfn.mjs template.yaml --param Environment=prod --story guess --out spec.json
 terraform plan -out plan.tfplan && terraform show -json plan.tfplan > plan.json
 node catalog/aws-kit/import/tf.mjs plan.json --flows plan.flows.json --out spec.json
+node catalog/aws-kit/import/index.mjs webapp.yaml --flows webapp.flows.json --rules --svg webapp.svg   # or --rules AppSg,DbSg
 ```
 ```js
 import { fromCloudFormation } from './import/cfn.mjs';   // fromTerraform, tfId: ./import/tf.mjs
-const { spec, report } = fromCloudFormation(text, { id, name, flows, params: { Environment: 'prod' }, story: 'page-view' });
+const { spec, report } = fromCloudFormation(text, { id, name, flows, params: { Environment: 'prod' }, story: 'page-view', rules: true });
 // report: { from, issues, unmapped, tile, lint,
 //           ledger: [{ kind: 'derived'|'assumed'|'dropped', fact, from: [logical ids or addresses], ask?, via? }],
 //           story: { channel: 'sidecar'|'bfs'|'none', flow, template, legs, steps, available },
-//           resources: [{ key, type, as: 'node'|'group'|'edge'|'folded'|'dropped'|'meta', into?, nodes?, frames?, group? }] }
+//           resources: [{ key, type, as: 'node'|'group'|'edge'|'folded'|'dropped'|'meta', into?, nodes?, frames?, group? }],
+//           rules?: { tables: [{ id, group, dir: 'in'|'out', rows, lit }], omitted: [{ group, why }], placed: 'right'|'below' } }
 ```
 Options: `id` (default `cfn-`/`tf-` plus the file name), `name`, `flows` (the sidecar, an object or its JSON),
 `params` (CloudFormation parameter values over the defaults), `region`, `story` (a sidecar flow or story id; `none`;
-`guess`). Without a sidecar there is **no animation** unless `story: 'guess'`, which draws a breadth-first walk from
+`guess`), `rules` (security group rules as tables; overrides the sidecar's `rules`, see below; CLI `--rules`). Without a sidecar there is **no animation** unless `story: 'guess'`, which draws a breadth-first walk from
 the internet-facing entry through the first AZ and reports it as a guess (`story-guess`). The spec passes
 `checkSpec`, the schema and lint like every import; fixtures and tests: `import/fixtures/cfn-*`, `tf-*`
-(`make-iac-fixtures.mjs` regenerates the CDK and Terraform ones), `node --test catalog/aws-kit/import/cfn.test.mjs
+(`make-iac-fixtures.mjs` regenerates the CDK and Terraform ones; `cfn-webapp-dualstack.yaml` and
+`tf-webapp-dualstack-plan.json` are one dual-stack web app with rules, drawn alike through one sidecar's anchors), `node --test catalog/aws-kit/import/cfn.test.mjs
 catalog/aws-kit/import/tf.test.mjs`.
 
 **Inputs.**
@@ -646,6 +649,8 @@ policies, API stages and deployments, bucket, queue and topic policies; the side
 | weak edges (dashed) | the resource ARNs in a role's policies, from what assumes the role (a function, an instance or ASG through its instance profile and launch template, an ECS task role), labelled with the action or "dynamodb read/write"; one per role and target. An ARN in a policy does not prove traffic: a sidecar request step over one makes it solid |
 | egress | a dashed "egress" wire from each private subnet to its NAT gateway; a NAT gateway in another AZ is a ledger fact with a question (an AZ failure cuts that subnet's egress) |
 | actors | the sidecar's; else Users at the internet-facing entry (CloudFront, the internet gateway in front of an internet-facing load balancer, API Gateway, AppSync), assumed |
+| dual stack | a VPC's IPv6 block (`AWS::EC2::VPCCidrBlock`, `aws_vpc.ipv6_cidr_block`, `aws_vpc_ipv6_cidr_block_association`; an Amazon-provided one reads `IPv6 /56 (Amazon)`) and a subnet's (`Ipv6CidrBlock`, `AWS::EC2::SubnetCidrBlock`, `ipv6_cidr_block`) become the frame's two-line note, IPv4 on the edge and IPv6 under it (a block computed with `!Cidr` shows its size, `IPv6 /64`); the frame's content starts below the second line. A `::/0` route is a ledger fact: to an egress-only internet gateway, IPv6 out only; to the internet gateway, in and out |
+| egress-only internet gateway | `AWS::EC2::EgressOnlyInternetGateway` / `aws_egress_only_internet_gateway` on the VPC's edge beside the internet gateway, drawn with `aws-res-vpc-internet-gateway` and labelled "Egress-only internet gateway" (the official set has no icon for it; a `kit-gap` info says so) |
 
 `Ref`, `GetAtt` and `DependsOn` alone draw nothing: they are configuration, not traffic.
 
@@ -658,6 +663,29 @@ centred on the bands, regional services that feed the VPC on its left and the re
 with the replication wire straight between the AZ rows. Without a VPC (a **serverless chain**), the layered layout of
 the text importers places it left to right. Tracks, routes, labels, badges, the tile and the lint loop are shared.
 
+**Rules tables** (opt-in: the `rules` option, `--rules` on the CLI, `rules` on the MCP `import_diagram` tool, or the
+sidecar's `rules`). Each shown security group gets a card titled `<name> inbound rules` (and `<name> outbound rules`
+when its egress is restricted, or for every group with `outbound: true`) with the console's columns, Type, Protocol,
+Port range and Source (Destination). Rows come from the source, inline ingress and egress and the separate rule
+resources (`AWS::EC2::SecurityGroupIngress`/`Egress`, `aws_security_group_rule`, `aws_vpc_security_group_*_rule`), one
+row per source: an IPv4 and an IPv6 CIDR are two rows, a CIDR that is an intrinsic (`!GetAtt Vpc.CidrBlock`) reads the
+resource's block, a prefix list reads its name (`prefix list corp-offices`), a group reference the referenced group's
+name (an anchor, a CDK path, a logical id or the `Name` tag), `(itself)` for a self reference, `not in the source` for
+what does not resolve (`!ImportValue`). Well-known ports are named as the console names them (HTTPS, SSH,
+PostgreSQL...). Muted rows: the default all-outbound (CloudFormation adds it, and `::/0` in a dual-stack VPC, when
+`SecurityGroupEgress` is absent; Terraform removes it, and CDK's placeholder rule only removes it) and the implicit
+`no match: denied` last. A table holds 12 rows: past that a `N more in the ledger` row. While the story runs, the rule
+that admits each request lights green during that packet's window: the peer's own group first, then a CIDR that
+covers the peer's subnet (the internet, an actor or a gateway, only through `0.0.0.0/0` or `::/0` of the packet's
+family), a prefix list last (assumed, with a question); the port is the hop's label's, or the hop before it. An
+outbound table lights its rule the same way. A `bad` packet no rule admits lights the deny red; a request no rule
+admits is a `rules` warning. The cards go in a column right of the drawing, from the VPC's top, or else in a band
+under it from the VPC's left edge; a normal or wide tile that grows becomes a full one (up to 1400x900) and its
+drawing moves to the left margin; a placement is kept only when the kit lint finds no new error. The groups go in the
+order the story reaches them, then the other flows, then left to right; those with no room are left out, last first,
+listed in `report.rules.omitted`, a `rules` info and the ledger. When the story carries IPv6 packets, an IPv4/IPv6 key
+goes under the cards (or alone in that column).
+
 **The ledger** (`report.ledger`, CLI `--ledger`) lists every fact the drawing rests on, and doubles as the question
 list for the customer:
 - `derived`: read from the source, with the chain ("PrivateSubnet1 is a private subnet with egress: route table
@@ -667,6 +695,11 @@ list for the customer:
   actor, a subnet's AZ); each carries `ask`, the question to put to the customer ("Which AZ holds Database's primary
   today?").
 - `dropped`: not drawn, and why (operational, not architecture, a false condition, no edge between drawn resources).
+
+With rules tables, every row shown is a `derived` fact with its evidence ("AppSg allows Custom TCP (TCP 8080) in from
+the security group AlbSg (row 1 of its inbound rules table)"), each lit row says which packet it admits (`via:
+'sidecar'`), and what is not shown is `dropped`: a group's outbound rules when unrestricted, rows past 12, groups left
+out.
 
 `from` lists the resources a fact came from; every resource of the source appears in at least one entry.
 `via: 'sidecar'` marks what the sidecar supplied (a pin, a hop, a confirmed edge).
@@ -678,9 +711,10 @@ A separate JSON file (a TAM should not have to edit a customer's template), pass
 {
   "name": "Three-tier web app",
   "story": "page-view",
+  "rules": ["AlbSg", "AppSg", "DbSg"],
   "actors": [{ "id": "Users", "icon": "aws-res-users", "label": "Users", "side": "left" }],
   "flows": [{
-    "id": "page-view", "name": "Browse a page", "dur": 10, "response": "reverse",
+    "id": "page-view", "name": "Browse a page", "dur": 10, "response": "reverse", "v6": false,
     "steps": [
       { "from": "Users", "to": "InternetGateway", "label": "HTTP :80", "text": "Users open the site." },
       { "from": "InternetGateway", "to": "LoadBalancer@az1" },
@@ -706,10 +740,11 @@ A separate JSON file (a TAM should not have to edit a customer's template), pass
 | field | effect |
 |---|---|
 | `actors` | nodes outside the stack (users, partners, on-premises systems): `id`, `icon` (any name the resolver knows), `label`, `sub`, `side` (`left`, default, or `right`), `to` (refs to wire it to). They replace the assumed Users |
-| `flows` | ordered request paths. A step names two **refs**: a logical id, a Terraform address, a CDK path, an anchor or an actor, with a qualifier for replicas: `@az1`, `@az2` (the replica in that AZ), `@primary`, `@standby` (a database), `@writer`, `@reader` (Aurora). An unqualified ref to a replicated resource takes the first replica (reported). `kind`: request (default: a numbered `pk` packet), `async` (numbered, the wire stays dashed), `replication` or `response` (`pk-2`, no badge), `bad` (`pk-bad`). `label` labels the wire, `text` is the badge's step text (default "A to B on label."). A step the source has no edge for adds a wire (a ledger fact); a request step over a weak IAM edge confirms it (solid). `response: reverse` replays the request steps backwards as responses. `dur` sets the clock. Steps compile to the timeline and badges with `story()` (even windows, one badge per request step) |
+| `flows` | ordered request paths. A step names two **refs**: a logical id, a Terraform address, a CDK path, an anchor or an actor, with a qualifier for replicas: `@az1`, `@az2` (the replica in that AZ), `@primary`, `@standby` (a database), `@writer`, `@reader` (Aurora). An unqualified ref to a replicated resource takes the first replica (reported). `kind`: request (default: a numbered `pk` packet), `async` (numbered, the wire stays dashed), `replication` or `response` (`pk-2`, no badge), `bad` (`pk-bad`). `label` labels the wire, `text` is the badge's step text (default "A to B on label."). A step the source has no edge for adds a wire (a ledger fact); a request step over a weak IAM edge confirms it (solid). `response: reverse` replays the request steps backwards as responses. `dur` sets the clock. `v6: true` on a flow draws its packets as IPv6 diamonds; a step's own `v6` overrides it (a dual-stack load balancer takes IPv6 and forwards to an IPv4 target group: `"v6": false` from there on). Steps compile to the timeline and badges with `story()` (even windows, one badge per request step) |
 | `stories` | templates over a flow (`flow`, default the first): `az-fail` runs the flow, then fails the AZ (`fail` on its frame, `fade` on its wires) and runs the same request through the other AZ with the standby promoted (`glow` on that path; a wire the failover needs is added; the clock is lengthened); `asg-scale` adds instances to each of the ASG's frames, from `from` to `to` (default its Min and Max), shown with `appear` and ghosted when idle |
 | `story` | the flow or story to draw (default the first flow); the `story` option overrides it |
 | `hide`, `show` | drop a resource; draw an operational one (an alarm, a log group) |
+| `rules` | security group rules as tables: `true` (every group a drawn resource carries), a list of groups (logical ids, addresses, anchors), or `{ "groups": [...], "outbound": true, false or "restricted" }` (outbound tables for every shown group, none, or, the default, those whose egress is restricted). The `rules` option overrides it |
 | `merge` | draw a resource as part of another (its edges move there) |
 | `pin` | which AZ a replica is in: `"Database@primary": "az2"` answers the ledger's "which AZ holds the primary" |
 | `group_hints` | a subnet's kind (`pub`, `priv`, `iso`) and AZ when the source is ambiguous |
@@ -734,7 +769,10 @@ The ledger's `assumed` entries and the sidecar exist for these:
    apply are absent from a plan (the configuration's references still give the edges).
 
 **Kit gaps met here.** No isolated-subnet frame (drawn as `priv` titled "Isolated subnet"); no security group icon
-(security group chains become edges, not frames); no way to say one node spans AZs (replicas per AZ instead); no
+(security group chains become edges, not frames, and the `sg` frame is not drawn around a group's members; the rules
+tables name the group instead); a table row takes one window, so a rule that admits two packets of a story (the
+replay after an AZ failure) lights for the first; the draw.io export leaves the tables and a note's second line to the
+hidden Prism spec; no way to say one node spans AZs (replicas per AZ instead); no
 `src` provenance field on nodes (the ledger and `report.resources` carry it).
 
 ## Layout rules (the bar is "looks like an official AWS reference architecture")

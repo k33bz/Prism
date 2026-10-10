@@ -1,0 +1,230 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Dual-stack web app. VPC with an IPv6 block, dual-stack subnets, an egress-only internet gateway, a dual-stack ALB, ASG of EC2, RDS PostgreSQL.
+# Documentation addresses only: 2001:db8::/32 (RFC 3849) for IPv6, RFC 5737 ranges for the office prefix list.
+
+Parameters:
+  LatestAmiId:
+    Type: AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>
+    Default: /aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-x86_64
+  CertificateArn:
+    Type: String
+    Default: arn:aws:acm:us-east-1:111122223333:certificate/example
+
+Resources:
+  Vpc:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: 10.0.0.0/16
+      EnableDnsHostnames: true
+      EnableDnsSupport: true
+  VpcIpv6Block:
+    Type: AWS::EC2::VPCCidrBlock
+    Properties:
+      VpcId: !Ref Vpc
+      Ipv6CidrBlock: 2001:db8:1200::/56
+      Ipv6Pool: ipv6pool-ec2-example
+
+  InternetGateway:
+    Type: AWS::EC2::InternetGateway
+  GatewayAttachment:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties: {VpcId: !Ref Vpc, InternetGatewayId: !Ref InternetGateway}
+  EgressOnlyInternetGateway:
+    Type: AWS::EC2::EgressOnlyInternetGateway
+    Properties: {VpcId: !Ref Vpc}
+
+  PublicSubnet1:
+    Type: AWS::EC2::Subnet
+    DependsOn: VpcIpv6Block
+    Properties:
+      VpcId: !Ref Vpc
+      CidrBlock: 10.0.0.0/24
+      Ipv6CidrBlock: 2001:db8:1200::/64
+      AssignIpv6AddressOnCreation: true
+      AvailabilityZone: !Select [0, !GetAZs '']
+      MapPublicIpOnLaunch: true
+  PublicSubnet2:
+    Type: AWS::EC2::Subnet
+    DependsOn: VpcIpv6Block
+    Properties:
+      VpcId: !Ref Vpc
+      CidrBlock: 10.0.1.0/24
+      Ipv6CidrBlock: 2001:db8:1200:1::/64
+      AssignIpv6AddressOnCreation: true
+      AvailabilityZone: !Select [1, !GetAZs '']
+      MapPublicIpOnLaunch: true
+  PrivateSubnet1:
+    Type: AWS::EC2::Subnet
+    DependsOn: VpcIpv6Block
+    Properties:
+      VpcId: !Ref Vpc
+      CidrBlock: 10.0.10.0/24
+      Ipv6CidrBlock: 2001:db8:1200:10::/64
+      AssignIpv6AddressOnCreation: true
+      AvailabilityZone: !Select [0, !GetAZs '']
+  PrivateSubnet2:
+    Type: AWS::EC2::Subnet
+    DependsOn: VpcIpv6Block
+    Properties:
+      VpcId: !Ref Vpc
+      CidrBlock: 10.0.11.0/24
+      Ipv6CidrBlock: 2001:db8:1200:11::/64
+      AssignIpv6AddressOnCreation: true
+      AvailabilityZone: !Select [1, !GetAZs '']
+
+  PublicRouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties: {VpcId: !Ref Vpc}
+  PublicDefaultRoute:
+    Type: AWS::EC2::Route
+    DependsOn: GatewayAttachment
+    Properties: {RouteTableId: !Ref PublicRouteTable, DestinationCidrBlock: 0.0.0.0/0, GatewayId: !Ref InternetGateway}
+  PublicDefaultRouteIpv6:
+    Type: AWS::EC2::Route
+    DependsOn: GatewayAttachment
+    Properties: {RouteTableId: !Ref PublicRouteTable, DestinationIpv6CidrBlock: '::/0', GatewayId: !Ref InternetGateway}
+  PublicAssoc1:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties: {SubnetId: !Ref PublicSubnet1, RouteTableId: !Ref PublicRouteTable}
+  PublicAssoc2:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties: {SubnetId: !Ref PublicSubnet2, RouteTableId: !Ref PublicRouteTable}
+
+  NatEip1:
+    Type: AWS::EC2::EIP
+    DependsOn: GatewayAttachment
+    Properties: {Domain: vpc}
+  NatEip2:
+    Type: AWS::EC2::EIP
+    DependsOn: GatewayAttachment
+    Properties: {Domain: vpc}
+  NatGateway1:
+    Type: AWS::EC2::NatGateway
+    Properties: {AllocationId: !GetAtt NatEip1.AllocationId, SubnetId: !Ref PublicSubnet1}
+  NatGateway2:
+    Type: AWS::EC2::NatGateway
+    Properties: {AllocationId: !GetAtt NatEip2.AllocationId, SubnetId: !Ref PublicSubnet2}
+
+  PrivateRouteTable1:
+    Type: AWS::EC2::RouteTable
+    Properties: {VpcId: !Ref Vpc}
+  PrivateRouteTable2:
+    Type: AWS::EC2::RouteTable
+    Properties: {VpcId: !Ref Vpc}
+  PrivateDefaultRoute1:
+    Type: AWS::EC2::Route
+    Properties: {RouteTableId: !Ref PrivateRouteTable1, DestinationCidrBlock: 0.0.0.0/0, NatGatewayId: !Ref NatGateway1}
+  PrivateDefaultRoute2:
+    Type: AWS::EC2::Route
+    Properties: {RouteTableId: !Ref PrivateRouteTable2, DestinationCidrBlock: 0.0.0.0/0, NatGatewayId: !Ref NatGateway2}
+  PrivateIpv6Route1:
+    Type: AWS::EC2::Route
+    Properties: {RouteTableId: !Ref PrivateRouteTable1, DestinationIpv6CidrBlock: '::/0', EgressOnlyInternetGatewayId: !Ref EgressOnlyInternetGateway}
+  PrivateIpv6Route2:
+    Type: AWS::EC2::Route
+    Properties: {RouteTableId: !Ref PrivateRouteTable2, DestinationIpv6CidrBlock: '::/0', EgressOnlyInternetGatewayId: !Ref EgressOnlyInternetGateway}
+  PrivateAssoc1:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties: {SubnetId: !Ref PrivateSubnet1, RouteTableId: !Ref PrivateRouteTable1}
+  PrivateAssoc2:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties: {SubnetId: !Ref PrivateSubnet2, RouteTableId: !Ref PrivateRouteTable2}
+
+  CorpPrefixList:
+    Type: AWS::EC2::PrefixList
+    Properties:
+      PrefixListName: corp-offices
+      AddressFamily: IPv4
+      MaxEntries: 4
+      Entries:
+        - {Cidr: 198.51.100.0/24, Description: head office}
+        - {Cidr: 203.0.113.0/24, Description: branch office}
+
+  AlbSg:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: ALB, HTTPS from the internet over IPv4 and IPv6
+      VpcId: !Ref Vpc
+      SecurityGroupIngress:
+        - {IpProtocol: tcp, FromPort: 443, ToPort: 443, CidrIp: 0.0.0.0/0}
+        - {IpProtocol: tcp, FromPort: 443, ToPort: 443, CidrIpv6: '::/0'}
+  AppSg:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: App tier, 8080 from the ALB, SSH from the offices; out to HTTPS and the database only
+      VpcId: !Ref Vpc
+      SecurityGroupIngress:
+        - {IpProtocol: tcp, FromPort: 8080, ToPort: 8080, SourceSecurityGroupId: !Ref AlbSg}
+        - {IpProtocol: tcp, FromPort: 22, ToPort: 22, SourcePrefixListId: !Ref CorpPrefixList}
+      SecurityGroupEgress:
+        - {IpProtocol: tcp, FromPort: 443, ToPort: 443, CidrIp: 0.0.0.0/0}
+        - {IpProtocol: tcp, FromPort: 443, ToPort: 443, CidrIpv6: '::/0'}
+  DbSg:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: DB tier, 5432 from the app tier only
+      VpcId: !Ref Vpc
+      SecurityGroupIngress:
+        - {IpProtocol: tcp, FromPort: 5432, ToPort: 5432, SourceSecurityGroupId: !GetAtt AppSg.GroupId}
+  # a separate rule: inline, AppSg's egress to DbSg and DbSg's ingress from AppSg would be a circular dependency
+  AppToDbEgress:
+    Type: AWS::EC2::SecurityGroupEgress
+    Properties: {GroupId: !GetAtt AppSg.GroupId, IpProtocol: tcp, FromPort: 5432, ToPort: 5432, DestinationSecurityGroupId: !GetAtt DbSg.GroupId}
+
+  LoadBalancer:
+    Type: AWS::ElasticLoadBalancingV2::LoadBalancer
+    Properties:
+      Type: application
+      Scheme: internet-facing
+      IpAddressType: dualstack
+      Subnets: [!Ref PublicSubnet1, !Ref PublicSubnet2]
+      SecurityGroups: [!Ref AlbSg]
+  TargetGroup:
+    Type: AWS::ElasticLoadBalancingV2::TargetGroup
+    Properties: {VpcId: !Ref Vpc, Port: 8080, Protocol: HTTP, TargetType: instance, HealthCheckPath: /health}
+  Listener:
+    Type: AWS::ElasticLoadBalancingV2::Listener
+    Properties:
+      LoadBalancerArn: !Ref LoadBalancer
+      Port: 443
+      Protocol: HTTPS
+      Certificates: [{CertificateArn: !Ref CertificateArn}]
+      DefaultActions: [{Type: forward, TargetGroupArn: !Ref TargetGroup}]
+
+  LaunchTemplate:
+    Type: AWS::EC2::LaunchTemplate
+    Properties:
+      LaunchTemplateData:
+        ImageId: !Ref LatestAmiId
+        InstanceType: t3.small
+        SecurityGroupIds: [!Ref AppSg]
+  AppAsg:
+    Type: AWS::AutoScaling::AutoScalingGroup
+    Properties:
+      MinSize: '2'
+      MaxSize: '6'
+      DesiredCapacity: '2'
+      VPCZoneIdentifier: [!Ref PrivateSubnet1, !Ref PrivateSubnet2]
+      LaunchTemplate: {LaunchTemplateId: !Ref LaunchTemplate, Version: !GetAtt LaunchTemplate.LatestVersionNumber}
+      TargetGroupARNs: [!Ref TargetGroup]
+      HealthCheckType: ELB
+
+  DbSubnetGroup:
+    Type: AWS::RDS::DBSubnetGroup
+    Properties: {DBSubnetGroupDescription: db, SubnetIds: [!Ref PrivateSubnet1, !Ref PrivateSubnet2]}
+  Database:
+    Type: AWS::RDS::DBInstance
+    DeletionPolicy: Snapshot
+    Properties:
+      Engine: postgres
+      DBInstanceClass: db.m6g.large
+      AllocatedStorage: '100'
+      MultiAZ: true
+      NetworkType: DUAL
+      DBSubnetGroupName: !Ref DbSubnetGroup
+      VPCSecurityGroups: [!Ref DbSg]
+      ManageMasterUserPassword: true
+      MasterUsername: app
+
+Outputs:
+  AlbDns: {Value: !GetAtt LoadBalancer.DNSName}

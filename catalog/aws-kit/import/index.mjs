@@ -10,10 +10,10 @@
 //   const { png } = await exportDiagram(spec, { to: 'png', at: 'poster' }); // a Buffer (headless Chrome or Edge)
 //
 //   // CloudFormation (YAML/JSON, CDK synth, SAM) and Terraform (terraform show -json) take a flows sidecar:
-//   await importDiagram(template, { from: 'cfn', flows: sidecar, params: { Env: 'prod' }, story: 'page-view' });
+//   await importDiagram(template, { from: 'cfn', flows: sidecar, params: { Env: 'prod' }, story: 'page-view', rules: true });
 //
 // CLI: node catalog/aws-kit/import/index.mjs <file> [--from auto|drawio|mermaid|plantuml|d2|cfn|tf] [--id x]
-//        [--flows sidecar.json] [--param K=V]... [--story id|none|guess] [--ledger]
+//        [--flows sidecar.json] [--param K=V]... [--story id|none|guess] [--rules [AppSg,DbSg]] [--ledger]
 //        [--out spec.json] [--svg out.svg] [--at 0.5|poster] [--theme light|dark|auto]
 import fs from 'node:fs';
 import path from 'node:path';
@@ -112,14 +112,17 @@ export function storyboardHtml(spec, frames) {
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   const [file, ...rest] = process.argv.slice(2);
   const opt = (k) => { const i = rest.indexOf(k); return i >= 0 ? rest[i + 1] : undefined; };
-  if (!file) { console.error('usage: index.mjs <file> [--from auto|drawio|mermaid|plantuml|d2|cfn|tf] [--id x] [--flows sidecar.json] [--param K=V]... [--story id|none|guess] [--ledger] [--out spec.json] [--svg out.svg] [--at 0.5|poster] [--theme light|dark|auto]'); process.exit(1); }
+  if (!file) { console.error('usage: index.mjs <file> [--from auto|drawio|mermaid|plantuml|d2|cfn|tf] [--id x] [--flows sidecar.json] [--param K=V]... [--story id|none|guess] [--rules [AppSg,DbSg]] [--ledger] [--out spec.json] [--svg out.svg] [--at 0.5|poster] [--theme light|dark|auto]'); process.exit(1); }
   const raw = fs.readFileSync(file);
   const from = opt('--from') || detectFormat(raw, file);
   const content = from === 'drawio' && !/\.png$/i.test(file) ? raw.toString('utf8') : from === 'drawio' ? raw : raw.toString('utf8');
   const params = {};
   rest.forEach((a, i) => { if (a === '--param' && rest[i + 1]) { const [k, ...v] = rest[i + 1].split('='); params[k] = v.join('='); } });
   const flows = opt('--flows') ? JSON.parse(fs.readFileSync(opt('--flows'), 'utf8')) : undefined;
-  const { spec, report } = await importDiagram(content, { from, file, id: opt('--id'), name: opt('--name'), flows, params: Object.keys(params).length ? params : undefined, story: opt('--story') });
+  // --rules draws every security group's rules as tables; --rules AppSg,DbSg (or --rules=AppSg,DbSg) names the groups
+  const ri = rest.findIndex((a) => a === '--rules' || a.startsWith('--rules='));
+  const rules = ri < 0 ? undefined : rest[ri].startsWith('--rules=') ? rest[ri].slice(8) : rest[ri + 1] && !rest[ri + 1].startsWith('--') ? rest[ri + 1] : true;
+  const { spec, report } = await importDiagram(content, { from, file, id: opt('--id'), name: opt('--name'), flows, params: Object.keys(params).length ? params : undefined, story: opt('--story'), rules });
   const n = (s) => report.issues.filter((i) => i.severity === s).length;
   console.log(`${report.from}: ${spec.id} ${spec.w}x${spec.h} (${report.tile?.size || report.tile || 'tile'}), ${(spec.nodes || []).length} nodes, ${(spec.groups || []).length} groups, ${(spec.wires || []).length} wires, ${(spec.steps || []).length} steps; ${n('error')} error, ${n('warn')} warn, ${n('info')} info; ${(report.unmapped || []).length} unmapped`);
   for (const i of report.issues.filter((x) => x.severity !== 'info')) console.log(`  ${i.severity.padEnd(5)} ${i.code.padEnd(16)} ${i.message}`);

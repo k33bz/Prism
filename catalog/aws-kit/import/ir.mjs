@@ -399,7 +399,7 @@ export function buildSpec(ir, opts = {}) {
   const hasReply = plan.reply || plan.hops.some((h) => h.kind === 'pk-2');
   const desc = ir.directives.desc || ir.meta.desc || `Imported from ${DIALECT_NAME[model.dialect] || model.dialect}: ${names.length > 6 ? `${names.slice(0, 6).join(', ')} and more` : list(names)}.${storyLine ? ` ${storyLine}${hasReply ? ', and responses return the same way' : ''}.` : ''}`;
   // story legs -> timeline and steps (story.mjs), badges where layout placed them
-  const { timeline, steps } = plan.hops.length ? storyOf(plan.hops.map((h) => ({ wire: h.wire, reverse: h.reverse, ring: h.ring, back: h.back, kind: h.kind, step: h.step, text: h.step !== false ? plan.texts.get(String(h.step)) : undefined })), { reply: plan.reply }) : { timeline: [], steps: [] };
+  const { timeline, steps } = plan.hops.length ? storyOf(plan.hops.map((h) => ({ wire: h.wire, reverse: h.reverse, ring: h.ring, back: h.back, kind: h.kind, step: h.step, ...(h.v6 ? { v6: true } : {}), text: h.step !== false ? plan.texts.get(String(h.step)) : undefined })), { reply: plan.reply }) : { timeline: [], steps: [] };
   const wireById = new Map(wires.map((w) => [w.id, w]));
   const seenText = new Set();
   for (const s of steps) {
