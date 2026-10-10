@@ -29,6 +29,8 @@ export default {
     // accent, SO red for danger, and a distinct magenta-purple critical hue.
     light: {
       '--bg': '#f8f9f9', '--panel': '#ffffff', '--panel2': '#f1f2f3', '--card': '#ffffff', '--line': '#d6d9dc',
+      // control boundary of inputs, checkboxes, radios, switches: --line's hue moved to 3:1 on bg/panel/panel2/card (WCAG 1.4.11)
+      '--control-line': '#8a8c8f',
       // contrast: --dim #9fa6ad -> #838c95; dim/panel 2.46 -> 3.41:1 (floor 3), dim/card 2.46 -> 3.41:1 (floor 3); Stacks black-400
       '--ink': '#232629', '--muted': '#6a737c', '--dim': '#838c95',                 // black-750 / black-500 / black-350
       // contrast: --accent #f48024 -> #bb5c04; accent/panel 2.64 -> 4.52:1 (floor 4.5), accent/bg 2.50 -> 4.29:1 (floor 3), #fff/accent 2.64 -> 4.52:1 (floor 4.5); SO orange darkened on its own hue
@@ -65,6 +67,8 @@ export default {
     // light ink; info/success/warn/danger/critical brightened to pop on dark.
     dark: {
       '--bg': '#1e1e1e', '--panel': '#2d2d2d', '--panel2': '#262626', '--card': '#2d2d2d', '--line': '#3d3d3d',
+      // control boundary of inputs, checkboxes, radios, switches: --line's hue moved to 3:1 on bg/panel/panel2/card (WCAG 1.4.11)
+      '--control-line': '#767576',
       // contrast: --dim #6e767d -> #6f777e; dim/panel 2.98 -> 3.03:1 (floor 3), dim/card 2.98 -> 3.03:1 (floor 3)
       '--ink': '#e7e8eb', '--muted': '#9fa6ad', '--dim': '#6f777e',
       '--accent': '#f48024', '--accent-rgb': '244,128,36', '--accent2': '#f48024',  // SO Orange

@@ -29,6 +29,8 @@ export default {
     // border + fg scale, and the light-mode semantic fg tokens.
     light: {
       '--bg': '#ffffff', '--panel': '#f6f8fa', '--panel2': '#f6f8fa', '--card': '#ffffff', '--line': '#d1d9e0',
+      // control boundary of inputs, checkboxes, radios, switches: --line's hue moved to 3:1 on bg/panel/panel2/card (WCAG 1.4.11)
+      '--control-line': '#899197',
       '--ink': '#1f2328', '--muted': '#59636e', '--dim': '#6e7781',              // fg.default / fg.muted / fg.subtle
       '--accent': '#0969da', '--accent-rgb': '9,105,218', '--accent2': '#0969da',  // accent.fg
       '--info': '#0969da', '--info-rgb': '9,105,218',                            // accent.fg (info)
@@ -48,6 +50,10 @@ export default {
       '--cs-topnav-ink': '#ffffff',
       '--cs-topnav-dim': '#d0d7de',
       '--cs-topnav-hover': 'rgba(255,255,255,.08)',
+      // top-bar accent: --accent #0969da on the #24292f bar is 2.82:1, so the active mode button, brand mark
+      // and focus ring there use the bar's ink instead: 14.65:1 (floor 3), with the bar color as its label
+      '--cs-topnav-accent': '#ffffff',
+      '--cs-topnav-accent-ink': '#24292f',
       // on-fill inks (new; same #fff the generator painted before): 4.87-5.36:1 on accent/info/pos/warn/neg/crit (floor 4.5)
       '--accent-ink': '#ffffff',
       '--info-ink': '#ffffff',
@@ -61,6 +67,8 @@ export default {
     // (including the authentic #2f81f7 dark accent blue).
     dark: {
       '--bg': '#0d1117', '--panel': '#161b22', '--panel2': '#161b22', '--card': '#161b22', '--line': '#30363d',
+      // control boundary of inputs, checkboxes, radios, switches: --line's hue moved to 3:1 on bg/panel/panel2/card (WCAG 1.4.11)
+      '--control-line': '#60676e',
       '--ink': '#e6edf3', '--muted': '#7d8590', '--dim': '#6e7681',              // fg.default / fg.muted / fg.subtle
       '--accent': '#2f81f7', '--accent-rgb': '47,129,247', '--accent2': '#2f81f7', // accent.fg (dark — authentic per-mode blue)
       '--info': '#2f81f7', '--info-rgb': '47,129,247',                           // accent.fg (info)

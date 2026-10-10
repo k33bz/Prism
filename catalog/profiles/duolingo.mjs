@@ -29,6 +29,8 @@ export default {
     light: {
       // surfaces — Polar/Snow with the classic Swan hairline border
       '--bg': '#f7f7f7', '--panel': '#ffffff', '--panel2': '#fbfbfb', '--card': '#ffffff', '--line': '#e5e5e5',
+      // control boundary of inputs, checkboxes, radios, switches: --line's hue moved to 3:1 on bg/panel/panel2/card (WCAG 1.4.11)
+      '--control-line': '#908f90',
       // text — Eel/Wolf/Hare (Duolingo never uses pure black)
       // contrast: --muted #777777 -> #767676; muted/panel 4.48 -> 4.54:1 (floor 4.5), muted/card 4.48 -> 4.54:1 (floor 4.5)
       // contrast: --dim #afafaf -> #949494; dim/panel 2.19 -> 3.03:1 (floor 3), dim/card 2.19 -> 3.03:1 (floor 3)
@@ -63,6 +65,10 @@ export default {
       '--cs-topnav-ink': '#ffffff',
       '--cs-topnav-dim': 'rgba(255,255,255,.92)',
       '--cs-topnav-hover': 'rgba(255,255,255,.16)',
+      // top-bar accent: --accent #347f02 on the #347f02 bar is 1.00:1, so the active mode button, brand mark
+      // and focus ring there use the bar's ink instead: 5.02:1 (floor 3), with the bar color as its label
+      '--cs-topnav-accent': '#ffffff',
+      '--cs-topnav-accent-ink': '#347f02',
       // on-fill inks (new; same #fff the generator painted before): 4.52-5.02:1 on accent/info/pos/warn/neg/crit (floor 4.5)
       '--accent-ink': '#ffffff',
       '--info-ink': '#ffffff',
@@ -74,6 +80,8 @@ export default {
     dark: {
       // surfaces — Duolingo's real dark-mode charcoal/teal set
       '--bg': '#131f24', '--panel': '#202f36', '--panel2': '#1b2a30', '--card': '#202f36', '--line': '#37464f',
+      // control boundary of inputs, checkboxes, radios, switches: --line's hue moved to 3:1 on bg/panel/panel2/card (WCAG 1.4.11)
+      '--control-line': '#677881',
       // text — Snow-ish ink on the dark surfaces
       '--ink': '#f1f7fb', '--muted': '#a5b4bd', '--dim': '#6b7c85',
       // brand roles — vivid, unchanged so they pop on the dark surface

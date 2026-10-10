@@ -336,6 +336,132 @@ export function checkCoverage(id, copy, tokens, metaKeys) {
   return metaKeys.filter((k) => !tokens || !(k in tokens)).map((k) => ({ theme: id, copy, token: k, problem: `${copy} does not define ${k}` }));
 }
 
+/* ================================================ shell CSS pairs + literal inks
+   Kept apart from PAIRS (plain token pairs): these depend on what the shell and
+   gallery CSS in Prism.html does with the tokens.
+
+   control-line/<surface>   --control-line on bg/panel/panel2/card, 3:1 (WCAG
+            1.4.11). It is the only boundary of an unchecked checkbox, radio,
+            switch or toggle and of a text input, select or multi-select box;
+            --line stays the divider (1.1-2.2:1, see line/bg above).
+   ref/panel2   the gallery .tile .ref label, 11.5px text on --panel2, 4.5:1. The
+            gallery CSS paints color-mix(in srgb,var(--accent) N%,var(--ink)); N is
+            read from Prism.html, and every accent .tile .ref copy must use the same
+            mix (a copy that does not is a shellCss finding). No copy: not measured.
+   topnav-accent/topnav-bg   --cs-topnav-accent, else --accent, on --cs-topnav-bg,
+            3:1: the active mode button fill, the brand mark and the focus ring on
+            the top bar. A theme whose bar is (close to) its accent sets the token.
+   topnav-accent-ink/topnav-accent   the active mode button label:
+            --cs-topnav-accent-ink, else --accent-ink, else #fff. 4.5:1.
+
+   literal inks: a rule (or inline style) in the shell or a gallery template that
+   paints a role fill (var(--accent|info|pos|warn|neg|crit), alone or in a
+   gradient of role stops) and a literal text color (#hex, white, black, rgb()).
+   The fix is the matching on-fill ink, var(--accent-ink,<old literal>). Fills
+   with a literal stop or a translucent tint are not role fills. The 9 legacy
+   spectrum families hardcode their whole palette and never paint var() fills.
+   ========================================================================== */
+export const CONTROL_SURFACES = ['bg', 'panel', 'panel2', 'card'];
+// fg/bg are fallback chains: the first token the theme (or the shell :root) defines
+// wins; a '#hex' entry ends the chain. fg { mix } is the .tile .ref color-mix.
+export const SHELL_PAIRS = [
+  ...CONTROL_SURFACES.map((s) => ({ id: `control-line/${s}`, fg: ['--control-line'], bg: [`--${s}`], floor: FLOOR.ui, kind: 'control boundary' })),
+  { id: 'ref/panel2', fg: { mix: ['--accent', '--ink'] }, bg: ['--panel2'], floor: FLOOR.text, kind: 'text' },
+  { id: 'topnav-accent/topnav-bg', fg: ['--cs-topnav-accent', '--accent'], bg: ['--cs-topnav-bg'], floor: FLOOR.ui, kind: 'ui' },
+  { id: 'topnav-accent-ink/topnav-accent', fg: ['--cs-topnav-accent-ink', '--accent-ink', '#ffffff'], bg: ['--cs-topnav-accent', '--accent'], floor: FLOOR.text, kind: 'text on fill' },
+];
+
+// color-mix(in srgb, a p, b): gamma-encoded channels interpolated, painted as 8-bit.
+export function mixSrgb(a, b, p) {
+  const ch = (x, y) => Math.round(x * p + y * (1 - p));
+  return { r: ch(a.r, b.r), g: ch(a.g, b.g), b: ch(a.b, b.b), a: 1 };
+}
+
+// The accent .tile .ref rules of the gallery templates: { mix (0-1, or null when
+// there is none), rules, findings }. The mix must be the same in every copy.
+export function loadRefMix(html) {
+  const out = { mix: null, rules: 0, findings: [] };
+  const re = /\.tile \.ref\{([^}]*)\}/g;
+  let m;
+  while ((m = re.exec(html)) !== null) {
+    const body = m[1];
+    if (!/background:var\(--panel2\)/.test(body)) continue;   // the chip label (Animation Lab's .ref is plain crit text)
+    const c = (body.match(/(?:^|;)color:([^;]*)/) || [])[1] || '';
+    if (!/var\(--accent\)/.test(c)) continue;
+    out.rules++;
+    const mm = c.match(/^color-mix\(in srgb,var\(--accent\) (\d+(?:\.\d+)?)%,var\(--ink\)\)$/);
+    const mix = mm ? Number(mm[1]) / 100 : c.trim() === 'var(--accent)' ? 1 : NaN;
+    if (!Number.isFinite(mix)) { out.findings.push({ where: '.tile .ref', problem: `unrecognized label color "${c}"` }); continue; }
+    if (out.mix == null) out.mix = mix;
+    else if (mix !== out.mix) out.findings.push({ where: '.tile .ref', problem: `copies disagree: ${Math.round(out.mix * 100)}% and ${Math.round(mix * 100)}% accent` });
+  }
+  return out;
+}
+
+// Measure SHELL_PAIRS for one theme (same row shape as auditTheme).
+export function auditShellPairs(theme, fallback = {}, { refMix = null } = {}) {
+  const tokens = { ...fallback, ...theme.tokens };
+  const page = theme.mode === 'light' ? { r: 255, g: 255, b: 255, a: 1 } : { r: 0, g: 0, b: 0, a: 1 };
+  const bg0 = parseColor(tokens['--bg']);
+  const bg = bg0 ? (bg0.a < 1 ? over(bg0, page) : bg0) : null;
+  const pick = (chain) => { for (const k of chain) { if (k.startsWith('#')) return { k, v: k }; if (tokens[k] != null) return { k, v: tokens[k] }; } return { k: chain[0], v: null }; };
+  const opaque = (v, under) => { const c = parseColor(v); return c && under ? (c.a < 1 ? over(c, under) : c) : null; };
+  const rows = [];
+  for (const p of SHELL_PAIRS) {
+    if (p.fg.mix && refMix == null) continue;
+    const b = pick(p.bg);
+    const bgC = b.k === '--bg' ? bg : opaque(b.v, bg);
+    let fgVal, fgC = null;
+    if (p.fg.mix) {
+      const [x, y] = p.fg.mix.map((k) => parseColor(tokens[k]));
+      fgC = x && y && bgC ? mixSrgb(opaque(tokens[p.fg.mix[0]], bgC), opaque(tokens[p.fg.mix[1]], bgC), refMix) : null;
+      fgVal = `color-mix(${p.fg.mix[0]} ${Math.round(refMix * 100)}%, ${p.fg.mix[1]})` + (fgC ? ' = ' + toHex(fgC) : '');
+    } else {
+      fgVal = pick(p.fg).v;
+      fgC = bgC ? opaque(fgVal, bgC) : null;
+    }
+    const base = { theme: theme.id, mode: theme.mode, pair: p.id, fg: fgVal, bg: b.v, floor: p.floor, kind: p.kind, severity: 'fail' };
+    if (!fgC || !bgC) { rows.push({ ...base, ratio: null, pass: false, note: 'unresolvable color' }); continue; }
+    const ratio = contrast(fgC, bgC);
+    rows.push({ ...base, ratio: Math.round(ratio * 100) / 100, pass: ratio + 1e-9 >= p.floor });
+  }
+  return rows;
+}
+
+// Literal text colors on role fills, in the shell and gallery CSS (see above).
+const ROLE_FILL = /var\(--(?:accent2?|info|pos|warn|neg|crit)(?:,[^)]*)?\)/;
+const LITERAL_COLOR = /#[0-9a-f]{3,8}\b|\b(?:white|black)\b|rgba?\(\s*\d/i;
+const LITERAL_INK = /(?:^|[;{\s])color\s*:\s*(#[0-9a-f]{3,8}|white|black|rgba?\([\d\s.,%]+\))\s*(?:!important\s*)?(?:;|$)/i;
+function literalOnFill(decls) {
+  const bgm = decls.match(/(?:^|[;{\s])background(?:-color)?\s*:\s*([^;]*)/i);
+  // a role fill has no literal stop once var() calls (with their fallbacks) and rgba(var(--x-rgb),a) are set aside
+  if (!bgm || !ROLE_FILL.test(bgm[1]) || LITERAL_COLOR.test(bgm[1].replace(/rgba?\(var\([^)]*\)[^)]*\)/g, '').replace(/var\([^()]*\)/g, ''))) return null;
+  const c = decls.match(LITERAL_INK);
+  return c ? c[1] : null;
+}
+export function checkLiteralInks(html) {
+  // from the shell <style> (the first after the catalog island) to the end: shell CSS,
+  // the gallery templates and the shell scripts (chrome CSS strings)
+  const start = Math.max(0, html.indexOf('<style>', html.indexOf('</script>')));
+  const lineAt = (i) => { let n = 1; for (let j = html.indexOf('\n'); j >= 0 && j < i; j = html.indexOf('\n', j + 1)) n++; return n; };
+  const hits = [];
+  for (let i = html.indexOf('{', start); i >= 0; i = html.indexOf('{', i + 1)) {
+    const close = html.indexOf('}', i + 1), next = html.indexOf('{', i + 1);
+    if (close < 0 || (next >= 0 && next < close) || close - i > 4000) continue;
+    const lit = literalOnFill(html.slice(i + 1, close));
+    if (!lit) continue;
+    const s0 = Math.max(html.lastIndexOf('}', i), html.lastIndexOf('{', i - 1), html.lastIndexOf('\n', i), html.lastIndexOf("'", i), i - 120);
+    hits.push({ at: i, where: html.slice(s0 + 1, i).trim(), literal: lit });
+  }
+  const re = /style="([^"]*)"/g; re.lastIndex = start;
+  let m;
+  while ((m = re.exec(html)) !== null) {
+    const lit = literalOnFill(';' + m[1]);
+    if (lit) hits.push({ at: m.index, where: 'inline style', literal: lit });
+  }
+  return hits.sort((a, b) => a.at - b.at).map((h) => ({ line: lineAt(h.at), where: h.where, literal: h.literal, problem: `literal ${h.literal} on a role fill: use the matching var(--<role>-ink,${h.literal})` }));
+}
+
 /* ==================================================================== runner */
 
 export async function runChecks(opts = {}) {
@@ -347,6 +473,7 @@ export async function runChecks(opts = {}) {
   const html = readFileSync(htmlPath, 'utf8');
   const htmlThemes = loadHtmlThemes(html);
   const shellDefaults = loadShellDefaults(html);
+  const refMix = loadRefMix(html);
   const mirror = await import(pathToFileURL(themesPath).href);
   const { themeTokens } = await import(pathToFileURL(resolve(HERE, '_scaffold_ds.mjs')).href);
   const metaKeys = mirror.TOKEN_META.map((t) => t.k);
@@ -400,12 +527,14 @@ export async function runChecks(opts = {}) {
     if (tokens) {
       const theme = { id, mode, tokens };
       report.contrast.push(...auditTheme(theme, shellDefaults));
+      report.contrast.push(...auditShellPairs(theme, shellDefaults, { refMix: refMix.mix }));
       report.rgb.push(...checkRgb(theme));
       if (profTokens && profTokens !== tokens) report.rgb.push(...checkRgb({ id: id + ' (profile)', tokens: profTokens }));
       if (mt && mt.tokens !== tokens) report.rgb.push(...checkRgb({ id: id + ' (themes.js)', tokens: mt.tokens }));
     }
   }
 
+  report.shellCss = [...refMix.findings, ...checkLiteralInks(html)];
   const contrastFailures = report.contrast.filter((r) => !r.pass && r.severity === 'fail');
   const advisories = report.contrast.filter((r) => !r.pass && r.severity === 'advisory');
   report.summary = {
@@ -416,8 +545,9 @@ export async function runChecks(opts = {}) {
     rgbMismatches: report.rgb.length,
     driftFindings: report.drift.length,
     coverageGaps: report.coverage.length,
+    shellCssFindings: report.shellCss.length,
   };
-  report.ok = contrastFailures.length === 0 && report.rgb.length === 0 && report.drift.length === 0 && report.coverage.length === 0;
+  report.ok = contrastFailures.length === 0 && report.rgb.length === 0 && report.drift.length === 0 && report.coverage.length === 0 && report.shellCss.length === 0;
   return report;
 }
 
@@ -445,6 +575,8 @@ function printHuman(report, { table }) {
   report.drift.forEach((d) => console.log(`  ${d.theme.padEnd(28)} ${d.token.padEnd(18)} ${d.problem}`));
   console.log(`TOKEN_META coverage: ${report.coverage.length} gap(s)`);
   report.coverage.forEach((c) => console.log(`  ${c.theme.padEnd(28)} ${c.problem}`));
+  console.log(`Shell CSS (literal inks on role fills, .tile .ref mix): ${report.shellCss.length} finding(s)`);
+  report.shellCss.forEach((f) => console.log(`  ${f.line ? 'Prism.html:' + f.line : ''} ${String(f.where).slice(-60)}  ${f.problem}`));
   console.log(report.ok ? '\nOK: theme tokens pass.' : '\nFAIL: theme tokens need attention (see above).');
 }
 

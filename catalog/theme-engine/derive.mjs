@@ -35,10 +35,12 @@ import * as C from './color.mjs';
 // (prism-mcp-server/utils/themes.js), then the optional top-nav chrome tokens
 // the newer packs set, then the on-fill inks (--accent-ink and one per status
 // role: the solved ink for text and glyphs painted on that fill, which the
-// generated facets read as var(--x-ink,#fff)). The tests check this list covers
-// TOKEN_META and BASE_TOKENS.
+// generated facets read as var(--x-ink,#fff)). --control-line is the boundary of
+// an interactive control (input, checkbox, switch): --line's hue, moved to 3:1 on
+// every surface (WCAG 1.4.11), where --line itself stays a quiet divider. The
+// tests check this list covers TOKEN_META and BASE_TOKENS.
 export const TOKENS = [
-  '--bg', '--panel', '--panel2', '--card', '--line', '--ink', '--muted', '--dim',
+  '--bg', '--panel', '--panel2', '--card', '--line', '--control-line', '--ink', '--muted', '--dim',
   '--accent', '--accent-rgb', '--accent2', '--info', '--info-rgb', '--pos', '--pos-rgb',
   '--warn', '--warn-rgb', '--neg', '--neg-rgb', '--crit', '--crit-rgb', '--cardgrad',
   '--font', '--r-sm', '--r-md', '--r-lg', '--r-xl',
@@ -68,6 +70,7 @@ export const PAIRS = [
   ...TEXT_SURFACES.map((s) => ['--muted', s, 'text']),
   ...TEXT_SURFACES.map((s) => ['--dim', s, 'tertiary']),
   ['--line', '--panel', 'decorative'], ['--line', '--bg', 'decorative'],
+  ...TEXT_SURFACES.map((s) => ['--control-line', s, 'ui']),
   ...CONTENT_SURFACES.map((s) => ['--accent', s, 'text']),
   ['--accent', '--bg', 'ui'],
   ['--accent-ink', '--accent', 'text'],
@@ -225,6 +228,18 @@ function solveL(lch, dir, ok) {
 
 const meets = (hex, against, floor) => against.every((b) => C.contrastRatio(hex, b) >= floor);
 
+/**
+ * The control boundary for a set of surfaces: the hue and chroma of `line`, its
+ * OKLCH lightness moved away from the surfaces (lighter in dark mode, darker in
+ * light mode) just far enough to reach `floor` on every one of them. Used for
+ * --control-line here, and exported so hand-tuned palettes are solved the same way.
+ * `line` and `surfaces` are opaque colors (composite translucent ones first).
+ */
+export function solveControlLine(line, surfaces, mode, floor = FLOORS.AA.ui) {
+  const hexes = surfaces.map((s) => C.normalizeHex(s));
+  return solveL(lchOf(C.normalizeHex(line)), mode === 'dark' ? +1 : -1, (h) => meets(h, hexes, floor)).hex;
+}
+
 function bestInk(fillHex, inks, floor) {
   // Prefer white (what Prism's generated facets put on fills), then the dark ink.
   for (const ink of inks) if (C.contrastRatio(ink, fillHex) >= floor) return ink;
@@ -274,6 +289,8 @@ function deriveMode(mode, inp, ctx) {
   for (const k of ['--bg', '--panel', '--panel2', '--card', '--line']) t[k] = C.oklchToHex(tone(k));
   const surfaces = TEXT_SURFACES.map((k) => t[k]);
   const content = CONTENT_SURFACES.map((k) => t[k]);
+
+  t['--control-line'] = solveControlLine(t['--line'], surfaces, mode, floors.ui);
 
   // Text: start at the ramp lightness, move away from the surfaces until it clears.
   t['--ink'] = solveL(tone('--ink'), dir, (h) => meets(h, surfaces, floors.text)).hex;

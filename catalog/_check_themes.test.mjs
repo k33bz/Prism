@@ -193,3 +193,99 @@ test('loadHtmlThemes reads multi-line Cloudscape consts and single-line pack con
   assert.deepEqual(t[0].tokens, { '--bg': '#0f1621', '--ink': '#e9ebed' });
   assert.equal(t[1].tokens['--ink'], '#eee');
 });
+
+/* ------------------------------------------ shell CSS pairs + literal inks */
+import { SHELL_PAIRS, auditShellPairs, loadRefMix, mixSrgb, checkLiteralInks } from './_check_themes.mjs';
+
+// A light theme whose top bar is its accent (Duolingo Light before the fix), with
+// nothing but --line to draw a control boundary.
+const SHELL_LIGHT = {
+  id: 'shell-light', mode: 'light',
+  tokens: {
+    '--bg': '#f7f7f7', '--panel': '#ffffff', '--panel2': '#fbfbfb', '--card': '#ffffff', '--line': '#e5e5e5',
+    '--ink': '#3c3c3c', '--accent': '#347f02', '--accent-ink': '#ffffff', '--cs-topnav-bg': '#347f02', '--cs-topnav-ink': '#ffffff',
+  },
+};
+const rowOf = (rows, id) => rows.find((r) => r.pair === id);
+const withTokens = (t, extra) => ({ ...t, tokens: { ...t.tokens, ...extra } });
+
+test('control-line: --line as the control boundary fails 3:1 on every surface, a solved control line passes', () => {
+  const bad = auditShellPairs(withTokens(SHELL_LIGHT, { '--control-line': '#e5e5e5' }));
+  for (const s of ['bg', 'panel', 'panel2', 'card']) {
+    const r = rowOf(bad, `control-line/${s}`);
+    assert.equal(r.pass, false, s);
+    assert.equal(r.floor, 3);
+  }
+  near(rowOf(bad, 'control-line/panel').ratio, 1.26);
+  assert.equal(rowOf(auditShellPairs(SHELL_LIGHT), 'control-line/bg').note, 'unresolvable color'); // undeclared fails, never passes
+  const good = auditShellPairs(withTokens(SHELL_LIGHT, { '--control-line': '#908f90' }));
+  for (const s of ['bg', 'panel', 'panel2', 'card']) assert.equal(rowOf(good, `control-line/${s}`).pass, true, s);
+});
+
+test('ref/panel2: the mix comes from the gallery CSS; plain accent fails where the mix passes', () => {
+  const css = (c) => `<style>.tile .ref{font-size:11.5px;color:${c};background:var(--panel2);border:1px solid var(--line)}</style>`;
+  assert.deepEqual(loadRefMix(css('color-mix(in srgb,var(--accent) 75%,var(--ink))')), { mix: 0.75, rules: 1, findings: [] });
+  assert.equal(loadRefMix(css('var(--accent)')).mix, 1);
+  assert.equal(loadRefMix('<style>.tile .ref{color:var(--crit);opacity:.7}</style>').rules, 0); // not the chip label
+  assert.equal(loadRefMix(css('var(--accent)') + css('color-mix(in srgb,var(--accent) 75%,var(--ink))')).findings.length, 1); // copies disagree
+  assert.deepEqual(mixSrgb({ r: 255, g: 0, b: 0 }, { r: 0, g: 0, b: 255 }, 0.75), { r: 191, g: 0, b: 64, a: 1 });
+  // Firefox Acorn Dark: accent #ff7139 on its light panel2 #42414d
+  const acorn = { id: 'acorn-like', mode: 'dark', tokens: { '--bg': '#1c1b22', '--panel2': '#42414d', '--accent': '#ff7139', '--ink': '#fbfbfe' } };
+  const plain = rowOf(auditShellPairs(acorn, {}, { refMix: 1 }), 'ref/panel2');
+  near(plain.ratio, 3.66);
+  assert.equal(plain.pass, false);
+  const mixed = rowOf(auditShellPairs(acorn, {}, { refMix: 0.75 }), 'ref/panel2');
+  assert.equal(mixed.pass, true);
+  near(mixed.ratio, 4.61);
+  assert.equal(rowOf(auditShellPairs(acorn), 'ref/panel2'), undefined); // no .tile .ref rule: not measured
+});
+
+test('topnav-accent: an accent-colored top bar fails 3:1 until the theme sets --cs-topnav-accent', () => {
+  const f = rowOf(auditShellPairs(SHELL_LIGHT), 'topnav-accent/topnav-bg');
+  assert.equal(f.fg, '#347f02');
+  near(f.ratio, 1);
+  assert.equal(f.pass, false);
+  const good = auditShellPairs(withTokens(SHELL_LIGHT, { '--cs-topnav-accent': '#ffffff', '--cs-topnav-accent-ink': '#347f02' }));
+  near(rowOf(good, 'topnav-accent/topnav-bg').ratio, 5.02);
+  assert.equal(rowOf(good, 'topnav-accent/topnav-bg').pass, true);
+  near(rowOf(good, 'topnav-accent-ink/topnav-accent').ratio, 5.02);
+  assert.equal(rowOf(good, 'topnav-accent-ink/topnav-accent').pass, true);
+  // the label falls back to --accent-ink: a white top-bar accent without its own ink fails
+  const noInk = rowOf(auditShellPairs(withTokens(SHELL_LIGHT, { '--cs-topnav-accent': '#ffffff' })), 'topnav-accent-ink/topnav-accent');
+  assert.equal(noInk.fg, '#ffffff');
+  assert.equal(noInk.pass, false);
+  // a theme that sets no bar gets the shell :root default (Cloudscape's #000716)
+  const dflt = rowOf(auditShellPairs({ id: 'x', mode: 'dark', tokens: { '--bg': '#0f1621', '--accent': '#539fe5' } }, { '--cs-topnav-bg': '#000716' }), 'topnav-accent/topnav-bg');
+  near(dflt.ratio, 7.16);
+});
+
+test('literal inks: role fills with a literal text color are found; inks, tints and literal stops are not', () => {
+  const html = [
+    '<script>{}</script>', '<style>',
+    '.a{background:var(--accent);color:#1a1200}',
+    '.b{background:var(--neg,#d91515);color:#fff!important}',
+    '.c{background:linear-gradient(90deg,var(--crit),rgba(var(--crit-rgb),.4));color:white}',
+    '.d{background:var(--accent);color:var(--accent-ink,#1a1200)}',
+    '.e{background:rgba(var(--accent-rgb),.15);color:#fff}',
+    '.f{background:linear-gradient(90deg,var(--accent),#ffb347);color:#1a1205}',
+    '.g{background:var(--panel2);color:#fff}',
+    '</style>',
+    '<div style="background:var(--pos);color:#06210d">x</div><div style="background:var(--pos);color:var(--pos-ink)">y</div>',
+  ].join('\n');
+  const hits = checkLiteralInks(html);
+  assert.deepEqual(hits.map((h) => h.where), ['.a', '.b', '.c', 'inline style']);
+  assert.deepEqual(hits.map((h) => h.literal), ['#1a1200', '#fff', 'white', '#06210d']);
+  assert.deepEqual(hits.map((h) => h.line), [3, 4, 5, 11]);
+});
+
+test('the repo measures every shell pair in every theme and has no literal inks left', async () => {
+  const report = await runChecks();
+  for (const t of report.themes) {
+    for (const p of SHELL_PAIRS) {
+      const r = report.contrast.find((x) => x.theme === t.id && x.pair === p.id);
+      assert.ok(r, `${t.id} ${p.id} measured`);
+      assert.equal(r.pass, true, `${t.id} ${p.id} ${r.ratio}`);
+    }
+  }
+  assert.deepEqual(report.shellCss, []);
+});

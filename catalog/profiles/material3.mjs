@@ -64,6 +64,8 @@ export default {
     // so elevation reads as primary tint, per M3, not as a grey step.
     light: {
       '--bg': '#fffbfe', '--panel': '#f7f2fa', '--panel2': '#ece6f0', '--card': '#f3edf7', '--line': '#cac4d0',
+      // control boundary of inputs, checkboxes, radios, switches: --line's hue moved to 3:1 on bg/panel/panel2/card (WCAG 1.4.11)
+      '--control-line': '#89838f',
       '--ink': '#1c1b1f', '--muted': '#49454f', '--dim': '#79747e',                  // on-surface / on-surface-variant / outline
       '--accent': '#6750a4', '--accent-rgb': '103,80,164', '--accent2': '#7d5260',    // primary + tertiary (gradient pair)
       '--info': '#35618e', '--info-rgb': '53,97,142',                                // tonal blue, tone 40 (M3 defines no info)
@@ -92,6 +94,8 @@ export default {
     // lightens to #d0bcff (M3 flips primary to tone 80 in dark).
     dark: {
       '--bg': '#1c1b1f', '--panel': '#1d1b20', '--panel2': '#2b2930', '--card': '#211f26', '--line': '#49454f',
+      // control boundary of inputs, checkboxes, radios, switches: --line's hue moved to 3:1 on bg/panel/panel2/card (WCAG 1.4.11)
+      '--control-line': '#75717b',
       '--ink': '#e6e1e5', '--muted': '#cac4d0', '--dim': '#938f99',                  // on-surface / on-surface-variant / outline
       '--accent': '#d0bcff', '--accent-rgb': '208,188,255', '--accent2': '#efb8c8',   // primary + tertiary (gradient pair)
       '--info': '#9fcaff', '--info-rgb': '159,202,255',                              // tonal blue, tone 80

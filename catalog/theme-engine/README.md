@@ -24,7 +24,7 @@ Input: `{ name, accent, secondary?, neutral? (brand | cool | warm | neutral | #h
 
 ## How it derives
 
-- **Neutrals**: fixed OKLCH ramp positions for bg, panel, panel2, card and line, at the brand hue with low chroma (scaled by the accent's chroma; `cool`, `warm` and a hex change the hue). Ink, muted and dim start at their ramp lightness and move away from the surfaces until they clear their floors on all four surfaces.
+- **Neutrals**: fixed OKLCH ramp positions for bg, panel, panel2, card and line, at the brand hue with low chroma (scaled by the accent's chroma; `cool`, `warm` and a hex change the hue). Ink, muted and dim start at their ramp lightness and move away from the surfaces until they clear their floors on all four surfaces. `--control-line`, the boundary of inputs, checkboxes, radios and switches, is line's hue moved the same way until it clears 3:1 on all four (`solveControlLine`, exported so hand-tuned palettes are solved alike); line itself stays a quiet divider.
 - **Accent**: the hue and chroma are kept. If the accent misses a floor in a mode (text on panel, panel2 and card; UI on bg; a readable ink on the fill), only its lightness moves. A passing accent is kept byte for byte. Every move lands in `report.moved` with a message such as `accent #ffd400 too light for text on a light panel: darkened to #897000, L 0.88 to 0.55`.
 - **Ink on fills**: `#fff` when it clears the floor, else a near-black from the neutral ramp, emitted as `--accent-ink` and per status role (`--info-ink`, `--pos-ink`, `--warn-ink`, `--neg-ink`, `--crit-ink`). The generated facets paint `var(--x-ink,#fff)` on role fills; the report still notes each mode where a component that hardcodes `#fff` on the accent would read below the floor.
 - **Status colors**: conventional hues (info 250, pos 145, warn 75, neg 27, crit 305), the accent's chroma clamped to 0.12 to 0.19, and one shared lightness per mode: the accent's L clamped to a band, moved as far as the most demanding hue needs. Warn sits a little lighter in dark mode.
@@ -37,7 +37,7 @@ All contrast is measured on the final `#rrggbb`. The output is deterministic.
 | Pair kind | AA | AAA |
 |---|---|---|
 | text: ink and muted on every surface; accent and status on panel, panel2, card; ink on accent; top-nav ink and dim | 4.5 | 7 |
-| UI: accent, accent2 and status on bg; accent2 on panel | 3 | 3 |
+| UI: accent, accent2 and status on bg; accent2 on panel; control-line on every surface | 3 | 3 |
 | tertiary: dim on every surface | 3 | 4.5 |
 | decorative: line on panel and bg | reported, not gated | |
 

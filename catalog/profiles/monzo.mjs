@@ -30,6 +30,8 @@ export default {
     // real system.
     light: {
       '--bg': '#fafbfc', '--panel': '#ffffff', '--panel2': '#f2f4f8', '--card': '#ffffff', '--line': '#e6e9ef',
+      // control boundary of inputs, checkboxes, radios, switches: --line's hue moved to 3:1 on bg/panel/panel2/card (WCAG 1.4.11)
+      '--control-line': '#8b8d93',
       // contrast: --dim #9aa2b1 -> #8c94a3; dim/panel 2.57 -> 3.05:1 (floor 3), dim/card 2.57 -> 3.05:1 (floor 3)
       '--ink': '#14233c', '--muted': '#6b7385', '--dim': '#8c94a3',          // Monzo navy ink family
       // contrast: --accent #ff4f40 -> #e12e24; accent/panel 3.26 -> 4.55:1 (floor 4.5), #fff/accent 3.26 -> 4.55:1 (floor 4.5); Hot Coral darkened on its own hue
@@ -71,6 +73,8 @@ export default {
     // dark surface.
     dark: {
       '--bg': '#06060a', '--panel': '#14161c', '--panel2': '#1c1f27', '--card': '#14161c', '--line': '#2a2e38',
+      // control boundary of inputs, checkboxes, radios, switches: --line's hue moved to 3:1 on bg/panel/panel2/card (WCAG 1.4.11)
+      '--control-line': '#656975',
       '--ink': '#f4f5f7', '--muted': '#a2a7b3', '--dim': '#6b7280',
       '--accent': '#ff4f40', '--accent-rgb': '255,79,64', '--accent2': '#ff4f40',   // Hot Coral
       '--info': '#1fc7d6', '--info-rgb': '31,199,214',                       // brightened teal on dark

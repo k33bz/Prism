@@ -34,6 +34,8 @@ export default {
     // theme keeps a light chrome with dark text — unlike GitHub's dark header).
     light: {
       '--bg': '#f9f9fb', '--panel': '#ffffff', '--panel2': '#f0f0f4', '--card': '#ffffff', '--line': '#cfcfd8',
+      // control boundary of inputs, checkboxes, radios, switches: --line's hue moved to 3:1 on bg/panel/panel2/card (WCAG 1.4.11)
+      '--control-line': '#8b8a93',
       '--ink': '#15141a', '--muted': '#5b5b66', '--dim': '#8f8f9d',                  // fg / fg-muted / fg-subtle
       // contrast: --accent #ff7139 -> #cc3d00; accent/panel 2.74 -> 4.96:1 (floor 4.5), accent/bg 2.60 -> 4.72:1 (floor 3), #fff/accent 2.74 -> 4.96:1 (floor 4.5); Photon orange-70 (orange-60 #e25920 is 3.7:1)
       '--accent': '#cc3d00', '--accent-rgb': '204,61,0', '--accent2': '#ff7139',    // orange-50 (brand)
@@ -62,6 +64,8 @@ export default {
     // text scale, brighter dark-mode semantic roles, and a dark Firefox toolbar.
     dark: {
       '--bg': '#1c1b22', '--panel': '#2b2a33', '--panel2': '#42414d', '--card': '#2b2a33', '--line': '#52525e',
+      // control boundary of inputs, checkboxes, radios, switches: --line's hue moved to 3:1 on bg/panel/panel2/card (WCAG 1.4.11)
+      '--control-line': '#8b8c99',
       '--ink': '#fbfbfe', '--muted': '#bfbfc9', '--dim': '#8f8f9d',                  // fg / fg-muted / fg-subtle
       '--accent': '#ff7139', '--accent-rgb': '255,113,57', '--accent2': '#ff7139',    // orange-50 (brand)
       // contrast: --info #0a84ff -> #45a1ff; info/panel 3.89 -> 5.26:1 (floor 4.5); Photon blue-40

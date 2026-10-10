@@ -24,6 +24,8 @@ export default {
       '--panel2': 'rgba(255,255,255,.55)',
       '--card': 'rgba(255,255,255,.82)',
       '--line': 'rgba(0,0,0,.08)',
+      // control boundary of inputs, checkboxes, radios, switches: --line's hue moved to 3:1 on bg/panel/panel2/card (WCAG 1.4.11)
+      '--control-line': '#898a8e',
       '--ink': '#1c1c1e',
       '--muted': '#6e6e73',
       // contrast: --dim #aeaeb2 -> #8e8e93; dim/panel 2.13 -> 3.15:1 (floor 3), dim/card 2.16 -> 3.18:1 (floor 3); Apple systemGray
@@ -79,6 +81,8 @@ export default {
       '--panel2': 'rgba(255,255,255,.04)',
       '--card': 'rgba(255,255,255,.07)',
       '--line': 'rgba(255,255,255,.14)',
+      // control boundary of inputs, checkboxes, radios, switches: --line's hue moved to 3:1 on bg/panel/panel2/card (WCAG 1.4.11)
+      '--control-line': '#717277',
       '--ink': '#f5f5f7',
       '--muted': '#a1a1aa',
       '--dim': '#6b6b76',

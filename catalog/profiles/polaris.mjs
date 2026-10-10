@@ -27,6 +27,8 @@ export default {
     // accent in both roles; semantic hues use Polaris's own blue/green/amber/red.
     light: {
       '--bg': '#f6f6f7', '--panel': '#ffffff', '--panel2': '#fafbfb', '--card': '#ffffff', '--line': '#e1e3e5',
+      // control boundary of inputs, checkboxes, radios, switches: --line's hue moved to 3:1 on bg/panel/panel2/card (WCAG 1.4.11)
+      '--control-line': '#8d8f91',
       '--ink': '#202223', '--muted': '#6d7175', '--dim': '#8c9196',              // ink / subdued / disabled
       '--accent': '#008060', '--accent-rgb': '0,128,96', '--accent2': '#008060', // action green (both roles)
       '--info': '#2c6ecb', '--info-rgb': '44,110,203',                           // Polaris interactive blue
@@ -61,6 +63,8 @@ export default {
     // are brightened to hold contrast on the dark ground.
     dark: {
       '--bg': '#0b0c0d', '--panel': '#202223', '--panel2': '#1a1c1d', '--card': '#202223', '--line': '#3f4246',
+      // control boundary of inputs, checkboxes, radios, switches: --line's hue moved to 3:1 on bg/panel/panel2/card (WCAG 1.4.11)
+      '--control-line': '#686c70',
       '--ink': '#e3e5e7', '--muted': '#999fa4', '--dim': '#71767a',
       // contrast: --accent #008060 -> #309978; accent/panel 3.24 -> 4.53:1 (floor 4.5); Polaris green lightened on its own hue for dark surfaces
       '--accent': '#309978', '--accent-rgb': '48,153,120', '--accent2': '#008060', // action green (both roles)

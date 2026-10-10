@@ -24,6 +24,8 @@ export default {
       '--panel2': '#f1f3f4',
       '--card': '#ffffff',
       '--line': '#dadce0',
+      // control boundary of inputs, checkboxes, radios, switches: --line's hue moved to 3:1 on bg/panel/panel2/card (WCAG 1.4.11)
+      '--control-line': '#8b8c90',
       '--ink': '#202124',
       '--muted': '#5f6368',
       '--dim': '#80868b',
@@ -75,6 +77,8 @@ export default {
       '--panel2': '#303134',
       '--card': '#292a2d',
       '--line': '#3c4043',
+      // control boundary of inputs, checkboxes, radios, switches: --line's hue moved to 3:1 on bg/panel/panel2/card (WCAG 1.4.11)
+      '--control-line': '#767a7d',
       '--ink': '#e8eaed',
       '--muted': '#9aa0a6',
       '--dim': '#80868b',
