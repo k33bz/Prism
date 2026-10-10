@@ -326,6 +326,17 @@ async function main() {
   check('load', 'New Facets re-render (visible, in place) paints themed from its first frame', later.frameBad.length === 0,
     later.frameBad.slice(0, 2).map(r => r.title + ' --bg=' + r.bg + ' visible=' + r.fw));
 
+  // ---- 1b. a first visit (nothing stored, no link) is Auto: the system's mode of the default pack
+  await open('', 'aws', {}, 'light');
+  s = await settle('cloudscape-light');
+  const fv = await fouc('cloudscape-light');
+  check('load', 'first visit under a light system = Cloudscape Light in Auto', s.id === 'cloudscape-light' && s.mode === 'auto', s.id + ' ' + s.mode);
+  check('load', 'first visit under a light system never paints the dark base', fv.shellBad.length === 0 && fv.frameBad.length === 0,
+    { shell: fv.shellBad.slice(0, 1), frames: fv.frameBad.slice(0, 1) });
+  await open('', 'aws', {}, 'dark');
+  s = await settle('cloudscape-dark');
+  check('load', 'first visit under a dark system = Cloudscape Dark in Auto', s.id === 'cloudscape-dark' && s.mode === 'auto', s.id + ' ' + s.mode);
+
   // ---- 2. switch through every registry theme on the AWS gallery (data-mode matters there)
   await open('', 'aws', { prismTheme: 'cloudscape-dark' }, 'dark', true);
   const times = [], frameTimes = []; let failures = [];
