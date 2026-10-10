@@ -17,6 +17,7 @@ import { fileURLToPath } from 'node:url';
 import { mkdtempSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { resolveChrome, closeBrowser } from './_chrome.mjs';
+import { CSS_SOURCE_FNS } from './_css-source.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const OUT = HERE;
@@ -59,6 +60,53 @@ const GALLERIES = [
 // we resolve the iframe doc first and pass it in via a wrapper below).
 const EXTRACT_FN = `function extractInPage(gallery, d){
   var docStyleSheets = d.styleSheets;
+  ${CSS_SOURCE_FNS}
+  // Chromium serializes a var() shorthand's longhands as "prop: ;" when the same block also
+  // sets one of them (background + background-size, animation + animation-delay), so
+  // cssText silently drops the value. Only those rules are rebuilt, from the declarations
+  // in the owner <style>'s source text; every other rule keeps its cssText byte for byte.
+  var EMPTY_DECL=/[a-z-]+: ;/, srcMaps=new Map(), scratch=null, unrecovered=new Set();
+  // The rule the browser makes of one rule's source parsed on its own (null when dropped).
+  function reparse(text){
+    try{ scratch=scratch||new d.defaultView.CSSStyleSheet(); scratch.replaceSync(text); }catch(e){ return null; }
+    return scratch.cssRules.length===1?scratch.cssRules[0]:null;
+  }
+  // Source rule behind a CSSOM rule (top level, or a child of an @media / @keyframes), or
+  // null. Each sheet / parent rule is aligned once, on first use, by exact re-serialization.
+  function srcNode(rule){
+    var parent=rule.parentRule, sheet=rule.parentStyleSheet, key=parent||sheet, m=srcMaps.get(key);
+    if(!m){
+      m=new Map(); srcMaps.set(key,m);
+      var nodes=null, head='';
+      if(parent){ var pn=srcNode(parent); if(pn&&pn.children){ nodes=pn.children; head=pn.text.slice(0,pn.text.length-pn.body.length-1); } }
+      else if(sheet&&sheet.ownerNode&&sheet.ownerNode.localName==='style') nodes=parseCssSource(sheet.ownerNode.textContent);
+      if(nodes){
+        var list=key.cssRules, texts=[];
+        for(var i=0;i<list.length;i++) texts.push(list[i].cssText);
+        alignCssRules(texts, nodes, function(n){
+          // a child only parses inside its parent's head ("@media (...){" / "@keyframes x{")
+          var r=reparse(head?head+n.text+'}':n.text);
+          if(r&&head) r=r.cssRules&&r.cssRules.length===1?r.cssRules[0]:null;
+          return r?r.cssText:null;
+        }).forEach(function(k,i){ if(k>=0) m.set(list[i],nodes[k]); });
+      }
+    }
+    return m.get(rule)||null;
+  }
+  // cssText, with any blanked declaration block replaced by the author's declarations.
+  function authored(rule){
+    var t=rule.cssText; if(!EMPTY_DECL.test(t)) return t;
+    var n, body;
+    if(rule.type===1){ n=srcNode(rule); if(n&&(body=cssDeclBlock(n.body))!=null) t=rule.selectorText+' { '+body+' }'; }
+    else if(rule.type===7){
+      for(var i=0;i<rule.cssRules.length;i++){
+        var k=rule.cssRules[i], kt=k.cssText;
+        if(EMPTY_DECL.test(kt)&&(n=srcNode(k))&&(body=cssDeclBlock(n.body))!=null) t=t.split(kt).join(k.keyText+' { '+body+' }');
+      }
+    }
+    if(EMPTY_DECL.test(t)) unrecovered.add(rule);
+    return t;
+  }
   function slug(s){return (s||'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,60);}
   function cssFor(html){
     var classes=new Set();
@@ -82,10 +130,10 @@ const EXTRACT_FN = `function extractInPage(gallery, d){
             if(hit) return;
             if(rule.selectorText.split(/[\\s,>+~]+/).some(function(sel){return sel.indexOf('.'+c)!==-1 && new RegExp('\\\\.'+c+'(?![\\\\w-])').test(sel);})){hit=true;}
           });
-          if(hit){ rulesOut.push(rule.cssText); scanAnims(rule.cssText); if(/animation(-name)?\\s*:/.test(rule.cssText)) animSel.add(rule.selectorText); }
+          if(hit){ var txt=authored(rule); rulesOut.push(txt); scanAnims(txt); if(/animation(-name)?\\s*:/.test(txt)) animSel.add(rule.selectorText); }
         }
       }
-      for(var rk=0; rk<rules.length; rk++){ if(rules[rk].type===7 && kf.has(rules[rk].name)) rulesOut.push(rules[rk].cssText); }
+      for(var rk=0; rk<rules.length; rk++){ if(rules[rk].type===7 && kf.has(rules[rk].name)) rulesOut.push(authored(rules[rk])); }
       // @media blocks (prefers-reduced-motion, responsive) whose child selectors reference
       // this facet's classes — carry them so a standalone copy keeps its reduced-motion /
       // responsive behaviour instead of silently animating through prefers-reduced-motion.
@@ -99,7 +147,7 @@ const EXTRACT_FN = `function extractInPage(gallery, d){
               var mhit=false;
               classes.forEach(function(c){ if(mhit) return;
                 if(cr.selectorText.split(/[\\s,>+~]+/).some(function(sel){return sel.indexOf('.'+c)!==-1 && new RegExp('\\\\.'+c+'(?![\\\\w-])').test(sel);})){mhit=true;} });
-              if(mhit) mkids.push(cr.cssText);
+              if(mhit) mkids.push(authored(cr));
             }
           }
           if(mkids.length) rulesOut.push('@media '+(mr.media&&mr.media.mediaText||'')+'{'+mkids.join('')+'}');
@@ -208,7 +256,7 @@ const EXTRACT_FN = `function extractInPage(gallery, d){
   d.querySelectorAll('script[data-prism-init]').forEach(function(s){
     initializers[s.getAttribute('data-prism-init')]={ js:s.textContent.trim(), page:gallery };
   });
-  return { records:records, initializers:initializers };
+  return { records:records, initializers:initializers, unrecovered:unrecovered.size };
 }`;
 
 let ws, id = 0; const pending = new Map();
@@ -296,6 +344,7 @@ try {
     const r = await send('Runtime.evaluate', { expression: expr, returnByValue: true });
     let recs; try { recs = JSON.parse(r.result.value); } catch { recs = { err: 'parse ' + r.result.value?.slice(0, 120) }; }
     if (recs.err) { console.log(g.gallery.padEnd(9), 'ERROR:', recs.err); failures.push(g.gallery); continue; }
+    if (recs.unrecovered) console.warn(g.gallery.padEnd(9), `WARN: ${recs.unrecovered} rule(s) still serialize an empty value (not recoverable from source text)`);
     if (recs.records) { Object.assign(initializers, recs.initializers || {}); recs = recs.records; }
     if (!recs.length) { console.log(g.gallery.padEnd(9), 'ERROR: 0 effects extracted'); failures.push(g.gallery); continue; }
     const sig = sigOf(recs);
