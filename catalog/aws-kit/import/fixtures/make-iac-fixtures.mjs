@@ -4,6 +4,9 @@
 //   tf-webapp-plan.json    terraform show -json of a plan: a VPC module with count, inline routes, module
 //                          outputs, count.index pairing, the CloudFormation webapp's architecture
 //   tf-queue-state.json    terraform show -json of a state: values only, edges from matching ids and ARNs
+//   tf-webapp-dualstack-plan.json  a dual-stack plan: IPv6 VPC and subnet blocks, an egress-only internet
+//                          gateway, inline and separate security group rules (IPv6 ::/0, a group reference,
+//                          a managed prefix list), the CloudFormation dual-stack webapp's architecture
 // The CloudFormation YAML/JSON fixtures and the sidecars are written by hand.
 //   node catalog/aws-kit/import/fixtures/make-iac-fixtures.mjs [outdir]
 import fs from 'node:fs';
@@ -139,9 +142,11 @@ const DIR = process.argv[2] || path.dirname(fileURLToPath(import.meta.url));
   const rootRes = [], rootConf = [];
   const rinst = (type, name, values) => rootRes.push({ address: `${type}.${name}`, mode: 'managed', type, name, provider_name: P, schema_version: 0, values, sensitive_values: {} });
   const rconf = (type, name, expressions) => rootConf.push({ address: `${type}.${name}`, mode: 'managed', type, name, provider_config_key: 'aws', expressions, schema_version: 0 });
+  // Terraform removes AWS's default allow-all egress when it creates a group: the config restates it, as the
+  // CloudFormation webapp's groups keep the default
   for (const [n, d] of [['alb', 'ALB, HTTPS from the internet'], ['app', 'App tier'], ['db', 'Database']]) {
-    rinst('aws_security_group', n, { name: `webapp-${n}`, description: d, tags: { Name: `webapp-${n}` } });
-    rconf('aws_security_group', n, { name: C(`webapp-${n}`), description: C(d), vpc_id: Rf('module.vpc.vpc_id', 'module.vpc') });
+    rinst('aws_security_group', n, { name: `webapp-${n}`, description: d, egress: [{ cidr_blocks: ['0.0.0.0/0'], description: '', from_port: 0, ipv6_cidr_blocks: [], prefix_list_ids: [], protocol: '-1', security_groups: [], self: false, to_port: 0 }], tags: { Name: `webapp-${n}` } });
+    rconf('aws_security_group', n, { name: C(`webapp-${n}`), description: C(d), vpc_id: Rf('module.vpc.vpc_id', 'module.vpc'), egress: [{ from_port: C(0), to_port: C(0), protocol: C('-1'), cidr_blocks: C(['0.0.0.0/0']) }] });
 }
   rinst('aws_vpc_security_group_ingress_rule', 'alb_https', { cidr_ipv4: '0.0.0.0/0', from_port: 443, to_port: 443, ip_protocol: 'tcp' });
   rconf('aws_vpc_security_group_ingress_rule', 'alb_https', { security_group_id: Rf('aws_security_group.alb.id', 'aws_security_group.alb'), cidr_ipv4: C('0.0.0.0/0'), from_port: C(443), to_port: C(443), ip_protocol: C('tcp') });
@@ -215,4 +220,96 @@ const DIR = process.argv[2] || path.dirname(fileURLToPath(import.meta.url));
   const state = { format_version: '1.0', terraform_version: '1.9.8', values: { root_module: { resources: S } } };
   fs.writeFileSync(path.join(DIR, "tf-queue-state.json"), JSON.stringify(state, null, 1) + '\n');
   console.log('tf-webapp-plan.json', allRes.length, 'instances; tf-queue-state.json', S.length);
+}
+{
+  // the dual-stack webapp as a flat root module with count: the same groups, rules and story as
+  // cfn-webapp-dualstack.yaml (the sidecar's anchors name them alike); documentation addresses only
+  const P = 'registry.terraform.io/hashicorp/aws';
+  const C = (v) => ({ constant_value: v });
+  const Rf = (...r) => ({ references: r });
+  const azs = ['us-east-1a', 'us-east-1b'];
+  const res = [], cfg = [];
+  const inst = (type, name, index, values) => res.push({ address: `${type}.${name}${index == null ? '' : `[${index}]`}`, mode: 'managed', type, name, ...(index == null ? {} : { index }), provider_name: P, schema_version: 0, values, sensitive_values: {} });
+  const conf = (type, name, expressions, count) => cfg.push({ address: `${type}.${name}`, mode: 'managed', type, name, provider_config_key: 'aws', expressions, schema_version: 0, ...(count ? { count_expression: count } : {}) });
+  const vpc = Rf('aws_vpc.main.id', 'aws_vpc.main');
+  inst('aws_vpc', 'main', null, { cidr_block: '10.0.0.0/16', ipv6_cidr_block: '2001:db8:1200::/56', ipv6_ipam_pool_id: 'ipam-pool-example', enable_dns_hostnames: true, enable_dns_support: true, tags: { Name: 'webapp' } });
+  conf('aws_vpc', 'main', { cidr_block: C('10.0.0.0/16'), ipv6_cidr_block: C('2001:db8:1200::/56'), ipv6_ipam_pool_id: Rf('var.ipv6_pool'), enable_dns_hostnames: C(true), tags: C({ Name: 'webapp' }) });
+  inst('aws_internet_gateway', 'main', null, { tags: { Name: 'webapp' } });
+  conf('aws_internet_gateway', 'main', { vpc_id: vpc });
+  inst('aws_egress_only_internet_gateway', 'main', null, { tags: { Name: 'webapp' } });
+  conf('aws_egress_only_internet_gateway', 'main', { vpc_id: vpc });
+  const v6 = (n) => (n ? `2001:db8:1200:${n}::/64` : '2001:db8:1200::/64');
+  for (const [t, base, pub] of [['public', 0, true], ['private', 10, false]]) {
+    azs.forEach((az, i) => inst('aws_subnet', t, i, { cidr_block: `10.0.${base + i}.0/24`, ipv6_cidr_block: v6(base + i), assign_ipv6_address_on_creation: true, availability_zone: az, map_public_ip_on_launch: pub, tags: { Name: `webapp-${t}-${az}` } }));
+    conf('aws_subnet', t, { vpc_id: vpc, cidr_block: Rf('var.vpc_cidr', 'count.index'), ipv6_cidr_block: Rf('aws_vpc.main.ipv6_cidr_block', 'aws_vpc.main', 'count.index'), assign_ipv6_address_on_creation: C(true), availability_zone: Rf('var.azs', 'count.index'), map_public_ip_on_launch: C(pub) }, Rf('var.azs'));
+  }
+  azs.forEach((az, i) => inst('aws_eip', 'nat', i, { domain: 'vpc' }));
+  conf('aws_eip', 'nat', { domain: C('vpc') }, Rf('var.azs'));
+  azs.forEach((az, i) => inst('aws_nat_gateway', 'main', i, { connectivity_type: 'public', tags: { Name: `webapp-${az}` } }));
+  conf('aws_nat_gateway', 'main', { allocation_id: Rf('aws_eip.nat', 'count.index'), subnet_id: Rf('aws_subnet.public', 'count.index') }, Rf('var.azs'));
+  const routes = [{ cidr_block: '0.0.0.0/0', ipv6_cidr_block: '' }, { cidr_block: '', ipv6_cidr_block: '::/0' }];
+  const igw = Rf('aws_internet_gateway.main.id', 'aws_internet_gateway.main');
+  inst('aws_route_table', 'public', null, { route: routes, tags: { Name: 'webapp-public' } });
+  conf('aws_route_table', 'public', { vpc_id: vpc, route: [{ cidr_block: C('0.0.0.0/0'), gateway_id: igw }, { ipv6_cidr_block: C('::/0'), gateway_id: igw }] });
+  azs.forEach((az, i) => inst('aws_route_table_association', 'public', i, {}));
+  conf('aws_route_table_association', 'public', { subnet_id: Rf('aws_subnet.public', 'count.index'), route_table_id: Rf('aws_route_table.public.id', 'aws_route_table.public') }, Rf('var.azs'));
+  // private subnets: IPv4 out through their AZ's NAT gateway, IPv6 out through the egress-only internet gateway
+  azs.forEach((az, i) => inst('aws_route_table', 'private', i, { route: routes, tags: { Name: `webapp-private-${az}` } }));
+  conf('aws_route_table', 'private', { vpc_id: vpc, route: [{ cidr_block: C('0.0.0.0/0'), nat_gateway_id: Rf('aws_nat_gateway.main', 'count.index') }, { ipv6_cidr_block: C('::/0'), egress_only_gateway_id: Rf('aws_egress_only_internet_gateway.main.id', 'aws_egress_only_internet_gateway.main') }] }, Rf('var.azs'));
+  azs.forEach((az, i) => inst('aws_route_table_association', 'private', i, {}));
+  conf('aws_route_table_association', 'private', { subnet_id: Rf('aws_subnet.private', 'count.index'), route_table_id: Rf('aws_route_table.private', 'count.index') }, Rf('var.azs'));
+  inst('aws_ec2_managed_prefix_list', 'corp', null, { name: 'corp-offices', address_family: 'IPv4', max_entries: 4, entry: [{ cidr: '198.51.100.0/24', description: 'head office' }, { cidr: '203.0.113.0/24', description: 'branch office' }] });
+  conf('aws_ec2_managed_prefix_list', 'corp', { name: C('corp-offices'), address_family: C('IPv4'), max_entries: C(4), entry: [{ cidr: C('198.51.100.0/24'), description: C('head office') }, { cidr: C('203.0.113.0/24'), description: C('branch office') }] });
+  // groups: inline rules where the CloudFormation template has them inline, separate ones where it has a
+  // separate resource (or a reference cycle forbids inline rules)
+  const block = (from, to, proto, v4, v6) => ({ cidr_blocks: v4, description: '', from_port: from, ipv6_cidr_blocks: v6, prefix_list_ids: [], protocol: proto, security_groups: [], self: false, to_port: to });
+  const blockConf = (from, to, proto, v4, v6) => ({ from_port: C(from), to_port: C(to), protocol: C(proto), cidr_blocks: C(v4), ipv6_cidr_blocks: C(v6) });
+  const https = [443, 443, 'tcp', ['0.0.0.0/0'], ['::/0']], all = [0, 0, '-1', ['0.0.0.0/0'], ['::/0']];
+  for (const [n, d, ingress, egress] of [
+    ['alb', 'ALB, HTTPS from the internet over IPv4 and IPv6', https, all],
+    ['app', 'App tier, 8080 from the ALB, SSH from the offices; out to HTTPS and the database only', null, https],
+    ['db', 'DB tier, 5432 from the app tier only', null, all],
+  ]) {
+    inst('aws_security_group', n, null, { name: `webapp-${n}`, description: d, ...(ingress ? { ingress: [block(...ingress)] } : {}), egress: [block(...egress)], tags: { Name: `webapp-${n}` } });
+    conf('aws_security_group', n, { name: C(`webapp-${n}`), description: C(d), vpc_id: vpc, ...(ingress ? { ingress: [blockConf(...ingress)] } : {}), egress: [blockConf(...egress)] });
+  }
+  const rule = (type, name, sg, port, peer) => {
+    inst(type, name, null, { from_port: port, to_port: port, ip_protocol: 'tcp' });
+    conf(type, name, { security_group_id: Rf(`aws_security_group.${sg}.id`, `aws_security_group.${sg}`), from_port: C(port), to_port: C(port), ip_protocol: C('tcp'), ...peer });
+  };
+  rule('aws_vpc_security_group_ingress_rule', 'app_from_alb', 'app', 8080, { referenced_security_group_id: Rf('aws_security_group.alb.id', 'aws_security_group.alb') });
+  rule('aws_vpc_security_group_ingress_rule', 'app_ssh_corp', 'app', 22, { prefix_list_id: Rf('aws_ec2_managed_prefix_list.corp.id', 'aws_ec2_managed_prefix_list.corp') });
+  rule('aws_vpc_security_group_egress_rule', 'app_to_db', 'app', 5432, { referenced_security_group_id: Rf('aws_security_group.db.id', 'aws_security_group.db') });
+  rule('aws_vpc_security_group_ingress_rule', 'db_from_app', 'db', 5432, { referenced_security_group_id: Rf('aws_security_group.app.id', 'aws_security_group.app') });
+  inst('aws_lb', 'web', null, { name: 'webapp', internal: false, load_balancer_type: 'application', ip_address_type: 'dualstack', tags: { Name: 'webapp' } });
+  conf('aws_lb', 'web', { name: C('webapp'), internal: C(false), load_balancer_type: C('application'), ip_address_type: C('dualstack'), subnets: Rf('aws_subnet.public'), security_groups: Rf('aws_security_group.alb.id', 'aws_security_group.alb') });
+  inst('aws_lb_target_group', 'app', null, { name: 'webapp-app', port: 8080, protocol: 'HTTP', target_type: 'instance' });
+  conf('aws_lb_target_group', 'app', { name: C('webapp-app'), port: C(8080), protocol: C('HTTP'), vpc_id: vpc });
+  inst('aws_lb_listener', 'https', null, { port: 443, protocol: 'HTTPS', default_action: [{ type: 'forward' }] });
+  conf('aws_lb_listener', 'https', { load_balancer_arn: Rf('aws_lb.web.arn', 'aws_lb.web'), port: C(443), protocol: C('HTTPS'), certificate_arn: Rf('var.certificate_arn'), default_action: [{ type: C('forward'), target_group_arn: Rf('aws_lb_target_group.app.arn', 'aws_lb_target_group.app') }] });
+  inst('aws_launch_template', 'app', null, { name_prefix: 'webapp-app-', instance_type: 't3.small' });
+  conf('aws_launch_template', 'app', { name_prefix: C('webapp-app-'), image_id: Rf('data.aws_ami.al2023.id', 'data.aws_ami.al2023'), instance_type: C('t3.small'), vpc_security_group_ids: Rf('aws_security_group.app.id', 'aws_security_group.app') });
+  inst('aws_autoscaling_group', 'app', null, { name: 'webapp-app', min_size: 2, max_size: 6, desired_capacity: 2, health_check_type: 'ELB', launch_template: [{ version: '$Latest' }] });
+  conf('aws_autoscaling_group', 'app', { name: C('webapp-app'), min_size: C(2), max_size: C(6), desired_capacity: C(2), vpc_zone_identifier: Rf('aws_subnet.private'), target_group_arns: Rf('aws_lb_target_group.app.arn', 'aws_lb_target_group.app'), launch_template: [{ id: Rf('aws_launch_template.app.id', 'aws_launch_template.app'), version: C('$Latest') }] });
+  inst('aws_db_subnet_group', 'db', null, { name: 'webapp-db' });
+  conf('aws_db_subnet_group', 'db', { name: C('webapp-db'), subnet_ids: Rf('aws_subnet.private') });
+  inst('aws_db_instance', 'db', null, { identifier: 'webapp-db', engine: 'postgres', instance_class: 'db.m6g.large', multi_az: true, network_type: 'DUAL', allocated_storage: 100, db_subnet_group_name: 'webapp-db' });
+  conf('aws_db_instance', 'db', { identifier: C('webapp-db'), engine: C('postgres'), instance_class: C('db.m6g.large'), multi_az: C(true), network_type: C('DUAL'), db_subnet_group_name: Rf('aws_db_subnet_group.db.name', 'aws_db_subnet_group.db'), vpc_security_group_ids: Rf('aws_security_group.db.id', 'aws_security_group.db') });
+  const plan = {
+    format_version: '1.2',
+    terraform_version: '1.9.8',
+    variables: { region: { value: 'us-east-1' }, azs: { value: azs }, ipv6_pool: { value: 'ipam-pool-example' }, certificate_arn: { value: 'arn:aws:acm:us-east-1:111122223333:certificate/example' } },
+    planned_values: { root_module: { resources: res } },
+    resource_changes: res.map((r) => ({ address: r.address, mode: 'managed', type: r.type, name: r.name, ...(r.index != null ? { index: r.index } : {}), provider_name: P, change: { actions: ['create'], before: null, after: r.values, after_unknown: { id: true, arn: true }, before_sensitive: false, after_sensitive: {} } })),
+    configuration: {
+      provider_config: { aws: { name: 'aws', full_name: P, version_constraint: '~> 5.80', expressions: { region: Rf('var.region') } } },
+      root_module: { resources: cfg, variables: { region: { default: 'us-east-1' }, azs: { default: azs }, ipv6_pool: {}, certificate_arn: {} } },
+    },
+    timestamp: '2026-10-10T12:00:00Z',
+    applyable: true,
+    complete: true,
+    errored: false,
+  };
+  fs.writeFileSync(path.join(DIR, 'tf-webapp-dualstack-plan.json'), JSON.stringify(plan, null, 1) + '\n');
+  console.log('tf-webapp-dualstack-plan.json', res.length, 'instances');
 }

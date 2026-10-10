@@ -176,6 +176,29 @@ test('import_diagram: CloudFormation and Terraform, with the flows sidecar, para
   await assert.rejects(call('import_diagram', { content: fixture('cfn-webapp.yaml'), flows: '{nope' }), (e) => e instanceof ToolError && e.code === 'invalid_argument');
 });
 
+test('import_diagram: rules draws security group rules as tables, the admitting row lit; dual stack from the template', async () => {
+  const flows = JSON.parse(fixture('cfn-webapp.flows.json'));
+  const r = await call('import_diagram', { content: fixture('cfn-webapp.yaml'), flows, rules: true });
+  assert.deepEqual(r.spec.tables.map((t) => t.title), ['AlbSg inbound rules', 'AppSg inbound rules', 'DbSg inbound rules']);
+  assert.ok(r.spec.tables.every((t) => t.rows.some((row) => row.tone === 'ok' && row.t)));
+  assert.deepEqual(r.report.rules.omitted, []);
+  assert.match(r.svg, /<g class="awd-table" data-table="AppSg-in">/);
+  const lint = await call('lint_diagram', { spec: r.spec });
+  assert.equal(lint.counts.error, 0, JSON.stringify(lint.findings.filter((f) => f.severity === 'error')));
+  // a list names the groups; the option beats the sidecar's rules; no option, no tables
+  const db = await call('import_diagram', { content: fixture('cfn-webapp.yaml'), flows: { ...flows, rules: true }, rules: ['DbSg'] });
+  assert.deepEqual(db.spec.tables.map((t) => t.id), ['DbSg-in']);
+  assert.equal((await call('import_diagram', { content: fixture('cfn-webapp.yaml'), flows })).spec.tables, undefined);
+  // Terraform: the dual-stack plan with its sidecar (rules: true inside), outbound tables for every group
+  const tf = await call('import_diagram', { content: fixture('tf-webapp-dualstack-plan.json'), flows: JSON.parse(fixture('tf-webapp-dualstack-plan.flows.json')), rules: { outbound: true } });
+  assert.equal(tf.report.from, 'tf');
+  assert.deepEqual(tf.spec.tables.map((t) => t.id), ['AlbSg-in', 'AlbSg-out', 'AppSg-in', 'AppSg-out', 'DbSg-in', 'DbSg-out']);
+  assert.ok(tf.spec.groups.some((g) => Array.isArray(g.note) && g.note[1] === '2001:db8:1200::/56'));
+  assert.ok(tf.spec.timeline.some((e) => e.v6));
+  assert.equal((await call('lint_diagram', { spec: tf.spec })).counts.error, 0);
+  await assert.rejects(call('import_diagram', { content: fixture('cfn-webapp.yaml'), rules: 3 }), (e) => e instanceof ToolError && e.code === 'invalid_argument');
+});
+
 test('export_diagram: a gallery diagram to draw.io (and back, animation restored), Mermaid and svg', async () => {
   const dio = await call('export_diagram', { id: 'aws-tt-classic', to: 'drawio' });
   assert.match(dio.text, /^<mxfile /);

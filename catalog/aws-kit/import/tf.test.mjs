@@ -163,6 +163,35 @@ test('a sidecar on a plan: addresses, anchors and qualifiers', () => {
   assert.ok(spec.nodes.some((n) => n.id === 'Web-az1'), 'the anchor names the node');
 });
 
+test('rules tables: the Terraform and CloudFormation dual-stack webapps draw the same tables, lit at the same moments', () => {
+  const side = JSON.parse(read('tf-webapp-dualstack-plan.flows.json'));
+  const tf = imp('tf-webapp-dualstack-plan.json', { flows: side });
+  const cfn = fromCloudFormation(read('cfn-webapp-dualstack.yaml'), { file: 'cfn-webapp-dualstack', flows: JSON.parse(read('cfn-webapp-dualstack.flows.json')) });
+  assert.deepEqual(errors(tf.report.issues), []);
+  assert.deepEqual(tf.report.issues.filter((i) => i.code === 'sidecar' || i.code === 'rules'), []);
+  const cards = (s) => s.tables.map(({ id, title, tone, cols, rows }) => ({ id, title, tone, cols, rows }));
+  assert.deepEqual(cards(tf.spec), cards(cfn.spec));
+  assert.equal(tf.spec.tables.length, 4);
+  assert.deepEqual(tf.report.rules.tables.map((t) => [t.id, t.group, t.lit]), [['AlbSg-in', 'aws_security_group.alb', 1], ['AppSg-in', 'aws_security_group.app', 1], ['AppSg-out', 'aws_security_group.app', 1], ['DbSg-in', 'aws_security_group.db', 1]]);
+  // inline blocks (one block, two families: two rows) and separate rule resources, each a fact with its evidence
+  assert.ok(tf.report.ledger.some((l) => /^aws_security_group\.alb allows HTTPS \(TCP 443\) in from ::\/0 \(IPv6\)/.test(l.fact)));
+  assert.ok(tf.report.ledger.some((l) => /^aws_security_group\.app allows SSH \(TCP 22\) in from the prefix list aws_ec2_managed_prefix_list\.corp \(corp-offices\)/.test(l.fact) && l.from.includes('aws_vpc_security_group_ingress_rule.app_ssh_corp')));
+  // dual stack from the plan: the VPC's and subnets' IPv6 blocks, the egress-only gateway and its ::/0 routes
+  const g = (id) => tf.spec.groups.find((x) => x.id === id);
+  assert.deepEqual(g('vpc-main').note, ['10.0.0.0/16', '2001:db8:1200::/56']);
+  assert.deepEqual(g('subnet-private-1').note, ['10.0.11.0/24', '2001:db8:1200:11::/64']);
+  assert.equal(tf.spec.nodes.find((n) => n.id === 'EgressOnlyInternetGateway').label, 'Egress-only internet gateway');
+  assert.ok(tf.report.ledger.some((l) => /^aws_subnet\.private\[1\] sends IPv6 traffic \(::\/0\) to the egress-only internet gateway aws_egress_only_internet_gateway\.main/.test(l.fact) && l.from.includes('aws_route_table.private[1]')));
+  assert.deepEqual(tf.spec.timeline.map((e) => !!e.v6), cfn.spec.timeline.map((e) => !!e.v6));
+  // a group the plan leaves without egress: Terraform removed AWS's default allow-all rule, so nothing goes out
+  const plan = JSON.parse(read('tf-webapp-dualstack-plan.json'));
+  const strip = (list) => { const r = list.find((x) => x.address === 'aws_security_group.db'); delete (r.values || r.expressions).egress; };
+  strip(plan.planned_values.root_module.resources); strip(plan.configuration.root_module.resources);
+  const none = fromTerraform(plan, { id: 'tf-noegress', flows: side, rules: { groups: ['DbSg'] } });
+  assert.deepEqual(none.spec.tables.map((t) => [t.id, t.rows.map((r) => r.cells[3])]), [['DbSg-in', ['AppSg', 'no match: denied']], ['DbSg-out', ['no match: denied']]]);
+  assert.ok(none.report.ledger.some((l) => /^aws_security_group\.db has no outbound rules: Terraform removes AWS's default allow-all egress rule when it creates a group$/.test(l.fact)));
+});
+
 test('raw HCL and other JSON are refused with a clear message; detection', async () => {
   const hcl = 'terraform {\n  required_providers {\n    aws = { source = "hashicorp/aws" }\n  }\n}\nresource "aws_s3_bucket" "b" {\n  bucket = "x"\n}\n';
   assert.throws(() => fromTerraform(hcl), (e) => e.message === HCL_MESSAGE);

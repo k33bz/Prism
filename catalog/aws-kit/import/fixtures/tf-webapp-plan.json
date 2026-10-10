@@ -25,6 +25,21 @@
      "values": {
       "name": "webapp-alb",
       "description": "ALB, HTTPS from the internet",
+      "egress": [
+       {
+        "cidr_blocks": [
+         "0.0.0.0/0"
+        ],
+        "description": "",
+        "from_port": 0,
+        "ipv6_cidr_blocks": [],
+        "prefix_list_ids": [],
+        "protocol": "-1",
+        "security_groups": [],
+        "self": false,
+        "to_port": 0
+       }
+      ],
       "tags": {
        "Name": "webapp-alb"
       }
@@ -41,6 +56,21 @@
      "values": {
       "name": "webapp-app",
       "description": "App tier",
+      "egress": [
+       {
+        "cidr_blocks": [
+         "0.0.0.0/0"
+        ],
+        "description": "",
+        "from_port": 0,
+        "ipv6_cidr_blocks": [],
+        "prefix_list_ids": [],
+        "protocol": "-1",
+        "security_groups": [],
+        "self": false,
+        "to_port": 0
+       }
+      ],
       "tags": {
        "Name": "webapp-app"
       }
@@ -57,6 +87,21 @@
      "values": {
       "name": "webapp-db",
       "description": "Database",
+      "egress": [
+       {
+        "cidr_blocks": [
+         "0.0.0.0/0"
+        ],
+        "description": "",
+        "from_port": 0,
+        "ipv6_cidr_blocks": [],
+        "prefix_list_ids": [],
+        "protocol": "-1",
+        "security_groups": [],
+        "self": false,
+        "to_port": 0
+       }
+      ],
       "tags": {
        "Name": "webapp-db"
       }
@@ -693,6 +738,21 @@
     "after": {
      "name": "webapp-alb",
      "description": "ALB, HTTPS from the internet",
+     "egress": [
+      {
+       "cidr_blocks": [
+        "0.0.0.0/0"
+       ],
+       "description": "",
+       "from_port": 0,
+       "ipv6_cidr_blocks": [],
+       "prefix_list_ids": [],
+       "protocol": "-1",
+       "security_groups": [],
+       "self": false,
+       "to_port": 0
+      }
+     ],
      "tags": {
       "Name": "webapp-alb"
      }
@@ -719,6 +779,21 @@
     "after": {
      "name": "webapp-app",
      "description": "App tier",
+     "egress": [
+      {
+       "cidr_blocks": [
+        "0.0.0.0/0"
+       ],
+       "description": "",
+       "from_port": 0,
+       "ipv6_cidr_blocks": [],
+       "prefix_list_ids": [],
+       "protocol": "-1",
+       "security_groups": [],
+       "self": false,
+       "to_port": 0
+      }
+     ],
      "tags": {
       "Name": "webapp-app"
      }
@@ -745,6 +820,21 @@
     "after": {
      "name": "webapp-db",
      "description": "Database",
+     "egress": [
+      {
+       "cidr_blocks": [
+        "0.0.0.0/0"
+       ],
+       "description": "",
+       "from_port": 0,
+       "ipv6_cidr_blocks": [],
+       "prefix_list_ids": [],
+       "protocol": "-1",
+       "security_groups": [],
+       "self": false,
+       "to_port": 0
+      }
+     ],
      "tags": {
       "Name": "webapp-db"
      }
@@ -1822,7 +1912,25 @@
         "module.vpc.vpc_id",
         "module.vpc"
        ]
-      }
+      },
+      "egress": [
+       {
+        "from_port": {
+         "constant_value": 0
+        },
+        "to_port": {
+         "constant_value": 0
+        },
+        "protocol": {
+         "constant_value": "-1"
+        },
+        "cidr_blocks": {
+         "constant_value": [
+          "0.0.0.0/0"
+         ]
+        }
+       }
+      ]
      },
      "schema_version": 0
     },
@@ -1844,7 +1952,25 @@
         "module.vpc.vpc_id",
         "module.vpc"
        ]
-      }
+      },
+      "egress": [
+       {
+        "from_port": {
+         "constant_value": 0
+        },
+        "to_port": {
+         "constant_value": 0
+        },
+        "protocol": {
+         "constant_value": "-1"
+        },
+        "cidr_blocks": {
+         "constant_value": [
+          "0.0.0.0/0"
+         ]
+        }
+       }
+      ]
      },
      "schema_version": 0
     },
@@ -1866,7 +1992,25 @@
         "module.vpc.vpc_id",
         "module.vpc"
        ]
-      }
+      },
+      "egress": [
+       {
+        "from_port": {
+         "constant_value": 0
+        },
+        "to_port": {
+         "constant_value": 0
+        },
+        "protocol": {
+         "constant_value": "-1"
+        },
+        "cidr_blocks": {
+         "constant_value": [
+          "0.0.0.0/0"
+         ]
+        }
+       }
+      ]
      },
      "schema_version": 0
     },

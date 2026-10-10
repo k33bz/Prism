@@ -12,7 +12,7 @@
 // addresses become kit ids with tfId(). Raw HCL is rejected: Terraform alone knows how to expand it.
 //
 // CLI: node catalog/aws-kit/import/tf.mjs plan.json [--flows sidecar.json] [--id x] [--story id|none|guess]
-//        [--out spec.json] [--svg out.svg] [--theme light|dark] [--ledger]
+//        [--rules [AppSg,DbSg]] [--out spec.json] [--svg out.svg] [--theme light|dark] [--ledger]
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -228,11 +228,14 @@ export function fromTerraform(content, opts = {}) {
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   const args = process.argv.slice(2);
   let file = null;
-  for (let i = 0; i < args.length; i++) { if (args[i] === '--ledger') continue; if (args[i].startsWith('--')) { i++; continue; } file = file || args[i]; }
+  // --rules takes a list of groups when one follows (--rules AppSg,DbSg or --rules=AppSg,DbSg), else it means every group
+  const bare = (i) => args[i] === '--rules' && (!args[i + 1] || args[i + 1].startsWith('--') || fs.existsSync(args[i + 1]));
+  const rulesArg = (a) => { const i = a.findIndex((x) => x === '--rules' || x.startsWith('--rules=')); return i < 0 ? undefined : a[i].startsWith('--rules=') ? a[i].slice(8) : bare(i) ? true : a[i + 1]; };
+  for (let i = 0; i < args.length; i++) { if (args[i] === '--ledger' || bare(i) || args[i].startsWith('--rules=')) continue; if (args[i].startsWith('--')) { i++; continue; } file = file || args[i]; }
   const opt = (k) => { const i = args.indexOf(k); return i >= 0 ? args[i + 1] : undefined; };
-  if (!file) { console.error('usage: tf.mjs <plan.json> [--flows sidecar.json] [--id x] [--story id|none|guess] [--out spec.json] [--svg out.svg] [--theme light|dark] [--ledger]'); process.exit(1); }
+  if (!file) { console.error('usage: tf.mjs <plan.json> [--flows sidecar.json] [--id x] [--story id|none|guess] [--rules [AppSg,DbSg]] [--out spec.json] [--svg out.svg] [--theme light|dark] [--ledger]'); process.exit(1); }
   const flows = opt('--flows') ? JSON.parse(fs.readFileSync(opt('--flows'), 'utf8')) : null;
-  const { spec, report } = fromTerraform(fs.readFileSync(file, 'utf8'), { file: path.basename(file).replace(/\.json$/i, ''), id: opt('--id'), flows, story: opt('--story') });
+  const { spec, report } = fromTerraform(fs.readFileSync(file, 'utf8'), { file: path.basename(file).replace(/\.json$/i, ''), id: opt('--id'), flows, story: opt('--story'), rules: rulesArg(args) });
   const n = (s) => report.issues.filter((i) => i.severity === s).length;
   console.log(`tf: ${spec.id} ${spec.w}x${spec.h} (${report.tile.size}), ${spec.nodes.length} nodes, ${spec.groups.length} groups, ${spec.wires.length} wires, ${(spec.steps || []).length} steps, ${(spec.timeline || []).length} legs; ${n('error')} error, ${n('warn')} warn, ${n('info')} info; lint ${report.lint.filter((f) => f.severity === 'error').length} error`);
   for (const i of report.issues.filter((x) => x.severity !== 'info')) console.log(`  ${i.severity.padEnd(5)} ${i.code.padEnd(14)} ${i.message}`);

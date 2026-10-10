@@ -384,6 +384,149 @@ test('Parameters and Conditions: defaults, overrides, NoValue, FindInMap, Import
   assert.equal(dev.report.resources.find((r) => r.key === 'AppInstanceA').as, 'node');
 });
 
+test('rules tables: the webapp groups as console tables beside the drawing, the admitting row lit while the request crosses', () => {
+  const { spec, report } = webapp({ flows: flows(), rules: true });
+  assertClean(spec, report, 'webapp rules');
+  const t = (id) => spec.tables.find((x) => x.id === id);
+  assert.deepEqual(spec.tables.map((x) => x.title), ['AlbSg inbound rules', 'AppSg inbound rules', 'DbSg inbound rules'], 'in the order the story reaches them');
+  assert.ok(spec.tables.every((x) => x.tone === 'security' && x.cols.join() === 'Type,Protocol,Port range,Source'));
+  const win = (a, b) => spec.timeline.find((e) => e.wire === wireBy(spec, a, b).id && !e.reverse).t;
+  assert.deepEqual(t('AlbSg-in').rows, [{ cells: ['HTTP', 'TCP', '80', '0.0.0.0/0'], t: win('InternetGateway', 'LoadBalancer-az1'), tone: 'ok' }, { cells: ['All traffic', 'All', 'All', 'no match: denied'], tone: 'muted' }]);
+  assert.deepEqual(t('AppSg-in').rows[0], { cells: ['Custom TCP', 'TCP', '8080', 'AlbSg'], t: win('LoadBalancer-az1', 'AppAsg-az1'), tone: 'ok' });
+  assert.deepEqual(t('DbSg-in').rows[0], { cells: ['PostgreSQL', 'TCP', '5432', 'AppSg'], t: win('AppAsg-az1', 'Database-primary'), tone: 'ok' });
+  // a column right of the AWS Cloud frame from the VPC's top, in a full tile
+  const cloud = spec.groups.find((g) => g.kind === 'cloud'), vpc = spec.groups.find((g) => g.kind === 'vpc');
+  for (const x of spec.tables) assert.ok(x.x > cloud.x + cloud.w && x.x + x.w <= spec.w && x.y >= vpc.y, x.id);
+  assert.ok(spec.full && spec.w <= 1400 && spec.h <= 900);
+  assert.deepEqual(report.rules, { tables: [{ id: 'AlbSg-in', group: 'AlbSg', dir: 'in', rows: 2, lit: 1 }, { id: 'AppSg-in', group: 'AppSg', dir: 'in', rows: 2, lit: 1 }, { id: 'DbSg-in', group: 'DbSg', dir: 'in', rows: 2, lit: 1 }], omitted: [], placed: 'right' });
+  assert.equal(report.tile.w, spec.w);
+  assert.match(spec.desc, /Rules tables list the security group rules; the row that admits a request lights as its packet arrives\.$/);
+  // the ledger: each row with its evidence, the lit rows, the outbound rules not shown
+  const L = report.ledger;
+  const has = (re, ...keys) => { const l = L.find((x) => re.test(x.fact)); assert.ok(l, String(re)); for (const k of keys) assert.ok(l.from.includes(k), `${l.fact}: from lacks ${k}`); return l; };
+  has(/^AppSg allows Custom TCP \(TCP 8080\) in from the security group AlbSg \(row 1 of its inbound rules table\)$/, 'AppSg', 'AlbSg');
+  has(/^DbSg drops any other inbound traffic: security groups only allow/, 'DbSg');
+  assert.equal(has(/^story: DbSg's inbound rule PostgreSQL \(TCP 5432\) from the security group AppSg admits EC2 instance \(AppAsg\) to RDS primary \(Database\) on :5432/, 'LaunchTemplate', 'Database').via, 'sidecar');
+  assert.equal(has(/^AppSg's outbound rules are not shown \(unrestricted; rules \{ outbound: true \} shows them\): all traffic to 0\.0\.0\.0\/0, the default rule$/, 'AppSg').kind, 'dropped');
+  // only when asked; the option beats the sidecar; a list names the groups; outbound tables on demand
+  assert.equal(webapp({ flows: flows() }).spec.tables, undefined);
+  assert.equal(webapp({ flows: { ...flows(), rules: true }, rules: false }).spec.tables, undefined);
+  const db = webapp({ flows: flows(), rules: ['DbSg'] });
+  assert.deepEqual(db.spec.tables.map((x) => x.id), ['DbSg-in']);
+  assert.deepEqual(db.report.rules.omitted, [{ group: 'AlbSg', why: 'the rules option names DbSg' }, { group: 'AppSg', why: 'the rules option names DbSg' }]);
+  assert.ok(db.report.ledger.some((l) => l.kind === 'dropped' && l.fact === "AlbSg's rules are not shown: the rules option names DbSg"));
+  const out = webapp({ rules: { outbound: true } });
+  assertClean(out.spec, out.report, 'webapp outbound');
+  assert.deepEqual(out.spec.tables.find((x) => x.id === 'AppSg-out').rows, [{ cells: ['All traffic', 'All', 'All', '0.0.0.0/0 (default)'], tone: 'muted' }, { cells: ['All traffic', 'All', 'All', 'no match: denied'], tone: 'muted' }]);
+  assert.ok(webapp({ rules: ['Nope'] }).report.issues.some((i) => i.code === 'rules' && i.severity === 'warn' && /Nope, which is not a security group/.test(i.message)));
+});
+
+test('dual stack: both CIDRs on the frames, the egress-only internet gateway, IPv6 packets as diamonds, the ::/0 row lit', () => {
+  const side = sidecarOf('cfn-webapp-dualstack.yaml');
+  const { spec, report } = imp('cfn-webapp-dualstack.yaml', { flows: side });
+  assertClean(spec, report, 'dual stack');
+  const g = (id) => spec.groups.find((x) => x.id === id), n = (id) => spec.nodes.find((x) => x.id === id), t = (id) => spec.tables.find((x) => x.id === id);
+  assert.deepEqual(g('Vpc').note, ['10.0.0.0/16', '2001:db8:1200::/56']);
+  assert.deepEqual(g('PublicSubnet1').note, ['10.0.0.0/24', '2001:db8:1200::/64']);
+  assert.deepEqual(g('PrivateSubnet2').note, ['10.0.11.0/24', '2001:db8:1200:11::/64']);
+  // the second note line sits inside the frame: the content starts below it
+  for (const s of ['PublicSubnet1', 'PrivateSubnet1']) assert.ok(spec.nodes.filter((x) => x.x > g(s).x && x.x < g(s).x + g(s).w && x.y > g(s).y && x.y < g(s).y + g(s).h).every((x) => x.y >= g(s).y + 30), s);
+  const eigw = n('EgressOnlyInternetGateway');
+  assert.equal(eigw.icon, 'aws-res-vpc-internet-gateway');
+  assert.equal(eigw.label, 'Egress-only internet gateway');
+  assert.ok(eigw.x < g('az1').x, 'on the VPC edge with the internet gateway');
+  assert.ok(report.issues.some((i) => i.code === 'kit-gap' && /egress-only internet gateway/.test(i.message)));
+  assert.ok(!report.unmapped.length);
+  const L = report.ledger;
+  const has = (re, ...keys) => { const l = L.find((x) => re.test(x.fact)); assert.ok(l, String(re)); for (const k of keys) assert.ok(l.from.includes(k), `${l.fact}: from lacks ${k}`); return l; };
+  has(/^Vpc is dual-stack: VpcIpv6Block gives it the IPv6 block 2001:db8:1200::\/56$/, 'Vpc', 'VpcIpv6Block');
+  has(/^PrivateSubnet1 is dual-stack: its IPv6 CIDR is 2001:db8:1200:10::\/64$/, 'PrivateSubnet1');
+  has(/^PrivateSubnet1 sends IPv6 traffic \(::\/0\) to the egress-only internet gateway EgressOnlyInternetGateway: IPv6 out only/, 'PrivateRouteTable1', 'PrivateIpv6Route1', 'EgressOnlyInternetGateway');
+  has(/^PublicSubnet2 sends IPv6 traffic \(::\/0\) to the internet gateway InternetGateway: IPv6 in and out$/, 'PublicDefaultRouteIpv6');
+  has(/^PublicSubnet1 is a public subnet: route table PublicRouteTable sends 0\.0\.0\.0\/0 to the internet gateway/, 'PublicDefaultRoute');
+  // IPv6 to the dual-stack load balancer, IPv4 from it to its targets; the responses keep their hop's shape
+  assert.deepEqual(spec.timeline.map((e) => !!e.v6), [true, true, false, false, false, false, false, true, true]);
+  assert.equal(spec.steps[0].text, 'A browser opens the site over IPv6: the load balancer is dual-stack.');
+  assert.deepEqual(spec.legend && Object.keys(spec.legend), ['x', 'y'], 'the IPv4/IPv6 key under the tables');
+  assert.match(standalone(spec, { theme: 'light' }), /class="pk pk-v6"[\s\S]*>IPv6 packet</);
+  // rules: the IPv6 source on its own row; the prefix list and the group references by name; AppSg's restricted egress
+  const win = (i) => spec.timeline[i].t;
+  assert.deepEqual(spec.tables.map((x) => x.id), ['AlbSg-in', 'AppSg-in', 'AppSg-out', 'DbSg-in']);
+  assert.deepEqual(t('AlbSg-in').rows, [{ cells: ['HTTPS', 'TCP', '443', '0.0.0.0/0'] }, { cells: ['HTTPS', 'TCP', '443', '::/0'], t: win(1), tone: 'ok' }, { cells: ['All traffic', 'All', 'All', 'no match: denied'], tone: 'muted' }]);
+  assert.deepEqual(t('AppSg-in').rows.map((r) => r.cells), [['Custom TCP', 'TCP', '8080', 'AlbSg'], ['SSH', 'TCP', '22', 'prefix list corp-offices'], ['All traffic', 'All', 'All', 'no match: denied']]);
+  assert.equal(t('AppSg-out').title, 'AppSg outbound rules');
+  assert.deepEqual(t('AppSg-out').cols, ['Type', 'Protocol', 'Port range', 'Destination']);
+  assert.deepEqual(t('AppSg-out').rows.map((r) => [r.cells[3], r.t || null]), [['0.0.0.0/0', null], ['::/0', null], ['DbSg', win(3)], ['no match: denied', null]]);
+  assert.deepEqual(t('DbSg-in').rows[0], { cells: ['PostgreSQL', 'TCP', '5432', 'AppSg'], t: win(3), tone: 'ok' });
+  has(/^AppSg allows PostgreSQL \(TCP 5432\) out to the security group DbSg \(row 3 of its outbound rules table\)$/, 'AppToDbEgress', 'DbSg');
+  has(/^AppSg allows SSH \(TCP 22\) in from the prefix list CorpPrefixList \(corp-offices\)/, 'CorpPrefixList');
+  assert.ok(!L.some((l) => l.kind === 'dropped' && /^(CorpPrefixList|AppToDbEgress) /.test(l.fact)), 'a rule a table shows is not dropped');
+  has(/^DbSg's outbound rules are not shown .*all traffic to 0\.0\.0\.0\/0, the default rule; all traffic to ::\/0 \(IPv6\), the default rule$/);
+  // the IPv4 flow lights the 0.0.0.0/0 row instead
+  const v4 = imp('cfn-webapp-dualstack.yaml', { flows: side, story: 'page-view' }).spec.tables[0].rows;
+  assert.ok(v4[0].t && !v4[1].t);
+  // a failed packet no rule admits lights the implicit deny red; a request no rule admits is reported
+  const bad = imp('cfn-webapp-dualstack.yaml', { flows: { ...side, flows: [{ id: 'ssh', steps: [{ from: 'Users', to: 'InternetGateway' }, { from: 'InternetGateway', to: 'LoadBalancer@az1', label: 'SSH :22', kind: 'bad' }] }] } });
+  assertClean(bad.spec, bad.report, 'denied');
+  assert.deepEqual(bad.spec.tables[0].rows[2], { cells: ['All traffic', 'All', 'All', 'no match: denied'], t: bad.spec.timeline[1].t, tone: 'bad' });
+  const told = imp('cfn-webapp-dualstack.yaml', { flows: { ...side, flows: [{ id: 'ssh', steps: [{ from: 'Users', to: 'InternetGateway' }, { from: 'InternetGateway', to: 'LoadBalancer@az1', label: 'SSH :22' }] }] } });
+  assert.ok(told.report.issues.some((i) => i.code === 'rules' && i.severity === 'warn' && /on :22: no inbound rule of AlbSg admits it/.test(i.message)));
+  // every resource of the template is accounted for
+  const named = new Set(L.flatMap((l) => l.from));
+  assert.deepEqual(Object.keys(loadTemplate(read('cfn-webapp-dualstack.yaml')).Resources).filter((k) => !named.has(k)), []);
+});
+
+test('rule rows read like the console; a table holds 12 rows; groups that find no room are listed', () => {
+  const sg = (ingress, extra = {}) => ({ Type: 'AWS::EC2::SecurityGroup', Properties: { GroupDescription: 'x', VpcId: { Ref: 'Vpc' }, SecurityGroupIngress: ingress, ...extra } });
+  const tpl = { Resources: {
+    Vpc: { Type: 'AWS::EC2::VPC', Properties: { CidrBlock: '10.1.0.0/16' } },
+    Sub: { Type: 'AWS::EC2::Subnet', Properties: { VpcId: { Ref: 'Vpc' }, CidrBlock: '10.1.0.0/24' } },
+    Mixed: sg([
+      { IpProtocol: 'tcp', FromPort: 1024, ToPort: 65535, CidrIp: { 'Fn::GetAtt': ['Vpc', 'CidrBlock'] } },
+      { IpProtocol: 'icmp', FromPort: -1, ToPort: -1, CidrIp: '192.0.2.0/24' },
+      { IpProtocol: 'udp', FromPort: 53, ToPort: 53, CidrIp: '10.1.0.0/16' },
+      { IpProtocol: 'tcp', FromPort: 443, ToPort: 443, SourcePrefixListId: 'pl-example' },
+      { IpProtocol: 'tcp', FromPort: 0, ToPort: 65535, SourceSecurityGroupId: { 'Fn::ImportValue': 'shared-sg' } },
+      { IpProtocol: '-1', CidrIpv6: '2001:db8::/32' },
+    ], { SecurityGroupEgress: [{ CidrIp: '255.255.255.255/32', Description: 'Disallow all traffic', FromPort: 252, IpProtocol: 'icmp', ToPort: 86 }] }),
+    MixedSelf: { Type: 'AWS::EC2::SecurityGroupIngress', Properties: { GroupId: { Ref: 'Mixed' }, IpProtocol: 'tcp', FromPort: 7000, ToPort: 7001, SourceSecurityGroupId: { Ref: 'Mixed' } } },
+    Big: sg(Array.from({ length: 14 }, (_, k) => ({ IpProtocol: 'tcp', FromPort: 8000 + k, ToPort: 8000 + k, CidrIp: '10.1.0.0/16' }))),
+    Box: { Type: 'AWS::EC2::Instance', Properties: { SubnetId: { Ref: 'Sub' }, SecurityGroupIds: [{ Ref: 'Mixed' }, { Ref: 'Big' }] } },
+  } };
+  const { spec, report } = fromCloudFormation(tpl, { id: 'cfn-rules', rules: { outbound: true } });
+  assertClean(spec, report, 'console rows');
+  const t = (id) => spec.tables.find((x) => x.id === id);
+  assert.deepEqual(t('Mixed-in').rows.map((r) => r.cells), [
+    ['Custom TCP', 'TCP', '1024 - 65535', '10.1.0.0/16'], ['All ICMP - IPv4', 'ICMP', 'All', '192.0.2.0/24'], ['DNS (UDP)', 'UDP', '53', '10.1.0.0/16'],
+    ['HTTPS', 'TCP', '443', 'prefix list pl-example'], ['All TCP', 'TCP', '0 - 65535', 'not in the source'], ['All traffic', 'All', 'All', '2001:db8::/32'],
+    ['Custom TCP', 'TCP', '7000 - 7001', 'Mixed (itself)'], ['All traffic', 'All', 'All', 'no match: denied']]);
+  assert.ok(report.ledger.some((l) => /^Mixed allows Custom TCP \(TCP 1024 - 65535\) in from 10\.1\.0\.0\/16 \(Vpc's block\)/.test(l.fact) && l.from.includes('Vpc')));
+  // CDK's placeholder egress leaves no outbound rule
+  assert.deepEqual(t('Mixed-out').rows.map((r) => r.cells[3]), ['no match: denied']);
+  assert.ok(report.ledger.some((l) => /^Mixed has no outbound rules: CDK's placeholder rule/.test(l.fact)));
+  // 14 rules: 10 rows, a "more" row and the deny; the rest in the ledger
+  assert.equal(t('Big-in').rows.length, 12);
+  assert.deepEqual(t('Big-in').rows[10], { cells: ['...', '', '', '4 more in the ledger'], tone: 'muted' });
+  assert.ok(report.ledger.some((l) => l.kind === 'dropped' && /^4 more inbound rules of Big are not in its table \(a table holds 12 rows\): Custom TCP \(TCP 8010\) from 10\.1\.0\.0\/16;/.test(l.fact)));
+  // more groups than a full tile holds: the ones the drawing reaches last are left out, and said so
+  const many = { Resources: { Vpc: tpl.Resources.Vpc, Sub: tpl.Resources.Sub } };
+  for (let i = 1; i <= 3; i++) {
+    for (let j = 1; j <= 6; j++) many.Resources[`Sg${i}x${j}`] = sg(Array.from({ length: 11 }, (_, k) => ({ IpProtocol: 'tcp', FromPort: 8000 + k, ToPort: 8000 + k, CidrIp: '10.1.0.0/16' })));
+    many.Resources[`Box${i}`] = { Type: 'AWS::EC2::Instance', Properties: { SubnetId: { Ref: 'Sub' }, SecurityGroupIds: Array.from({ length: 6 }, (_, j) => ({ Ref: `Sg${i}x${j + 1}` })) } };
+  }
+  const m = fromCloudFormation(many, { id: 'cfn-many', rules: true });
+  assertClean(m.spec, m.report, 'many groups');
+  assert.ok(m.spec.tables.length >= 10 && m.spec.w <= 1400 && m.spec.h <= 900);
+  assert.ok(m.report.rules.omitted.length && m.report.rules.omitted.every((o) => o.why === 'no room in a full tile (1400x900)'));
+  assert.equal(m.spec.tables.length + m.report.rules.omitted.length, 18);
+  assert.ok(m.report.issues.some((i) => i.code === 'rules' && /^rules tables left out: Sg3x6 /.test(i.message)));
+  for (const o of m.report.rules.omitted) assert.ok(m.report.ledger.some((l) => l.kind === 'dropped' && l.fact === `${o.group}'s rules are not shown: no room in a full tile (1400x900)`));
+  // a tile that grows into a full one moves its drawing to the left margin
+  const small = fromCloudFormation({ Resources: { Vpc: tpl.Resources.Vpc, Sub: tpl.Resources.Sub, Big: tpl.Resources.Big, Box: { Type: 'AWS::EC2::Instance', Properties: { SubnetId: { Ref: 'Sub' }, SecurityGroupIds: [{ Ref: 'Big' }] } } } }, { id: 'cfn-small', rules: true });
+  assertClean(small.spec, small.report, 'small');
+  assert.equal(small.spec.groups.find((x) => x.kind === 'cloud').x, 8);
+});
+
 test('index.mjs detects CloudFormation (YAML and JSON) and passes the sidecar, params and story', async () => {
   for (const f of templates) assert.equal(detectFormat(read(f), f), 'cfn', f);
   assert.equal(detectFormat('AWSTemplateFormatVersion: "2010-09-09"\nResources: {}\n'), 'cfn');

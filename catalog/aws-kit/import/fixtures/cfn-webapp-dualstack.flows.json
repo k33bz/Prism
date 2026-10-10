@@ -1,0 +1,49 @@
+{
+  "_comment": "Sidecar for cfn-webapp-dualstack.yaml (and, through the anchors, tf-webapp-dualstack-plan.json). An IPv6 page view: the dual-stack ALB takes the request over IPv6 and forwards to its IPv4 target group, so the later hops are IPv4. rules: true draws each security group's rules as a table.",
+  "name": "Dual-stack web app",
+  "rules": true,
+  "anchors": {
+    "InternetGateway": { "cfn": "InternetGateway", "tf": "aws_internet_gateway.main" },
+    "EgressOnlyInternetGateway": { "cfn": "EgressOnlyInternetGateway", "tf": "aws_egress_only_internet_gateway.main" },
+    "LoadBalancer": { "cfn": "LoadBalancer", "tf": "aws_lb.web" },
+    "AppAsg": { "cfn": "AppAsg", "tf": "aws_autoscaling_group.app" },
+    "Database": { "cfn": "Database", "tf": "aws_db_instance.db" },
+    "AlbSg": { "cfn": "AlbSg", "tf": "aws_security_group.alb" },
+    "AppSg": { "cfn": "AppSg", "tf": "aws_security_group.app" },
+    "DbSg": { "cfn": "DbSg", "tf": "aws_security_group.db" },
+    "CorpPrefixList": { "cfn": "CorpPrefixList", "tf": "aws_ec2_managed_prefix_list.corp" }
+  },
+  "actors": [{ "id": "Users", "icon": "aws-res-users", "label": "Users" }],
+  "flows": [
+    {
+      "id": "page-view-v6",
+      "name": "Browse over IPv6",
+      "v6": true,
+      "dur": 10,
+      "response": "reverse",
+      "steps": [
+        { "from": "Users", "to": "InternetGateway", "label": "HTTPS :443", "text": "A browser opens the site over IPv6: the load balancer is dual-stack." },
+        { "from": "InternetGateway", "to": "LoadBalancer@az1", "text": "The internet gateway delivers the IPv6 request; AlbSg admits HTTPS from ::/0." },
+        { "from": "LoadBalancer@az1", "to": "AppAsg@az1", "label": ":8080", "v6": false, "text": "The load balancer forwards to an instance over IPv4 (its target group is IPv4); AppSg admits 8080 from AlbSg." },
+        { "from": "AppAsg@az1", "to": "Database@primary", "label": ":5432", "v6": false, "text": "The instance queries the primary over IPv4; AppSg lets 5432 out to DbSg and DbSg admits it from AppSg." },
+        { "from": "Database@primary", "to": "Database@standby", "kind": "replication", "v6": false }
+      ]
+    },
+    {
+      "id": "page-view",
+      "name": "Browse over IPv4",
+      "dur": 10,
+      "response": "reverse",
+      "steps": [
+        { "from": "Users", "to": "InternetGateway", "label": "HTTPS :443" },
+        { "from": "InternetGateway", "to": "LoadBalancer@az1" },
+        { "from": "LoadBalancer@az1", "to": "AppAsg@az1", "label": ":8080" },
+        { "from": "AppAsg@az1", "to": "Database@primary", "label": ":5432" },
+        { "from": "Database@primary", "to": "Database@standby", "kind": "replication" }
+      ]
+    }
+  ],
+  "stories": [
+    { "id": "az-failure", "template": "az-fail", "flow": "page-view-v6", "az": "az1", "promote": "Database@standby" }
+  ]
+}
