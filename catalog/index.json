@@ -36823,7 +36823,9 @@
         "amb-bg-drift",
         "amb-bg-tag"
       ],
-      "params": [],
+      "params": [
+        "color"
+      ],
       "tags": [
         "objects",
         "background",
@@ -37519,7 +37521,9 @@
         "amb-bg-checker",
         "amb-bg-tag"
       ],
-      "params": [],
+      "params": [
+        "color"
+      ],
       "tags": [
         "objects",
         "background",
@@ -49596,7 +49600,9 @@
         "star",
         "rainbowfill"
       ],
-      "params": [],
+      "params": [
+        "color"
+      ],
       "tags": [
         "shapes",
         "animated"
@@ -69271,6 +69277,7 @@
       ],
       "tags": [
         "obsidian",
+        "animated",
         "new"
       ],
       "componentType": "obsidian",
