@@ -249,6 +249,93 @@ resolveIcon('AWS::RDS::DBInstance', { props: { Engine: 'postgres', MultiAZ: true
   `node catalog/aws-icons/build_icons.mjs --overlay-only`. Coverage on the interop evaluators' inputs:
   `node catalog/aws-icons/coverage.mjs`; tests: `node --test catalog/aws-icons/resolve.test.mjs`.
 
+## Importing and exporting draw.io
+`catalog/aws-kit/import/drawio.mjs` turns a draw.io (diagrams.net) diagram into one kit spec, and
+`drawio-export.mjs` writes a spec back as a `.drawio` file. No deps.
+```bash
+node catalog/aws-kit/import/drawio.mjs arch.drawio                        # report summary only
+node catalog/aws-kit/import/drawio.mjs arch.drawio --id dr-arch --out arch.json --svg arch.svg --theme light
+node catalog/aws-kit/import/drawio.mjs arch.drawio.png --page 1 --story none --width 960
+node catalog/aws-kit/import/drawio.mjs --export catalog/aws-kit/json/three-tier.json tt-classic --out tt.drawio
+```
+```js
+import { fromDrawio, toDrawio } from './catalog/aws-kit/import/drawio.mjs';
+const { spec, report } = fromDrawio(fs.readFileSync('arch.drawio'), { id: 'dr-arch', page: 0, story: 'auto' });
+// report: { issues: [{ severity, code, element, message }], unmapped: [{ element, shape, label }], pages, format, scale, tile, lint }
+fs.writeFileSync('tt.drawio', toDrawio(spec));
+```
+`--out` writes a family JSON (section `drawio-import`) that `awd.mjs build`, `preview` and `svg` read. The CLI
+exits 1 when lint errors remain. Options: `id` (kebab; default `dr-` plus the title or page name), `name`,
+`page` (index or name), `story` (`auto` or `none`), `width` (forces the canvas width and so the tile),
+`restore` (default true, see the round trip below).
+
+**What it reads.** Plain and compressed `.drawio`, a bare `<mxGraphModel>`, `.drawio.svg` (the `content`
+attribute) and `.drawio.png` (the `mxfile` tEXt, zTXt or iTXt chunk); `<object>`/`UserObject` labels and
+`%placeholders%`, layers (hidden ones dropped), parent-relative geometry, `edgeLabel` children, `def(n)`
+style compression, HTML labels (flattened to text).
+
+**How shapes map.**
+- AWS shapes go through `resolveIcon(style, { from: 'drawio' })`: a `resIcon` tile is the service icon, a bare
+  `mxgraph.aws4.*` shape the resource icon. An EC2 instance-type shape (`c5_instance`) is an EC2 instance with
+  the family as `sub`. The label is a guarded second signal: an exact name that disagrees with the shape is
+  reported (`label-shape`, the shape wins); a label naming a resource of the shape's own service refines it
+  (`cloudwatch` labelled "Amazon CloudWatch Logs": `label-refined`). An AWS shape with no icon is a box (`icon-unmapped`, listed in `unmapped`).
+- AWS groups: `grIcon` through the resolver (subnets told apart by stroke color; `group_aws_cloud` is
+  `cloud-plain`, the Greengrass deployment `iot`, Beanstalk and Step Functions a `gen` frame with that icon).
+  Plain containers (a container, a swimlane, or a rectangle around other content) are Availability Zones or
+  security groups by label or stroke, other kit frames by label ("VPC", "Private subnet", "us-east-1"), else
+  `gen` with the category `tone` nearest the stroke color (the 2019 palette included), `fill` when filled,
+  `dashed` as drawn.
+- Other shapes are `box` nodes (an ellipse a `pill`) with their label; an image with a label is a box, one
+  without is dropped; unlabeled decorations (lines, brackets, empty panels) are dropped. All are reported.
+- Text is a note (wrapped where draw.io wraps it); the largest bold text above the drawing is the `name`, a
+  line right under it opens the `desc`; a CIDR or short right-aligned text on a frame's top band is that
+  frame's `note`.
+- Numbered ellipses and small rounded boxes ("1".."99") are steps. A badge with a sentence beside it, or a
+  repeated number beside text (a description column), gives that step its text; a text block of numbered
+  lines (a legend) does too. Texts longer than 400 characters are shortened (`step-text-long`).
+
+**Layout.** The drawing is scaled so the median icon is 40 (or 32) px, every icon gets that one size, then
+each axis is stretched where the kit needs room: the 22px header band and 16px padding of every frame, labels
+clear of frame borders and of each other, wires clear of headers and of labels they do not connect. A stretch
+inserts space between two coordinates and moves everything past it, so rows, columns and orthogonal wires
+stay intact. The tile is the smallest of normal (480x300), wide (960x440) and full (up to 1400x900) the
+result fits, at the largest scale that fits it; a smaller tile that only lints clean by dropping a label
+loses to the next one. Wires that join two nodes without waypoints are `from`/`to`; the rest are explicit
+`M`/`H`/`V` paths through the waypoints (elbows added, ends at the icon edge or below its label, exit and
+entry sides kept), floating ends kept, ends on a frame drawn to its border (`edge-group`). Edge labels follow
+draw.io's relative position (`labelAt`), on the side the measured rule gives (a positive relative y is left
+of travel: above a left-to-right run, right of a top-to-bottom run). Then a lint loop tries each finding's
+knobs (a wire label's place and side, a node label's side and wrap, a badge's place on its wire, a note's
+offset, a wire's elbow, a frame header's alignment, the canvas) and keeps what lowers the count; it also
+spreads badges that crowd each other. A wire label with no clear spot is dropped as a last resort
+(`label-dropped`); lint errors that remain are reported as `lint:<code>` issues.
+
+**Story.** With `story: 'auto'`, badges on (or near) wires give the order: one hop per badge, in number order,
+a ring on the wire's target. Without badges, a breadth-first walk from the leftmost actor outside the frames
+(users, client, internet...) over the connected wires (12 hops at most) gives a guessed order, reported as
+`story-bfs`. Windows come from `story()`; step texts stay empty unless the drawing carries them.
+
+**Export.** `toDrawio(spec)` writes a plain `.drawio`: official AWS group styles (the Auto Scaling group as the
+left-aligned group, as the kit draws it), icons as the draw.io AWS4 shape that resolves back to the same id
+(the store's `xref.drawio` names first, then the draw.io library names in `coverage-inputs.json`; an icon
+draw.io lacks, such as Direct Connect gateway, is an inline SVG image), boxes as rounded rectangles, wires as
+orthogonal edges with `source`/`target`, the kit's route as waypoints and exact ports (`exitDx`/`exitDy`, so a
+wire starts below a label), steps as numbered ellipses (the step text is the tooltip), static notes, marks and
+the legend as text, the name above the drawing and the step list below it. Every cell carries `prism_kind`,
+`prism_id` and, on icons, `prism_icon`. Motion has no draw.io form, so the canonical spec rides on a hidden
+layer (`<object prism_spec="...">`). Importing an unedited export restores that spec exactly
+(`prism-restored`); after edits in draw.io the drawing is imported again and the timeline, effects, timed
+notes and step texts are restored where their references still exist (`prism-merged`). `restore: false`
+(CLI `--no-restore`) ignores the hidden layer.
+Gallery round trip (tested): all 79 diagrams restore exactly; from the drawing alone all 79 keep their node,
+group, wire and step counts and lint clean (wire labels, notes, marks and legends kept; the timeline becomes
+one packet per badge; tiles can grow because the importer keeps headers and padding the gallery sometimes
+tightens).
+
+Tests: `node --test catalog/aws-kit/import/drawio.test.mjs`. Fixtures live in `catalog/aws-kit/import/fixtures/`
+(`make-fixtures.mjs` regenerates the authored ones). Do not commit the jgraph templates.
+
 ## Layout rules (the bar is "looks like an official AWS reference architecture")
 - 16px padding inside groups; leave 22px at the top of a group for its corner icon + label.
 - Nothing overlaps: labels never cross wires, icons, group borders or other labels (>= 6px clear).
