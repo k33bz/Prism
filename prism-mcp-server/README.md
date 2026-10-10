@@ -67,7 +67,7 @@ Add the server to your `claude_desktop_config.json` (see `examples/claude_deskto
 }
 ```
 
-Restart Claude Desktop; the 35 Prism tools appear in the tools menu.
+Restart Claude Desktop; the 37 Prism tools appear in the tools menu.
 
 ## Use with the Anthropic API
 
@@ -75,7 +75,7 @@ The Messages API accepts local MCP servers via the `mcp_servers` parameter (stdi
 
 ---
 
-## Tools (35)
+## Tools (37)
 
 ### Discovery & search (11)
 | Tool | Purpose |
@@ -162,6 +162,8 @@ Diagrams as data. A diagram is a JSON spec (schema: `catalog/aws-kit/spec.schema
 | `build_diagram` | Build one diagram spec, or every diagram of a family (`{ version: 1, section, diagrams }`). Runs the schema and the kit's input checks and returns `{ id, svg, html, errors }`: `svg` is one self-contained SVG document (kit CSS, only the icons it uses, the spec in `<metadata id="awd-spec">`; `theme`: auto, light or dark; `still`: no packets), `html` is the bare `<svg class="awd">` the gallery embeds. Both are null when `errors` is not empty (typos come back as `nodes[0].lable: unknown property (did you mean label?)`). |
 | `get_diagram_spec` | The JSON spec of one gallery diagram by catalog id (`aws-sl-api`) or spec id (`sl-api`), from `catalog/aws-kit/json/`. Far smaller than the rendered `get_effect` html, and the starting point for an edited copy passed to `build_diagram`. Unknown ids return `not_found` with suggestions. |
 | `lint_diagram` | Layout findings for a diagram spec or a gallery diagram id, measured on the drawn markup with Arial's real widths: `{ id, errors, findings: [{ severity, code, message, at }], counts, clean }`. Errors are what the gallery build rejects (text across a frame edge, wires through labels or icons, badges on icons, off-canvas...); `build_diagram` returns the same findings as `lint`. |
+| `import_diagram` | Import a design: draw.io (`.drawio` XML plain or compressed, `.drawio.svg`; `.drawio.png` as `contentBase64`), Mermaid `architecture-beta` or `flowchart`, PlantUML-AWS or D2 (`from`: auto detects). Icons resolve to the official AWS icons (unmapped shapes become boxes and are listed), groups to AWS frames, the layout fits a kit tile and passes the kit lint, and the source's order (numbered badges or edges, `%% prism: flow`) becomes the animation. Returns `{ spec, svg, report: { from, issues, unmapped, tile, lint } }`. |
+| `export_diagram` | Export a gallery diagram (`id`) or a spec to `drawio` (opens in diagrams.net with the official AWS shapes; the Prism spec rides on a hidden layer so a re-import restores the animation), `mermaid` (flowchart with AWS icon shapes, or `dialect: architecture-beta` for a consistent grid) or a standalone `svg`. Returns `{ to, text }`. |
 
 Full parameter schemas are returned by `tools/list`. Per-tool example calls live in [`examples/`](./examples).
 
@@ -185,7 +187,7 @@ prism-mcp-server/
 ├── index.js          # PrismMCPServer (JSON-RPC dispatch) + StdioTransport
 ├── cli.js            # prism-mcp CLI (start / info / tools / help)
 ├── tools/
-│   └── index.js      # the 35 tool definitions (name, description, schema, handler)
+│   └── index.js      # the 37 tool definitions (name, description, schema, handler)
 ├── utils/
 │   ├── catalog.js    # CatalogStore: load island/manifest, index, hot reload, runtime facets
 │   ├── collections.js# CollectionStore: disk-backed named sets + prism-collection-1.0 export

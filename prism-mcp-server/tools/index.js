@@ -3,6 +3,8 @@
 // JS object (serialized to JSON text by the server). Handlers throw ToolError for
 // structured, actionable failures.
 
+import path from 'node:path';
+import { pathToFileURL } from 'node:url';
 import { lightEffect } from '../utils/catalog.js';
 import { loadKit, buildDiagram, lintDiagram, diagramSpecs, findDiagramSpec, suggestDiagrams } from '../utils/diagrams.js';
 import { compose, composeWithTemplate, availableTemplates } from '../utils/compose.js';
@@ -1354,7 +1356,77 @@ export function buildTools() {
         return lintDiagram(kit, spec);
       },
     },
+    {
+      name: 'import_diagram',
+      description: 'Import an architecture design into the AWS kit: draw.io (.drawio XML, plain or compressed, or .drawio.svg; a .drawio.png as contentBase64), Mermaid architecture-beta or flowchart, PlantUML-AWS or D2. Shapes and names resolve to the official AWS Architecture Icons (unmapped ones become plain boxes and are listed), groups to AWS frames, the layout is fitted to a kit tile and checked by the kit lint, and the request order (numbered badges or edges, or a %% prism: flow directive) becomes the animation. Returns { spec, svg, report: { from, issues, unmapped, tile, lint } }: edit spec and pass it to build_diagram, or export it with export_diagram.',
+      inputSchema: {
+        type: 'object',
+        properties: {
+          content: { type: 'string', description: 'The source text (draw.io XML, Mermaid, PlantUML or D2).' },
+          contentBase64: { type: 'string', description: 'A binary source (a .drawio.png) as base64, instead of content.' },
+          from: { type: 'string', enum: ['auto', 'drawio', 'mermaid', 'plantuml', 'd2'], description: 'Source format; auto (default) detects it.' },
+          id: { type: 'string', description: 'Diagram id for the spec (kebab case); derived from the source when absent.' },
+          name: { type: 'string', description: 'Diagram name (title).' },
+          story: { type: 'string', enum: ['auto', 'none'], description: 'auto (default) animates the order the source gives (or guesses one and says so); none draws a still diagram.' },
+          theme: { type: 'string', enum: ['auto', 'light', 'dark'], description: 'Colors of the returned standalone svg.' },
+        },
+        additionalProperties: false,
+      },
+      handler: async (a, { store }) => {
+        if ((a.content == null) === (a.contentBase64 == null)) throw new ToolError('pass exactly one of content or contentBase64', { code: 'invalid_argument' });
+        const content = a.content != null ? String(a.content) : Buffer.from(String(a.contentBase64), 'base64');
+        if (!content.length) throw new ToolError('the source is empty', { code: 'invalid_argument' });
+        const kit = await diagramKit(store);
+        const imp = await importers(kit);
+        let out;
+        try { out = await imp.importDiagram(content, { from: a.from || 'auto', id: a.id, name: a.name, story: a.story || 'auto' }); } catch (err) {
+          throw new ToolError(`Import failed: ${err.message}`, { code: 'import_failed' });
+        }
+        return { spec: out.spec, svg: kit.awd.standalone(out.spec, { theme: a.theme || 'auto' }), report: out.report };
+      },
+    },
+    {
+      name: 'export_diagram',
+      description: 'Export an AWS kit diagram (a gallery id such as aws-tt-classic, or a spec) to draw.io (.drawio XML that opens in diagrams.net with the official AWS shapes; the Prism spec rides on a hidden layer so a re-import restores the animation), Mermaid (a flowchart with AWS icon shapes, or architecture-beta when the layout is a consistent grid) or a standalone SVG. Returns { to, text }.',
+      inputSchema: {
+        type: 'object',
+        properties: {
+          id: { type: 'string', description: 'A gallery diagram id, e.g. aws-tt-classic or tt-classic.' },
+          spec: { type: 'object', description: 'A diagram spec instead of an id.' },
+          to: { type: 'string', enum: ['drawio', 'mermaid', 'svg'], description: 'Target format.' },
+          dialect: { type: 'string', enum: ['flowchart', 'architecture-beta'], description: 'Mermaid only (default flowchart).' },
+          theme: { type: 'string', enum: ['auto', 'light', 'dark'], description: 'SVG only.' },
+          still: { type: 'boolean', description: 'SVG only: the complete static diagram, no packets.' },
+        },
+        required: ['to'],
+        additionalProperties: false,
+      },
+      handler: async (a, { store }) => {
+        if ((a.spec == null) === (a.id == null)) throw new ToolError('pass exactly one of spec or id', { code: 'invalid_argument' });
+        const kit = await diagramKit(store);
+        let spec = a.spec;
+        if (a.id != null) {
+          const specs = diagramSpecs(kit.dir);
+          const hit = findDiagramSpec(specs, a.id);
+          if (!hit) throw new ToolError(`No diagram spec with id "${a.id}"`, { code: 'not_found', data: { suggestions: suggestDiagrams(specs, a.id), available: specs.length } });
+          spec = hit.spec;
+        }
+        const errs = kit.spec.validateDiagram(spec);
+        if (errs.length) throw new ToolError('spec does not match the schema', { code: 'invalid_argument', data: { errors: errs.map((e) => `${e.path}: ${e.message}`) } });
+        const imp = await importers(kit);
+        try { return await imp.exportDiagram(spec, { to: a.to, dialect: a.dialect, theme: a.theme, still: a.still === true }); } catch (err) {
+          throw new ToolError(`Export failed: ${err.message}`, { code: 'export_failed' });
+        }
+      },
+    },
   ];
+}
+
+/** The kit's import/export entry point (catalog/aws-kit/import/index.mjs), or a structured 'unavailable' error. */
+async function importers(kit) {
+  try { return await import(pathToFileURL(path.join(kit.dir, 'import', 'index.mjs')).href); } catch (err) {
+    throw new ToolError(`The AWS kit importers are not reachable at ${path.join(kit.dir, 'import')}: ${err.message}`, { code: 'unavailable' });
+  }
 }
 
 /** The AWS kit beside the loaded catalog, or a structured 'unavailable' error. */
