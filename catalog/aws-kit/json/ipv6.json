@@ -1,0 +1,431 @@
+{
+  "version": 1,
+  "section": { "id": "ipv6", "title": "IPV6 AND DUAL STACK" },
+  "diagrams": [
+    {
+      "id": "v6-dual-stack",
+      "name": "Dual-stack VPC with an egress-only internet gateway",
+      "desc": "A VPC with an IPv4 CIDR and an IPv6 /56, whose public and private subnets in two Availability Zones each carry an IPv4 /24 and an IPv6 /64. A private instance reaches the internet over IPv4 through the NAT gateway in its Availability Zone (circles) and over IPv6 through the egress-only internet gateway (diamonds), and the route table row each packet uses lights up. An IPv6 connection started from the internet is blocked at the egress-only internet gateway (red).",
+      "wide": true,
+      "w": 960,
+      "h": 440,
+      "dur": 12,
+      "poster": 0.925,
+      "groups": [
+        { "kind": "cloud", "x": 104, "y": 8, "w": 840, "h": 402 },
+        { "kind": "region", "x": 116, "y": 34, "w": 816, "h": 364, "label": "Region" },
+        { "kind": "vpc", "x": 256, "y": 58, "w": 664, "h": 328, "label": "VPC", "note": ["10.0.0.0/16", "2001:db8:1200::/56"] },
+        { "kind": "az", "x": 270, "y": 96, "w": 240, "h": 278, "label": "Availability Zone A" },
+        { "kind": "az", "x": 522, "y": 96, "w": 240, "h": 278, "label": "Availability Zone B" },
+        { "kind": "pub", "x": 282, "y": 120, "w": 216, "h": 118, "note": ["10.0.1.0/24", "2001:db8:1200:1::/64"] },
+        { "kind": "pub", "x": 534, "y": 120, "w": 216, "h": 118, "note": ["10.0.2.0/24", "2001:db8:1200:2::/64"] },
+        { "kind": "priv", "x": 282, "y": 250, "w": 216, "h": 112, "note": ["10.0.11.0/24", "2001:db8:1200:11::/64"] },
+        { "kind": "priv", "x": 534, "y": 250, "w": 216, "h": 112, "note": ["10.0.12.0/24", "2001:db8:1200:12::/64"] }
+      ],
+      "nodes": [
+        { "id": "net", "icon": "aws-res-internet", "x": 34, "y": 229, "size": 32, "label": "Internet" },
+        { "id": "igw", "icon": "aws-res-vpc-internet-gateway", "x": 180, "y": 164, "size": 32, "label": "Internet gateway" },
+        { "id": "eigw", "icon": "aws-res-vpc-internet-gateway", "x": 180, "y": 294, "size": 32, "label": "Egress-only internet gateway", "wrap": 16 },
+        { "id": "nata", "icon": "aws-res-vpc-nat-gateway", "x": 374, "y": 164, "size": 32, "label": "NAT gateway" },
+        { "id": "natb", "icon": "aws-res-vpc-nat-gateway", "x": 626, "y": 164, "size": 32, "label": "NAT gateway" },
+        { "id": "eca", "icon": "aws-res-ec2-instance", "x": 374, "y": 294, "size": 32, "label": "Amazon EC2" },
+        { "id": "ecb", "icon": "aws-res-ec2-instance", "x": 626, "y": 294, "size": 32, "label": "Amazon EC2" }
+      ],
+      "wires": [
+        { "id": "a4", "d": "M390,290 V213", "both": true },
+        { "id": "n4", "d": "M370,180 H216", "both": true },
+        { "id": "g4", "d": "M176,180 H86 V239 H70", "both": true },
+        { "id": "a6", "d": "M370,310 H216", "both": true },
+        { "id": "g6", "d": "M176,304 H86 V251 H70", "both": true },
+        { "id": "x6", "d": "M50,278 V318 H176", "dashed": true, "hot": true },
+        { "id": "b4", "d": "M642,290 V213", "both": true }
+      ],
+      "flows": [
+        {
+          "id": "v4",
+          "wires": [
+            { "wire": "a4", "ring": "nata", "f": 0.83, "dx": 11, "dy": 0 },
+            { "wire": "n4", "ring": "igw", "f": 0.87 },
+            { "wire": "g4", "ring": "net", "f": 0.17 },
+            { "wire": "g4", "reverse": true, "ring": "igw", "kind": "pk-2", "step": false },
+            { "wire": "n4", "reverse": true, "ring": "nata", "kind": "pk-2", "step": false },
+            { "wire": "a4", "reverse": true, "ring": "eca", "kind": "pk-2", "step": false }
+          ],
+          "text": ["A private instance sends IPv4 traffic to the internet. Its route table sends 0.0.0.0/0 to the NAT gateway in the public subnet of the same Availability Zone; each Availability Zone has its own NAT gateway.", "The NAT gateway replaces the private source address with its own and sends the traffic by the 0.0.0.0/0 route of the public route table to the internet gateway, which maps it to the Elastic IP address of the NAT gateway.", "The internet gateway sends the traffic to the internet, and the response returns the same way."]
+        },
+        {
+          "id": "v6",
+          "wires": [
+            { "wire": "a6", "ring": "eigw", "f": 0.87 },
+            { "wire": "g6", "ring": "net", "f": 0.12 },
+            { "wire": "g6", "reverse": true, "ring": "eigw", "kind": "pk-2", "step": false },
+            { "wire": "a6", "reverse": true, "ring": "eca", "kind": "pk-2", "step": false }
+          ],
+          "text": ["The same instance sends IPv6 traffic. Its IPv6 address is globally unique, so there is no NAT: the route table sends ::/0 to the egress-only internet gateway, a horizontally scaled VPC component rather than one gateway per Availability Zone.", "The egress-only internet gateway is stateful: it sends the traffic to the internet and returns the response for this outbound connection."],
+          "v6": true
+        },
+        {
+          "id": "in",
+          "wires": [
+            { "wire": "x6", "ring": "eigw", "f": 0.75, "dy": 11, "text": "A host on the internet tries to open an IPv6 connection to the private instance. The egress-only internet gateway prevents the internet from initiating IPv6 connections with the instances, while they can still start their own." }
+          ],
+          "kind": "pk-bad",
+          "v6": true
+        }
+      ],
+      "notes": [
+        { "x": 776, "y": 336, "text": "AZ B table: 0.0.0.0/0 > nat-b", "anchor": "start", "size": 9 },
+        { "x": 196, "y": 366, "text": "Inbound IPv6\nconnection blocked", "kind": "warn", "t": [0.92, 0.985], "still": true, "size": 8.5 }
+      ],
+      "marks": [
+        { "on": "eigw", "t": [0.92, 0.985], "still": true }
+      ],
+      "tables": [
+        {
+          "id": "rt-pub",
+          "x": 776,
+          "y": 120,
+          "title": "Public route table",
+          "tone": "networking",
+          "cols": ["Destination", "Target"],
+          "rows": [
+            ["10.0.0.0/16", "local"],
+            ["2001:db8:1200::/56", "local"],
+            { "cells": ["0.0.0.0/0", "igw"], "t": [0.088, 0.173], "tone": "ok" },
+            ["::/0", "igw"]
+          ]
+        },
+        {
+          "id": "rt-priv",
+          "x": 776,
+          "y": 250,
+          "title": "Private route table, AZ A",
+          "tone": "networking",
+          "cols": ["Destination", "Target"],
+          "rows": [
+            ["10.0.0.0/16", "local"],
+            ["2001:db8:1200::/56", "local"],
+            { "cells": ["0.0.0.0/0", "nat-a"], "t": [0.04, 0.083], "tone": "ok" },
+            { "cells": ["::/0", "eigw"], "t": [0.524, 0.596], "tone": "ok" }
+          ]
+        }
+      ],
+      "legend": { "x": 108, "y": 428, "row": true }
+    },
+    {
+      "id": "v6-nat64",
+      "name": "NAT64 and DNS64 for an IPv6-only subnet",
+      "desc": "An instance in an IPv6-only subnet reaches a server that has only an IPv4 address. DNS64 on the subnet makes the Route 53 VPC Resolver synthesize an AAAA answer in 64:ff9b::/96, the subnet route table sends that prefix to a NAT gateway in a public subnet, and the NAT gateway translates IPv6 (diamonds) to IPv4 (circles) on the way out and back again on the way in.",
+      "wide": true,
+      "w": 960,
+      "h": 400,
+      "dur": 12,
+      "poster": 0.489,
+      "groups": [
+        { "kind": "cloud", "x": 8, "y": 8, "w": 836, "h": 365 },
+        { "kind": "region", "x": 20, "y": 34, "w": 812, "h": 327, "label": "Region" },
+        { "kind": "vpc", "x": 32, "y": 58, "w": 712, "h": 291, "label": "VPC", "note": ["10.0.0.0/16", "2001:db8:1200::/56"] },
+        { "kind": "az", "x": 168, "y": 92, "w": 562, "h": 160, "label": "Availability Zone A" },
+        { "kind": "priv", "x": 180, "y": 116, "w": 278, "h": 124, "label": "IPv6-only subnet", "note": "2001:db8:1200:21::/64" },
+        { "kind": "pub", "x": 470, "y": 116, "w": 248, "h": 124, "note": ["10.0.1.0/24", "2001:db8:1200:1::/64"] }
+      ],
+      "nodes": [
+        { "id": "res", "icon": "aws-res-route-53-resolver", "x": 84, "y": 164, "size": 32, "label": "Route 53 VPC Resolver", "wrap": 12, "sub": "fd00:ec2::253" },
+        { "id": "ec2", "icon": "aws-res-ec2-instance", "x": 234, "y": 164, "size": 32, "label": "Amazon EC2", "sub": "2001:db8:1200:21::10" },
+        { "id": "nat", "icon": "aws-res-vpc-nat-gateway", "x": 524, "y": 164, "size": 32, "label": "NAT gateway", "sub": "10.0.1.20" },
+        { "id": "igw", "icon": "aws-res-vpc-internet-gateway", "x": 768, "y": 164, "size": 32, "label": "Internet gateway" },
+        { "id": "srv", "icon": "aws-res-server", "x": 890, "y": 164, "size": 32, "label": "IPv4-only server", "sub": "198.51.100.10" }
+      ],
+      "wires": [
+        { "id": "q", "d": "M230,180 H120", "both": true },
+        { "id": "a", "d": "M270,180 H520", "both": true },
+        { "id": "b", "d": "M560,180 H764", "both": true },
+        { "id": "c", "d": "M804,180 H886", "both": true }
+      ],
+      "flows": [
+        {
+          "id": "dns",
+          "wires": [
+            { "wire": "q", "ring": "res", "f": 0.8, "text": "A Nitro instance in the IPv6-only subnet receives an IPv6 address and no IPv4 address. It asks the Route 53 VPC Resolver, at fd00:ec2::253, for the AAAA record of legacy.example.com." },
+            { "wire": "q", "ring": "ec2", "reverse": true, "kind": "pk-2", "f": 0.8, "dy": 11, "text": "The name has only an A record, 198.51.100.10. DNS64 is enabled on the subnet, so the Resolver synthesizes an AAAA answer by prepending 64:ff9b::/96 to that address: 64:ff9b::c633:640a." }
+          ],
+          "v6": true
+        },
+        {
+          "id": "data",
+          "wires": [
+            { "wire": "a", "ring": "nat", "v6": true, "f": 0.12, "text": "The instance sends IPv6 traffic to 64:ff9b::c633:640a. The subnet route table sends 64:ff9b::/96 to the NAT gateway in the public subnet. NAT64 is built into every NAT gateway, and its subnet does not need to be dual-stack." },
+            { "wire": "b", "ring": "igw", "f": 0.2, "text": "The NAT gateway does NAT64: it replaces the IPv6 source with its own private IPv4 address and takes the IPv4 destination from the last 32 bits of the address. It sends the IPv4 packet by the 0.0.0.0/0 route of the public route table to the internet gateway." },
+            { "wire": "c", "ring": "srv", "f": 0.75, "text": "The internet gateway maps the private address of the NAT gateway to its Elastic IP address, and the packet reaches the IPv4-only server." },
+            { "wire": "c", "reverse": true, "ring": "igw", "kind": "pk-2", "step": false },
+            { "wire": "b", "reverse": true, "ring": "nat", "kind": "pk-2", "step": false },
+            { "wire": "a", "reverse": true, "ring": "ec2", "kind": "pk-2", "step": true, "v6": true, "f": 0.12, "dy": 11, "text": "The server answers over IPv4. The NAT gateway translates the response back to IPv6, with 64:ff9b::c633:640a as its source, and delivers it to the instance over the local route." }
+          ]
+        }
+      ],
+      "notes": [
+        { "x": 188, "y": 152, "text": "DNS64 enabled", "anchor": "start", "size": 9 },
+        { "x": 392, "y": 174, "text": "to 64:ff9b::c633:640a", "kind": "label", "t": [0.277, 0.424], "tone": "request", "size": 8.5 },
+        { "x": 650, "y": 174, "text": "to 198.51.100.10", "kind": "label", "t": [0.429, 0.548], "tone": "request", "size": 8.5 },
+        { "x": 650, "y": 174, "text": "from 198.51.100.10", "kind": "label", "t": [0.659, 0.779], "tone": "response", "size": 8.5 }
+      ],
+      "tables": [
+        {
+          "id": "dns64",
+          "x": 44,
+          "y": 264,
+          "title": "Resolver answer, DNS64 on",
+          "tone": "networking",
+          "cols": ["Name", "Type", "Value"],
+          "rows": [
+            ["legacy.example.com", "A", "198.51.100.10"],
+            { "cells": ["legacy.example.com", "AAAA", "64:ff9b::c633:640a"], "t": [0.151, 0.258], "tone": "ok" }
+          ]
+        },
+        {
+          "id": "rt-v6",
+          "x": 256,
+          "y": 264,
+          "title": "IPv6-only subnet route table",
+          "tone": "networking",
+          "cols": ["Destination", "Target"],
+          "rows": [
+            ["10.0.0.0/16", "local"],
+            ["2001:db8:1200::/56", "local"],
+            { "cells": ["64:ff9b::/96", "nat-a"], "t": [0.277, 0.424], "tone": "ok" }
+          ]
+        },
+        {
+          "id": "rt-pub",
+          "x": 540,
+          "y": 264,
+          "title": "Public route table",
+          "tone": "networking",
+          "cols": ["Destination", "Target"],
+          "rows": [
+            ["10.0.0.0/16", "local"],
+            ["2001:db8:1200::/56", "local"],
+            { "cells": ["0.0.0.0/0", "igw"], "t": [0.429, 0.548], "tone": "ok" },
+            ["::/0", "igw"]
+          ]
+        }
+      ],
+      "legend": { "x": 12, "y": 391, "row": true }
+    },
+    {
+      "id": "v6-dualstack-alb",
+      "name": "Dual-stack Application Load Balancer",
+      "desc": "An internet-facing Application Load Balancer with the dualstack IP address type has IPv4 and IPv6 addresses, and Route 53 alias A and AAAA records point to it. An IPv4 client (circles) and an IPv6 client (diamonds) resolve the name and connect in their own IP version; the load balancer terminates both connections and reaches its targets over IPv4, because the target group IP address type is ipv4.",
+      "wide": true,
+      "w": 960,
+      "h": 440,
+      "dur": 14,
+      "poster": 0.754,
+      "groups": [
+        { "kind": "cloud", "x": 112, "y": 8, "w": 818, "h": 412 },
+        { "kind": "region", "x": 256, "y": 34, "w": 662, "h": 374, "label": "Region" },
+        { "kind": "vpc", "x": 330, "y": 58, "w": 576, "h": 338, "label": "VPC", "note": ["10.0.0.0/16", "2001:db8:1200::/56"] },
+        { "kind": "az", "x": 342, "y": 90, "w": 396, "h": 140, "label": "Availability Zone A" },
+        { "kind": "az", "x": 342, "y": 244, "w": 396, "h": 140, "label": "Availability Zone B" },
+        { "kind": "pub", "x": 354, "y": 114, "w": 180, "h": 104, "note": ["10.0.1.0/24", "2001:db8:1200:1::/64"] },
+        { "kind": "priv", "x": 546, "y": 114, "w": 180, "h": 104, "note": "10.0.11.0/24" },
+        { "kind": "pub", "x": 354, "y": 268, "w": 180, "h": 104, "note": ["10.0.2.0/24", "2001:db8:1200:2::/64"] },
+        { "kind": "priv", "x": 546, "y": 268, "w": 180, "h": 104, "note": "10.0.12.0/24" }
+      ],
+      "nodes": [
+        { "id": "c4", "icon": "aws-res-client", "x": 38, "y": 150, "size": 32, "label": "IPv4 client", "sub": "192.0.2.10" },
+        { "id": "c6", "icon": "aws-res-client", "x": 38, "y": 304, "size": 32, "label": "IPv6 client", "sub": "2001:db8:5000::25" },
+        { "id": "r53", "icon": "aws-res-route-53-hosted-zone", "x": 174, "y": 227, "size": 32, "label": "Public hosted zone", "sub": "example.com" },
+        { "id": "igw", "icon": "aws-res-vpc-internet-gateway", "x": 284, "y": 227, "size": 32, "label": "Internet gateway" },
+        { "id": "alba", "icon": "aws-res-elastic-load-balancing-application-load-balancer", "x": 428, "y": 150, "size": 32, "label": "Application Load Balancer" },
+        { "id": "albb", "icon": "aws-res-elastic-load-balancing-application-load-balancer", "x": 428, "y": 304, "size": 32, "label": "Application Load Balancer" },
+        { "id": "eca", "icon": "aws-res-ec2-instance", "x": 620, "y": 150, "size": 32, "label": "Amazon EC2" },
+        { "id": "ecb", "icon": "aws-res-ec2-instance", "x": 620, "y": 304, "size": 32, "label": "Amazon EC2" }
+      ],
+      "wires": [
+        { "id": "d4", "d": "M74,174 H190 V223", "dashed": true, "both": true },
+        { "id": "d6", "d": "M74,312 H190 V300", "dashed": true, "both": true },
+        { "id": "i4", "d": "M74,158 H238 V235 H280", "both": true, "label": "IPv4", "labelAt": 0.27 },
+        { "id": "i6", "d": "M74,328 H238 V251 H280", "both": true, "label": "IPv6", "labelAt": 0.27, "labelDy": 12 },
+        { "id": "ia", "d": "M300,223 V166 H424", "both": true },
+        { "id": "ib", "d": "M300,289 V320 H424", "both": true },
+        { "id": "ta", "d": "M464,166 H616", "both": true, "label": "IPv4", "labelAt": 0.75 },
+        { "id": "tb", "d": "M464,320 H616", "both": true, "label": "IPv4", "labelAt": 0.75 }
+      ],
+      "flows": [
+        {
+          "id": "dns4",
+          "wires": [
+            { "wire": "d4", "ring": "r53", "f": 0.4, "text": "The IPv4 client asks for the A record of app.example.com. The Route 53 alias A record answers with the IPv4 addresses of the load balancer." },
+            { "wire": "d4", "reverse": true, "ring": "c4", "kind": "pk-2", "step": false }
+          ]
+        },
+        {
+          "id": "dns6",
+          "wires": [
+            { "wire": "d6", "ring": "r53", "f": 0.4, "dy": 11, "text": "The IPv6 client asks for the AAAA record. Because the IP address type of the load balancer is dualstack, it also has IPv6 addresses, and the alias AAAA record answers with them." },
+            { "wire": "d6", "reverse": true, "ring": "c6", "kind": "pk-2", "step": false }
+          ],
+          "v6": true
+        },
+        {
+          "id": "web4",
+          "wires": [
+            { "wire": "i4", "ring": "igw", "f": 0.55, "dx": -11, "dy": 0, "text": "The IPv4 client connects over IPv4 through the internet gateway to the load balancer node in the public subnet of Availability Zone A." },
+            { "wire": "ia", "ring": "alba", "step": false },
+            { "wire": "ta", "ring": "eca", "f": 0.25, "text": "The load balancer terminates the connection and sends the request to a target over IPv4: it reaches targets in the IP version of the target group." },
+            { "wire": "ta", "reverse": true, "ring": "alba", "kind": "pk-2", "step": false },
+            { "wire": "ia", "reverse": true, "ring": "igw", "kind": "pk-2", "step": false },
+            { "wire": "i4", "reverse": true, "ring": "c4", "kind": "pk-2", "step": false }
+          ]
+        },
+        {
+          "id": "web6",
+          "wires": [
+            { "wire": "i6", "ring": "igw", "v6": true, "f": 0.55, "dx": -11, "dy": 0, "text": "The IPv6 client connects over IPv6 to the same load balancer, here to its node in Availability Zone B. Both nodes have IPv4 and IPv6 addresses." },
+            { "wire": "ib", "ring": "albb", "v6": true, "step": false },
+            { "wire": "tb", "ring": "ecb", "f": 0.25, "text": "The load balancer terminates the IPv6 connection and opens an IPv4 one to the target, with the client IPv6 address in the X-Forwarded-For header. The response returns to the client over IPv6." },
+            { "wire": "tb", "reverse": true, "ring": "albb", "kind": "pk-2", "step": false },
+            { "wire": "ib", "reverse": true, "ring": "igw", "kind": "pk-2", "step": false, "v6": true },
+            { "wire": "i6", "reverse": true, "ring": "c6", "kind": "pk-2", "step": false, "v6": true }
+          ]
+        }
+      ],
+      "notes": [
+        { "x": 754, "y": 232, "text": "IPv6 target groups also exist\n(dualstack load balancers only):\nthe load balancer then reaches\nits targets over IPv6.", "anchor": "start", "size": 9 },
+        { "x": 754, "y": 290, "text": "dualstack-without-public-ipv4:\nIPv6 clients only, with no\npublic IPv4 addresses.", "anchor": "start", "size": 9 },
+        { "x": 636, "y": 366, "text": "X-Forwarded-For: 2001:db8:5000::25", "kind": "label", "t": [0.735, 0.772], "tone": "request", "size": 8.5 }
+      ],
+      "tables": [
+        {
+          "id": "r53-records",
+          "x": 122,
+          "y": 30,
+          "title": "app.example.com",
+          "tone": "networking",
+          "cols": ["Type", "Value"],
+          "rows": [
+            { "cells": ["A", "alias: the ALB"], "t": [0.04, 0.144], "tone": "ok" },
+            { "cells": ["AAAA", "alias: the ALB"], "t": [0.164, 0.268], "tone": "ok" }
+          ]
+        },
+        {
+          "id": "alb",
+          "x": 754,
+          "y": 150,
+          "title": "Application Load Balancer",
+          "tone": "networking",
+          "cols": ["Setting", "Value"],
+          "rows": [
+            ["Scheme", "internet-facing"],
+            { "cells": ["IP address type", "dualstack"], "t": [0.692, 0.73], "tone": "ok" },
+            { "cells": ["Target group IP type", "ipv4"], "t": [0.735, 0.772], "tone": "ok" }
+          ]
+        }
+      ],
+      "legend": { "x": 122, "y": 434, "row": true }
+    },
+    {
+      "id": "v6-tgw",
+      "name": "IPv6 between VPCs with Transit Gateway",
+      "desc": "Two dual-stack VPCs attach to AWS Transit Gateway with IPv6 support enabled on each VPC attachment, so their IPv6 CIDRs propagate into the transit gateway route table next to the IPv4 ones. Instances in IPv6-only subnets reach each other over IPv6 (diamonds), and each route table row lights as the packet uses it.",
+      "wide": true,
+      "w": 960,
+      "h": 440,
+      "dur": 12,
+      "poster": 0.353,
+      "groups": [
+        { "kind": "cloud", "x": 8, "y": 8, "w": 944, "h": 418 },
+        { "kind": "region", "x": 20, "y": 34, "w": 920, "h": 384, "label": "Region" },
+        { "kind": "vpc", "x": 32, "y": 58, "w": 260, "h": 262, "label": "VPC A", "note": ["10.1.0.0/16", "2001:db8:1100::/56"] },
+        { "kind": "priv", "x": 44, "y": 90, "w": 236, "h": 104, "label": "IPv6-only subnet", "note": "2001:db8:1100:21::/64" },
+        { "kind": "priv", "x": 44, "y": 204, "w": 236, "h": 104, "label": "TGW subnet", "note": ["10.1.2.0/28", "2001:db8:1100:2::/64"] },
+        { "kind": "vpc", "x": 668, "y": 58, "w": 260, "h": 262, "label": "VPC B", "note": ["10.2.0.0/16", "2001:db8:2200::/56"] },
+        { "kind": "priv", "x": 680, "y": 90, "w": 236, "h": 104, "label": "IPv6-only subnet", "note": "2001:db8:2200:21::/64" },
+        { "kind": "priv", "x": 680, "y": 204, "w": 236, "h": 104, "label": "TGW subnet", "note": ["10.2.2.0/28", "2001:db8:2200:2::/64"] }
+      ],
+      "nodes": [
+        { "id": "eca", "icon": "aws-res-ec2-instance", "x": 146, "y": 130, "size": 32, "label": "Amazon EC2", "sub": "Nitro instance" },
+        { "id": "ata", "icon": "aws-res-transit-gateway-attachment", "x": 146, "y": 244, "size": 32, "label": "TGW attachment", "sub": "IPv6 support on" },
+        { "id": "tgw", "icon": "aws-svc-transit-gateway", "x": 464, "y": 244, "size": 32, "label": "AWS Transit Gateway" },
+        { "id": "atb", "icon": "aws-res-transit-gateway-attachment", "x": 782, "y": 244, "size": 32, "label": "TGW attachment", "sub": "IPv6 support on" },
+        { "id": "ecb", "icon": "aws-res-ec2-instance", "x": 782, "y": 130, "size": 32, "label": "Amazon EC2", "sub": "Nitro instance" }
+      ],
+      "wires": [
+        { "id": "ea", "d": "M162,190 V240", "both": true },
+        { "id": "at", "d": "M182,260 H460", "both": true },
+        { "id": "tb", "d": "M500,260 H778", "both": true },
+        { "id": "eb", "d": "M798,240 V190", "both": true },
+        { "id": "rt", "d": "M480,306 V330", "dashed": true, "arrow": false }
+      ],
+      "flows": [
+        {
+          "id": "req",
+          "wires": [
+            { "wire": "ea", "ring": "ata", "f": 0.5, "dx": 11, "dy": 0, "text": "A Nitro instance in an IPv6-only subnet of VPC A sends IPv6 traffic to an instance in VPC B. Its route table sends 2001:db8:2200::/56, the IPv6 CIDR of VPC B, to the transit gateway, through the attachment in the same Availability Zone." },
+            { "wire": "at", "ring": "tgw", "f": 0.5, "text": "IPv6 support is enabled on the VPC attachment, so the transit gateway has an IPv6 address on its network interface in the TGW subnet. Attachment subnets must also have IPv4: an attachment cannot use an IPv6-only subnet." },
+            { "wire": "tb", "ring": "atb", "f": 0.5, "text": "With route propagation on, both attachments propagate their IPv4 and IPv6 CIDRs into the transit gateway route table. The 2001:db8:2200::/56 route sends the traffic to the VPC B attachment." },
+            { "wire": "eb", "ring": "ecb", "f": 0.5, "dx": -11, "dy": 0, "text": "The traffic reaches the instance in VPC B. Its route table sends 2001:db8:1100::/56 to the transit gateway, so the response returns the same way." },
+            { "wire": "eb", "reverse": true, "ring": "atb", "kind": "pk-2", "step": false },
+            { "wire": "tb", "reverse": true, "ring": "tgw", "kind": "pk-2", "step": false },
+            { "wire": "at", "reverse": true, "ring": "ata", "kind": "pk-2", "step": false },
+            { "wire": "ea", "reverse": true, "ring": "eca", "kind": "pk-2", "step": false }
+          ],
+          "v6": true
+        }
+      ],
+      "tables": [
+        {
+          "id": "rt-a",
+          "x": 44,
+          "y": 330,
+          "title": "VPC A, IPv6-only subnet route table",
+          "tone": "networking",
+          "cols": ["Destination", "Target"],
+          "rows": [
+            ["10.1.0.0/16", "local"],
+            ["2001:db8:1100::/56", "local"],
+            { "cells": ["2001:db8:2200::/56", "tgw"], "t": [0.04, 0.077], "tone": "ok" }
+          ]
+        },
+        {
+          "id": "rt-tgw",
+          "x": 384,
+          "y": 330,
+          "title": "Transit gateway route table",
+          "tone": "networking",
+          "cols": ["Destination", "Attachment", "Type"],
+          "rows": [
+            ["10.1.0.0/16", "VPC A", "propagated"],
+            { "cells": ["2001:db8:1100::/56", "VPC A", "propagated"], "t": [0.711, 0.888], "tone": "ok" },
+            ["10.2.0.0/16", "VPC B", "propagated"],
+            { "cells": ["2001:db8:2200::/56", "VPC B", "propagated"], "t": [0.264, 0.441], "tone": "ok" }
+          ]
+        },
+        {
+          "id": "rt-b",
+          "x": 680,
+          "y": 330,
+          "title": "VPC B, IPv6-only subnet route table",
+          "tone": "networking",
+          "cols": ["Destination", "Target"],
+          "rows": [
+            ["10.2.0.0/16", "local"],
+            ["2001:db8:2200::/56", "local"],
+            { "cells": ["2001:db8:1100::/56", "tgw"], "t": [0.488, 0.524], "tone": "ok" }
+          ]
+        }
+      ],
+      "legend": {
+        "x": 12,
+        "y": 437,
+        "row": true,
+        "items": [
+          { "kind": "pk", "label": "Request" },
+          { "kind": "pk-2", "label": "Response" },
+          { "kind": "v6", "label": "IPv6 packet" }
+        ]
+      }
+    }
+  ]
+}
