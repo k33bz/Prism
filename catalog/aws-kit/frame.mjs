@@ -16,6 +16,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { standalone } from './awd.mjs';
+import { compileFlows } from './story.mjs';
 
 // ---- a lossless reader and writer for the markup the generator draws ----
 function parse(src) {
@@ -150,6 +151,8 @@ const distBox = (b, [x, y]) => Math.hypot(Math.max(b.x - x, 0, x - (b.x + b.w)),
  * on a nearby wire, a frame failing around it, a wire draining or lighting up, a node appearing.
  */
 export function storyboard(spec, { theme = 'auto', near = 60 } = {}) {
+  const src = spec;
+  spec = compileFlows(spec);
   // the drawn wire paths (auto-routed ones included), by wire id
   const drawn = parse(standalone(spec)), paths = new Map();
   (function index(el) { const id = get(el, 'id'); if (el.tag === 'path' && id?.startsWith(spec.id + '-')) paths.set(id.slice(spec.id.length + 1), get(el, 'd')); for (const k of el.kids || []) index(k); })(drawn);
@@ -182,7 +185,7 @@ export function storyboard(spec, { theme = 'auto', near = 60 } = {}) {
     const at = pick ? pick.at : null;
     if (pick) { prev = at; used.add(pick); }
     const text = (spec.steps || []).find((x) => String(x.n) === String(s.n) && x.text)?.text || '';
-    out.push({ n: s.n, at, text, svg: at == null ? frame(spec, 'poster', { theme }) : frame(spec, at, { theme }) });
+    out.push({ n: s.n, at, text, svg: at == null ? frame(src, 'poster', { theme }) : frame(src, at, { theme }) });
   }
   return out;
 }

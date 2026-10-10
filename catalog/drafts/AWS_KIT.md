@@ -65,6 +65,8 @@ export default {
     wires:   [ { id, from, to } | { id, d:'M..H..V..' } ,  dashed?, both?, flow?, label?, labelAt?:0.5, labelDx?, labelDy?:-5, labelAnchor?, labelBg?, via?, arrow?:false, hot?, tone? ],
     steps:   [ { n, at:'<wire id>', f?:0.5, dx?, dy?:-11, text } | { n, x, y, text } ],
     timeline:[ { wire?, t:[a,b], reverse?, kind?:'pk'|'pk-2'|'pk-bad', ring?:'<node id>'|{ x, y, r? }, r? } ],
+    flows:   [ { id?, path:['<node id>', ...] | wires:['<wire id>' | { wire, reverse?, ring?, text?, step?, f?, dx?, dy?, kind? }, ...],
+                 reply?, text?:['<one per hop>'], steps?:false, kind?, with?:'<flow id>', t?:[a,b], pace?:'length'|'even' } ],
     effects: [ { appear:'<node id>', t:[a,b], ghost?:true } | { fail:'<group id>', t } | { fade:'<wire id>', t } | { glow:'<wire id>', t } ],
     notes:   [ { x, y, text, kind?:'caption'|'label'|'warn', anchor?:'start'|'middle'|'end', t?:[a,b], off?:[a,b], still?, tone?, size?, weight?, caps? } ],
     marks:   [ { on:'<node or wire id>', f?, kind?:'blocked'|'ok', t?:[a,b], still?, dx?, dy? } | { x, y, ... } ],
@@ -133,6 +135,19 @@ group. place.mjs has `box(id, cx, cy, w, h, label)`, and its ports know boxes an
 `pk` = request (AWS orange), `pk-2` = response/replication (blue), `pk-bad` = failed traffic (red).
 Packet colors are fixed rather than the theme accent, so the two stay distinct in every design
 system; a page can override them with `--awd-request` / `--awd-response`.
+
+**Flows** say the story the way an architect tells it, and the generator writes the timeline:
+`{ path: ['users', 'apigw', 'fn', 'ddb'], reply: true, text: ['Users call the API.', '...', '...'] }`
+sends a request along the wires that join those nodes (either direction), pulses a ring on each node
+it reaches, numbers a badge per hop (on from the spec's own steps) with its text, and with `reply`
+brings the response back. Packets keep one speed (`pace: 'length'`, the default: a long wire takes
+longer; `'even'` gives equal windows). Flows run one after another over the clock in array order;
+`with: '<flow id>'` starts one alongside another (a log write beside the request), `t: [a, b]` pins
+one, `kind: 'pk-bad'` draws failed traffic, `steps: false` drops its badges. A wire drawn with `d` has
+no ends to find, so name it: `wires: ['l1', { wire: 'l2', ring: 'cw', f: 0.7 }]` (a hop object also
+sets the badge spot and `ring: false` for none). An empty text (`''`) leaves a hop's step untold.
+Flows compile to plain timeline entries and steps after the spec's own, so the two mix, and the
+exports, frames and storyboards see the compiled story. `compileFlows(spec)` in `story.mjs` shows it.
 `reverse:true` runs the wire backwards. Tell one readable story per cycle: sequential windows with
 small gaps, responses after requests, leave ~0.05 idle at the end before the loop.
 

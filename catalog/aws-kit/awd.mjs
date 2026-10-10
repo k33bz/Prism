@@ -18,6 +18,7 @@ import { pathToFileURL, fileURLToPath } from 'node:url';
 import { VERSION, canonical, canonicalDiagram, toJson, validateFamily } from './spec.mjs';
 import { wrap } from './place.mjs';
 import { lint as lintSvg, report as lintReport } from './lint.mjs';
+import { compileFlows } from './story.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(HERE, '..', '..');
@@ -150,6 +151,29 @@ export function checkSpec(spec) {
     if (e.wire == null && e.ring == null) fail(w, 'needs a wire, a ring, or both');
     if (e.kind != null && !PACKETS.has(e.kind)) fail(w, `kind must be one of ${[...PACKETS].join(', ')}`);
   }
+  const flowIds = new Set((spec.flows || []).map((f) => f && f.id).filter((x) => x != null));
+  for (const [i, f] of (spec.flows || []).entries()) {
+    const w = `${at} flow[${i}]`;
+    if (f.id != null) okId(f.id, w);
+    if ((f.path == null) === (f.wires == null)) fail(w, 'give a path (node ids) or wires, one of them');
+    if (f.path != null) {
+      if (!Array.isArray(f.path) || f.path.length < 2) fail(w, 'path needs two or more node ids');
+      for (const n of f.path) if (!nodeIds.has(n)) fail(w, `path names unknown node ${JSON.stringify(n)}`);
+    } else {
+      if (!Array.isArray(f.wires) || !f.wires.length) fail(w, 'wires needs one or more wire ids');
+      for (const x of f.wires) {
+        const wid = typeof x === 'string' ? x : x && x.wire;
+        if (!wireIds.has(wid)) fail(w, `wires names unknown wire ${JSON.stringify(wid)}`);
+        if (typeof x === 'object' && x.ring != null && x.ring !== false && !nodeIds.has(x.ring)) fail(w, `unknown ring node ${JSON.stringify(x.ring)}`);
+        if (typeof x === 'object' && x.text != null) okText(x.text, `${w}.wires.text`);
+      }
+    }
+    if (f.text != null) { if (!Array.isArray(f.text)) fail(w, 'text is a list, one per hop'); f.text.forEach((s, j) => { if (s != null) okText(s, `${w}.text[${j}]`); }); }
+    if (f.t != null) okWindow(f.t, w);
+    if (f.with != null && (!flowIds.has(f.with) || f.with === f.id)) fail(w, `with names unknown flow ${JSON.stringify(f.with)}`);
+    if (f.kind != null && !PACKETS.has(f.kind)) fail(w, `kind must be one of ${[...PACKETS].join(', ')}`);
+    okEnum(f.pace, new Set(['length', 'even']), `${w}.pace`); okBool(f, ['reply', 'steps'], w);
+  }
   for (const [i, e] of (spec.effects || []).entries()) {
     const w = `${at} effects[${i}]`;
     okWindow(e.t, w);
@@ -264,6 +288,7 @@ const win = (dur, a, b, inner) => inner; // (kept for readability of call sites)
 
 export function diagram(spec) {
   checkSpec(spec);
+  spec = compileFlows(spec);   // flows become timeline entries and steps
   const id = spec.id;
   const W = spec.w || 480, H = spec.h || 240, dur = spec.dur || 6;
   const D = `${dur}s`;
@@ -509,6 +534,7 @@ export function diagram(spec) {
 
 // the numbered step texts, one per badge number (the first text given for a number), in order
 export function stepTexts(spec) {
+  spec = compileFlows(spec);
   const by = new Map();
   for (const s of spec.steps || []) if (s.text && !by.has(String(s.n))) by.set(String(s.n), s.text);
   return [...by].sort((a, b) => (Number(a[0]) - Number(b[0])) || a[0].localeCompare(b[0]));
@@ -546,7 +572,7 @@ export function validate(html) {
 }
 
 // ---- lint: layout rules checked on the drawn markup (see lint.mjs) ----
-export function lint(spec) { return lintSvg(spec, diagram(spec)); }
+export function lint(spec) { return lintSvg(compileFlows(spec), diagram(spec)); }
 
 // ---- standalone SVG: one self-contained document per diagram, for .svg files, <img src>, slides and
 // READMEs. The kit CSS (diagram rules only, not the gallery chrome) is inlined, the <symbol>s the

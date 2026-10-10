@@ -53,6 +53,7 @@
         "wires": { "type": "array", "items": { "$ref": "#/$defs/wire" } },
         "steps": { "type": "array", "items": { "$ref": "#/$defs/step" } },
         "timeline": { "type": "array", "items": { "$ref": "#/$defs/timelineEntry" } },
+        "flows": { "type": "array", "items": { "$ref": "#/$defs/flow" }, "description": "Paths through the diagram that compile to timeline entries, rings and numbered steps (after the spec's own)." },
         "effects": { "type": "array", "items": { "$ref": "#/$defs/effect" } },
         "notes": { "type": "array", "items": { "$ref": "#/$defs/note" } },
         "marks": { "type": "array", "items": { "$ref": "#/$defs/mark" }, "description": "Blocked X or ok check on a node, a wire or a point." },
@@ -60,6 +61,36 @@
         "extra": { "type": "string", "description": "Raw SVG appended last. No script, on* handlers, foreignObject/style/iframe/object/embed, javascript: URLs, or href/url() that is not a #fragment." }
       },
       "required": ["id", "name"],
+      "additionalProperties": false
+    },
+    "flow": {
+      "type": "object",
+      "properties": {
+        "id": { "$ref": "#/$defs/id", "description": "Needed when another flow runs with this one." },
+        "path": { "type": "array", "items": { "$ref": "#/$defs/id" }, "minItems": 2, "description": "Node ids in travel order; each pair names the wire between them (either direction)." },
+        "wires": { "type": "array", "minItems": 1, "items": { "anyOf": [{ "$ref": "#/$defs/id" }, { "$ref": "#/$defs/flowHop" }] }, "description": "Wire ids in travel order, for wires drawn with d (no from/to), or hops with options." },
+        "reply": { "type": "boolean", "description": "The response comes back along the same wires (pk-2)." },
+        "text": { "type": "array", "items": { "type": "string", "maxLength": 400 }, "description": "Step texts, one per hop." },
+        "steps": { "type": "boolean", "description": "false: no numbered badges for this flow." },
+        "kind": { "enum": ["pk", "pk-2", "pk-bad"] },
+        "with": { "$ref": "#/$defs/id", "description": "Run at the same time as this flow." },
+        "t": { "$ref": "#/$defs/window", "description": "Pin the flow's window; default: flows share the clock in order." },
+        "pace": { "enum": ["length", "even"], "description": "length (default): one speed, a long wire takes longer; even: equal windows." }
+      },
+      "additionalProperties": false
+    },
+    "flowHop": {
+      "type": "object",
+      "properties": {
+        "wire": { "$ref": "#/$defs/id" },
+        "reverse": { "type": "boolean" },
+        "ring": { "anyOf": [{ "$ref": "#/$defs/id" }, { "enum": [false] }], "description": "Ring node on arrival (default: the wire's far end); false for none." },
+        "text": { "type": "string", "maxLength": 400 },
+        "step": { "anyOf": [{ "type": "boolean" }, { "type": "number" }, { "type": "string" }] },
+        "f": { "type": "number" }, "dx": { "type": "number" }, "dy": { "type": "number" },
+        "kind": { "enum": ["pk", "pk-2", "pk-bad"] }
+      },
+      "required": ["wire"],
       "additionalProperties": false
     },
     "group": {
