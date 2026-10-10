@@ -282,6 +282,10 @@ export const XREF = {
   // draw.io AWS4 library: resIcon=mxgraph.aws4.<name> service tiles and shape=mxgraph.aws4.<name> resource shapes
   drawio: {
     s3: 'aws-svc-simple-storage-service', sns: 'aws-svc-simple-notification-service', sqs: 'aws-svc-simple-queue-service',
+    // tile names that older files also use as bare shapes (shape=mxgraph.aws4.lambda): the service, not a
+    // resource whose name ends in the same word (S3 Object Lambda, Backup for CloudFormation, MSK Connect)
+    lambda: 'aws-svc-lambda', cloudformation: 'aws-svc-cloudformation', artifact: 'aws-svc-artifact',
+    audit_manager: 'aws-svc-audit-manager', connect: 'aws-svc-connect', fsx_for_netapp_ontap: 'aws-svc-fsx-for-netapp-ontap',
     ec2: 'aws-svc-ec2', ecs: 'aws-svc-elastic-container-service', eks: 'aws-svc-elastic-kubernetes-service',
     ecr: 'aws-svc-elastic-container-registry', efs: 'aws-svc-efs', elastic_file_system: 'aws-svc-efs',
     elastic_block_store: 'aws-svc-elastic-block-store', rds: 'aws-svc-rds', vpc: 'aws-svc-virtual-private-cloud',
