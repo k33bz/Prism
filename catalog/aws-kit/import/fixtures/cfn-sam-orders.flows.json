@@ -1,0 +1,21 @@
+{
+  "_comment": "Sidecar for cfn-sam-orders.json: a client places an order; the queue hands it to fulfilment.",
+  "name": "Orders API (SAM)",
+  "actors": [{ "id": "Client", "icon": "aws-res-client", "label": "Client" }],
+  "flows": [
+    {
+      "id": "place-order",
+      "name": "Place an order",
+      "dur": 9,
+      "steps": [
+        { "from": "Client", "to": "ServerlessRestApi", "label": "POST /orders", "text": "The client posts an order to the REST API." },
+        { "from": "ServerlessRestApi", "to": "CreateOrderFunction", "text": "API Gateway invokes the create-order function." },
+        { "from": "CreateOrderFunction", "to": "OrdersTable", "text": "The function writes the order to DynamoDB." },
+        { "from": "CreateOrderFunction", "to": "OrdersQueue", "kind": "async", "text": "It queues the order for fulfilment." },
+        { "from": "OrdersQueue", "to": "FulfillFunction", "kind": "async", "text": "The queue triggers the fulfilment function." },
+        { "from": "FulfillFunction", "to": "OrderEventsTopic", "kind": "async", "text": "Fulfilment publishes an order event." }
+      ]
+    }
+  ],
+  "overrides": { "ServerlessRestApi": { "sub": "Orders API" } }
+}

@@ -1358,16 +1358,18 @@ export function buildTools() {
     },
     {
       name: 'import_diagram',
-      description: 'Import an architecture design into the AWS kit: draw.io (.drawio XML, plain or compressed, or .drawio.svg; a .drawio.png as contentBase64), Mermaid architecture-beta or flowchart, PlantUML-AWS or D2. Shapes and names resolve to the official AWS Architecture Icons (unmapped ones become plain boxes and are listed), groups to AWS frames, the layout is fitted to a kit tile and checked by the kit lint, and the request order (numbered badges or edges, or a %% prism: flow directive) becomes the animation. Returns { spec, svg, report: { from, issues, unmapped, tile, lint } }: edit spec and pass it to build_diagram, or export it with export_diagram.',
+      description: 'Import an architecture design into the AWS kit: draw.io (.drawio XML, plain or compressed, or .drawio.svg; a .drawio.png as contentBase64), Mermaid architecture-beta or flowchart, PlantUML-AWS, D2, CloudFormation (JSON or YAML with short-form intrinsics; CDK synth output and SAM after transform included) or Terraform (terraform show -json of a plan or a state; raw HCL is rejected with how to get the JSON). Shapes, names and resource types resolve to the official AWS Architecture Icons (unmapped ones become plain boxes and are listed), groups to AWS frames, the layout is fitted to a kit tile and checked by the kit lint, and the request order (numbered badges or edges, a %% prism: flow directive, or for IaC a flows sidecar) becomes the animation. For CloudFormation and Terraform the VPC, subnets (public, private or isolated from the route tables), Availability Zone positions, placement and edges (listener to target group, security group chain with ports, DNS aliases, event sources, IAM resource ARNs as dashed weak edges) are inferred, and report.ledger lists every fact as derived, assumed or dropped with the resources it came from (the assumed ones carry a question for the customer). Without a flows sidecar IaC has no animation unless story is guess. Returns { spec, svg, report: { from, issues, unmapped, tile, lint, ledger? } }: edit spec and pass it to build_diagram, or export it with export_diagram.',
       inputSchema: {
         type: 'object',
         properties: {
-          content: { type: 'string', description: 'The source text (draw.io XML, Mermaid, PlantUML or D2).' },
+          content: { type: 'string', description: 'The source text (draw.io XML, Mermaid, PlantUML, D2, a CloudFormation template, or terraform show -json output).' },
           contentBase64: { type: 'string', description: 'A binary source (a .drawio.png) as base64, instead of content.' },
-          from: { type: 'string', enum: ['auto', 'drawio', 'mermaid', 'plantuml', 'd2'], description: 'Source format; auto (default) detects it.' },
+          from: { type: 'string', enum: ['auto', 'drawio', 'mermaid', 'plantuml', 'd2', 'cfn', 'tf'], description: 'Source format; auto (default) detects it.' },
           id: { type: 'string', description: 'Diagram id for the spec (kebab case); derived from the source when absent.' },
           name: { type: 'string', description: 'Diagram name (title).' },
-          story: { type: 'string', enum: ['auto', 'none'], description: 'auto (default) animates the order the source gives (or guesses one and says so); none draws a still diagram.' },
+          story: { type: 'string', description: 'auto (default) animates the order the source gives (or guesses one and says so); none draws a still diagram. For cfn/tf: the id of a sidecar flow or story, or guess (a breadth-first walk from the internet-facing entry, reported as a guess).' },
+          flows: { type: 'object', description: 'cfn/tf only: the flows sidecar (an object, or its JSON text) with what IaC cannot say: actors, flows (steps from/to logical ids with @az1/@primary/@standby qualifiers, label, kind request|async|replication|response|bad, text; response: reverse), stories (az-fail, asg-scale), story, hide, show, merge, pin, group_hints, overrides, anchors. See "Importing CloudFormation and Terraform" in catalog/drafts/AWS_KIT.md.' },
+          params: { type: 'object', description: 'cfn only: Parameter values that override the template defaults when Conditions and Fn::If are evaluated, e.g. { "Environment": "prod" }.' },
           theme: { type: 'string', enum: ['auto', 'light', 'dark'], description: 'Colors of the returned standalone svg.' },
         },
         additionalProperties: false,
@@ -1376,10 +1378,16 @@ export function buildTools() {
         if ((a.content == null) === (a.contentBase64 == null)) throw new ToolError('pass exactly one of content or contentBase64', { code: 'invalid_argument' });
         const content = a.content != null ? String(a.content) : Buffer.from(String(a.contentBase64), 'base64');
         if (!content.length) throw new ToolError('the source is empty', { code: 'invalid_argument' });
+        let flows = a.flows;
+        if (typeof flows === 'string') {
+          try { flows = JSON.parse(flows); } catch (err) { throw new ToolError(`flows is not valid JSON: ${err.message}`, { code: 'invalid_argument' }); }
+        }
+        if (flows != null && (typeof flows !== 'object' || Array.isArray(flows))) throw new ToolError('flows must be a sidecar object', { code: 'invalid_argument' });
+        if (a.params != null && (typeof a.params !== 'object' || Array.isArray(a.params))) throw new ToolError('params must be an object of parameter values', { code: 'invalid_argument' });
         const kit = await diagramKit(store);
         const imp = await importers(kit);
         let out;
-        try { out = await imp.importDiagram(content, { from: a.from || 'auto', id: a.id, name: a.name, story: a.story || 'auto' }); } catch (err) {
+        try { out = await imp.importDiagram(content, { from: a.from || 'auto', id: a.id, name: a.name, story: a.story || 'auto', flows: flows || undefined, params: a.params || undefined }); } catch (err) {
           throw new ToolError(`Import failed: ${err.message}`, { code: 'import_failed' });
         }
         return { spec: out.spec, svg: kit.awd.standalone(out.spec, { theme: a.theme || 'auto' }), report: out.report };

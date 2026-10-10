@@ -21,7 +21,7 @@ import { layout, placeLabels, DEFAULT_LABEL } from './layout.mjs';
 
 export const KINDS = ['cloud', 'cloud-plain', 'region', 'az', 'vpc', 'pub', 'priv', 'sg', 'asg', 'acct', 'dc', 'server', 'ec2', 'spot', 'iot', 'gen'];
 const KIND_WORDS = { public: 'pub', private: 'priv', subnet: 'priv', account: 'acct', datacenter: 'dc', 'data-center': 'dc', onprem: 'dc', generic: 'gen', group: 'gen', 'availability-zone': 'az', zone: 'az' };
-const DIALECT_NAME = { 'mermaid-architecture': 'Mermaid architecture-beta', 'mermaid-flowchart': 'a Mermaid flowchart', plantuml: 'PlantUML', d2: 'D2' };
+const DIALECT_NAME = { 'mermaid-architecture': 'Mermaid architecture-beta', 'mermaid-flowchart': 'a Mermaid flowchart', plantuml: 'PlantUML', d2: 'D2', cfn: 'a CloudFormation template', tf: 'a Terraform plan' };
 const ID_RE = /^[A-Za-z0-9_-]+$/;
 
 export function newIr(dialect) {
@@ -202,7 +202,7 @@ export function prepare(ir) {
     let label = n.label != null ? cleanText(n.label) : null, sub = n.sub != null ? cleanText(n.sub) : null;
     if (label && label.includes('\n')) { const [a, ...b] = label.split('\n'); label = a; if (!sub) sub = b.join(' '); }
     if (!label) label = r.icon ? iconName(r.icon) : n.id;
-    const N = { id, src: n.id, parent, decl: i, label, sub: sub || null, shapeHint: n.shapeHint || null };
+    const N = { id, src: n.id, parent, decl: i, label, sub: sub || null, shapeHint: n.shapeHint || null, ...(n.wrap ? { wrap: n.wrap } : {}) };
     if (r.icon) N.icon = r.icon; else N.boxKind = r.box;
     for (const w of r.warnings || []) say('info', 'icon', n.id, w);
     if (!r.icon) {
@@ -379,7 +379,10 @@ export function buildSpec(ir, opts = {}) {
   const byName = new Map();
   for (const n of model.nodes.values()) byName.set(n.src, n.id);
   model.nodeIdOf = (x) => byName.get(x) || (model.nodes.has(x) ? x : null);
-  const plan = planStory(model, ir, opts);
+  // opts.plan(model, ir) -> { channel, hops, reply, texts }: an importer with its own story source (the
+  // CloudFormation flows sidecar) compiles the hops itself; badges, layout and story() stay shared
+  const plan = typeof opts.plan === 'function' ? opts.plan(model, ir) : planStory(model, ir, opts);
+  if (typeof opts.plan === 'function') for (const h of plan.hops) if (h.step !== false && h.step != null) h.edge.badge = true;
   // after the story took its numbers off: long labels break into two lines
   for (const e of model.edges) if (e.label && !e.label.includes('\n') && e.label.length > 18) e.label = wrapLabel(e.label);
   const L = layout(model, opts);
@@ -392,7 +395,7 @@ export function buildSpec(ir, opts = {}) {
   const realNodes = [...model.nodes.values()].filter((n) => !n.junction);
   const names = [...new Set(realNodes.map((n) => n.label))];
   const list = (a) => (a.length <= 1 ? a.join('') : a.length === 2 ? `${a[0]} and ${a[1]}` : `${a.slice(0, -1).join(', ')} and ${a[a.length - 1]}`);
-  const storyLine = { numbered: 'Packets follow the numbered steps', flow: 'Packets follow the declared request path', 'd2-steps': 'Packets follow the D2 steps', bfs: 'Packets follow a guessed request path', none: '' }[plan.channel];
+  const storyLine = { numbered: 'Packets follow the numbered steps', flow: 'Packets follow the declared request path', 'd2-steps': 'Packets follow the D2 steps', bfs: 'Packets follow a guessed request path', sidecar: 'Packets follow the request path the flows sidecar declares', none: '' }[plan.channel] ?? '';
   const hasReply = plan.reply || plan.hops.some((h) => h.kind === 'pk-2');
   const desc = ir.directives.desc || ir.meta.desc || `Imported from ${DIALECT_NAME[model.dialect] || model.dialect}: ${names.length > 6 ? `${names.slice(0, 6).join(', ')} and more` : list(names)}.${storyLine ? ` ${storyLine}${hasReply ? ', and responses return the same way' : ''}.` : ''}`;
   // story legs -> timeline and steps (story.mjs), badges where layout placed them

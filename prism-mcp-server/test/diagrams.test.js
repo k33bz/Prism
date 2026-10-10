@@ -146,6 +146,36 @@ test('import_diagram: draw.io, Mermaid, PlantUML and D2 sources become lint-clea
   await assert.rejects(call('import_diagram', {}), (e) => e instanceof ToolError && /exactly one/.test(e.message));
 });
 
+test('import_diagram: CloudFormation and Terraform, with the flows sidecar, params and the ledger', async () => {
+  // YAML with short-form intrinsics, auto-detected; no sidecar means no animation
+  const plain = await call('import_diagram', { content: fixture('cfn-webapp.yaml') });
+  assert.equal(plain.report.from, 'cfn');
+  assert.equal(plain.spec.timeline, undefined);
+  assert.ok(plain.report.ledger.some((l) => l.kind === 'assumed' && /primary/.test(l.fact)), 'the RDS primary AZ is an assumption');
+  assert.match(plain.svg, /^<svg xmlns="http:\/\/www\.w3\.org\/2000\/svg" class="awd"/);
+  // the sidecar as an object and as JSON text animates the same flow
+  const flows = JSON.parse(fixture('cfn-webapp.flows.json'));
+  const a = await call('import_diagram', { content: fixture('cfn-webapp.yaml'), flows });
+  const b = await call('import_diagram', { content: fixture('cfn-webapp.json'), from: 'cfn', flows: JSON.stringify(flows) });
+  assert.equal(a.spec.timeline.length, 9);
+  assert.deepEqual(a.spec.timeline, b.spec.timeline);
+  assert.equal(a.report.story.flow, 'page-view');
+  const lint = await call('lint_diagram', { spec: a.spec });
+  assert.equal(lint.counts.error, 0, JSON.stringify(lint.findings.filter((f) => f.severity === 'error')));
+  // params decide the Conditions
+  const dev = await call('import_diagram', { content: fixture('cfn-conditions.yaml') });
+  const prod = await call('import_diagram', { content: fixture('cfn-conditions.yaml'), params: { EnvType: 'prod', EnableCache: 'true' } });
+  assert.ok(prod.spec.nodes.length > dev.spec.nodes.length);
+  assert.ok(prod.spec.nodes.some((n) => /ElastiCache/.test(n.label)));
+  // Terraform plan JSON; raw HCL is refused with what to run instead
+  const tf = await call('import_diagram', { content: fixture('tf-webapp-plan.json'), story: 'guess' });
+  assert.equal(tf.report.from, 'tf');
+  assert.ok(tf.spec.timeline.length > 0);
+  assert.ok(tf.report.issues.some((i) => i.code === 'story-guess'));
+  await assert.rejects(call('import_diagram', { content: 'resource "aws_s3_bucket" "b" {\n  bucket = "x"\n}\n' }), (e) => e instanceof ToolError && /terraform show -json/.test(e.message));
+  await assert.rejects(call('import_diagram', { content: fixture('cfn-webapp.yaml'), flows: '{nope' }), (e) => e instanceof ToolError && e.code === 'invalid_argument');
+});
+
 test('export_diagram: a gallery diagram to draw.io (and back, animation restored), Mermaid and svg', async () => {
   const dio = await call('export_diagram', { id: 'aws-tt-classic', to: 'drawio' });
   assert.match(dio.text, /^<mxfile /);

@@ -1,0 +1,285 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: >-
+  Internal API with environment switches. EnvType and EnableCache decide the NAT gateway,
+  the Aurora reader and the cache; app and data subnets stay private.
+
+Parameters:
+  EnvType:
+    Type: String
+    Default: dev
+    AllowedValues: [dev, prod]
+  EnableCache:
+    Type: String
+    Default: "false"
+    AllowedValues: ["true", "false"]
+  AvailabilityZones:
+    Type: List<AWS::EC2::AvailabilityZone::Name>
+    Description: Two Availability Zones for the subnets
+  AlertsExportName:
+    Type: String
+    Default: shared-alerts-topic-arn
+
+Mappings:
+  Sizing:
+    dev:  { Instance: t3.small,  Db: db.t4g.medium }
+    prod: { Instance: m7g.large, Db: db.r7g.large }
+
+Conditions:
+  IsProd: !Equals [!Ref EnvType, prod]
+  IsDev: !Not [!Condition IsProd]
+  WantCache: !Equals [!Ref EnableCache, "true"]
+  CreateCache: !And
+    - !Condition IsProd
+    - !Condition WantCache
+
+Resources:
+  Vpc:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: 10.1.0.0/16
+      EnableDnsSupport: true
+      EnableDnsHostnames: true
+  Igw:
+    Type: AWS::EC2::InternetGateway
+  IgwAttach:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties: { VpcId: !Ref Vpc, InternetGatewayId: !Ref Igw }
+
+  # three tiers of subnets in two AZs (positions from a list parameter with no default)
+  PublicSubnetA:
+    Type: AWS::EC2::Subnet
+    Properties: { VpcId: !Ref Vpc, CidrBlock: 10.1.0.0/24, AvailabilityZone: !Select [0, !Ref AvailabilityZones] }
+  PublicSubnetB:
+    Type: AWS::EC2::Subnet
+    Properties: { VpcId: !Ref Vpc, CidrBlock: 10.1.1.0/24, AvailabilityZone: !Select [1, !Ref AvailabilityZones] }
+  AppSubnetA:
+    Type: AWS::EC2::Subnet
+    Properties: { VpcId: !Ref Vpc, CidrBlock: 10.1.10.0/24, AvailabilityZone: !Select [0, !Ref AvailabilityZones] }
+  AppSubnetB:
+    Type: AWS::EC2::Subnet
+    Properties: { VpcId: !Ref Vpc, CidrBlock: 10.1.11.0/24, AvailabilityZone: !Select [1, !Ref AvailabilityZones] }
+  DataSubnetA:
+    Type: AWS::EC2::Subnet
+    Properties: { VpcId: !Ref Vpc, CidrBlock: 10.1.20.0/24, AvailabilityZone: !Select [0, !Ref AvailabilityZones] }
+  DataSubnetB:
+    Type: AWS::EC2::Subnet
+    Properties: { VpcId: !Ref Vpc, CidrBlock: 10.1.21.0/24, AvailabilityZone: !Select [1, !Ref AvailabilityZones] }
+
+  PublicRouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties: { VpcId: !Ref Vpc }
+  PublicDefaultRoute:
+    Type: AWS::EC2::Route
+    DependsOn: IgwAttach
+    Properties: { RouteTableId: !Ref PublicRouteTable, DestinationCidrBlock: 0.0.0.0/0, GatewayId: !Ref Igw }
+  PublicAssocA:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties: { SubnetId: !Ref PublicSubnetA, RouteTableId: !Ref PublicRouteTable }
+  PublicAssocB:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties: { SubnetId: !Ref PublicSubnetB, RouteTableId: !Ref PublicRouteTable }
+
+  # prod only: one NAT gateway for the app subnets
+  NatEip:
+    Type: AWS::EC2::EIP
+    Condition: IsProd
+    Properties: { Domain: vpc }
+  NatGateway:
+    Type: AWS::EC2::NatGateway
+    Condition: IsProd
+    Properties:
+      AllocationId: !GetAtt NatEip.AllocationId
+      SubnetId: !Ref PublicSubnetA
+  AppRouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties: { VpcId: !Ref Vpc }
+  AppDefaultRoute:
+    Type: AWS::EC2::Route
+    Condition: IsProd
+    Properties: { RouteTableId: !Ref AppRouteTable, DestinationCidrBlock: 0.0.0.0/0, NatGatewayId: !Ref NatGateway }
+  AppAssocA:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties: { SubnetId: !Ref AppSubnetA, RouteTableId: !Ref AppRouteTable }
+  AppAssocB:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties: { SubnetId: !Ref AppSubnetB, RouteTableId: !Ref AppRouteTable }
+  DataRouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties: { VpcId: !Ref Vpc }
+  DataAssocA:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties: { SubnetId: !Ref DataSubnetA, RouteTableId: !Ref DataRouteTable }
+  DataAssocB:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties: { SubnetId: !Ref DataSubnetB, RouteTableId: !Ref DataRouteTable }
+
+  # security groups: VPC clients -> ALB :443 -> app :8443 -> Aurora :5432 (and the cache :6379 in prod)
+  AlbSg:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Internal ALB, HTTPS from inside the VPC
+      VpcId: !Ref Vpc
+      SecurityGroupIngress:
+        - { IpProtocol: tcp, FromPort: 443, ToPort: 443, CidrIp: !GetAtt Vpc.CidrBlock }
+  AppSg:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: App instances
+      VpcId: !Ref Vpc
+      SecurityGroupIngress:
+        - { IpProtocol: tcp, FromPort: 8443, ToPort: 8443, SourceSecurityGroupId: !Ref AlbSg }
+  DbSg:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Aurora
+      VpcId: !Ref Vpc
+  DbIngressFromApp:
+    Type: AWS::EC2::SecurityGroupIngress
+    Properties: { GroupId: !Ref DbSg, IpProtocol: tcp, FromPort: 5432, ToPort: 5432, SourceSecurityGroupId: !Ref AppSg }
+  CacheSg:
+    Type: AWS::EC2::SecurityGroup
+    Condition: CreateCache
+    Properties:
+      GroupDescription: Cache
+      VpcId: !Ref Vpc
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 6379
+          ToPort: 6379
+          SourceSecurityGroupId: !Ref AppSg
+
+  InternalAlb:
+    Type: AWS::ElasticLoadBalancingV2::LoadBalancer
+    Properties:
+      Type: application
+      Scheme: internal
+      Subnets: [!Ref AppSubnetA, !Ref AppSubnetB]
+      SecurityGroups: [!Ref AlbSg]
+  AppTargets:
+    Type: AWS::ElasticLoadBalancingV2::TargetGroup
+    Properties:
+      VpcId: !Ref Vpc
+      Port: 8443
+      Protocol: HTTPS
+      TargetType: instance
+      Targets:
+        - Id: !Ref AppInstanceA
+        - Id: !Ref AppInstanceB
+  HttpsListener:
+    Type: AWS::ElasticLoadBalancingV2::Listener
+    Properties:
+      LoadBalancerArn: !Ref InternalAlb
+      Port: 443
+      Protocol: HTTPS
+      Certificates: [{ CertificateArn: !Sub "arn:${AWS::Partition}:acm:${AWS::Region}:${AWS::AccountId}:certificate/0000-example" }]
+      DefaultActions:
+        - Type: forward
+          TargetGroupArn: !Ref AppTargets
+
+  AppRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement: [{ Effect: Allow, Principal: { Service: ec2.amazonaws.com }, Action: sts:AssumeRole }]
+      Policies:
+        - PolicyName: backups
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action: [s3:PutObject]
+                Resource: !Sub
+                  - "${BucketArn}/exports/*"
+                  - { BucketArn: !GetAtt BackupBucket.Arn }
+  AppProfile:
+    Type: AWS::IAM::InstanceProfile
+    Properties: { Roles: [!Ref AppRole] }
+  AppInstanceA:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: !FindInMap [Sizing, !Ref EnvType, Instance]
+      ImageId: ami-0123456789abcdef0
+      SubnetId: !Ref AppSubnetA
+      SecurityGroupIds: [!Ref AppSg]
+      IamInstanceProfile: !Ref AppProfile
+      Monitoring: !If [IsProd, true, !Ref AWS::NoValue]
+  AppInstanceB:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: !FindInMap [Sizing, !Ref EnvType, Instance]
+      ImageId: ami-0123456789abcdef0
+      SubnetId: !Ref AppSubnetB
+      SecurityGroupIds: [!Ref AppSg]
+      IamInstanceProfile: !Ref AppProfile
+
+  DbSubnets:
+    Type: AWS::RDS::DBSubnetGroup
+    Properties:
+      DBSubnetGroupDescription: Aurora subnets
+      SubnetIds: [!Ref DataSubnetA, !Ref DataSubnetB]
+  DbCluster:
+    Type: AWS::RDS::DBCluster
+    Properties:
+      Engine: aurora-postgresql
+      DBSubnetGroupName: !Ref DbSubnets
+      VpcSecurityGroupIds: [!Ref DbSg]
+      ManageMasterUserPassword: true
+      MasterUsername: app
+  DbWriter:
+    Type: AWS::RDS::DBInstance
+    Properties:
+      DBClusterIdentifier: !Ref DbCluster
+      Engine: aurora-postgresql
+      DBInstanceClass: !FindInMap [Sizing, !Ref EnvType, Db]
+  DbReader:
+    Type: AWS::RDS::DBInstance
+    Condition: IsProd
+    Properties:
+      DBClusterIdentifier: !Ref DbCluster
+      Engine: aurora-postgresql
+      DBInstanceClass: !FindInMap [Sizing, !Ref EnvType, Db]
+
+  CacheSubnets:
+    Type: AWS::ElastiCache::SubnetGroup
+    Condition: CreateCache
+    Properties:
+      Description: cache subnets
+      SubnetIds: [!Ref DataSubnetA, !Ref DataSubnetB]
+  Cache:
+    Type: AWS::ElastiCache::ReplicationGroup
+    Condition: CreateCache
+    Properties:
+      ReplicationGroupDescription: session cache
+      Engine: valkey
+      CacheNodeType: cache.r7g.large
+      NumCacheClusters: 2
+      AutomaticFailoverEnabled: true
+      MultiAZEnabled: true
+      CacheSubnetGroupName: !Ref CacheSubnets
+      SecurityGroupIds: [!Ref CacheSg]
+
+  BackupBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      VersioningConfiguration: !If
+        - IsProd
+        - { Status: Enabled }
+        - !Ref AWS::NoValue
+
+  CpuAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      Namespace: AWS/EC2
+      MetricName: CPUUtilization
+      Dimensions: [{ Name: InstanceId, Value: !Ref AppInstanceA }]
+      Statistic: Average
+      Period: 300
+      EvaluationPeriods: 2
+      Threshold: 80
+      ComparisonOperator: GreaterThanThreshold
+      AlarmActions: [!ImportValue { "Fn::Sub": "${AlertsExportName}" }]
+
+Outputs:
+  AlbDns:
+    Value: !GetAtt InternalAlb.DNSName

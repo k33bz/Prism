@@ -1,0 +1,1289 @@
+{
+ "Resources": {
+  "ServiceVpc6F2A0B39": {
+   "Type": "AWS::EC2::VPC",
+   "Properties": {
+    "CidrBlock": "10.20.0.0/16",
+    "EnableDnsHostnames": true,
+    "EnableDnsSupport": true,
+    "InstanceTenancy": "default",
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "OrdersStack/ServiceVpc"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "OrdersStack/ServiceVpc/Resource"
+   }
+  },
+  "ServiceVpcIGW9F1D4A62": {
+   "Type": "AWS::EC2::InternetGateway",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "OrdersStack/ServiceVpc"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "OrdersStack/ServiceVpc/IGW"
+   }
+  },
+  "ServiceVpcVPCGWB7A3C1E5": {
+   "Type": "AWS::EC2::VPCGatewayAttachment",
+   "Properties": {
+    "InternetGatewayId": {
+     "Ref": "ServiceVpcIGW9F1D4A62"
+    },
+    "VpcId": {
+     "Ref": "ServiceVpc6F2A0B39"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "OrdersStack/ServiceVpc/VPCGW"
+   }
+  },
+  "ServiceVpcPublicSubnet1SubnetE5F60718": {
+   "Type": "AWS::EC2::Subnet",
+   "Properties": {
+    "AvailabilityZone": {
+     "Fn::Select": [
+      0,
+      {
+       "Fn::GetAZs": ""
+      }
+     ]
+    },
+    "CidrBlock": "10.20.0.0/18",
+    "MapPublicIpOnLaunch": true,
+    "Tags": [
+     {
+      "Key": "aws-cdk:subnet-name",
+      "Value": "Public"
+     },
+     {
+      "Key": "aws-cdk:subnet-type",
+      "Value": "Public"
+     },
+     {
+      "Key": "Name",
+      "Value": "OrdersStack/ServiceVpc/PublicSubnet1"
+     }
+    ],
+    "VpcId": {
+     "Ref": "ServiceVpc6F2A0B39"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "OrdersStack/ServiceVpc/PublicSubnet1/Subnet"
+   }
+  },
+  "ServiceVpcPublicSubnet1RouteTable293A4B5C": {
+   "Type": "AWS::EC2::RouteTable",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "OrdersStack/ServiceVpc/PublicSubnet1"
+     }
+    ],
+    "VpcId": {
+     "Ref": "ServiceVpc6F2A0B39"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "OrdersStack/ServiceVpc/PublicSubnet1/RouteTable"
+   }
+  },
+  "ServiceVpcPublicSubnet1RouteTableAssociation6D7E8F90": {
+   "Type": "AWS::EC2::SubnetRouteTableAssociation",
+   "Properties": {
+    "RouteTableId": {
+     "Ref": "ServiceVpcPublicSubnet1RouteTable293A4B5C"
+    },
+    "SubnetId": {
+     "Ref": "ServiceVpcPublicSubnet1SubnetE5F60718"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "OrdersStack/ServiceVpc/PublicSubnet1/RouteTableAssociation"
+   }
+  },
+  "ServiceVpcPublicSubnet2Subnet293A4B5C": {
+   "Type": "AWS::EC2::Subnet",
+   "Properties": {
+    "AvailabilityZone": {
+     "Fn::Select": [
+      1,
+      {
+       "Fn::GetAZs": ""
+      }
+     ]
+    },
+    "CidrBlock": "10.20.64.0/18",
+    "MapPublicIpOnLaunch": true,
+    "Tags": [
+     {
+      "Key": "aws-cdk:subnet-name",
+      "Value": "Public"
+     },
+     {
+      "Key": "aws-cdk:subnet-type",
+      "Value": "Public"
+     },
+     {
+      "Key": "Name",
+      "Value": "OrdersStack/ServiceVpc/PublicSubnet2"
+     }
+    ],
+    "VpcId": {
+     "Ref": "ServiceVpc6F2A0B39"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "OrdersStack/ServiceVpc/PublicSubnet2/Subnet"
+   }
+  },
+  "ServiceVpcPublicSubnet2RouteTable6D7E8F90": {
+   "Type": "AWS::EC2::RouteTable",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "OrdersStack/ServiceVpc/PublicSubnet2"
+     }
+    ],
+    "VpcId": {
+     "Ref": "ServiceVpc6F2A0B39"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "OrdersStack/ServiceVpc/PublicSubnet2/RouteTable"
+   }
+  },
+  "ServiceVpcPublicSubnet2RouteTableAssociationABCDEF12": {
+   "Type": "AWS::EC2::SubnetRouteTableAssociation",
+   "Properties": {
+    "RouteTableId": {
+     "Ref": "ServiceVpcPublicSubnet2RouteTable6D7E8F90"
+    },
+    "SubnetId": {
+     "Ref": "ServiceVpcPublicSubnet2Subnet293A4B5C"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "OrdersStack/ServiceVpc/PublicSubnet2/RouteTableAssociation"
+   }
+  },
+  "ServiceVpcPrivateSubnet1Subnet6D7E8F90": {
+   "Type": "AWS::EC2::Subnet",
+   "Properties": {
+    "AvailabilityZone": {
+     "Fn::Select": [
+      0,
+      {
+       "Fn::GetAZs": ""
+      }
+     ]
+    },
+    "CidrBlock": "10.20.128.0/18",
+    "MapPublicIpOnLaunch": false,
+    "Tags": [
+     {
+      "Key": "aws-cdk:subnet-name",
+      "Value": "Private"
+     },
+     {
+      "Key": "aws-cdk:subnet-type",
+      "Value": "Private"
+     },
+     {
+      "Key": "Name",
+      "Value": "OrdersStack/ServiceVpc/PrivateSubnet1"
+     }
+    ],
+    "VpcId": {
+     "Ref": "ServiceVpc6F2A0B39"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "OrdersStack/ServiceVpc/PrivateSubnet1/Subnet"
+   }
+  },
+  "ServiceVpcPrivateSubnet1RouteTable293A4B5C": {
+   "Type": "AWS::EC2::RouteTable",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "OrdersStack/ServiceVpc/PrivateSubnet1"
+     }
+    ],
+    "VpcId": {
+     "Ref": "ServiceVpc6F2A0B39"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "OrdersStack/ServiceVpc/PrivateSubnet1/RouteTable"
+   }
+  },
+  "ServiceVpcPrivateSubnet1RouteTableAssociation6D7E8F90": {
+   "Type": "AWS::EC2::SubnetRouteTableAssociation",
+   "Properties": {
+    "RouteTableId": {
+     "Ref": "ServiceVpcPrivateSubnet1RouteTable293A4B5C"
+    },
+    "SubnetId": {
+     "Ref": "ServiceVpcPrivateSubnet1Subnet6D7E8F90"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "OrdersStack/ServiceVpc/PrivateSubnet1/RouteTableAssociation"
+   }
+  },
+  "ServiceVpcPrivateSubnet2SubnetABCDEF12": {
+   "Type": "AWS::EC2::Subnet",
+   "Properties": {
+    "AvailabilityZone": {
+     "Fn::Select": [
+      1,
+      {
+       "Fn::GetAZs": ""
+      }
+     ]
+    },
+    "CidrBlock": "10.20.192.0/18",
+    "MapPublicIpOnLaunch": false,
+    "Tags": [
+     {
+      "Key": "aws-cdk:subnet-name",
+      "Value": "Private"
+     },
+     {
+      "Key": "aws-cdk:subnet-type",
+      "Value": "Private"
+     },
+     {
+      "Key": "Name",
+      "Value": "OrdersStack/ServiceVpc/PrivateSubnet2"
+     }
+    ],
+    "VpcId": {
+     "Ref": "ServiceVpc6F2A0B39"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "OrdersStack/ServiceVpc/PrivateSubnet2/Subnet"
+   }
+  },
+  "ServiceVpcPrivateSubnet2RouteTable6D7E8F90": {
+   "Type": "AWS::EC2::RouteTable",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "OrdersStack/ServiceVpc/PrivateSubnet2"
+     }
+    ],
+    "VpcId": {
+     "Ref": "ServiceVpc6F2A0B39"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "OrdersStack/ServiceVpc/PrivateSubnet2/RouteTable"
+   }
+  },
+  "ServiceVpcPrivateSubnet2RouteTableAssociationABCDEF12": {
+   "Type": "AWS::EC2::SubnetRouteTableAssociation",
+   "Properties": {
+    "RouteTableId": {
+     "Ref": "ServiceVpcPrivateSubnet2RouteTable6D7E8F90"
+    },
+    "SubnetId": {
+     "Ref": "ServiceVpcPrivateSubnet2SubnetABCDEF12"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "OrdersStack/ServiceVpc/PrivateSubnet2/RouteTableAssociation"
+   }
+  },
+  "ServiceVpcPublicSubnet1EIP4C5D6E7F": {
+   "Type": "AWS::EC2::EIP",
+   "Properties": {
+    "Domain": "vpc",
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "OrdersStack/ServiceVpc/PublicSubnet1"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "OrdersStack/ServiceVpc/PublicSubnet1/EIP"
+   }
+  },
+  "ServiceVpcPublicSubnet1NATGateway8A9B0C1D": {
+   "Type": "AWS::EC2::NatGateway",
+   "Properties": {
+    "AllocationId": {
+     "Fn::GetAtt": [
+      "ServiceVpcPublicSubnet1EIP4C5D6E7F",
+      "AllocationId"
+     ]
+    },
+    "SubnetId": {
+     "Ref": "ServiceVpcPublicSubnet1SubnetE5F60718"
+    },
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "OrdersStack/ServiceVpc/PublicSubnet1"
+     }
+    ]
+   },
+   "DependsOn": [
+    "ServiceVpcPublicSubnet1DefaultRouteABCDEF12",
+    "ServiceVpcPublicSubnet1RouteTable293A4B5C"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "OrdersStack/ServiceVpc/PublicSubnet1/NATGateway"
+   }
+  },
+  "ServiceVpcPublicSubnet1DefaultRouteABCDEF12": {
+   "Type": "AWS::EC2::Route",
+   "Properties": {
+    "DestinationCidrBlock": "0.0.0.0/0",
+    "GatewayId": {
+     "Ref": "ServiceVpcIGW9F1D4A62"
+    },
+    "RouteTableId": {
+     "Ref": "ServiceVpcPublicSubnet1RouteTable293A4B5C"
+    }
+   },
+   "DependsOn": [
+    "ServiceVpcVPCGWB7A3C1E5"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "OrdersStack/ServiceVpc/PublicSubnet1/DefaultRoute"
+   }
+  },
+  "ServiceVpcPrivateSubnet1DefaultRouteABCDEF12": {
+   "Type": "AWS::EC2::Route",
+   "Properties": {
+    "DestinationCidrBlock": "0.0.0.0/0",
+    "NatGatewayId": {
+     "Ref": "ServiceVpcPublicSubnet1NATGateway8A9B0C1D"
+    },
+    "RouteTableId": {
+     "Ref": "ServiceVpcPrivateSubnet1RouteTable293A4B5C"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "OrdersStack/ServiceVpc/PrivateSubnet1/DefaultRoute"
+   }
+  },
+  "ServiceVpcPublicSubnet2DefaultRoute34567890": {
+   "Type": "AWS::EC2::Route",
+   "Properties": {
+    "DestinationCidrBlock": "0.0.0.0/0",
+    "GatewayId": {
+     "Ref": "ServiceVpcIGW9F1D4A62"
+    },
+    "RouteTableId": {
+     "Ref": "ServiceVpcPublicSubnet2RouteTable6D7E8F90"
+    }
+   },
+   "DependsOn": [
+    "ServiceVpcVPCGWB7A3C1E5"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "OrdersStack/ServiceVpc/PublicSubnet2/DefaultRoute"
+   }
+  },
+  "ServiceVpcPrivateSubnet2DefaultRoute34567890": {
+   "Type": "AWS::EC2::Route",
+   "Properties": {
+    "DestinationCidrBlock": "0.0.0.0/0",
+    "NatGatewayId": {
+     "Ref": "ServiceVpcPublicSubnet1NATGateway8A9B0C1D"
+    },
+    "RouteTableId": {
+     "Ref": "ServiceVpcPrivateSubnet2RouteTable6D7E8F90"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "OrdersStack/ServiceVpc/PrivateSubnet2/DefaultRoute"
+   }
+  },
+  "ServiceVpcRestrictDefaultSecurityGroupCustomResource1A2B3C4D": {
+   "Type": "Custom::VpcRestrictDefaultSG",
+   "Properties": {
+    "ServiceToken": {
+     "Fn::GetAtt": [
+      "CustomVpcRestrictDefaultSGCustomResourceProviderHandlerDC833E5E",
+      "Arn"
+     ]
+    },
+    "DefaultSecurityGroupId": {
+     "Fn::GetAtt": [
+      "ServiceVpc6F2A0B39",
+      "DefaultSecurityGroup"
+     ]
+    },
+    "Account": {
+     "Ref": "AWS::AccountId"
+    }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "OrdersStack/ServiceVpc/RestrictDefaultSecurityGroupCustomResource/Default"
+   }
+  },
+  "CustomVpcRestrictDefaultSGCustomResourceProviderRole26592FE0": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Version": "2012-10-17",
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ]
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Sub": "arn:${AWS::Partition}:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+     }
+    ],
+    "Policies": [
+     {
+      "PolicyName": "Inline",
+      "PolicyDocument": {
+       "Version": "2012-10-17",
+       "Statement": [
+        {
+         "Effect": "Allow",
+         "Action": [
+          "ec2:AuthorizeSecurityGroupIngress",
+          "ec2:AuthorizeSecurityGroupEgress",
+          "ec2:RevokeSecurityGroupIngress",
+          "ec2:RevokeSecurityGroupEgress"
+         ],
+         "Resource": [
+          {
+           "Fn::Join": [
+            "",
+            [
+             "arn:",
+             {
+              "Ref": "AWS::Partition"
+             },
+             ":ec2:",
+             {
+              "Ref": "AWS::Region"
+             },
+             ":",
+             {
+              "Ref": "AWS::AccountId"
+             },
+             ":security-group/",
+             {
+              "Fn::GetAtt": [
+               "ServiceVpc6F2A0B39",
+               "DefaultSecurityGroup"
+              ]
+             }
+            ]
+           ]
+          }
+         ]
+        }
+       ]
+      }
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "OrdersStack/Custom::VpcRestrictDefaultSGCustomResourceProvider/Role"
+   }
+  },
+  "CustomVpcRestrictDefaultSGCustomResourceProviderHandlerDC833E5E": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": {
+      "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
+     },
+     "S3Key": "example-rds-handler-asset.zip"
+    },
+    "Timeout": 900,
+    "MemorySize": 128,
+    "Handler": "__entrypoint__.handler",
+    "Role": {
+     "Fn::GetAtt": [
+      "CustomVpcRestrictDefaultSGCustomResourceProviderRole26592FE0",
+      "Arn"
+     ]
+    },
+    "Runtime": "nodejs22.x",
+    "Description": "Lambda function for removing all inbound/outbound rules from the VPC default security group"
+   },
+   "DependsOn": [
+    "CustomVpcRestrictDefaultSGCustomResourceProviderRole26592FE0"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "OrdersStack/Custom::VpcRestrictDefaultSGCustomResourceProvider/Handler"
+   }
+  },
+  "ClusterEB0386A7": {
+   "Type": "AWS::ECS::Cluster",
+   "Metadata": {
+    "aws:cdk:path": "OrdersStack/Cluster/Resource"
+   }
+  },
+  "ApiServiceLBSecurityGroup5C2C8E1A": {
+   "Type": "AWS::EC2::SecurityGroup",
+   "Properties": {
+    "GroupDescription": "Automatically created Security Group for ELB OrdersStackApiServiceLB",
+    "SecurityGroupIngress": [
+     {
+      "CidrIp": "0.0.0.0/0",
+      "Description": "Allow from anyone on port 80",
+      "FromPort": 80,
+      "IpProtocol": "tcp",
+      "ToPort": 80
+     }
+    ],
+    "VpcId": {
+     "Ref": "ServiceVpc6F2A0B39"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "OrdersStack/ApiService/LB/SecurityGroup/Resource"
+   }
+  },
+  "ApiServiceLBSecurityGrouptoOrdersStackApiServiceSecurityGroup7A8B9C0D80": {
+   "Type": "AWS::EC2::SecurityGroupEgress",
+   "Properties": {
+    "Description": "Load balancer to target",
+    "DestinationSecurityGroupId": {
+     "Fn::GetAtt": [
+      "ApiServiceSecurityGroup2D4E6F80",
+      "GroupId"
+     ]
+    },
+    "FromPort": 80,
+    "GroupId": {
+     "Fn::GetAtt": [
+      "ApiServiceLBSecurityGroup5C2C8E1A",
+      "GroupId"
+     ]
+    },
+    "IpProtocol": "tcp",
+    "ToPort": 80
+   },
+   "Metadata": {
+    "aws:cdk:path": "OrdersStack/ApiService/LB/SecurityGroup/to OrdersStackApiServiceSecurityGroup7A8B9C0D:80"
+   }
+  },
+  "ApiServiceLB4B1D0C9E": {
+   "Type": "AWS::ElasticLoadBalancingV2::LoadBalancer",
+   "Properties": {
+    "LoadBalancerAttributes": [
+     {
+      "Key": "deletion_protection.enabled",
+      "Value": "false"
+     }
+    ],
+    "Scheme": "internet-facing",
+    "SecurityGroups": [
+     {
+      "Fn::GetAtt": [
+       "ApiServiceLBSecurityGroup5C2C8E1A",
+       "GroupId"
+      ]
+     }
+    ],
+    "Subnets": [
+     {
+      "Ref": "ServiceVpcPublicSubnet1SubnetE5F60718"
+     },
+     {
+      "Ref": "ServiceVpcPublicSubnet2Subnet293A4B5C"
+     }
+    ],
+    "Type": "application"
+   },
+   "DependsOn": [
+    "ServiceVpcPublicSubnet1DefaultRouteABCDEF12",
+    "ServiceVpcPublicSubnet2DefaultRoute34567890"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "OrdersStack/ApiService/LB/Resource"
+   }
+  },
+  "ApiServiceLBPublicListenerECSGroup9C3D4E5F": {
+   "Type": "AWS::ElasticLoadBalancingV2::TargetGroup",
+   "Properties": {
+    "Port": 80,
+    "Protocol": "HTTP",
+    "TargetGroupAttributes": [
+     {
+      "Key": "stickiness.enabled",
+      "Value": "false"
+     }
+    ],
+    "TargetType": "ip",
+    "VpcId": {
+     "Ref": "ServiceVpc6F2A0B39"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "OrdersStack/ApiService/LB/PublicListener/ECSGroup/Resource"
+   }
+  },
+  "ApiServiceLBPublicListener8E2F7A3B": {
+   "Type": "AWS::ElasticLoadBalancingV2::Listener",
+   "Properties": {
+    "DefaultActions": [
+     {
+      "TargetGroupArn": {
+       "Ref": "ApiServiceLBPublicListenerECSGroup9C3D4E5F"
+      },
+      "Type": "forward"
+     }
+    ],
+    "LoadBalancerArn": {
+     "Ref": "ApiServiceLB4B1D0C9E"
+    },
+    "Port": 80,
+    "Protocol": "HTTP"
+   },
+   "Metadata": {
+    "aws:cdk:path": "OrdersStack/ApiService/LB/PublicListener/Resource"
+   }
+  },
+  "ApiServiceTaskDefTaskRole1F2E3D4C": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "ecs-tasks.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "OrdersStack/ApiService/TaskDef/TaskRole/Resource"
+   }
+  },
+  "ApiServiceTaskDefTaskRoleDefaultPolicy5B6A7C8D": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "dynamodb:BatchGetItem",
+        "dynamodb:BatchWriteItem",
+        "dynamodb:ConditionCheckItem",
+        "dynamodb:DeleteItem",
+        "dynamodb:DescribeTable",
+        "dynamodb:GetItem",
+        "dynamodb:GetRecords",
+        "dynamodb:GetShardIterator",
+        "dynamodb:PutItem",
+        "dynamodb:Query",
+        "dynamodb:Scan",
+        "dynamodb:UpdateItem"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "OrdersTable315BB997",
+          "Arn"
+         ]
+        },
+        {
+         "Ref": "AWS::NoValue"
+        }
+       ]
+      },
+      {
+       "Action": [
+        "s3:GetBucket*",
+        "s3:GetObject*",
+        "s3:List*"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "AssetsBucket5CB76180",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "AssetsBucket5CB76180",
+             "Arn"
+            ]
+           },
+           "/*"
+          ]
+         ]
+        }
+       ]
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "ApiServiceTaskDefTaskRoleDefaultPolicy5B6A7C8D",
+    "Roles": [
+     {
+      "Ref": "ApiServiceTaskDefTaskRole1F2E3D4C"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "OrdersStack/ApiService/TaskDef/TaskRole/DefaultPolicy/Resource"
+   }
+  },
+  "ApiServiceTaskDefwebLogGroup8B9A0C1D": {
+   "Type": "AWS::Logs::LogGroup",
+   "UpdateReplacePolicy": "Retain",
+   "DeletionPolicy": "Retain",
+   "Metadata": {
+    "aws:cdk:path": "OrdersStack/ApiService/TaskDef/web/LogGroup/Resource"
+   }
+  },
+  "ApiServiceTaskDefExecutionRole9E8D7C6B": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "ecs-tasks.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "OrdersStack/ApiService/TaskDef/ExecutionRole/Resource"
+   }
+  },
+  "ApiServiceTaskDefExecutionRoleDefaultPolicy3A2B1C0D": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::GetAtt": [
+         "ApiServiceTaskDefwebLogGroup8B9A0C1D",
+         "Arn"
+        ]
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "ApiServiceTaskDefExecutionRoleDefaultPolicy3A2B1C0D",
+    "Roles": [
+     {
+      "Ref": "ApiServiceTaskDefExecutionRole9E8D7C6B"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "OrdersStack/ApiService/TaskDef/ExecutionRole/DefaultPolicy/Resource"
+   }
+  },
+  "ApiServiceTaskDef4F5E6D7C": {
+   "Type": "AWS::ECS::TaskDefinition",
+   "Properties": {
+    "ContainerDefinitions": [
+     {
+      "Essential": true,
+      "Image": "public.ecr.aws/acme/orders-api:1.4.2",
+      "LogConfiguration": {
+       "LogDriver": "awslogs",
+       "Options": {
+        "awslogs-group": {
+         "Ref": "ApiServiceTaskDefwebLogGroup8B9A0C1D"
+        },
+        "awslogs-stream-prefix": "ApiService",
+        "awslogs-region": {
+         "Ref": "AWS::Region"
+        }
+       }
+      },
+      "Name": "web",
+      "PortMappings": [
+       {
+        "ContainerPort": 80,
+        "Protocol": "tcp"
+       }
+      ],
+      "Environment": [
+       {
+        "Name": "TABLE",
+        "Value": {
+         "Ref": "OrdersTable315BB997"
+        }
+       },
+       {
+        "Name": "BUCKET",
+        "Value": {
+         "Ref": "AssetsBucket5CB76180"
+        }
+       }
+      ]
+     }
+    ],
+    "Cpu": "512",
+    "ExecutionRoleArn": {
+     "Fn::GetAtt": [
+      "ApiServiceTaskDefExecutionRole9E8D7C6B",
+      "Arn"
+     ]
+    },
+    "Family": "OrdersStackApiServiceTaskDef",
+    "Memory": "1024",
+    "NetworkMode": "awsvpc",
+    "RequiresCompatibilities": [
+     "FARGATE"
+    ],
+    "TaskRoleArn": {
+     "Fn::GetAtt": [
+      "ApiServiceTaskDefTaskRole1F2E3D4C",
+      "Arn"
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "OrdersStack/ApiService/TaskDef/Resource"
+   }
+  },
+  "ApiService6B8C9D7E": {
+   "Type": "AWS::ECS::Service",
+   "Properties": {
+    "Cluster": {
+     "Ref": "ClusterEB0386A7"
+    },
+    "DeploymentConfiguration": {
+     "MaximumPercent": 200,
+     "MinimumHealthyPercent": 50
+    },
+    "DesiredCount": 2,
+    "EnableECSManagedTags": false,
+    "HealthCheckGracePeriodSeconds": 60,
+    "LaunchType": "FARGATE",
+    "LoadBalancers": [
+     {
+      "ContainerName": "web",
+      "ContainerPort": 80,
+      "TargetGroupArn": {
+       "Ref": "ApiServiceLBPublicListenerECSGroup9C3D4E5F"
+      }
+     }
+    ],
+    "NetworkConfiguration": {
+     "AwsvpcConfiguration": {
+      "AssignPublicIp": "DISABLED",
+      "SecurityGroups": [
+       {
+        "Fn::GetAtt": [
+         "ApiServiceSecurityGroup2D4E6F80",
+         "GroupId"
+        ]
+       }
+      ],
+      "Subnets": [
+       {
+        "Ref": "ServiceVpcPrivateSubnet1Subnet6D7E8F90"
+       },
+       {
+        "Ref": "ServiceVpcPrivateSubnet2SubnetABCDEF12"
+       }
+      ]
+     }
+    },
+    "TaskDefinition": {
+     "Ref": "ApiServiceTaskDef4F5E6D7C"
+    }
+   },
+   "DependsOn": [
+    "ApiServiceLBPublicListener8E2F7A3B",
+    "ApiServiceTaskDefTaskRole1F2E3D4C"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "OrdersStack/ApiService/Service/Service"
+   }
+  },
+  "ApiServiceSecurityGroup2D4E6F80": {
+   "Type": "AWS::EC2::SecurityGroup",
+   "Properties": {
+    "GroupDescription": "OrdersStack/ApiService/Service/SecurityGroup",
+    "SecurityGroupEgress": [
+     {
+      "CidrIp": "0.0.0.0/0",
+      "Description": "Allow all outbound traffic by default",
+      "IpProtocol": "-1"
+     }
+    ],
+    "VpcId": {
+     "Ref": "ServiceVpc6F2A0B39"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "OrdersStack/ApiService/Service/SecurityGroup/Resource"
+   }
+  },
+  "ApiServiceSecurityGroupfromOrdersStackApiServiceLBSecurityGroup1E2F3A4B807C8D9E0F": {
+   "Type": "AWS::EC2::SecurityGroupIngress",
+   "Properties": {
+    "Description": "Load balancer to target",
+    "FromPort": 80,
+    "GroupId": {
+     "Fn::GetAtt": [
+      "ApiServiceSecurityGroup2D4E6F80",
+      "GroupId"
+     ]
+    },
+    "IpProtocol": "tcp",
+    "SourceSecurityGroupId": {
+     "Fn::GetAtt": [
+      "ApiServiceLBSecurityGroup5C2C8E1A",
+      "GroupId"
+     ]
+    },
+    "ToPort": 80
+   },
+   "Metadata": {
+    "aws:cdk:path": "OrdersStack/ApiService/Service/SecurityGroup/from OrdersStackApiServiceLBSecurityGroup1E2F3A4B:80"
+   }
+  },
+  "OrdersTable315BB997": {
+   "Type": "AWS::DynamoDB::Table",
+   "Properties": {
+    "AttributeDefinitions": [
+     {
+      "AttributeName": "pk",
+      "AttributeType": "S"
+     }
+    ],
+    "BillingMode": "PAY_PER_REQUEST",
+    "KeySchema": [
+     {
+      "AttributeName": "pk",
+      "KeyType": "HASH"
+     }
+    ]
+   },
+   "UpdateReplacePolicy": "Retain",
+   "DeletionPolicy": "Retain",
+   "Metadata": {
+    "aws:cdk:path": "OrdersStack/OrdersTable/Resource"
+   }
+  },
+  "AssetsBucket5CB76180": {
+   "Type": "AWS::S3::Bucket",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "aws-cdk:auto-delete-objects",
+      "Value": "true"
+     }
+    ]
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "OrdersStack/AssetsBucket/Resource"
+   }
+  },
+  "AssetsBucketPolicy7D1E5A2B": {
+   "Type": "AWS::S3::BucketPolicy",
+   "Properties": {
+    "Bucket": {
+     "Ref": "AssetsBucket5CB76180"
+    },
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "s3:PutBucketPolicy",
+        "s3:GetBucket*",
+        "s3:List*",
+        "s3:DeleteObject*"
+       ],
+       "Effect": "Allow",
+       "Principal": {
+        "AWS": {
+         "Fn::GetAtt": [
+          "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092",
+          "Arn"
+         ]
+        }
+       },
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "AssetsBucket5CB76180",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "AssetsBucket5CB76180",
+             "Arn"
+            ]
+           },
+           "/*"
+          ]
+         ]
+        }
+       ]
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "OrdersStack/AssetsBucket/Policy/Resource"
+   }
+  },
+  "AssetsBucketAutoDeleteObjectsCustomResource2C4E6A8B": {
+   "Type": "Custom::S3AutoDeleteObjects",
+   "Properties": {
+    "ServiceToken": {
+     "Fn::GetAtt": [
+      "CustomS3AutoDeleteObjectsCustomResourceProviderHandler9D90184F",
+      "Arn"
+     ]
+    },
+    "BucketName": {
+     "Ref": "AssetsBucket5CB76180"
+    }
+   },
+   "DependsOn": [
+    "AssetsBucketPolicy7D1E5A2B"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "OrdersStack/AssetsBucket/AutoDeleteObjectsCustomResource/Default"
+   }
+  },
+  "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Version": "2012-10-17",
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ]
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Sub": "arn:${AWS::Partition}:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "OrdersStack/Custom::S3AutoDeleteObjectsCustomResourceProvider/Role"
+   }
+  },
+  "CustomS3AutoDeleteObjectsCustomResourceProviderHandler9D90184F": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": {
+      "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
+     },
+     "S3Key": "example-auto-delete-asset.zip"
+    },
+    "Timeout": 900,
+    "MemorySize": 128,
+    "Handler": "__entrypoint__.handler",
+    "Role": {
+     "Fn::GetAtt": [
+      "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092",
+      "Arn"
+     ]
+    },
+    "Runtime": "nodejs22.x",
+    "Description": {
+     "Fn::Join": [
+      "",
+      [
+       "Lambda function for auto-deleting objects in ",
+       {
+        "Ref": "AssetsBucket5CB76180"
+       },
+       " S3 bucket."
+      ]
+     ]
+    }
+   },
+   "DependsOn": [
+    "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "OrdersStack/Custom::S3AutoDeleteObjectsCustomResourceProvider/Handler"
+   }
+  },
+  "CDKMetadata": {
+   "Type": "AWS::CDK::Metadata",
+   "Properties": {
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/1WOQQ6CMBBF38K+jFQ1rr2Ae0BjAgB9Twj2r7sVW8AAAA="
+   },
+   "Metadata": {
+    "aws:cdk:path": "OrdersStack/CDKMetadata/Default"
+   },
+   "Condition": "CDKMetadataAvailable"
+  }
+ },
+ "Outputs": {
+  "ApiServiceLoadBalancerDNS3F4A5B6C": {
+   "Value": {
+    "Fn::GetAtt": [
+     "ApiServiceLB4B1D0C9E",
+     "DNSName"
+    ]
+   }
+  },
+  "ApiServiceServiceURL7D8E9F0A": {
+   "Value": {
+    "Fn::Join": [
+     "",
+     [
+      "http://",
+      {
+       "Fn::GetAtt": [
+        "ApiServiceLB4B1D0C9E",
+        "DNSName"
+       ]
+      }
+     ]
+    ]
+   }
+  }
+ },
+ "Conditions": {
+  "CDKMetadataAvailable": {
+   "Fn::Or": [
+    {
+     "Fn::Or": [
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-east-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-west-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-west-1"
+       ]
+      }
+     ]
+    },
+    {
+     "Fn::Equals": [
+      {
+       "Ref": "AWS::Region"
+      },
+      "ap-southeast-2"
+     ]
+    }
+   ]
+  }
+ },
+ "Parameters": {
+  "BootstrapVersion": {
+   "Type": "AWS::SSM::Parameter::Value<String>",
+   "Default": "/cdk-bootstrap/hnb659fds/version",
+   "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]"
+  }
+ },
+ "Rules": {
+  "CheckBootstrapVersion": {
+   "Assertions": [
+    {
+     "Assert": {
+      "Fn::Not": [
+       {
+        "Fn::Contains": [
+         [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+         ],
+         {
+          "Ref": "BootstrapVersion"
+         }
+        ]
+       }
+      ]
+     },
+     "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI."
+    }
+   ]
+  }
+ }
+}
