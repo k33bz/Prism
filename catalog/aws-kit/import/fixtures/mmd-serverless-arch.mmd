@@ -1,0 +1,21 @@
+---
+title: Serverless REST API
+---
+architecture-beta
+    %% prism: flow users>apigw>fn>ddb>fn>apigw>users
+    service users(aws:users)[Users]
+
+    group cloud(cloud)[AWS Cloud]
+    group region(aws:region)["us-east-1"] in cloud
+
+    service cog(aws:cognito)[Amazon Cognito] in region
+    service apigw(aws:api-gateway)[Amazon API Gateway] in region
+    service fn(aws:lambda)[AWS Lambda] in region
+    service ddb(aws:dynamodb)[Amazon DynamoDB] in region
+    service cw(aws:cloudwatch)[Amazon CloudWatch] in region
+
+    users:R <--> L:apigw
+    apigw:R <--> L:fn
+    fn:R <--> L:ddb
+    cog:B <--> T:apigw
+    fn:B --> T:cw

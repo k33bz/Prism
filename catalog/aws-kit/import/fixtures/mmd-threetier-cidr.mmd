@@ -1,0 +1,41 @@
+---
+title: Three-tier web application across two AZs
+---
+architecture-beta
+    %% prism: flow users>igw>albA>ec2A>rdsA>rdsB>ec2B>albB>igw>users
+    service users(aws:users)[Users]
+
+    group cloud(cloud)[AWS Cloud]
+    group region(aws:region)["us-east-1"] in cloud
+    group vpc(aws:virtual-private-cloud)["VPC 10.0.0.0/16"] in region
+
+    group aza[Availability Zone a] in vpc
+    group puba["Public subnet 10.0.0.0/24"] in aza
+    group appa["Private subnet 10.0.10.0/24"] in aza
+    group dba["Private subnet 10.0.20.0/24"] in aza
+
+    group azb[Availability Zone b] in vpc
+    group pubb["Public subnet 10.0.1.0/24"] in azb
+    group appb["Private subnet 10.0.11.0/24"] in azb
+    group dbb["Private subnet 10.0.21.0/24"] in azb
+
+    service igw(aws:vpc-internet-gateway)[Internet gateway] in vpc
+    junction j in vpc
+
+    service albA(aws:elastic-load-balancing-application-load-balancer)[Application Load Balancer] in puba
+    service ec2A(aws:ec2-instance)[Amazon EC2 instance] in appa
+    service rdsA(aws:rds)[Amazon RDS primary] in dba
+
+    service albB(aws:elastic-load-balancing-application-load-balancer)[Application Load Balancer] in pubb
+    service ec2B(aws:ec2-instance)[Amazon EC2 instance] in appb
+    service rdsB(aws:rds)[Amazon RDS standby] in dbb
+
+    users:R --> L:igw
+    igw:R --> L:albA
+    igw:B -- T:j
+    j:R --> L:albB
+    albA:R --> L:ec2A
+    ec2A:R --> L:rdsA
+    albB:R --> L:ec2B
+    ec2B:R --> L:rdsB
+    rdsA:B <--> T:rdsB

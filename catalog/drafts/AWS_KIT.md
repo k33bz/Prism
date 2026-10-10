@@ -16,6 +16,7 @@ node catalog/aws-kit/awd.mjs preview catalog/aws-kit/specs/<family>.mjs light  #
 node catalog/aws-kit/awd.mjs build   catalog/aws-kit/specs/<family>.mjs        # -> catalog/drafts/<family>.aws.html
 node catalog/aws-kit/awd.mjs export-json catalog/aws-kit/specs/<family>.mjs   # -> catalog/aws-kit/json/<family>.json
 node catalog/aws-kit/awd.mjs svg catalog/aws-kit/json/<family>.json <diagram id> --theme light --out x.svg   # one standalone .svg
+node catalog/aws-kit/import/mermaid.mjs diagram.mmd --out imported.json --svg imported.svg   # Mermaid, PlantUML or D2 -> spec (see "Importing")
 ```
 `build` and `preview` take a `.json` family as well as a `.mjs` one; `build --out <file>` writes
 somewhere other than `catalog/drafts/`. After editing a family `.mjs`, run `export-json` for it too
@@ -335,6 +336,149 @@ tightens).
 
 Tests: `node --test catalog/aws-kit/import/drawio.test.mjs`. Fixtures live in `catalog/aws-kit/import/fixtures/`
 (`make-fixtures.mjs` regenerates the authored ones). Do not commit the jgraph templates.
+
+## Importing from Mermaid, PlantUML and D2
+`catalog/aws-kit/import/` turns diagram text into an ordinary spec (layout, routes, labels, badges and the
+animation included), and a spec back into Mermaid. No deps; all four dialects share one model (`ir.mjs`), so
+they get the same layout, icons, group kinds, directives and story.
+```bash
+node catalog/aws-kit/import/mermaid.mjs diagram.mmd [--id x] [--name "..."] [--out spec.json] [--svg out.svg] [--theme light|dark] [--story none]
+node catalog/aws-kit/import/mermaid.mjs stack.puml              # PlantUML (.puml/.plantuml, or text starting @startuml)
+node catalog/aws-kit/import/mermaid.mjs pipeline.d2             # D2
+node catalog/aws-kit/import/mermaid.mjs --export catalog/aws-kit/json/serverless.json sl-api [--dialect flowchart|architecture-beta]
+```
+The import prints a summary (tile, counts, story channel, every issue and lint finding); `--out` writes a
+one-diagram family file that `awd.mjs preview|build|svg` read, `--svg` a standalone SVG. From code:
+```js
+import { fromMermaid, toMermaid } from './import/mermaid.mjs';   // fromPlantUml: ./import/plantuml.mjs, fromD2: ./import/d2.mjs
+const { spec, report } = fromMermaid(text, { id: 'sl-imported', name, story: 'auto' });   // story: 'none' drops the animation
+// report: { dialect, issues: [{ severity, code, element, message }], unmapped: [{ element, label, icon, candidates }],
+//           tile: { size, w, h, fits }, lint: [...lint findings left], story: { channel, legs, steps }, icons: [...] }
+```
+The spec passes `checkSpec`, the schema and `lint` (the importer runs a lint loop that moves flagged labels and
+badges to their next clear spot, a bounded number of rounds; what remains is in `report.lint`). Review
+`report.issues`: `warn` means the drawing departs from the source (a grid conflict, an unmapped icon), `info`
+explains a choice (a guessed story, a generated step text, an ignored `classDef`).
+
+**Mermaid architecture-beta** (the best input: it carries icons, nesting and placement):
+`group id(icon)[title] in parent`, `service id(icon)[title] in parent`, `junction id in parent`, edges
+`a:R --> L:b` with `--`, `-->`, `<--`, `<-->`, an edge title `-[1: HTTPS]-`, `a{group}:B --> T:b` (the edge
+leaves a's group border; b is placed outside that group), `align row a b c` / `align column a b`, `title`,
+`accTitle`, `accDescr`, frontmatter `title:`. Edge sides place nodes on a grid (b right of a, below a...), as
+Mermaid does before its force layout; when two edges disagree the report names both
+(`edge "cache:B --> T:rds" conflicts with edge "app:B --> T:cache"...`), and two nodes sent to one cell are
+reported and moved. Junctions are waypoints: each edge into or out of one stays its own wire, meeting at the
+junction point. Mermaid 11 rejects unquoted titles with anything but letters, digits, `_` and spaces:
+`[us-east-1]` must be `["us-east-1"]` (the importer accepts both and reports the unquoted one).
+
+**Mermaid flowchart** (what most people write): `flowchart LR|RL|TD|BT` (or `graph`), node shapes
+(`[ ]`, `( )`, `([ ])` (a pill when no icon matches), `[( )]`, `(( ))`, `{ }`, `{{ }}`, `[/ /]`, `>  ]`),
+`id@{ icon: "aws:lambda", label: "..." }` and `id@{ shape: f-circ }` (a junction), every link (`-->`, `---`,
+`-.->`, `-.-`, `==>`, `<-->`, `--o`, `--x`, longer forms, `-- text -->`, `-->|text|`), `a & b --> c`
+chains, edge ids `e1@-->`, `subgraph id [Title] ... end` (nested; a node belongs to the innermost subgraph
+that mentions it, as in Mermaid), and links to a subgraph id (the wire ends on that frame's border). `classDef`,
+`class`, `style`, `linkStyle`, `click` and `~~~` are ignored (the kit's theme sets colors). Thick links draw as
+normal wires. Without sides, a layered layout places the nodes: longest-path layers in the flowchart's direction,
+groups kept contiguous (sibling groups in declaration order, so AZ a comes before AZ b), barycenter ordering,
+container packing (a frame never holds a node that is not in it), forks centered between their branches (a frame
+alone in its slot, such as an ALB in its public subnet, centers as a block), and chains straightened into them. A
+both-headed edge between twins (same icon) or a dashed both-headed edge is a peer edge (replication, sync): same
+tier, not a hop. A layered drawing that fits no tile in its direction is tried in the other one (reported).
+
+**PlantUML** (awslabs aws-icons-for-plantuml): group macros are exact frame kinds (`AWSCloudGroup`,
+`RegionGroup`, `VPCGroup`, `AvailabilityZoneGroup`, `PublicSubnetGroup`, `PrivateSubnetGroup`,
+`SecurityGroupGroup`, `AutoScalingGroupGroup`, `AWSAccountGroup`, `CorporateDataCenterGroup`, `GenericGroup`...),
+icon macros `Lambda(fn, "AWS Lambda", "technology", "description")` (the technology is the sub line), plain
+`actor`, `rectangle`, `node`, `database`, `component`, `package`... with or without a block, links (`-->`,
+`->`, `..>`, `--`, `<-->`, `-[#c]->`, `-[dashed]->`) with `: label`, `title`, `left to right direction`.
+Direction words (`-right->`, `-r->`, `-up->`, `-down->`, `-left->`) are edge sides and place nodes on the grid;
+links without one follow the diagram direction as a soft hint. Notes, legends and skinparams are ignored.
+
+**D2**: shapes (`a`, `a: Label`, quoted keys, dotted paths `a.b.c`), containers (a shape with children is a
+frame), `icon:` URLs (the file name names the service: `icons.terrastruct.com/aws/Compute/AWS-Lambda.svg`),
+`label:`, `shape: person`, connections (`->`, `<-`, `<->`, `--`, chains, `: label`, a block with
+`style.stroke-dash` for a dashed wire), `direction:`, and `steps`. A top-level reference to a key that only
+exists nested (`apigw` for `cloud.region.apigw`) joins the nested shape (real D2 would make a new one; reported).
+`layers`, `scenarios`, `vars`, `classes` and globs are ignored.
+
+**Icons** come from the explicit icon, then the label, through `resolveIcon` (Mermaid pack keys such as
+`aws:lambda`, Prism pack keys `aws:svc-lambda` exactly, PlantUML macros, D2 file names, free text such as "ALB",
+"RDS Primary", "Dead-letter queue"; when the whole name matches nothing, its last word or two may, exactly:
+"Order queue", "Image bucket", "Payment function", reported). Mermaid's generic built-ins (`cloud`, `database`, `disk`, `internet`,
+`server`) defer to the title. Anything unresolved becomes a `kind: 'box'` node (a `pill` for a stadium shape)
+and an `unmapped` entry with the closest candidates. A node without a label takes the icon's official short
+name; a `<br>` in a label starts the sub line. Wire labels over 18 characters break into two lines.
+**Group kinds** come from the title (CIDRs ignored: "VPC 10.0.0.0/16" is a vpc, "us-east-1" a region,
+"Availability Zone a" an az, "Private subnet" priv; a subnet that does not say public or private is priv,
+reported), then the id (`aza`, `pub_a`), then the icon (a group icon such as `aws:region`; a service icon makes
+a `gen` frame with that icon in its corner), else `gen` (reported). A title equal to the kind's default label
+is dropped, so the frame shows the official name.
+
+**Directives** ride in comments, so the source stays valid Mermaid (`%% prism: ...`), PlantUML
+(`' prism: ...`) or D2 (`# prism: ...`):
+
+| directive | effect |
+|---|---|
+| `flow users>apigw>fn>ddb>fn>apigw>users` | the request path; a hop back along a wire already taken is the response (blue packet, no badge). Several `flow` lines run one after another; a hop through a junction is one step |
+| `kind vpc=vpc aza=az` | group kinds by group id (`cloud region az vpc pub priv sg asg acct dc server ec2 spot iot gen`; `public`, `private`, `subnet`, `account` also read) |
+| `icon fn=aws-svc-lambda`, `icon idp=box` | a node's icon: an icon id, a Prism pack key, any name the resolver knows, or `box` / `pill` |
+| `name Serverless REST API`, `desc ...` | tile title and description (default: frontmatter `title:`, then a generated description that says where the story came from) |
+| `dur 8` | seconds on the diagram's clock (default 6 to 10 from the number of legs) |
+| `step 2: API Gateway invokes the function.` | the text of badge 2 (default: a generated "A to B: label." text, reported as info) |
+| `peer rdsA rdsB` | a replication or sync edge: same tier in a layered layout, not a hop in the BFS guess |
+| `note vpc=10.0.0.0/16` | a frame's right-aligned note |
+| `story none` | no timeline or badges |
+
+**Animation channels**, first match wins:
+1. numbered edge titles or labels: `-["1: HTTPS"]-`, `-->|2: invoke|`, `-->|3|`, PlantUML `: 1 HTTPS`,
+   D2 `: 1 HTTPS` (a number followed by `:`, `.` or `)`, or alone; "1 HTTPS" without a separator only when two or
+   more labels use it; numbers that are not a 1..n sequence, such as a port 443, are labels). The number comes
+   off the label and becomes the badge. When every numbered edge is `<-->`, the response replays the path
+   backwards (`story(..., { reply: true })`); otherwise only the `<-->` hops get a response leg.
+2. `%% prism: flow a>b>c` (above).
+3. D2 `steps`: each step board's new connections are one numbered step; a step's `label:` is its text.
+4. a breadth-first guess from the entry actor (Users, a client, the internet, a server outside every group,
+   else a node nothing points at), along the arrows, solid wires only; responses on `<-->` wires. Reported as
+   `info` (`story-guess`): it is a guess, set the order with one of the channels above.
+The timeline and numbered steps come from `story()` (story.mjs), one window per leg on the diagram's clock.
+
+**Layout and tile.** Track sizing follows the layout rules below: 16px padding and the 22px header chain through
+nested frames, columns as wide as their icon or label, room in a gap for a straight wire's label and badge,
+frames widened for their title (and note), a frame whose title a wire crosses from above gets left clearance,
+and frames of one kind over the same columns (or rows) get the same size. The tile is the first that fits:
+normal 480x300, wide 960x440 (gaps stretched to use the width), full up to 1400x900; larger is reported
+(`tile-size`). Wires are orthogonal M/H/V routes from the kit's ports (place.mjs `R`, `L`, `T`, `B` below the
+label), searched over the channel lines between tracks: other nodes block, titles and corner icons cost, wires
+avoid running along borders or on top of each other (a shared trunk from one port is fine). In a layered layout a
+hop to the next layer leaves on the flow's exit side and enters on its entry side, so a fork draws as a bus and
+a merge comes in from one side; a dashed and a solid wire at one port are spread apart. Labels and badges
+go to the clearest spot along their wire, measured the way lint measures (Arial advance widths).
+
+**Export.** `toMermaid(spec)` writes a `flowchart LR`: subgraphs by containment, nodes as
+`id@{ icon: "aws:svc-lambda", form: "square", label: "...", pos: "b", h: 48 }` (boxes as `["..."]`, pills as
+`(["..."])`), wire ends on nodes, frame borders (a link to the subgraph) or shared points (an `f-circ` junction
+node), the step number on each badged wire's label (`|"1: HTTPS"|`), and `%% prism:` lines for the name,
+description, duration, group kinds, notes, box nodes and step texts, so an import of the export gets the same
+kinds and texts back. Timeline windows, effects, notes, marks, the legend and `extra` are not carried (the
+first comment line counts them). `{ dialect: 'architecture-beta' }` exports only when the spec's grid is
+consistent: every wire joins two nodes, no node side carries two wires, and the edge sides rebuild the spec's
+own arrangement; otherwise it throws with the reasons (8 of the 79 gallery diagrams qualify).
+Mermaid needs the icons: `catalog/aws-icons/aws-mermaid-pack.json` is the store as an Iconify pack (859 icons,
+1.8 MB; keys `svc-*`, `res-*`, `grp-*`, `cat-*`, colorway pairs as `<key>` light and `<key>-dark`):
+`mermaid.registerIconPacks([{ name: 'aws', icons: pack }])`. Regenerate it after a store refresh with
+`node catalog/aws-kit/import/make-pack.mjs` (a test fails while it is stale).
+
+**Checks.** `node --test catalog/aws-kit/import/mermaid.test.mjs`: every fixture in `import/fixtures/` (`mmd-`,
+`puml-`, `d2-`) imports to a spec that passes checkSpec, the schema and lint with 0 errors; each animation
+channel; grid conflicts and collisions; and the flowchart export of every gallery diagram imports back with the
+same node and wire counts. Mermaid itself is not a dependency: the round trip uses this parser. The fixtures and
+all exports (79 flowcharts, 8 architecture-beta) were also checked once against Mermaid 11.16.1's
+`mermaid.parse` in headless Edge, with negative controls (all valid inputs parse, the controls fail).
+
+**Limits.** The layered layout is built for the sizes gallery tiles hold (about 30 nodes); a long chain of
+layers or nine frames in one layer may need a full tile or more. Group kinds and icons from free text are best
+guesses: read `report.issues` and pin them with `kind` / `icon` directives. The accuracy rules (ALB in a public
+subnet, one NAT gateway per AZ...) are not checked; the source's structure is drawn as written.
 
 ## Layout rules (the bar is "looks like an official AWS reference architecture")
 - 16px padding inside groups; leave 22px at the top of a group for its corner icon + label.

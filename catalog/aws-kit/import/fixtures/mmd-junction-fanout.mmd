@@ -1,0 +1,18 @@
+architecture-beta
+    %% prism: name Fan-out to two subnets
+    %% prism: flow users>alb>web1
+    service users(internet)[Users]
+    group vpc(aws:virtual-private-cloud)["VPC 10.0.0.0/16"]
+    group pub(aws:public-subnet)[Public subnet] in vpc
+    group appa(aws:private-subnet)["App subnet (private) a"] in vpc
+    group appb(aws:private-subnet)["App subnet (private) b"] in vpc
+    service alb(aws:elastic-load-balancing-application-load-balancer)[Application Load Balancer] in pub
+    junction j in vpc
+    service web1(aws:ec2-instance)[Web server] in appa
+    service web2(aws:ec2-instance)[Web server] in appb
+    service logs(aws:simple-storage-service)[Amazon S3 logs]
+    users:R --> L:alb
+    alb:R -- L:j
+    j:T --> B:web1
+    j:B --> T:web2
+    alb{group}:B -[access logs]-> T:logs

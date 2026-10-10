@@ -1,0 +1,27 @@
+flowchart LR
+    %% prism: name Event-driven order pipeline
+    web([Web app]) -->|1: POST /orders| apigw[Amazon API Gateway]
+    mobile([Mobile app]) -->|1: POST /orders| apigw
+    subgraph aws[AWS Cloud]
+      subgraph ingest[Ingest]
+        apigw -->|2: invoke| intake[Order intake function]
+        intake -->|3: PutEvents| bus[Amazon EventBridge]
+      end
+      subgraph process[Processing]
+        bus -->|4: rule| sfn[AWS Step Functions]
+        sfn --> pay[Payment function]
+        sfn --> inv[Inventory function]
+        inv --> ddb[(Amazon DynamoDB)]
+        pay --> sm[AWS Secrets Manager]
+      end
+      subgraph notify[Notifications]
+        bus -->|5: rule| sns[Amazon SNS]
+        sns --> sqs[Amazon SQS]
+        sqs --> mailer[Mailer function]
+        mailer --> ses[Amazon SES]
+      end
+      bus -.->|archive| s3[(Amazon S3)]
+      cw[Amazon CloudWatch]
+    end
+    intake -.-> cw
+    sfn -.-> cw

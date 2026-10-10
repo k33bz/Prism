@@ -1,0 +1,24 @@
+@startuml
+!define AWSPuml https://raw.githubusercontent.com/awslabs/aws-icons-for-plantuml/v23.1/dist
+!include AWSPuml/AWSCommon.puml
+!include AWSPuml/Compute/Lambda.puml
+!include AWSPuml/NetworkingContentDelivery/APIGateway.puml
+!include AWSPuml/Database/DynamoDB.puml
+!include AWSPuml/SecurityIdentityCompliance/Cognito.puml
+!include AWSPuml/Groups/AWSCloud.puml
+!include AWSPuml/Groups/Region.puml
+left to right direction
+actor "Users" as users
+AWSCloudGroup(cloud) {
+  RegionGroup(region, "us-east-1") {
+    APIGateway(apigw, "Amazon API Gateway", "REST API")
+    Lambda(fn, "AWS Lambda", "handler")
+    DynamoDB(ddb, "Amazon DynamoDB", "table")
+    Cognito(cog, "Amazon Cognito", "user pool")
+  }
+}
+users -right-> apigw : 1 HTTPS
+apigw -right-> fn : 2 invoke
+fn -right-> ddb : 3 GetItem
+cog -down-> apigw
+@enduml
