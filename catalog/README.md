@@ -158,6 +158,14 @@ pack (0 facets), which is the signal to run F4.
 Staged-verification overrides (never touch the repo copies): `PRISM_HTML`,
 `PRISM_MCP_THEMES`, `PRISM_SYSTEMS`, `PRISM_PROFILES_DIR`.
 
+The theme tokens of every pack are gated by `node catalog/_check_themes.mjs` (contrast
+floors, rgb/hex agreement, drift between the three copies, TOKEN_META coverage). Its
+contrast pairs include the text the generated facets paint on a role tint: chip and
+selected menu labels, callout body, the tab label on its indicator and the card heading,
+one pair per archetype, role and surface. They are read from `_gen_system.mjs` `PAINTS`
+and `TINT`, so a changed tint alpha or label mix is measured in all 32 themes on the next
+run.
+
 ## Chrome resolution (cross-platform)
 
 `catalog/_chrome.mjs` resolves a browser binary at runtime so the pipeline runs on

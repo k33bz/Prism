@@ -1,7 +1,8 @@
 // node --test catalog/_check_themes.test.mjs
 // Covers the WCAG ratio math against known pairs, the parsers the gate relies on,
-// one synthetic failing palette (in-process and through the CLI with --json), and
-// the scaffolder precedence the drift check depends on. Zero deps.
+// one synthetic failing palette (in-process and through the CLI with --json), the
+// facet pairs taken from the generator (and the old recipe they replace), and the
+// scaffolder precedence the drift check depends on. Zero deps.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { mkdtempSync, writeFileSync, mkdirSync, rmSync } from 'node:fs';
@@ -12,9 +13,10 @@ import { spawnSync } from 'node:child_process';
 import {
   parseColor, contrast, relativeLuminance, over, toHex,
   parseRootBlock, readStringConcat, auditTheme, checkRgb, diffTokens, checkCoverage,
-  loadHtmlThemes, PAIRS, severityOf, runChecks,
+  loadHtmlThemes, PAIRS, severityOf, runChecks, facetPairs,
 } from './_check_themes.mjs';
 import { themeTokens } from './_scaffold_ds.mjs';
+import { generateSystem, PAINTS, VARIANTS } from './_gen_system.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const near = (a, b, eps = 0.01) => assert.ok(Math.abs(a - b) <= eps, `${a} != ${b} (±${eps})`);
@@ -149,10 +151,69 @@ test('the CLI exits 1 with --json naming theme, pair, ratio and floor', () => {
     const f = report.contrast.find((x) => x.pair === 'ink/panel');
     assert.deepEqual([f.theme, f.pass, f.floor], ['cloudscape-light', false, 4.5]);
     near(f.ratio, 2.85);
+    const chip = report.contrast.find((x) => x.pair === 'chip:accent/panel');   // yellow label on a yellow tint
+    assert.deepEqual([chip.pass, chip.severity], [false, 'fail']);
     assert.equal(report.drift.length, 0);                 // both copies agree; only contrast fails
   } finally {
     rmSync(dir, { recursive: true, force: true });
   }
+});
+
+/* --------------------------------------------------------------- facet pairs */
+// Cloudscape's info role and surfaces in both modes (the Prism.html values).
+const CS = {
+  light: { '--bg': '#f2f3f3', '--panel': '#ffffff', '--panel2': '#fafafa', '--card': '#ffffff', '--ink': '#16191f', '--info': '#0972d3', '--info-rgb': '9,114,211', '--info-ink': '#ffffff' },
+  dark: { '--bg': '#0f1621', '--panel': '#192534', '--panel2': '#232f3e', '--card': '#1a2633', '--ink': '#e9ebed', '--info': '#539fe5', '--info-rgb': '83,159,229', '--info-ink': '#000716' },
+};
+const infoRows = (mode, pairs, tokens = CS[mode]) => auditTheme({ id: 'cs-' + mode, mode, tokens }, {}, pairs).filter((r) => r.pair.includes(':info/'));
+const fmtAlpha = (a) => String(a).replace(/^0\.(?=\d)/, '.');
+
+test('facet pairs are the generator PAINTS, and the emitted CSS uses the same numbers', () => {
+  const out = generateSystem({ ds: 'T', dsShort: 't' });
+  for (const p of PAINTS) {
+    for (const v of VARIANTS) for (const s of p.on) assert.ok(PAIRS.some((x) => x.id === `${p.arch}:${v.key}/${s.slice(2)}`), `PAIRS has ${p.arch}:${v.key}/${s}`);
+    const f = out.facets.find((x) => x.id === `t-${p.arch}-info`);
+    assert.ok(f, `facet t-${p.arch}-info exists`);
+    if (p.tint > 0 && p.tint < 1) assert.ok(f.css.includes(`rgba(var(--_rgb),${fmtAlpha(p.tint)})`), `${p.arch} paints its ${p.tint} tint`);
+    if (p.tint >= 1) assert.ok(f.css.includes('background:var(--_c)'), `${p.arch} paints an opaque fill`);
+    if (p.mix < 100) assert.ok(f.css.includes(`color:color-mix(in srgb,var(--_c) ${p.mix}%,var(--ink))`), `${p.arch} mixes its label ${p.mix}%`);
+    if (p.fg === 'role-ink') {
+      assert.ok(f.css.includes('var(--_ink,#fff)'), `${p.arch} paints the on-fill ink`);
+      assert.ok(f.html.includes('--_ink:var(--info-ink,#fff)'), `${p.arch} sets the role ink`);
+    }
+  }
+  // The pattern the gate replaced must not come back unmeasured: a rule that paints
+  // the bare role as text on a role tint.
+  const bare = out.css.split('}').filter((r) => /color:var\(--_c\)/.test(r) && /background:rgba\(var\(--_rgb\)/.test(r));
+  assert.deepEqual(bare, []);
+});
+
+test('negative control: the old recipe fails the facet pairs, the new one passes', () => {
+  const OLD = [
+    { arch: 'chip', fg: 'role', mix: 100, tint: 0.16, on: ['--panel', '--panel2'] },
+    { arch: 'menu', fg: 'role', mix: 100, tint: 0.26, on: ['--panel2'] },
+    { arch: 'tab', fg: '--ink', mix: 100, tint: 0.9, on: ['--panel2'] },   // ink on the 90% indicator
+  ];
+  for (const mode of ['light', 'dark']) {
+    const old = infoRows(mode, facetPairs(OLD));
+    assert.equal(old.length, 4);
+    old.forEach((r) => { assert.equal(r.pass, false, `${mode} ${r.pair} ${r.ratio}`); assert.equal(r.severity, 'fail'); assert.ok(r.ratio < 4.5); });
+    const now = infoRows(mode, facetPairs(PAINTS));
+    assert.equal(now.length, PAINTS.reduce((n, p) => n + p.on.length, 0));
+    now.forEach((r) => assert.equal(r.pass, true, `${mode} ${r.pair} ${r.ratio}`));
+  }
+  near(infoRows('light', facetPairs(OLD)).find((r) => r.pair === 'chip:info/panel').ratio, 3.86);
+  near(infoRows('dark', facetPairs(OLD)).find((r) => r.pair === 'tab:info/panel2').ratio, 2.7);
+});
+
+test('negative control: a surface too light for the current recipe is a gated failure', () => {
+  const rows = infoRows('dark', PAIRS, { ...CS.dark, '--panel2': '#5a5966' });
+  const p2 = rows.find((r) => r.pair === 'chip:info/panel2');
+  assert.deepEqual([p2.pass, p2.severity, p2.floor], [false, 'fail', 4.5]);
+  assert.ok(p2.ratio < 4.5, String(p2.ratio));
+  assert.match(p2.fg, /^#539fe5 \d+% to --ink #e9ebed$/);
+  assert.match(p2.bg, /^rgba\(83,159,229,[0-9.]+\) over #5a5966$/);
+  assert.equal(rows.find((r) => r.pair === 'chip:info/panel').pass, true);
 });
 
 /* ------------------------------------------- scaffolder precedence + loaders */

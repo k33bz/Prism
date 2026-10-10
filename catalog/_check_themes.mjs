@@ -18,7 +18,8 @@
      contrast   WCAG 2.x relative-luminance ratios for the pairs the shell and the
                 generated facets actually paint (see PAIRS below for the floor and
                 the usage that justifies it). Translucent surfaces are composited
-                over --bg first, translucent text over its surface.
+                over --bg first, translucent text over its surface. The facet pairs
+                (text on a role tint) come from _gen_system.mjs PAINTS.
      rgb        every --x-rgb triplet equals the rgb of its --x hex.
      drift      profile vs Prism.html const vs themes.js, token by token, plus the
                 THEME_REGISTRY accent field vs the const's --accent.
@@ -41,6 +42,7 @@
 import { readFileSync, existsSync } from 'node:fs';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
+import { VARIANTS, PAINTS } from './_gen_system.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 
@@ -118,7 +120,7 @@ export function contrast(fgIn, bgIn) {
             separators, timestamps, placeholders, pending/disabled steps,
             captions (357 uses in Prism.html, none of them body copy). 3.0.
    accent   as TEXT: rail .sr-tag, active rail link, current sub-link, tile .ref
-            label, facet chip/menu/card labels (11-13px). 4.5 on --panel.
+            label (11-13px). 4.5 on --panel. Facet labels: see facets below.
             as UI: the focus ring (2px outline), input focus border, loader bar,
             progress/slider/spinner fills on the page. 3.0 on --bg.
    inks     --accent-ink, --info-ink … --crit-ink: the text/glyph the generated
@@ -132,9 +134,16 @@ export function contrast(fgIn, bgIn) {
             light enough for 4.5 text on a dark panel cannot also carry #fff at
             4.5 (needs L >= 0.27 for the first and L <= 0.18 for the second), so
             the fix is var(--accent-ink) in the shell CSS, not a palette value.
-   roles    info/pos/warn/neg/crit are painted as TEXT by the facets (chip, menu
-            row, card heading, 12px bold) and by the shell (--pos "New facets"
-            link and chip). 4.5 on --panel.
+   roles    info/pos/warn/neg/crit are painted as TEXT by the shell (--pos "New
+            facets" link and chip). 4.5 on --panel.
+   facets   text the generated facets paint on a role tint or a role-colored
+            surface, one pair per archetype, role and surface, read from
+            catalog/_gen_system.mjs PAINTS: chip and selected menu row labels
+            (12px, the role mixed toward --ink, on the chip tint or the menu's
+            breathing peak), callout body (--ink on its tint), the tab label on
+            its indicator (on-fill ink) and the card heading (role on --card).
+            Text, 4.5. A tint is rgba(var(--<role>-rgb),a) composited over the
+            surface; color-mix(in srgb,fg p%,--ink) is over() at alpha p.
    line     dividers, tile and panel borders. Advisory 3.0 on --bg: in the shell
             and the generated facets --line is never the only cue for a control
             (every bordered control also has a fill, an icon or a label).
@@ -157,7 +166,21 @@ export const PAIRS = [
   { id: 'line/bg', fg: '--line', bg: '--bg', floor: FLOOR.ui, kind: 'border', advisory: 'divider; never the only cue in the shell or generated facets' },
   { id: 'topnav-ink/topnav-bg', fg: '--cs-topnav-ink', bg: '--cs-topnav-bg', floor: FLOOR.text, kind: 'text' },
   { id: 'topnav-dim/topnav-bg', fg: '--cs-topnav-dim', bg: '--cs-topnav-bg', floor: FLOOR.text, kind: 'text' },
+  ...facetPairs(PAINTS),
 ];
+
+// One pair per paint, role variant and surface, id "<archetype>:<role>/<surface>".
+// A tint below 1 is the role's -rgb triplet at that alpha (what the facet's
+// rgba(var(--_rgb),a) resolves to); a tint of 1 is the role itself (var(--_c)).
+export function facetPairs(paints) {
+  return paints.flatMap((p) => VARIANTS.flatMap((v) => p.on.map((s) => ({
+    id: `${p.arch}:${v.key}/${s.slice(2)}`,
+    fg: p.fg === 'role' ? v.tok : p.fg === 'role-ink' ? v.ink : p.fg,
+    fgFallback: p.fg === 'role-ink' ? '#ffffff' : undefined,
+    mix: p.mix, tint: p.tint, tintTok: p.tint >= 1 ? v.tok : v.rgb,
+    bg: s, floor: FLOOR.text, kind: `facet text on ${p.tint >= 1 ? 'fill' : p.tint > 0 ? 'tint' : 'surface'}`,
+  }))));
+}
 
 // Severity for one pair in one theme: 'fail' (gated) or 'advisory' (reported).
 export function severityOf(pair, mode) {
@@ -182,14 +205,25 @@ function surfaceOf(tokens, key, mode) {
 
 // Measure every PAIR for one theme. `fallback` supplies tokens the theme does
 // not declare but the shell paints anyway (the static :root chrome defaults).
-export function auditTheme(theme, fallback = {}) {
+export function auditTheme(theme, fallback = {}, pairs = PAIRS) {
   const tokens = { ...fallback, ...theme.tokens };
   const rows = [];
-  for (const p of PAIRS) {
-    const bg = surfaceOf(tokens, p.bg, theme.mode);
-    const fgVal = p.fg.startsWith('#') ? p.fg : (tokens[p.fg] != null ? tokens[p.fg] : p.fgFallback);
-    const fgRaw = parseColor(fgVal);
-    const bgVal = tokens[p.bg];
+  for (const p of pairs) {
+    let bg = surfaceOf(tokens, p.bg, theme.mode);
+    let fgVal = p.fg.startsWith('#') ? p.fg : (tokens[p.fg] != null ? tokens[p.fg] : p.fgFallback);
+    let fgRaw = parseColor(fgVal);
+    let bgVal = tokens[p.bg];
+    // Facet pairs: the role tint goes over the surface, the text mixes toward --ink.
+    if (p.tint > 0) {
+      const t = parseColor(tokens[p.tintTok]);
+      bgVal = p.tint >= 1 ? tokens[p.tintTok] : `rgba(${tokens[p.tintTok]},${p.tint}) over ${bgVal}`;
+      bg = bg && t ? over({ ...t, a: p.tint }, bg) : null;
+    }
+    if (p.mix != null && p.mix < 100) {
+      const ink = parseColor(tokens['--ink']);
+      fgVal = `${fgVal} ${p.mix}% to --ink ${tokens['--ink']}`;
+      fgRaw = fgRaw && ink ? over({ ...fgRaw, a: p.mix / 100 }, ink) : null;
+    }
     if (!bg || !fgRaw) {
       rows.push({ theme: theme.id, mode: theme.mode, pair: p.id, fg: fgVal, bg: bgVal, ratio: null, floor: p.floor, kind: p.kind, severity: 'fail', pass: false, note: 'unresolvable color' });
       continue;
