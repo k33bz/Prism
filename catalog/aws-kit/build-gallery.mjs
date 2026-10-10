@@ -24,7 +24,7 @@ export const BLURB = 'Animated reference architectures drawn with the official A
   'three-tier web, Active Directory and directory trusts, databases, multi-Region resilience, VPC and hybrid ' +
   'networking, transit and segmentation, service endpoints, and Route 53 DNS. Numbered steps and traffic run on one clock per diagram; every icon is embedded once and the ' +
   'searchable icon library sits at the bottom.';
-export const FAMILIES = ['serverless', 'three-tier', 'directory', 'databases', 'regions', 'vpc', 'transit', 'endpoints', 'dns'];
+export const FAMILIES = ['serverless', 'three-tier', 'directory', 'databases', 'regions', 'vpc', 'security', 'ipv6', 'transit', 'endpoints', 'dns'];
 
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 const node = (args) => {
