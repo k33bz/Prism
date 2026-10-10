@@ -67,7 +67,8 @@ const GSTYLE = {
   ec2: grp('group_ec2_instance_contents', '#D86613', 'none', '#D86613', 'dashed=0;'),
   spot: grp('group_spot_fleet', '#D86613', 'none', '#D86613', 'dashed=0;'),
   iot: grp('group_iot_greengrass_deployment', '#7AA116', 'none', '#3F8624', 'dashed=0;'),
-  asg: `${PTS16}outlineConnect=0;gradientColor=none;html=1;whiteSpace=wrap;fontSize=12;fontStyle=0;container=1;pointerEvents=0;collapsible=0;recursiveResize=0;shape=mxgraph.aws4.groupCenter;grIcon=mxgraph.aws4.group_auto_scaling_group;grStroke=1;strokeColor=#D86613;fillColor=none;verticalAlign=top;align=center;fontColor=#D86613;dashed=1;spacingTop=25;`,
+  // the kit draws the Auto Scaling group header on the left, so the left-aligned group shape, not groupCenter
+  asg: grp('group_auto_scaling_group', '#D86613', 'none', '#D86613', 'dashed=1;'),
   az: plainGrp('#147EBA', 'none', '#147EBA', true, true),
   sg: plainGrp('#DD3522', 'none', '#DD3522', false, true),
 };
@@ -209,11 +210,16 @@ export function exportDrawio(spec, { scale = 1.2 } = {}) {
     return best;
   };
   const port = (B, p, q) => {
-    // which side the path leaves (or enters) through, and where along it
+    // which side the path leaves (or enters) through, where along it, and how far off the edge the kit's
+    // route starts (below a label, a 2 to 4 px gap): draw.io's exitDx/exitDy keep that exact point
     const horiz = Math.abs(p[1] - q[1]) < 0.5;
     const cl = (v) => Math.max(0, Math.min(1, r2(v)));
-    if (horiz) return { x: q[0] > p[0] ? (p[0] >= B.x + B.w / 2 ? 1 : 0) : (p[0] <= B.x + B.w / 2 ? 0 : 1), y: cl((p[1] - B.y) / B.h) };
-    return { x: cl((p[0] - B.x) / B.w), y: q[1] > p[1] ? (p[1] >= B.y + B.h / 2 ? 1 : 0) : (p[1] <= B.y + B.h / 2 ? 0 : 1) };
+    if (horiz) {
+      const x = q[0] > p[0] ? (p[0] >= B.x + B.w / 2 ? 1 : 0) : (p[0] <= B.x + B.w / 2 ? 0 : 1);
+      return { x, y: cl((p[1] - B.y) / B.h), dx: r2((p[0] - (B.x + x * B.w)) * k), dy: 0 };
+    }
+    const y = q[1] > p[1] ? (p[1] >= B.y + B.h / 2 ? 1 : 0) : (p[1] <= B.y + B.h / 2 ? 0 : 1);
+    return { x: cl((p[0] - B.x) / B.w), y, dx: 0, dy: r2((p[1] - (B.y + y * B.h)) * k) };
   };
   for (const w of spec.wires || []) {
     const pts = paths[w.id] || [];
@@ -224,8 +230,8 @@ export function exportDrawio(spec, { scale = 1.2 } = {}) {
     let st = `edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;html=1;strokeColor=${color};strokeWidth=2;fontSize=11;fontColor=#545B64;labelBackgroundColor=#FFFFFF;endArrow=${w.arrow === false ? 'none' : 'open'};endFill=0;startArrow=${w.both && w.arrow !== false ? 'open' : 'none'};startFill=0;`;
     if (w.dashed) st += 'dashed=1;';
     if (w.flow) st += 'flowAnimation=1;';
-    if (s0 && s0.c) { const p = port(s0.c.b, pts[0], pts[1]); st += `exitX=${p.x};exitY=${p.y};exitDx=0;exitDy=0;`; }
-    if (t0 && t0.c) { const p = port(t0.c.b, pts[pts.length - 1], pts[pts.length - 2]); st += `entryX=${p.x};entryY=${p.y};entryDx=0;entryDy=0;`; }
+    if (s0 && s0.c) { const p = port(s0.c.b, pts[0], pts[1]); st += `exitX=${p.x};exitY=${p.y};exitDx=${p.dx};exitDy=${p.dy};`; }
+    if (t0 && t0.c) { const p = port(t0.c.b, pts[pts.length - 1], pts[pts.length - 2]); st += `entryX=${p.x};entryY=${p.y};entryDx=${p.dx};entryDy=${p.dy};`; }
     // label: x from -1 at the source to 1, y beside the path (positive = left of travel, as draw.io draws it)
     let lx = 0, ly = 0;
     if (w.label) {

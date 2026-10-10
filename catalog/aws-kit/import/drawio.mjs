@@ -14,7 +14,7 @@
 //
 // CLI:
 //   node catalog/aws-kit/import/drawio.mjs <file> [--id x] [--name n] [--page n] [--story auto|none] [--width n]
-//        [--out spec.json] [--svg out.svg] [--theme light|dark|auto] [--still]
+//        [--out spec.json] [--svg out.svg] [--theme light|dark|auto] [--still] [--no-restore]
 //   node catalog/aws-kit/import/drawio.mjs --export <family spec> <diagram id> --out x.drawio
 //
 // The pipeline: load (plain, compressed, svg, png, def() style compression) -> cells (object labels,
@@ -1526,7 +1526,7 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
       process.exit(0);
     }
     const file = args[0];
-    if (!file || file.startsWith('--')) { console.error('usage: drawio.mjs <file> [--id x] [--name n] [--page n] [--story auto|none] [--width n] [--out spec.json] [--svg out.svg] [--theme light|dark|auto] [--still]\n       drawio.mjs --export <family spec> <diagram id> --out x.drawio'); process.exit(2); }
+    if (!file || file.startsWith('--')) { console.error('usage: drawio.mjs <file> [--id x] [--name n] [--page n] [--story auto|none] [--width n] [--out spec.json] [--svg out.svg] [--theme light|dark|auto] [--still] [--no-restore]\n       drawio.mjs --export <family spec> <diagram id> --out x.drawio'); process.exit(2); }
     const o = { id: opt('--id') || undefined, name: opt('--name') || undefined, page: opt('--page') != null ? opt('--page') : 0, story: opt('--story') || 'auto', width: opt('--width') ? +opt('--width') : undefined, restore: !args.includes('--no-restore') };
     const res = fromDrawio(fs.readFileSync(path.resolve(file)), o);
     console.log(summary(file, res));
