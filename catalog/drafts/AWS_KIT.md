@@ -66,7 +66,7 @@ export default {
     wires:   [ { id, from, to } | { id, d:'M..H..V..' } ,  dashed?, both?, flow?, label?, labelAt?:0.5, labelDx?, labelDy?:-5, labelAnchor?, labelBg?, via?, arrow?:false, hot?, tone? ],
     steps:   [ { n, at:'<wire id>', f?:0.5, dx?, dy?:-11, text } | { n, x, y, text } ],
     timeline:[ { wire?, t:[a,b], reverse?, kind?:'pk'|'pk-2'|'pk-bad', ring?:'<node id>'|{ x, y, r? }, r?, v6? } ],
-    tables:  [ { id?, x, y, title, tone?, cols?:['Type','Port','Source'], rows:[ ['TCP','443','0.0.0.0/0'] | { cells, t?:[a,b], tone?:'ok'|'bad'|'muted', still? } ], w? } ],
+    tables:  [ { id?, x, y, title, tone?, cols?:['Type','Port','Source'], rows:[ ['TCP','443','0.0.0.0/0'] | { cells, t?:[a,b]|[[a,b],..], on?:'<wire id>'|[..], v6?, tone?:'ok'|'bad'|'muted', still? } ], w? } ],
     flows:   [ { id?, path:['<node id>', ...] | wires:['<wire id>' | { wire, reverse?, ring?, text?, step?, f?, dx?, dy?, kind? }, ...],
                  reply?, text?:['<one per hop>'], steps?:false, kind?, with?:'<flow id>', t?:[a,b], pace?:'length'|'even' } ],
     effects: [ { appear:'<node id>', t:[a,b], ghost?:true } | { fail:'<group id>', t } | { fade:'<wire id>', t } | { glow:'<wire id>', t } ],
@@ -149,13 +149,20 @@ and the label "Egress-only internet gateway", as AWS's own diagrams do.
 
 **Tables** are rules and routes cards: security group rules, network ACL entries, a route table. A
 `title`, optional `cols` (small capitals) and `rows` of cells; columns size to their widest cell. A row
-`{ cells, t: [a, b], tone: 'ok' }` lights green while the packet it admits arrives, `tone: 'bad'` red for
+`{ cells, on: 'w3', tone: 'ok' }` lights green while a packet travels wire `w3` (and a moment past its
+arrival), following the timeline and flows, so the row keeps time when the story changes; `v6: true` or
+`false` with `on` picks one IP version. `t: [a, b]` (or several windows, `[[a, b], [c, d]]`) pins the
+windows instead. `tone: 'bad'` lights red for
 the deny that applied (a network ACL's numbered deny, or a security group's "no match: denied", which
-is implicit: security groups only allow); a tone without `t` keeps the row lit, `muted` reads an
+is implicit: security groups only allow); a tone without `t` or `on` keeps the row lit, `muted` reads an
 implicit rule quieter, `still: true` keeps a lit row in still frames. `tone` on the table colors its
 left stripe (`security` for rules, `networking` for routes). Put a table beside the frame it describes,
 and mark the boundary with the `sg` frame kind (the deck's red Security group frame; `label` names it,
-for example `sg-app`). Ports go on wires as labels (`TCP 443`, `:5432`).
+for example `sg-app`). Ports go on wires as labels (`TCP 443`, `:5432`). lint treats a table as an
+obstacle: off the canvas, across a frame edge, under a wire, icon or badge is an error.
+A step's `moment` (a fraction of the clock) pins its storyboard frame, for a step whose event is not
+the first one on its badge's wire (a deny at the far end of a multi-hop path). A flow hop's `back`
+names the ring for its reply leg on a wire drawn with `d`.
 
 **Flows** say the story the way an architect tells it, and the generator writes the timeline:
 `{ path: ['users', 'apigw', 'fn', 'ddb'], reply: true, text: ['Users call the API.', '...', '...'] }`

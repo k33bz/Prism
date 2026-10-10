@@ -53,3 +53,40 @@ test('a dual-stack frame shows its IPv4 and IPv6 CIDRs on two lines', () => {
   assert.match(svg, /<text class="t-sub" x="294" y="14" style="text-anchor:end">10.0.1.0\/24<\/text><text class="t-sub" x="294" y="25" style="text-anchor:end">2001:db8:1200:1::\/64<\/text>/);
   rejects({ groups: [{ kind: 'priv', x: 0, y: 0, w: 9, h: 9, note: ['a', 'b', 'c'] }] }, /one or two lines/);
 });
+
+test('rows light in several windows, or while packets travel a wire (one IP version if asked)', async () => {
+  const { lint } = await import('./awd.mjs');
+  const s = { ...base(), timeline: [{ wire: 'w', t: [0.1, 0.2] }, { wire: 'w', t: [0.5, 0.6], v6: true }],
+    tables: [{ x: 300, y: 20, title: 'routes', rows: [{ cells: ['a'], t: [[0.1, 0.2], [0.7, 0.8]], tone: 'ok' }, { cells: ['b'], on: 'w', tone: 'ok' }, { cells: ['c'], on: 'w', v6: true, tone: 'ok' }] }] };
+  checkSpec(s);
+  assert.deepEqual(validateDiagram(s), []);
+  const svg = diagram(s);
+  assert.match(svg, /values="0;1;0;1;0" keyTimes="0;\.1;\.2;\.7;\.8"/);
+  assert.match(svg, /values="0;1;0;1;0" keyTimes="0;\.1;\.23;\.5;\.63"/);   // both packets, each a moment past arrival
+  assert.match(svg, /values="0;1;0" keyTimes="0;\.5;\.63"/);                // the IPv6 one only
+  assert.deepEqual(lint(s).filter((f) => f.severity === 'error'), []);
+  assert.throws(() => checkSpec({ ...s, tables: [{ x: 1, y: 1, title: 't', rows: [{ cells: ['a'], on: 'nope' }] }] }), /unknown wire "nope"/);
+});
+
+test('lint: a table off the canvas, across a frame edge, or under a wire or icon is an error', async () => {
+  const { lint } = await import('./awd.mjs');
+  const codes = (patch) => lint({ ...base(), ...patch }).filter((f) => f.severity === 'error').map((f) => f.code);
+  assert.ok(codes({ tables: [{ x: 440, y: 20, title: 'wide table here', rows: [['x']] }] }).includes('off-canvas'));
+  assert.ok(codes({ groups: [{ kind: 'vpc', x: 250, y: 0, w: 220, h: 230 }], tables: [{ x: 230, y: 40, title: 'routes', rows: [['x']] }] }).includes('table-on-border'));
+  assert.ok(codes({ tables: [{ x: 60, y: 110, title: 'routes over the wire', rows: [['x']] }] }).some((c) => c === 'wire-on-table' || c === 'table-overlap'));
+  assert.deepEqual(codes({ tables: [{ x: 300, y: 20, title: 'routes', rows: [['x']] }] }), []);
+});
+
+test('legend keys only the IP versions used; a hop names its reply ring; a step can pin its storyboard moment', async () => {
+  const { storyboard } = await import('./frame.mjs');
+  const only6 = diagram({ ...base(), timeline: [{ wire: 'w', t: [0.1, 0.3], v6: true }], legend: { x: 10, y: 20 } });
+  assert.match(only6, />IPv6 packet</);
+  assert.doesNotMatch(only6, />IPv4 packet</);
+  const drawn = { ...base(), wires: [{ id: 'd', d: 'M42,120 H200' }], flows: [{ wires: [{ wire: 'd', ring: 'b', back: 'a' }], reply: true }] };
+  checkSpec(drawn);
+  assert.deepEqual(validateDiagram(drawn), []);
+  assert.deepEqual(compileFlows(drawn).timeline.map((e) => e.ring), ['b', 'a']);
+  const st = { ...base(), timeline: [{ wire: 'w', t: [0.1, 0.3] }, { wire: 'w', t: [0.6, 0.8], kind: 'pk-bad' }], steps: [{ n: 1, at: 'w', text: 'Request.' }, { n: 2, at: 'w', text: 'Denied.', moment: 0.75 }] };
+  assert.deepEqual(storyboard(st).map((f) => f.at), [0.2, 0.75]);
+  assert.throws(() => checkSpec({ ...st, steps: [{ n: 1, at: 'w', moment: 1.2 }] }), /moment must be a fraction/);
+});

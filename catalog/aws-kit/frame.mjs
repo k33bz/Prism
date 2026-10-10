@@ -183,6 +183,8 @@ export function storyboard(spec, { theme = 'auto', near = 60 } = {}) {
     seen.add(String(s.n));
     // concurrent hops share a moment: an event at the previous moment still counts, once
     const after = events.filter((e) => e.at >= prev && !used.has(e));
+    // an author's moment wins (a deny at the far end of a multi-hop path, say)
+    if (s.moment != null) { prev = s.moment; const text = (spec.steps || []).find((x) => String(x.n) === String(s.n) && x.text)?.text || ''; out.push({ n: s.n, at: s.moment, text, svg: frame(src, s.moment, { theme }) }); continue; }
     let pick = s.at != null ? after.find((e) => e.wire === s.at) : null;
     if (!pick && s.x != null) pick = after.find((e) => e.dist([s.x, s.y]) <= near);
     if (!pick && s.at != null) pick = after.find((e) => e.dist(along(paths.get(s.at) || '', s.f ?? 0.5)) <= near);

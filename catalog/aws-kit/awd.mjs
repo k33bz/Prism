@@ -144,6 +144,7 @@ export function checkSpec(spec) {
     if (s.at != null) { if (!wireIds.has(s.at)) fail(w, `at names unknown wire ${JSON.stringify(s.at)}`); okOptNum(s, ['f', 'dx', 'dy'], w); }
     else { okNum(s.x, w + '.x'); okNum(s.y, w + '.y'); }
     if (s.text != null) okText(s.text, `${w}.text`);
+    if (s.moment != null && !(typeof s.moment === 'number' && s.moment >= 0 && s.moment < 1)) fail(w, 'moment must be a fraction of the clock in [0, 1)');
   }
   for (const [i, e] of (spec.timeline || []).entries()) {
     const w = `${at} timeline[${i}]`;
@@ -169,7 +170,12 @@ export function checkSpec(spec) {
       if (!Array.isArray(cells) || !cells.length) fail(rw, 'a row is a list of cells, or { cells, t?, tone?, still? }');
       if (ncol != null && cells.length !== ncol) fail(rw, `has ${cells.length} cells for ${ncol} columns`);
       cells.forEach((c, k) => okText(String(c), `${rw}[${k}]`, 60));
-      if (!Array.isArray(r)) { if (r.t != null) okWindow(r.t, rw); okEnum(r.tone, ROW_TONES, `${rw}.tone`); okBool(r, ['still'], rw); }
+      if (!Array.isArray(r)) {
+        // t: one window [a, b] or several [[a, b], [c, d]]; on: the wire(s) whose packets light the row
+        if (r.t != null) { if (Array.isArray(r.t[0])) r.t.forEach((x, k) => okWindow(x, `${rw}.t[${k}]`)); else okWindow(r.t, rw); }
+        if (r.on != null) for (const wid of [].concat(r.on)) if (!wireIds.has(wid)) fail(rw, `on names unknown wire ${JSON.stringify(wid)}`);
+        okEnum(r.tone, ROW_TONES, `${rw}.tone`); okBool(r, ['still', 'v6'], rw);
+      }
     }
   }
   const flowIds = new Set((spec.flows || []).map((f) => f && f.id).filter((x) => x != null));
@@ -186,6 +192,7 @@ export function checkSpec(spec) {
         const wid = typeof x === 'string' ? x : x && x.wire;
         if (!wireIds.has(wid)) fail(w, `wires names unknown wire ${JSON.stringify(wid)}`);
         if (typeof x === 'object' && x.ring != null && x.ring !== false && !nodeIds.has(x.ring)) fail(w, `unknown ring node ${JSON.stringify(x.ring)}`);
+        if (typeof x === 'object' && x.back != null && x.back !== false && !nodeIds.has(x.back)) fail(w, `unknown back node ${JSON.stringify(x.back)}`);
         if (typeof x === 'object' && x.text != null) okText(x.text, `${w}.wires.text`);
       }
     }
@@ -527,11 +534,24 @@ export function diagram(spec) {
       `<text class="t-tb" x="${r2(x0 + PAD + 3)}" y="${r2(y0 + 10)}" style="font-size:${TS}px;font-weight:700">${esc(tb.title)}</text>`];
     if (tb.cols) tb.cols.forEach((c, k) => out.push(`<text class="t-tbh" x="${r2(cx(k))}" y="${r2(y0 + TH + 7.5)}" style="font-size:${HS}px;letter-spacing:.4px">${esc(String(c).toUpperCase())}</text>`));
     const lit = [];
+    // a row's windows: t (one or several), and every packet on the wires it is on (v6 picks a version);
+    // a packet's row stays lit a moment past its arrival, while the rule is read
+    const windowsOf = (r) => {
+      const ws = r.t ? (Array.isArray(r.t[0]) ? r.t : [r.t]) : [];
+      if (r.on != null) for (const e of spec.timeline || []) if (e.wire && [].concat(r.on).includes(e.wire) && (r.v6 == null || !!e.v6 === r.v6)) ws.push([e.t[0], Math.min(0.995, e.t[1] + 0.03)]);
+      const sorted = ws.map((x) => [...x]).sort((p, q) => p[0] - q[0]), merged = [];
+      for (const x of sorted) { const m = merged[merged.length - 1]; if (m && x[0] <= m[1] + 0.002) m[1] = Math.max(m[1], x[1]); else merged.push(x); }
+      return merged;
+    };
+    // several windows in one discrete opacity track
+    const multiWin = (ws) => ws.length === 1 ? winAttr('opacity', '0;1;0', ws[0][0], ws[0][1])
+      : `<animate attributeName="opacity" dur="${D}" repeatCount="indefinite" calcMode="discrete" values="0;${ws.map(() => '1;0').join(';')}" keyTimes="0;${ws.map(([a, b]) => `${pct(a)};${pct(b)}`).join(';')}"/>`;
     rows.forEach((r, j) => {
       const top = y0 + TH + HH + j * RH, base = top + 8;
       const paint = r.tone === 'ok' ? '#3F8624' : r.tone === 'bad' ? '#DD344C' : null;
       const hl = paint ? `<rect x="${r2(x0 + 3.5)}" y="${r2(top + 0.5)}" width="${r2(W - 4)}" height="${RH}" style="fill:${paint};fill-opacity:.16;stroke:${paint};stroke-width:.8"/>` : '';
-      if (hl && r.t) lit.push(`<g class="anim" opacity="0">${hl}${winAttr('opacity', '0;1;0', r.t[0], r.t[1])}</g>${r.still ? stillCopy(hl) : ''}`);
+      const ws = windowsOf(r);
+      if (hl && ws.length) lit.push(`<g class="anim" opacity="0">${hl}${multiWin(ws)}</g>${r.still ? stillCopy(hl) : ''}`);
       else if (hl) out.push(hl);
       r.cells.forEach((c, k) => out.push(`<text class="t-tb${r.tone === 'muted' ? ' t-tbm' : ''}" x="${r2(cx(k))}" y="${r2(base)}" style="font-size:${FS}px">${esc(c)}</text>`));
     });
@@ -564,8 +584,9 @@ export function diagram(spec) {
   if (spec.legend) {
     const L = spec.legend, rows = [];
     const used = new Set((spec.timeline || []).filter((e) => e.wire).map((e) => e.kind || 'pk'));
-    const v6 = (spec.timeline || []).some((e) => e.wire && e.v6);
-    const items = L.items || [...['pk', 'pk-2', 'pk-bad'].filter((k) => used.has(k)), ...(v6 ? ['v4', 'v6'] : [])].map((kind) => ({ kind }));
+    // the IP version keys appear once the timeline carries IPv6, each only for a version it uses
+    const pks = (spec.timeline || []).filter((e) => e.wire), v6 = pks.some((e) => e.v6), v4 = pks.some((e) => !e.v6);
+    const items = L.items || [...['pk', 'pk-2', 'pk-bad'].filter((k) => used.has(k)), ...(v6 ? [...(v4 ? ['v4'] : []), 'v6'] : [])].map((kind) => ({ kind }));
     // one row per item, or with row:true one line, each item after the last one's label
     let lx = L.x
     items.forEach((it, i) => {

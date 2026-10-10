@@ -92,6 +92,12 @@ function collect(svg, id) {
       items.push({ k: 'icon', box: true, t: s.t, off: s.off, name: 'box', b: { x0: x, y0: y, x1: x + +el.attrs.width, y1: y + +el.attrs.height } });
       return;
     }
+    if (el.tag === 'rect' && has(el, 'awd-tb')) {
+      // a rules or routes card: its text is linted as text, the card itself as an obstacle
+      const x = +el.attrs.x, y = +el.attrs.y;
+      items.push({ k: 'table', name: 'table', b: { x0: x, y0: y, x1: x + +el.attrs.width, y1: y + +el.attrs.height } });
+      return;
+    }
     if (el.tag === 'rect' && has(el, 'g')) {
       items.push({ k: 'frame', name: `frame ${(el.attrs.class.match(/g-(\w+)/) || [])[1]}`, b: { x0: +el.attrs.x, y0: +el.attrs.y, x1: +el.attrs.x + +el.attrs.width, y1: +el.attrs.y + +el.attrs.height } });
       return;
@@ -175,7 +181,19 @@ export function lint(spec, svg) {
   const canvas = { x0: 0, y0: 0, x1: W, y1: H };
 
   // canvas
-  for (const i of [...texts, ...icons, ...badges, ...frames]) if (!inside(shrink(i.b, 0.5), canvas)) add('error', 'off-canvas', `${i.name} runs past the ${W}x${H} viewBox`, i.b);
+  const tables = items.filter((i) => i.k === 'table');
+  for (const i of [...texts, ...icons, ...badges, ...frames, ...tables]) if (!inside(shrink(i.b, 0.5), canvas)) add('error', 'off-canvas', `${i.name} runs past the ${W}x${H} viewBox`, i.b);
+  // a table sits inside a frame or outside it, never across an edge; nothing else sits on it
+  for (const t of tables) {
+    for (const f of frames) {
+      const F = f.b, b = t.b;
+      const vert = (x) => b.x0 < x && x < b.x1 && b.y1 > F.y0 && b.y0 < F.y1, horz = (y) => b.y0 < y && y < b.y1 && b.x1 > F.x0 && b.x0 < F.x1;
+      if (vert(F.x0) || vert(F.x1) || horz(F.y0) || horz(F.y1)) add('error', 'table-on-border', `the table at ${at(b)} crosses the ${f.name} border`, b);
+    }
+    for (const ic of icons) if (hit(t.b, ic.b, 1)) add('error', 'table-overlap', `${ic.name} overlaps the table at ${at(t.b)}`, ic.b);
+    for (const bd of badges) if (hit(t.b, bd.b, 0.5)) add('error', 'table-overlap', `${bd.name} sits on the table at ${at(t.b)}`, bd.b);
+    for (const w of wires) if (wireHits(w, shrink(t.b, 1))) add('error', 'wire-on-table', `${w.name} runs through the table at ${at(t.b)}`, t.b);
+  }
   const size = spec.full ? 'full' : spec.wide ? 'wide' : 'normal', [tw, th] = TILE[size];
   if (W > tw || H > th) add('warn', 'tile-size', `${W}x${H} is larger than a ${size} tile (${tw}x${th})${size === 'full' ? '' : '; full: true allows up to 1400x900'}`);
 

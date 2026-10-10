@@ -91,7 +91,8 @@
         "step": { "anyOf": [{ "type": "boolean" }, { "type": "number" }, { "type": "string" }] },
         "f": { "type": "number" }, "dx": { "type": "number" }, "dy": { "type": "number" },
         "kind": { "enum": ["pk", "pk-2", "pk-bad"] },
-        "v6": { "type": "boolean" }
+        "v6": { "type": "boolean" },
+        "back": { "anyOf": [{ "$ref": "#/$defs/id" }, { "enum": [false] }], "description": "Ring node for this hop's reply leg (default: the wire's near end); false for none." }
       },
       "required": ["wire"],
       "additionalProperties": false
@@ -178,7 +179,8 @@
         "dy": { "$ref": "#/$defs/num", "description": "Default -11 (above the wire)." },
         "x": { "$ref": "#/$defs/num", "description": "Free position, when not on a wire." },
         "y": { "$ref": "#/$defs/num" },
-        "text": { "type": "string", "maxLength": 400, "description": "What happens at this step: one or two sentences for the numbered list under the diagram and its desc. One text per number (the first badge of a repeated number)." }
+        "text": { "type": "string", "maxLength": 400, "description": "What happens at this step: one or two sentences for the numbered list under the diagram and its desc. One text per number (the first badge of a repeated number)." },
+        "moment": { "type": "number", "minimum": 0, "exclusiveMaximum": 1, "description": "The storyboard frame for this step (a fraction of the clock); default: picked from the events near the badge." }
       },
       "required": ["n"],
       "anyOf": [{ "required": ["at"] }, { "required": ["x", "y"] }],
@@ -271,7 +273,9 @@
             { "type": "array", "items": { "type": "string", "maxLength": 60 }, "minItems": 1 },
             { "type": "object", "properties": {
                 "cells": { "type": "array", "items": { "type": "string", "maxLength": 60 }, "minItems": 1 },
-                "t": { "$ref": "#/$defs/window", "description": "Light the row during this window (the rule a packet matched)." },
+                "t": { "anyOf": [{ "$ref": "#/$defs/window" }, { "type": "array", "items": { "$ref": "#/$defs/window" }, "minItems": 1 }], "description": "Light the row during this window, or these windows (the rule a packet matched)." },
+                "on": { "anyOf": [{ "$ref": "#/$defs/id" }, { "type": "array", "items": { "$ref": "#/$defs/id" }, "minItems": 1 }], "description": "Light the row while a packet travels this wire (or these), and a moment past its arrival; follows the timeline, flows included." },
+                "v6": { "type": "boolean", "description": "With on: only IPv6 (true) or only IPv4 (false) packets light the row." },
                 "tone": { "enum": ["ok", "bad", "muted"], "description": "ok green, bad red; without t the row stays lit. muted: an implicit rule." },
                 "still": { "type": "boolean", "description": "A lit row also shows in still frames." }
               }, "required": ["cells"], "additionalProperties": false }
