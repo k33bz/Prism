@@ -478,7 +478,7 @@ export function buildTools() {
           tokensCss: tokens ? tokens.css : null,
           tokensNote: tokens ? tokens.note : null,
           semanticTokens: ['--accent', '--info', '--pos', '--neg', '--warn', '--crit'],
-          surfaceTokens: ['--bg', '--panel', '--panel2', '--card', '--line', '--ink', '--muted', '--dim'],
+          surfaceTokens: ['--bg', '--panel', '--panel2', '--card', '--line', '--control-line', '--ink', '--muted', '--dim'],
           recolor: 'Set --c and --c-rgb (or add a c-* class like c-pos) on the effect element to recolor it.',
           // Derived from the theme registry (utils/themes.js) so scaffolded packs
           // (F6) surface here automatically — no hand-editing this list.
@@ -646,7 +646,7 @@ export function buildTools() {
     },
     {
       name: 'check_theme_contrast',
-      description: 'Check a theme token map against the contrast floors derive_theme uses: ink, muted (4.5:1 text) and dim (3:1) on bg/panel/panel2/card; accent and the five status colors as text on panel/panel2/card and as UI on bg; ink on accent fills (--accent-ink, or #fff when absent, the ink Prism\'s generated facets use); accent2 as UI; top-nav ink and dim; line as an unscored decorative pair. Pass tokens (a partial or full map of --token: value; rgba surfaces are composited over --bg) or theme (a shipped theme id). Missing tokens are filled from the Cloudscape base of the mode, as Prism layers a pack over it (fill: false to check only what you pass). mode is inferred from the surfaces when omitted. Returns { mode, contrast, pass, checked, failures, pairs: [{ fg, bg, fgValue, bgValue, ratio, floor, pass, apca }], skipped, filledFromBase }.',
+      description: 'Check a theme token map against the contrast floors derive_theme uses: ink, muted (4.5:1 text) and dim (3:1) on bg/panel/panel2/card; accent and the five status colors as text on panel/panel2/card and as UI on bg; ink on accent fills (--accent-ink, or #fff when absent, the ink Prism\'s generated facets use); accent2 as UI; top-nav ink and dim; control-line (the input, checkbox and switch boundary) as UI on bg/panel/panel2/card; line as an unscored decorative pair. Pass tokens (a partial or full map of --token: value; rgba surfaces are composited over --bg) or theme (a shipped theme id). Missing tokens are filled from the Cloudscape base of the mode, as Prism layers a pack over it (fill: false to check only what you pass). mode is inferred from the surfaces when omitted. Returns { mode, contrast, pass, checked, failures, pairs: [{ fg, bg, fgValue, bgValue, ratio, floor, pass, apca }], skipped, filledFromBase }.',
       inputSchema: {
         type: 'object',
         properties: {

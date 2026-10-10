@@ -22,6 +22,8 @@ export default {
       '--panel2': '#eef9ff',
       '--card': '#ffffff',
       '--line': '#b9dff5',
+      // control boundary of inputs, checkboxes, radios, switches: --line's hue moved to 3:1 on bg/panel/panel2/card (WCAG 1.4.11)
+      '--control-line': '#6c8fa4',
       '--ink': '#0b3550',
       '--muted': '#3f6b86',
       // contrast: --dim #7aa3bd -> #7099b3; dim/panel 2.69 -> 3.05:1 (floor 3), dim/card 2.69 -> 3.05:1 (floor 3)
@@ -64,6 +66,10 @@ export default {
       // contrast: --cs-topnav-dim #cfe6fa -> #dff0fe; topnav-dim/topnav-bg 4.11 -> 4.54:1 (floor 4.5)
       '--cs-topnav-dim': '#dff0fe',
       '--cs-topnav-hover': 'rgba(255,255,255,.18)',
+      // top-bar accent: --accent #007cbb on the #1f6fb2 bar is 1.16:1, so the active mode button, brand mark
+      // and focus ring there use the bar's ink instead: 5.28:1 (floor 3), with the bar color as its label
+      '--cs-topnav-accent': '#ffffff',
+      '--cs-topnav-accent-ink': '#1f6fb2',
       // on-fill inks (new; same #fff the generator painted before): 4.52-4.57:1 on accent/info/pos/warn/neg/crit (floor 4.5)
       '--accent-ink': '#ffffff',
       '--info-ink': '#ffffff',
@@ -78,6 +84,8 @@ export default {
       '--panel2': '#083352',
       '--card': '#0b3b5e',
       '--line': '#1d5a84',
+      // control boundary of inputs, checkboxes, radios, switches: --line's hue moved to 3:1 on bg/panel/panel2/card (WCAG 1.4.11)
+      '--control-line': '#4c87b3',
       '--ink': '#eaf7ff',
       '--muted': '#a8cde6',
       '--dim': '#6d9bbd',

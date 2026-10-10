@@ -28,6 +28,8 @@ export default {
     // magenta hues that sit comfortably beside the purple identity.
     light: {
       '--bg': '#faf9fc', '--panel': '#ffffff', '--panel2': '#f4f1f9', '--card': '#ffffff', '--line': '#e4e0ec',
+      // control boundary of inputs, checkboxes, radios, switches: --line's hue moved to 3:1 on bg/panel/panel2/card (WCAG 1.4.11)
+      '--control-line': '#8e8a95',
       // contrast: --dim #a49db3 -> #9891a7; dim/panel 2.61 -> 3.02:1 (floor 3), dim/card 2.61 -> 3.02:1 (floor 3)
       '--ink': '#2a2734', '--muted': '#6f6a7d', '--dim': '#9891a7',
       '--accent': '#79589f', '--accent-rgb': '121,88,159', '--accent2': '#79589f',  // Purple3
@@ -54,6 +56,10 @@ export default {
       '--cs-topnav-ink': '#f2eef8',
       '--cs-topnav-dim': '#c9bce0',
       '--cs-topnav-hover': 'rgba(255,255,255,.1)',
+      // top-bar accent: --accent #79589f on the #3d2c5f bar is 2.15:1, so the active mode button, brand mark
+      // and focus ring there use the bar's ink instead: 10.65:1 (floor 3), with the bar color as its label
+      '--cs-topnav-accent': '#f2eef8',
+      '--cs-topnav-accent-ink': '#3d2c5f',
       // on-fill inks (new; same #fff the generator painted before): 4.52-5.66:1 on accent/info/pos/warn/neg/crit (floor 4.5)
       '--accent-ink': '#ffffff',
       '--info-ink': '#ffffff',
@@ -66,6 +72,8 @@ export default {
     // Purple3 holding steady on top and the semantic hues brightened for contrast.
     dark: {
       '--bg': '#1a1523', '--panel': '#2a2338', '--panel2': '#201a2b', '--card': '#2a2338', '--line': '#3a3350',
+      // control boundary of inputs, checkboxes, radios, switches: --line's hue moved to 3:1 on bg/panel/panel2/card (WCAG 1.4.11)
+      '--control-line': '#726b8b',
       '--ink': '#f2eef8', '--muted': '#b0a6c2', '--dim': '#7a7090',
       // contrast: --accent #79589f -> #a07ec9; accent/panel 2.66 -> 4.53:1 (floor 4.5); Heroku purple lightened on its own hue for dark surfaces
       '--accent': '#a07ec9', '--accent-rgb': '160,126,201', '--accent2': '#79589f',  // Purple3

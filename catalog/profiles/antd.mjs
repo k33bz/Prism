@@ -28,6 +28,8 @@ export default {
     // / colorBgElevated; colorBorder hairline; text steps at 88% / 65% / 45%.
     light: {
       '--bg': '#f5f5f5', '--panel': '#ffffff', '--panel2': '#fafafa', '--card': '#ffffff', '--line': '#d9d9d9',
+      // control boundary of inputs, checkboxes, radios, switches: --line's hue moved to 3:1 on bg/panel/panel2/card (WCAG 1.4.11)
+      '--control-line': '#8e8e8e',
       '--ink': '#141414', '--muted': '#595959', '--dim': '#8c8c8c',        // colorText / colorTextSecondary / colorTextTertiary
       // contrast: --accent #1677ff -> #0958d9; accent/panel 4.10 -> 6.16:1 (floor 4.5), #fff/accent 4.10 -> 6.16:1 (floor 4.5); antd blue-7 (colorPrimaryActive)
       '--accent': '#0958d9', '--accent-rgb': '9,88,217', '--accent2': '#1677ff',  // colorPrimary (blue-6)
@@ -55,6 +57,10 @@ export default {
       '--cs-topnav-ink': '#ffffff',
       '--cs-topnav-dim': 'rgba(255,255,255,.65)',
       '--cs-topnav-hover': 'rgba(255,255,255,.08)',
+      // top-bar accent: --accent #0958d9 on the #001529 bar is 2.99:1, so the active mode button, brand mark
+      // and focus ring there use the bar's ink instead: 18.43:1 (floor 3), with the bar color as its label
+      '--cs-topnav-accent': '#ffffff',
+      '--cs-topnav-accent-ink': '#001529',
       // on-fill inks (new; same #fff the generator painted before): 4.54-6.16:1 on accent/info/pos/warn/neg/crit (floor 4.5)
       '--accent-ink': '#ffffff',
       '--info-ink': '#ffffff',
@@ -67,6 +73,8 @@ export default {
     // border #424242, text rgba(255,255,255,.85) plus its muted/dim steps.
     dark: {
       '--bg': '#141414', '--panel': '#1f1f1f', '--panel2': '#262626', '--card': '#1f1f1f', '--line': '#424242',
+      // control boundary of inputs, checkboxes, radios, switches: --line's hue moved to 3:1 on bg/panel/panel2/card (WCAG 1.4.11)
+      '--control-line': '#6f6f6f',
       '--ink': '#e6e6e6', '--muted': '#a6a6a6', '--dim': '#737373',        // colorText / colorTextSecondary / colorTextTertiary
       // contrast: --accent #1668dc -> #3c89e8; accent/panel 3.18 -> 4.66:1 (floor 4.5); antd dark-algorithm blue-7
       '--accent': '#3c89e8', '--accent-rgb': '60,137,232', '--accent2': '#1668dc',  // colorPrimary (dark blue-6)
