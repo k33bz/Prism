@@ -53,13 +53,39 @@ const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replac
 // label, count badge, checkbox tick). Themes define it per mode (#fff where white
 // passes 4.5:1 on the fill, a near-black ink where it does not, typically dark
 // mode); the #fff fallback keeps a theme without the token rendering as before.
-const VARIANTS = [
+export const VARIANTS = [
   { key: 'accent', tok: '--accent', rgb: '--accent-rgb', ink: '--accent-ink', label: 'Primary' },
   { key: 'info', tok: '--info', rgb: '--info-rgb', ink: '--info-ink', label: 'Info' },
   { key: 'pos', tok: '--pos', rgb: '--pos-rgb', ink: '--pos-ink', label: 'Success' },
   { key: 'warn', tok: '--warn', rgb: '--warn-rgb', ink: '--warn-ink', label: 'Warning' },
   { key: 'neg', tok: '--neg', rgb: '--neg-rgb', ink: '--neg-ink', label: 'Danger' },
   { key: 'crit', tok: '--crit', rgb: '--crit-rgb', ink: '--crit-ink', label: 'Critical' },
+];
+
+// Text on a role tint. Role text on a 16% tint of its own role read 3.6 to 4.4:1
+// over --panel in most themes (2.7 over acorn-dark's --panel2, 2.4 at the menu's
+// old 26% peak), so tinted labels now mix the role toward --ink (the hue stays,
+// the text moves away from the surface in both modes) over a lighter tint. 55%
+// role on a 12% tint clears 4.5:1 for every role in all 32 themes; acorn-dark,
+// whose --panel2 is the lightest dark surface, sets the limit. The tab indicator
+// is an opaque fill so its label can use the on-fill ink as is.
+export const TINT = { chip: 0.12, menuLo: 0.06, menuHi: 0.12, callout: 0.1, tab: 1, roleTextPct: 55 };
+const alpha = (a) => String(a).replace(/^0\./, '.');
+const tintBg = (a) => (a >= 1 ? 'var(--_c)' : `rgba(var(--_rgb),${alpha(a)})`);
+const ROLE_TEXT = `color-mix(in srgb,var(--_c) ${TINT.roleTextPct}%,var(--ink))`;
+
+// The text-on-tint pairs the archetypes below paint, per role variant, for
+// catalog/_check_themes.mjs to measure in every theme. fg: 'role' (var(--_c)),
+// 'role-ink' (var(--_ink,#fff)) or a token; mix: % of fg kept when mixed toward
+// --ink; tint: role alpha over each `on` surface (1 = opaque fill, 0 = none).
+// Solid fills with on-fill ink (button, badge, checkbox) are the gate's own
+// <role>-ink/<role> pairs, and --ink on a plain surface is its ink/* pairs.
+export const PAINTS = [
+  { arch: 'chip', fg: 'role', mix: TINT.roleTextPct, tint: TINT.chip, on: ['--panel', '--panel2'] },
+  { arch: 'menu', fg: 'role', mix: TINT.roleTextPct, tint: TINT.menuHi, on: ['--panel2'] }, // peak of the breath
+  { arch: 'callout', fg: '--ink', mix: 100, tint: TINT.callout, on: ['--panel', '--panel2'] },
+  { arch: 'tab', fg: 'role-ink', mix: 100, tint: TINT.tab, on: ['--panel2'] },
+  { arch: 'card', fg: 'role', mix: 100, tint: 0, on: ['--card'] },
 ];
 
 // The 8 canonical component types the spectrum galleries use.
@@ -89,8 +115,9 @@ const ARCHETYPES = [
     title: 'Status Chip', desc: 'A compact filter/label chip with a token tint and a sliding sheen. Used in toolbars and lists.',
     css: (ns) => [
       `@keyframes ${ns}ChipShine{0%{background-position:-160% 0}60%,100%{background-position:260% 0}}`,
-      `.${ns}-chip{position:relative;overflow:hidden;display:inline-flex;align-items:center;padding:4px 12px;border-radius:999px;background:rgba(var(--_rgb),.16);border:1px solid rgba(var(--_rgb),.4);color:var(--_c);font-size:12px;font-weight:700}`,
-      `.${ns}-chip::after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 40%,rgba(var(--_rgb),.4) 50%,transparent 60%);background-size:250% 100%;animation:${ns}ChipShine 3s linear infinite;pointer-events:none}`,
+      `.${ns}-chip{position:relative;overflow:hidden;isolation:isolate;display:inline-flex;align-items:center;padding:4px 12px;border-radius:999px;background:${tintBg(TINT.chip)};border:1px solid rgba(var(--_rgb),.4);color:${ROLE_TEXT};font-size:12px;font-weight:700}`,
+      // z-index:-1 inside the isolated chip keeps the sheen above the fill but under the label.
+      `.${ns}-chip::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(110deg,transparent 40%,rgba(var(--_rgb),.4) 50%,transparent 60%);background-size:250% 100%;animation:${ns}ChipShine 3s linear infinite;pointer-events:none}`,
     ],
     html: (ns, v) => `<span class="${ns}-chip" style="--_c:var(${v.tok});--_rgb:var(${v.rgb})">${esc(v.label)}</span>`,
   },
@@ -98,10 +125,10 @@ const ARCHETYPES = [
     slug: 'menu', ctype: 'menu', interact: 'hover click', motion: 'MenuSel',
     title: 'Dropdown Menu', desc: 'A surface menu with a highlighted selected row that breathes in the token tint. The system\'s standard menu.',
     css: (ns) => [
-      `@keyframes ${ns}MenuSel{0%,100%{background:rgba(var(--_rgb),.12)}50%{background:rgba(var(--_rgb),.26)}}`,
+      `@keyframes ${ns}MenuSel{0%,100%{background:${tintBg(TINT.menuLo)}}50%{background:${tintBg(TINT.menuHi)}}}`,
       `.${ns}-menu{min-width:150px;padding:6px;border-radius:var(--${ns}-radius,12px);background:var(--panel2);border:1px solid var(--line)}`,
       `.${ns}-menu .${ns}-mi{padding:7px 10px;border-radius:8px;color:var(--ink);font-size:12px}`,
-      `.${ns}-menu .${ns}-sel{color:var(--_c);animation:${ns}MenuSel 2.8s ease-in-out infinite}`,
+      `.${ns}-menu .${ns}-sel{background:${tintBg(TINT.menuHi)};color:${ROLE_TEXT};animation:${ns}MenuSel 2.8s ease-in-out infinite}`,
     ],
     html: (ns, v) => `<div class="${ns}-menu" style="--_c:var(${v.tok});--_rgb:var(${v.rgb})"><div class="${ns}-mi ${ns}-sel">${esc(v.label)}</div><div class="${ns}-mi">Duplicate</div><div class="${ns}-mi">Share…</div></div>`,
   },
@@ -120,7 +147,7 @@ const ARCHETYPES = [
     title: 'Callout Banner', desc: 'An emphasis banner with a token-tinted fill and a scanning edge highlight. Draws attention inline.',
     css: (ns) => [
       `@keyframes ${ns}CalloutEdge{0%{transform:translateX(-120%)}100%{transform:translateX(120%)}}`,
-      `.${ns}-callout{position:relative;overflow:hidden;padding:10px 14px;border-radius:10px;background:rgba(var(--_rgb),.1);border:1px solid rgba(var(--_rgb),.35);color:var(--ink);font-size:12px}`,
+      `.${ns}-callout{position:relative;overflow:hidden;padding:10px 14px;border-radius:10px;background:${tintBg(TINT.callout)};border:1px solid rgba(var(--_rgb),.35);color:var(--ink);font-size:12px}`,
       `.${ns}-callout::after{content:"";position:absolute;top:0;left:0;height:2px;width:60%;background:linear-gradient(90deg,transparent,var(--_c),transparent);animation:${ns}CalloutEdge 2.6s linear infinite;pointer-events:none}`,
     ],
     html: (ns, v) => `<div class="${ns}-callout" style="--_c:var(${v.tok});--_rgb:var(${v.rgb})"><b>${esc(v.label)}:</b> review the changes</div>`,
@@ -180,11 +207,20 @@ const ARCHETYPES = [
     title: 'Segmented Tabs', desc: 'A pill-track segmented control with a token active indicator that slides between segments.',
     css: (ns) => [
       `@keyframes ${ns}TabSlide{0%,100%{left:2px}50%{left:calc(50% + 1px)}}`,
+      // A label wears the on-fill ink while the indicator covers it, --ink on the track
+      // otherwise. The slide eases symmetrically, so the indicator is half way across at
+      // 25% and 75%: the color flips there, on the same 3.2s clock (linear), and the
+      // second label runs half a cycle behind. Without motion the indicator rests on
+      // the first label, which is why that one defaults to the on-fill ink.
+      `@keyframes ${ns}TabInk{0%,24%,76%,100%{color:var(--_ink,#fff)}26%,74%{color:var(--ink)}}`,
       `.${ns}-tabs{position:relative;display:inline-flex;padding:3px;border-radius:999px;background:var(--panel2);border:1px solid var(--line)}`,
-      `.${ns}-tabs span{position:relative;z-index:1;padding:5px 14px;font-size:12px;color:var(--ink)}`,
-      `.${ns}-tabs::before{content:"";position:absolute;top:3px;bottom:3px;width:calc(50% - 3px);left:2px;border-radius:999px;background:rgba(var(--_rgb),.9);animation:${ns}TabSlide 3.2s ease-in-out infinite}`,
+      `.${ns}-tabs span{position:relative;z-index:1;padding:5px 14px;font-size:12px;color:var(--ink);animation:${ns}TabInk 3.2s linear infinite}`,
+      `.${ns}-tabs span:first-child{color:var(--_ink,#fff)}.${ns}-tabs span+span{animation-delay:-1.6s}`,
+      `.${ns}-tabs::before{content:"";position:absolute;top:3px;bottom:3px;width:calc(50% - 3px);left:2px;border-radius:999px;background:${tintBg(TINT.tab)};animation:${ns}TabSlide 3.2s ease-in-out infinite}`,
+      // The labels carry no class, so the root reduced-motion block does not reach them.
+      `@media(prefers-reduced-motion:reduce){.${ns}-tabs span{animation:none!important}}`,
     ],
-    html: (ns, v) => `<div class="${ns}-tabs" style="--_rgb:var(${v.rgb})"><span>On</span><span>Off</span></div>`,
+    html: (ns, v) => `<div class="${ns}-tabs" style="--_c:var(${v.tok});--_rgb:var(${v.rgb});--_ink:var(${v.ink},#fff)"><span>On</span><span>Off</span></div>`,
   },
   {
     slug: 'tooltip', ctype: 'callout', interact: 'auto-play', motion: 'TipFloat',
@@ -362,6 +398,8 @@ function selfTest() {
   let depth = 0; for (const ch of out.css) { if (ch === '{') depth++; else if (ch === '}') depth--; }
   if (depth !== 0) problems.push(`unbalanced css braces (depth ${depth})`);
   if (!/prefers-reduced-motion/.test(out.css)) problems.push('no reduced-motion block');
+  // every gated paint names a real archetype (catalog/_check_themes.mjs measures PAINTS)
+  PAINTS.forEach((p) => { if (!ARCHETYPES.some((a) => a.slug === p.arch)) problems.push(`PAINTS names unknown archetype ${p.arch}`); });
   if (problems.length) { console.error('SELF-TEST FAILED:\n  ' + problems.join('\n  ')); process.exit(1); }
   console.log(`self-test OK: 100 facets, ${new Set(ids).size} unique ids, ${out.css.split('\n').length} css lines, balanced braces, reduced-motion present.`);
 }
