@@ -1,0 +1,30 @@
+{
+  "_comment": "Sidecar for tf-webapp-plan.json. Anchors give the Terraform addresses the names the CloudFormation webapp's sidecar uses.",
+  "name": "Three-tier web app (Terraform)",
+  "anchors": {
+    "InternetGateway": { "tf": "module.vpc.aws_internet_gateway.this", "cfn": "InternetGateway" },
+    "LoadBalancer": { "tf": "aws_lb.web", "cfn": "LoadBalancer" },
+    "AppAsg": { "tf": "aws_autoscaling_group.app", "cfn": "AppAsg" },
+    "Database": { "tf": "aws_db_instance.db", "cfn": "Database" }
+  },
+  "actors": [{ "id": "Users", "icon": "aws-res-users", "label": "Users" }],
+  "flows": [
+    {
+      "id": "page-view",
+      "name": "Browse a page",
+      "dur": 10,
+      "steps": [
+        { "from": "Users", "to": "InternetGateway", "label": "HTTPS :443", "text": "Users open www.example.com over HTTPS." },
+        { "from": "InternetGateway", "to": "LoadBalancer@az1" },
+        { "from": "LoadBalancer@az1", "to": "AppAsg@az1", "label": ":8080" },
+        { "from": "AppAsg@az1", "to": "Database@primary", "label": ":5432" },
+        { "from": "Database@primary", "to": "Database@standby", "kind": "replication" }
+      ],
+      "response": "reverse"
+    }
+  ],
+  "stories": [
+    { "id": "az-failure", "template": "az-fail", "az": "az1", "promote": "Database@standby" }
+  ],
+  "hide": ["aws_cloudwatch_metric_alarm.cpu"]
+}

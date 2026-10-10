@@ -1,0 +1,23 @@
+{
+  "_comment": "Sidecar for webapp.cfn.yaml. Everything the template cannot say: actors, request order, response, labels, stories.",
+  "actors": [{ "id": "Users", "icon": "aws-res-users", "label": "Users" }],
+  "flows": [
+    {
+      "id": "page-view",
+      "name": "Browse a page",
+      "dur": 10,
+      "steps": [
+        { "from": "Users", "to": "InternetGateway", "label": "HTTP :80" },
+        { "from": "InternetGateway", "to": "LoadBalancer@az1" },
+        { "from": "LoadBalancer@az1", "to": "AppAsg@az1", "label": ":8080" },
+        { "from": "AppAsg@az1", "to": "Database@primary", "label": ":5432" },
+        { "from": "Database@primary", "to": "Database@standby", "kind": "replication" }
+      ],
+      "response": "reverse"
+    }
+  ],
+  "stories": [
+    { "id": "az-failure", "template": "az-fail", "az": "az1", "promote": "Database@standby" },
+    { "id": "scale-out", "template": "asg-scale", "asg": "AppAsg", "from": 2, "to": 4 }
+  ]
+}

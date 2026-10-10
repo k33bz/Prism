@@ -52,7 +52,8 @@ export function measureNode(n) {
     return Object.assign(n, { bw: w, bh: h, fw: w, up: h / 2, down: h / 2, iw: w, ih: h, lblH: 0, lblW: w, lines });
   }
   const s = n.size || 40;
-  let at = 14, lines = n.label ? wrap(n.label, 14) : [];
+  // an importer may start the wrap wider (a label whose last word would dangle: "Amazon Route / 53")
+  let at = n.wrap || 14, lines = n.label ? wrap(n.label, at) : [];
   while (lines.length > 2 && at < 26) { at += 2; lines = wrap(n.label, at); }
   if (at !== 14) n.wrap = at;
   const lblW = Math.max(0, ...lines.map((l) => textWidth(l, PX.label)), n.sub ? textWidth(n.sub, PX.sub) : 0);
@@ -1009,6 +1010,8 @@ export function placeLabels(model, geo, wires, align, badgeOf) {
     if (!inCanvas(b)) s += 5000;
     for (const ic of O.icons) if (hitB(b, grow(ic, -2))) s += 1000;
     for (const t of O.texts) if (hitB(b, t, 0.5)) s += 1000;
+    // flush against a node's label the two read as one phrase ("s3:GetObject db"): prefer 6px of air
+    for (const t of O.texts) if (t.id && !hitB(b, t, 0.5) && hitB(b, t, 6)) s += 25;
     if (onBorder(b, O.frames)) s += 800;
     s += wireThrough(b, wires, w.id) * 900;
     for (const t of taken) if (hitB(b, t, 1)) s += 1000;
@@ -1087,7 +1090,7 @@ export function layout(model, opts = {}) {
   const n0 = model.issues.length;
   const first = layoutOnce(model, opts);
   // a layered drawing taller (or wider) than any tile: try the other axis, and say so
-  if (!model.sided && first.geo.tile === 'over' && !opts.keepDirection) {
+  if (!model.sided && !opts.cells && first.geo.tile === 'over' && !opts.keepDirection) {
     const dir = model.dir, alt = { LR: 'TD', RL: 'BT', TD: 'LR', BT: 'RL' }[dir];
     const said = model.issues.splice(n0);
     model.dir = alt;
@@ -1103,7 +1106,9 @@ export function layout(model, opts = {}) {
   return first;
 }
 function layoutOnce(model, opts) {
-  const cells = model.sided ? gridFromSides(model) : layered(model);
+  // opts.cells(model) -> Map<node id, [column, row]>: an importer that knows its archetype (the AZ-row
+  // three-tier of a CloudFormation VPC) places the cells itself; tracks, routes and labels stay shared
+  const cells = opts.cells ? opts.cells(model) : model.sided ? gridFromSides(model) : layered(model);
   const ex = { l: new Map(), r: new Map(), t: new Map(), b: new Map(), needX: new Map(), needY: new Map() };
   const align = new Map();
   let geo, wires, routed = null;

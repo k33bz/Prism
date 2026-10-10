@@ -1,0 +1,185 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "Orders API. SAM application in its processed form: REST API, three functions, a DynamoDB table, an SQS queue and an SNS topic.",
+  "Metadata": {
+    "AWS::ServerlessTransform": "AWS::Serverless-2016-10-31"
+  },
+  "Parameters": {
+    "StageName": { "Type": "String", "Default": "Prod" }
+  },
+  "Resources": {
+    "OrdersTable": {
+      "Type": "AWS::DynamoDB::Table",
+      "Properties": {
+        "AttributeDefinitions": [{ "AttributeName": "id", "AttributeType": "S" }],
+        "KeySchema": [{ "AttributeName": "id", "KeyType": "HASH" }],
+        "BillingMode": "PAY_PER_REQUEST"
+      }
+    },
+    "OrdersQueue": {
+      "Type": "AWS::SQS::Queue",
+      "Properties": { "VisibilityTimeout": 180 }
+    },
+    "OrderEventsTopic": {
+      "Type": "AWS::SNS::Topic"
+    },
+    "GetOrderFunction": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Code": { "S3Bucket": "aws-sam-cli-managed-default-samclisourcebucket-1a2b3c", "S3Key": "orders/0f1e2d3c" },
+        "Handler": "get.handler",
+        "Runtime": "nodejs22.x",
+        "Role": { "Fn::GetAtt": ["GetOrderFunctionRole", "Arn"] },
+        "Environment": { "Variables": { "TABLE": { "Ref": "OrdersTable" } } },
+        "Tags": [{ "Key": "lambda:createdBy", "Value": "SAM" }]
+      }
+    },
+    "GetOrderFunctionRole": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": { "Version": "2012-10-17", "Statement": [{ "Action": ["sts:AssumeRole"], "Effect": "Allow", "Principal": { "Service": ["lambda.amazonaws.com"] } }] },
+        "ManagedPolicyArns": ["arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"],
+        "Policies": [{
+          "PolicyName": "GetOrderFunctionRolePolicy0",
+          "PolicyDocument": { "Statement": [{
+            "Effect": "Allow",
+            "Action": ["dynamodb:GetItem", "dynamodb:Query", "dynamodb:Scan", "dynamodb:BatchGetItem", "dynamodb:DescribeTable", "dynamodb:ConditionCheckItem"],
+            "Resource": [
+              { "Fn::Sub": ["arn:${AWS::Partition}:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${tableName}", { "tableName": { "Ref": "OrdersTable" } }] },
+              { "Fn::Sub": ["arn:${AWS::Partition}:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${tableName}/index/*", { "tableName": { "Ref": "OrdersTable" } }] }
+            ]
+          }] }
+        }],
+        "Tags": [{ "Key": "lambda:createdBy", "Value": "SAM" }]
+      }
+    },
+    "GetOrderFunctionGetOrderPermissionProd": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": { "Ref": "GetOrderFunction" },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": { "Fn::Sub": ["arn:${AWS::Partition}:execute-api:${AWS::Region}:${AWS::AccountId}:${__ApiId__}/${__Stage__}/GET/orders/*", { "__ApiId__": { "Ref": "ServerlessRestApi" }, "__Stage__": "*" }] }
+      }
+    },
+    "CreateOrderFunction": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Code": { "S3Bucket": "aws-sam-cli-managed-default-samclisourcebucket-1a2b3c", "S3Key": "orders/0f1e2d3c" },
+        "Handler": "create.handler",
+        "Runtime": "nodejs22.x",
+        "Role": { "Fn::GetAtt": ["CreateOrderFunctionRole", "Arn"] },
+        "Environment": { "Variables": { "TABLE": { "Ref": "OrdersTable" }, "QUEUE_URL": { "Ref": "OrdersQueue" } } }
+      }
+    },
+    "CreateOrderFunctionRole": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": { "Version": "2012-10-17", "Statement": [{ "Action": ["sts:AssumeRole"], "Effect": "Allow", "Principal": { "Service": ["lambda.amazonaws.com"] } }] },
+        "ManagedPolicyArns": ["arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"],
+        "Policies": [
+          {
+            "PolicyName": "CreateOrderFunctionRolePolicy0",
+            "PolicyDocument": { "Statement": [{
+              "Effect": "Allow",
+              "Action": ["dynamodb:PutItem", "dynamodb:UpdateItem", "dynamodb:GetItem"],
+              "Resource": [{ "Fn::Sub": ["arn:${AWS::Partition}:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${tableName}", { "tableName": { "Ref": "OrdersTable" } }] }]
+            }] }
+          },
+          {
+            "PolicyName": "CreateOrderFunctionRolePolicy1",
+            "PolicyDocument": { "Statement": [{
+              "Effect": "Allow",
+              "Action": ["sqs:SendMessage*"],
+              "Resource": { "Fn::Sub": ["arn:${AWS::Partition}:sqs:${AWS::Region}:${AWS::AccountId}:${queueName}", { "queueName": { "Fn::GetAtt": ["OrdersQueue", "QueueName"] } }] }
+            }] }
+          }
+        ]
+      }
+    },
+    "CreateOrderFunctionCreateOrderPermissionProd": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": { "Ref": "CreateOrderFunction" },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": { "Fn::Sub": ["arn:${AWS::Partition}:execute-api:${AWS::Region}:${AWS::AccountId}:${__ApiId__}/${__Stage__}/POST/orders", { "__ApiId__": { "Ref": "ServerlessRestApi" }, "__Stage__": "*" }] }
+      }
+    },
+    "FulfillFunction": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Code": { "S3Bucket": "aws-sam-cli-managed-default-samclisourcebucket-1a2b3c", "S3Key": "orders/0f1e2d3c" },
+        "Handler": "fulfill.handler",
+        "Runtime": "nodejs22.x",
+        "Role": { "Fn::GetAtt": ["FulfillFunctionRole", "Arn"] },
+        "Environment": { "Variables": { "TOPIC": { "Ref": "OrderEventsTopic" } } }
+      }
+    },
+    "FulfillFunctionRole": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": { "Version": "2012-10-17", "Statement": [{ "Action": ["sts:AssumeRole"], "Effect": "Allow", "Principal": { "Service": ["lambda.amazonaws.com"] } }] },
+        "ManagedPolicyArns": ["arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole", "arn:aws:iam::aws:policy/service-role/AWSLambdaSQSQueueExecutionRole"],
+        "Policies": [{
+          "PolicyName": "FulfillFunctionRolePolicy0",
+          "PolicyDocument": { "Statement": [{
+            "Effect": "Allow",
+            "Action": ["sns:Publish"],
+            "Resource": { "Ref": "OrderEventsTopic" }
+          }] }
+        }]
+      }
+    },
+    "FulfillFunctionOrdersQueueEvent": {
+      "Type": "AWS::Lambda::EventSourceMapping",
+      "Properties": {
+        "BatchSize": 10,
+        "EventSourceArn": { "Fn::GetAtt": ["OrdersQueue", "Arn"] },
+        "FunctionName": { "Ref": "FulfillFunction" }
+      }
+    },
+    "ServerlessRestApi": {
+      "Type": "AWS::ApiGateway::RestApi",
+      "Properties": {
+        "Body": {
+          "swagger": "2.0",
+          "info": { "title": { "Ref": "AWS::StackName" }, "version": "1.0" },
+          "paths": {
+            "/orders/{id}": {
+              "get": {
+                "x-amazon-apigateway-integration": {
+                  "httpMethod": "POST",
+                  "type": "aws_proxy",
+                  "uri": { "Fn::Sub": "arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${GetOrderFunction.Arn}/invocations" }
+                },
+                "responses": {}
+              }
+            },
+            "/orders": {
+              "post": {
+                "x-amazon-apigateway-integration": {
+                  "httpMethod": "POST",
+                  "type": "aws_proxy",
+                  "uri": { "Fn::Sub": "arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${CreateOrderFunction.Arn}/invocations" }
+                },
+                "responses": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "ServerlessRestApiDeployment5f2c9a1b7e": {
+      "Type": "AWS::ApiGateway::Deployment",
+      "Properties": { "RestApiId": { "Ref": "ServerlessRestApi" }, "Description": "RestApi deployment id: 5f2c9a1b7e", "StageName": "Stage" }
+    },
+    "ServerlessRestApiProdStage": {
+      "Type": "AWS::ApiGateway::Stage",
+      "Properties": { "DeploymentId": { "Ref": "ServerlessRestApiDeployment5f2c9a1b7e" }, "RestApiId": { "Ref": "ServerlessRestApi" }, "StageName": { "Ref": "StageName" } }
+    }
+  },
+  "Outputs": {
+    "OrdersApi": { "Value": { "Fn::Sub": "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/orders" } }
+  }
+}

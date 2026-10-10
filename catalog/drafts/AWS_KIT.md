@@ -17,6 +17,7 @@ node catalog/aws-kit/awd.mjs build   catalog/aws-kit/specs/<family>.mjs        #
 node catalog/aws-kit/awd.mjs export-json catalog/aws-kit/specs/<family>.mjs   # -> catalog/aws-kit/json/<family>.json
 node catalog/aws-kit/awd.mjs svg catalog/aws-kit/json/<family>.json <diagram id> --theme light --out x.svg   # one standalone .svg
 node catalog/aws-kit/import/mermaid.mjs diagram.mmd --out imported.json --svg imported.svg   # Mermaid, PlantUML or D2 -> spec (see "Importing")
+node catalog/aws-kit/import/index.mjs template.yaml --flows template.flows.json --ledger --svg out.svg   # CloudFormation or Terraform JSON -> spec
 ```
 `build` and `preview` take a `.json` family as well as a `.mjs` one; `build --out <file>` writes
 somewhere other than `catalog/drafts/`. After editing a family `.mjs`, run `export-json` for it too
@@ -294,11 +295,14 @@ resolveIcon('AWS::RDS::DBInstance', { props: { Engine: 'postgres', MultiAZ: true
 
 ## Import and export, any format
 `catalog/aws-kit/import/index.mjs` is the one entry point: `importDiagram(content, { from: 'auto' })` detects
-draw.io (plain, compressed, `.drawio.svg`, `.drawio.png`), Mermaid, PlantUML or D2 and returns
-`{ spec, report: { from, issues, unmapped, tile, lint } }`; `exportDiagram(spec, { to: 'drawio' | 'mermaid' | 'svg' })`
-returns `{ to, text }`; `to: 'svg'` takes `at` for a frozen frame and `to: 'storyboard'` returns
-`frames` (see Frames and storyboards). CLI: `node catalog/aws-kit/import/index.mjs <file> [--from x]
-[--id x] [--out spec.json] [--svg out.svg] [--at 0.5|poster]`.
+draw.io (plain, compressed, `.drawio.svg`, `.drawio.png`), Mermaid, PlantUML, D2, CloudFormation (`AWSTemplateFormatVersion`,
+or `Resources` whose entries have an `AWS::` type) or Terraform (`terraform show -json`: `format_version` with
+`planned_values` or `values`; HCL is routed there to be refused with what to run) and returns
+`{ spec, report: { from, issues, unmapped, tile, lint } }` (CloudFormation and Terraform add `ledger`, `story` and
+`resources`; they take `flows`, the sidecar, and CloudFormation `params`); `exportDiagram(spec, { to: 'drawio' | 'mermaid' | 'svg' })`
+returns `{ to, text }`; `to: 'svg'` takes `at` for a frozen frame, `to: 'png'` returns an image and `to: 'storyboard'`
+returns `frames` (see Frames and storyboards). CLI: `node catalog/aws-kit/import/index.mjs <file> [--from x] [--id x]
+[--flows sidecar.json] [--param K=V]... [--story id|none|guess] [--ledger] [--out spec.json] [--svg out.svg] [--at 0.5|poster]`.
 The MCP server exposes both as `import_diagram` and `export_diagram`. Importers animate the order a
 source gives with `story(hops, { reply })` (`catalog/aws-kit/story.mjs`), which authors can use too: an
 ordered list of hops becomes even windows on the clock, arrival rings, numbered steps and, with
@@ -533,6 +537,178 @@ all exports (79 flowcharts, 8 architecture-beta) were also checked once against 
 layers or nine frames in one layer may need a full tile or more. Group kinds and icons from free text are best
 guesses: read `report.issues` and pin them with `kind` / `icon` directives. The accuracy rules (ALB in a public
 subnet, one NAT gateway per AZ...) are not checked; the source's structure is drawn as written.
+
+## Importing CloudFormation and Terraform
+`catalog/aws-kit/import/cfn.mjs` and `tf.mjs` turn infrastructure as code into an AWS reference diagram, and a
+**flows sidecar** adds what code cannot say (who the users are, the request order, the stories). Both feed
+`iac.mjs` (classification, inference, the ledger, the sidecar, the AZ-row layout), which lays out through the
+text importers' pipeline (`ir.mjs`, `layout.mjs`). No deps.
+```bash
+node catalog/aws-kit/import/index.mjs webapp.yaml --flows webapp.flows.json --ledger --svg webapp.svg
+node catalog/aws-kit/import/cfn.mjs template.yaml --param Environment=prod --story guess --out spec.json
+terraform plan -out plan.tfplan && terraform show -json plan.tfplan > plan.json
+node catalog/aws-kit/import/tf.mjs plan.json --flows plan.flows.json --out spec.json
+```
+```js
+import { fromCloudFormation } from './import/cfn.mjs';   // fromTerraform, tfId: ./import/tf.mjs
+const { spec, report } = fromCloudFormation(text, { id, name, flows, params: { Environment: 'prod' }, story: 'page-view' });
+// report: { from, issues, unmapped, tile, lint,
+//           ledger: [{ kind: 'derived'|'assumed'|'dropped', fact, from: [logical ids or addresses], ask?, via? }],
+//           story: { channel: 'sidecar'|'bfs'|'none', flow, template, legs, steps, available },
+//           resources: [{ key, type, as: 'node'|'group'|'edge'|'folded'|'dropped'|'meta', into?, nodes?, frames?, group? }] }
+```
+Options: `id` (default `cfn-`/`tf-` plus the file name), `name`, `flows` (the sidecar, an object or its JSON),
+`params` (CloudFormation parameter values over the defaults), `region`, `story` (a sidecar flow or story id; `none`;
+`guess`). Without a sidecar there is **no animation** unless `story: 'guess'`, which draws a breadth-first walk from
+the internet-facing entry through the first AZ and reports it as a guess (`story-guess`). The spec passes
+`checkSpec`, the schema and lint like every import; fixtures and tests: `import/fixtures/cfn-*`, `tf-*`
+(`make-iac-fixtures.mjs` regenerates the CDK and Terraform ones), `node --test catalog/aws-kit/import/cfn.test.mjs
+catalog/aws-kit/import/tf.test.mjs`.
+
+**Inputs.**
+- **CloudFormation**, JSON or YAML. `cfn-yaml.mjs` (`parseYaml`) reads the short-form intrinsics (`!Ref`, `!GetAtt A.B`
+  and `[A, B]`, `!Sub` string and list, `!If`, `!Select`, `!GetAZs`, `!Join`, `!Split`, `!FindInMap`, `!ImportValue`,
+  `!Equals`, `!Not`, `!And`, `!Or`, `!Base64`, `!Cidr`, `!Condition`...) into their long JSON form, and the YAML
+  templates use: block and flow collections across lines, compact `- key: value`, plain, quoted and `|`/`>` block
+  scalars, comments, anchors. Plain scalars resolve as YAML 1.2 core does, so `2010-09-09`, `0755` and `yes` stay
+  strings. Parameters take their default unless `params` gives one; Conditions are evaluated (a resource whose
+  condition is false does not exist; `Fn::If` picks its branch; `AWS::NoValue` drops the property), Mappings and
+  pseudo parameters resolve (`AWS::Region` only with `region`), `Fn::ImportValue` names another stack (info). The
+  ledger says which parameter decided what, and whether it was a default (assumed) or given (derived).
+- **CDK synth output.** `Metadata."aws:cdk:path"` names things: node ids from the last two construct segments
+  (`ApiService-LB-az1`), subs from them (`ApiService/LB`), ledger and issue text in construct paths (`from` keeps the
+  hashed logical ids). `Custom::` resources, their provider functions, roles and layers, and `CDKMetadata` fold away;
+  `DefaultPolicy` statements become IAM edges; the `aws-cdk:subnet-type` tag is the fallback when no route table says.
+- **SAM.** The processed template (`aws cloudformation get-template --template-stage Processed`) is exact: implicit
+  APIs with OpenAPI bodies, permissions, event source mappings and policy templates expanded into roles. A SAM source
+  template is approximated (Api, HttpApi, SQS, Kinesis, DynamoDB, S3, SNS and schedule events, policy templates) with a
+  `sam-source` warning.
+- **Terraform**, `terraform show -json` of a plan (`planned_values` and `configuration`) or a state (`values`). Modules
+  recurse; `count` and `for_each` instances are resources of their own; edges come from
+  `configuration.*.expressions.references`, resolved through `var.x` (the module call's argument) and `module.x.out`
+  (the module's output), with `count.index` and `each.key` pairing instances (`aws_nat_gateway.this[1]` in
+  `aws_subnet.public[1]`). In a state (or for values a plan knows), an attribute equal to another resource's id or ARN
+  is a reference too, an ARN with a path (`bucket/*`, `table/x/index/*`) included. The Region comes from the aws
+  provider configuration. `tfId(address)` makes kit ids: `module.vpc.aws_subnet.private[0]` is `vpc-subnet-private-0`,
+  `aws_subnet.az["us-east-1a"]` is `subnet-az-us-east-1a`. Raw HCL is refused with what to run instead: only
+  Terraform can expand modules, `count` and `for_each`.
+- Nested stacks (`AWS::CloudFormation::Stack`) are one stack node (the child template is not fetched: warning); macros
+  do not run. A template may carry its sidecar in `Metadata: { "Prism::Flows": { ... } }`.
+
+**Classification.** Every resource is one of: a **node** (its icon from `resolveIcon(type, { from: 'cfn' | 'tf', props })`,
+with the ELBv2 `Type`, RDS `Engine` and `MultiAZ` picks; label the official name, sub the author's name), a **group**
+(VPC, subnet, Auto Scaling group), an **edge** (security group rules, listeners and target groups, event source
+mappings, subscriptions, permissions, DNS records, API integrations), **folded** into another (route tables, routes,
+EIPs, launch templates, instance profiles, roles and policies, subnet groups, ECS clusters and task definitions, CDK
+helpers; `resources[].into` says into what), **dropped** (operational: alarms, dashboards, log groups, scaling
+policies, API stages and deployments, bucket, queue and topic policies; the sidecar's `show` draws one) or **meta**
+(not architecture). A type with no icon is a box (`unmapped-type`, listed in `unmapped`).
+
+**What is inferred.**
+
+| fact | how |
+|---|---|
+| VPC | `AWS::EC2::VPC` / `aws_vpc`, its CIDR as the frame's note; Cloud and Region frames are always added (the Region is named when the source says: a provider region, AZ names) |
+| AZ position | `!Select [n, !GetAZs '']` (or `!Select [n, !Ref <AZ list parameter>]`) is position n+1, a position and never an AZ name; literal AZ names are sorted and shown as the AZ frame's note; otherwise the subnet's place among its siblings (assumed). Frames read "Availability Zone 1", "Availability Zone 2", never a/b |
+| public, private, isolated | the subnet's route table association, then that table's 0.0.0.0/0 route: an internet gateway makes it public, a NAT gateway (or a transit gateway, an appliance) private with egress, no default route isolated (drawn as a private subnet frame titled "Isolated subnet": the kit has no isolated kind). Without an association: the CDK subnet tag, then `MapPublicIpOnLaunch` (a hint, assumed); `group_hints` overrides |
+| placement | `SubnetId`, `Subnets`/`SubnetMappings`, `VPCZoneIdentifier`, DB, cache, DocumentDB and Redshift subnet groups (an Aurora instance through its cluster's), `VpcConfig.SubnetIds`, `AwsvpcConfiguration.Subnets`, `ResourcesVpcConfig`, `VPCOptions`, `ClientSubnets` and their Terraform names; VPC-level gateways (internet, VPN, gateway endpoints) through their attachment |
+| replicas | a resource in subnets of several AZs is drawn once per AZ (`<id>-az1`, `<id>-az2`): load balancers, ASG instances (one Auto Scaling group frame per AZ), VPC Lambda functions, ECS services, interface endpoints. A database is a primary (`-primary`) and, when Multi-AZ, a standby (`-standby`, the alternate icon) in another AZ; which AZ holds the primary is assumed unless the sidecar pins it. Aurora instances are their cluster's writer and readers (request edges go to the writer). Replicas share a column |
+| request edges | listener > target group > Auto Scaling group, ECS service, instances or Lambda (the target group's port); security group ingress chains (an ASG carries its launch template's groups) with ports; an internet-facing load balancer behind its public subnets' internet gateway; CloudFront origins; API Gateway integrations (methods, OpenAPI bodies, HTTP API integrations); Step Functions tasks. A load balancer replica reaches the targets in its own AZ |
+| async edges (dashed) | event source mappings, EventBridge rule targets, SNS subscriptions, S3 notifications, Pipes, Scheduler; Lambda permissions when nothing else linked the two |
+| DNS (dashed) | Route 53 aliases (a Route 53 node stands in for a zone outside the stack), labelled with the record name |
+| weak edges (dashed) | the resource ARNs in a role's policies, from what assumes the role (a function, an instance or ASG through its instance profile and launch template, an ECS task role), labelled with the action or "dynamodb read/write"; one per role and target. An ARN in a policy does not prove traffic: a sidecar request step over one makes it solid |
+| egress | a dashed "egress" wire from each private subnet to its NAT gateway; a NAT gateway in another AZ is a ledger fact with a question (an AZ failure cuts that subnet's egress) |
+| actors | the sidecar's; else Users at the internet-facing entry (CloudFront, the internet gateway in front of an internet-facing load balancer, API Gateway, AppSync), assumed |
+
+`Ref`, `GetAtt` and `DependsOn` alone draw nothing: they are configuration, not traffic.
+
+**Layout.** With a VPC, the **AZ-row three-tier** archetype places the cells and the shared pipeline does the rest:
+Availability Zones are rows (one band per AZ, as tall as the busiest subnet column; the subnets of a band share its
+height), tiers are columns (public, private, isolated subnets; inside a subnet the entry, compute and data columns,
+deeper tiers further right, NAT gateways under the load balancer), VPC-level gateways sit on the VPC's left edge
+centred on the bands, regional services that feed the VPC on its left and the rest on its right, global services
+(CloudFront, Route 53) left of the Region, actors outside the AWS Cloud. A primary and its standby sit in one column
+with the replication wire straight between the AZ rows. Without a VPC (a **serverless chain**), the layered layout of
+the text importers places it left to right. Tracks, routes, labels, badges, the tile and the lint loop are shared.
+
+**The ledger** (`report.ledger`, CLI `--ledger`) lists every fact the drawing rests on, and doubles as the question
+list for the customer:
+- `derived`: read from the source, with the chain ("PrivateSubnet1 is a private subnet with egress: route table
+  PrivateRouteTable1 sends 0.0.0.0/0 to the NAT gateway NatGateway1"; "AppAsg reaches Database on :5432: DbSg allows
+  ingress from AppSg (AppAsg carries AppSg through LaunchTemplate)").
+- `assumed`: the importer had to choose (a parameter's default decided a condition, the AZ of a primary, the Users
+  actor, a subnet's AZ); each carries `ask`, the question to put to the customer ("Which AZ holds Database's primary
+  today?").
+- `dropped`: not drawn, and why (operational, not architecture, a false condition, no edge between drawn resources).
+
+`from` lists the resources a fact came from; every resource of the source appears in at least one entry.
+`via: 'sidecar'` marks what the sidecar supplied (a pin, a hop, a confirmed edge).
+
+### The flows sidecar
+A separate JSON file (a TAM should not have to edit a customer's template), passed as `flows` (`--flows` on the CLI,
+`flows` on the MCP `import_diagram` tool) or carried in the template's `Metadata."Prism::Flows"`:
+```json
+{
+  "name": "Three-tier web app",
+  "story": "page-view",
+  "actors": [{ "id": "Users", "icon": "aws-res-users", "label": "Users", "side": "left" }],
+  "flows": [{
+    "id": "page-view", "name": "Browse a page", "dur": 10, "response": "reverse",
+    "steps": [
+      { "from": "Users", "to": "InternetGateway", "label": "HTTP :80", "text": "Users open the site." },
+      { "from": "InternetGateway", "to": "LoadBalancer@az1" },
+      { "from": "LoadBalancer@az1", "to": "AppAsg@az1", "label": ":8080" },
+      { "from": "AppAsg@az1", "to": "Database@primary", "label": ":5432" },
+      { "from": "Database@primary", "to": "Database@standby", "kind": "replication" }
+    ]
+  }],
+  "stories": [
+    { "id": "az-failure", "template": "az-fail", "flow": "page-view", "az": "az1", "promote": "Database@standby" },
+    { "id": "scale-out", "template": "asg-scale", "asg": "AppAsg", "from": 2, "to": 4 }
+  ],
+  "hide": ["CpuAlarm"],
+  "show": [],
+  "merge": { "TargetGroup": "LoadBalancer" },
+  "pin": { "Database@primary": "az1" },
+  "group_hints": { "PrivateSubnet1": "iso", "SubnetX": { "kind": "pub", "az": 2 } },
+  "overrides": { "AssetsBucket": { "icon": "aws-svc-simple-storage-service", "label": "Amazon S3", "sub": "assets" } },
+  "anchors": { "Web": { "cfn": "LoadBalancer", "tf": "aws_lb.web", "cdk": "Stack/Alb/Resource" } }
+}
+```
+
+| field | effect |
+|---|---|
+| `actors` | nodes outside the stack (users, partners, on-premises systems): `id`, `icon` (any name the resolver knows), `label`, `sub`, `side` (`left`, default, or `right`), `to` (refs to wire it to). They replace the assumed Users |
+| `flows` | ordered request paths. A step names two **refs**: a logical id, a Terraform address, a CDK path, an anchor or an actor, with a qualifier for replicas: `@az1`, `@az2` (the replica in that AZ), `@primary`, `@standby` (a database), `@writer`, `@reader` (Aurora). An unqualified ref to a replicated resource takes the first replica (reported). `kind`: request (default: a numbered `pk` packet), `async` (numbered, the wire stays dashed), `replication` or `response` (`pk-2`, no badge), `bad` (`pk-bad`). `label` labels the wire, `text` is the badge's step text (default "A to B on label."). A step the source has no edge for adds a wire (a ledger fact); a request step over a weak IAM edge confirms it (solid). `response: reverse` replays the request steps backwards as responses. `dur` sets the clock. Steps compile to the timeline and badges with `story()` (even windows, one badge per request step) |
+| `stories` | templates over a flow (`flow`, default the first): `az-fail` runs the flow, then fails the AZ (`fail` on its frame, `fade` on its wires) and runs the same request through the other AZ with the standby promoted (`glow` on that path; a wire the failover needs is added; the clock is lengthened); `asg-scale` adds instances to each of the ASG's frames, from `from` to `to` (default its Min and Max), shown with `appear` and ghosted when idle |
+| `story` | the flow or story to draw (default the first flow); the `story` option overrides it |
+| `hide`, `show` | drop a resource; draw an operational one (an alarm, a log group) |
+| `merge` | draw a resource as part of another (its edges move there) |
+| `pin` | which AZ a replica is in: `"Database@primary": "az2"` answers the ledger's "which AZ holds the primary" |
+| `group_hints` | a subnet's kind (`pub`, `priv`, `iso`) and AZ when the source is ambiguous |
+| `overrides` | a node's `icon`, `label` or `sub` (one replica with `"LoadBalancer@az2"`) |
+| `anchors` | one stable name across a CloudFormation logical id, a Terraform address and a CDK path: it becomes the node id and a ref the flows can use, so a sidecar survives a refactor or a move from CloudFormation to Terraform |
+| `name`, `desc`, `region` | the tile title, description and Region frame label |
+
+### What IaC cannot tell
+The ledger's `assumed` entries and the sidecar exist for these:
+1. **Actors** outside the stack: users, browsers, partners, on-premises systems. Users at the internet-facing entry are
+   assumed; the sidecar's `actors` say who they are.
+2. **Request order**, the response path and which paths matter: IaC has dependencies, not traffic. No animation
+   without a sidecar flow (`story: 'guess'` draws a breadth-first walk and says it is a guess).
+3. **Which AZ holds a primary** (RDS picks it at deploy time; `pin` answers it) and anything a parameter decides
+   (`params`; the ledger names the default that decided it).
+4. **Runtime counts**: an ASG's Min, Max and Desired are in the ledger; the running count and placement are not
+   (`asg-scale` draws a scale-out).
+5. **Anything outside the stack**: DNS zones (a Route 53 node stands in), CDNs, WAF, Transit Gateway, shared VPCs,
+   `Fn::ImportValue`, cross-account links; nested stacks' children; macros' output.
+6. **Whether a grant is traffic**: an ARN in a policy is a dashed weak edge until a sidecar step confirms it.
+7. **Terraform HCL** alone: modules, `count` and `for_each` need Terraform to expand them; values known only after
+   apply are absent from a plan (the configuration's references still give the edges).
+
+**Kit gaps met here.** No isolated-subnet frame (drawn as `priv` titled "Isolated subnet"); no security group icon
+(security group chains become edges, not frames); no way to say one node spans AZs (replicas per AZ instead); no
+`src` provenance field on nodes (the ledger and `report.resources` carry it).
 
 ## Layout rules (the bar is "looks like an official AWS reference architecture")
 - 16px padding inside groups; leave 22px at the top of a group for its corner icon + label.

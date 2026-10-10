@@ -1,0 +1,176 @@
+{
+ "format_version": "1.0",
+ "terraform_version": "1.9.8",
+ "values": {
+  "root_module": {
+   "resources": [
+    {
+     "address": "aws_sqs_queue.jobs",
+     "mode": "managed",
+     "type": "aws_sqs_queue",
+     "name": "jobs",
+     "provider_name": "registry.terraform.io/hashicorp/aws",
+     "schema_version": 0,
+     "values": {
+      "id": "https://sqs.eu-west-1.amazonaws.com/111122223333/jobs",
+      "arn": "arn:aws:sqs:eu-west-1:111122223333:jobs",
+      "name": "jobs"
+     },
+     "sensitive_values": {}
+    },
+    {
+     "address": "aws_sqs_queue.jobs_dlq",
+     "mode": "managed",
+     "type": "aws_sqs_queue",
+     "name": "jobs_dlq",
+     "provider_name": "registry.terraform.io/hashicorp/aws",
+     "schema_version": 0,
+     "values": {
+      "id": "https://sqs.eu-west-1.amazonaws.com/111122223333/jobs-dlq",
+      "arn": "arn:aws:sqs:eu-west-1:111122223333:jobs-dlq",
+      "name": "jobs-dlq"
+     },
+     "sensitive_values": {}
+    },
+    {
+     "address": "aws_iam_role.worker",
+     "mode": "managed",
+     "type": "aws_iam_role",
+     "name": "worker",
+     "provider_name": "registry.terraform.io/hashicorp/aws",
+     "schema_version": 0,
+     "values": {
+      "id": "jobs-worker",
+      "arn": "arn:aws:iam::111122223333:role/jobs-worker",
+      "name": "jobs-worker"
+     },
+     "sensitive_values": {}
+    },
+    {
+     "address": "aws_lambda_function.worker",
+     "mode": "managed",
+     "type": "aws_lambda_function",
+     "name": "worker",
+     "provider_name": "registry.terraform.io/hashicorp/aws",
+     "schema_version": 0,
+     "values": {
+      "id": "jobs-worker",
+      "arn": "arn:aws:lambda:eu-west-1:111122223333:function:jobs-worker",
+      "function_name": "jobs-worker",
+      "role": "arn:aws:iam::111122223333:role/jobs-worker",
+      "runtime": "python3.13",
+      "handler": "app.handler",
+      "tags": {
+       "Name": "jobs-worker"
+      }
+     },
+     "sensitive_values": {}
+    },
+    {
+     "address": "aws_lambda_event_source_mapping.jobs",
+     "mode": "managed",
+     "type": "aws_lambda_event_source_mapping",
+     "name": "jobs",
+     "provider_name": "registry.terraform.io/hashicorp/aws",
+     "schema_version": 0,
+     "values": {
+      "id": "9f1c2d3e-0000-4b5a-9c8d-112233445566",
+      "event_source_arn": "arn:aws:sqs:eu-west-1:111122223333:jobs",
+      "function_name": "arn:aws:lambda:eu-west-1:111122223333:function:jobs-worker",
+      "batch_size": 10
+     },
+     "sensitive_values": {}
+    },
+    {
+     "address": "aws_dynamodb_table.results",
+     "mode": "managed",
+     "type": "aws_dynamodb_table",
+     "name": "results",
+     "provider_name": "registry.terraform.io/hashicorp/aws",
+     "schema_version": 0,
+     "values": {
+      "id": "job-results",
+      "arn": "arn:aws:dynamodb:eu-west-1:111122223333:table/job-results",
+      "name": "job-results",
+      "billing_mode": "PAY_PER_REQUEST",
+      "hash_key": "job_id"
+     },
+     "sensitive_values": {}
+    },
+    {
+     "address": "aws_iam_role_policy.worker",
+     "mode": "managed",
+     "type": "aws_iam_role_policy",
+     "name": "worker",
+     "provider_name": "registry.terraform.io/hashicorp/aws",
+     "schema_version": 0,
+     "values": {
+      "id": "jobs-worker:worker",
+      "name": "worker",
+      "role": "jobs-worker",
+      "policy": "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\"Action\":[\"sqs:ReceiveMessage\",\"sqs:DeleteMessage\",\"sqs:GetQueueAttributes\"],\"Resource\":\"arn:aws:sqs:eu-west-1:111122223333:jobs\"},{\"Effect\":\"Allow\",\"Action\":[\"dynamodb:PutItem\"],\"Resource\":\"arn:aws:dynamodb:eu-west-1:111122223333:table/job-results\"}]}"
+     },
+     "sensitive_values": {}
+    },
+    {
+     "address": "aws_sns_topic.done",
+     "mode": "managed",
+     "type": "aws_sns_topic",
+     "name": "done",
+     "provider_name": "registry.terraform.io/hashicorp/aws",
+     "schema_version": 0,
+     "values": {
+      "id": "arn:aws:sns:eu-west-1:111122223333:jobs-done",
+      "arn": "arn:aws:sns:eu-west-1:111122223333:jobs-done",
+      "name": "jobs-done"
+     },
+     "sensitive_values": {}
+    },
+    {
+     "address": "aws_cloudwatch_event_rule.nightly",
+     "mode": "managed",
+     "type": "aws_cloudwatch_event_rule",
+     "name": "nightly",
+     "provider_name": "registry.terraform.io/hashicorp/aws",
+     "schema_version": 0,
+     "values": {
+      "id": "jobs-nightly",
+      "arn": "arn:aws:events:eu-west-1:111122223333:rule/jobs-nightly",
+      "name": "jobs-nightly",
+      "schedule_expression": "cron(0 2 * * ? *)"
+     },
+     "sensitive_values": {}
+    },
+    {
+     "address": "aws_cloudwatch_event_target.nightly",
+     "mode": "managed",
+     "type": "aws_cloudwatch_event_target",
+     "name": "nightly",
+     "provider_name": "registry.terraform.io/hashicorp/aws",
+     "schema_version": 0,
+     "values": {
+      "id": "jobs-nightly-sqs",
+      "rule": "jobs-nightly",
+      "arn": "arn:aws:sqs:eu-west-1:111122223333:jobs",
+      "target_id": "sqs"
+     },
+     "sensitive_values": {}
+    },
+    {
+     "address": "aws_cloudwatch_log_group.worker",
+     "mode": "managed",
+     "type": "aws_cloudwatch_log_group",
+     "name": "worker",
+     "provider_name": "registry.terraform.io/hashicorp/aws",
+     "schema_version": 0,
+     "values": {
+      "id": "/aws/lambda/jobs-worker",
+      "arn": "arn:aws:logs:eu-west-1:111122223333:log-group:/aws/lambda/jobs-worker",
+      "name": "/aws/lambda/jobs-worker"
+     },
+     "sensitive_values": {}
+    }
+   ]
+  }
+ }
+}
