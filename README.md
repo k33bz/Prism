@@ -389,6 +389,8 @@ The MCP server's `compose` / `compose_with_template` tools do all of this for yo
 │   ├── _embed-catalog.mjs     embed the manifest into the #prism-catalog island
 │   ├── _smoke.mjs             island + shell parse check
 │   ├── _check_ds.mjs          theme-pack gate: 100 facets, token-only, offline, reduced-motion
+│   ├── _check_markup.mjs      shell + every template parse with no browser repair; islands agree with the manifest
+│   ├── _check_pages.mjs       every page and the main controls, 3 themes, 1440 and 390 wide (headless)
 │   ├── _sync_counts.mjs       keep this README's badges and counts honest
 │   ├── _scaffold.mjs / _rescaffold.mjs / _splice.mjs / _splice_page.mjs   build and splice gallery templates from drafts/
 │   ├── _scaffold_ds.mjs / _gen_system.mjs / _merge_spectrum.mjs           theme packs: profile → registry + MCP mirror → 100 facets → Spectrums
@@ -415,6 +417,8 @@ node catalog/_facet_dates.mjs         # derives addedOn / updatedOn / author per
 node catalog/extract-from-prism.mjs   # loads Prism.html headlessly, re-extracts every effect (merges the dates)
 node catalog/_embed-catalog.mjs       # embeds the fresh manifest into the #prism-catalog island
 node catalog/_smoke.mjs               # island + shell scripts still parse
+node catalog/_check_markup.mjs        # shell + every template parse with no browser repair; islands agree with the manifest (--self-test)
+node catalog/_check_pages.mjs         # every page and the main controls in 3 themes at 1440 and 390, storage blocked, a11y basics (--self-test)
 node catalog/_check_ds.mjs            # theme-pack gate (add --only <pack> for one)
 node catalog/_sync_counts.mjs         # README badges and counts
 node catalog/_check_facets.mjs        # per-facet render / animation / reduced-motion gate across dark, reduced-motion and Cloudscape Light, with text contrast (author k33bz by default; --all for everything; --themes <ids> for any registry theme)
