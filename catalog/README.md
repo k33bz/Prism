@@ -17,7 +17,32 @@ _check_markup.mjs        →  shell + every gallery template parse with no brows
 _check_pages.mjs         →  headless sweep: every page and the main controls in 3 themes at 1440 and 390, storage blocked, a11y basics (exit non-zero on fail)
 _check_ds.mjs            →  design-system coverage & integrity gate (exit non-zero on fail)
 _check_selection.mjs     →  agent-facing selection-metadata gate: every facet has valid role + layer + a11y, charts have dataShape (exit non-zero on fail)
+_check_copy.mjs          →  Copy-button gate: sampled tiles per gallery, each copy pasted into a blank page must render like its tile (exit non-zero on fail)
 ```
+
+## Standalone copies
+
+Two things hand a facet out as code, and both aim at the same bar: pasted into a blank
+page, it renders the way its tile renders in the gallery.
+
+- **The Copy button.** Every gallery tile's Copy (and "Copy snippet", and a panel's
+  "Code") runs one implementation, `prismCopyFrame` in the shell, which injects it into
+  each gallery frame. The copy is the stage markup inside a `.prism-copy` wrapper that
+  carries the current theme's value of every token the markup reads plus the stage's
+  text, backdrop and layout; the rules that reach the markup (found by selector against
+  the live tile, `.tile` / `.stage` / page scoping folded into the wrapper); the
+  `@keyframes`, `@property` and bundled `@font-face` it uses; the `<symbol>`s and paint
+  servers it references by id; and the initializer a `data-needs-js` tile names.
+  `node catalog/_check_copy.mjs` gates it.
+- **The catalog record** (`effect.html` + `effect.css`, after `tokens.css`). `tokens.css`
+  is built from the theme registry (Cloudscape Dark on `:root`, Cloudscape Light under
+  `:root[data-mode="light"]`, the MCP token block's shape) plus a zero-specificity page
+  base; a gallery rule that styles a facet only through its surroundings
+  (`*{box-sizing}`, `.stage svg`) is re-anchored on the facet's roots with `:where()`. A
+  facet whose top-level element has no class cannot be re-anchored that way and keeps
+  relying on the host page for those rules. The record is the stage's content: it
+  renders like its tile in a container like the tile's stage (a centered flex box);
+  dropped straight into a page body, its block layout differs.
 
 ## Agent-facing selection metadata
 

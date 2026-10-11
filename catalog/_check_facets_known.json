@@ -1,8 +1,22 @@
 {
-  "note": "Facets the per-facet gate tolerates. ids: failures reported but not gated (reduced-motion gaps were systemically fixed 2026-09-07; the one remaining entry is a metadata quirk, not a render/a11y bug). Regenerate: node catalog/_check_facets.mjs --update-baseline. contrast: facet id -> why its low-contrast text is a design choice (a string tolerates every run of the facet; {\"why\": ..., \"els\": [element labels as the report prints them]} only those runs). Empty: every facet clears its floor in the default configs.",
+  "note": "Facets the per-facet gate tolerates. ids: failures reported but not gated (reduced-motion gaps were systemically fixed 2026-09-07; the one remaining entry is a metadata quirk, not a render/a11y bug). Regenerate: node catalog/_check_facets.mjs --update-baseline. contrast: facet id -> why its low-contrast text is a design choice (a string tolerates every run of the facet; {\"why\": ..., \"els\": [element labels as the report prints them]} only those runs). Empty: every facet clears its floor in the default configs. 2026-10-11 (copy fidelity): tokens.css now comes from the theme registry (Cloudscape Dark, not the old navy palette), so the dark baseline no longer shares the low light-mode text of 13 facets and stops excusing it; Magma-Flow joins them because its background now survives extraction (a blanked !important shorthand) and its light text sits on it, as in the gallery. Their light renders are unchanged; they are a contrast backlog, not a copy regression.",
   "generated": "2026-09-07",
   "ids": [
-    "notify-avatar-shapes-2d"
+    "ai-chain-of-thought",
+    "charts-capacity-treemap",
+    "charts-sankey-flow-diagram",
+    "charts-threshold-ring-alarm",
+    "charts-treemap-delta",
+    "fx-magma-flow",
+    "fx-prismatic",
+    "lab-split-screen-reveal",
+    "lab-zoom-out-hero",
+    "menus-rich-palette-with-descriptions",
+    "notify-avatar-shapes-2d",
+    "notify-avatar-shapes-3d",
+    "notify-incident-banner",
+    "notify-maintenance-banner",
+    "obsidian-cycling-note-tabs"
   ],
   "contrast": {}
 }
