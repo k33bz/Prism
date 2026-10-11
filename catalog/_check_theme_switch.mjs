@@ -133,9 +133,13 @@ const RECORDER = `(function(){
     try{
       var de=document.documentElement, cs=de&&getComputedStyle(de), b=document.body;
       var fw=null; if(depth===1){ var e=T.document.getElementById('fw'); fw=e?+getComputedStyle(e).opacity:null; }
+      // the colour the canvas actually paints: the root's background, else the body's (which
+      // propagates to the canvas even while the body itself is visibility:hidden)
+      var rb=cs?cs.backgroundColor:'', bb=b?getComputedStyle(b).backgroundColor:'';
       log.push({t:performance.timeOrigin+performance.now(), depth:depth, title:document.title, n:n, url:location.href,
         body:!!b, vis:b?getComputedStyle(b).visibility:null,
         bg:cs?cs.getPropertyValue('--bg').trim().toLowerCase():'', mode:de?de.getAttribute('data-mode'):null,
+        canvas:(rb&&rb!=='rgba(0, 0, 0, 0)'&&rb!=='transparent')?rb:bb,
         scheme:cs?cs.colorScheme:'', fw:fw, vm:!!document.getElementById('vm-theme')});
     }catch(e){}
     if(++n<24) requestAnimationFrame(snap);
@@ -275,7 +279,13 @@ async function fouc(expectId) {
   // about:blank is an iframe's initial empty document (no content, never a gallery)
   L.filter(r => r.depth > 0 && r.body && r.url !== 'about:blank').forEach(r => { const k = r.depth + '|' + r.title + '|' + r.vm; if (!docs[k]) docs[k] = r; });
   const frameBad = Object.values(docs).filter(r => r.bg !== t.bg || r.mode !== t.mode);
-  return { records: L.length, shellBad, frameBad, frames: Object.keys(docs).length,
+  // a light theme's shell canvas is never painted dark on the way in (nor a dark one light),
+  // hidden body or not: a held body still paints its background across the whole canvas
+  const lum = c => { const m = /rgba?\(([\d.]+),\s*([\d.]+),\s*([\d.]+)/.exec(c || ''); if (!m) return null;
+    const f = v => { v /= 255; return v <= 0.04045 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); };
+    return 0.2126 * f(+m[1]) + 0.7152 * f(+m[2]) + 0.0722 * f(+m[3]); };
+  const canvasBad = L.filter(r => { if (r.depth !== 0) return false; const y = lum(r.canvas); return y != null && (t.mode === 'light' ? y < 0.35 : y > 0.35); });
+  return { records: L.length, shellBad, frameBad, canvasBad, frames: Object.keys(docs).length,
     frameBadVisible: frameBad.filter(r => r.depth > 1 || r.fw == null || r.fw > 0) };
 }
 
@@ -304,6 +314,8 @@ async function main() {
   check('load', 'page loads with a stored theme', await open('', 'aws', { prismTheme: LOAD_THEME }), 'timeout');
   const first = await fouc(LOAD_THEME);
   metrics.firstVisit = { shellWrongFrames: first.shellBad.length, staleFrameDocs: first.frameBad.length, of: first.frames };
+  check('load', 'a stored light theme with no cached snapshot never paints a dark canvas while the body is held', first.canvasBad.length === 0,
+    first.canvasBad.slice(0, 2).map(r => 'frame#' + r.n + ' canvas=' + r.canvas + ' body ' + r.vis));
   await send('Page.reload', {}); await waitPage('aws');
   const again = await fouc(LOAD_THEME);
   metrics.returningVisit = { shellWrongFrames: again.shellBad.length, staleFrameDocs: again.frameBad.length, of: again.frames };
@@ -331,11 +343,20 @@ async function main() {
   s = await settle('cloudscape-light');
   const fv = await fouc('cloudscape-light');
   check('load', 'first visit under a light system = Cloudscape Light in Auto', s.id === 'cloudscape-light' && s.mode === 'auto', s.id + ' ' + s.mode);
-  check('load', 'first visit under a light system never paints the dark base', fv.shellBad.length === 0 && fv.frameBad.length === 0,
-    { shell: fv.shellBad.slice(0, 1), frames: fv.frameBad.slice(0, 1) });
+  check('load', 'first visit under a light system never paints the dark base (tokens or canvas)', fv.shellBad.length === 0 && fv.frameBad.length === 0 && fv.canvasBad.length === 0,
+    { shell: fv.shellBad.slice(0, 1), frames: fv.frameBad.slice(0, 1), canvas: fv.canvasBad.slice(0, 1).map(r => 'frame#' + r.n + ' ' + r.canvas + ' body ' + r.vis) });
   await open('', 'aws', {}, 'dark');
   s = await settle('cloudscape-dark');
   check('load', 'first visit under a dark system = Cloudscape Dark in Auto', s.id === 'cloudscape-dark' && s.mode === 'auto', s.id + ' ' + s.mode);
+  // an implicit Auto (nothing chosen) stays Auto after the system flips while Prism is open
+  await media('light', true);
+  s = await settle('cloudscape-light');
+  const stored = await call(function () { return { t: localStorage.getItem('prismTheme'), m: localStorage.getItem('prismThemeMode') }; });
+  await media('dark', true);
+  await send('Page.reload', {}); await waitPage('aws');
+  s = await settle('cloudscape-dark');
+  check('auto', 'an implicit first-visit Auto survives a live system flip and a reload (nothing pinned)', s.id === 'cloudscape-dark' && s.mode === 'auto',
+    { after: s.id + ' ' + s.mode, stored });
 
   // ---- 2. switch through every registry theme on the AWS gallery (data-mode matters there)
   await open('', 'aws', { prismTheme: 'cloudscape-dark' }, 'dark', true);
@@ -407,6 +428,30 @@ async function main() {
   });
   s = await settle('monzo-light');
   check('pages', 'a change made in another tab is followed (shell + frame)', !stateMatches(s, BY_ID['monzo-light']), stateMatches(s, BY_ID['monzo-light']));
+  // another tab's pick arrives as two storage events (theme, then mode): no wrong theme in between.
+  // From Auto under a dark system, the other tab picks primer-light (an explicit light): resolving on
+  // the theme key alone would paint primer-dark (new pack, old Auto) first. Reduced motion, so every
+  // paint is synchronous and an intermediate one would be recorded.
+  await media('dark', true);
+  await call(async function () {
+    localStorage.setItem('prismTheme', 'monzo-light'); localStorage.setItem('prismThemeMode', 'auto');
+    window.dispatchEvent(new StorageEvent('storage', { key: 'prismThemeMode', newValue: 'auto' }));
+    await new Promise(function (r) { setTimeout(r, 400); });
+  });
+  const seq2 = await call(async function () {
+    var seen = [], de = document.documentElement;
+    var mo = new MutationObserver(function () { var t = de.getAttribute('data-theme'); if (seen[seen.length - 1] !== t) seen.push(t); });
+    mo.observe(de, { attributes: true, attributeFilter: ['data-theme'] });
+    localStorage.setItem('prismTheme', 'primer-light');
+    window.dispatchEvent(new StorageEvent('storage', { key: 'prismTheme', newValue: 'primer-light' }));
+    await new Promise(function (r) { setTimeout(r, 5); });
+    localStorage.setItem('prismThemeMode', 'light');
+    window.dispatchEvent(new StorageEvent('storage', { key: 'prismThemeMode', newValue: 'light' }));
+    await new Promise(function (r) { setTimeout(r, 400); });
+    mo.disconnect();
+    return seen;
+  });
+  check('pages', 'a two-key change from another tab paints only its final theme', J(seq2) === '["primer-light"]', seq2);
 
   // ---- 5. ?theme= / &mode= deep links
   await open('?theme=fluent-light', 'charts', {});
