@@ -129,7 +129,7 @@ const EXTRACT_FN = `function extractInPage(gallery, d, tokenNames, templateText)
     // A rule that names no class of the facet can still style it through its surroundings
     // (.stage svg, *, button): found by testing the selector against the live tile, then
     // re-anchored on the facet's own roots (rescopeSelector, _standalone-css.mjs).
-    var roots=(panel?[src]:[].slice.call(src.children)).map(function(e){ return rootSelector(e.getAttribute('class')); }).filter(Boolean);
+    var roots=(panel?[src]:[].slice.call(src.children)).map(function(e){ return rootSelector(String(e.getAttribute('class')||'').replace(/(^|\\s)is-(new|fixed)(?=\\s|$)/g,' ')); }).filter(Boolean);
     var chain=[]; for(var a=panel?src.parentElement:src; a; a=a.parentElement) chain.push(a);
     function inFacet(s){ try{
       if(panel&&src.matches(s)) return true;
@@ -269,7 +269,9 @@ const EXTRACT_FN = `function extractInPage(gallery, d, tokenNames, templateText)
     var descEl=node.querySelector('.desc, .cap'); var description=descEl?descEl.textContent.replace(/\\s+/g,' ').trim():'';
     var demoNode=node.querySelector('.stage'); var html;
     if(demoNode){ html=demoNode.innerHTML.trim(); }
-    else { var clone=node.cloneNode(true); var bar=clone.querySelector('.fx-copy'); if(bar)bar.remove(); html=clone.outerHTML; }
+    // a panel is its own markup, without the copy bar and the gallery's NEW / UPDATED marking (the
+    // record says isNew / isFixed; the classes only brought along the badge and its pulse rules)
+    else { var clone=node.cloneNode(true); var bar=clone.querySelector('.fx-copy'); if(bar)bar.remove(); clone.classList.remove('is-new','is-fixed'); html=clone.outerHTML; }
     var snipBtn=node.querySelector('[data-snip]');
     var dataSnip=snipBtn?snipBtn.getAttribute('data-snip'):null;
     var id=node.getAttribute('data-fx-id') || (gallery+'-'+slug(name));

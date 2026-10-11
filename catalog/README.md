@@ -36,10 +36,13 @@ page, it renders the way its tile renders in the gallery.
   `node catalog/_check_copy.mjs` gates it.
 - **The catalog record** (`effect.html` + `effect.css`, after `tokens.css`). `tokens.css`
   is built from the theme registry (Cloudscape Dark on `:root`, Cloudscape Light under
-  `[data-mode="light"]`) plus a zero-specificity page base; a gallery rule that styles a
-  facet only through its surroundings (`*{box-sizing}`, `.stage svg`) is re-anchored on
-  the facet's roots with `:where()`. A facet whose top-level element has no class cannot
-  be re-anchored that way and keeps relying on the host page for those rules.
+  `:root[data-mode="light"]`, the MCP token block's shape) plus a zero-specificity page
+  base; a gallery rule that styles a facet only through its surroundings
+  (`*{box-sizing}`, `.stage svg`) is re-anchored on the facet's roots with `:where()`. A
+  facet whose top-level element has no class cannot be re-anchored that way and keeps
+  relying on the host page for those rules. The record is the stage's content: it
+  renders like its tile in a container like the tile's stage (a centered flex box);
+  dropped straight into a page body, its block layout differs.
 
 ## Agent-facing selection metadata
 

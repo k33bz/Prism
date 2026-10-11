@@ -175,18 +175,21 @@ export const STANDALONE_FNS = [inlineAnimationNames, inlineAnimationSelectors, c
 /** tokens.css (manifest.tokens.css: include once per page, then any facet's html + css), built
  *  from the live theme registry: `dark` and `light` are the token maps of Cloudscape Dark (the
  *  shell's default theme) and Cloudscape Light ({'--bg': '#0f1621', ...}, _check_themes.mjs
- *  loadHtmlThemes). Dark is the :root default; light applies under [data-mode="light"] (the
- *  attribute the shell stamps on a themed page, on <html> or on any wrapper) and repeats only
- *  the tokens that change. Then the c-* recolor classes, and the page base every gallery body
- *  sets (backdrop, text color, 14px/1.6 system type) at zero specificity, so a blank page shows a
- *  facet the way its tile looks while any body rule of the host page still wins. */
+ *  loadHtmlThemes). The same shape as the MCP server's token block (utils/apply.js
+ *  tokenBlockCss): dark on :root, and the light differences under :root[data-mode="light"], the
+ *  attribute the shell stamps on a light page. Unlike the server's Auto block it does not follow
+ *  prefers-color-scheme: a page without data-mode gets dark, as the shell's default does. Then
+ *  the c-* recolor classes, and the page base every gallery body sets (backdrop, text color,
+ *  14px/1.6 system type) at zero specificity, so a blank page shows a facet the way its tile
+ *  looks while any body rule of the host page still wins. */
 export function tokensCss(dark, light) {
   var decl = function (m, keys) { return keys.map(function (k) { return k + ':' + m[k]; }).join(';'); };
   var dk = Object.keys(dark), lk = Object.keys(light || {}).filter(function (k) { return light[k] !== dark[k]; });
-  return ':root{' + decl(dark, dk) + '}'
-    + (lk.length ? '[data-mode="light"]{' + decl(light, lk) + '}' : '')
+  return ':root{' + decl(dark, dk) + ';color-scheme:dark}'
+    + (lk.length ? ':root[data-mode="light"]{' + decl(light, lk) + ';color-scheme:light}' : '')
     + '.c-crit{--c:var(--crit);--c-rgb:var(--crit-rgb)}.c-neg{--c:var(--neg);--c-rgb:var(--neg-rgb)}'
     + '.c-warn{--c:var(--warn);--c-rgb:var(--warn-rgb)}.c-pos{--c:var(--pos);--c-rgb:var(--pos-rgb)}'
     + '.c-info{--c:var(--info);--c-rgb:var(--info-rgb)}.c-accent{--c:var(--accent);--c-rgb:var(--accent-rgb)}'
     + ':where(body){background:var(--bg);color:var(--ink);font:14px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}';
 }
+

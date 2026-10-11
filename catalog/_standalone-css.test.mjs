@@ -127,9 +127,10 @@ test('rootSelector names a root by all its classes', () => {
   assert.equal(rootSelector('w-1/2 ok'), '.ok');
 });
 
-test('tokensCss: dark :root default, light deltas under [data-mode="light"], page base at zero specificity', () => {
+test('tokensCss: dark :root default, light deltas under :root[data-mode="light"], page base at zero specificity', () => {
   const css = tokensCss({ '--bg': '#000', '--ink': '#fff', '--r-sm': '4px' }, { '--bg': '#fff', '--ink': '#000', '--r-sm': '4px' });
-  assert.ok(css.startsWith(':root{--bg:#000;--ink:#fff;--r-sm:4px}[data-mode="light"]{--bg:#fff;--ink:#000}'));
+  assert.ok(css.startsWith(':root{--bg:#000;--ink:#fff;--r-sm:4px;color-scheme:dark}:root[data-mode="light"]{--bg:#fff;--ink:#000;color-scheme:light}'));
+  assert.ok(!/prefers-color-scheme/.test(css));   // deterministic: no data-mode is dark
   assert.ok(css.includes('.c-pos{--c:var(--pos);--c-rgb:var(--pos-rgb)}'));
   assert.ok(/:where\(body\)\{background:var\(--bg\);color:var\(--ink\);font:14px\/1\.6 /.test(css));
   assert.ok(!tokensCss({ '--bg': '#000' }, { '--bg': '#000' }).includes('[data-mode'));

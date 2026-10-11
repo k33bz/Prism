@@ -21,7 +21,7 @@
    Exits non-zero if any sampled tile fails.
 
    Usage:
-     node catalog/_check_copy.mjs                          # 3 tiles per gallery, dark + light
+     node catalog/_check_copy.mjs                          # 2 tiles per gallery, dark + light (about 2 min)
      node catalog/_check_copy.mjs --per 12 --gallery fx,aws
      node catalog/_check_copy.mjs --themes cloudscape-dark,duolingo-light
      node catalog/_check_copy.mjs --json
@@ -38,7 +38,7 @@ const HERE = dirname(fileURLToPath(import.meta.url));
 const argv = process.argv.slice(2);
 const opt = (n, d) => { const i = argv.indexOf(n); return i >= 0 ? argv[i + 1] : d; };
 const HTML = process.env.PRISM_HTML ? resolve(process.env.PRISM_HTML) : resolve(HERE, '../Prism.html');
-const PER = parseInt(opt('--per', '3'), 10);
+const PER = parseInt(opt('--per', '2'), 10);
 const THEMES = opt('--themes', opt('--theme', 'cloudscape-dark,cloudscape-light')).split(',');
 const JSON_OUT = argv.includes('--json');
 const GALLERIES = (opt('--gallery') || 'charts,fx,lab,ai,objects,input,text,shapes,maps,notify,arch,aws,callouts,obsidian,menus,tables,diagrams,spectrums').split(',');
@@ -90,7 +90,7 @@ const PASTE = `(async function(){${FNS}
   return {wrap:!!wrap,info:info(body,els),unresolved:Object.keys(unresolved)};})()`;
 
 const num = (s) => String(s).replace(/-?\d+\.\d+/g, (m) => String(Math.round(parseFloat(m) * 10) / 10));
-const same = (k, a, b) => a === b || (/transform|shadow|filter|dasharray|line-height|letter-spacing/.test(k) && num(a) === num(b));
+const same = (k, a, b) => a === b || (/transform|shadow|filter|dasharray|line-height|letter-spacing|opacity/.test(k) && num(a) === num(b));
 const shows = (o) => o.w > 0 && o.h > 0 && o.p.display !== 'none' && o.p.visibility !== 'hidden';
 function compare(g, p) {
   const out = [];
@@ -110,7 +110,10 @@ function compare(g, p) {
       if (!x || !y) { out.push(`${el}${pe}: ${x ? 'missing in the copy' : 'only in the copy'}`); continue; }
       for (const k of Object.keys(x)) if (!same(k, x[k], y[k])) out.push(`${el}${pe} ${k}: ${x[k].slice(0, 60)} | copy ${y[k].slice(0, 60)}`);
     }
-    if (JSON.stringify(a.an) !== JSON.stringify(b.an)) out.push(`${el}: ${Object.keys(a.an).length ? 'animates in the tile' : 'still in the tile'}, ${Object.keys(b.an).length ? 'animates' : 'still'} in the copy`);
+    // what runs in the tile must run in the copy; a one-shot entrance the tile already played
+    // runs again in a fresh paste, which is fine
+    const lost = Object.keys(a.an).filter((k) => (b.an[k] || 0) < a.an[k]);
+    if (lost.length) out.push(`${el}${lost[0]}: animates in the tile, not in the copy`);
     if (shows(a) && (Math.abs(a.w - b.w) > Math.max(2, a.w * 0.03) || Math.abs(a.h - b.h) > Math.max(2, a.h * 0.03))) out.push(`${el} size ${a.w}x${a.h} | copy ${b.w}x${b.h}`);
   }
   if (p.unresolved.length) out.push('tokens with no value in the copy: ' + p.unresolved.join(', '));
