@@ -435,6 +435,12 @@ test('dual stack: both CIDRs on the frames, the egress-only internet gateway, IP
   assert.equal(eigw.icon, 'aws-res-vpc-internet-gateway');
   assert.equal(eigw.label, 'Egress-only internet gateway');
   assert.ok(eigw.x < g('az1').x, 'on the VPC edge with the internet gateway');
+  // each private subnet's ::/0 route draws a dashed IPv6 egress wire to it, next to the IPv4 one to its NAT gateway
+  const egress = (label) => spec.wires.filter((w) => w.label === label);
+  assert.equal(egress('IPv6 egress').length, 2);
+  assert.ok(egress('IPv6 egress').every((w) => w.dashed && w.to === 'EgressOnlyInternetGateway'));
+  assert.equal(egress('IPv4 egress').length, 2);
+  assert.ok(egress('IPv4 egress').every((w) => /^NatGateway/.test(w.to)));
   assert.ok(report.issues.some((i) => i.code === 'kit-gap' && /egress-only internet gateway/.test(i.message)));
   assert.ok(!report.unmapped.length);
   const L = report.ledger;

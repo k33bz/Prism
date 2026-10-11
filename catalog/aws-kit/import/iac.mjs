@@ -924,11 +924,17 @@ export function importInfra(resources, ctx, opts = {}) {
       addEdge(u.key, t, { kind: 'iam', label, evidence: [...us.flatMap((x) => [x.key, ...x.via]), role, ...g.via, t], fact: `${u.key}${others.length ? ` (and ${others.join(', ')}, same role)` : ''} may call ${t}${acts.length ? ` (${acts.slice(0, 4).join(', ')}${acts.length > 4 ? '...' : ''})` : ''}: ${role}'s policy names ${t}'s ARN${u.via.length ? ` (${u.key} > ${u.via.join(' > ')} > ${role})` : ''}; a weak edge, an ARN in a policy does not prove traffic`, ledgerKind: 'derived' });
     }
   }
-  // private egress through the NAT gateway of the subnet's route table
+  // IPv6 egress through the egress-only internet gateway of the subnet's ::/0 route (out only)
+  const eigwOf = (s) => { const r6 = s.rt && v6Route.get(s.rt); return r6 && r6.target && K(byKey.get(r6.target) || { type: '' }) === 'eigw' && drawn(r6.target) ? r6 : null; };
+  // private egress through the NAT gateway of the subnet's route table (IPv4 egress when the subnet also leaves over IPv6)
   for (const s of subnets.values()) if (s.egress && K(byKey.get(s.egress) || { type: '' }) === 'nat' && drawn(s.egress)) {
-    addEdge(`subnet:${s.key}`, s.egress, { kind: 'egress', label: 'egress', evidence: [s.key, s.rt, s.egress], fact: `${s.key} reaches the internet through ${s.egress} (its default route)` });
+    addEdge(`subnet:${s.key}`, s.egress, { kind: 'egress', label: eigwOf(s) ? 'IPv4 egress' : 'egress', evidence: [s.key, s.rt, s.egress], fact: `${s.key} reaches the internet through ${s.egress} (its default route)` });
     const nat = (replicasOf.get(s.egress) || [])[0];
     if (nat && nat.az != null && s.azPos != null && nat.az !== s.azPos) led('derived', `${s.key} (Availability Zone ${s.azPos}) sends its internet traffic to ${s.egress} in Availability Zone ${nat.az}: if that AZ fails, ${s.key} loses egress (one NAT gateway per AZ avoids it)`, [s.key, s.rt, s.egress], { ask: `Is a single NAT gateway for ${s.key}'s AZ intended (cost) or should each AZ have its own?` });
+  }
+  for (const s of subnets.values()) {
+    const r6 = eigwOf(s);
+    if (r6) addEdge(`subnet:${s.key}`, r6.target, { kind: 'egress', label: 'IPv6 egress', evidence: [s.key, s.rt, ...r6.evidence, r6.target], fact: `${s.key} reaches the internet over IPv6 through ${r6.target} (its ::/0 route): replies come back, but nothing on the internet can open a connection in` });
   }
 
   // ---- 5. actors: the sidecar's, else Users at the internet-facing entry (assumed)

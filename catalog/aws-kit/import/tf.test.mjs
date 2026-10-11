@@ -181,6 +181,7 @@ test('rules tables: the Terraform and CloudFormation dual-stack webapps draw the
   assert.deepEqual(g('vpc-main').note, ['10.0.0.0/16', '2001:db8:1200::/56']);
   assert.deepEqual(g('subnet-private-1').note, ['10.0.11.0/24', '2001:db8:1200:11::/64']);
   assert.equal(tf.spec.nodes.find((n) => n.id === 'EgressOnlyInternetGateway').label, 'Egress-only internet gateway');
+  assert.equal(tf.spec.wires.filter((w) => w.label === 'IPv6 egress' && w.to === 'EgressOnlyInternetGateway').length, cfn.spec.wires.filter((w) => w.label === 'IPv6 egress').length);
   assert.ok(tf.report.ledger.some((l) => /^aws_subnet\.private\[1\] sends IPv6 traffic \(::\/0\) to the egress-only internet gateway aws_egress_only_internet_gateway\.main/.test(l.fact) && l.from.includes('aws_route_table.private[1]')));
   assert.deepEqual(tf.spec.timeline.map((e) => !!e.v6), cfn.spec.timeline.map((e) => !!e.v6));
   // a group the plan leaves without egress: Terraform removed AWS's default allow-all rule, so nothing goes out
