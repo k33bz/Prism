@@ -7,7 +7,7 @@ import { fileURLToPath } from 'node:url';
 import { CatalogStore } from '../utils/catalog.js';
 import { engineDir } from '../utils/theme-engine.js';
 import { buildTools, ToolError } from '../tools/index.js';
-import { TOKEN_META, BASE_TOKENS, THEME_IDS } from '../utils/themes.js';
+import { TOKEN_META, BASE_TOKENS, THEME_IDS, SHELL_CHROME } from '../utils/themes.js';
 import { createLogger } from '../utils/logger.js';
 import { fixtureStore } from './helper.js';
 
@@ -79,7 +79,8 @@ test('check_theme_contrast checks a partial map over the base and flags failures
 test('check_theme_contrast audits a shipped theme and a derived one', async () => {
   const shipped = await call('check_theme_contrast', { theme: 'cloudscape-light', contrast: 'AA' });
   assert.equal(shipped.mode, 'light');
-  assert.deepEqual(shipped.filledFromBase, []);
+  // Cloudscape declares no top bar: it gets the shell's (the dark console bar), and only that is filled
+  assert.deepEqual(shipped.filledFromBase, Object.keys(SHELL_CHROME));
   assert.ok(shipped.pairs.length > 30);
   const d = await call('derive_theme', { accent: '#58cc02', contrast: 'AAA' });
   const back = await call('check_theme_contrast', { tokens: d.light, contrast: 'AAA' });
@@ -100,4 +101,41 @@ test('without the engine beside the catalog both tools are unavailable', async (
   const store = fixtureStore(); // file path "(fixture)": no catalog/theme-engine next to it
   await rejects(call('derive_theme', { accent: '#0078d4' }, store), 'unavailable', /theme engine is not reachable/);
   await rejects(call('check_theme_contrast', { tokens: { '--bg': '#000000' } }, store), 'unavailable');
+});
+
+test('check_theme_contrast covers the top bar: shell defaults for Cloudscape, the pack accent where the bar is the accent', async () => {
+  const cs = await call('check_theme_contrast', { theme: 'cloudscape-dark' });
+  const pair = (r, fg, bg) => r.pairs.find((p) => p.fg === fg && p.bg === bg);
+  assert.equal(cs.skipped.length, 0);
+  assert.ok(pair(cs, '--cs-topnav-ink', '--cs-topnav-bg').pass);
+  const csAccent = pair(cs, '--accent', '--cs-topnav-bg');     // no --cs-topnav-accent: the accent stands in
+  assert.equal(csAccent.bgValue, '#000716');
+  assert.equal(csAccent.floor, 3);
+  assert.ok(pair(cs, '--accent-ink', '--accent'));
+  // Duolingo Light's bar is its green accent: the pack sets --cs-topnav-accent to white, its ink to the bar
+  const duo = await call('check_theme_contrast', { theme: 'duolingo-light' });
+  const acc = pair(duo, '--cs-topnav-accent', '--cs-topnav-bg');
+  assert.ok(acc && acc.pass && acc.fgValue === '#ffffff' && acc.bgValue === '#347f02');
+  const ink = pair(duo, '--cs-topnav-accent-ink', '--cs-topnav-accent');
+  assert.ok(ink && ink.pass && ink.floor === 4.5);
+  // a bar accent too close to the bar fails
+  const bad = await call('check_theme_contrast', { tokens: { '--cs-topnav-bg': '#347f02', '--cs-topnav-accent': '#3a8a05' }, mode: 'light' });
+  assert.ok(bad.failures.some((p) => p.fg === '--cs-topnav-accent' && p.ratio < 1.5));
+  assert.equal(bad.pass, false);
+});
+
+test('theme tools return the on-fill inks, --control-line and the top-bar accent', async () => {
+  const pal = await call('get_theme_palette', { theme: 'duolingo-light' });
+  for (const k of ['--accent-ink', '--crit-ink', '--control-line', '--cs-topnav-accent', '--cs-topnav-accent-ink']) assert.ok(k in pal.tokens, k);
+  assert.match(pal.css, /--control-line: #908f90;/);
+  assert.deepEqual(pal.rootAttributes, { 'data-mode': 'light', 'data-ds': 'duolingo', 'data-theme': 'duolingo-light' });
+  assert.deepEqual(pal.pair, { dark: 'duolingo-dark', light: 'duolingo-light' });
+  assert.ok(pal.autoCss.includes('@media (prefers-color-scheme: light){:root:not([data-mode="dark"]){--bg:#f7f7f7;'));
+  assert.ok(pal.autoScript.includes('de.setAttribute("data-theme",ds+"-"+m)'));
+  const d = await call('derive_theme', { accent: '#7c3aed' });
+  for (const k of ['--accent-ink', '--pos-ink', '--control-line']) assert.ok(d.dark[k] && d.light[k], k);
+  const ref = await call('get_token_reference', {});
+  for (const k of ['--control-line', '--accent-ink', '--crit-ink', '--accent2']) assert.ok(ref.tokens.some((t) => t.token === k), k);
+  assert.ok(ref.tokensCss.startsWith(':root{--bg:#0f1621;'));   // Cloudscape Dark, not the legacy palette
+  assert.match(ref.tokensCss, /--control-line:#6a7888/);
 });

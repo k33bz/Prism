@@ -529,11 +529,12 @@ export function diagram(spec) {
       `<text class="t-tb" x="${r2(x0 + PAD + 3)}" y="${r2(y0 + 10)}" style="font-size:${TS}px;font-weight:700">${esc(tb.title)}</text>`];
     if (tb.cols) tb.cols.forEach((c, k) => out.push(`<text class="t-tbh" x="${r2(cx(k))}" y="${r2(y0 + TH + 7.5)}" style="font-size:${HS}px;letter-spacing:.4px">${esc(String(c).toUpperCase())}</text>`));
     const lit = [];
-    // a row's windows: t (one or several), and every packet on the wires it is on (v6 picks a version);
-    // a packet's row stays lit a moment past its arrival, while the rule is read
+    // a row's windows: t (one or several), and every request or failed packet on the wires it is on
+    // (v6 picks a version); a reply (pk-2) does not light it: a stateful security group or a route lets
+    // the response through without evaluating a rule again. A row stays lit a moment past the arrival.
     const windowsOf = (r) => {
       const ws = r.t ? (Array.isArray(r.t[0]) ? r.t : [r.t]) : [];
-      if (r.on != null) for (const e of spec.timeline || []) if (e.wire && [].concat(r.on).includes(e.wire) && (r.v6 == null || !!e.v6 === r.v6)) ws.push([e.t[0], Math.min(0.995, e.t[1] + 0.03)]);
+      if (r.on != null) for (const e of spec.timeline || []) if (e.wire && e.kind !== 'pk-2' && [].concat(r.on).includes(e.wire) && (r.v6 == null || !!e.v6 === r.v6)) ws.push([e.t[0], Math.min(0.995, e.t[1] + 0.03)]);
       const sorted = ws.map((x) => [...x]).sort((p, q) => p[0] - q[0]), merged = [];
       for (const x of sorted) { const m = merged[merged.length - 1]; if (m && x[0] <= m[1] + 0.002) m[1] = Math.max(m[1], x[1]); else merged.push(x); }
       return merged;

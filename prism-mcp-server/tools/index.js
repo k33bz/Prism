@@ -9,7 +9,9 @@ import { lightEffect } from '../utils/catalog.js';
 import { loadKit, buildDiagram, lintDiagram, diagramSpecs, findDiagramSpec, suggestDiagrams } from '../utils/diagrams.js';
 import { compose, composeWithTemplate, availableTemplates } from '../utils/compose.js';
 import { validateFacet, validateComposition } from '../utils/validate.js';
-import { THEMES, THEME_IDS, TOKEN_META, BASE_TOKENS, getTheme, baseTokensFor, usesTokens, themeRootCss, isThemeSensitive, themeIdList, themesSummary } from '../utils/themes.js';
+import { THEMES, THEME_IDS, TOKEN_META, BASE_TOKENS, SHELL_CHROME, TOKEN_DOCS, getTheme, baseTokensFor, usesTokens, themeRootCss, isThemeSensitive, themeIdList, themesSummary, designSystems, themePair } from '../utils/themes.js';
+import { ApplyError, resolvePalette, themeCss, tokenBlockCss, rootAttributes, autoModeScript, buildDocument, applySteps, effectGuide } from '../utils/apply.js';
+import { readIntent } from '../utils/recommend.js';
 import { loadEngine } from '../utils/theme-engine.js';
 import { CollectionError, toExportSchema } from '../utils/collections.js';
 import { ICON_KINDS, RESOLVE_FROM, RESOLVE_PREFER, searchIcons, suggestIcons, resolveIcon, colorwayPair, iconSvg, iconSymbol, iconResolver } from '../utils/icons.js';
@@ -279,6 +281,71 @@ function sortEffects(list, sort, scoreMap) {
 
 const SORTS = ['relevance', 'name', 'newest', 'gallery'];
 
+// The closed selection vocabularies (catalog/selection-vocab.json). A value outside them matches
+// nothing, so it is an error that lists the valid ones rather than an empty page.
+const VOCAB = {
+  roles: ['action', 'input', 'navigation', 'feedback', 'loading', 'data-display', 'decorative', 'ambient', 'media'],
+  layers: ['background', 'content', 'overlay'],
+  dataShapes: ['single-value', 'time-series', 'comparison', 'part-to-whole', 'correlation', 'distribution', 'flow', 'geo'],
+};
+
+/** Throw invalid_argument for a gallery, role, layer or dataShape value the catalog does not have. */
+function checkVocab(store, { galleries, roles, layers, dataShapes } = {}) {
+  const known = new Set([...store.galleries().map((g) => g.id), ...store.all().map((e) => e.gallery)]);
+  const bad = {};
+  const g = asStrArray(galleries).filter((v) => !known.has(v));
+  if (g.length) bad.galleries = { unknown: g, valid: [...known].filter(Boolean) };
+  for (const [key, vals] of [['roles', roles], ['layers', layers], ['dataShapes', dataShapes]]) {
+    const u = asStrArray(vals).filter((v) => !VOCAB[key].includes(v));
+    if (u.length) bad[key] = { unknown: u, valid: VOCAB[key] };
+  }
+  const keys = Object.keys(bad);
+  if (keys.length) {
+    throw new ToolError(`Unknown ${keys.map((k) => `${k} value ${bad[k].unknown.join(', ')}`).join('; ')}`, { code: 'invalid_argument', data: bad });
+  }
+}
+
+/** Near ids for an unknown effect id: the catalog ranked by the id's words. */
+function suggestEffects(store, id) {
+  const q = String(id || '').replace(/[-_]+/g, ' ');
+  return store.all()
+    .map((x) => ({ id: x.id, score: matchScore(x, q) }))
+    .filter((x) => x.score > 0).sort((x, y) => y.score - x.score || x.id.localeCompare(y.id)).slice(0, 5).map((x) => x.id);
+}
+
+/** One effect by id, or a not_found ToolError with suggestions. */
+function effectOr404(store, id) {
+  if (typeof id !== 'string' || !id.trim()) throw new ToolError('id is required (an effect id such as "charts-kpi-sparkline")', { code: 'invalid_argument' });
+  const e = store.get(id.trim());
+  if (!e) throw new ToolError(`No effect with id "${id}"`, { code: 'not_found', data: { suggestions: suggestEffects(store, id) } });
+  return e;
+}
+
+/** resolvePalette as a tool error. */
+function paletteOf(a) {
+  try { return resolvePalette({ theme: a.theme, tokens: a.tokens }); } catch (err) {
+    if (err instanceof ApplyError) throw new ToolError(err.message, { code: 'invalid_argument', data: err.data });
+    throw err;
+  }
+}
+
+/** A compose result as the tools return it: no internals, plus the theme and how to apply it. */
+function bundleOut(res, palette, { document: doc = false, title = 'Prism' } = {}) {
+  const { _perEffectHtml, _sprite, ok, ...out } = res;
+  out.theme = palette ? { id: palette.id, ds: palette.ds, name: palette.name, mode: palette.mode } : null;
+  out.rootAttributes = rootAttributes(palette);
+  const auto = autoModeScript(palette);
+  if (auto) out.autoScript = auto;
+  out.apply = applySteps(palette, res.scripts || []);
+  if (doc) out.document = buildDocument({ title, css: res.css, html: res.html, palette, scripts: res.scripts || [] });
+  return { ok, ...out };
+}
+
+// Shared compose schema fragments: the theme a bundle carries and the standalone page.
+const THEME_ARG = { type: 'string', description: `Token block to prepend: a theme id (${THEME_IDS.slice(0, 4).join(', ')}..., one mode), a design system id (${designSystems().map((d) => d.ds).join(', ')}: Auto, dark with light under prefers-color-scheme, as a first visit to the app), or "none". Default "cloudscape" (Auto).` };
+const TOKENS_ARG = { type: 'object', description: 'A custom palette instead of a shipped one: the { dark, light } pair derive_theme returns (Auto when both are given), or a flat { "--accent": "#..." } map layered over the tokens of the theme for its mode (inferred from --bg).' };
+const DOCUMENT_ARG = { type: 'boolean', default: false, description: 'Also return document: a complete standalone HTML page (token block, root attributes, markup, initializer scripts) ready to save or screenshot.' };
+
 /** Count how many effects carry each value of a facet dimension. */
 function facetValueCounts(list, dimKey) {
   const def = FACET_DIMS[dimKey];
@@ -351,12 +418,102 @@ function runSearch(store, { query, gallery, filters, sort, limit, offset } = {})
   return { query: q || null, sort: effSort, filters: mergedFilters, ...page };
 }
 
+/**
+ * Rank one recommend_effects need: the filters, then the intent's words for relevance, with reduced
+ * motion safe, no JS and the requested motion first. Relaxes dataShape, then role, when nothing
+ * matches; never the motion, JS or background constraints.
+ */
+function rankNeed(store, need, intent, limit) {
+  const relaxed = [];
+  let filters = { ...need.filters };
+  let list = applyFilters(store.all(), filters);
+  for (const key of ['dataShapes', 'roles']) {
+    if (list.length || !filters[key]) continue;
+    relaxed.push(`${key} ${asStrArray(filters[key]).join(', ')}`);
+    const { [key]: _drop, ...rest } = filters;
+    filters = rest;
+    list = applyFilters(store.all(), filters);
+  }
+  const q = intent.terms.join(' ');
+  const themeDs = intent.theme ? (themePair(intent.theme) || {}).ds : null;
+  const scored = list.map((e) => {
+    const why = [];
+    let score = q ? matchScore(e, q) : 0;
+    if (score) why.push(`matches "${intent.terms.filter((t) => matchScore(e, t) > 0).join(' ')}"`);
+    const a11y = e.a11y || {};
+    if (a11y.reducedMotionSafe !== false) score += 2; else why.push('no reduced-motion fallback');
+    if (intent.prefer.selfAnimates && a11y.selfAnimates) { score += 3; why.push('animates on its own'); }
+    if (e.needsJs) { if (intent.prefer.noJs) score -= 8; why.push(`needs the "${e.needsJs}" initializer`); }
+    // Spectrums are aesthetic showcases (a glass or neon family, or a theme pack's own facets, often on
+    // their own stage): they rank first only when the request names that aesthetic or that theme.
+    if (e.gallery === 'spectrums') {
+      const look = String(e.spectrum || '');
+      if (look && (look === themeDs || intent.terms.some((t) => t.length > 3 && (look.includes(t) || t.includes(look))))) { score += 3; why.push(`the ${look} aesthetic`); }
+      else score -= 10;
+    }
+    for (const [k, v] of Object.entries(filters)) {
+      if (k === 'dataShapes') why.push(`dataShape ${e.dataShape}`);
+      else if (k === 'roles') why.push(`role ${e.role}`);
+      else if (k === 'usableAsBackground' && v) why.push('usable as a background');
+      else if (k === 'reducedMotionSafe' && v) why.push('reduced-motion safe');
+    }
+    return { e, score, why };
+  });
+  scored.sort((x, y) => y.score - x.score || (x.e.name || x.e.id).localeCompare(y.e.name || y.e.id));
+  return {
+    need: need.need,
+    filters,
+    ...(relaxed.length ? { relaxed } : {}),
+    total: scored.length,
+    items: scored.slice(0, limit).map(({ e, why }) => ({
+      id: e.id, name: e.name, gallery: e.gallery, category: e.category,
+      description: e.description && e.description.length > 180 ? e.description.slice(0, 177) + '...' : e.description,
+      role: e.role, dataShape: e.dataShape, layer: e.layer, usableAsBackground: e.usableAsBackground,
+      needsJs: e.needsJs, a11y: e.a11y, why: [...new Set(why)],
+    })),
+  };
+}
+
+const EXPORT_TO = ['drawio', 'mermaid', 'svg', 'png', 'storyboard'];
+const DIAGRAM_FEATURES = ['tables', 'flows', 'v6', 'note2', 'effects', 'poster', 'moment', 'marks', 'legend'];
+
+/** The kit primitives a diagram spec uses (get_diagram_spec without an id). */
+function diagramFeatures(d) {
+  const f = [];
+  if ((d.tables || []).length) f.push('tables');
+  if ((d.flows || []).length) f.push('flows');
+  if ((d.timeline || []).some((x) => x.v6) || (d.flows || []).some((x) => x.v6 || (x.wires || []).some((w) => w && w.v6))) f.push('v6');
+  if ((d.groups || []).some((g) => Array.isArray(g.note))) f.push('note2');
+  if ((d.effects || []).length) f.push('effects');
+  if (d.poster != null) f.push('poster');
+  if ((d.steps || []).some((x) => x.moment != null)) f.push('moment');
+  if ((d.marks || []).length) f.push('marks');
+  if (d.legend) f.push('legend');
+  return f;
+}
+
+/** The gallery's diagram specs by family, with their features, optionally filtered. */
+function diagramIndex(specs, { family, feature } = {}) {
+  if (feature != null && !DIAGRAM_FEATURES.includes(feature)) throw new ToolError(`feature must be one of: ${DIAGRAM_FEATURES.join(', ')}`, { code: 'invalid_argument' });
+  const fams = new Map();
+  for (const x of specs) {
+    if (!fams.has(x.family.id)) fams.set(x.family.id, { id: x.family.id, title: x.family.title, diagrams: [] });
+    const features = diagramFeatures(x.spec);
+    if (family && x.family.id !== family) continue;
+    if (feature && !features.includes(feature)) continue;
+    fams.get(x.family.id).diagrams.push({ id: x.spec.id, name: x.spec.name, size: `${x.spec.w}x${x.spec.h}`, features });
+  }
+  if (family && !fams.has(family)) throw new ToolError(`No diagram family "${family}"`, { code: 'not_found', data: { families: [...fams.keys()] } });
+  const families = [...fams.values()].filter((f) => f.diagrams.length);
+  return { total: families.reduce((n, f) => n + f.diagrams.length, 0), families, features: DIAGRAM_FEATURES };
+}
+
 export function buildTools() {
   return [
     // ============================== DISCOVERY (11) ==============================
     {
       name: 'list_effects',
-      description: 'List effects in the catalog with optional filters (gallery, tag, componentType, role, dataShape, background-capable, new/fixed). Returns lightweight metadata (no html/css) with pagination. For relevance ranking or multi-value facets use search_effects.',
+      description: 'List effects in the catalog with optional filters (gallery, tag, componentType, role, layer, dataShape, background-capable, new). Returns lightweight metadata (no html/css) with pagination. An unknown gallery, role, layer or dataShape is an invalid_argument error listing the valid values. For relevance ranking, motion filters or several values per facet use search_effects; to go from a plain request to effects use recommend_effects.',
       inputSchema: {
         type: 'object',
         properties: {
@@ -374,6 +531,7 @@ export function buildTools() {
         additionalProperties: false,
       },
       handler: (a, { store }) => {
+        checkVocab(store, { galleries: a.gallery, roles: a.role, layers: a.layer, dataShapes: a.dataShape });
         let list = store.all();
         if (a.gallery) list = list.filter((e) => e.gallery === a.gallery);
         if (a.tag) list = list.filter((e) => e.tags.includes(a.tag));
@@ -389,7 +547,7 @@ export function buildTools() {
     },
     {
       name: 'search_effects',
-      description: 'Faceted relevance search over the catalog. Full-text ranks across id/name/description/tags/category/role/dataShape; the optional `filters` object narrows by gallery, componentType, spectrum (aesthetic), category, role (component purpose), dataShape (chart/map/diagram data relationship), tag (AND), and interaction, plus boolean flags (isNew, usableAsBackground, needsJs, isFixed, selfContained, selfAnimates, reducedMotionSafe). Pick by intent with `roles` (e.g. loading, feedback, navigation), pick the right chart with `dataShapes` (e.g. time-series, part-to-whole), and respect motion prefs with reducedMotionSafe:true / selfAnimates:false. `sort` controls ordering (relevance/name/newest/gallery) and offset/limit paginate. query is optional when filters are given. Use get_available_filters to discover valid facet values.',
+      description: 'Faceted relevance search over the catalog. Full-text ranks across id/name/description/tags/category/role/dataShape; the optional `filters` object narrows by gallery, componentType, spectrum (aesthetic), category, role (component purpose), dataShape (chart/map/diagram data relationship), tag (AND), and interaction, plus boolean flags (isNew, usableAsBackground, needsJs, isFixed, selfContained, selfAnimates, reducedMotionSafe). Pick by intent with `roles` (e.g. loading, feedback, navigation), pick the right chart with `dataShapes` (time-series for a trend, part-to-whole for shares of a total, comparison, distribution, correlation, flow, geo, single-value for a KPI), a backdrop with usableAsBackground:true (layer "background" alone also covers some foreground objects), and respect motion prefs with reducedMotionSafe:true / selfAnimates:false. `sort` controls ordering (relevance/name/newest/gallery) and offset/limit paginate. query is optional when filters are given. Unknown gallery, role, layer or dataShape values and an unknown sort are invalid_argument errors that list the valid ones. Use get_available_filters to discover facet values, recommend_effects to go from a plain request to filters.',
       inputSchema: {
         type: 'object',
         properties: {
@@ -431,6 +589,9 @@ export function buildTools() {
         if (!hasQuery && !hasFilters) {
           throw new ToolError('Provide a query and/or at least one filter', { code: 'invalid_argument' });
         }
+        if (a.sort != null && !SORTS.includes(a.sort)) throw new ToolError(`Invalid sort "${a.sort}"`, { code: 'invalid_argument', data: { validSorts: SORTS } });
+        const f = a.filters || {};
+        checkVocab(store, { galleries: [...asStrArray(f.galleries), ...asStrArray(a.gallery)], roles: f.roles, layers: f.layers, dataShapes: f.dataShapes });
         return runSearch(store, {
           query: a.query,
           gallery: a.gallery,
@@ -442,8 +603,47 @@ export function buildTools() {
       },
     },
     {
+      name: 'recommend_effects',
+      description: 'Go from a plain request to the right facets. Reads the intent ("a KPI dashboard with revenue over time and the plan mix", "a loading state that respects reduced motion", "an animated hero background", "toast for a failed upload", "three-tier AWS diagram with security group rules") into selection filters: role (loading, feedback, action, input, navigation, media, data-display), dataShape (time-series for trends, part-to-whole for shares of a total, comparison, distribution, correlation, flow, geo, single-value for KPIs), usableAsBackground for backdrops, reducedMotionSafe / selfAnimates for motion, needsJs:false for CSS only, the aws gallery for architectures, and a theme named in the text. Ranks the matches (reduced-motion safe and no-JS first unless the request says otherwise) and, when the request names several needs (a dashboard with a trend and a breakdown), returns one ranked group per need. Says which rules it applied and which filters it relaxed when nothing matched. Returns { intent, rules, theme, groups: [{ need, filters, relaxed, total, items: [{ id, name, gallery, role, dataShape, layer, usableAsBackground, needsJs, a11y, why }] }], next }. Then get_effect (its apply guide) and compose { ids, theme }.',
+      inputSchema: {
+        type: 'object',
+        properties: {
+          intent: { type: 'string', description: 'What the page needs, in plain words.' },
+          limit: { type: 'integer', minimum: 1, maximum: 20, default: 5, description: 'Items per group.' },
+          filters: { type: 'object', additionalProperties: true, description: 'Extra search_effects filters ANDed with what the intent says, e.g. { "galleries": ["charts"] } or { "reducedMotionSafe": true }.' },
+        },
+        required: ['intent'],
+        additionalProperties: false,
+      },
+      handler: (a, { store }) => {
+        if (typeof a.intent !== 'string' || !a.intent.trim()) throw new ToolError('intent is required: what the page needs, in plain words', { code: 'invalid_argument' });
+        if (a.filters != null && (typeof a.filters !== 'object' || Array.isArray(a.filters))) throw new ToolError('filters must be an object (search_effects filters)', { code: 'invalid_argument' });
+        const extra = a.filters || {};
+        checkVocab(store, { galleries: extra.galleries, roles: extra.roles, layers: extra.layers, dataShapes: extra.dataShapes });
+        const r = readIntent(a.intent);
+        const limit = Math.min(20, nonNegInt(a.limit, 5));
+        const base = { ...r.filters, ...extra };
+        // one need per detected data shape, or per role (a dashboard asks for several charts)
+        const needs = [];
+        const shapes = asStrArray(base.dataShapes), roles = asStrArray(base.roles);
+        if (shapes.length > 1) for (const d of shapes) needs.push({ need: `dataShape ${d}`, filters: { ...base, dataShapes: [d] } });
+        else if (roles.length > 1 && !shapes.length) for (const ro of roles) needs.push({ need: `role ${ro}`, filters: { ...base, roles: [ro] } });
+        else needs.push({ need: r.rules.length ? r.rules.map((x) => x.split(':')[0]).join(', ') : 'text match', filters: base });
+        const groups = needs.map((n) => rankNeed(store, n, r, limit));
+        const next = [];
+        if (r.aws) {
+          next.push('get_diagram_spec with no id lists every gallery diagram with its features (tables, flows, v6, two-line notes, poster): start from the closest one.');
+          next.push('Edit the spec (icon ids from resolve_aws_icon, groups, wires, flows or timeline, tables), then build_diagram, fix what lint_diagram reports, and export_diagram to svg, png, storyboard, drawio or mermaid.');
+        } else {
+          next.push('get_effect { id } for the html, css and its apply guide (theme tokens it reads, initializer, motion, background placement).');
+          next.push(`compose { ids: [...], theme: "${r.theme || 'cloudscape'}", document: true } for one bundle with the token block, or compose_with_template for a grid of cards.`);
+        }
+        return { intent: a.intent, rules: r.rules, theme: r.theme, groups, next };
+      },
+    },
+    {
       name: 'get_effect',
-      description: 'Fetch the complete record for one effect by id, including production-ready html and css, classes, keyframes, params, and whether it needs a JS initializer.',
+      description: 'Fetch the complete record for one effect by id: production-ready html and css, classes, keyframes, params, selection metadata (role, layer, dataShape, a11y, usableAsBackground), and apply, the guide to using it: the theme tokens it reads (themeTokens: any theme token block defines them), its JS initializer with the source when needsJs is set, its motion (selfAnimates, reducedMotionSafe and what to do), how to place a backdrop or overlay, recolor classes, and the [data-mode="light"] note for light themes. Unknown ids return not_found with suggestions.',
       inputSchema: {
         type: 'object',
         properties: {
@@ -455,14 +655,8 @@ export function buildTools() {
         additionalProperties: false,
       },
       handler: (a, { store }) => {
-        const e = store.get(a.id);
-        if (!e) {
-          const suggestions = store.all()
-            .map((x) => ({ id: x.id, score: matchScore(x, a.id) }))
-            .filter((x) => x.score > 0).sort((x, y) => y.score - x.score).slice(0, 5).map((x) => x.id);
-          throw new ToolError(`No effect with id "${a.id}"`, { code: 'not_found', data: { suggestions } });
-        }
-        const out = { ...e };
+        const e = effectOr404(store, a.id);
+        const out = { ...e, apply: effectGuide(e, store) };
         if (a.includeCss === false) delete out.css;
         if (a.includeHtml === false) delete out.html;
         return out;
@@ -470,16 +664,18 @@ export function buildTools() {
     },
     {
       name: 'get_theme_variants',
-      description: 'Return the theme token reference and how to recolor an effect. Includes the global tokens.css and the semantic color tokens (accent, pos, neg, warn, info, crit) that themes override.',
+      description: 'Return the theme token reference and how to recolor an effect: tokensCss (the default theme block, Cloudscape in Auto: every token, dark with light under prefers-color-scheme, plus the .c-* recolor classes), the semantic role tokens (accent, info, pos, warn, neg, crit) with their on-fill inks (--accent-ink...), the surface tokens (--control-line included), every shipped theme id and the design systems with their dark and light ids.',
       inputSchema: { type: 'object', properties: {}, additionalProperties: false },
-      handler: (a, { store }) => {
-        const tokens = store.tokens();
+      handler: () => {
+        const palette = resolvePalette({});
         return {
-          tokensCss: tokens ? tokens.css : null,
-          tokensNote: tokens ? tokens.note : null,
+          tokensCss: themeCss(palette),
+          tokensNote: 'Include once per page. A theme is this block with other values: get_theme_palette { theme } returns one, compose { theme } prepends one. Set data-mode on <html> to the mode (Auto: autoScript from compose).',
           semanticTokens: ['--accent', '--info', '--pos', '--neg', '--warn', '--crit'],
+          onFillInks: ['--accent-ink', '--info-ink', '--pos-ink', '--warn-ink', '--neg-ink', '--crit-ink'],
           surfaceTokens: ['--bg', '--panel', '--panel2', '--card', '--line', '--control-line', '--ink', '--muted', '--dim'],
           recolor: 'Set --c and --c-rgb (or add a c-* class like c-pos) on the effect element to recolor it.',
+          designSystems: designSystems(),
           // Derived from the theme registry (utils/themes.js) so scaffolded packs
           // (F6) surface here automatically — no hand-editing this list.
           builtInThemes: THEME_IDS,
@@ -489,7 +685,7 @@ export function buildTools() {
     },
     {
       name: 'get_theme_palette',
-      description: 'Return the token palette for one theme (or all themes). Prism themes are pure :root token overrides applied over identical component HTML/CSS, so a palette fully defines how every component looks in that theme. Each theme returns its complete token map, the overrides vs the Cloudscape Dark base, mode (light/dark), and a ready-to-paste :root{…} CSS block. Themes: ' + themeIdList() + '.',
+      description: 'Return the token palette for one theme (or all themes). Prism themes are pure :root token overrides applied over identical component HTML/CSS, so a palette fully defines how every component looks in that theme. Each theme returns its complete token map (surfaces, --control-line, text, the role colors with -rgb triplets and their on-fill inks --accent-ink..--crit-ink, the font, radius and feel tokens, and the pack\'s --cs-topnav-* top-bar tokens, --cs-topnav-accent where the bar is the accent), the overrides vs the Cloudscape Dark base, mode (light/dark) and a ready-to-paste :root{…} CSS block. One theme also returns rootAttributes (data-mode, data-theme, data-ds: set them on <html>, facets read [data-mode="light"]), pair (its design system\'s dark and light ids) and autoCss (both modes following prefers-color-scheme, as the app\'s Auto). Themes: ' + themeIdList() + '.',
       inputSchema: {
         type: 'object',
         properties: {
@@ -499,7 +695,7 @@ export function buildTools() {
       },
       handler: (a) => {
         const shape = (t) => ({
-          id: t.id, name: t.name, mode: t.mode, builtin: t.builtin,
+          id: t.id, ds: t.ds, name: t.name, mode: t.mode, builtin: t.builtin,
           tokens: t.tokens, overrides: t.overrides,
           overrideCount: Object.keys(t.overrides).length,
           css: themeRootCss(t.id),
@@ -507,7 +703,16 @@ export function buildTools() {
         if (a.theme) {
           const t = getTheme(a.theme);
           if (!t) throw new ToolError(`No theme "${a.theme}"`, { code: 'not_found', data: { themes: THEME_IDS } });
-          return shape(t);
+          const pair = themePair(t.id);
+          const auto = resolvePalette({ theme: t.ds });
+          return {
+            ...shape(t),
+            rootAttributes: rootAttributes(resolvePalette({ theme: t.id })),
+            pair: { dark: pair.dark, light: pair.light },
+            autoCss: tokenBlockCss(auto),
+            autoScript: autoModeScript(auto),
+            apply: `Put css on the page once (or compose { theme: "${t.id}" }) and set data-mode="${t.mode}" data-theme="${t.id}" data-ds="${t.ds}" on <html>. To follow the system instead, use autoCss and run autoScript in <head> (or compose { theme: "${t.ds}" }).`,
+          };
         }
         return { base: BASE_TOKENS, tokenMeta: TOKEN_META, themeCount: THEMES.length, themes: THEMES.map(shape) };
       },
@@ -526,12 +731,7 @@ export function buildTools() {
         additionalProperties: false,
       },
       handler: (a, { store }) => {
-        const e = store.get(a.id);
-        if (!e) {
-          const suggestions = store.all().map((x) => ({ id: x.id, score: matchScore(x, a.id) }))
-            .filter((x) => x.score > 0).sort((x, y) => y.score - x.score).slice(0, 5).map((x) => x.id);
-          throw new ToolError(`No effect with id "${a.id}"`, { code: 'not_found', data: { suggestions } });
-        }
+        const e = effectOr404(store, a.id);
         let themes = THEMES;
         if (a.themes && a.themes.length) {
           const bad = a.themes.filter((id) => !getTheme(id));
@@ -582,6 +782,7 @@ export function buildTools() {
         additionalProperties: false,
       },
       handler: (a, { store }) => {
+        if (typeof a.theme !== 'string' || !a.theme.trim()) throw new ToolError('theme is required (a theme id)', { code: 'invalid_argument', data: { themes: THEME_IDS } });
         const t = getTheme(a.theme);
         if (!t) throw new ToolError(`No theme "${a.theme}"`, { code: 'not_found', data: { themes: THEME_IDS } });
         let list = store.all();
@@ -613,7 +814,7 @@ export function buildTools() {
     // audit for any token map.
     {
       name: 'derive_theme',
-      description: 'Derive a complete Prism theme from brand inputs: every theme token (surfaces, text, accent, status colors with their -rgb triplets, gradient, elevation, radius scale, font, density, top-nav chrome, plus --accent-ink for text on accent fills) for dark and light mode, contrast-safe by construction. The accent keeps its hue; its OKLCH lightness moves per mode only when it misses a floor (4.5:1 text on the panels, 3:1 UI on bg, readable ink on accent fills; 7:1 text with contrast AAA). Neutrals keep the brand hue at low chroma; status colors use the conventional hues at the accent\'s chroma and one shared lightness. Deterministic. Returns { name, dark, light, css: { dark, light } (paste-ready :root blocks), report: { pairs: [{ mode, fg, bg, ratio, floor, pass, apca }], failures, moved (inputs it had to move, with a message such as "accent #ffd400 too light for text on a light panel: darkened to #897000, L 0.88 to 0.55"), notes, summary } }. A mode not requested is null. To ship it as a pack: catalog/theme-engine/derive.mjs --profile out.mjs, then catalog/_scaffold_ds.mjs.',
+      description: 'Derive a complete Prism theme from brand inputs: every theme token (surfaces, text, accent, status colors with their -rgb triplets, gradient, elevation, radius scale, font, density, top-nav chrome, --control-line for input, checkbox and switch boundaries, and an on-fill ink per role, --accent-ink to --crit-ink, for text on those fills) for dark and light mode, contrast-safe by construction. The accent keeps its hue; its OKLCH lightness moves per mode only when it misses a floor (4.5:1 text on the panels, 3:1 UI on bg, readable ink on accent fills; 7:1 text with contrast AAA). Neutrals keep the brand hue at low chroma; status colors use the conventional hues at the accent\'s chroma and one shared lightness. Deterministic. Returns { name, dark, light, css: { dark, light } (paste-ready :root blocks), report: { pairs: [{ mode, fg, bg, ratio, floor, pass, apca }], failures, moved (inputs it had to move, with a message such as "accent #ffd400 too light for text on a light panel: darkened to #897000, L 0.88 to 0.55"), notes, summary } }. A mode not requested is null. To use it on a page: compose { ids, tokens: { dark, light } } (Auto between the two) or paste css.dark / css.light and set data-mode on <html>; check_theme_contrast audits any edit. To ship it as a pack: catalog/theme-engine/derive.mjs --profile out.mjs, then catalog/_scaffold_ds.mjs.',
       inputSchema: {
         type: 'object',
         properties: {
@@ -646,7 +847,7 @@ export function buildTools() {
     },
     {
       name: 'check_theme_contrast',
-      description: 'Check a theme token map against the contrast floors derive_theme uses: ink, muted (4.5:1 text) and dim (3:1) on bg/panel/panel2/card; accent and the five status colors as text on panel/panel2/card and as UI on bg; ink on accent fills (--accent-ink, or #fff when absent, the ink Prism\'s generated facets use); accent2 as UI; top-nav ink and dim; control-line (the input, checkbox and switch boundary) as UI on bg/panel/panel2/card; line as an unscored decorative pair. Pass tokens (a partial or full map of --token: value; rgba surfaces are composited over --bg) or theme (a shipped theme id). Missing tokens are filled from the Cloudscape base of the mode, as Prism layers a pack over it (fill: false to check only what you pass). mode is inferred from the surfaces when omitted. Returns { mode, contrast, pass, checked, failures, pairs: [{ fg, bg, fgValue, bgValue, ratio, floor, pass, apca }], skipped, filledFromBase }.',
+      description: 'Check a theme token map against the contrast floors derive_theme uses: ink, muted (4.5:1 text) and dim (3:1) on bg/panel/panel2/card; accent and the five status colors as text on panel/panel2/card and as UI on bg; ink on accent fills (--accent-ink, or #fff when absent, the ink Prism\'s generated facets use); accent2 as UI; the top bar: --cs-topnav-ink and -dim on --cs-topnav-bg, --cs-topnav-accent (else --accent) as UI on it and --cs-topnav-accent-ink (else --accent-ink) on that fill, the pairs Prism\'s theme gate holds; control-line (the input, checkbox and switch boundary) as UI on bg/panel/panel2/card; line as an unscored decorative pair. On-fill inks missing from the map are taken as #fff, what the facets fall back to. Pass tokens (a partial or full map of --token: value; rgba surfaces are composited over --bg) or theme (a shipped theme id). Missing tokens are filled from the Cloudscape base of the mode and the shell\'s top-bar defaults, as Prism layers a pack over them (fill: false to check only what you pass). mode is inferred from the surfaces when omitted. Returns { mode, contrast, pass, checked, failures, pairs: [{ fg, bg, fgValue, bgValue, ratio, floor, pass, apca }], skipped, filledFromBase }.',
       inputSchema: {
         type: 'object',
         properties: {
@@ -683,12 +884,13 @@ export function buildTools() {
         const filledFromBase = [];
         let full = tokens;
         if (a.fill !== false) {
-          const base = baseTokensFor(mode);
+          const base = { ...baseTokensFor(mode), ...SHELL_CHROME };
           full = { ...base, ...tokens };
           for (const k of Object.keys(base)) if (!(k in tokens)) filledFromBase.push(k);
         }
         let r;
         try { r = eng.derive.checkContrast(full, { mode, contrast: a.contrast || 'AA' }); } catch (err) { throw new ToolError(err.message, { code: 'invalid_argument' }); }
+        topBarAccentPairs(eng.color, full, r);
         return {
           mode: r.mode, contrast: r.contrast, pass: r.pass,
           checked: r.pairs.filter((p) => p.floor != null).length,
@@ -776,12 +978,14 @@ export function buildTools() {
         return {
           totalEffects: all.length,
           facets,
-          booleanFlags: boolFlagCounts(all),
+          booleanFlags: { ...boolFlagCounts(all), themeSensitive: { label: 'Theme-sensitive (derived)', count: all.filter((e) => isThemeSensitive(e)).length } },
           sorts: SORTS,
           notes: [
             'tags filter uses AND (an effect must have every selected tag); all other array facets use OR.',
             'interaction values are normalized from noisy source data (e.g. "tatic"→static, "focu"→focus, "croll"→scroll).',
-            'No performance or theme-compatibility facet exists in the catalog; those are intentionally omitted.',
+            'themeSensitive (search_effects filter) is derived: the component reads theme tokens or classes. No performance facet exists in the catalog.',
+            'usableAsBackground is the authored backdrop flag; layer "background" is derived from the component type and also covers some foreground objects, so filter backdrops with usableAsBackground: true.',
+            'role, layer and dataShape are closed vocabularies; recommend_effects maps a plain request onto them.',
           ],
         };
       },
@@ -906,12 +1110,16 @@ export function buildTools() {
     // ============================== COMPOSITION (3) ==============================
     {
       name: 'compose',
-      description: 'Compose multiple effects (by id) into one production-ready bundle: merged HTML, deduplicated + token-merged CSS, list of required JS initializers, validation, and size metrics. Reports composition conflicts in `conflicts` (CSS selectors that two effects define differently — the later wins when bundled) and `backgroundConflict` (multiple background-layer effects). Optionally wrap the markup in a container.',
+      description: 'Compose effects (by id) into one production-ready bundle themed like the app: css starts with the theme token block (theme: a theme id for one mode, a design system id for Auto, dark with light under prefers-color-scheme, default "cloudscape" Auto; or tokens: a custom palette such as derive_theme\'s { dark, light }) and the .c-* recolor classes, then the deduplicated effect css; html is the merged markup (AWS icon sprites merged into one). Returns rootAttributes to set on <html> (data-mode drives the facets\' [data-mode="light"] rules; Auto returns autoScript instead), scripts (each needed JS initializer with its source), apply (the steps), conflicts (CSS selectors two effects define differently: the later wins), backgroundConflict (more than one backdrop), validation and size metrics. document: true adds a complete standalone HTML page. Optionally wrap the markup in a container element.',
       inputSchema: {
         type: 'object',
         properties: {
           ids: { ...strArr, description: 'Effect ids to compose, in display order', minItems: 1 },
-          includeTokens: { type: 'boolean', default: true, description: 'Prepend the global tokens.css' },
+          theme: THEME_ARG,
+          tokens: TOKENS_ARG,
+          includeTokens: { type: 'boolean', default: true, description: 'Prepend the theme token block and the .c-* classes (false: the page supplies its own tokens).' },
+          document: DOCUMENT_ARG,
+          title: { type: 'string', description: 'Title of the standalone document.' },
           wrap: {
             type: 'object',
             description: 'Optional wrapper element around the combined markup',
@@ -927,34 +1135,40 @@ export function buildTools() {
       },
       handler: (a, { store }) => {
         if (!Array.isArray(a.ids) || a.ids.length === 0) throw new ToolError('ids must be a non-empty array', { code: 'invalid_argument' });
-        const res = compose(a.ids, store, { includeTokens: a.includeTokens, wrap: a.wrap, separator: a.separator });
+        const palette = paletteOf(a);
+        const res = compose(a.ids, store, { includeTokens: a.includeTokens, palette, wrap: a.wrap, separator: a.separator });
         if (!res.ok) throw new ToolError('Composition failed', { code: 'compose_failed', data: { errors: res.errors, missing: res.missing } });
-        return res;
+        return bundleOut(res, a.includeTokens === false ? null : palette, { document: a.document === true, title: a.title });
       },
     },
     {
       name: 'compose_with_template',
-      description: `Compose effects into a named layout template. Templates arrange the effects: ${availableTemplates().join(', ')}. Returns the same bundle shape as compose plus the applied template.`,
+      description: `Compose effects into a named layout template: stack (a column), row (wrapping flex row), grid (auto-fit columns of at least 240px), card (each effect in a padded panel, in a grid: a dashboard of tiles), backdrop (a hero section: the first usableAsBackground effect is stretched to fill it behind the other effects, which stack centered above it). Takes theme, tokens and document like compose and returns the same bundle shape plus the applied template. Templates: ${availableTemplates().join(', ')}.`,
       inputSchema: {
         type: 'object',
         properties: {
           ids: { ...strArr, description: 'Effect ids to compose', minItems: 1 },
           template: { type: 'string', enum: availableTemplates(), default: 'stack' },
+          theme: THEME_ARG,
+          tokens: TOKENS_ARG,
           includeTokens: { type: 'boolean', default: true },
+          document: DOCUMENT_ARG,
+          title: { type: 'string', description: 'Title of the standalone document.' },
         },
         required: ['ids'],
         additionalProperties: false,
       },
       handler: (a, { store }) => {
         if (!Array.isArray(a.ids) || a.ids.length === 0) throw new ToolError('ids must be a non-empty array', { code: 'invalid_argument' });
-        const res = composeWithTemplate(a.ids, store, a.template || 'stack', { includeTokens: a.includeTokens });
+        const palette = paletteOf(a);
+        const res = composeWithTemplate(a.ids, store, a.template || 'stack', { includeTokens: a.includeTokens, palette });
         if (!res.ok) throw new ToolError('Composition failed', { code: 'compose_failed', data: { errors: res.errors, missing: res.missing } });
-        return res;
+        return bundleOut(res, a.includeTokens === false ? null : palette, { document: a.document === true, title: a.title });
       },
     },
     {
       name: 'validate_composition',
-      description: 'Validate that a set of effect ids can be composed: checks each id exists, flags missing ones, reports which effects need JS initializers or are not self-contained, and detects composition conflicts — CSS selectors that two effects define differently (the later silently wins when bundled) and multiple background-layer effects (only one renders). Does not build output.',
+      description: 'Validate that a set of effect ids can be composed: checks each id exists, flags missing ones, reports which effects need JS initializers, and detects composition conflicts: CSS selectors that two effects define differently (the later silently wins when bundled) and more than one backdrop (usableAsBackground: only one renders). Does not build output.',
       inputSchema: {
         type: 'object',
         properties: { ids: { ...strArr, minItems: 1 } },
@@ -1077,7 +1291,7 @@ export function buildTools() {
     },
     {
       name: 'export_collection',
-      description: 'Export effects as a self-contained bundle. Three sources (in priority order): a saved collectionId, an explicit set of ids, or an entire gallery. format="bundle" (default) returns merged deduped CSS + each effect\'s html; format="document" adds a complete standalone <html> document; format="schema" returns the portable prism-collection-1.0 JSON (importable by the Prism.html UI). Only a saved collectionId can produce format="schema".',
+      description: 'Export effects as a self-contained bundle. Three sources (in priority order): a saved collectionId, an explicit set of ids, or an entire gallery. format="bundle" (default) returns merged deduped CSS (led by the theme token block, as compose) + the html and the initializer scripts; format="document" adds a complete standalone <html> document with the root attributes and the initializers; format="schema" returns the portable prism-collection-1.0 JSON (importable by the Prism.html UI). Only a saved collectionId can produce format="schema". theme and tokens work as in compose.',
       inputSchema: {
         type: 'object',
         properties: {
@@ -1087,6 +1301,8 @@ export function buildTools() {
           format: { type: 'string', enum: ['bundle', 'document', 'schema'], default: 'bundle', description: 'bundle (CSS+HTML), document (full <html>), or schema (prism-collection-1.0 JSON)' },
           title: { type: 'string', default: 'Prism Collection' },
           asDocument: { type: 'boolean', default: false, description: 'Deprecated alias for format="document"' },
+          theme: THEME_ARG,
+          tokens: TOKENS_ARG,
           includeTokens: { type: 'boolean', default: true },
         },
         additionalProperties: false,
@@ -1111,15 +1327,19 @@ export function buildTools() {
         if (format === 'schema') {
           if (!sourceCollection) throw new ToolError('format="schema" requires a saved collectionId', { code: 'invalid_argument' });
           // totalSize = byte length of the composed CSS+HTML, a useful UI hint.
-          const composed = compose(ids, store, { includeTokens: a.includeTokens });
+          const composed = compose(ids, store, { includeTokens: a.includeTokens, palette: a.includeTokens === false ? null : paletteOf(a) });
           const totalSize = composed.ok ? Buffer.byteLength((composed.css || '') + (composed.html || '')) : null;
           return toExportSchema(sourceCollection, { totalSize });
         }
 
         const title = a.title || (sourceCollection && sourceCollection.name) || 'Prism Collection';
-        const res = compose(ids, store, { includeTokens: a.includeTokens });
+        const palette = a.includeTokens === false ? null : paletteOf(a);
+        const res = compose(ids, store, { includeTokens: a.includeTokens, palette });
         if (!res.ok) throw new ToolError('Export failed', { code: 'export_failed', data: { errors: res.errors, missing: res.missing } });
-        const bundle = { title, effects: res.effects, css: res.css, html: res.html, initializers: res.initializers, metrics: res.metrics };
+        const bundle = {
+          title, effects: res.effects, css: res.css, html: res.html, initializers: res.initializers, scripts: res.scripts, metrics: res.metrics,
+          theme: palette ? { id: palette.id, ds: palette.ds, name: palette.name, mode: palette.mode } : null, rootAttributes: rootAttributes(palette),
+        };
         if (sourceCollection) bundle.collectionId = sourceCollection.id;
         if (format === 'document') {
           // Defense-in-depth: even though the catalog is trusted by design, when we
@@ -1128,7 +1348,8 @@ export function buildTools() {
           // Neutralize those sequences so composed content can't break out of context.
           const safeCss = neutralizeClosers(res.css);
           const safeBodyHtml = neutralizeClosers(res.html, /* htmlBody */ true);
-          bundle.document = `<!DOCTYPE html>\n<html lang="en">\n<head>\n<meta charset="UTF-8">\n<meta name="viewport" content="width=device-width, initial-scale=1.0">\n<title>${escapeHtml(bundle.title)}</title>\n<style>\n${safeCss}\n</style>\n</head>\n<body>\n${safeBodyHtml}\n</body>\n</html>\n`;
+          // the initializers come from the catalog's initializers table, not from facet markup
+          bundle.document = buildDocument({ title: bundle.title, css: safeCss, html: safeBodyHtml, palette, scripts: res.scripts });
           if (safeCss !== res.css || safeBodyHtml !== res.html) {
             bundle.sanitized = true;
             bundle.warnings = (bundle.warnings || []).concat('Neutralized </style> or </script> sequences in composed content for the generated document.');
@@ -1139,32 +1360,16 @@ export function buildTools() {
     },
     {
       name: 'get_token_reference',
-      description: 'Return the canonical CSS token reference for building/theming facets: the global tokens.css, the list of themeable tokens with descriptions, and recolor guidance.',
+      description: 'Return the canonical CSS token reference for building and theming facets: tokensCss (the default theme block, Cloudscape in Auto, with the .c-* recolor classes), every token a theme defines with its purpose (surfaces, --control-line, text, role colors, on-fill inks --accent-ink to --crit-ink, font, radius, feel, the top bar), the recolor classes and how a page applies a theme.',
       inputSchema: { type: 'object', properties: {}, additionalProperties: false },
-      handler: (a, { store }) => {
-        const tokens = store.tokens();
+      handler: () => {
+        const palette = resolvePalette({});
         return {
-          tokensCss: tokens ? tokens.css : null,
-          note: tokens ? tokens.note : null,
-          tokens: [
-            { token: '--bg', purpose: 'Page background base' },
-            { token: '--panel', purpose: 'Card / panel surface' },
-            { token: '--panel2', purpose: 'Secondary surface' },
-            { token: '--card', purpose: 'Card fill' },
-            { token: '--line', purpose: 'Borders / separators' },
-            { token: '--ink', purpose: 'Primary text' },
-            { token: '--muted', purpose: 'Secondary text' },
-            { token: '--dim', purpose: 'Tertiary / disabled text' },
-            { token: '--accent', purpose: 'Brand / primary accent (also --accent-rgb)' },
-            { token: '--info', purpose: 'Informational / links (also --info-rgb)' },
-            { token: '--pos', purpose: 'Positive / success (also --pos-rgb)' },
-            { token: '--warn', purpose: 'Warning / caution (also --warn-rgb)' },
-            { token: '--neg', purpose: 'Negative / danger (also --neg-rgb)' },
-            { token: '--crit', purpose: 'Critical / special (also --crit-rgb)' },
-            { token: '--c / --c-rgb', purpose: 'Per-element active color; set to recolor an effect' },
-            { token: '--cardgrad', purpose: 'Standard card gradient overlay' },
-          ],
+          tokensCss: themeCss(palette),
+          note: 'Include a theme block once per page (this one, get_theme_palette { theme } css, or compose { theme }) and set data-mode on <html>. Facets read the tokens with var(); text on a role fill reads the matching -ink token (var(--accent-ink,#fff)) and control boundaries read var(--control-line,var(--line)).',
+          tokens: TOKEN_DOCS,
           recolorClasses: ['c-accent', 'c-info', 'c-pos', 'c-warn', 'c-neg', 'c-crit'],
+          rootAttributes: 'data-mode (dark or light; facets carry [data-mode="light"] rules), data-theme (the theme id) and data-ds (the design system), as the app stamps them.',
         };
       },
     },
@@ -1176,7 +1381,7 @@ export function buildTools() {
     // Ranking and name resolution come from catalog/aws-icons/resolve.mjs, shared with awd.mjs.
     {
       name: 'search_aws_icons',
-      description: 'Search the official AWS Architecture Icons that ship with Prism (services, resources, group frames, categories) by words over name, id, service, category, aliases and crosswalk names, e.g. "lambda", "managed microsoft ad", "nat gateway", "ALB", "AWS::S3::Bucket". Every word must match a whole word or the start of one, so "ecr" does not find Secrets Manager. Exact names, abbreviations and old names (S3, NACL, DAX, Elasticsearch, QuickSight) rank first. Colorway pairs (separate artwork for dark and light backgrounds) collapse into one result keyed by the base id; retired and renamed icons carry status. Use resolve_aws_icon to pick one icon for a name, get_aws_icon for the SVG.',
+      description: 'Search the official AWS Architecture Icons that ship with Prism (services, resources, group frames, categories) by words over name, id, service, category, aliases and crosswalk names, e.g. "lambda", "managed microsoft ad", "nat gateway", "ALB", "AWS::S3::Bucket". Every word must match a whole word or the start of one, so "ecr" does not find Secrets Manager. Exact names, abbreviations and old names (S3, NACL, DAX, Elasticsearch, QuickSight) rank first. Colorway pairs (separate artwork for dark and light backgrounds) collapse into one result keyed by the base id; retired and renamed icons carry status. Containers (security group, Availability Zone, VPC, subnets) are frames, not icons: the result then carries frame.group, the group kind a diagram spec takes. The official set has no egress-only internet gateway: the kit draws it with aws-res-vpc-internet-gateway labelled "Egress-only internet gateway". Use resolve_aws_icon to pick one icon for a name, get_aws_icon for the SVG.',
       inputSchema: {
         type: 'object',
         properties: {
@@ -1198,7 +1403,14 @@ export function buildTools() {
         if (!R) return { source: pack.source, ...searchIcons(pack.icons, { query: a.query || '', kind: a.kind || null, limit, offset }) };
         const hits = R.search(a.query || '', { kind: a.kind || null });
         const items = hits.slice(offset, offset + limit).map((h) => iconItem(pack.icons, h.entry, a.query ? h.score : undefined));
-        return { source: pack.source, total: hits.length, offset, count: items.length, items };
+        const out = { source: pack.source, total: hits.length, offset, count: items.length, items };
+        // a container such as "security group" has no icon: say which frame draws it
+        if (a.query && a.query.trim()) {
+          const r = R.resolve(a.query);
+          if (r.kind === 'group' && r.group) out.frame = { group: r.group, ...(r.id ? { icon: r.id } : {}), note: `"${a.query}" is drawn as a group frame: { kind: "${r.group}" } in a diagram spec's groups (resolve_aws_icon says the same).` };
+          else if (!r.id && r.warnings && r.warnings.length) out.warnings = r.warnings;
+        }
+        return out;
       },
     },
     {
@@ -1261,7 +1473,8 @@ export function buildTools() {
           // near matches: the resolver's picks for the id read as a name, then any-word matches
           const plain = a.id.trim().replace(/^aws-(svc|res|grp|cat)-/, '').replace(/-(dark|light)$/, '');
           const near = R ? [...R.resolve(plain).candidates.map((c) => c.id), ...R.search(plain).slice(0, 5).map((h) => h.id)] : [];
-          const suggestions = [...new Set([...near, ...suggestIcons(pack.icons, a.id)])].slice(0, 5);
+          const typos = closeIds([...pack.icons.keys()].filter((k) => !/-(dark|light)$/.test(k)), a.id.trim(), 2);
+          const suggestions = [...new Set([...typos, ...near, ...suggestIcons(pack.icons, a.id)])].slice(0, 5);
           throw new ToolError(`Unknown AWS icon id: ${a.id}`, { code: 'not_found', data: { suggestions } });
         }
         const pair = colorwayPair(pack.icons, icon.id);
@@ -1381,7 +1594,7 @@ export function buildTools() {
     // builds the gallery (catalog/aws-kit/awd.mjs), found beside the catalog file.
     {
       name: 'build_diagram',
-      description: 'Build an AWS architecture diagram from a JSON spec with the AWS kit behind the AWS Architecture gallery: official AWS icons and group frames, numbered steps, and packets on one SMIL clock. Pass one diagram object ({ id, name, desc, w, h, dur, groups, nodes, wires, steps, timeline, effects, notes }; or flows instead of timeline and steps: { path: [node ids], reply, text: [one per hop] } compiles to packets, rings and numbered steps) or a family file ({ version: 1, section, diagrams }). Runs the schema and the kit\'s input checks; returns { id, svg, html, errors, lint }: lint lists layout findings (text across a frame edge, wires through labels or icons, badges on icons, off-canvas...; the gallery build rejects severity error, so fix those and rebuild); svg is one self-contained SVG document (kit CSS, only the icons it uses, the spec in <metadata id="awd-spec">), html is the bare <svg class="awd"> the gallery embeds (needs the kit CSS and icon sprite on the page). svg and html are null when errors is not empty. A family returns { section, diagrams: [...], errors }. Start from get_diagram_spec for a working example; find icon ids with search_aws_icons.',
+      description: 'Build an AWS architecture diagram from a JSON spec with the AWS kit behind the AWS Architecture gallery: official AWS icons and group frames, numbered steps, and packets on one SMIL clock. A diagram is { id, name, desc, w, h (normal 480 wide and up to 300 high; wide: true for 960x440; full: true for up to 1400x900), dur (6-10 s), poster, groups, nodes, wires, steps, timeline, flows, tables, effects, notes, marks, legend }. groups: frames (cloud, region, az, vpc, pub, priv, sg, asg, acct, dc, gen...) drawn outer first, with note for a CIDR; a two-line note ["10.0.1.0/24", "2001:db8:1::/64"] puts the IPv6 block under the IPv4 one (dual stack). nodes: { id, icon (from resolve_aws_icon), x, y, label } or boxes. wires: { id, from, to } or { id, d: "M..H..V.." }, with label (a port such as TCP 443), dashed, both, tone. Story: either timeline entries { wire, t: [a, b], ring, kind: pk|pk-2|pk-bad, v6 } plus steps { n, at, text, moment? }, or flows (the easy way): { path: [node ids], reply: true, text: [one per hop], kind?, v6? } compile to packets, arrival rings and numbered steps with their text; v6: true draws IPv6 packets as diamonds (IPv4 stay circles). tables: rules and routes cards { x, y, title, tone: "security"|"networking", cols, rows: [cells] or { cells, on: "<wire id>", v6?, tone: ok|bad|muted, t?, still? } }: a row with on lights while any packet crosses that wire, the reply included (ok green for the rule that admits it, bad red for the deny), so network ACL and route tables keep time with the story; for a stateful security group rule that should light for the request only, pin t to the request window instead (story below gives it). poster is the moment a still export shows; steps[].moment pins a storyboard frame. Runs the schema and the kit\'s input checks; returns { id, svg, html, errors, lint, story }: story (a spec with flows) is the compiled timeline and steps, the windows to pin the t of a row or the moment of a step on; lint lists layout findings (the gallery build rejects severity error, tables included: fix and rebuild); svg is one self-contained SVG document (kit CSS, only the icons it uses, the spec in <metadata id="awd-spec">), html is the bare <svg class="awd"> the gallery embeds (needs the kit CSS and icon sprite on the page). svg and html are null when errors is not empty (a typo comes back as nodes[0].lable: unknown property (did you mean label?)). A family { version: 1, section, diagrams } returns { section, diagrams: [...], errors }. Start from get_diagram_spec (no id lists the gallery by feature: sg-chain for security group tables, v6-dual-stack for flows, IPv6 and two-line notes). Reference: catalog/drafts/AWS_KIT.md.',
       inputSchema: {
         type: 'object',
         properties: {
@@ -1405,14 +1618,21 @@ export function buildTools() {
     },
     {
       name: 'get_diagram_spec',
-      description: 'Get the JSON spec of one AWS Architecture gallery diagram by id (catalog id such as aws-sl-api, or spec id sl-api). About 8x smaller than the rendered html from get_effect, and editable: change it and pass it to build_diagram. Returns { id, catalogId, family, version, spec, source }.',
+      description: 'Get the JSON spec of one AWS Architecture gallery diagram by id (catalog id such as aws-sl-api, or spec id sl-api). About 8x smaller than the rendered html from get_effect, and editable: change it and pass it to build_diagram. Returns { id, catalogId, family, version, spec, source }. Without an id it lists the gallery (87 diagrams in 11 families, plus the kit example sx-api) so you can pick the closest one to copy: { total, families: [{ id, title, diagrams: [{ id, name, size, features }] }] }, where features names the kit primitives a spec uses: tables (rules and routes cards), flows, v6 (IPv6 packets), note2 (two-line IPv4 and IPv6 frame notes), effects (failover, scale-out), poster, moment, marks, legend. Filter the list with family (e.g. security, ipv6, three-tier) or feature.',
       inputSchema: {
         type: 'object',
-        properties: { id: { type: 'string', description: 'Diagram id, e.g. aws-sl-api or sl-api.' } },
-        required: ['id'],
+        properties: {
+          id: { type: 'string', description: 'Diagram id, e.g. aws-sl-api or sl-api. Omit to list the gallery.' },
+          family: { type: 'string', description: 'List only this family (section id), e.g. security or ipv6.' },
+          feature: { type: 'string', enum: DIAGRAM_FEATURES, description: 'List only the diagrams that use this kit primitive.' },
+        },
         additionalProperties: false,
       },
       handler: async (a, { store }) => {
+        if (a.id == null) {
+          const kit = await diagramKit(store);
+          return diagramIndex(diagramSpecs(kit.dir), { family: a.family, feature: a.feature });
+        }
         if (typeof a.id !== 'string' || !a.id.trim()) throw new ToolError('id is required', { code: 'invalid_argument' });
         const kit = await diagramKit(store);
         const specs = diagramSpecs(kit.dir);
@@ -1423,7 +1643,7 @@ export function buildTools() {
     },
     {
       name: 'lint_diagram',
-      description: 'Check an AWS architecture diagram\'s layout against the kit\'s rules without building it: pass a diagram spec, or the id of a gallery diagram (aws-sl-api or sl-api). Measures text with Arial\'s real widths on the drawn markup (timed captions and raw extra included). Returns { id, errors, findings: [{ severity, code, message, at }], counts, clean }. Errors (the gallery build rejects them): off-canvas, icon-overlap, text-overlap, text-on-icon, text-on-border (text across or within 2px of a frame edge), wire-on-text, wire-on-icon, badge-on-icon, badge-on-text, badge-overlap. Warnings: header-band, label-lines, tile-size. Info: icon-sizes, text-over-text. at is the finding\'s center in viewBox units; move the element or its label and lint again.',
+      description: 'Check an AWS architecture diagram\'s layout against the kit\'s rules without building it: pass a diagram spec, or the id of a gallery diagram (aws-sl-api or sl-api). Measures text with Arial\'s real widths on the drawn markup (timed captions and raw extra included). Returns { id, errors, findings: [{ severity, code, message, at }], counts, clean }. Errors (the gallery build rejects them): off-canvas, icon-overlap, text-overlap, text-on-icon, text-on-border (text across or within 2px of a frame edge), wire-on-text, wire-on-icon, badge-on-icon, badge-on-text, badge-overlap, and for rules tables table-on-border, table-overlap (an icon or badge on a table), wire-on-table. Warnings: header-band, label-lines, tile-size, step-text (a step without text), step-order (numbers not 1..n). Info: icon-sizes, text-over-text. at is the finding\'s center in viewBox units; move the element or its label and lint again.',
       inputSchema: {
         type: 'object',
         properties: {
@@ -1451,7 +1671,7 @@ export function buildTools() {
     },
     {
       name: 'import_diagram',
-      description: 'Import an architecture design into the AWS kit: draw.io (.drawio XML, plain or compressed, or .drawio.svg; a .drawio.png as contentBase64), Mermaid architecture-beta or flowchart, PlantUML-AWS, D2, CloudFormation (JSON or YAML with short-form intrinsics; CDK synth output and SAM after transform included) or Terraform (terraform show -json of a plan or a state; raw HCL is rejected with how to get the JSON). Shapes, names and resource types resolve to the official AWS Architecture Icons (unmapped ones become plain boxes and are listed), groups to AWS frames, the layout is fitted to a kit tile and checked by the kit lint, and the request order (numbered badges or edges, a %% prism: flow directive, or for IaC a flows sidecar) becomes the animation. For CloudFormation and Terraform the VPC, subnets (public, private or isolated from the route tables), Availability Zone positions, placement and edges (listener to target group, security group chain with ports, DNS aliases, event sources, IAM resource ARNs as dashed weak edges) are inferred, and report.ledger lists every fact as derived, assumed or dropped with the resources it came from (the assumed ones carry a question for the customer). Without a flows sidecar IaC has no animation unless story is guess. With rules, security group rules become tables beside the drawing (console columns, IPv4 and IPv6 sources, prefix lists, group references by name), the rule that admits each story packet lighting up as it crosses; dual-stack subnets show both CIDRs and an egress-only internet gateway is drawn. Returns { spec, svg, report: { from, issues, unmapped, tile, lint, ledger?, rules? } }: edit spec and pass it to build_diagram, or export it with export_diagram.',
+      description: 'Import an architecture design into the AWS kit: draw.io (.drawio XML, plain or compressed, or .drawio.svg; a .drawio.png as contentBase64), Mermaid architecture-beta or flowchart, PlantUML-AWS, D2, CloudFormation (JSON or YAML with short-form intrinsics; CDK synth output and SAM after transform included) or Terraform (terraform show -json of a plan or a state; raw HCL is rejected with how to get the JSON). Shapes, names and resource types resolve to the official AWS Architecture Icons (unmapped ones become plain boxes and are listed), groups to AWS frames, the layout is fitted to a kit tile and checked by the kit lint, and the request order (numbered badges or edges, a %% prism: flow directive, or for IaC a flows sidecar) becomes the animation. For CloudFormation and Terraform the VPC, subnets (public, private or isolated from the route tables), Availability Zone positions, placement and edges (listener to target group, security group chain with ports, DNS aliases, event sources, IAM resource ARNs as dashed weak edges) are inferred, and report.ledger lists every fact as derived, assumed or dropped with the resources it came from (the assumed ones carry a question for the customer). Without a flows sidecar IaC has no animation unless story is guess. With rules, security group rules become tables beside the drawing (console columns, IPv4 and IPv6 sources, prefix lists, group references by name), the rule that admits each story packet lighting up as it crosses; dual-stack subnets show both CIDRs as a two-line frame note and an egress-only internet gateway is drawn; a sidecar flow or step with v6: true sends IPv6 diamonds. Returns { spec, svg, report: { from, issues, unmapped, tile, lint, ledger?, rules? } }: edit spec and pass it to build_diagram, or export it with export_diagram.',
       inputSchema: {
         type: 'object',
         properties: {
@@ -1490,13 +1710,13 @@ export function buildTools() {
     },
     {
       name: 'export_diagram',
-      description: 'Export an AWS kit diagram (a gallery id such as aws-tt-classic, or a spec) to draw.io (.drawio XML that opens in diagrams.net with the official AWS shapes; the Prism spec rides on a hidden layer so a re-import restores the animation), Mermaid (a flowchart with AWS icon shapes, or architecture-beta when the layout is a consistent grid), a standalone SVG (animated, the static diagram, or frozen at one moment of its clock for slides and documents), a PNG of such a moment (drawn by headless Chrome or Edge on the server) or a storyboard (one still per numbered step, with its step text). Returns { to, text }; { to, at, width, height, base64 } for a PNG; { to, frames: [{ n, at, text, svg }] } for a storyboard.',
+      description: 'Export an AWS kit diagram (a gallery id such as aws-tt-classic, or a spec) to draw.io (.drawio XML that opens in diagrams.net with the official AWS shapes; the Prism spec rides on a hidden layer so a re-import restores the animation), Mermaid (a flowchart with AWS icon shapes, or architecture-beta when the layout is a consistent grid), a standalone SVG (animated, the static diagram, or frozen at one moment of its clock for slides and documents), a PNG of such a moment (drawn by headless Chrome or Edge on the server; at defaults to the poster moment of the spec, where tables show their lit rows and IPv6 packets their diamonds) or a storyboard (one still per numbered step, with its step text, at the moment of the step when it has one). draw.io carries the first line of a note and leaves the tables to the hidden Prism spec, which a re-import restores. Returns { to, text }; { to, at, width, height, base64 } for a PNG; { to, frames: [{ n, at, text, svg }] } for a storyboard.',
       inputSchema: {
         type: 'object',
         properties: {
           id: { type: 'string', description: 'A gallery diagram id, e.g. aws-tt-classic or tt-classic.' },
           spec: { type: 'object', description: 'A diagram spec instead of an id.' },
-          to: { type: 'string', enum: ['drawio', 'mermaid', 'svg', 'png', 'storyboard'], description: 'Target format.' },
+          to: { type: 'string', enum: EXPORT_TO, description: 'Target format.' },
           dialect: { type: 'string', enum: ['flowchart', 'architecture-beta'], description: 'Mermaid only (default flowchart).' },
           theme: { type: 'string', enum: ['auto', 'light', 'dark'], description: 'SVG, PNG (default light) and storyboard.' },
           still: { type: 'boolean', description: 'SVG only: the complete static diagram, no packets.' },
@@ -1508,8 +1728,12 @@ export function buildTools() {
       },
       handler: async (a, { store }) => {
         if ((a.spec == null) === (a.id == null)) throw new ToolError('pass exactly one of spec or id', { code: 'invalid_argument' });
+        if (!EXPORT_TO.includes(a.to)) throw new ToolError(`to must be one of: ${EXPORT_TO.join(', ')}`, { code: 'invalid_argument' });
         const kit = await diagramKit(store);
         let spec = a.spec;
+        if (typeof spec === 'string') {
+          try { spec = JSON.parse(spec); } catch (err) { throw new ToolError(`spec is not valid JSON: ${err.message}`, { code: 'invalid_argument' }); }
+        }
         if (a.id != null) {
           const specs = diagramSpecs(kit.dir);
           const hit = findDiagramSpec(specs, a.id);
@@ -1534,6 +1758,37 @@ export function buildTools() {
       },
     },
   ];
+}
+
+/**
+ * The top-bar accent pairs Prism's theme gate holds (catalog/_check_themes.mjs SHELL_PAIRS) and the
+ * engine's PAIRS leave out: --cs-topnav-accent (else --accent) as UI on --cs-topnav-bg, and
+ * --cs-topnav-accent-ink (else --accent-ink, else #fff) as text on that fill. Added to r in place.
+ */
+function topBarAccentPairs(C, t, r) {
+  const pick = (chain) => { for (const k of chain) { if (k.startsWith('#')) return { k, v: k }; if (t[k] != null) return { k, v: t[k] }; } return null; };
+  const backdrop = r.mode === 'dark' ? { r: 0, g: 0, b: 0 } : { r: 255, g: 255, b: 255 };
+  const bgP = C.parseColor(t['--bg']);
+  const bgRgb = bgP ? C.composite(bgP, backdrop) : backdrop;
+  const solid = (v, over) => { const c = C.parseColor(v); return c ? (c.a >= 1 ? c : C.composite(c, over)) : null; };
+  const floors = r.contrast === 'AAA' ? { ui: 3, text: 7 } : { ui: 3, text: 4.5 };
+  const defs = [
+    { fg: ['--cs-topnav-accent', '--accent'], bg: ['--cs-topnav-bg'], kind: 'ui' },
+    { fg: ['--cs-topnav-accent-ink', '--accent-ink', '#ffffff'], bg: ['--cs-topnav-accent', '--accent'], kind: 'text' },
+  ];
+  for (const d of defs) {
+    const f = pick(d.fg), b = pick(d.bg);
+    // without the top-bar tokens the ink pair falls back to --accent-ink on --accent: already checked
+    if (f && b && r.pairs.some((p) => p.fg === f.k && p.bg === b.k)) continue;
+    const bRgb = b && solid(b.v, d.bg[0] === '--cs-topnav-bg' ? bgRgb : (solid(t['--cs-topnav-bg'], bgRgb) || bgRgb));
+    const fRgb = f && bRgb && solid(f.v, bRgb);
+    if (!fRgb || !bRgb) { r.skipped.push({ fg: d.fg[0], bg: d.bg[0], reason: `${!bRgb ? d.bg[0] : d.fg[0]} is missing or not a color` }); continue; }
+    const ratio = C.contrastRatio(fRgb, bRgb);
+    const floor = floors[d.kind];
+    const pair = { mode: r.mode, fg: f.k, bg: b.k, kind: d.kind, fgValue: C.toHex(fRgb), bgValue: C.toHex(bRgb), ratio: C.round(ratio, 2), floor, pass: ratio >= floor, apca: C.round(C.apcaContrast(fRgb, bRgb), 1) };
+    r.pairs.push(pair);
+    if (!pair.pass) { r.failures.push(pair); r.pass = false; }
+  }
 }
 
 /** The kit's import/export entry point (catalog/aws-kit/import/index.mjs), or a structured 'unavailable' error. */
@@ -1567,8 +1822,20 @@ async function themeEngine(store) {
   return eng;
 }
 
-function escapeHtml(s) {
-  return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+/** Ids within an edit distance of max from text, nearest first. */
+function closeIds(ids, text, max) {
+  const t = String(text).toLowerCase();
+  const dist = (x, y) => {
+    if (Math.abs(x.length - y.length) > max) return max + 1;
+    let prev = Array.from({ length: y.length + 1 }, (_, j) => j);
+    for (let i = 1; i <= x.length; i++) {
+      const cur = [i];
+      for (let j = 1; j <= y.length; j++) cur[j] = Math.min(prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + (x[i - 1] === y[j - 1] ? 0 : 1));
+      prev = cur;
+    }
+    return prev[y.length];
+  };
+  return ids.map((id) => ({ id, d: dist(id, t) })).filter((x) => x.d <= max).sort((a, b) => a.d - b.d || a.id.localeCompare(b.id)).map((x) => x.id);
 }
 
 /**

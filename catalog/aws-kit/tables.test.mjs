@@ -64,6 +64,9 @@ test('rows light in several windows, or while packets travel a wire (one IP vers
   assert.match(svg, /values="0;1;0;1;0" keyTimes="0;\.1;\.2;\.7;\.8"/);
   assert.match(svg, /values="0;1;0;1;0" keyTimes="0;\.1;\.23;\.5;\.63"/);   // both packets, each a moment past arrival
   assert.match(svg, /values="0;1;0" keyTimes="0;\.5;\.63"/);                // the IPv6 one only
+  // a reply on the same wire does not light the rule (stateful)
+  const rep = diagram({ ...s, timeline: [...s.timeline, { wire: 'w', t: [0.7, 0.8], kind: 'pk-2', reverse: true }] });
+  assert.match(rep, /values="0;1;0;1;0" keyTimes="0;\.1;\.23;\.5;\.63"/);
   assert.deepEqual(lint(s).filter((f) => f.severity === 'error'), []);
   assert.throws(() => checkSpec({ ...s, tables: [{ x: 1, y: 1, title: 't', rows: [{ cells: ['a'], on: 'nope' }] }] }), /unknown wire "nope"/);
 });

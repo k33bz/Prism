@@ -13,6 +13,8 @@ extract-from-prism.mjs   →  manifest.json + index.json   (headless Chrome / CD
 _derive_selection.mjs    →  adds role / dataShape / a11y to manifest.json + index.json   (--write; deterministic, from selection-vocab.json)
 _embed-catalog.mjs       →  writes the island back into Prism.html   (idempotent)
 _smoke.mjs               →  validates the island parses + shell scripts syntax-check
+_check_markup.mjs        →  shell + every gallery template parse with no browser repair, no </script> breakout, islands agree with manifest.json (exit non-zero on fail)
+_check_pages.mjs         →  headless sweep: every page and the main controls in 3 themes at 1440 and 390, storage blocked, a11y basics (exit non-zero on fail)
 _check_ds.mjs            →  design-system coverage & integrity gate (exit non-zero on fail)
 _check_selection.mjs     →  agent-facing selection-metadata gate: every facet has valid role + layer + a11y, charts have dataShape (exit non-zero on fail)
 _check_copy.mjs          →  Copy-button gate: sampled tiles per gallery, each copy pasted into a blank page must render like its tile (exit non-zero on fail)

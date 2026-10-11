@@ -149,8 +149,8 @@ and the label "Egress-only internet gateway", as AWS's own diagrams do.
 
 **Tables** are rules and routes cards: security group rules, network ACL entries, a route table. A
 `title`, optional `cols` (small capitals) and `rows` of cells; columns size to their widest cell. A row
-`{ cells, on: 'w3', tone: 'ok' }` lights green while a packet travels wire `w3` (and a moment past its
-arrival), following the timeline and flows, so the row keeps time when the story changes; `v6: true` or
+`{ cells, on: 'w3', tone: 'ok' }` lights green while a request (or failed) packet travels wire `w3` (and a
+moment past its arrival; replies do not light it, a stateful rule is not evaluated again for them), following the timeline and flows, so the row keeps time when the story changes; `v6: true` or
 `false` with `on` picks one IP version. `t: [a, b]` (or several windows, `[[a, b], [c, d]]`) pins the
 windows instead. `tone: 'bad'` lights red for
 the deny that applied (a network ACL's numbered deny, or a security group's "no match: denied", which

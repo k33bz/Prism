@@ -15,6 +15,7 @@ import { CatalogStore } from './utils/catalog.js';
 import { CollectionStore } from './utils/collections.js';
 import { buildTools, ToolError } from './tools/index.js';
 import { createLogger } from './utils/logger.js';
+import { THEMES, designSystems } from './utils/themes.js';
 
 export const PROTOCOL_VERSION = '2024-11-05';
 export const SERVER_NAME = 'prism-mcp-server';
@@ -93,7 +94,7 @@ export class PrismMCPServer {
       protocolVersion: PROTOCOL_VERSION,
       capabilities: { tools: { listChanged: false } },
       serverInfo: { name: SERVER_NAME, version: SERVER_VERSION },
-      instructions: 'Prism catalog MCP. Use search_effects (with facet filters) / list_effects to discover, get_available_filters + list_filter_values to learn valid facet values, create_saved_search / execute_saved_search to reuse queries, get_effect for full html/css, compose/compose_with_template to build bundles, and create_facet/validate_facet to author new components. For theming: Prism themes are pure :root token swaps over identical HTML/CSS, so use get_theme_palette, get_component_variants (one payload → every theme variant), and get_variants_for_theme to explore the component variant matrix; derive_theme turns a brand accent into a complete contrast-safe palette for both modes, and check_theme_contrast audits any token map or shipped theme. For AWS architecture diagrams, search_aws_icons / resolve_aws_icon / get_aws_icon serve the official AWS Architecture Icons: resolve_aws_icon maps any name (text, draw.io, Mermaid, PlantUML, diagrams, CloudFormation, Terraform) to one icon id (diagrams in the aws gallery already embed theirs). To make a diagram, start from get_diagram_spec (any gallery diagram as a JSON spec), edit it, build it with build_diagram (a standalone SVG plus the gallery svg) and fix what lint_diagram reports.',
+      instructions: serverInstructions(this.store),
     };
   }
 
@@ -172,6 +173,25 @@ export class PrismMCPServer {
     this.store.close();
     this.transport && this.transport.stop && this.transport.stop();
   }
+}
+
+/**
+ * What a fresh agent needs to pick and apply components with this server alone. Counts come from the
+ * loaded catalog and the theme registry, so they never go stale.
+ */
+export function serverInstructions(store) {
+  const all = store && store.catalog ? store.all() : [];
+  const galleries = store && store.catalog ? store.galleries().length : 0;
+  const aws = all.filter((e) => e.gallery === 'aws').length;
+  const ds = designSystems();
+  return [
+    `Prism: ${all.length} offline CSS/SVG components ("effects" or facets) in ${galleries} galleries, themed by ${ds.length} design systems in dark and light (${THEMES.length} themes), plus an AWS architecture diagram kit (${aws} gallery diagrams).`,
+    'PICK: recommend_effects turns a plain request into selection filters and ranked picks (one group per need). Or search_effects with filters: roles (loading for spinners and skeletons, feedback for toasts, alerts and badges, action, input, navigation, data-display, media), dataShapes for charts (time-series for a trend, part-to-whole for shares of a total, comparison, distribution, correlation, flow, geo, single-value for a KPI), usableAsBackground:true for a backdrop behind content, layers (overlay floats above), reducedMotionSafe:true (static, or stops under prefers-reduced-motion) and selfAnimates:false for no motion, needsJs:false for CSS only. get_available_filters lists the values.',
+    'APPLY: get_effect returns html, css and apply (the theme tokens it reads, its JS initializer source, motion, backdrop placement). compose { ids, theme } bundles several: css starts with the theme token block (theme: a theme id such as duolingo-light for one mode, a design system id such as duolingo for Auto, dark with light under prefers-color-scheme; tokens: a custom palette), then rootAttributes to set on <html> (data-mode="light" switches the light rules of the facets), scripts (initializers to run once after the markup), apply (the steps); document: true returns a complete page. compose_with_template lays effects out as stack, row, grid or card.',
+    'THEMES: a theme is a :root token swap over identical html and css. get_theme_palette { theme } gives the :root css, rootAttributes and autoCss; get_component_variants and get_variants_for_theme show components across themes; derive_theme turns one brand color into a contrast-safe dark and light palette (pass its { dark, light } to compose as tokens); check_theme_contrast audits any token map or shipped theme (on-fill inks, --control-line, the top bar included).',
+    'AWS DIAGRAMS: get_diagram_spec with no id lists the gallery by feature (tables, flows, v6, two-line notes, poster); get_diagram_spec { id } returns an editable JSON spec. resolve_aws_icon maps any name (text, CloudFormation, Terraform, draw.io, Mermaid, PlantUML) to an icon id; containers such as a security group are frames (groups kind sg). build_diagram compiles a spec (flows for the request path, tables for security group, network ACL and route rules whose rows light per packet, v6 for IPv6 packets, two-line notes for dual-stack CIDRs) and returns lint; lint_diagram checks layout; export_diagram writes svg (animated, still or a moment), png, storyboard, drawio or mermaid; import_diagram reads draw.io, Mermaid, PlantUML, D2, CloudFormation and Terraform (rules: true draws security group tables).',
+    'OTHER: saved searches (create_saved_search), collections (create_collection, export_collection), and facet authoring (validate_facet, create_facet).',
+  ].join('\n');
 }
 
 export class RpcError extends Error {

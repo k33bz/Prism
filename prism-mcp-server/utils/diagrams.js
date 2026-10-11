@@ -19,12 +19,12 @@ export function kitDir(catalogPath) {
   return null;
 }
 
-/** Import the kit: { dir, awd (generator), spec (schema + canonical form) }, or null when not found. */
+/** Import the kit: { dir, awd (generator), spec (schema + canonical form), story (flows) }, or null when not found. */
 export async function loadKit(catalogPath) {
   const dir = kitDir(catalogPath);
   if (!dir) return null;
-  const [awd, spec] = await Promise.all(['awd.mjs', 'spec.mjs'].map((f) => import(pathToFileURL(path.join(dir, f)).href)));
-  return { dir, awd, spec };
+  const [awd, spec, story] = await Promise.all(['awd.mjs', 'spec.mjs', 'story.mjs'].map((f) => import(pathToFileURL(path.join(dir, f)).href)));
+  return { dir, awd, spec, story };
 }
 
 const fmt = (e) => `${e.path}: ${e.message}`;
@@ -44,7 +44,14 @@ function buildOne(kit, d, opts) {
   try {
     const html = kit.awd.diagram(d);
     out.errors.push(...kit.awd.validate(html));
-    if (!out.errors.length) { out.html = html; out.svg = kit.awd.standalone(d, opts); out.lint = kit.awd.lint(d); }
+    if (!out.errors.length) {
+      out.html = html; out.svg = kit.awd.standalone(d, opts); out.lint = kit.awd.lint(d);
+      // the story the flows compile to: windows to pin a table row (t) or a step (moment) on
+      if ((d.flows || []).length && kit.story && kit.story.compileFlows) {
+        const c = kit.story.compileFlows(d);
+        out.story = { timeline: c.timeline || [], steps: (c.steps || []).map(({ n, at, f, x, y, moment }) => ({ n, at, f, x, y, moment })) };
+      }
+    }
   } catch (err) {
     out.errors.push(err.message);
   }
