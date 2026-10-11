@@ -1,12 +1,15 @@
 // Facet + composition validation helpers.
 
 import { validateCss, referencedTokens, definedTokens, detectSelectorConflicts } from './css.js';
+import { BASE_TOKENS, SHELL_CHROME } from './themes.js';
 
 const ID_RE = /^[a-z0-9]+(?:-[a-z0-9]+)*$/; // kebab-case, lowercase
 
-// The core theming tokens Prism always defines globally (from tokens.css). A facet
-// referencing these is fine; referencing anything else that it doesn't define is a warning.
+// The core theming tokens Prism always defines globally: every token of a theme block (BASE_TOKENS:
+// the on-fill inks, --control-line and --accent2 included), the shell's top-bar tokens and --c/--c-rgb.
+// A facet referencing these is fine; referencing anything else that it doesn't define is a warning.
 export const GLOBAL_TOKENS = new Set([
+  ...Object.keys(BASE_TOKENS), ...Object.keys(SHELL_CHROME), '--cs-topnav-accent', '--cs-topnav-accent-ink',
   '--bg', '--panel', '--panel2', '--card', '--line', '--ink', '--muted', '--dim',
   '--crit', '--crit-rgb', '--neg', '--neg-rgb', '--warn', '--warn-rgb',
   '--pos', '--pos-rgb', '--info', '--info-rgb', '--accent', '--accent-rgb',
@@ -110,8 +113,7 @@ export function validateComposition(ids, store) {
     const e = store.get(id);
     if (!e) { missing.push(id); errors.push(`Unknown effect id: ${id}`); continue; }
     resolved.push(e);
-    if (e.needsJs) warnings.push(`Effect "${id}" needs JS initializer "${e.needsJs}" — run it after inserting markup`);
-    if (e.selfContained === false) warnings.push(`Effect "${id}" is not fully self-contained — verify surrounding context`);
+    if (e.needsJs) warnings.push(`Effect "${id}" needs JS initializer "${e.needsJs}": run it once after inserting the markup (compose returns it in scripts)`);
   }
 
   // Composition-only checks (meaningful only when 2+ effects are bundled together).
@@ -121,7 +123,11 @@ export function validateComposition(ids, store) {
   for (const c of conflicts) {
     warnings.push(`Selector "${c.selector}" is defined differently by ${c.effects.join(', ')} — when bundled the later rule wins and may break the earlier effect`);
   }
-  const backgrounds = resolved.filter((e) => e.layer === 'background').map((e) => e.id);
+  // A backdrop is what the catalog flags usableAsBackground (authored). layer 'background' is derived
+  // from the component type and also covers 40 foreground objects, so it only counts when the flag
+  // is absent (a hand-built record).
+  const backgrounds = resolved.filter((e) => e.usableAsBackground === true
+    || (e.usableAsBackground === undefined && e.layer === 'background')).map((e) => e.id);
   if (backgrounds.length > 1) {
     warnings.push(`Multiple background-layer effects (${backgrounds.join(', ')}) — only one background renders; the others are occluded`);
   }

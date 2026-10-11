@@ -195,3 +195,16 @@ test('the real catalog: resolver ranking, crosswalks and retired icons through t
   assert.equal(miss.error.code, 'not_found');
   assert.ok(miss.error.data.suggestions.includes('aws-svc-opensearch-service'));
 });
+
+test('the real catalog: a container has no icon but a frame, and a typo in an id gets the near id', { skip: !fs.existsSync(PRISM_HTML) }, () => {
+  const ctx = toolCtx();
+  ctx.store._icons = loadIcons(PRISM_HTML);
+  const sg = ctx.call('search_aws_icons', { query: 'security group' });
+  assert.equal(sg.total, 0);
+  assert.equal(sg.frame.group, 'sg');
+  assert.match(sg.frame.note, /kind: "sg"/);
+  assert.equal(ctx.call('search_aws_icons', { query: 'lambda' }).frame, undefined);
+  const typo = ctx.callSafe('get_aws_icon', { id: 'aws-svc-lamda' });
+  assert.equal(typo.error.code, 'not_found');
+  assert.equal(typo.error.data.suggestions[0], 'aws-svc-lambda');
+});

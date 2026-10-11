@@ -231,3 +231,68 @@ test('export_diagram: a PNG of the poster moment (needs Chrome or Edge on the ma
   assert.deepEqual([out.to, out.at, out.width, out.height], ['png', 'poster', 960, 426]);
   assert.equal(Buffer.from(out.base64, 'base64').subarray(1, 4).toString('latin1'), 'PNG');
 });
+
+test('get_diagram_spec without an id lists the gallery by family with the kit primitives each uses', async () => {
+  const all = await call('get_diagram_spec', {});
+  assert.equal(all.total, 88);                       // 87 gallery diagrams plus the kit example
+  const fam = (id) => all.families.find((f) => f.id === id);
+  assert.deepEqual(fam('security').diagrams.map((d) => d.id), ['sg-chain', 'sg-nacl', 'sg-endpoints', 'sg-egress', 'sg-tgw']);
+  assert.deepEqual(fam('ipv6').diagrams.map((d) => d.id), ['v6-dual-stack', 'v6-nat64', 'v6-dualstack-alb', 'v6-tgw']);
+  const sg = fam('security').diagrams[0];
+  assert.ok(sg.features.includes('tables') && sg.features.includes('poster'));
+  const v6 = fam('ipv6').diagrams[0];
+  for (const f of ['tables', 'flows', 'v6', 'note2']) assert.ok(v6.features.includes(f), f);
+  const tables = await call('get_diagram_spec', { feature: 'tables' });
+  assert.deepEqual(tables.families.map((f) => f.id).sort(), ['ipv6', 'security']);
+  const only = await call('get_diagram_spec', { family: 'ipv6', feature: 'v6' });
+  assert.equal(only.total, 4);
+  await assert.rejects(call('get_diagram_spec', { family: 'nope' }), (e) => e instanceof ToolError && e.code === 'not_found' && e.data.families.includes('security'));
+  await assert.rejects(call('get_diagram_spec', { feature: 'sparkles' }), (e) => e instanceof ToolError && e.code === 'invalid_argument');
+});
+
+test('get_diagram_spec: the new families, sg-chain with rules tables and v6-dual-stack with flows, IPv6 and two-line notes', async () => {
+  const sg = await call('get_diagram_spec', { id: 'sg-chain' });
+  assert.deepEqual([sg.catalogId, sg.family.id], ['aws-sg-chain', 'security']);
+  assert.equal(sg.spec.tables.length, 3);
+  assert.deepEqual(sg.spec.tables[0].cols, ['Type', 'Protocol', 'Port range', 'Source']);
+  const v6 = await call('get_diagram_spec', { id: 'aws-v6-dual-stack' });
+  assert.equal(v6.family.id, 'ipv6');
+  assert.ok(v6.spec.flows.length >= 1);
+  assert.ok(v6.spec.groups.some((g) => Array.isArray(g.note) && /^2001:db8:/.test(g.note[1])));
+  for (const id of ['sg-chain', 'v6-dual-stack']) assert.equal((await call('lint_diagram', { id })).clean, true, id);
+});
+
+test('build_diagram with tables, flows, IPv6 packets and two-line notes returns the compiled story', async () => {
+  const spec = {
+    id: 'x-ds', name: 'Dual stack', desc: 'An instance reaches the internet over IPv4 and IPv6.', w: 480, h: 300, dur: 8,
+    groups: [{ kind: 'vpc', x: 110, y: 8, w: 362, h: 160, note: ['10.0.0.0/16', '2001:db8:1::/56'] }],
+    nodes: [{ id: 'ec2', icon: 'aws-res-ec2-instance', x: 380, y: 80, label: 'Amazon EC2' }, { id: 'igw', icon: 'aws-res-vpc-internet-gateway', x: 140, y: 80, label: 'Internet gateway', wrap: 10 }, { id: 'net', icon: 'aws-res-internet', x: 20, y: 80, label: 'Internet' }],
+    wires: [{ id: 'a', from: 'ec2', to: 'igw' }, { id: 'b', from: 'igw', to: 'net' }],
+    flows: [{ path: ['ec2', 'igw', 'net'], v6: true, text: ['The instance sends IPv6 traffic to the internet gateway.', 'The gateway forwards it to the internet.'] }],
+    tables: [{ x: 190, y: 190, title: 'Route table', tone: 'networking', cols: ['Destination', 'Target'], rows: [['10.0.0.0/16', 'local'], { cells: ['::/0', 'igw'], on: 'a', v6: true, tone: 'ok' }] }],
+  };
+  const r = await call('build_diagram', { spec });
+  assert.deepEqual(r.errors, []);
+  assert.deepEqual(r.lint.filter((f) => f.severity === 'error'), []);
+  assert.deepEqual(r.story.timeline.map((e) => [e.wire, !!e.v6]), [['a', true], ['b', true]]);
+  assert.deepEqual(r.story.steps.map((s) => s.n), [1, 2]);
+  assert.match(r.svg, /2001:db8:1::\/56/);          // the second line of the frame note
+  assert.match(r.svg, /Route table/);
+  assert.equal((r.html.match(/class="pk pk-v6"/g) || []).length, 2);   // IPv6 packets are diamonds
+  const plain = await call('build_diagram', { spec: probe() });
+  assert.equal(plain.story, undefined, 'no flows: no story');
+});
+
+test('export_diagram: a security diagram to svg at its poster, storyboard, draw.io and Mermaid; an unknown target is invalid_argument', async () => {
+  const poster = await call('export_diagram', { id: 'sg-chain', to: 'svg', at: 'poster', theme: 'light' });
+  assert.match(poster.text, /class="awd awd-frame"/);
+  assert.match(poster.text, /sg-alb inbound rules/);
+  const sb = await call('export_diagram', { id: 'sg-chain', to: 'storyboard', theme: 'light' });
+  assert.deepEqual(sb.frames.map((f) => f.n), [1, 2, 3, 4, 5]);
+  const dio = await call('export_diagram', { id: 'aws-sg-chain', to: 'drawio' });
+  assert.match(dio.text, /^<mxfile /);
+  assert.match(dio.text, /prism_spec=/);           // the tables ride on the hidden Prism layer
+  const mmd = await call('export_diagram', { id: 'sg-chain', to: 'mermaid' });
+  assert.match(mmd.text, /flowchart /);
+  await assert.rejects(call('export_diagram', { id: 'sg-chain', to: 'pdf' }), (e) => e instanceof ToolError && e.code === 'invalid_argument' && /drawio, mermaid, svg, png, storyboard/.test(e.message));
+});
