@@ -21,12 +21,12 @@ export function engineDir(catalogPath) {
 
 const cache = new Map();
 
-/** Import the engine: { dir, derive (deriveTheme, checkContrast, rootCss, ...) }, or null when not found. */
+/** Import the engine: { dir, derive (deriveTheme, checkContrast, rootCss, ...), color (contrast math) }, or null when not found. */
 export async function loadEngine(catalogPath) {
   const dir = engineDir(catalogPath);
   if (!dir) return null;
   if (!cache.has(dir)) {
-    cache.set(dir, import(pathToFileURL(path.join(dir, 'derive.mjs')).href).then((derive) => ({ dir, derive })));
+    cache.set(dir, Promise.all(['derive.mjs', 'color.mjs'].map((f) => import(pathToFileURL(path.join(dir, f)).href))).then(([derive, color]) => ({ dir, derive, color })));
   }
   try {
     return await cache.get(dir);

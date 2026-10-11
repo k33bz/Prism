@@ -38,8 +38,9 @@ document shows two ways to wire it up.
 }
 ```
 
-Claude will call, e.g., `search_effects` → `search_effects` → `compose`, and
-return the merged HTML/CSS.
+Claude will call, e.g., `recommend_effects` (or `search_effects` with a role or
+background filter) → `get_effect` → `compose` with a theme, and return the merged
+HTML/CSS with the token block and the attributes to set on `<html>`.
 
 ---
 
@@ -115,4 +116,4 @@ node examples/bridge.mjs
 ```
 
 This keeps a single warm `CatalogStore` in memory (fast, hot-reloadable) while
-Claude iterates over the 21 tools.
+Claude iterates over the 40 tools.

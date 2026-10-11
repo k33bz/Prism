@@ -208,3 +208,73 @@ export function themeRootCss(themeId) {
 export function isThemeSensitive(effect) {
   return usesTokens(effect).length > 0 || /class\s*=/.test(effect.html || '');
 }
+
+// ---- applying a theme outside the app ----------------------------------------------------
+
+// The shell's static top-bar defaults (the first :root block of Prism.html): what a theme that
+// declares no --cs-topnav-* token gets, Cloudscape Dark and Light included (both keep the dark
+// console bar). Mode-invariant. check_theme_contrast fills them like the base tokens, so the top
+// bar pairs are measured for every theme; the facets never read them.
+export const SHELL_CHROME = {
+  '--cs-topnav-bg': '#000716', '--cs-topnav-line': 'rgba(255,255,255,.14)', '--cs-topnav-ink': '#e9ebed',
+  '--cs-topnav-dim': '#c6cdd6', '--cs-topnav-hover': 'rgba(255,255,255,.1)',
+};
+
+// Every token a theme block defines, with what reads it. get_token_reference returns this list.
+export const TOKEN_DOCS = [
+  { token: '--bg', group: 'surface', purpose: 'Page background' },
+  { token: '--panel', group: 'surface', purpose: 'Panel and card surface' },
+  { token: '--panel2', group: 'surface', purpose: 'Secondary surface (wells, table stripes, chips)' },
+  { token: '--card', group: 'surface', purpose: 'Card fill' },
+  { token: '--line', group: 'surface', purpose: 'Dividers and card borders (a quiet 1.1-2.2:1 hairline)' },
+  { token: '--control-line', group: 'surface', purpose: 'Boundary of an input, select, checkbox, radio, switch or toggle: 3:1 on every surface (WCAG 1.4.11); facets read var(--control-line,var(--line))' },
+  { token: '--ink', group: 'text', purpose: 'Primary text' },
+  { token: '--muted', group: 'text', purpose: 'Secondary text (4.5:1 on every surface)' },
+  { token: '--dim', group: 'text', purpose: 'Tertiary text, captions, placeholders (3:1)' },
+  { token: '--accent', group: 'role', purpose: 'Brand / primary accent; --accent-rgb is its R,G,B triplet for rgba() tints' },
+  { token: '--accent2', group: 'role', purpose: 'Gradient partner of the accent' },
+  { token: '--info', group: 'role', purpose: 'Informational, links (also --info-rgb)' },
+  { token: '--pos', group: 'role', purpose: 'Positive / success (also --pos-rgb)' },
+  { token: '--warn', group: 'role', purpose: 'Warning / caution (also --warn-rgb)' },
+  { token: '--neg', group: 'role', purpose: 'Negative / danger (also --neg-rgb)' },
+  { token: '--crit', group: 'role', purpose: 'Critical / special (also --crit-rgb)' },
+  { token: '--accent-ink', group: 'on-fill ink', purpose: 'Text and glyphs painted ON an accent fill (button label, badge count, checkbox tick); facets read var(--accent-ink,#fff)' },
+  { token: '--info-ink', group: 'on-fill ink', purpose: 'Text on an info fill' },
+  { token: '--pos-ink', group: 'on-fill ink', purpose: 'Text on a positive fill' },
+  { token: '--warn-ink', group: 'on-fill ink', purpose: 'Text on a warning fill' },
+  { token: '--neg-ink', group: 'on-fill ink', purpose: 'Text on a negative fill' },
+  { token: '--crit-ink', group: 'on-fill ink', purpose: 'Text on a critical fill' },
+  { token: '--cardgrad', group: 'surface', purpose: 'Standard card gradient overlay' },
+  { token: '--font', group: 'chrome', purpose: 'Font family of the design system' },
+  { token: '--r-sm / --r-md / --r-lg / --r-xl', group: 'chrome', purpose: 'Corner radius scale' },
+  { token: '--elev-1 / --elev-2', group: 'feel', purpose: 'Elevation (box-shadow) levels' },
+  { token: '--dur / --ease', group: 'feel', purpose: 'Transition duration and easing' },
+  { token: '--bd', group: 'feel', purpose: 'Border width' },
+  { token: '--head-w', group: 'feel', purpose: 'Heading font weight' },
+  { token: '--dens', group: 'feel', purpose: 'Density multiplier for padding' },
+  { token: '--cs-topnav-bg / -line / -ink / -dim / -hover', group: 'shell chrome', purpose: 'The app top bar (not read by facets); packs whose bar is the accent also set --cs-topnav-accent and --cs-topnav-accent-ink' },
+  { token: '--c / --c-rgb', group: 'per element', purpose: 'Active color of one element: set them (or add a c-* class: c-accent, c-info, c-pos, c-warn, c-neg, c-crit) to recolor an effect whose params.color says so' },
+];
+
+// The .c-* recolor classes (the same rules as the catalog's tokens.css).
+export const RECOLOR_CSS = ['crit', 'neg', 'warn', 'pos', 'info', 'accent']
+  .map((r) => `.c-${r}{--c:var(--${r});--c-rgb:var(--${r}-rgb)}`).join('');
+
+/** The design systems: [{ ds, name, dark, light, isDefault }] (theme ids of each mode). */
+export function designSystems() {
+  const by = new Map();
+  for (const t of THEMES) {
+    if (!by.has(t.ds)) by.set(t.ds, { ds: t.ds, name: t.dsName || t.ds, dark: null, light: null, isDefault: false });
+    const s = by.get(t.ds);
+    s[t.mode] = t.id;
+    if (t.isDefault) s.isDefault = true;
+  }
+  return [...by.values()];
+}
+
+/** The two modes of a theme's design system: { ds, name, dark, light } (ids), or null. */
+export function themePair(idOrDs) {
+  const t = getTheme(idOrDs);
+  const ds = t ? t.ds : idOrDs;
+  return designSystems().find((s) => s.ds === ds) || null;
+}

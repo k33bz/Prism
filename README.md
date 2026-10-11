@@ -4,9 +4,9 @@
 
 **One prism. Every facet of your report.**
 
-A single-file gallery of **3,551** offline, self-contained CSS/SVG animations, components, and backdrops — built to be browsed by humans *and* driven by AI agents. Ships with a **zero-dependency MCP server** so Claude (Desktop, Code, or the API) can search the catalog and compose production-ready HTML/CSS on demand.
+A single-file gallery of **3,560** offline, self-contained CSS/SVG animations, components, and backdrops, built to be browsed by humans *and* driven by AI agents. Ships with a **zero-dependency MCP server** so Claude (Desktop, Code, or the API) can search the catalog and compose production-ready HTML/CSS on demand.
 
-![Effects](https://img.shields.io/badge/effects-3551-ff9900) ![Galleries](https://img.shields.io/badge/galleries-18-4493f8) ![Dependencies](https://img.shields.io/badge/dependencies-0-3fb950) ![Offline](https://img.shields.io/badge/offline-100%25-3fb950) ![MCP](https://img.shields.io/badge/MCP-server%20included-c879ff) ![Single file](https://img.shields.io/badge/single%20file-HTML-e0a52b)
+![Effects](https://img.shields.io/badge/effects-3560-ff9900) ![Galleries](https://img.shields.io/badge/galleries-18-4493f8) ![Dependencies](https://img.shields.io/badge/dependencies-0-3fb950) ![Offline](https://img.shields.io/badge/offline-100%25-3fb950) ![MCP](https://img.shields.io/badge/MCP-server%20included-c879ff) ![Single file](https://img.shields.io/badge/single%20file-HTML-e0a52b)
 
 </div>
 
@@ -17,7 +17,7 @@ A single-file gallery of **3,551** offline, self-contained CSS/SVG animations, c
 This is [k33bz/Prism](https://github.com/k33bz/Prism), a fork of [crazy54/Prism](https://github.com/crazy54/Prism). Upstream is the design library and the MCP server; the fork keeps both intact and adds, on top:
 
 - **Two galleries:** 📋 Tables & Data Layouts (57 facets, including click-driven sorting demos and a holographic file tree) and 📐 Diagrams & Frameworks (58 facets: every fishbone variant, flow, hierarchy, comparison, timeline, network, strategy frameworks, flywheels).
-- **☁️ AWS Architecture gallery:** 78 animated reference architectures drawn with the official AWS Architecture Icons: serverless, three-tier web applications, Active Directory (forest trusts, AD Connector, Windows and Kerberos auth for RDS, Aurora and FSx), databases, multi-Region resilience, VPC and hybrid networking, transit and segmentation (TGW route tables, Connect, Cloud WAN, Gateway Load Balancer, VPC Lattice, IPAM), service endpoints and private access, and Route 53 DNS (Resolver endpoints, Profiles, DNS Firewall, DNSSEC). They compile from plain-data specs (`catalog/aws-kit`), all 859 icons are embedded once with a searchable icon library, Copy carries the icons a diagram uses, and the MCP server can search and serve any icon.
+- **☁️ AWS Architecture gallery:** 87 animated reference architectures in 11 families drawn with the official AWS Architecture Icons: serverless, three-tier web applications, Active Directory (forest trusts, AD Connector, Windows and Kerberos auth for RDS, Aurora and FSx), databases, multi-Region resilience, VPC and hybrid networking, security groups and network ACLs (rule tables whose rows light as each packet is admitted or denied), IPv6 and dual stack (IPv6 packets as diamonds, two-line IPv4 and IPv6 CIDR notes, the egress-only internet gateway, NAT64), transit and segmentation (TGW route tables, Connect, Cloud WAN, Gateway Load Balancer, VPC Lattice, IPAM), service endpoints and private access, and Route 53 DNS (Resolver endpoints, Profiles, DNS Firewall, DNSSEC). They compile from plain-data specs (`catalog/aws-kit`), all 859 icons are embedded once with a searchable icon library, Copy carries the icons a diagram uses, and the MCP server can search and serve any icon.
 - **New facet families inside existing galleries:** the Elemental Base blocks and Pokémon Battle scenes in FX Store, a self-hosted-Forgejo landing kit in Animated Objects and Text Effects, presence status modifiers and a live avatar stack in Notifications.
 - **Three more theme packs** (Cloudflare Orange, Google Cloud Console, Fluent for Azure) through the same profile, scaffolder, generator and 100-facet gate as upstream's packs, plus two skins (Frutiger Aero, Liquid Glass).
 - **Git-derived metadata:** every catalog record carries `addedOn`, `updatedOn` and `author` mined from history, the New Facets page is built from those dates with an adjustable window, and Search filters and sorts by author.
@@ -39,7 +39,7 @@ It serves two audiences from the same source of truth:
 
 ## Install the MCP server
 
-The [Model Context Protocol](https://modelcontextprotocol.io) lets an AI agent call tools over a well-defined resource. The bundled server exposes Prism's catalog as **39 tools** — discovery, composition, facet creation, saved collections, AWS icons and diagrams, and theme derivation — so an agent can go from *"give me a pulsing KPI card with a wind background"* to **discovered, composed, deduplicated, validated HTML/CSS** in one turn.
+The [Model Context Protocol](https://modelcontextprotocol.io) lets an AI agent call tools over a well-defined resource. The bundled server exposes Prism's catalog as **40 tools** (discovery and intent-based recommendations, themed composition, facet creation, saved collections, AWS icons and diagrams, and theme derivation), so an agent can go from *"give me a pulsing KPI card with a wind background"* to **discovered, composed, deduplicated, validated HTML/CSS** in one turn.
 
 It has **zero runtime dependencies** (pure Node.js ≥ 18) and speaks MCP JSON-RPC 2.0 over **stdio** — the transport Claude Desktop, Claude Code, and the Anthropic API use to launch a local MCP server as a subprocess.
 
@@ -67,7 +67,7 @@ node cli.js tools
 node cli.js start --catalog ../Prism.html
 ```
 
-`info` should report **3,551 effects across 18 galleries** (1,300 of those are the 13 theme packs' Spectrum facets, 100 per pack). If it does, the server is working — the remaining steps just tell a client *how* to launch it.
+`info` should report **3,560 effects across 18 galleries** (1,300 of those are the 13 theme packs' Spectrum facets, 100 per pack). If it does, the server is working; the remaining steps just tell a client *how* to launch it.
 
 > **Always point `--catalog` at `Prism.html`.** The `#prism-catalog` island inside it is the authoritative catalog and can be fresher than `catalog/manifest.json`. If `--catalog` is omitted, the server defaults to `../Prism.html`, falling back to `../catalog/manifest.json`.
 
@@ -89,7 +89,7 @@ Use **absolute paths** everywhere below — clients launch the server from their
 claude mcp add prism -- node /ABS/PATH/prism/prism-mcp-server/cli.js start --catalog /ABS/PATH/prism/Prism.html
 ```
 
-Then `claude mcp list` should show `prism`, and the 39 tools become available in your session. Remove it with `claude mcp remove prism`.
+Then `claude mcp list` should show `prism`, and the 40 tools become available in your session. Remove it with `claude mcp remove prism`.
 </details>
 
 <details>
@@ -168,21 +168,21 @@ Options:
 
 Logs go to **stderr** (stdout is reserved for the JSON-RPC channel), so they never corrupt the MCP protocol stream. Verbosity is also settable via `PRISM_MCP_LOG_LEVEL`. A `--port` flag is accepted but ignored — this build is stdio-only; add an HTTP/SSE transport by implementing one against `PrismMCPServer`.
 
-### The 39 tools
+### The 40 tools
 
 | Group | Tools |
 |---|---|
-| **Discovery (11)** | `list_effects` · `search_effects` · `get_effect` · `list_galleries` · `get_catalog_stats` · `get_available_filters` · `list_filter_values` · `get_theme_variants` · `get_theme_palette` · `get_component_variants` · `get_variants_for_theme` |
+| **Discovery (12)** | `recommend_effects` (a plain request in, the right facets out: role, data shape, backdrop, motion, JS, a theme named in the text) · `list_effects` · `search_effects` · `get_effect` (with its apply guide) · `list_galleries` · `get_catalog_stats` · `get_available_filters` · `list_filter_values` · `get_theme_variants` · `get_theme_palette` · `get_component_variants` · `get_variants_for_theme` |
 | **Themes (2)** | `derive_theme` (brand accent in, a complete contrast-safe token palette for dark and light out, with a report of every checked pair and any input it moved) · `check_theme_contrast` (audit any token map or shipped theme against the same floors) |
 | **Saved searches (3)** | `create_saved_search` · `get_saved_searches` · `execute_saved_search` (in-memory, per server process) |
-| **Composition (3)** | `compose` · `compose_with_template` (`stack`/`row`/`grid`/`card`) · `validate_composition` |
+| **Composition (3)** | `compose` (led by the theme token block: a theme, a design system in Auto, or a derived palette; root attributes, initializer sources, a standalone page on request) · `compose_with_template` (`stack`/`row`/`grid`/`card`/`backdrop`) · `validate_composition` |
 | **Content creation (3)** | `create_facet` · `update_facet` · `validate_facet` |
 | **Catalog management (3)** | `get_catalog_metadata` · `export_collection` (`bundle`/`document`/`schema`) · `get_token_reference` |
 | **AWS icons (3)** | `search_aws_icons` · `get_aws_icon` (the official AWS Architecture Icons, as standalone SVG or sprite symbols) · `resolve_aws_icon` (draw.io, Mermaid, PlantUML, Python diagrams, CloudFormation or Terraform names to an icon id) |
 | **Collections & favorites (6)** | `list_collections` · `get_collection` · `create_collection` · `add_to_collection` · `remove_from_collection` · `delete_collection` |
-| **AWS diagrams (5)** | `import_diagram` (draw.io, Mermaid, PlantUML or D2 into a kit spec and svg) · `export_diagram` (a kit diagram to draw.io, Mermaid, svg, a still or PNG at any moment, or a storyboard of its steps) · `build_diagram` (a JSON diagram spec to a standalone SVG and the gallery svg, with the kit's checks and layout lint) · `lint_diagram` (layout findings for a spec or a gallery diagram) · `get_diagram_spec` (any gallery diagram's JSON spec) |
+| **AWS diagrams (5)** | `import_diagram` (draw.io, Mermaid, PlantUML, D2, CloudFormation or Terraform into a kit spec and svg; `rules` draws security group tables) · `export_diagram` (a kit diagram to draw.io, Mermaid, svg, a still or PNG at any moment, or a storyboard of its steps) · `build_diagram` (a JSON diagram spec with flows, rules and routes tables, IPv6 packets and two-line notes to a standalone SVG and the gallery svg, with the kit's checks, layout lint and the compiled story) · `lint_diagram` (layout findings for a spec or a gallery diagram) · `get_diagram_spec` (any gallery diagram's JSON spec, or the gallery listed by the primitives each uses) |
 
-`compose` merges HTML, deduplicates CSS rules, collapses `:root` token blocks, validates the output, and reports size savings. **Collections** are named, disk-backed sets of effects that persist across sessions (stored in `prism-mcp-server/collections.json`, which is git-ignored); export one with `export_collection { collectionId, format: "schema" }` to hand it to the Prism.html UI. Full parameter schemas come back from `tools/list`, and one example call per tool lives in [`prism-mcp-server/examples/`](./prism-mcp-server/examples).
+`compose` prepends the theme token block (every token of the theme, the on-fill inks and `--control-line` included; default Cloudscape in Auto, dark or light by the system), merges HTML, deduplicates CSS rules, collapses `:root` token blocks, validates the output, reports size savings, and says how to apply the bundle: the `data-mode` / `data-theme` / `data-ds` attributes for `<html>` and the initializer scripts. **Collections** are named, disk-backed sets of effects that persist across sessions (stored in `prism-mcp-server/collections.json`, which is git-ignored); export one with `export_collection { collectionId, format: "schema" }` to hand it to the Prism.html UI. Full parameter schemas come back from `tools/list`, and one example call per tool lives in [`prism-mcp-server/examples/`](./prism-mcp-server/examples).
 
 For deeper server internals (architecture, error model, facet draft→register→persist flow), see [`prism-mcp-server/README.md`](./prism-mcp-server/README.md).
 
@@ -221,23 +221,23 @@ Every block below is **actual output** from the server against the shipped `Pris
 .delta.down { color: var(--neg); background: rgba(var(--neg-rgb), .13); }
 ```
 
-**3. Bundle a whole KPI row** → `compose { "ids": ["charts-mini-kpi-row", "charts-kpi-tile-delta", "charts-kpi-delta-card-grid"] }`. The engine merges the HTML and deduplicates the shared `.kpi` / `.delta` rules — real `metrics` from this call:
+**3. Bundle a whole KPI row** → `compose { "ids": ["charts-mini-kpi-row", "charts-kpi-tile-delta", "charts-kpi-delta-card-grid"], "theme": "none" }`. The engine merges the HTML and deduplicates the shared `.kpi` / `.delta` rules; real `metrics` from this call (without `"theme": "none"` the bundle also starts with the Cloudscape token block):
 
 ```json
 {
   "effectCount": 3,
   "rulesIn": 47,
-  "rulesOut": 28,
-  "duplicatesRemoved": 19,
-  "naiveCssLength": 4854,
-  "finalCssLength": 3018,
-  "reductionPct": 37.8
+  "rulesOut": 24,
+  "duplicatesRemoved": 23,
+  "naiveCssLength": 4327,
+  "finalCssLength": 2283,
+  "reductionPct": 47.2
 }
 ```
 
-Three overlapping components collapse into one clean bundle **37.8% smaller** than concatenating them — validated and paste-ready. Add a background layer (`objects-windy-day`, `objects-snowfall`, `objects-rain`…) to the `ids` and `compose` reports the required initializer (e.g. `amb-particles`) so the backdrop animates once dropped in.
+Three overlapping components collapse into one clean bundle **47.2% smaller** than concatenating them, validated and paste-ready. Add a facet that needs JS (`fx-live-holo-tilt`, `input-persistent-checklist`, `menus-draggable-dial-menu-live`...) and `compose` returns its initializer source in `scripts`, to run once after the markup.
 
-> These snippets render as static markup on GitHub (it strips CSS/animation), but paste them into any HTML page — with Prism's `tokens.css` included once — and they animate exactly as they do in the gallery. Fetch `tokens.css` any time via `get_token_reference`.
+> These snippets render as static markup on GitHub (it strips CSS/animation), but paste them into any HTML page with a theme token block included once (`compose` adds it; `get_theme_palette { "theme": "cloudscape-dark" }` returns one) and `data-mode` set on `<html>`, and they animate exactly as they do in the gallery.
 
 ### Try it with no client
 
@@ -247,7 +247,7 @@ cd prism-mcp-server
 # Drive search -> get -> compose end to end against the real catalog
 node examples/quickstart.mjs ../Prism.html
 
-# Run the bundled Node-native test suite (129 tests, zero deps)
+# Run the bundled Node-native test suite (206 tests, zero deps)
 node --test test/*.test.js
 ```
 
@@ -300,9 +300,9 @@ Eighteen authored galleries, plus special views. Every element carries a name, i
 
 ## Themes
 
-Prism ships **16 themes, each in dark and light** (32 entries in the theme registry, mirrored into the MCP server). It is built in the **AWS Cloudscape** design language and defaults to two color modes: **Cloudscape Dark** (the default) and **Cloudscape Light**. Toggle between them from the top navigation bar. The theme picker also carries the design-system packs (Duolingo, Mailchimp, Stack Overflow, Monzo, Heroku, Polaris, Primer, Ant Design, Acorn, Material 3, **Cloudflare Orange**, **Google Cloud Console**, **Fluent (Azure)**), each with a gated 100-facet family in the Spectrums gallery, and two skin-only themes with no facet family of their own: **Frutiger Aero** and **Liquid Glass**. Every theme ships in dark and light. The mode override reskins the entire tool — shell *and* every gallery — by swapping a shared set of CSS custom properties (`--accent`, `--info`, `--pos`, `--bg`, `--ink` …), so every element re-themes at once. Your choice persists across sessions.
+Prism ships **16 themes, each in dark and light** (32 entries in the theme registry, mirrored into the MCP server). It is built in the **AWS Cloudscape** design language, **Cloudscape Dark** and **Cloudscape Light**; a first visit follows the system (Auto: dark or light by `prefers-color-scheme`) until you pick a mode. Toggle between them from the top navigation bar. The theme picker also carries the design-system packs (Duolingo, Mailchimp, Stack Overflow, Monzo, Heroku, Polaris, Primer, Ant Design, Acorn, Material 3, **Cloudflare Orange**, **Google Cloud Console**, **Fluent (Azure)**), each with a gated 100-facet family in the Spectrums gallery, and two skin-only themes with no facet family of their own: **Frutiger Aero** and **Liquid Glass**. Every theme ships in dark and light. The mode override reskins the entire tool (shell *and* every gallery) by swapping a shared set of CSS custom properties (`--accent`, `--info`, `--pos`, `--bg`, `--ink` …), so every element re-themes at once. Your choice persists across sessions.
 
-To start a new theme from a brand color, derive it instead of hand-tuning it: `node catalog/theme-engine/derive.mjs --accent '#0078d4' --css` prints both modes' `:root` blocks and a report of every contrast pair, and `--profile out.mjs` writes a pack profile for `_scaffold_ds.mjs`. The MCP server exposes the same engine as `derive_theme` and `check_theme_contrast`. See [`catalog/theme-engine/README.md`](./catalog/theme-engine/README.md).
+To start a new theme from a brand color, derive it instead of hand-tuning it: `node catalog/theme-engine/derive.mjs --accent '#0078d4' --css` prints both modes' `:root` blocks and a report of every contrast pair, and `--profile out.mjs` writes a pack profile for `_scaffold_ds.mjs`. The MCP server exposes the same engine as `derive_theme` and `check_theme_contrast`, and `compose { tokens: { dark, light } }` applies a derived palette to a bundle. See [`catalog/theme-engine/README.md`](./catalog/theme-engine/README.md).
 
 ---
 
@@ -371,11 +371,11 @@ The MCP server's `compose` / `compose_with_template` tools do all of this for yo
 .
 ├── Prism.html              ← the whole tool: UI + all galleries + the JSON island
 ├── README.md               ← you are here
-├── prism-mcp-server/       ← the MCP server (zero-dependency Node, 39 tools)
+├── prism-mcp-server/       ← the MCP server (zero-dependency Node, 40 tools)
 │   ├── cli.js                 prism-mcp CLI (start / info / tools / help)
 │   ├── index.js               PrismMCPServer (JSON-RPC dispatch) + StdioTransport
 │   ├── tools/index.js         the 39 tool definitions
-│   ├── utils/                 catalog store, collections, themes mirror, AWS icons, css/compose/validate, logger
+│   ├── utils/                 catalog store, collections, themes mirror, theme application, intent reading, AWS icons and diagrams, css/compose/validate, logger
 │   ├── examples/              per-tool example calls + Claude Desktop / Anthropic API configs
 │   ├── test/                  Node-native test suite (181 tests)
 │   └── README.md              server internals & architecture

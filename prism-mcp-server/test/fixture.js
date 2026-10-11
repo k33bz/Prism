@@ -15,6 +15,10 @@ export const FIXTURE = {
     note: 'Include once globally.',
   },
   usage: { compose: 'insert html; include css.' },
+  // needsJs key -> initializer (the catalog's initializers table): inline source, or a pointer only
+  initializers: {
+    'wind-init': { js: '(function(){ /* wind </script> drift */ window.__wind = true; })();', page: 'fx' },
+  },
   count: 3,
   effects: [
     {

@@ -66,6 +66,10 @@ export function normalizeCatalog(raw) {
     categories: toArray(raw.categories),
     tokens: raw.tokens || null,
     usage: raw.usage || null,
+    // needsJs key -> { js, page, note }: the initializer a facet with needsJs runs once after
+    // its markup is in the page. js is the inline source, or null when the catalog only points
+    // at the page script that carries it (upstream's amb-particles and time-widgets).
+    initializers: raw.initializers && typeof raw.initializers === 'object' ? raw.initializers : {},
     count: typeof raw.count === 'number' ? raw.count : effects.length,
     effects,
   };
@@ -256,6 +260,13 @@ export class CatalogStore extends EventEmitter {
   gallery(id) { return this._byGallery.get(id) || []; }
   galleries() { return this.catalog ? this.catalog.galleries : []; }
   tokens() { return this.catalog ? this.catalog.tokens : null; }
+  /** The JS initializer for a needsJs key: { key, js, page, note }, or null when the catalog has none. */
+  initializer(key) {
+    const all = (this.catalog && this.catalog.initializers) || {};
+    if (!key || !Object.prototype.hasOwnProperty.call(all, key)) return null;
+    const v = all[key] || {};
+    return { key, js: typeof v.js === 'string' && v.js.trim() ? v.js : null, page: v.page || null, note: v.note || null };
+  }
   /** AWS Architecture Icons that ship with this catalog ({ source, icons: Map }), loaded on first
    *  use from the gallery sprite in Prism.html or aws-icons/aws-icons.json beside a manifest. */
   icons() {

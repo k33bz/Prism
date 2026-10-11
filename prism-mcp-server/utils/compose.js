@@ -3,22 +3,30 @@
 
 import { dedupeCss, mergeRootTokens, validateCss } from './css.js';
 import { validateComposition } from './validate.js';
+import { themeCss, initializerScripts } from './apply.js';
 
 /**
  * Compose effects into a single bundle.
  * @param {string[]} ids       effect ids, in the order they should appear
  * @param {CatalogStore} store
  * @param {object} opts
- *   - includeTokens: prepend the global tokens.css (default true)
+ *   - includeTokens: prepend a token block (default true)
+ *   - palette: the theme to prepend (utils/apply.js resolvePalette: every token of the theme, Auto
+ *     included, plus the .c-* recolor classes), or null for none. Absent: the catalog's tokens.css.
  *   - wrap: optional {tag, className, style} wrapper around the combined HTML
  *   - separator: HTML joined with this (default '\n')
  * @returns {object} composition result with html, css, trace, validation, metrics
  */
 export function compose(ids, store, opts = {}) {
   const { includeTokens = true, wrap = null, separator = '\n' } = opts;
+  const hasPalette = Object.prototype.hasOwnProperty.call(opts, 'palette');
   const trace = [];
   const t0 = Date.now();
 
+  // The wrapper tag is written into the markup as is: only a plain element name may pass.
+  if (wrap && wrap.tag != null && !/^[a-z][a-z0-9-]*$/i.test(String(wrap.tag))) {
+    return { ok: false, errors: [`wrap.tag must be an element name such as section or div, not "${String(wrap.tag).slice(0, 40)}"`], warnings: [], missing: [] };
+  }
   const check = validateComposition(ids, store);
   if (!check.valid) {
     return {
@@ -55,7 +63,12 @@ export function compose(ids, store, opts = {}) {
 
   // --- CSS: gather, optionally prepend tokens, dedupe, merge :root ---
   const cssSources = [];
-  if (includeTokens && store.tokens() && store.tokens().css) {
+  if (includeTokens && hasPalette) {
+    if (opts.palette) {
+      cssSources.push(themeCss(opts.palette));
+      trace.push(`Included the ${opts.palette.name} token block${opts.palette.mode === 'auto' ? ' (dark, light under prefers-color-scheme or data-mode)' : ''} and the .c-* recolor classes`);
+    }
+  } else if (includeTokens && store.tokens() && store.tokens().css) {
     cssSources.push(store.tokens().css);
     trace.push('Included global tokens.css');
   }
@@ -71,6 +84,7 @@ export function compose(ids, store, opts = {}) {
   // --- initializers needed ---
   const initializers = Array.from(new Set(effects.map((e) => e.needsJs).filter(Boolean)));
   if (initializers.length) trace.push(`Requires JS initializers: ${initializers.join(', ')}`);
+  const scripts = initializerScripts(effects, store);
 
   const validation = validateCss(finalCss);
 
@@ -82,6 +96,7 @@ export function compose(ids, store, opts = {}) {
     css: finalCss,
     effects: effects.map((e) => e.id),
     initializers,
+    scripts,
     warnings: check.warnings,
     conflicts: check.conflicts || [],
     backgroundConflict: check.backgroundConflict || null,
@@ -105,7 +120,8 @@ export function compose(ids, store, opts = {}) {
 /**
  * Compose using a named layout template. Templates position slots of effects.
  * Currently supported templates: 'stack' (vertical), 'row' (flex row), 'grid' (auto-fit grid),
- * 'card' (wrap each effect in a padded panel then arrange in a grid).
+ * 'card' (wrap each effect in a padded panel then arrange in a grid), 'backdrop' (a hero: the first
+ * usableAsBackground effect fills the section behind the others).
  */
 export function composeWithTemplate(ids, store, templateName = 'stack', opts = {}) {
   const template = TEMPLATES[templateName];
@@ -118,6 +134,7 @@ export function composeWithTemplate(ids, store, templateName = 'stack', opts = {
   const wrapper = template.build(ids, store);
   const css = [base.css, wrapper.css].filter(Boolean).join('\n');
   base.trace.push(`Applied template "${templateName}"`);
+  if (wrapper.note) base.warnings = [...(base.warnings || []), wrapper.note];
   return {
     ...base,
     html: wrapper.html(base),
@@ -144,6 +161,30 @@ const TEMPLATES = {
       css: '.prism-compose-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}',
       html: (b) => `<div class="prism-compose-grid">\n${b.html}\n</div>`,
     }),
+  },
+  // A hero: the first backdrop (usableAsBackground) fills the section behind the other effects. A
+  // gallery backdrop is drawn as a tile (a fixed width, height and radius on its root), so its root is
+  // stretched to the section here.
+  backdrop: {
+    build: (ids, store) => {
+      const is = (test) => ids.findIndex((id) => { const e = store.get(id); return e && test(e); });
+      // the authored flag first; layer 'background' (derived) only when no id carries it
+      let bgAt = is((e) => e.usableAsBackground);
+      if (bgAt < 0) bgAt = is((e) => e.layer === 'background');
+      return {
+        css: '.prism-compose-backdrop{position:relative;isolation:isolate;overflow:hidden;min-height:360px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:48px 24px;box-sizing:border-box}'
+          + '.prism-compose-bg{position:absolute;inset:0;z-index:0}'
+          + '.prism-compose-bg>*{position:absolute!important;inset:0!important;width:100%!important;max-width:none!important;height:100%!important;margin:0!important;border-radius:0!important}'
+          + '.prism-compose-fg{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:16px}',
+        html: (b) => {
+          const parts = b._perEffectHtml || [b.html];
+          const bg = bgAt >= 0 ? `<div class="prism-compose-bg" aria-hidden="true">${parts[bgAt]}</div>\n` : '';
+          const fg = parts.filter((_, i) => i !== bgAt).join('\n');
+          return `<section class="prism-compose-backdrop">\n${bg}<div class="prism-compose-fg">\n${fg}\n</div>\n</section>` + (b._sprite ? '\n' + b._sprite : '');
+        },
+        note: bgAt < 0 ? 'No backdrop among the ids (usableAsBackground): the effects stack on a plain section.' : null,
+      };
+    },
   },
   card: {
     build: () => ({
