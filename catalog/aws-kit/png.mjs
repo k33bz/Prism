@@ -10,7 +10,7 @@
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
-import { spawn } from 'node:child_process';
+import { spawn, spawnSync } from 'node:child_process';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { resolveChrome } from '../_chrome.mjs';
 import { frame } from './frame.mjs';
@@ -47,7 +47,9 @@ export async function svgToPng(svg, { scale = 2, timeoutMs = 60000, browser } = 
       if (Date.now() > until) throw new Error(`png: the browser wrote no image in ${Math.round(timeoutMs / 1000)} s`);
     }
   } finally {
-    if (proc.exitCode == null) try { proc.kill(); } catch {}
+    // a browser still running (a timeout) goes with its whole process tree: killing the launcher alone
+    // leaves Edge's renderer and GPU children behind, and enough of them stop new shots from landing
+    if (proc.exitCode == null) try { if (process.platform === 'win32') spawnSync('taskkill', ['/pid', String(proc.pid), '/T', '/F'], { stdio: 'ignore', windowsHide: true }); else proc.kill('SIGKILL'); } catch {}
     // the browser may hold profile files for a moment after it exits
     for (let i = 0; i < 10; i++) { try { fs.rmSync(dir, { recursive: true, force: true }); break; } catch { await sleep(200); } }
   }
