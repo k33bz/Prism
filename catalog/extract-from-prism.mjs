@@ -18,7 +18,8 @@ import { mkdtempSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { resolveChrome, closeBrowser } from './_chrome.mjs';
 import { CSS_SOURCE_FNS } from './_css-source.mjs';
-import { STANDALONE_FNS } from './_standalone-css.mjs';
+import { STANDALONE_FNS, tokensCss } from './_standalone-css.mjs';
+import { loadHtmlThemes } from './_check_themes.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const OUT = HERE;
@@ -55,16 +56,14 @@ const GALLERIES = [
   { gallery: 'spectrums', title: 'Spectrums' },
 ];
 
-// Global tokens every standalone copy shares (manifest.tokens.css, included once per page).
-const TOKENS_CSS = ':root{--bg:#0b0e17;--panel:#121623;--panel2:#171d2e;--card:#141b2b;--line:#243049;'
-  + '--ink:#eaf1f9;--muted:#8593a8;--dim:#5b6678;'
-  + '--crit:#c879ff;--crit-rgb:200,121,255;--neg:#f85149;--neg-rgb:248,81,73;'
-  + '--warn:#e0a52b;--warn-rgb:224,165,43;--pos:#3fb950;--pos-rgb:63,185,80;'
-  + '--info:#4493f8;--info-rgb:68,147,248;--accent:#ff9900;--accent-rgb:255,153,0;'
-  + '--cardgrad:linear-gradient(157deg,rgba(255,255,255,.05),rgba(255,255,255,0) 55%)}'
-  + '.c-crit{--c:var(--crit);--c-rgb:var(--crit-rgb)}.c-neg{--c:var(--neg);--c-rgb:var(--neg-rgb)}'
-  + '.c-warn{--c:var(--warn);--c-rgb:var(--warn-rgb)}.c-pos{--c:var(--pos);--c-rgb:var(--pos-rgb)}'
-  + '.c-info{--c:var(--info);--c-rgb:var(--info-rgb)}.c-accent{--c:var(--accent);--c-rgb:var(--accent-rgb)}';
+// Global tokens every standalone copy shares (manifest.tokens.css, included once per page), from
+// the theme registry in the page being extracted: Cloudscape Dark as the :root default, Cloudscape
+// Light under [data-mode="light"] (tokensCss, _standalone-css.mjs). It used to be a hand-kept copy
+// of the galleries' pre-theme palette (orange accent) that lacked --control-line, the on-fill inks
+// and the type / shape / feel tokens, so facets reading those rendered with nothing.
+const REGISTRY = loadHtmlThemes(readFileSync(TARGET, 'utf8'));
+const themeTokens = (id) => { const t = REGISTRY.find((x) => x.id === id); if (!t || !t.tokens) throw new Error('theme registry has no ' + id); return t.tokens; };
+const TOKENS_CSS = tokensCss(themeTokens('cloudscape-dark'), themeTokens('cloudscape-light'));
 // A gallery's own :root custom properties travel with a facet unless tokens.css owns the name.
 const TOKEN_NAMES = [...new Set(TOKENS_CSS.match(/--[\w-]+(?=\s*:)/g))];
 
@@ -80,7 +79,8 @@ const EXTRACT_FN = `function extractInPage(gallery, d, tokenNames, templateText)
   // sets one of them (background + background-size, animation + animation-delay), so
   // cssText silently drops the value. Only those rules are rebuilt, from the declarations
   // in the owner <style>'s source text; every other rule keeps its cssText byte for byte.
-  var EMPTY_DECL=/[a-z-]+: ;/, srcMaps=new Map(), scratch=null, unrecovered=new Set();
+  // An !important one blanks as "prop:  !important;" (six FX facets: Iridescent, Lava Flow...).
+  var EMPTY_DECL=/[a-z-]+: (?: !important)?;/, srcMaps=new Map(), scratch=null, unrecovered=new Set();
   // The rule the browser makes of one rule's source parsed on its own (null when dropped).
   function reparse(text){
     try{ scratch=scratch||new d.defaultView.CSSStyleSheet(); scratch.replaceSync(text); }catch(e){ return null; }
@@ -123,7 +123,26 @@ const EXTRACT_FN = `function extractInPage(gallery, d, tokenNames, templateText)
     return t;
   }
   function slug(s){return (s||'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,60);}
-  function cssFor(html){
+  // the sheets the shell injects into every frame (theme tokens, bundled fonts, gallery chrome)
+  var SHELL_SHEETS={'prism-theme-vars':1,'pr-fonts':1,'pr-cs-chrome':1};
+  function cssFor(html, src, panel){
+    // A rule that names no class of the facet can still style it through its surroundings
+    // (.stage svg, *, button): found by testing the selector against the live tile, then
+    // re-anchored on the facet's own roots (rescopeSelector, _standalone-css.mjs).
+    var roots=(panel?[src]:[].slice.call(src.children)).map(function(e){ return rootSelector(e.getAttribute('class')); }).filter(Boolean);
+    var chain=[]; for(var a=panel?src.parentElement:src; a; a=a.parentElement) chain.push(a);
+    function inFacet(s){ try{
+      if(panel&&src.matches(s)) return true;
+      var hits=src.querySelectorAll(s);
+      for(var i=0;i<hits.length;i++) if(!(panel&&hits[i].closest('.fx-copy'))) return true;
+    }catch(e){} return false; }
+    function around(s){ try{ for(var i=0;i<chain.length;i++) if(chain[i].matches(s)) return true; }catch(e){} return false; }
+    function rescoped(rule){
+      var sels=selectorList(rule.selectorText).filter(function(s){ var p=selectorParts(s); return inFacet(stripDynamic(p[p.length-1])); })
+        .map(function(s){ return rescopeSelector(s, roots, inFacet, around); }).filter(Boolean);
+      if(!sels.length) return null;
+      var t=authored(rule); return sels.join(', ')+' '+t.slice(t.indexOf('{'));
+    }
     var classes=new Set();
     (html.match(/class="([^"]*)"/g)||[]).forEach(function(m){m.replace(/class="|"/g,'').split(/\\s+/).forEach(function(c){if(c)classes.add(c);});});
     var rulesOut=[]; var kf=new Set(); var animSel=new Set();
@@ -140,6 +159,7 @@ const EXTRACT_FN = `function extractInPage(gallery, d, tokenNames, templateText)
     for(var si=0; si<docStyleSheets.length; si++){
       var rules; try{rules=docStyleSheets[si].cssRules;}catch(e){continue;}
       if(!rules) continue;
+      var own=docStyleSheets[si].ownerNode, gallerySheet=!(own&&SHELL_SHEETS[own.id]);
       for(var ri=0; ri<rules.length; ri++){
         var rule=rules[ri];
         if(rule.type===1 && rule.selectorText){
@@ -149,6 +169,7 @@ const EXTRACT_FN = `function extractInPage(gallery, d, tokenNames, templateText)
             if(rule.selectorText.split(/[\\s,>+~]+/).some(function(sel){return sel.indexOf('.'+c)!==-1 && new RegExp('\\\\.'+c+'(?![\\\\w-])').test(sel);})){hit=true;}
           });
           if(hit){ var txt=authored(rule); rulesOut.push(txt); scanAnims(txt); if(/animation(-name)?\\s*:/.test(txt)) animSel.add(rule.selectorText); }
+          else if(gallerySheet){ var rt=rescoped(rule); if(rt){ rulesOut.push(rt); scanAnims(rt); if(/animation(-name)?\\s*:/.test(rt)) animSel.add(rt.slice(0,rt.indexOf(' {'))); } }
         }
       }
       for(var rk=0; rk<rules.length; rk++){ if(rules[rk].type===7 && (kf.has(rules[rk].name)||inlineSet.has(rules[rk].name))){ rulesOut.push(authored(rules[rk])); kfFound.add(rules[rk].name); } }
@@ -166,6 +187,7 @@ const EXTRACT_FN = `function extractInPage(gallery, d, tokenNames, templateText)
               classes.forEach(function(c){ if(mhit) return;
                 if(cr.selectorText.split(/[\\s,>+~]+/).some(function(sel){return sel.indexOf('.'+c)!==-1 && new RegExp('\\\\.'+c+'(?![\\\\w-])').test(sel);})){mhit=true;} });
               if(mhit) mkids.push(authored(cr));
+              else if(gallerySheet){ var mt=rescoped(cr); if(mt) mkids.push(mt); }
             }
           }
           if(mkids.length) rulesOut.push('@media '+(mr.media&&mr.media.mediaText||'')+'{'+mkids.join('')+'}');
@@ -252,7 +274,7 @@ const EXTRACT_FN = `function extractInPage(gallery, d, tokenNames, templateText)
     var dataSnip=snipBtn?snipBtn.getAttribute('data-snip'):null;
     var id=node.getAttribute('data-fx-id') || (gallery+'-'+slug(name));
     if(seen[id]){seen[id]++;id+='-'+seen[id];}else seen[id]=1;
-    var r=cssFor(html);
+    var r=cssFor(html, demoNode||node, !demoNode);
     // <symbol>s the markup references by id but does not contain (the AWS gallery's icon sprite)
     // travel with the facet, so its html stays self-contained like every other entry.
     var defs=[], seenRef={};
@@ -266,12 +288,11 @@ const EXTRACT_FN = `function extractInPage(gallery, d, tokenNames, templateText)
     if(defs.length) html+='\\n<svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position:absolute" aria-hidden="true">'+defs.join('')+'</svg>';
     // A tile may declare its initializer explicitly (fork convention: data-needs-js="<key>",
     // with the code in a <script data-prism-init="<key>"> on the same page); otherwise the
-    // upstream heuristics apply.
+    // upstream heuristic applies. The ambient weather backdrops (data-weather) no longer count:
+    // html is read after their initializer ran, so the particles are already in the markup, and
+    // running it again on a page would add a second set.
     var needsJs=node.getAttribute('data-needs-js')||null;
-    if(!needsJs){
-      if(/data-weather=/.test(html)) needsJs='amb-particles';
-      else if(/data-countdown=|data-timer=|data-stopwatch/.test(html)) needsJs='time-widgets';
-    }
+    if(!needsJs && /data-countdown=|data-timer=|data-stopwatch/.test(html)) needsJs='time-widgets';
     var isBackground=r.classes.some(function(c){return c.indexOf('amb')===0;});
     var selfContained=!r.css.trim();
     var isNew=node.classList.contains('is-new');
@@ -319,7 +340,8 @@ const proc = spawn(CHROME, [
 
 try {
   let target;
-  for (let i = 0; i < 40; i++) {
+  // up to 30s: a busy machine (other headless runs) can take well over the old 6s to start one
+  for (let i = 0; i < 200; i++) {
     try { const j = await (await fetch(`http://localhost:${PORT}/json`)).json();
       target = j.find(t => t.type === 'page'); if (target) break; } catch {}
     await sleep(150);
@@ -331,12 +353,13 @@ try {
   await send('Runtime.enable'); await send('Page.enable');
   await send('Page.navigate', { url: FILE });
   await sleep(2600);
+  // the 26 MB page can take longer than that on a busy machine: wait for the shell router
+  for (let i = 0; i < 100; i++) { const ok = await send('Runtime.evaluate', { expression: '!!(window.PrismShell&&window.PrismShell.go)', returnByValue: true }); if (ok.result && ok.result.value) break; await sleep(300); }
 
   const all = []; const byGallery = {}; const failures = [];
-  // needsJs key -> { js, page }. Upstream's two initializers live in their page tail scripts
-  // and are not declared with data-prism-init, so they are recorded as pointers only.
+  // needsJs key -> { js, page }, from each page's <script data-prism-init> (the Animation Lab's time
+  // widgets now declare theirs too). This pointer only stays when a page does not declare it.
   const initializers = {
-    'amb-particles': { js: null, page: 'objects', note: 'Ambient weather backdrop initializer in the Animated Objects page tail script.' },
     'time-widgets': { js: null, page: 'lab', note: 'Countdown ring, MM:SS and stopwatch initializer in the Animation Lab page tail script.' },
   };
   // Signature of the previously-extracted gallery. If a navigation silently fails the
