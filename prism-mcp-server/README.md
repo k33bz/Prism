@@ -1,6 +1,6 @@
 # Prism MCP Server
 
-A [Model Context Protocol](https://modelcontextprotocol.io) server that exposes the **Prism component catalog** (3,560 self-contained CSS/SVG facets in 18 galleries, themed by 16 design systems in dark and light) and the **AWS architecture diagram kit** (87 animated gallery diagrams) as tools for agents.
+A [Model Context Protocol](https://modelcontextprotocol.io) server that exposes the **Prism component catalog** (3,587 self-contained CSS/SVG facets in 18 galleries, themed by 16 design systems in dark and light) and the **AWS architecture diagram kit** (87 animated gallery diagrams) as tools for agents.
 
 An agent can ask for *"a KPI dashboard with revenue over time and the plan mix, in Duolingo Light"* and get the right components, themed and composed into **production-ready HTML/CSS**, or for *"a three-tier VPC with its security group rules"* and get an animated AWS diagram, a PNG or a draw.io file.
 
