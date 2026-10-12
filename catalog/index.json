@@ -3924,7 +3924,7 @@
       "role": "data-display",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "dataShape": "flow",
       "layer": "content"
@@ -4057,7 +4057,7 @@
       "role": "data-display",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "dataShape": "time-series",
       "layer": "content"
@@ -4129,7 +4129,7 @@
       "role": "data-display",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "dataShape": "comparison",
       "layer": "content"
@@ -4164,7 +4164,7 @@
       "role": "data-display",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "dataShape": "part-to-whole",
       "layer": "content"
@@ -9361,7 +9361,7 @@
       "role": "data-display",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "dataShape": "time-series",
       "layer": "content"
@@ -9406,7 +9406,7 @@
       "role": "data-display",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "dataShape": "time-series",
       "layer": "content"
@@ -9450,7 +9450,7 @@
       "role": "data-display",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "dataShape": "time-series",
       "layer": "content"
@@ -9494,7 +9494,7 @@
       "role": "data-display",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "dataShape": "time-series",
       "layer": "content"
@@ -11840,7 +11840,7 @@
       "role": "media",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "layer": "content"
     },
@@ -11911,7 +11911,7 @@
       "role": "decorative",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "layer": "content"
     },
@@ -12644,7 +12644,7 @@
       "role": "ambient",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "layer": "background"
     },
@@ -13830,7 +13830,7 @@
       "role": "media",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "layer": "content"
     },
@@ -21787,7 +21787,7 @@
       "role": "decorative",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "layer": "content"
     },
@@ -21819,7 +21819,7 @@
       "role": "decorative",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "layer": "content"
     },
@@ -21851,7 +21851,7 @@
       "role": "decorative",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "layer": "content"
     },
@@ -21883,7 +21883,7 @@
       "role": "decorative",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "layer": "content"
     },
@@ -21948,7 +21948,7 @@
       "role": "decorative",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "layer": "content"
     },
@@ -21980,7 +21980,7 @@
       "role": "decorative",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "layer": "content"
     },
@@ -22012,7 +22012,7 @@
       "role": "decorative",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "layer": "content"
     },
@@ -22044,7 +22044,7 @@
       "role": "decorative",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "layer": "content"
     },
@@ -22076,7 +22076,7 @@
       "role": "media",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "layer": "content"
     },
@@ -22108,7 +22108,7 @@
       "role": "media",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "layer": "content"
     },
@@ -22174,7 +22174,7 @@
       "role": "decorative",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "layer": "content"
     },
@@ -22206,7 +22206,7 @@
       "role": "data-display",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "layer": "content"
     },
@@ -23002,7 +23002,7 @@
       "role": "decorative",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "layer": "content"
     },
@@ -26143,7 +26143,7 @@
       "role": "decorative",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "layer": "content"
     },
@@ -29270,7 +29270,6 @@
       "classes": [
         "panel",
         "w2",
-        "is-fixed",
         "ptitle",
         "tdot",
         "pbody",
@@ -29414,7 +29413,6 @@
       "classes": [
         "panel",
         "w2",
-        "is-fixed",
         "ptitle",
         "tdot",
         "pbody",
@@ -30394,7 +30392,6 @@
       "classes": [
         "panel",
         "w2",
-        "is-fixed",
         "ptitle",
         "tdot",
         "pbody",
@@ -30681,7 +30678,6 @@
       "ref": "",
       "classes": [
         "panel",
-        "is-new",
         "w2",
         "ptitle",
         "tdot",
@@ -30726,7 +30722,6 @@
       "ref": "",
       "classes": [
         "panel",
-        "is-new",
         "ptitle",
         "tdot",
         "pbody",
@@ -30769,7 +30764,6 @@
       "ref": "",
       "classes": [
         "panel",
-        "is-new",
         "ptitle",
         "tdot",
         "pbody",
@@ -30814,7 +30808,6 @@
       "ref": "",
       "classes": [
         "panel",
-        "is-new",
         "ptitle",
         "tdot",
         "pbody",
@@ -30857,7 +30850,6 @@
       "ref": "",
       "classes": [
         "panel",
-        "is-new",
         "ptitle",
         "tdot",
         "pbody",
@@ -30903,7 +30895,6 @@
       "ref": "",
       "classes": [
         "panel",
-        "is-new",
         "ptitle",
         "tdot",
         "pbody",
@@ -30946,7 +30937,6 @@
       "ref": "",
       "classes": [
         "panel",
-        "is-new",
         "ptitle",
         "tdot",
         "pbody",
@@ -30991,7 +30981,6 @@
       "ref": "",
       "classes": [
         "panel",
-        "is-new",
         "ptitle",
         "tdot",
         "pbody",
@@ -31036,7 +31025,6 @@
       "ref": "",
       "classes": [
         "panel",
-        "is-new",
         "ptitle",
         "tdot",
         "pbody",
@@ -31079,7 +31067,6 @@
       "ref": "",
       "classes": [
         "panel",
-        "is-new",
         "ptitle",
         "tdot",
         "pbody",
@@ -31124,7 +31111,6 @@
       "ref": "",
       "classes": [
         "panel",
-        "is-new",
         "w2",
         "ptitle",
         "tdot",
@@ -31176,7 +31162,6 @@
       "ref": "",
       "classes": [
         "panel",
-        "is-new",
         "w2",
         "ptitle",
         "tdot",
@@ -31227,7 +31212,6 @@
       "ref": "",
       "classes": [
         "panel",
-        "is-new",
         "ptitle",
         "tdot",
         "pbody",
@@ -31271,7 +31255,6 @@
       "ref": "",
       "classes": [
         "panel",
-        "is-new",
         "ptitle",
         "tdot",
         "pbody",
@@ -31315,7 +31298,6 @@
       "ref": "",
       "classes": [
         "panel",
-        "is-new",
         "ptitle",
         "tdot",
         "pbody",
@@ -31358,7 +31340,6 @@
       "ref": "",
       "classes": [
         "panel",
-        "is-new",
         "ptitle",
         "tdot",
         "pbody",
@@ -31401,7 +31382,6 @@
       "ref": "",
       "classes": [
         "panel",
-        "is-new",
         "ptitle",
         "tdot",
         "pbody",
@@ -31444,7 +31424,6 @@
       "ref": "",
       "classes": [
         "panel",
-        "is-new",
         "ptitle",
         "tdot",
         "pbody",
@@ -31489,7 +31468,6 @@
       "ref": "",
       "classes": [
         "panel",
-        "is-new",
         "ptitle",
         "tdot",
         "pbody",
@@ -31533,7 +31511,6 @@
       "ref": "",
       "classes": [
         "panel",
-        "is-new",
         "ptitle",
         "tdot",
         "pbody",
@@ -31580,7 +31557,6 @@
       "ref": "",
       "classes": [
         "panel",
-        "is-new",
         "ptitle",
         "tdot",
         "pbody",
@@ -31625,7 +31601,6 @@
       "ref": "",
       "classes": [
         "panel",
-        "is-new",
         "ptitle",
         "tdot",
         "pbody",
@@ -31671,7 +31646,6 @@
       "ref": "",
       "classes": [
         "panel",
-        "is-fixed",
         "ptitle",
         "tdot",
         "pbody",
@@ -31715,7 +31689,6 @@
       "ref": "",
       "classes": [
         "panel",
-        "is-fixed",
         "ptitle",
         "tdot",
         "pbody",
@@ -31762,7 +31735,6 @@
       "ref": "",
       "classes": [
         "panel",
-        "is-new",
         "w2",
         "ptitle",
         "tdot",
@@ -31807,7 +31779,6 @@
       "ref": "",
       "classes": [
         "panel",
-        "is-new",
         "ptitle",
         "tdot",
         "pbody",
@@ -31850,7 +31821,6 @@
       "ref": "",
       "classes": [
         "panel",
-        "is-new",
         "ptitle",
         "tdot",
         "pbody",
@@ -31894,7 +31864,6 @@
       "ref": "",
       "classes": [
         "panel",
-        "is-new",
         "w2",
         "ptitle",
         "tdot",
@@ -31941,7 +31910,6 @@
       "ref": "",
       "classes": [
         "panel",
-        "is-new",
         "ptitle",
         "tdot",
         "pbody",
@@ -31986,7 +31954,6 @@
       "ref": "",
       "classes": [
         "panel",
-        "is-new",
         "ptitle",
         "tdot",
         "pbody",
@@ -32029,7 +31996,6 @@
       "ref": "",
       "classes": [
         "panel",
-        "is-new",
         "ptitle",
         "tdot",
         "pbody",
@@ -32074,7 +32040,6 @@
       "ref": "",
       "classes": [
         "panel",
-        "is-new",
         "ptitle",
         "tdot",
         "pbody",
@@ -32119,7 +32084,6 @@
       "ref": "",
       "classes": [
         "panel",
-        "is-new",
         "ptitle",
         "tdot",
         "pbody",
@@ -32170,7 +32134,6 @@
       "ref": "",
       "classes": [
         "panel",
-        "is-new",
         "ptitle",
         "tdot",
         "pbody",
@@ -32219,7 +32182,6 @@
       "ref": "",
       "classes": [
         "panel",
-        "is-new",
         "ptitle",
         "tdot",
         "pbody",
@@ -32270,7 +32232,6 @@
       "ref": "",
       "classes": [
         "panel",
-        "is-new",
         "ptitle",
         "tdot",
         "pbody",
@@ -32314,7 +32275,6 @@
       "ref": "",
       "classes": [
         "panel",
-        "is-new",
         "ptitle",
         "tdot",
         "pbody",
@@ -32363,7 +32323,6 @@
       "ref": "",
       "classes": [
         "panel",
-        "is-new",
         "ptitle",
         "tdot",
         "pbody",
@@ -32409,7 +32368,6 @@
       "ref": "",
       "classes": [
         "panel",
-        "is-new",
         "w2",
         "ptitle",
         "tdot",
@@ -32462,7 +32420,6 @@
       "ref": "",
       "classes": [
         "panel",
-        "is-new",
         "ptitle",
         "tdot",
         "pbody",
@@ -32505,7 +32462,6 @@
       "ref": "",
       "classes": [
         "panel",
-        "is-new",
         "w2",
         "ptitle",
         "tdot",
@@ -32552,7 +32508,6 @@
       "ref": "",
       "classes": [
         "panel",
-        "is-new",
         "ptitle",
         "tdot",
         "pbody",
@@ -32598,7 +32553,6 @@
       "ref": "",
       "classes": [
         "panel",
-        "is-new",
         "ptitle",
         "tdot",
         "pbody",
@@ -32645,7 +32599,6 @@
       "ref": "",
       "classes": [
         "panel",
-        "is-fixed",
         "ptitle",
         "tdot",
         "pbody",
@@ -32695,7 +32648,6 @@
       "ref": "",
       "classes": [
         "panel",
-        "is-new",
         "ptitle",
         "tdot",
         "pbody",
@@ -32741,7 +32693,6 @@
       "ref": "",
       "classes": [
         "panel",
-        "is-new",
         "ptitle",
         "tdot",
         "pbody",
@@ -32785,7 +32736,6 @@
       "ref": "",
       "classes": [
         "panel",
-        "is-new",
         "ptitle",
         "tdot",
         "pbody",
@@ -32832,7 +32782,6 @@
       "ref": "",
       "classes": [
         "panel",
-        "is-new",
         "ptitle",
         "tdot",
         "pbody",
@@ -32875,7 +32824,6 @@
       "ref": "",
       "classes": [
         "panel",
-        "is-new",
         "ptitle",
         "tdot",
         "pbody",
@@ -32918,7 +32866,6 @@
       "ref": "",
       "classes": [
         "panel",
-        "is-new",
         "ptitle",
         "tdot",
         "pbody",
@@ -32963,7 +32910,6 @@
       "ref": "",
       "classes": [
         "panel",
-        "is-new",
         "ptitle",
         "tdot",
         "pbody",
@@ -33008,7 +32954,6 @@
       "ref": "",
       "classes": [
         "panel",
-        "is-new",
         "ptitle",
         "tdot",
         "pbody",
@@ -33053,7 +32998,6 @@
       "ref": "",
       "classes": [
         "panel",
-        "is-new",
         "ptitle",
         "tdot",
         "pbody",
@@ -33100,7 +33044,6 @@
       "ref": "",
       "classes": [
         "panel",
-        "is-new",
         "ptitle",
         "tdot",
         "pbody",
@@ -33144,7 +33087,6 @@
       "ref": "",
       "classes": [
         "panel",
-        "is-new",
         "w2",
         "ptitle",
         "tdot",
@@ -33191,7 +33133,6 @@
       "ref": "",
       "classes": [
         "panel",
-        "is-new",
         "ptitle",
         "tdot",
         "pbody",
@@ -33237,7 +33178,6 @@
       "ref": "",
       "classes": [
         "panel",
-        "is-new",
         "ptitle",
         "tdot",
         "pbody",
@@ -33280,7 +33220,6 @@
       "ref": "",
       "classes": [
         "panel",
-        "is-new",
         "ptitle",
         "tdot",
         "pbody",
@@ -33326,7 +33265,6 @@
       "ref": "",
       "classes": [
         "panel",
-        "is-new",
         "ptitle",
         "tdot",
         "pbody",
@@ -33375,7 +33313,6 @@
       "ref": "",
       "classes": [
         "panel",
-        "is-new",
         "ptitle",
         "tdot",
         "pbody",
@@ -33420,7 +33357,6 @@
       "ref": "",
       "classes": [
         "panel",
-        "is-new",
         "ptitle",
         "tdot",
         "pbody",
@@ -33466,7 +33402,6 @@
       "ref": "",
       "classes": [
         "panel",
-        "is-new",
         "ptitle",
         "tdot",
         "pbody",
@@ -33979,14 +33914,13 @@
         "background",
         "ambient",
         "behind-content",
-        "needs-js",
         "animated"
       ],
       "componentType": "object-weather",
       "interaction": "auto-play",
       "spectrum": null,
       "usableAsBackground": true,
-      "needsJs": "amb-particles",
+      "needsJs": null,
       "isNew": false,
       "isFixed": false,
       "addedOn": "2026-07-13",
@@ -34020,14 +33954,13 @@
         "background",
         "ambient",
         "behind-content",
-        "needs-js",
         "animated"
       ],
       "componentType": "object-weather",
       "interaction": "auto-play",
       "spectrum": null,
       "usableAsBackground": true,
-      "needsJs": "amb-particles",
+      "needsJs": null,
       "isNew": false,
       "isFixed": false,
       "addedOn": "2026-07-13",
@@ -34061,14 +33994,13 @@
         "background",
         "ambient",
         "behind-content",
-        "needs-js",
         "animated"
       ],
       "componentType": "object-weather",
       "interaction": "auto-play",
       "spectrum": null,
       "usableAsBackground": true,
-      "needsJs": "amb-particles",
+      "needsJs": null,
       "isNew": false,
       "isFixed": false,
       "addedOn": "2026-07-13",
@@ -34102,14 +34034,13 @@
         "background",
         "ambient",
         "behind-content",
-        "needs-js",
         "animated"
       ],
       "componentType": "object-weather",
       "interaction": "auto-play",
       "spectrum": null,
       "usableAsBackground": true,
-      "needsJs": "amb-particles",
+      "needsJs": null,
       "isNew": false,
       "isFixed": false,
       "addedOn": "2026-07-13",
@@ -34298,14 +34229,13 @@
         "background",
         "ambient",
         "behind-content",
-        "needs-js",
         "animated"
       ],
       "componentType": "object-weather",
       "interaction": "auto-play",
       "spectrum": null,
       "usableAsBackground": true,
-      "needsJs": "amb-particles",
+      "needsJs": null,
       "isNew": false,
       "isFixed": false,
       "addedOn": "2026-07-13",
@@ -63489,7 +63419,7 @@
       "role": "feedback",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "layer": "content"
     },
@@ -63763,7 +63693,7 @@
       "role": "input",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "layer": "content"
     },
@@ -64493,7 +64423,7 @@
       "role": "feedback",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "layer": "content"
     },
@@ -64559,7 +64489,7 @@
       "role": "feedback",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "layer": "content"
     },
@@ -70532,7 +70462,7 @@
       "role": "navigation",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "layer": "content"
     },
@@ -70638,7 +70568,7 @@
       "role": "navigation",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "layer": "content"
     },
@@ -70711,7 +70641,7 @@
       "role": "navigation",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "layer": "content"
     },
@@ -70951,7 +70881,7 @@
       "role": "action",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "layer": "content"
     },
@@ -70987,7 +70917,7 @@
       "role": "action",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "layer": "content"
     },
@@ -71026,7 +70956,7 @@
       "role": "action",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "layer": "content"
     },
@@ -71061,7 +70991,7 @@
       "role": "action",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "layer": "content"
     },
@@ -71129,7 +71059,7 @@
       "role": "navigation",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "layer": "content"
     },
@@ -71200,7 +71130,7 @@
       "role": "action",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "layer": "content"
     },
@@ -71235,7 +71165,7 @@
       "role": "navigation",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "layer": "content"
     },
@@ -71270,7 +71200,7 @@
       "role": "navigation",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "layer": "content"
     },
@@ -71657,7 +71587,7 @@
       "role": "navigation",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "layer": "content"
     },
@@ -71778,7 +71708,7 @@
       "role": "navigation",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "layer": "content"
     },
@@ -71816,7 +71746,7 @@
       "role": "navigation",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "layer": "content"
     },
@@ -71852,7 +71782,7 @@
       "role": "navigation",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "layer": "content"
     },
@@ -71888,7 +71818,7 @@
       "role": "navigation",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "layer": "content"
     },
@@ -71924,7 +71854,7 @@
       "role": "navigation",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "layer": "content"
     },
@@ -71959,7 +71889,7 @@
       "role": "navigation",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "layer": "content"
     },
@@ -72104,7 +72034,7 @@
       "role": "navigation",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "layer": "content"
     },
@@ -72212,7 +72142,7 @@
       "role": "navigation",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "layer": "content"
     },
@@ -72246,7 +72176,7 @@
       "role": "navigation",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "layer": "content"
     },
@@ -72354,7 +72284,7 @@
       "role": "navigation",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "layer": "content"
     },
@@ -77271,7 +77201,7 @@
       "role": "navigation",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "layer": "content"
     },
@@ -77345,7 +77275,7 @@
       "role": "action",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "layer": "content"
     },
@@ -77490,7 +77420,7 @@
       "role": "action",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "layer": "content"
     },
@@ -77524,7 +77454,7 @@
       "role": "action",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "layer": "content"
     },
@@ -79474,7 +79404,7 @@
       "role": "navigation",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "layer": "content"
     },
@@ -79508,7 +79438,7 @@
       "role": "action",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "layer": "content"
     },
@@ -79543,7 +79473,7 @@
       "role": "action",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "layer": "content"
     },
@@ -79578,7 +79508,7 @@
       "role": "navigation",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "layer": "content"
     },
@@ -79611,7 +79541,7 @@
       "role": "action",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "layer": "content"
     },
@@ -79645,7 +79575,7 @@
       "role": "action",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "layer": "content"
     },
@@ -79681,7 +79611,7 @@
       "role": "input",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "layer": "content"
     },
@@ -79716,7 +79646,7 @@
       "role": "input",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "layer": "content"
     },
@@ -80120,7 +80050,7 @@
       "role": "input",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "layer": "content"
     },
@@ -80225,7 +80155,7 @@
       "role": "input",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "layer": "content"
     },
@@ -82655,7 +82585,7 @@
       "role": "navigation",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "layer": "content"
     },
@@ -82690,7 +82620,7 @@
       "role": "navigation",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "layer": "content"
     },
@@ -82726,7 +82656,7 @@
       "role": "navigation",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "layer": "content"
     },
@@ -82763,7 +82693,7 @@
       "role": "decorative",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "layer": "content"
     },
@@ -82796,7 +82726,7 @@
       "role": "action",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "layer": "content"
     },
@@ -82867,7 +82797,7 @@
       "role": "input",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "layer": "content"
     },
@@ -82902,7 +82832,7 @@
       "role": "action",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "layer": "content"
     },
@@ -83160,7 +83090,7 @@
       "role": "data-display",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "layer": "content"
     },
@@ -83311,7 +83241,7 @@
       "role": "input",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "layer": "content"
     },
@@ -83346,7 +83276,7 @@
       "role": "input",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "layer": "content"
     },
@@ -84960,7 +84890,7 @@
       "role": "navigation",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "layer": "content"
     },
@@ -84998,7 +84928,7 @@
       "role": "navigation",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "layer": "content"
     },
@@ -85033,7 +84963,7 @@
       "role": "navigation",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "layer": "content"
     },
@@ -85069,7 +84999,7 @@
       "role": "navigation",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "layer": "content"
     },
@@ -85102,7 +85032,7 @@
       "role": "action",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "layer": "content"
     },
@@ -85174,7 +85104,7 @@
       "role": "input",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "layer": "content"
     },
@@ -85566,7 +85496,7 @@
       "role": "input",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "layer": "content"
     },
@@ -85637,7 +85567,7 @@
       "role": "input",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "layer": "content"
     },
@@ -86021,7 +85951,7 @@
       "role": "navigation",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "layer": "content"
     },
@@ -86056,7 +85986,7 @@
       "role": "navigation",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "layer": "content"
     },
@@ -86129,7 +86059,7 @@
       "role": "action",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "layer": "content"
     },
@@ -86196,7 +86126,7 @@
       "role": "action",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "layer": "content"
     },
@@ -86229,7 +86159,7 @@
       "role": "action",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "layer": "content"
     },
@@ -86376,7 +86306,7 @@
       "role": "feedback",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "layer": "content"
     },
@@ -86661,7 +86591,7 @@
       "role": "input",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "layer": "content"
     },
@@ -86697,7 +86627,7 @@
       "role": "input",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "layer": "content"
     },
@@ -86766,7 +86696,7 @@
       "role": "input",
       "a11y": {
         "selfAnimates": false,
-        "reducedMotionSafe": false
+        "reducedMotionSafe": true
       },
       "layer": "content"
     },
