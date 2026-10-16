@@ -74,8 +74,13 @@ const question = {
     // the question: one block of lines per key, the first key under a small "who asks" line
     const K = Math.min(grid.key.w, grid.key.h), u = K / 72;
     const size = (K >= 110 ? 10.5 : 10) * u, lh = size * 1.22, pad = 7 * u;
-    const perKey = Math.max(2, Math.min(5, Math.floor((grid.key.h - pad * 2) / lh)));
-    const blocks = flowWords(ctx.params.question, { keys: top.length, perKey, maxWidth: grid.key.w - pad * 2, size });
+    // as many lines as a key holds under the first key's "who asks" line, spread over the row: a short
+    // question takes two or three lines a key across several keys rather than filling the first two
+    const maxWidth = grid.key.w - pad * 2;
+    const maxPer = Math.max(2, Math.min(5, Math.floor((grid.key.h - pad * 2 - 9 * u) / lh)));
+    const total = flowWords(ctx.params.question, { keys: 1, perKey: 99, maxWidth, size })[0].length;
+    const perKey = Math.min(maxPer, Math.max(2, Math.ceil(total / Math.max(1, top.length))));
+    const blocks = flowWords(ctx.params.question, { keys: top.length, perKey, maxWidth, size });
     const arr = ctx.reduced ? 1 : outExpo(clamp(ctx.t / 0.8));
     top.forEach((cell, i) => keyInto(d, cell, (k) => {
       k.background({ tone: i === 0 ? 'warn' : 'idle' });

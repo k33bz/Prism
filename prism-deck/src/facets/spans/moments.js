@@ -163,7 +163,9 @@ const outrun = {
     const cells = grid.cells;
     const { t } = frameClock(ctx, { fps: 10, changing: Math.ceil(cells.length * 0.6), still: 0.8 });
     const W = k.w, H = k.h, K = Math.min(grid.key.w, grid.key.h), u = K / 72;
-    const hz = H * (grid.rows > 2 ? 0.5 : 0.56);           // the horizon
+    // the horizon sits low inside the upper-middle row of keys (never in a gap): the sky above, the floor below
+    const rowTops = [...new Set(cells.map((c) => c.y))].sort((a, b) => a - b);
+    const hz = rowTops[Math.floor((rowTops.length - 1) / 2)] + grid.key.h * 0.78;
     const pink = T.spectral(345, { tier: 'vivid' }), magenta = T.spectral(320, { tier: 'vivid' }), cyan = T.spectral(200, { tier: 'vivid' });
     const amber = T.spectral(70, { tier: 'vivid' });
     k.add(rect({ width: n(W), height: n(H), fill: '#000000' }));
@@ -173,7 +175,7 @@ const outrun = {
     const floor = k.id('floor');
     k.def(linearGradient(floor, [[0, '#12051f'], [1, '#03020a']], { x1: 0, y1: n(hz), x2: 0, y2: n(H), gradientUnits: 'userSpaceOnUse' }));
     const sun = k.id('sun');
-    const R = Math.min(W * 0.2, hz * 0.62);
+    const R = Math.min(W * 0.18, hz * 0.72);
     k.def(linearGradient(sun, [[0, amber], [1, pink]], { x1: 0, y1: n(hz - R), x2: 0, y2: n(hz), gradientUnits: 'userSpaceOnUse' }));
     for (const c of cells) {
       if (c.y < hz) k.add(rect({ x: n(c.x), y: n(c.y), width: n(c.w), height: n(Math.min(c.h, hz - c.y)), fill: url(sky) }));
