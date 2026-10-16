@@ -124,8 +124,8 @@
   });
 
   const commands = {
-    browser: 'git clone https://github.com/crazy54/Prism.git\ncd Prism\n\n# Open Prism.html in your browser.\n# Or double-click the downloaded file.',
-    mcp: 'git clone https://github.com/crazy54/Prism.git\ncd Prism/prism-mcp-server\n\n# Verify your catalog\nnode cli.js info --catalog ../Prism.html\n\n# Start the local MCP server\nnode cli.js start --catalog ../Prism.html'
+    browser: 'git clone https://github.com/k33bz/Prism.git\ncd Prism\n\n# Open Prism.html in your browser.\n# Or double-click the downloaded file.',
+    mcp: 'git clone https://github.com/k33bz/Prism.git\ncd Prism/prism-mcp-server\n\n# Verify your catalog\nnode cli.js info --catalog ../Prism.html\n\n# Start the local MCP server\nnode cli.js start --catalog ../Prism.html'
   };
   const tabs = [...document.querySelectorAll('[role="tab"]')];
   function selectTab(tab) {

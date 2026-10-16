@@ -2,17 +2,17 @@
   {
     "id": "charts",
     "title": "Charts & Metrics",
-    "count": 209
+    "count": 266
   },
   {
     "id": "fx",
     "title": "FX Store",
-    "count": 146
+    "count": 329
   },
   {
     "id": "lab",
     "title": "Animation Lab",
-    "count": 217
+    "count": 261
   },
   {
     "id": "ai",
@@ -22,17 +22,17 @@
   {
     "id": "objects",
     "title": "Animated Objects",
-    "count": 91
+    "count": 185
   },
   {
     "id": "input",
     "title": "Input Methods",
-    "count": 101
+    "count": 136
   },
   {
     "id": "text",
     "title": "Text Effects",
-    "count": 100
+    "count": 102
   },
   {
     "id": "shapes",
@@ -47,12 +47,17 @@
   {
     "id": "notify",
     "title": "Notifications & Status",
-    "count": 50
+    "count": 55
   },
   {
     "id": "arch",
     "title": "Architecture Diagrams",
-    "count": 50
+    "count": 76
+  },
+  {
+    "id": "aws",
+    "title": "AWS Architecture",
+    "count": 87
   },
   {
     "id": "callouts",
@@ -67,11 +72,21 @@
   {
     "id": "menus",
     "title": "Menus & Actions",
-    "count": 37
+    "count": 62
+  },
+  {
+    "id": "tables",
+    "title": "Tables & Data Layouts",
+    "count": 57
+  },
+  {
+    "id": "diagrams",
+    "title": "Diagrams & Frameworks",
+    "count": 58
   },
   {
     "id": "spectrums",
     "title": "Spectrums",
-    "count": 1266
+    "count": 1566
   }
 ]
