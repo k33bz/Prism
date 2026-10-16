@@ -6,9 +6,9 @@
 
 **[prism.k33bz.com](https://prism.k33bz.com)** · [open the gallery](https://prism.k33bz.com/Prism.html)
 
-A single-file gallery of **3,641** offline, self-contained CSS/SVG animations, components, and backdrops, built to be browsed by humans *and* driven by AI agents. Ships with a **zero-dependency MCP server** so Claude (Desktop, Code, or the API) can search the catalog and compose production-ready HTML/CSS on demand.
+A single-file gallery of **3,687** offline, self-contained CSS/SVG animations, components, and backdrops, built to be browsed by humans *and* driven by AI agents. Ships with a **zero-dependency MCP server** so Claude (Desktop, Code, or the API) can search the catalog and compose production-ready HTML/CSS on demand.
 
-![Effects](https://img.shields.io/badge/effects-3641-ff9900) ![Galleries](https://img.shields.io/badge/galleries-18-4493f8) ![Dependencies](https://img.shields.io/badge/dependencies-0-3fb950) ![Offline](https://img.shields.io/badge/offline-100%25-3fb950) ![MCP](https://img.shields.io/badge/MCP-server%20included-c879ff) ![Single file](https://img.shields.io/badge/single%20file-HTML-e0a52b)
+![Effects](https://img.shields.io/badge/effects-3687-ff9900) ![Galleries](https://img.shields.io/badge/galleries-18-4493f8) ![Dependencies](https://img.shields.io/badge/dependencies-0-3fb950) ![Offline](https://img.shields.io/badge/offline-100%25-3fb950) ![MCP](https://img.shields.io/badge/MCP-server%20included-c879ff) ![Single file](https://img.shields.io/badge/single%20file-HTML-e0a52b)
 
 </div>
 
@@ -22,6 +22,7 @@ This is [k33bz/Prism](https://github.com/k33bz/Prism), a fork of [crazy54/Prism]
 - **☁️ AWS Architecture gallery:** 87 animated reference architectures in 11 families drawn with the official AWS Architecture Icons: serverless, three-tier web applications, Active Directory (forest trusts, AD Connector, Windows and Kerberos auth for RDS, Aurora and FSx), databases, multi-Region resilience, VPC and hybrid networking, security groups and network ACLs (rule tables whose rows light as each packet is admitted or denied), IPv6 and dual stack (IPv6 packets as diamonds, two-line IPv4 and IPv6 CIDR notes, the egress-only internet gateway, NAT64), transit and segmentation (TGW route tables, Connect, Cloud WAN, Gateway Load Balancer, VPC Lattice, IPAM), service endpoints and private access, and Route 53 DNS (Resolver endpoints, Profiles, DNS Firewall, DNSSEC). They compile from plain-data specs (`catalog/aws-kit`), all 859 icons are embedded once with a searchable icon library, Copy carries the icons a diagram uses, and the MCP server can search and serve any icon.
 - **New facet families inside existing galleries:** the Elemental Base blocks and Pokémon Battle scenes in FX Store, a self-hosted-Forgejo landing kit in Animated Objects and Text Effects, presence status modifiers and a live avatar stack in Notifications.
 - **Three more theme packs** (Cloudflare Orange, Google Cloud Console, Fluent for Azure) through the same profile, scaffolder, generator and 100-facet gate as upstream's packs, plus two skins (Frutiger Aero, Liquid Glass).
+- **Upstream's Refraction design language** (from its `feat/prism-design-language` branch): the Prism theme (Night and Day, with the `--rf-*` token layer) as a skin, its 46 Refraction signature facets in 14 galleries, and its accessibility labels on existing tiles. A per-gallery token layer resolves every `--rf-*` those facets read under every other theme too.
 - **Git-derived metadata:** every catalog record carries `addedOn`, `updatedOn` and `author` mined from history, the New Facets page is built from those dates with an adjustable window, and Search filters and sorts by author.
 
 Every facet records who introduced it (`author`: `crazy54` upstream, `k33bz` fork), so attribution travels with the catalog rather than living in this paragraph.
@@ -69,7 +70,7 @@ node cli.js tools
 node cli.js start --catalog ../Prism.html
 ```
 
-`info` should report **3,641 effects across 18 galleries** (1,300 of those are the 13 theme packs' Spectrum facets, 100 per pack). If it does, the server is working; the remaining steps just tell a client *how* to launch it.
+`info` should report **3,687 effects across 18 galleries** (1,300 of those are the 13 theme packs' Spectrum facets, 100 per pack). If it does, the server is working; the remaining steps just tell a client *how* to launch it.
 
 > **Always point `--catalog` at `Prism.html`.** The `#prism-catalog` island inside it is the authoritative catalog and can be fresher than `catalog/manifest.json`. If `--catalog` is omitted, the server defaults to `../Prism.html`, falling back to `../catalog/manifest.json`.
 
@@ -273,22 +274,22 @@ Eighteen authored galleries, plus special views. Every element carries a name, i
 
 | Gallery | What's inside | Count |
 |---|---|--:|
-| 🧪 **Animation Lab** | Motion studies — easing, transforms, loaders, physics, keyframes, loaders and waiting states, reveal choreography | 261 |
+| 🧪 **Animation Lab** | Motion studies — easing, transforms, loaders, physics, keyframes, loaders and waiting states, reveal choreography | 267 |
 | ◆ **Spectrums** | 9 hand-authored families across full visual languages (Material, glass, brutalist, solarpunk…) plus the 13 theme packs at 100 generator facets each | 1566 |
-| 📊 **Charts & Metrics** | KPIs, gauges, progress, trends, comparisons, status, 3D charts, correlation/time/distribution plots, treemaps and hierarchies, liquid gauges and variance bands, run charts with SPC rules | 266 |
-| 🎇 **FX Store** | Drop-in visual effects: glow, pulse, shimmer, glass, particles, glitch, Pokémon Battle signature scenes, Elemental Base blocks (spray, bolt, streak, burst, aura, volley), glow system, hover and reveal | 248 |
-| ◈ **Obsidian Facets** | Callouts, graph links, note chrome, Dataview dashboards, Canvas, focus scenes | 130 |
-| 🤖 **AI Working** | "Thinking" states, token streams, tool calls, model internals | 118 |
-| ✏️ **Input Methods** | Controls, pickers, toggles, interactive input patterns, button hover effects, retro sci-fi control panels, nixie tubes | 136 |
-| 🔤 **Text Effects** | Gradient, neon, glitch, shimmer, kinetic, 3D/extrude text | 102 |
-| ⌬ **Animated Objects** | Self-contained animated SVG/CSS objects, icons, 3D objects, forge landing kit, ambient backgrounds, 3D CSS objects, synthwave outrun scenes, hourglass and sand, lava lamps | 185 |
-| 🌈 **Text Shapes** | Text arranged into arcs, rings, spirals, 3D tunnels | 53 |
-| 🌍 **Maps & Geo** | Offline SVG maps, pulsing markers, great-circle arcs, choropleth, radar, telemetry | 50 |
-| 🔔 **Notifications & Status** | Toasts, snackbars, banners, live indicators, presence status set, live avatar stack, empty states, skeletons, geometric and 3D avatar shapes | 55 |
-| 🗺 **Architecture Diagrams** | Service nodes, animated connectors, VPC containers, sequence & flow diagrams, AWS reference architectures, network flow maps | 76 |
-| ☁️ **AWS Architecture** | Animated reference architectures on the official AWS Architecture Icons: serverless, web applications, Active Directory and trusts, databases, regions and resilience, VPC and hybrid networking, transit and segmentation, service endpoints, Route 53 and DNS, plus a searchable library of all 859 icons | 78 |
-| ⭐ **Callouts & Annotations** | Admonitions, badges & pills, timelines, dividers, tooltips, key-value meta | 50 |
-| 🧭 **Menus & Actions** | Dropdowns, context menus, command palettes, action bars, radial menus, live long-press and drag dial menus | 62 |
+| 📊 **Charts & Metrics** | KPIs, gauges, progress, trends, comparisons, status, 3D charts, correlation/time/distribution plots, treemaps and hierarchies, liquid gauges and variance bands, run charts with SPC rules | 271 |
+| 🎇 **FX Store** | Drop-in visual effects: glow, pulse, shimmer, glass, particles, glitch, Pokémon Battle signature scenes, Elemental Base blocks (spray, bolt, streak, burst, aura, volley), glow system, hover and reveal | 335 |
+| ◈ **Obsidian Facets** | Callouts, graph links, note chrome, Dataview dashboards, Canvas, focus scenes | 131 |
+| 🤖 **AI Working** | "Thinking" states, token streams, tool calls, model internals | 121 |
+| ✏️ **Input Methods** | Controls, pickers, toggles, interactive input patterns, button hover effects, retro sci-fi control panels, nixie tubes | 140 |
+| 🔤 **Text Effects** | Gradient, neon, glitch, shimmer, kinetic, 3D/extrude text | 106 |
+| ⌬ **Animated Objects** | Self-contained animated SVG/CSS objects, icons, 3D objects, forge landing kit, ambient backgrounds, 3D CSS objects, synthwave outrun scenes, hourglass and sand, lava lamps | 188 |
+| 🌈 **Text Shapes** | Text arranged into arcs, rings, spirals, 3D tunnels | 55 |
+| 🌍 **Maps & Geo** | Offline SVG maps, pulsing markers, great-circle arcs, choropleth, radar, telemetry | 53 |
+| 🔔 **Notifications & Status** | Toasts, snackbars, banners, live indicators, presence status set, live avatar stack, empty states, skeletons, geometric and 3D avatar shapes | 57 |
+| 🗺 **Architecture Diagrams** | Service nodes, animated connectors, VPC containers, sequence & flow diagrams, AWS reference architectures, network flow maps | 78 |
+| ☁️ **AWS Architecture** | Animated reference architectures on the official AWS Architecture Icons: serverless, web applications, Active Directory and trusts, databases, regions and resilience, VPC and hybrid networking, transit and segmentation, service endpoints, Route 53 and DNS, plus a searchable library of all 859 icons | 87 |
+| ⭐ **Callouts & Annotations** | Admonitions, badges & pills, timelines, dividers, tooltips, key-value meta | 52 |
+| 🧭 **Menus & Actions** | Dropdowns, context menus, command palettes, action bars, radial menus, live long-press and drag dial menus | 65 |
 | 📋 **Tables & Data Layouts** | Data tables, status cells, matrices, key-value blocks, lists & trees, grids & schedules, ledgers, toolbars | 57 |
 | 📐 **Diagrams & Frameworks** | Fishbone variants, flowcharts & loops, trees & funnels, Venn & SWOT, roadmaps & Gantt, networks, Sankey sub-styles, OKR / RACI / canvas, flywheels | 58 |
 
@@ -302,7 +303,7 @@ Eighteen authored galleries, plus special views. Every element carries a name, i
 
 ## Themes
 
-Prism ships **16 themes, each in dark and light** (32 entries in the theme registry, mirrored into the MCP server). It is built in the **AWS Cloudscape** design language, **Cloudscape Dark** and **Cloudscape Light**; a first visit follows the system (Auto: dark or light by `prefers-color-scheme`) until you pick a mode. Toggle between them from the top navigation bar. The theme picker also carries the design-system packs (Duolingo, Mailchimp, Stack Overflow, Monzo, Heroku, Polaris, Primer, Ant Design, Acorn, Material 3, **Cloudflare Orange**, **Google Cloud Console**, **Fluent (Azure)**), each with a gated 100-facet family in the Spectrums gallery, and two skin-only themes with no facet family of their own: **Frutiger Aero** and **Liquid Glass**. Every theme ships in dark and light. The mode override reskins the entire tool (shell *and* every gallery) by swapping a shared set of CSS custom properties (`--accent`, `--info`, `--pos`, `--bg`, `--ink` …), so every element re-themes at once. Your choice persists across sessions.
+Prism ships **17 themes, each in dark and light** (34 entries in the theme registry, mirrored into the MCP server). It is built in the **AWS Cloudscape** design language, **Cloudscape Dark** and **Cloudscape Light**; a first visit follows the system (Auto: dark or light by `prefers-color-scheme`) until you pick a mode. Toggle between them from the top navigation bar. The theme picker also carries the design-system packs (Duolingo, Mailchimp, Stack Overflow, Monzo, Heroku, Polaris, Primer, Ant Design, Acorn, Material 3, **Cloudflare Orange**, **Google Cloud Console**, **Fluent (Azure)**), each with a gated 100-facet family in the Spectrums gallery, and three skin-only themes with no facet family of their own: **Frutiger Aero**, **Liquid Glass** and **Prism** (upstream's Refraction design language, Night and Day). Every theme ships in dark and light. The mode override reskins the entire tool (shell *and* every gallery) by swapping a shared set of CSS custom properties (`--accent`, `--info`, `--pos`, `--bg`, `--ink` …), so every element re-themes at once. Your choice persists across sessions.
 
 To start a new theme from a brand color, derive it instead of hand-tuning it: `node catalog/theme-engine/derive.mjs --accent '#0078d4' --css` prints both modes' `:root` blocks and a report of every contrast pair, and `--profile out.mjs` writes a pack profile for `_scaffold_ds.mjs`. The MCP server exposes the same engine as `derive_theme` and `check_theme_contrast`, and `compose { tokens: { dark, light } }` applies a derived palette to a bundle. See [`catalog/theme-engine/README.md`](./catalog/theme-engine/README.md).
 

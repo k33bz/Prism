@@ -1,6 +1,6 @@
 # Prism MCP Server
 
-A [Model Context Protocol](https://modelcontextprotocol.io) server that exposes the **Prism component catalog** (3,641 self-contained CSS/SVG facets in 18 galleries, themed by 16 design systems in dark and light) and the **AWS architecture diagram kit** (87 animated gallery diagrams) as tools for agents.
+A [Model Context Protocol](https://modelcontextprotocol.io) server that exposes the **Prism component catalog** (3,687 self-contained CSS/SVG facets in 18 galleries, themed by 17 design systems in dark and light) and the **AWS architecture diagram kit** (87 animated gallery diagrams) as tools for agents.
 
 An agent can ask for *"a KPI dashboard with revenue over time and the plan mix, in Duolingo Light"* and get the right components, themed and composed into **production-ready HTML/CSS**, or for *"a three-tier VPC with its security group rules"* and get an animated AWS diagram, a PNG or a draw.io file.
 
@@ -142,7 +142,7 @@ A theme is a `:root` token swap over identical HTML and CSS. `get_theme_palette 
 ### Component Variant Matrix (3)
 | Tool | Purpose |
 |------|---------|
-| `get_theme_palette` | Token palette for one theme (or all 32): complete token map (on-fill inks, `--control-line`, the pack's `--cs-topnav-*` top bar with `--cs-topnav-accent` where the bar is the accent), overrides vs the Cloudscape Dark base, mode, and a paste-ready `:root{...}` block. One theme also returns `rootAttributes`, `pair` (its design system's dark and light ids), `autoCss` and `autoScript`. Prism ships 16 design systems in dark and light: Cloudscape (`cloudscape-dark` is the base), Duolingo, Mailchimp, Stack Overflow, Monzo, Heroku, Shopify Polaris, GitHub Primer, Ant Design, Firefox Acorn, Material Design 3, Cloudflare Orange, Frutiger Aero, Liquid Glass, Google Cloud Console and Fluent (Azure). |
+| `get_theme_palette` | Token palette for one theme (or all 34): complete token map (on-fill inks, `--control-line`, the pack's `--cs-topnav-*` top bar with `--cs-topnav-accent` where the bar is the accent), overrides vs the Cloudscape Dark base, mode, and a paste-ready `:root{...}` block. One theme also returns `rootAttributes`, `pair` (its design system's dark and light ids), `autoCss` and `autoScript`. Prism ships 17 design systems in dark and light: Cloudscape (`cloudscape-dark` is the base), Duolingo, Mailchimp, Stack Overflow, Monzo, Heroku, Shopify Polaris, GitHub Primer, Ant Design, Firefox Acorn, Material Design 3, Cloudflare Orange, Frutiger Aero, Liquid Glass, Google Cloud Console, Fluent (Azure) and Prism (Refraction). |
 | `get_component_variants` | Every theme variant of one component. Prism themes are pure `:root` token swaps over identical HTML/CSS, so this returns the payload **once** plus each theme's token overrides (and the subset the component actually consumes), not N copies. |
 | `get_variants_for_theme` | Components rendered under a single theme, each with the token values it uses; supports gallery/componentType/spectrum/tag + `themeSensitiveOnly` filters + pagination. |
 
