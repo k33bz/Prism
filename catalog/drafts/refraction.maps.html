@@ -1,0 +1,102 @@
+<h3 class="sec">SPECTRAL SIGNATURES</h3>
+<style id="gmap-rf-styles">
+/* ===== Maps · spectral signatures (gmap-beam* / gmap-prism* / gmap-fl*) — Refraction-native, tokens only ===== */
+.gmap-eye{font:600 9.5px/1.2 var(--rf-mono,ui-monospace,monospace);letter-spacing:.15em;text-transform:uppercase;color:var(--rf-g-maps,var(--accent))}
+.gmap-eye .gmap-sep{color:var(--dim);font-weight:400;margin:0 .35em}
+.gmap-eye .gmap-lam{color:var(--dim);font-weight:400;text-transform:none;letter-spacing:.04em}
+
+/* A · Beam-traced route — the route is a hairline of light; a pulse of white light travels it */
+@keyframes gmapBeamRun{from{stroke-dashoffset:14}to{stroke-dashoffset:-100}}
+@keyframes gmapBeamLand{0%,78%{r:3.5;opacity:.9}86%{r:7;opacity:1}100%{r:3.5;opacity:.9}}
+.gmap-beamroute .ghost{fill:none;stroke:var(--line);stroke-width:1.2;stroke-dasharray:2 4}
+.gmap-beamroute .lit{fill:none;stroke:rgba(var(--rf-g-maps-rgb,var(--accent-rgb)),.4);stroke-width:1.6;stroke-linecap:round}
+.gmap-beamroute .gmap-rf-halo{fill:none;stroke:var(--rf-g-maps-v,var(--accent));stroke-width:6;stroke-linecap:round;stroke-dasharray:14 200;opacity:.45;filter:blur(2px);animation:gmapBeamRun 2.8s cubic-bezier(.65,0,.35,1) infinite}
+.gmap-beamroute .gmap-rf-core{fill:none;stroke:var(--rf-beam-core,#fff);stroke-width:1.6;stroke-linecap:round;stroke-dasharray:14 200;filter:drop-shadow(0 0 3px rgba(var(--rf-g-maps-rgb,var(--accent-rgb)),.9));animation:gmapBeamRun 2.8s cubic-bezier(.65,0,.35,1) infinite}
+.gmap-beamroute .gmap-rf-end{fill:var(--rf-g-maps-v,var(--accent));filter:drop-shadow(0 0 5px rgba(var(--rf-g-maps-rgb,var(--accent-rgb)),.9));animation:gmapBeamLand 2.8s ease-out infinite}
+.gmap-beamroute .org{fill:var(--rf-beam-core,#fff);stroke:var(--rf-g-maps-v,var(--accent));stroke-width:1.5}
+.gmap-beamroute .gmap-rf-lbl{position:absolute;left:12px;top:10px}
+.gmap-beamroute .km{position:absolute;right:12px;bottom:9px;font:400 9.5px/1 var(--rf-mono,ui-monospace,monospace);color:var(--dim);letter-spacing:.04em}
+
+/* B · Prism pin — a glass prism hovers over the place; a beam of light drops to it and ripples out */
+@keyframes gmapPrismBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+@keyframes gmapPrismRipple{0%{transform:translate(-50%,-50%) scale(.3);opacity:.9}100%{transform:translate(-50%,-50%) scale(1.6);opacity:0}}
+.gmap-prismpin .pin{position:absolute;left:50%;top:22px;width:44px;margin-left:-22px;animation:gmapPrismBob 3.2s ease-in-out infinite}
+.gmap-prismpin .pin svg{display:block;overflow:visible}
+.gmap-prismpin .shaft{position:absolute;left:50%;top:62px;width:2px;height:48px;margin-left:-1px;border-radius:1px;
+  background:var(--rf-beam-v,linear-gradient(180deg,rgba(255,255,255,0),#fff 30%,#fff 70%,rgba(255,255,255,0)));box-shadow:0 0 10px rgba(var(--rf-g-maps-rgb,var(--accent-rgb)),.8)}
+.gmap-prismpin .spot{position:absolute;left:50%;top:116px;width:10px;height:4px;margin-left:-5px;border-radius:50%;background:var(--rf-beam-core,#fff);box-shadow:0 0 10px 2px rgba(var(--rf-g-maps-rgb,var(--accent-rgb)),.9)}
+.gmap-prismpin .ripple{position:absolute;left:50%;top:118px;width:58px;height:16px;border-radius:50%;border:1.5px solid var(--rf-g-maps-v,var(--accent));transform:translate(-50%,-50%);animation:gmapPrismRipple 2.4s ease-out infinite}
+.gmap-prismpin .ripple.gmap-rf-r2{animation-delay:1.2s}
+.gmap-prismpin .gmap-rf-tag{position:absolute;right:calc(50% + 30px);top:26px;padding:5px 8px;border-radius:6px;background:var(--rf-glass,var(--card));
+  border:1px solid var(--rf-glass-line,var(--line));box-shadow:var(--rf-shadow-1,none);font:600 11px/1.25 var(--font,system-ui,sans-serif);color:var(--ink);white-space:nowrap}
+.gmap-prismpin .gmap-rf-tag .gmap-eye{display:block;margin-top:3px;font-size:8.5px}
+
+/* C · First Light world scan — a vertical beam crosses a dotted world and lights it in the gallery hue */
+@keyframes gmapFlScan{0%{transform:translateX(0);opacity:0}6%{opacity:1}70%{transform:translateX(250px);opacity:1}76%,100%{transform:translateX(250px);opacity:0}}
+@keyframes gmapFlLight{0%{clip-path:inset(0 100% 0 0)}70%{clip-path:inset(0 0 0 0)}92%{clip-path:inset(0 0 0 0);opacity:1}100%{clip-path:inset(0 0 0 0);opacity:0}}
+.gmap-firstlight{position:relative;width:250px;height:158px;border-radius:12px;overflow:hidden;background:var(--rf-bg-deep,var(--panel2));border:1px solid var(--line)}
+.gmap-firstlight .gmap-rf-grid{position:absolute;inset:0;background-image:radial-gradient(var(--rf-faint,var(--dim)) .8px,transparent 1.2px);background-size:9px 9px;opacity:.55}
+.gmap-firstlight .land{position:absolute;background-image:radial-gradient(var(--rf-line-strong,var(--dim)) 1.3px,transparent 1.9px);background-size:9px 9px}
+.gmap-firstlight .lit{position:absolute;inset:0;animation:gmapFlLight 4.2s cubic-bezier(.65,0,.35,1) infinite}
+.gmap-firstlight .lit .land{background-image:radial-gradient(var(--rf-g-maps-v,var(--accent)) 1.4px,transparent 2px);filter:drop-shadow(0 0 3px rgba(var(--rf-g-maps-rgb,var(--accent-rgb)),.7))}
+.gmap-firstlight .beam{position:absolute;top:0;bottom:0;left:-1px;width:2px;background:var(--rf-beam-v,linear-gradient(180deg,transparent,#fff 30%,#fff 70%,transparent));
+  box-shadow:0 0 14px 3px rgba(var(--rf-g-maps-rgb,var(--accent-rgb)),.55),0 0 40px 8px rgba(var(--rf-g-maps-rgb,var(--accent-rgb)),.18);animation:gmapFlScan 4.2s cubic-bezier(.65,0,.35,1) infinite}
+.gmap-firstlight .gmap-eye{position:absolute;left:10px;bottom:8px;padding:3px 6px;border-radius:4px;background:var(--rf-glass,var(--panel));border:1px solid var(--rf-glass-line,var(--line))}
+
+@media (prefers-reduced-motion:reduce){
+  .gmap-beamroute .gmap-rf-halo,.gmap-beamroute .gmap-rf-core,.gmap-beamroute .gmap-rf-end,.gmap-prismpin .pin,.gmap-prismpin .ripple,.gmap-firstlight .lit,.gmap-firstlight .beam{animation:none}
+  .gmap-beamroute .gmap-rf-halo,.gmap-beamroute .gmap-rf-core{stroke-dashoffset:-80}
+  .gmap-firstlight .beam{opacity:0}
+}
+</style>
+<div class="gallery">
+
+  <div class="tile is-new" data-ctype="map-route" data-interact="auto-play"><div class="stage">
+    <div class="gmap-scene gmap-beamroute">
+      <svg class="gmap-svg" viewBox="0 0 250 158">
+        <path class="gmap-land" d="M18,50 Q30,34 55,38 Q72,30 82,46 Q78,64 60,70 Q40,78 28,66 Z" opacity=".55"/>
+        <path class="gmap-land" d="M120,44 Q140,32 158,42 Q150,58 132,60 Q122,54 120,44 Z" opacity=".55"/>
+        <path class="gmap-land" d="M172,40 Q206,32 230,46 Q224,64 196,66 Q176,60 172,40 Z" opacity=".55"/>
+        <path class="ghost" d="M34,112 C80,26 168,24 216,70"/>
+        <path class="lit" d="M34,112 C80,26 168,24 216,70"/>
+        <path class="gmap-rf-halo" d="M34,112 C80,26 168,24 216,70" pathLength="100"/>
+        <path class="gmap-rf-core" d="M34,112 C80,26 168,24 216,70" pathLength="100"/>
+        <circle class="org" cx="34" cy="112" r="3.5"/>
+        <circle class="gmap-rf-end" cx="216" cy="70" r="3.5"/>
+      </svg>
+      <div class="gmap-rf-lbl gmap-eye">SFO<span class="gmap-sep">→</span>FRA<span class="gmap-sep">·</span><span class="gmap-lam">λ 519</span></div>
+      <div class="km">9 140 km · 10 h 55 m</div>
+    </div>
+  </div><div class="meta"><div class="nm">Beam-Traced Route</div><span class="ref">.gmap-beamroute</span><div class="desc">A great-circle route drawn as a hairline of light: a pulse of white light runs the path origin → destination, the lit trail glows in the gallery hue, and the destination flares as the beam lands.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+
+  <div class="tile is-new" data-ctype="map-marker" data-interact="auto-play"><div class="stage">
+    <div class="gmap-scene gmap-prismpin">
+      <svg class="gmap-svg" viewBox="0 0 250 158" preserveAspectRatio="none">
+        <path class="gmap-land" d="M70,80 Q110,64 150,74 Q186,82 196,104 Q170,132 120,130 Q78,128 62,108 Z" opacity=".7"/>
+      </svg>
+      <div class="ripple"></div><div class="ripple gmap-rf-r2"></div>
+      <div class="shaft"></div><div class="spot"></div>
+      <div class="pin"><svg width="44" height="42" viewBox="0 0 44 42">
+        <defs><linearGradient id="gmapPrismIris" x1="0" y1="0" x2="1" y2="1"><stop offset="0.000" stop-color="var(--rf-s-violet-v,#ab91eb)"/><stop offset="0.167" stop-color="var(--rf-s-azure-v,#52acee)"/><stop offset="0.333" stop-color="var(--rf-s-cyan-v,#00c3be)"/><stop offset="0.500" stop-color="var(--rf-s-mint-v,#52cea0)"/><stop offset="0.667" stop-color="var(--rf-s-citrine-v,#ebc059)"/><stop offset="0.833" stop-color="var(--rf-s-coral-v,#f69077)"/><stop offset="1.000" stop-color="var(--rf-s-rose-v,#ec8398)"/></linearGradient>
+        <linearGradient id="gmapPrismGlass" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="rgb(var(--rf-g-maps-rgb,var(--accent-rgb)))" stop-opacity=".42"/><stop offset="1" stop-color="rgb(var(--rf-g-maps-rgb,var(--accent-rgb)))" stop-opacity=".1"/></linearGradient></defs>
+        <polygon points="3,3 41,3 22,39" fill="url(#gmapPrismGlass)" stroke="url(#gmapPrismIris)" stroke-width="1.6" stroke-linejoin="round"/>
+        <line x1="7" y1="6" x2="37" y2="6" stroke="var(--rf-beam-core,#fff)" stroke-opacity=".75" stroke-width="1"/>
+        <line x1="22" y1="3" x2="22" y2="39" stroke="var(--rf-beam-core,#fff)" stroke-opacity=".22" stroke-width="1"/>
+      </svg></div>
+      <div class="gmap-rf-tag">Frankfurt edge<span class="gmap-eye">50.11°N<span class="gmap-sep">·</span>8.68°E</span></div>
+    </div>
+  </div><div class="meta"><div class="nm">Prism Pin Marker</div><span class="ref">.gmap-prismpin</span><div class="desc">A location marker made of glass: a small prism with an iridescent rim hovers over the place, a beam of light drops from its tip and the ground ripples where it lands. Pair the tag with coordinates in the instrument face.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+
+  <div class="tile is-new" data-ctype="map" data-interact="auto-play"><div class="stage">
+    <div class="gmap-firstlight">
+      <div class="gmap-rf-grid"></div>
+      <div class="land" style="left:20px;top:44px;width:70px;height:44px"></div><div class="land" style="left:56px;top:86px;width:34px;height:52px"></div><div class="land" style="left:118px;top:40px;width:44px;height:30px"></div><div class="land" style="left:126px;top:70px;width:40px;height:64px"></div><div class="land" style="left:176px;top:38px;width:60px;height:30px"></div><div class="land" style="left:196px;top:100px;width:34px;height:26px"></div>
+      <div class="lit"><div class="land" style="left:20px;top:44px;width:70px;height:44px"></div><div class="land" style="left:56px;top:86px;width:34px;height:52px"></div><div class="land" style="left:118px;top:40px;width:44px;height:30px"></div><div class="land" style="left:126px;top:70px;width:40px;height:64px"></div><div class="land" style="left:176px;top:38px;width:60px;height:30px"></div><div class="land" style="left:196px;top:100px;width:34px;height:26px"></div></div>
+      <div class="beam"></div>
+      <div class="gmap-eye">First light<span class="gmap-sep">·</span>06:00 UTC<span class="gmap-sep">·</span><span class="gmap-lam">λ 519</span></div>
+    </div>
+  </div><div class="meta"><div class="nm">First Light World Scan</div><span class="ref">.gmap-firstlight</span><div class="desc">A vertical beam of white light crosses a dark dotted world and paints every continent in the gallery hue as it passes — the Prism load moment, as a map. Great for "coming online", sunrise or rollout coverage.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+</div>

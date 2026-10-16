@@ -1,0 +1,308 @@
+<h3 class="sec">Refraction Signatures</h3>
+<style id="rfm-styles">
+/* ============================================================================
+   0 — REFRACTION SIGNATURES (rfm-*)
+   Every --rf-* read here carries a contract fallback so a copied facet degrades
+   to any theme's own tokens.
+   ============================================================================ */
+.rfm-kbd{display:inline-flex;align-items:center;justify-content:center;min-width:20px;height:20px;padding:0 5px;
+  border:1px solid var(--rf-line-strong,var(--line));border-bottom-width:2px;border-radius:var(--rf-r-xs,4px);
+  background:var(--panel2);color:var(--muted);font:400 10px/1 var(--rf-mono,ui-monospace,monospace);letter-spacing:.02em;white-space:nowrap}
+
+/* ---- Spectral Command Palette: glass, lens + caret, full-spectrum beam, spectral match ---- */
+.rfm-pal{position:relative;width:100%;max-width:340px;overflow:hidden;border-radius:var(--r-xl,16px);
+  background:var(--rf-glass-strong,var(--panel));-webkit-backdrop-filter:blur(18px) saturate(140%);backdrop-filter:blur(18px) saturate(140%);
+  border:1px solid var(--rf-glass-line,var(--line));box-shadow:inset 0 1px 0 var(--rf-edge-hi,transparent),var(--rf-shadow-2,var(--elev-2));
+  color:var(--ink);font:400 13px/1.2 var(--font);text-align:left;transition:border-color var(--rf-dur-base,.24s)}
+.rfm-pal:focus-within{border-color:var(--rf-accent-line,var(--accent));box-shadow:inset 0 1px 0 var(--rf-edge-hi,transparent),0 0 0 4px var(--rf-focus-halo,transparent),var(--rf-shadow-2,var(--elev-2))}
+.rfm-pal-in{position:relative;display:flex;align-items:center;gap:10px;height:50px;padding:0 14px 0 42px}
+.rfm-pal-in::before{content:"";position:absolute;left:17px;top:50%;width:10px;height:10px;margin-top:-7px;border:1.5px solid var(--muted);border-radius:50%}
+.rfm-pal-in::after{content:"";position:absolute;left:27px;top:50%;width:6px;height:1.5px;margin-top:4px;background:var(--muted);transform:rotate(45deg);transform-origin:left center}
+.rfm-pal-q{flex:1;min-width:0;height:100%;padding:0;border:0;background:transparent;color:var(--ink);font:400 14px/1 var(--font);caret-color:var(--accent);outline:none}
+.rfm-pal-q:focus,.rfm-pal-q:focus-visible{outline:none!important}
+.rfm-pal-q::placeholder{color:var(--dim)}
+.rfm-pal-beam{position:relative;display:block;height:1px;background:var(--rf-spectrum,linear-gradient(90deg,var(--accent),var(--accent2)));opacity:.7;transition:opacity var(--rf-dur-base,.24s)}
+.rfm-pal-beam::after{content:"";position:absolute;left:0;right:0;top:-2px;height:5px;background:inherit;filter:blur(4px);opacity:.55}
+.rfm-pal:focus-within .rfm-pal-beam{opacity:1}
+.rfm-pal-list{max-height:286px;overflow:auto;padding:2px 6px 6px;scrollbar-width:thin}
+.rfm-pal-grp{padding:11px 8px 5px;font:600 9.5px/1 var(--rf-mono,ui-monospace,monospace);letter-spacing:.15em;text-transform:uppercase;color:var(--dim)}
+.rfm-pal-row{display:flex;align-items:center;gap:8px;height:36px;padding:0 8px;border-radius:var(--r-md,8px);color:var(--muted);cursor:pointer;white-space:nowrap;
+  transition:background-color var(--rf-dur-fast,.14s)}
+.rfm-pal-row[hidden],.rfm-pal-grp[hidden],.rfm-pal-empty[hidden]{display:none}
+.rfm-pal-row:hover{background:var(--rf-hover,rgba(127,127,127,.08))}
+.rfm-pal-row[aria-selected="true"]{background:rgba(var(--hr,var(--accent-rgb)),.13);box-shadow:inset 0 0 0 1px rgba(var(--hr,var(--accent-rgb)),.3)}
+.rfm-tick{flex:none;width:3px;height:14px;border-radius:2px;background:var(--h,var(--accent));opacity:.85}
+.rfm-tick.is-white{background:var(--rf-white,var(--ink));opacity:.6}
+.rfm-pal-row[aria-selected="true"] .rfm-tick{opacity:1;box-shadow:0 0 8px rgba(var(--hr,var(--accent-rgb)),.8)}
+.rfm-pal-name{flex:none;max-width:60%;overflow:hidden;text-overflow:ellipsis;color:var(--ink)}
+.rfm-pal-name mark{background:var(--rf-spectrum-text,linear-gradient(90deg,var(--accent),var(--accent2)));-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:600}
+.rfm-pal-where{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;color:var(--dim);font-size:11px}
+.rfm-pal-l{flex:none;font:400 10px/1 var(--rf-mono,ui-monospace,monospace);letter-spacing:.02em;color:var(--dim);font-variant-numeric:tabular-nums}
+.rfm-pal-ent{display:none}
+.rfm-pal-row[aria-selected="true"] .rfm-pal-l{display:none}
+.rfm-pal-row[aria-selected="true"] .rfm-pal-ent{display:inline-flex}
+.rfm-pal-empty{padding:20px 10px;color:var(--dim);font-size:12px;text-align:center}
+.rfm-pal-foot{display:flex;align-items:center;gap:12px;height:38px;padding:0 14px;border-top:1px solid var(--rf-glass-line,var(--line));
+  font:400 10px/1 var(--rf-mono,ui-monospace,monospace);color:var(--dim);letter-spacing:.02em;white-space:nowrap}
+.rfm-pal-foot .rfm-kbd{margin-right:3px;height:18px;min-width:18px}
+.rfm-pal-count{margin-left:auto;overflow:hidden;text-overflow:ellipsis}
+
+/* ---- Spectral Index Nav: README §9 sidebar — index tick + label + λ + count ---- */
+.rfm-nav{display:grid;grid-template-columns:minmax(0,1fr);gap:1px;width:100%;max-width:256px;padding:4px 6px 8px;border-radius:var(--r-lg,12px);
+  background:var(--panel);border:1px solid var(--line);box-shadow:var(--elev-1);text-align:left}
+.rfm-nav-grp{display:flex;align-items:center;gap:10px;margin:12px 0 6px;padding:0 10px;font:600 9.5px/1 var(--rf-mono,ui-monospace,monospace);
+  letter-spacing:.15em;text-transform:uppercase;color:var(--dim)}
+.rfm-nav-grp::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--line),transparent)}
+.rfm-nav-it{position:relative;display:flex;align-items:center;gap:12px;min-height:calc(34px * var(--dens,1));padding:0 10px 0 12px;border-radius:var(--r-md,8px);
+  color:var(--muted);font:400 13px/1.2 var(--font);text-decoration:none;
+  transition:background-color var(--rf-dur-fast,.14s),color var(--rf-dur-fast,.14s)}
+.rfm-ix{flex:none;width:3px;height:14px;border-radius:2px;background:var(--h,var(--accent));opacity:.8;
+  transition:height var(--rf-dur-base,.24s) var(--rf-ease-out-expo,ease),opacity var(--rf-dur-fast,.14s),box-shadow var(--rf-dur-base,.24s)}
+.rfm-ix.is-white{background:var(--rf-white,var(--ink));opacity:.55}
+.rfm-nav-lb{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rfm-nav-l{display:none;font:400 11px/1 var(--rf-mono,ui-monospace,monospace);letter-spacing:.02em;color:var(--dim);white-space:nowrap}
+@keyframes rfmLambdaIn{from{opacity:0;transform:translateX(4px)}to{opacity:1;transform:none}}
+.rfm-nav-n{min-width:24px;text-align:right;font:400 11px/1 var(--rf-mono,ui-monospace,monospace);color:var(--dim);font-variant-numeric:tabular-nums}
+.rfm-nav-it:hover,.rfm-nav-it:focus-visible{background:var(--rf-hover,rgba(127,127,127,.08));color:var(--ink)}
+.rfm-nav-it:focus-visible{outline:2px solid var(--rf-focus,var(--accent));outline-offset:-2px}
+.rfm-nav-it:hover .rfm-ix,.rfm-nav-it:focus-visible .rfm-ix{opacity:1}
+.rfm-nav-it[aria-current="page"] .rfm-nav-l{display:inline}
+.rfm-nav-it:hover .rfm-nav-l,.rfm-nav-it:focus-visible .rfm-nav-l{display:inline;animation:rfmLambdaIn var(--rf-dur-base,.24s) var(--rf-ease-out-expo,ease) both}
+.rfm-nav-it[aria-current="page"]{color:var(--ink);font-weight:600;
+  background:linear-gradient(90deg,rgba(var(--hr,var(--accent-rgb)),.16),rgba(var(--hr,var(--accent-rgb)),.03) 75%)}
+.rfm-nav-it[aria-current="page"] .rfm-nav-l{color:var(--hi,var(--accent))}
+.rfm-nav-it[aria-current="page"] .rfm-ix{height:20px;opacity:1;background:var(--rf-beam-v,var(--h,var(--accent)));box-shadow:0 0 10px 1px rgba(var(--hr,var(--accent-rgb)),.85)}
+.rfm-nav-it[aria-current="page"] .rfm-ix.is-white{background:var(--rf-white,var(--ink))}
+/* Day: the beam becomes the hue made visible on paper — hue tick with a soft glow */
+:is([data-rf-mode="day"],[data-theme="prism-light"]) .rfm-nav-it[aria-current="page"] .rfm-ix{background:var(--h,var(--accent));box-shadow:0 0 8px rgba(var(--hr,var(--accent-rgb)),.45)}
+@container style(--rf-mode: day){.rfm-nav-it[aria-current="page"] .rfm-ix{background:var(--h,var(--accent));box-shadow:0 0 8px rgba(var(--hr,var(--accent-rgb)),.45)}}
+
+/* ---- Radial Prism Menu: white light in, a fan of spectral rays out ---- */
+.rfm-rad{position:relative;width:220px;height:226px;--cx:62px;--cy:104px;--r:96px}
+.rfm-rad-in{position:absolute;left:0;top:var(--cy);width:calc(var(--cx) - 14px);height:1px;margin-top:-.5px;pointer-events:none;
+  background:linear-gradient(90deg,transparent,var(--rf-beam-core,var(--ink)) 75%);box-shadow:var(--rf-beam-glow,none)}
+.rfm-rad-prism{position:absolute;left:var(--cx);top:var(--cy);width:52px;height:52px;margin:-26px;padding:0;border-radius:50%;z-index:3;cursor:pointer;
+  display:grid;place-items:center;background:var(--rf-raised,var(--panel2));border:1px solid var(--rf-line-strong,var(--line));
+  box-shadow:var(--elev-2);transition:border-color var(--rf-dur-fast,.14s),transform var(--rf-dur-fast,.14s) var(--rf-ease-out-expo,ease)}
+.rfm-rad-prism:hover{border-color:var(--rf-accent-line,var(--accent));transform:translateY(-1px)}
+.rfm-rad-prism:active{transform:scale(.97)}
+.rfm-rad-prism:focus-visible{outline:2px solid var(--rf-focus,var(--accent));outline-offset:3px}
+.rfm-rad-glass{position:relative;width:24px;height:21px;margin-top:-2px;clip-path:polygon(50% 0,100% 100%,0 100%);
+  background:linear-gradient(180deg,var(--ink),color-mix(in srgb,var(--ink) 35%,transparent))}
+.rfm-rad-glass::after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,var(--rf-s-violet-v,#ab91eb),var(--rf-s-azure-v,#52acee) 30%,var(--rf-s-mint-v,#52cea0) 50%,var(--rf-s-citrine-v,#ebc059) 70%,var(--rf-s-rose-v,#ec8398));
+  opacity:0;transition:opacity var(--rf-dur-slow,.4s) var(--rf-ease-out-expo,ease)}
+.rfm-rad[data-open="true"] .rfm-rad-glass::after{opacity:1}
+.rfm-rad[data-open="true"] .rfm-rad-prism{border-color:var(--rf-accent-line,var(--accent))}
+.rfm-rad-arm{position:absolute;left:var(--cx);top:var(--cy);width:0;height:0;transform:rotate(var(--a));z-index:2}
+.rfm-rad-arm::before{content:"";position:absolute;left:28px;top:-.5px;width:calc(var(--r) - 28px - 17px);height:1px;pointer-events:none;
+  background:linear-gradient(90deg,rgba(var(--cr),0),rgba(var(--cr),.95));box-shadow:0 0 6px rgba(var(--cr),.55);
+  transform-origin:left center;transform:scaleX(0);transition:transform var(--rf-dur-slow,.4s) var(--rf-ease-out-expo,ease);transition-delay:calc(var(--i) * 28ms)}
+.rfm-rad-it{position:absolute;left:0;top:0;width:34px;height:34px;margin:-17px;padding:0;border-radius:50%;cursor:pointer;
+  display:grid;place-items:center;background:var(--rf-raised,var(--panel2));border:1px solid rgba(var(--cr),.6);color:var(--ink);font:400 14px/1 var(--font);
+  box-shadow:var(--elev-1);opacity:0;visibility:hidden;
+  transform:translateX(0) rotate(calc(-1 * var(--a))) scale(.4);
+  transition:transform var(--rf-dur-slow,.4s) var(--rf-ease-out-expo,ease),opacity var(--rf-dur-base,.24s),visibility 0s linear var(--rf-dur-slow,.4s),background-color var(--rf-dur-fast,.14s),border-color var(--rf-dur-fast,.14s);
+  transition-delay:calc(var(--i) * 28ms),calc(var(--i) * 28ms),var(--rf-dur-slow,.4s),0s,0s}
+.rfm-rad[data-open="true"] .rfm-rad-arm::before{transform:scaleX(1)}
+.rfm-rad[data-open="true"] .rfm-rad-it{opacity:1;visibility:visible;transform:translateX(var(--r)) rotate(calc(-1 * var(--a))) scale(1);
+  transition-delay:calc(var(--i) * 28ms),calc(var(--i) * 28ms),0s,0s,0s}
+.rfm-rad-it:hover,.rfm-rad-it:focus-visible{background:rgba(var(--cr),.2);border-color:var(--c)}
+.rfm-rad-it:focus-visible{outline:2px solid var(--rf-focus,var(--accent));outline-offset:2px}
+.rfm-rad-cap{position:absolute;left:0;right:0;bottom:0;display:flex;justify-content:center;gap:.7em;
+  font:600 9.5px/1 var(--rf-mono,ui-monospace,monospace);letter-spacing:.15em;text-transform:uppercase;color:var(--dim)}
+.rfm-rad-cap b{font-weight:600;color:var(--ink)}
+.rfm-nocase{text-transform:none;letter-spacing:.04em}
+
+@media (prefers-reduced-motion:reduce){
+  .rfm-nav-l{animation:none!important}
+  .rfm-pal,.rfm-pal-row,.rfm-pal-beam,.rfm-nav-it,.rfm-ix,.rfm-rad-prism,.rfm-rad-glass::after,.rfm-rad-arm::before,.rfm-rad-it{transition:none!important}
+}
+</style>
+<div class="gallery">
+
+  <div class="tile is-new" data-ctype="command-palette" data-interact="focus click"><div class="stage">
+    <div class="rfm-pal" role="dialog" aria-label="Command palette">
+      <div class="rfm-pal-in">
+        <input class="rfm-pal-q" type="text" value="glo" placeholder="Search facets, galleries, commands" role="combobox" aria-expanded="true" aria-controls="rfm-pal-list1" aria-activedescendant="rfm-pal-o1" aria-autocomplete="list" aria-label="Search facets, galleries and commands" autocomplete="off" spellcheck="false">
+        <kbd class="rfm-kbd">esc</kbd>
+      </div>
+      <i class="rfm-pal-beam" aria-hidden="true"></i>
+      <div class="rfm-pal-list" id="rfm-pal-list1" role="listbox" aria-label="Results">
+        <div class="rfm-pal-grp" role="presentation">Galleries</div>
+        <div class="rfm-pal-row" role="option" id="rfm-pal-o1" aria-selected="true" data-k="Glows &amp; Halos" style="--h:var(--rf-g-fx-v,var(--accent));--hi:var(--rf-g-fx,var(--accent));--hr:var(--rf-g-fx-rgb,var(--accent-rgb))"><i class="rfm-tick"></i><span class="rfm-pal-name"><mark>Glo</mark>ws &amp; Halos</span><span class="rfm-pal-where">FX Store</span><span class="rfm-pal-l">λ 467</span><kbd class="rfm-kbd rfm-pal-ent">↵</kbd></div>
+        <div class="rfm-pal-row" role="option" id="rfm-pal-o2" aria-selected="false" data-k="Glow Text" style="--h:var(--rf-g-text-v,var(--accent));--hi:var(--rf-g-text,var(--accent));--hr:var(--rf-g-text-rgb,var(--accent-rgb))"><i class="rfm-tick"></i><span class="rfm-pal-name"><mark>Glo</mark>w Text</span><span class="rfm-pal-where">Text Effects</span><span class="rfm-pal-l">λ 492</span><kbd class="rfm-kbd rfm-pal-ent">↵</kbd></div>
+        <div class="rfm-pal-grp" role="presentation">Facets</div>
+        <div class="rfm-pal-row" role="option" id="rfm-pal-o3" aria-selected="false" data-k="Neon Glow Button" style="--h:var(--rf-g-fx-v,var(--accent));--hi:var(--rf-g-fx,var(--accent));--hr:var(--rf-g-fx-rgb,var(--accent-rgb))"><i class="rfm-tick"></i><span class="rfm-pal-name">Neon <mark>Glo</mark>w Button</span><span class="rfm-pal-where">FX Store</span><span class="rfm-pal-l">λ 467</span><kbd class="rfm-kbd rfm-pal-ent">↵</kbd></div>
+        <div class="rfm-pal-row" role="option" id="rfm-pal-o4" aria-selected="false" data-k="KPI + Glow Ring" style="--h:var(--rf-g-charts-v,var(--accent));--hi:var(--rf-g-charts,var(--accent));--hr:var(--rf-g-charts-rgb,var(--accent-rgb))"><i class="rfm-tick"></i><span class="rfm-pal-name">KPI + <mark>Glo</mark>w Ring</span><span class="rfm-pal-where">Charts</span><span class="rfm-pal-l">λ 436</span><kbd class="rfm-kbd rfm-pal-ent">↵</kbd></div>
+        <div class="rfm-pal-row" role="option" id="rfm-pal-o5" aria-selected="false" data-k="Glow Orb" style="--h:var(--rf-g-ai-v,var(--accent));--hi:var(--rf-g-ai,var(--accent));--hr:var(--rf-g-ai-rgb,var(--accent-rgb))"><i class="rfm-tick"></i><span class="rfm-pal-name"><mark>Glo</mark>w Orb</span><span class="rfm-pal-where">AI Working</span><span class="rfm-pal-l">λ 479</span><kbd class="rfm-kbd rfm-pal-ent">↵</kbd></div>
+        <div class="rfm-pal-row" role="option" id="rfm-pal-o6" aria-selected="false" data-k="Spectral Index Nav" style="--h:var(--rf-g-menus-v,var(--accent));--hi:var(--rf-g-menus,var(--accent));--hr:var(--rf-g-menus-rgb,var(--accent-rgb))" hidden><i class="rfm-tick"></i><span class="rfm-pal-name">Spectral Index Nav</span><span class="rfm-pal-where">Menus &amp; Actions</span><span class="rfm-pal-l">λ 581</span><kbd class="rfm-kbd rfm-pal-ent">↵</kbd></div>
+        <div class="rfm-pal-grp" role="presentation">Commands</div>
+        <div class="rfm-pal-row" role="option" id="rfm-pal-o7" aria-selected="false" data-k="Toggle global motion"><i class="rfm-tick is-white"></i><span class="rfm-pal-name">Toggle <mark>glo</mark>bal motion</span><span class="rfm-pal-where">Settings</span><span class="rfm-pal-l">D65</span><kbd class="rfm-kbd rfm-pal-ent">↵</kbd></div>
+        <div class="rfm-pal-row" role="option" id="rfm-pal-o8" aria-selected="false" data-k="Switch to Day" hidden><i class="rfm-tick is-white"></i><span class="rfm-pal-name">Switch to Day</span><span class="rfm-pal-where">Theme</span><span class="rfm-pal-l">D50</span><kbd class="rfm-kbd rfm-pal-ent">↵</kbd></div>
+        <div class="rfm-pal-row" role="option" id="rfm-pal-o9" aria-selected="false" data-k="Open Collections" hidden><i class="rfm-tick is-white"></i><span class="rfm-pal-name">Open Collections</span><span class="rfm-pal-where">Library</span><span class="rfm-pal-l">D93</span><kbd class="rfm-kbd rfm-pal-ent">↵</kbd></div>
+        <div class="rfm-pal-empty" hidden>No light at that wavelength — try another word.</div>
+      </div>
+      <div class="rfm-pal-foot"><span><kbd class="rfm-kbd">↑</kbd><kbd class="rfm-kbd">↓</kbd>move</span><span><kbd class="rfm-kbd">↵</kbd>open</span><span class="rfm-pal-count" aria-live="polite">6 results</span></div>
+    </div>
+  </div><div class="meta"><div class="nm">Spectral Command Palette</div><span class="ref">.rfm-pal</span><div class="desc">Glass command palette: lens field with an accent caret, a full-spectrum beam under the input, grouped results with hue index ticks and λ labels, and the matched run lit in spectral ink. Type to filter, ↑ ↓ to move, ↵ to open.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="nav-menu" data-interact="hover click"><div class="stage">
+    <nav class="rfm-nav" aria-label="Galleries">
+      <div class="rfm-nav-grp">Library</div>
+      <a class="rfm-nav-it" href="#"><i class="rfm-ix is-white"></i><span class="rfm-nav-lb">New Facets</span><span class="rfm-nav-l">D65</span><span class="rfm-nav-n">128</span></a>
+      <a class="rfm-nav-it" href="#"><i class="rfm-ix is-white"></i><span class="rfm-nav-lb">Collections</span><span class="rfm-nav-l">D93</span><span class="rfm-nav-n">6</span></a>
+      <div class="rfm-nav-grp">Galleries · 18</div>
+      <a class="rfm-nav-it" href="#" style="--h:var(--rf-g-charts-v,var(--accent));--hi:var(--rf-g-charts,var(--accent));--hr:var(--rf-g-charts-rgb,var(--accent-rgb))"><i class="rfm-ix"></i><span class="rfm-nav-lb">Charts &amp; Metrics</span><span class="rfm-nav-l">λ 436</span><span class="rfm-nav-n">209</span></a>
+      <a class="rfm-nav-it" href="#" aria-current="page" style="--h:var(--rf-g-fx-v,var(--accent));--hi:var(--rf-g-fx,var(--accent));--hr:var(--rf-g-fx-rgb,var(--accent-rgb))"><i class="rfm-ix"></i><span class="rfm-nav-lb">FX Store</span><span class="rfm-nav-l">λ 467</span><span class="rfm-nav-n">146</span></a>
+      <a class="rfm-nav-it" href="#" style="--h:var(--rf-g-input-v,var(--accent));--hi:var(--rf-g-input,var(--accent));--hr:var(--rf-g-input-rgb,var(--accent-rgb))"><i class="rfm-ix"></i><span class="rfm-nav-lb">Input Methods</span><span class="rfm-nav-l">λ 487</span><span class="rfm-nav-n">113</span></a>
+      <a class="rfm-nav-it" href="#" style="--h:var(--rf-g-notify-v,var(--accent));--hi:var(--rf-g-notify,var(--accent));--hr:var(--rf-g-notify-rgb,var(--accent-rgb))"><i class="rfm-ix"></i><span class="rfm-nav-lb">Notifications &amp; Status</span><span class="rfm-nav-l">λ 550</span><span class="rfm-nav-n">52</span></a>
+      <a class="rfm-nav-it" href="#" style="--h:var(--rf-g-callouts-v,var(--accent));--hi:var(--rf-g-callouts,var(--accent));--hr:var(--rf-g-callouts-rgb,var(--accent-rgb))"><i class="rfm-ix"></i><span class="rfm-nav-lb">Callouts &amp; Annotations</span><span class="rfm-nav-l">λ 570</span><span class="rfm-nav-n">52</span></a>
+      <a class="rfm-nav-it" href="#" style="--h:var(--rf-g-menus-v,var(--accent));--hi:var(--rf-g-menus,var(--accent));--hr:var(--rf-g-menus-rgb,var(--accent-rgb))"><i class="rfm-ix"></i><span class="rfm-nav-lb">Menus &amp; Actions</span><span class="rfm-nav-l">λ 581</span><span class="rfm-nav-n">40</span></a>
+      <a class="rfm-nav-it" href="#" style="--h:var(--rf-g-desktop-v,var(--accent));--hi:var(--rf-g-desktop,var(--accent));--hr:var(--rf-g-desktop-rgb,var(--accent-rgb))"><i class="rfm-ix"></i><span class="rfm-nav-lb">Desktop Gallery</span><span class="rfm-nav-l">λ 494c</span><span class="rfm-nav-n">61</span></a>
+    </nav>
+  </div><div class="meta"><div class="nm">Spectral Index Nav</div><span class="ref">.rfm-nav</span><div class="desc">The Refraction sidebar: mono group eyebrows over fading hairlines, a hue index tick per gallery, λ revealed on hover and a mono count. The active page (aria-current) gets a hue wash and a white beam tick haloed in its hue; ↑ ↓ move between items.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="menu" data-interact="toggle click"><div class="stage">
+    <div class="rfm-rad" data-open="true">
+      <i class="rfm-rad-in" aria-hidden="true"></i>
+      <button class="rfm-rad-prism" type="button" aria-haspopup="menu" aria-expanded="true" aria-controls="rfm-rad-m1" aria-label="Close actions"><i class="rfm-rad-glass" aria-hidden="true"></i></button>
+      <div class="rfm-rad-menu" id="rfm-rad-m1" role="menu" aria-label="Actions">
+        <span class="rfm-rad-arm" style="--i:0;--a:-60deg;--c:var(--rf-s-violet-v,#ab91eb);--cr:var(--rf-s-violet-rgb,171,145,235)"><button class="rfm-rad-it" type="button" role="menuitem" tabindex="-1" aria-label="Edit" data-l="λ 436">✎</button></span>
+        <span class="rfm-rad-arm" style="--i:1;--a:-36deg;--c:var(--rf-s-azure-v,#52acee);--cr:var(--rf-s-azure-rgb,82,172,238)"><button class="rfm-rad-it" type="button" role="menuitem" tabindex="-1" aria-label="Share" data-l="λ 479">↗</button></span>
+        <span class="rfm-rad-arm" style="--i:2;--a:-12deg;--c:var(--rf-s-mint-v,#52cea0);--cr:var(--rf-s-mint-rgb,82,206,160)"><button class="rfm-rad-it" type="button" role="menuitem" tabindex="-1" aria-label="Duplicate" data-l="λ 510">⧉</button></span>
+        <span class="rfm-rad-arm" style="--i:3;--a:12deg;--c:var(--rf-s-citrine-v,#ebc059);--cr:var(--rf-s-citrine-rgb,235,192,89)"><button class="rfm-rad-it" type="button" role="menuitem" tabindex="-1" aria-label="Favorite" data-l="λ 578">★</button></span>
+        <span class="rfm-rad-arm" style="--i:4;--a:36deg;--c:var(--rf-s-amber-v,#f8a75f);--cr:var(--rf-s-amber-rgb,248,167,95)"><button class="rfm-rad-it" type="button" role="menuitem" tabindex="-1" aria-label="Export" data-l="λ 585">⤓</button></span>
+        <span class="rfm-rad-arm" style="--i:5;--a:60deg;--c:var(--rf-s-rose-v,#ec8398);--cr:var(--rf-s-rose-rgb,236,131,152)"><button class="rfm-rad-it" type="button" role="menuitem" tabindex="-1" aria-label="Delete" data-l="λ 494c">⌫</button></span>
+      </div>
+      <div class="rfm-rad-cap" aria-live="polite"><b>Actions</b><span>6 rays</span></div>
+    </div>
+  </div><div class="meta"><div class="nm">Radial Prism Menu</div><span class="ref">.rfm-rad</span><div class="desc">White light enters a glass prism trigger and fans out as six spectral rays, each an action at its own wavelength. Enter / Space opens, arrow keys walk the rays, Esc closes; reduced motion drops the fan animation.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+</div>
+<script>
+/* Refraction signatures (rfm-*) — delegated, idempotent, keyboard-first */
+(function(){
+  if(window.__rfmInit) return; window.__rfmInit=true;
+  var d=document;
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+  function arr(n){return Array.prototype.slice.call(n);}
+
+  /* ---- Spectral Command Palette ---- */
+  function palRows(p){return arr(p.querySelectorAll('.rfm-pal-row')).filter(function(r){return !r.hidden;});}
+  function palSel(p,r){
+    arr(p.querySelectorAll('.rfm-pal-row')).forEach(function(x){x.setAttribute('aria-selected',x===r?'true':'false');});
+    var q=p.querySelector('.rfm-pal-q'), list=p.querySelector('.rfm-pal-list');
+    if(!r){q.removeAttribute('aria-activedescendant');return;}
+    q.setAttribute('aria-activedescendant',r.id);
+    var top=r.offsetTop-list.offsetTop, bot=top+r.offsetHeight;
+    if(top<list.scrollTop) list.scrollTop=top-30; else if(bot>list.scrollTop+list.clientHeight) list.scrollTop=bot-list.clientHeight+6;
+  }
+  function palFilter(p){
+    var q=p.querySelector('.rfm-pal-q').value.trim(), ql=q.toLowerCase(), vis=0, first=null;
+    arr(p.querySelectorAll('.rfm-pal-row')).forEach(function(r){
+      var k=r.getAttribute('data-k')||'', i=ql?k.toLowerCase().indexOf(ql):0, show=!ql||i>=0;
+      r.hidden=!show;
+      r.querySelector('.rfm-pal-name').innerHTML=(ql&&show)?esc(k.slice(0,i))+'<mark>'+esc(k.slice(i,i+q.length))+'</mark>'+esc(k.slice(i+q.length)):esc(k);
+      if(show){vis++; if(!first) first=r;}
+    });
+    arr(p.querySelectorAll('.rfm-pal-grp')).forEach(function(g){
+      var n=g.nextElementSibling, any=false;
+      while(n&&!n.classList.contains('rfm-pal-grp')){ if(n.classList.contains('rfm-pal-row')&&!n.hidden) any=true; n=n.nextElementSibling; }
+      g.hidden=!any;
+    });
+    var e=p.querySelector('.rfm-pal-empty'); if(e) e.hidden=vis>0;
+    var c=p.querySelector('.rfm-pal-count'); if(c) c.textContent=vis+(vis===1?' result':' results');
+    p.querySelector('.rfm-pal-q').setAttribute('aria-expanded',vis>0?'true':'false');
+    palSel(p,first);
+  }
+  function palOpen(p,r){
+    if(!r) return;
+    var c=p.querySelector('.rfm-pal-count');
+    if(c) c.textContent='Opened '+(r.getAttribute('data-k')||'');
+  }
+  d.addEventListener('input',function(e){
+    var q=e.target.closest&&e.target.closest('.rfm-pal-q'); if(q) palFilter(q.closest('.rfm-pal'));
+  });
+  d.addEventListener('keydown',function(e){
+    var q=e.target.closest&&e.target.closest('.rfm-pal-q'); if(!q) return;
+    var p=q.closest('.rfm-pal'), rows=palRows(p), cur=p.querySelector('.rfm-pal-row[aria-selected="true"]'), i=rows.indexOf(cur);
+    if(e.key==='ArrowDown'||e.key==='ArrowUp'){
+      e.preventDefault(); if(!rows.length) return;
+      i=e.key==='ArrowDown'?(i+1)%rows.length:(i<=0?rows.length-1:i-1);
+      palSel(p,rows[i]);
+    } else if(e.key==='Home'&&rows.length&&e.ctrlKey){ e.preventDefault(); palSel(p,rows[0]); }
+    else if(e.key==='End'&&rows.length&&e.ctrlKey){ e.preventDefault(); palSel(p,rows[rows.length-1]); }
+    else if(e.key==='Enter'){ e.preventDefault(); palOpen(p,cur); }
+    else if(e.key==='Escape'&&q.value){ e.preventDefault(); q.value=''; palFilter(p); }
+  });
+  d.addEventListener('click',function(e){
+    var r=e.target.closest&&e.target.closest('.rfm-pal-row'); if(!r) return;
+    var p=r.closest('.rfm-pal'); palSel(p,r); palOpen(p,r); p.querySelector('.rfm-pal-q').focus();
+  });
+  arr(d.querySelectorAll('.rfm-pal')).forEach(function(p){
+    var list=p.querySelector('.rfm-pal-list');
+    palFilter(p); list.scrollTop=0;
+  });
+
+  /* ---- Spectral Index Nav ---- */
+  d.addEventListener('click',function(e){
+    var a=e.target.closest&&e.target.closest('.rfm-nav-it'); if(!a) return;
+    e.preventDefault();
+    arr(a.closest('.rfm-nav').querySelectorAll('.rfm-nav-it')).forEach(function(x){ if(x===a) x.setAttribute('aria-current','page'); else x.removeAttribute('aria-current'); });
+  });
+  d.addEventListener('keydown',function(e){
+    var a=e.target.closest&&e.target.closest('.rfm-nav-it'); if(!a) return;
+    var its=arr(a.closest('.rfm-nav').querySelectorAll('.rfm-nav-it')), i=its.indexOf(a), n=-1;
+    if(e.key==='ArrowDown') n=(i+1)%its.length; else if(e.key==='ArrowUp') n=(i-1+its.length)%its.length;
+    else if(e.key==='Home') n=0; else if(e.key==='End') n=its.length-1;
+    if(n>=0){ e.preventDefault(); its[n].focus(); }
+  });
+
+  /* ---- Radial Prism Menu ---- */
+  function radItems(w){return arr(w.querySelectorAll('.rfm-rad-it'));}
+  function radCap(w,it,done){
+    var c=w.querySelector('.rfm-rad-cap'); if(!c) return;
+    if(!it){ c.innerHTML=w.getAttribute('data-open')==='true'?'<b>Actions</b><span>6 rays</span>':'<b>White light</b><span>press to refract</span>'; return; }
+    c.innerHTML='<b>'+esc(it.getAttribute('aria-label'))+'</b><span class="rfm-nocase">'+esc(it.getAttribute('data-l')||'')+'</span>'+(done?'<span>selected</span>':'');
+  }
+  function radSet(w,open,focusIdx){
+    w.setAttribute('data-open',open?'true':'false');
+    var b=w.querySelector('.rfm-rad-prism');
+    b.setAttribute('aria-expanded',open?'true':'false'); b.setAttribute('aria-label',open?'Close actions':'Open actions');
+    var its=radItems(w); its.forEach(function(x){x.tabIndex=-1;});
+    if(open&&focusIdx!=null){ var t=its[(focusIdx+its.length)%its.length]; t.tabIndex=0; radCap(w,t); setTimeout(function(){t.focus();},reduce?0:90); }
+    else radCap(w,null);
+  }
+  d.addEventListener('click',function(e){
+    var b=e.target.closest&&e.target.closest('.rfm-rad-prism');
+    if(b){ var w=b.closest('.rfm-rad'); radSet(w,w.getAttribute('data-open')!=='true',e.detail===0?0:null); return; }
+    var it=e.target.closest&&e.target.closest('.rfm-rad-it');
+    if(it){ var w2=it.closest('.rfm-rad'); radSet(w2,false); radCap(w2,it,true); w2.querySelector('.rfm-rad-prism').focus(); return; }
+  });
+  d.addEventListener('keydown',function(e){
+    var b=e.target.closest&&e.target.closest('.rfm-rad-prism');
+    if(b){
+      var w=b.closest('.rfm-rad');
+      if(e.key==='ArrowDown'||e.key==='ArrowRight'){ e.preventDefault(); radSet(w,true,0); }
+      else if(e.key==='ArrowUp'||e.key==='ArrowLeft'){ e.preventDefault(); radSet(w,true,-1); }
+      else if(e.key==='Escape'&&w.getAttribute('data-open')==='true'){ e.preventDefault(); radSet(w,false); }
+      return;
+    }
+    var it=e.target.closest&&e.target.closest('.rfm-rad-it'); if(!it) return;
+    var w2=it.closest('.rfm-rad'), its=radItems(w2), i=its.indexOf(it), n=-1;
+    if(e.key==='ArrowDown'||e.key==='ArrowRight') n=(i+1)%its.length;
+    else if(e.key==='ArrowUp'||e.key==='ArrowLeft') n=(i-1+its.length)%its.length;
+    else if(e.key==='Home') n=0; else if(e.key==='End') n=its.length-1;
+    else if(e.key==='Escape'){ e.preventDefault(); radSet(w2,false); w2.querySelector('.rfm-rad-prism').focus(); return; }
+    else if(e.key==='Tab'){ radSet(w2,false); return; }
+    if(n>=0){ e.preventDefault(); its.forEach(function(x){x.tabIndex=-1;}); its[n].tabIndex=0; its[n].focus(); radCap(w2,its[n]); }
+  });
+  d.addEventListener('focusin',function(e){
+    var it=e.target.closest&&e.target.closest('.rfm-rad-it'); if(it) radCap(it.closest('.rfm-rad'),it);
+  });
+  d.addEventListener('mouseover',function(e){
+    var it=e.target.closest&&e.target.closest('.rfm-rad-it'); if(it) radCap(it.closest('.rfm-rad'),it);
+  });
+})();
+</script>

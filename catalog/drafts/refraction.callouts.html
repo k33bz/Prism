@@ -1,0 +1,108 @@
+<h3 class="sec">REFRACTION SIGNATURES</h3>
+<style id="rfc-styles">
+/* ============================================================
+   REFRACTION SIGNATURES  (rfc-)
+   ============================================================ */
+/* Lit-Edge Status Callout — a beam in the status hue lands on the top edge */
+.rfc-stack{display:grid;gap:8px;width:256px}
+.rfc-lit{--rfc:var(--info,#86bdf9);--rfc-rgb:var(--info-rgb,134,189,249);position:relative;display:flex;gap:11px;
+  padding:11px 13px 12px 12px;text-align:left;border-radius:var(--r-lg,12px);
+  background:linear-gradient(180deg,rgba(var(--rfc-rgb),.08),rgba(var(--rfc-rgb),0) 62%),var(--card);
+  border:1px solid var(--line);box-shadow:var(--elev-1);
+  transition:border-color var(--rf-dur-base,.24s) var(--rf-ease-out-expo,ease),box-shadow var(--rf-dur-base,.24s) var(--rf-ease-out-expo,ease)}
+.rfc-lit::before{content:"";position:absolute;left:14%;right:14%;top:-1px;height:1px;border-radius:1px;pointer-events:none;
+  background:linear-gradient(90deg,rgba(var(--rfc-rgb),0),var(--rfc) 38%,color-mix(in srgb,var(--rfc) 45%,var(--ink)) 50%,var(--rfc) 62%,rgba(var(--rfc-rgb),0));
+  box-shadow:0 0 9px rgba(var(--rfc-rgb),.55);opacity:.8;
+  transition:left var(--rf-dur-slow,.4s) var(--rf-ease-out-expo,ease),right var(--rf-dur-slow,.4s) var(--rf-ease-out-expo,ease),opacity var(--rf-dur-base,.24s)}
+.rfc-lit:hover,.rfc-lit:focus-within{border-color:rgba(var(--rfc-rgb),.4);box-shadow:var(--elev-2,var(--elev-1))}
+.rfc-lit:hover::before,.rfc-lit:focus-within::before{left:3%;right:3%;opacity:1}
+:is([data-rf-mode="day"],[data-theme="prism-light"]) .rfc-lit:hover{border-color:transparent;
+  background:linear-gradient(180deg,rgba(var(--rfc-rgb),.08),rgba(var(--rfc-rgb),0) 62%) padding-box,linear-gradient(var(--card),var(--card)) padding-box,var(--rf-iris-edge,var(--line)) border-box}
+.rfc-lit.is-info{--rfc:var(--info,#86bdf9);--rfc-rgb:var(--info-rgb,134,189,249)}
+.rfc-lit.is-pos{--rfc:var(--pos,#8bd8ba);--rfc-rgb:var(--pos-rgb,139,216,186)}
+.rfc-lit.is-warn{--rfc:var(--warn,#eec36f);--rfc-rgb:var(--warn-rgb,238,195,111)}
+.rfc-lit.is-neg{--rfc:var(--neg,#f5877f);--rfc-rgb:var(--neg-rgb,245,135,127)}
+.rfc-idx{flex:none;width:3px;height:32px;margin-top:1px;border-radius:2px;background:var(--rfc);box-shadow:0 0 8px rgba(var(--rfc-rgb),.75)}
+.rfc-body{min-width:0}
+.rfc-eye{display:flex;align-items:center;gap:7px;font:600 9.5px/1.2 var(--rf-mono,ui-monospace,monospace);letter-spacing:.15em;text-transform:uppercase;color:var(--rfc)}
+.rfc-eye .rfc-l{color:var(--dim);font-weight:400;letter-spacing:.04em;text-transform:none}
+.rfc-t{margin-top:5px;font:600 12.5px/1.35 var(--font);letter-spacing:-.006em;color:var(--ink)}
+.rfc-d{margin-top:2px;font:400 11px/1.5 var(--font);color:var(--muted)}
+
+/* Spectral Annotation Marker — ring of white light, beam leader, glass label */
+.rfc-fig{position:relative;width:256px;height:140px;border-radius:var(--r-lg,12px);overflow:hidden;text-align:left;
+  background:var(--card);border:1px solid var(--line);box-shadow:var(--elev-1)}
+.rfc-fig::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background-image:linear-gradient(var(--rf-grid-line,rgba(127,127,127,.07)) 1px,transparent 1px),linear-gradient(90deg,var(--rf-grid-line,rgba(127,127,127,.07)) 1px,transparent 1px);
+  background-size:17px 17px;-webkit-mask-image:radial-gradient(ellipse 80% 90% at 40% 50%,#000 20%,transparent 80%);mask-image:radial-gradient(ellipse 80% 90% at 40% 50%,#000 20%,transparent 80%)}
+.rfc-plot{position:absolute;left:0;top:0;width:256px;height:140px}
+.rfc-plot .rfc-area{fill:rgba(var(--rf-hue-rgb,var(--accent-rgb)),.1)}
+.rfc-plot .rfc-line{fill:none;stroke:var(--rf-hue-v,var(--accent));stroke-width:1.5;stroke-linejoin:round;stroke-linecap:round}
+.rfc-axis{position:absolute;left:10px;bottom:7px;font:400 9px/1 var(--rf-mono,ui-monospace,monospace);letter-spacing:.08em;color:var(--dim)}
+.rfc-pin{position:absolute;left:62px;top:31px;width:20px;height:20px;padding:0;border:0;border-radius:50%;background:transparent;cursor:pointer;z-index:2}
+.rfc-pin:focus-visible{outline:2px solid var(--rf-focus,var(--accent));outline-offset:3px}
+.rfc-ring{position:absolute;inset:3px;border-radius:50%;border:1.5px solid var(--rf-beam-core,var(--ink));background:var(--card);
+  box-shadow:0 0 0 3px rgba(var(--rf-hue-rgb,var(--accent-rgb)),.22),0 0 12px rgba(var(--rf-hue-rgb,var(--accent-rgb)),.7)}
+.rfc-ring::after{content:"";position:absolute;inset:3px;border-radius:50%;background:var(--rf-hue-v,var(--accent))}
+.rfc-pin::after{content:"";position:absolute;inset:-4px;border-radius:50%;border:1px solid rgba(var(--rf-hue-rgb,var(--accent-rgb)),.6);
+  animation:rfcPing 2.4s var(--rf-ease-out,ease-out) infinite}
+@keyframes rfcPing{0%{transform:scale(.7);opacity:.9}70%,100%{transform:scale(1.6);opacity:0}}
+.rfc-lead{position:absolute;left:82px;top:40px;width:30px;height:1px;transform-origin:left center;
+  background:linear-gradient(90deg,var(--rf-beam-core,var(--ink)),rgba(var(--rf-hue-rgb,var(--accent-rgb)),.95));
+  box-shadow:0 0 6px rgba(var(--rf-hue-rgb,var(--accent-rgb)),.6);transition:transform var(--rf-dur-slow,.4s) var(--rf-ease-out-expo,ease)}
+.rfc-lead::after{content:"";position:absolute;right:-2px;top:-1px;width:7px;height:3px;border-radius:2px;background:var(--rf-fringe,var(--accent));filter:blur(.5px)}
+.rfc-note{position:absolute;left:112px;top:12px;width:132px;padding:9px 11px 10px;border-radius:var(--r-md,8px);
+  background:var(--rf-glass-strong,var(--panel));border:1px solid var(--rf-glass-line,var(--line));
+  -webkit-backdrop-filter:blur(18px) saturate(140%);backdrop-filter:blur(18px) saturate(140%);
+  box-shadow:inset 0 1px 0 var(--rf-edge-hi,transparent),var(--rf-shadow-2,0 12px 28px -14px #000);
+  transition:opacity var(--rf-dur-base,.24s) var(--rf-ease-out,ease),transform var(--rf-dur-slow,.4s) var(--rf-ease-out-expo,ease)}
+.rfc-note::before{content:"";position:absolute;left:12%;right:12%;top:-1px;height:1px;
+  background:linear-gradient(90deg,rgba(var(--rf-hue-rgb,var(--accent-rgb)),0),rgba(var(--rf-hue-rgb,var(--accent-rgb)),.9),rgba(var(--rf-hue-rgb,var(--accent-rgb)),0))}
+.rfc-coord{font:400 9px/1.2 var(--rf-mono,ui-monospace,monospace);letter-spacing:.08em;color:var(--dim);font-variant-numeric:tabular-nums}
+.rfc-nt{margin-top:5px;font:600 12px/1.3 var(--font);color:var(--ink);letter-spacing:-.005em}
+.rfc-nt b{color:var(--rf-hue,var(--accent));font-weight:600}
+.rfc-nd{margin-top:3px;font:400 10.5px/1.45 var(--font);color:var(--muted)}
+.rfc-pin[aria-expanded="false"]~.rfc-lead{transform:scaleX(0)}
+.rfc-pin[aria-expanded="false"]~.rfc-note{opacity:0;transform:translateX(-6px);pointer-events:none}
+@media (prefers-reduced-motion:reduce){
+  .rfc-lit,.rfc-lit::before,.rfc-lead,.rfc-note{transition:none}
+  .rfc-pin::after{animation:none;opacity:0}
+}
+</style>
+<div class="gallery">
+
+  <div class="tile is-new" data-ctype="callout" data-interact="hover"><div class="stage">
+    <div class="rfc-stack">
+      <div class="rfc-lit is-info" role="note"><span class="rfc-idx"></span><div class="rfc-body"><div class="rfc-eye">Note <span class="rfc-l">· λ 479</span></div><div class="rfc-t">Replica lag is under 40 ms</div><div class="rfc-d">Reads can move to the replica pool.</div></div></div>
+      <div class="rfc-lit is-pos" role="note"><span class="rfc-idx"></span><div class="rfc-body"><div class="rfc-eye">Success <span class="rfc-l">· λ 510</span></div><div class="rfc-t">All 48 checks passed</div><div class="rfc-d">Build 2.4.1 is ready to promote.</div></div></div>
+      <div class="rfc-lit is-warn" role="note"><span class="rfc-idx"></span><div class="rfc-body"><div class="rfc-eye">Caution <span class="rfc-l">· λ 578</span></div><div class="rfc-t">Certificate expires in 9 days</div><div class="rfc-d">Renew before the change freeze.</div></div></div>
+      <div class="rfc-lit is-neg" role="note"><span class="rfc-idx"></span><div class="rfc-body"><div class="rfc-eye">Critical <span class="rfc-l">· λ 597</span></div><div class="rfc-t">Deleting a bucket is permanent</div><div class="rfc-d">Objects cannot be restored afterwards.</div></div></div>
+    </div>
+  </div><div class="meta"><div class="nm">Lit-Edge Status Callout</div><span class="ref">.rfc-lit.is-info / .is-pos / .is-warn / .is-neg</span><div class="desc">Refraction admonition: a beam in the status hue lands on the top edge, a lit status index and a mono eyebrow carry the word, the wavelength sits beside it. Hover or focus widens the beam; Day swaps to a thin-film edge.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="callout" data-interact="click"><div class="stage">
+    <div class="rfc-fig">
+      <svg class="rfc-plot" viewBox="0 0 256 140" aria-hidden="true"><path class="rfc-area" d="M0 108 L20 102 L40 104 L56 88 L72 41 L88 84 L108 96 L128 90 L148 100 L168 82 L188 92 L208 74 L228 80 L256 66 L256 140 L0 140 Z"/><polyline class="rfc-line" points="0,108 20,102 40,104 56,88 72,41 88,84 108,96 128,90 148,100 168,82 188,92 208,74 228,80 256,66"/></svg>
+      <span class="rfc-axis">P95 LATENCY · 24 H</span>
+      <button class="rfc-pin" type="button" aria-expanded="true" aria-controls="rfcNote1" aria-label="Annotation: p95 spike at 09:41"><span class="rfc-ring"></span></button>
+      <span class="rfc-lead" aria-hidden="true"></span>
+      <div class="rfc-note" id="rfcNote1" role="note"><div class="rfc-coord">x 0.28 · y 0.71</div><div class="rfc-nt">p95 spike · <b>412 ms</b></div><div class="rfc-nd">Cache warmer restarted at 09:41.</div></div>
+    </div>
+  </div><div class="meta"><div class="nm">Spectral Annotation Marker</div><span class="ref">.rfc-fig .rfc-pin .rfc-note</span><div class="desc">Annotate a point on a chart: a ring of white light on the datum, a one-pixel beam leader and a glass label with mono coordinates. The marker is a real button — click, Enter or Space toggles the note, Esc closes it.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+</div>
+<script>
+/* Refraction signatures (rfc-) — Spectral Annotation Marker toggle. Delegated, idempotent. */
+(function(){
+  if(window.__rfcInit) return; window.__rfcInit=true;
+  document.addEventListener('click',function(e){
+    var pin=e.target.closest&&e.target.closest('.rfc-pin'); if(!pin) return;
+    pin.setAttribute('aria-expanded', pin.getAttribute('aria-expanded')==='true'?'false':'true');
+  });
+  document.addEventListener('keydown',function(e){
+    if(e.key!=='Escape') return;
+    var fig=e.target.closest&&e.target.closest('.rfc-fig'); if(!fig) return;
+    var pin=fig.querySelector('.rfc-pin'); if(pin){ pin.setAttribute('aria-expanded','false'); pin.focus(); }
+  });
+})();
+</script>

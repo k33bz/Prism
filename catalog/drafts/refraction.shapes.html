@@ -1,0 +1,69 @@
+<h3 class="sec">Refraction paths — light bent through letters</h3>
+<style id="tsrf-styles">
+/* ============ REFRACTION PATHS — signature facets (namespaced .ts-rf-* / @keyframes tsRf*) ============
+   Light is the material: a white beam traces the path and the letters it passes light up in
+   spectral order; a word fans out of a glass prism like dispersed light. Tokens only (Night + Day),
+   contract fallbacks under other skins. Static state = the finished, fully-lit design, so
+   prefers-reduced-motion (which stops every animation) shows the good frame. */
+
+/* ---------- Beam-Traced Path: SVG textPath + one dash timeline drives beam, trail and reveal ---------- */
+.ts-rf-beam{display:block;margin:0 auto;overflow:visible}
+.ts-rf-beam text{font-family:var(--font);font-weight:600;font-size:11px;letter-spacing:.1em}
+.ts-rf-beam .ts-rf-bt-guide{fill:none;stroke:color-mix(in srgb,var(--ink) 12%,transparent);stroke-width:1}
+.ts-rf-beam .ts-rf-bt-dim{fill:color-mix(in srgb,var(--ink) 28%,transparent)}
+.ts-rf-beam .ts-rf-bt-lit{fill:url(#tsRfBeamGrad)}
+.ts-rf-beam .ts-rf-bt-wipe{fill:none;stroke:#fff;stroke-width:46;stroke-dasharray:100 100;animation:tsRfWipe 5.2s var(--rf-ease-in-out,cubic-bezier(.65,0,.35,1)) infinite}
+.ts-rf-beam .ts-rf-bt-trail{fill:none;stroke:color-mix(in srgb,var(--rf-beam-core,var(--ink)) 50%,transparent);stroke-width:1;stroke-dasharray:100 100;animation:tsRfWipe 5.2s var(--rf-ease-in-out,cubic-bezier(.65,0,.35,1)) infinite}
+.ts-rf-beam .ts-rf-bt-ray{fill:none;stroke:var(--rf-beam-core,var(--ink));stroke-width:2.2;stroke-linecap:round;stroke-dasharray:5 300;stroke-dashoffset:5;opacity:0;
+  filter:drop-shadow(0 0 2px var(--rf-beam-core,var(--ink))) drop-shadow(0 0 7px rgba(var(--rf-hue-rgb,var(--accent-rgb)),calc(.95*var(--rx-glow,1))));
+  animation:tsRfRay 5.2s var(--rf-ease-in-out,cubic-bezier(.65,0,.35,1)) infinite}
+.ts-rf-beam .ts-rf-bt-hold{animation:tsRfHold 5.2s linear infinite}
+@keyframes tsRfWipe{0%{stroke-dashoffset:100}62%,100%{stroke-dashoffset:0}}
+@keyframes tsRfRay{0%{stroke-dashoffset:5;opacity:1}62%{stroke-dashoffset:-95;opacity:1}68%,100%{stroke-dashoffset:-95;opacity:0}}
+@keyframes tsRfHold{0%,86%{opacity:1}97%,100%{opacity:0}}
+
+/* ---------- Spectral Arc: each glyph rides its own ray out of the prism ---------- */
+.ts-rf-arc{--r:98px;--cy:124px;--a0:-62deg;--step:13.78deg;position:relative;width:260px;height:150px;margin:0 auto}
+.ts-rf-arc::before{content:"";position:absolute;left:50%;top:var(--cy);width:150px;height:70px;transform:translate(-50%,-62%);pointer-events:none;
+  background:radial-gradient(closest-side,rgba(var(--rf-hue-rgb,var(--accent-rgb)),calc(.2*var(--rx-glow,1))),transparent)}
+.ts-rf-arc>span{--ang:calc(var(--a0) + var(--i)*var(--step));position:absolute;left:50%;top:var(--cy);font-family:var(--font);font-weight:600;font-size:22px;line-height:1;color:var(--k);
+  transform:translate(-50%,-50%) rotate(var(--ang)) translateY(calc(-1*var(--r)));
+  text-shadow:0 0 0 transparent,0 0 0 transparent,0 0 14px rgba(var(--kr),calc(.4*var(--rx-glow,1)));
+  animation:tsRfFan 6.4s var(--rf-ease-out-expo,cubic-bezier(.16,1,.3,1)) infinite backwards;animation-delay:calc(var(--i)*60ms)}
+.ts-rf-arc>span::after{content:"";position:absolute;left:50%;top:calc(100% + 5px);width:1px;height:calc(var(--r) - 36px);margin-left:-.5px;pointer-events:none;
+  background:linear-gradient(180deg,rgba(var(--kr),calc(.55*var(--rx-glow,1) + .1)),rgba(var(--kr),.03))}
+.ts-rf-arc-prism{position:absolute;left:50%;top:var(--cy);width:30px;height:26px;transform:translate(-50%,-58%);overflow:visible}
+.ts-rf-arc-prism path{fill:color-mix(in srgb,var(--ink) 8%,transparent);stroke:color-mix(in srgb,var(--ink) 60%,transparent);stroke-width:1;stroke-linejoin:round}
+.ts-rf-arc-prism .hi{fill:none;stroke:var(--rf-beam-core,var(--ink));stroke-width:1.2;opacity:.8}
+.ts-rf-arc-beam{position:absolute;left:4px;top:var(--cy);width:calc(50% - 16px);height:1px;transform-origin:right center;
+  background:linear-gradient(90deg,transparent,var(--rf-beam-core,var(--ink)));box-shadow:var(--rf-beam-glow,none);animation:tsRfBeamIn 6.4s ease-out infinite}
+@keyframes tsRfBeamIn{0%{opacity:.3;transform:scaleX(.15)}9%{opacity:1;transform:scaleX(1)}84%{opacity:.9;transform:scaleX(1)}100%{opacity:.3;transform:scaleX(1)}}
+@keyframes tsRfFan{
+  0%{transform:translate(-50%,-50%) rotate(var(--ang)) translateY(-16px) scale(.35);opacity:0;filter:blur(3px);
+     text-shadow:-3px 0 0 var(--rf-split-a,rgba(var(--crit-rgb),.6)),3px 0 0 var(--rf-split-b,rgba(var(--info-rgb),.6)),0 0 14px rgba(var(--kr),0)}
+  20%,84%{transform:translate(-50%,-50%) rotate(var(--ang)) translateY(calc(-1*var(--r))) scale(1);opacity:1;filter:blur(0);
+     text-shadow:0 0 0 transparent,0 0 0 transparent,0 0 14px rgba(var(--kr),calc(.4*var(--rx-glow,1)))}
+  100%{transform:translate(-50%,-50%) rotate(var(--ang)) translateY(calc(-1*var(--r))) scale(1);opacity:0;filter:blur(2px)}
+}
+</style>
+  <div class="gallery" id="g0">
+    <div class="tile is-new" data-ctype="shaped-text" data-interact="auto-play" data-c="accent"><div class="stage">
+      <svg class="ts-rf-beam" width="260" height="130" viewBox="0 0 260 130" role="img" aria-label="White light in, every color out">
+        <defs>
+          <linearGradient id="tsRfBeamGrad" gradientUnits="userSpaceOnUse" x1="8" y1="0" x2="252" y2="0"><stop offset="0" style="stop-color:var(--rf-s-violet,var(--accent))"/><stop offset=".2" style="stop-color:var(--rf-s-periwinkle,var(--accent2))"/><stop offset=".4" style="stop-color:var(--rf-s-azure,var(--info))"/><stop offset=".58" style="stop-color:var(--rf-s-mint,var(--pos))"/><stop offset=".78" style="stop-color:var(--rf-s-citrine,var(--warn))"/><stop offset="1" style="stop-color:var(--rf-s-rose,var(--crit))"/></linearGradient>
+          <mask id="tsRfBeamMask" maskUnits="userSpaceOnUse" x="0" y="0" width="260" height="130"><path class="ts-rf-bt-wipe" d="M8,94 C62,94 74,40 130,40 S198,94 252,94" pathLength="100"/></mask>
+          <path id="tsRfBeamPath" d="M8,94 C62,94 74,40 130,40 S198,94 252,94" fill="none"/>
+        </defs>
+        <path class="ts-rf-bt-guide" d="M8,94 C62,94 74,40 130,40 S198,94 252,94"/>
+        <text class="ts-rf-bt-dim" dy="-6"><textPath href="#tsRfBeamPath" startOffset="50%" text-anchor="middle">WHITE LIGHT IN · EVERY COLOR OUT</textPath></text>
+        <g class="ts-rf-bt-hold">
+          <path class="ts-rf-bt-trail" d="M8,94 C62,94 74,40 130,40 S198,94 252,94" pathLength="100"/>
+          <text class="ts-rf-bt-lit" dy="-6" mask="url(#tsRfBeamMask)"><textPath href="#tsRfBeamPath" startOffset="50%" text-anchor="middle">WHITE LIGHT IN · EVERY COLOR OUT</textPath></text>
+        </g>
+        <path class="ts-rf-bt-ray" d="M8,94 C62,94 74,40 130,40 S198,94 252,94" pathLength="100"/>
+      </svg></div>
+      <div class="meta"><div class="nm">Beam-Traced Path</div><span class="ref">.ts-rf-beam (SVG textPath)</span><div class="desc">A hairline of white light runs along a curved <code>&lt;textPath&gt;</code>; the letters it passes light up in spectral order, violet to rose, then dim and the beam returns. One dash timeline drives the beam, its trail and a wide stroke mask, so the reveal is exact on any curve. In Day, the beam becomes violet ink. Reduced motion shows it fully lit.</div><div class="row"><button class="copy" data-snip='SVG textPath beam trace'>Copy snippet</button></div></div></div>
+
+    <div class="tile is-new" data-ctype="shaped-text" data-interact="auto-play" data-c="accent"><div class="stage"><div class="ts-rf-arc" role="img" aria-label="Refraction"><i class="ts-rf-arc-beam" aria-hidden="true"></i><svg class="ts-rf-arc-prism" viewBox="0 0 30 26" aria-hidden="true"><path d="M15 1.5 28.5 24.5H1.5z"/><path class="hi" d="M15 1.5 1.5 24.5"/></svg><span style="--i:0;--k:var(--rf-s-violet,var(--accent));--kr:var(--rf-s-violet-rgb,var(--accent-rgb))">R</span><span style="--i:1;--k:var(--rf-s-periwinkle,var(--accent2));--kr:var(--rf-s-periwinkle-rgb,var(--accent2-rgb))">E</span><span style="--i:2;--k:var(--rf-s-azure,var(--info));--kr:var(--rf-s-azure-rgb,var(--info-rgb))">F</span><span style="--i:3;--k:var(--rf-s-cyan,var(--info));--kr:var(--rf-s-cyan-rgb,var(--info-rgb))">R</span><span style="--i:4;--k:var(--rf-s-mint,var(--pos));--kr:var(--rf-s-mint-rgb,var(--pos-rgb))">A</span><span style="--i:5;--k:var(--rf-s-jade,var(--pos));--kr:var(--rf-s-jade-rgb,var(--pos-rgb))">C</span><span style="--i:6;--k:var(--rf-s-lime,var(--warn));--kr:var(--rf-s-lime-rgb,var(--warn-rgb))">T</span><span style="--i:7;--k:var(--rf-s-amber,var(--warn));--kr:var(--rf-s-amber-rgb,var(--warn-rgb))">I</span><span style="--i:8;--k:var(--rf-s-coral,var(--neg));--kr:var(--rf-s-coral-rgb,var(--neg-rgb))">O</span><span style="--i:9;--k:var(--rf-s-rose,var(--crit));--kr:var(--rf-s-rose-rgb,var(--crit-rgb))">N</span></div></div>
+      <div class="meta"><div class="nm">Spectral Arc</div><span class="ref">.ts-rf-arc</span><div class="desc">A word fans out of a glass prism like dispersed light: each glyph rides its own faint ray and takes the next stop of the Refraction ramp, violet to rose. Letters converge into place with a short chromatic split. Pure CSS: angles come from <code>--i</code>, colors from <code>--k</code>. Reduced motion shows the finished arc.</div><div class="row"><button class="copy" data-snip='class="ts-rf-arc"'>Copy snippet</button></div></div></div>
+  </div>

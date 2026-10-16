@@ -1,0 +1,82 @@
+<h3 class="sec">Refraction — beam, spectrum &amp; lit edges</h3>
+<style id="fxrf-styles">
+/* ===== Refraction signature FX — white light in, every color out (namespaced fx-rf-*) =====
+   Night: white light with a halo of the element hue. Day: the light's own color made
+   visible on pearl paper. Every rule reads --c/--c-rgb (element hue) and the Prism --rf-*
+   tokens, each with a fallback, so a copied snippet still renders outside Prism. */
+@property --fx-rf-ang{syntax:'<angle>';inherits:false;initial-value:0deg}
+
+/* 1 · Beam Sweep — a hairline of white light travels the top edge, a spectral fringe in its wake */
+.fx-rf-beam{position:relative;overflow:hidden}
+.fx-rf-beam::before,.fx-rf-beam::after{content:"";position:absolute;top:0;left:0;width:46%;pointer-events:none;transform:translateX(-110%);animation:fxRfBeam 3.6s var(--rf-ease-in-out,cubic-bezier(.65,0,.35,1)) infinite}
+.fx-rf-beam::before{height:1px;background:linear-gradient(90deg,rgba(var(--c-rgb,var(--accent-rgb)),0),rgba(var(--c-rgb,var(--accent-rgb)),.85) 36%,var(--rf-beam-core,#fff) 50%,rgba(var(--c-rgb,var(--accent-rgb)),.85) 64%,rgba(var(--c-rgb,var(--accent-rgb)),0));filter:drop-shadow(0 0 3px rgba(var(--c-rgb,var(--accent-rgb)),.9)) drop-shadow(0 0 8px rgba(var(--c-rgb,var(--accent-rgb)),.5))}
+.fx-rf-beam::after{top:1px;height:5px;background:var(--rf-fringe,linear-gradient(90deg,rgba(255,110,140,0),rgba(255,110,140,.55),rgba(255,214,120,.5),rgba(120,230,190,.5),rgba(110,170,255,.55),rgba(184,140,255,0))) 30% 0/34% 100% no-repeat;filter:blur(1.5px);opacity:.8}
+@keyframes fxRfBeam{0%{transform:translateX(-110%)}62%,100%{transform:translateX(230%)}}
+@media (prefers-reduced-motion:reduce){.fx-rf-beam::before,.fx-rf-beam::after{animation:none;transform:translateX(66%)}}
+
+/* 2 · Lit Edge — on hover/focus (or .is-lit) a beam of the hue lands on the top edge and a
+   glint crosses once. Day swaps the hairline for the thin-film iridescent border. */
+.fx-rf-lit{position:relative;overflow:hidden;border-left-width:1px!important;transition:border-color var(--rf-dur-base,.24s) var(--rf-ease-out-expo,ease),box-shadow var(--rf-dur-base,.24s) var(--rf-ease-out-expo,ease),transform var(--rf-dur-base,.24s) var(--rf-ease-out-expo,ease)}
+.fx-rf-lit::before{content:"";position:absolute;left:10%;right:10%;top:0;height:1px;pointer-events:none;background:linear-gradient(90deg,rgba(var(--c-rgb,var(--accent-rgb)),0),rgba(var(--c-rgb,var(--accent-rgb)),.9) 30%,var(--rf-beam-core,#fff) 50%,rgba(var(--c-rgb,var(--accent-rgb)),.9) 70%,rgba(var(--c-rgb,var(--accent-rgb)),0));filter:drop-shadow(0 0 4px rgba(var(--c-rgb,var(--accent-rgb)),.85));opacity:0;transform:scaleX(.3);transition:opacity var(--rf-dur-base,.24s) var(--rf-ease-out-expo,ease),transform var(--rf-dur-slow,.4s) var(--rf-ease-out-expo,ease)}
+.fx-rf-lit::after{content:"";position:absolute;top:-10%;bottom:-10%;left:0;width:42%;pointer-events:none;background:linear-gradient(100deg,transparent,rgba(var(--fx-glint,255,255,255),calc(.14*var(--fx-glint-k,1))) 46%,rgba(var(--c-rgb,var(--accent-rgb)),.14) 56%,transparent);transform:translateX(-130%) skewX(-16deg);opacity:0;transition:transform 0s .6s,opacity var(--rf-dur-fast,.14s)}
+.fx-rf-lit:hover,.fx-rf-lit:focus-visible,.fx-rf-lit.is-lit,.tile:hover .fx-rf-lit{border-color:var(--rf-line-strong,var(--line))!important;box-shadow:var(--elev-2,0 18px 40px -18px rgba(0,0,0,.75));transform:translateY(-1px)}
+.fx-rf-lit:hover::before,.fx-rf-lit:focus-visible::before,.fx-rf-lit.is-lit::before,.tile:hover .fx-rf-lit::before{opacity:1;transform:none}
+.fx-rf-lit:hover::after,.fx-rf-lit.is-lit::after,.tile:hover .fx-rf-lit::after{transform:translateX(330%) skewX(-16deg);opacity:1;transition:transform var(--rf-dur-deliberate,.6s) var(--rf-ease-out,ease),opacity var(--rf-dur-fast,.14s)}
+[data-rf-mode="day"] .fx-rf-lit:hover,[data-rf-mode="day"] .fx-rf-lit.is-lit,[data-rf-mode="day"] .tile:hover .fx-rf-lit{border-color:transparent!important;background:linear-gradient(var(--card),var(--card)) padding-box,var(--rf-iris-edge,linear-gradient(115deg,#e7a6c8,#b49ff0 30%,#8fb8f2 55%,#86d7bb 78%,#e6c98a)) border-box!important}
+@media (prefers-reduced-motion:reduce){.fx-rf-lit,.fx-rf-lit::before{transition:opacity 120ms linear}.fx-rf-lit::before{transform:none}.fx-rf-lit::after{display:none}.fx-rf-lit:hover,.fx-rf-lit.is-lit,.tile:hover .fx-rf-lit{transform:none}}
+
+/* 3 · Spectral Rim — a white-headed glint laps the hairline border, its tail dispersed into the
+   spectrum; a soft copy just inside the edge is the light caught in the glass */
+.fx-rf-rim{position:relative;border-color:var(--line)!important;border-left-width:1px!important}
+.fx-rf-rim::before,.fx-rf-rim::after{content:"";position:absolute;border-radius:inherit;pointer-events:none;background:conic-gradient(from var(--fx-rf-ang),transparent 0 60%,var(--rf-s-coral-v,var(--neg)) 70%,var(--rf-s-citrine-v,var(--warn)) 76%,var(--rf-s-mint-v,var(--pos)) 82%,var(--rf-s-azure-v,var(--info)) 87%,var(--rf-s-violet-v,var(--accent)) 91.5%,var(--rf-beam-core,#fff) 96%,transparent 98%);animation:fxRfRim 5.4s linear infinite}
+.fx-rf-rim::before{inset:-1px;padding:1.5px;-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
+.fx-rf-rim::after{inset:0;filter:blur(3px);opacity:.38;-webkit-mask:linear-gradient(90deg,#000,transparent 12px,transparent calc(100% - 12px),#000),linear-gradient(180deg,#000,transparent 12px,transparent calc(100% - 12px),#000);mask:linear-gradient(90deg,#000,transparent 12px,transparent calc(100% - 12px),#000),linear-gradient(180deg,#000,transparent 12px,transparent calc(100% - 12px),#000)}
+@keyframes fxRfRim{to{--fx-rf-ang:360deg}}
+@media (prefers-reduced-motion:reduce){.fx-rf-rim::before,.fx-rf-rim::after{animation:none;--fx-rf-ang:38deg}}
+
+/* 4 · Spectral Shimmer — ink type; a dispersed band of light passes through the letters */
+.fx-rf-shimmer{display:inline-block;font:700 27px/1.15 var(--font,system-ui,sans-serif);letter-spacing:-.035em;color:var(--ink);background:linear-gradient(100deg,var(--ink) 0 35%,var(--rf-s-coral-v,var(--neg)) 41%,var(--rf-s-citrine-v,var(--warn)) 44.5%,var(--rf-beam-core,#fff) 48%,var(--rf-s-mint-v,var(--pos)) 51.5%,var(--rf-s-azure-v,var(--info)) 55%,var(--rf-s-violet-v,var(--accent)) 58.5%,var(--ink) 64% 100%) 100% 0/280% 100% no-repeat;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:fxRfShimmer 4.2s var(--rf-ease-in-out,cubic-bezier(.65,0,.35,1)) infinite}
+@keyframes fxRfShimmer{0%{background-position:100% 0}62%,100%{background-position:0% 0}}
+@media (prefers-reduced-motion:reduce){.fx-rf-shimmer{animation:none;background-position:30% 0}}
+
+/* 5 · Caustic Light — two drifting networks of refracted light play across the surface
+   (SVG fractal-noise contours used as a mask; only transform animates) */
+.fx-rf-caustic{position:relative;overflow:hidden;isolation:isolate}
+.fx-rf-caustic::before,.fx-rf-caustic::after{content:"";position:absolute;inset:-180px;z-index:-1;pointer-events:none;background:linear-gradient(120deg,rgba(var(--c-rgb,var(--accent-rgb)),.95),rgba(var(--rf-s-cyan-rgb,var(--info-rgb)),.9) 50%,rgba(var(--rf-s-violet-rgb,var(--accent-rgb)),.95));-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='c' x='0' y='0' width='100%' height='100%'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.028' numOctaves='2' seed='11' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 2.6 0 0 0 -0.8'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='table' tableValues='0 0 0 0 0 0 0 .35 1 .35 0 0 0 0 0 0 .25 .8 .25 0 0 0 0 0 0'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23c)'/%3E%3C/svg%3E") 0 0/180px 180px repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='c' x='0' y='0' width='100%' height='100%'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.028' numOctaves='2' seed='11' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 2.6 0 0 0 -0.8'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='table' tableValues='0 0 0 0 0 0 0 .35 1 .35 0 0 0 0 0 0 .25 .8 .25 0 0 0 0 0 0'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23c)'/%3E%3C/svg%3E") 0 0/180px 180px repeat;opacity:.36;animation:fxRfCausticA 18s linear infinite}
+.fx-rf-caustic::after{-webkit-mask-size:126px 126px;mask-size:126px 126px;opacity:.22;animation:fxRfCausticB 12s linear infinite}
+@keyframes fxRfCausticA{from{transform:translate(0,0)}to{transform:translate(180px,180px)}}
+@keyframes fxRfCausticB{from{transform:translate(0,0)}to{transform:translate(-126px,126px)}}
+[data-rf-mode="day"] .fx-rf-caustic::before,[data-rf-mode="day"] .fx-rf-caustic::after{background:var(--rf-spectrum,linear-gradient(90deg,#b299f3,#5ab3f7,#00c8c3,#53cea0,#e5ba53,#fb947c,#f48a9f));opacity:.5}
+[data-rf-mode="day"] .fx-rf-caustic::after{opacity:.3}
+@media (prefers-reduced-motion:reduce){.fx-rf-caustic::before,.fx-rf-caustic::after{animation:none}}
+
+/* 6 · Thin-Film Sheen — a pearl surface with an iridescent edge; a soap-film band of color
+   glides across. Made for Day; at Night it is a quiet spectral glint. */
+.fx-rf-film{position:relative;overflow:hidden;border:1px solid transparent!important;background:linear-gradient(var(--card),var(--card)) padding-box,var(--rf-iris-edge,linear-gradient(115deg,rgba(203,185,247,.75),rgba(134,189,249,.55) 35%,rgba(139,216,186,.5) 65%,rgba(238,195,111,.45))) border-box!important}
+.fx-rf-film::after{content:"";position:absolute;top:-30%;bottom:-30%;left:0;width:72%;pointer-events:none;background:linear-gradient(100deg,transparent 16%,rgba(var(--rf-s-rose-rgb,var(--crit-rgb)),.15) 31%,rgba(var(--rf-s-violet-rgb,var(--accent-rgb)),.2) 41%,rgba(var(--fx-glint,255,255,255),calc(.24*var(--fx-glint-k,1))) 50%,rgba(var(--rf-s-azure-rgb,var(--info-rgb)),.2) 59%,rgba(var(--rf-s-mint-rgb,var(--pos-rgb)),.15) 69%,transparent 84%);transform:translateX(-112%) skewX(-14deg);animation:fxRfFilm 5.6s var(--rf-ease-in-out,cubic-bezier(.65,0,.35,1)) infinite}
+@keyframes fxRfFilm{0%{transform:translateX(-112%) skewX(-14deg)}58%,100%{transform:translateX(170%) skewX(-14deg)}}
+[data-rf-mode="day"] .fx-rf-film{background:linear-gradient(118deg,rgba(255,255,255,.8),rgba(255,255,255,.42)) padding-box,var(--rf-iris,linear-gradient(115deg,#ffe1e5 0%,#ebe5ff 26%,#cbf1fc 52%,#d1f3e3 76%,#f6e8ca 100%)) padding-box,var(--rf-iris-edge,linear-gradient(115deg,#e7a6c8,#b49ff0 30%,#8fb8f2 55%,#86d7bb 78%,#e6c98a)) border-box!important;box-shadow:inset 0 1px 0 #fff,0 1px 2px rgba(32,24,72,.05),0 14px 32px -18px rgba(64,40,150,.3)}
+[data-rf-mode="day"] .fx-rf-film::after{background:linear-gradient(100deg,transparent 16%,rgba(var(--rf-s-rose-rgb,var(--crit-rgb)),.2) 31%,rgba(var(--rf-s-violet-rgb,var(--accent-rgb)),.22) 41%,rgba(255,255,255,.85) 50%,rgba(var(--rf-s-azure-rgb,var(--info-rgb)),.22) 59%,rgba(var(--rf-s-mint-rgb,var(--pos-rgb)),.2) 69%,transparent 84%)}
+@media (prefers-reduced-motion:reduce){.fx-rf-film::after{animation:none;opacity:0}}
+</style>
+<div class="gallery" id="fxrfG">
+
+  <div class="tile is-new" data-ctype="fx-glow" data-interact="auto-play" data-c="accent"><div class="stage"><div class="el-card c-accent fx-rf-beam"><div class="n">2,668</div><div class="l">Facets indexed</div></div></div>
+    <div class="meta"><div class="nm">Beam Sweep</div><span class="ref">.fx-rf-beam</span><div class="desc">A hairline of white light travels the top edge with a spectral fringe in its wake, then rests — Prism's Beam, the recurring motif. Day draws it in the element's own color. Reduced motion parks the beam on the edge.</div><div class="row"><button class="copy" data-snip='class="el-card c-accent fx-rf-beam"'>Copy snippet</button></div></div></div>
+
+  <div class="tile is-new" data-ctype="fx-glow" data-interact="hover focus" data-c="info"><div class="stage"><div class="el-card c-info fx-rf-lit" tabindex="0"><div class="n">Hover</div><div class="l">Lit edge · cut glass</div></div></div>
+    <div class="meta"><div class="nm">Lit Edge</div><span class="ref">.fx-rf-lit</span><div class="desc">Cut-glass hover: a beam of the hue lands on the top edge, the card lifts a pixel and one glint crosses the surface. Day swaps the hairline for a thin-film iridescent border. Add <code>.is-lit</code> for a selected state; keyboard focus lights it too.</div><div class="row"><button class="copy" data-snip='class="el-card c-info fx-rf-lit" tabindex="0"'>Copy snippet</button></div></div></div>
+
+  <div class="tile is-new" data-ctype="fx-glow" data-interact="auto-play" data-c="accent"><div class="stage"><div class="el-card c-accent fx-rf-rim"><div class="n">λ 467</div><div class="l">Spectral rim</div></div></div>
+    <div class="meta"><div class="nm">Spectral Rim</div><span class="ref">.fx-rf-rim</span><div class="desc">White light in, every color out: a white-headed glint laps the hairline border and its tail disperses into the spectrum, casting a soft colored light around the card. Slow and quiet — a frame for one featured element.</div><div class="row"><button class="copy" data-snip='class="el-card c-accent fx-rf-rim"'>Copy snippet</button></div></div></div>
+
+  <div class="tile is-new" data-ctype="text-effect" data-interact="auto-play" data-c="accent"><div class="stage"><span class="fx-rf-shimmer">Every color out.</span></div>
+    <div class="meta"><div class="nm">Spectral Shimmer</div><span class="ref">.fx-rf-shimmer</span><div class="desc">Ink-colored type; a dispersed band of light — coral through violet around a white core — passes through the letters, then rests. Restrained enough for a headline. Reduced motion holds a still fringe on the word.</div><div class="row"><button class="copy" data-snip='class="fx-rf-shimmer"'>Copy snippet</button></div></div></div>
+
+  <div class="tile is-new" data-ctype="fx-glow" data-interact="auto-play" data-c="info"><div class="stage"><div class="el-card c-info fx-rf-caustic" style="min-height:78px"><div class="n">4,200 lm</div><div class="l">Light through glass</div></div></div>
+    <div class="meta"><div class="nm">Caustic Light</div><span class="ref">.fx-rf-caustic</span><div class="desc">Caustics on a surface: two networks of refracted light drift across the card at different scales, like sun through a glass of water. Pure CSS — fractal-noise contours as a mask, only transforms animate. Day plays it in the full spectrum.</div><div class="row"><button class="copy" data-snip='class="el-card c-info fx-rf-caustic"'>Copy snippet</button></div></div></div>
+
+  <div class="tile is-new" data-ctype="fx-glow" data-interact="auto-play" data-c="accent"><div class="stage"><div class="el-card c-accent fx-rf-film"><div class="n">Pearl</div><div class="l">Thin-film sheen</div></div></div>
+    <div class="meta"><div class="nm">Thin-Film Sheen</div><span class="ref">.fx-rf-film</span><div class="desc">Made for Day: a pearl surface with an iridescent thin-film edge; a soap-film band of color — rose, violet, white, azure, mint — glides across. At Night it becomes a quiet spectral glint on the glass.</div><div class="row"><button class="copy" data-snip='class="el-card c-accent fx-rf-film"'>Copy snippet</button></div></div></div>
+
+</div>

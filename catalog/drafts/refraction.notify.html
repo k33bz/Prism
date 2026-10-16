@@ -1,0 +1,163 @@
+<h3 class="sec">REFRACTION SIGNATURES</h3>
+<style id="rfn-styles">
+/* ============================ 0. REFRACTION SIGNATURES =================== */
+/* Beam Progress Toast — glass overlay, lit status index, mono detail and a beam timer
+   draining along the bottom edge (white core at its head). Hover or focus pauses the
+   timer (WCAG 2.2.1); × dismisses; "Show again" replays. Driven by a tiny timer that
+   sets --rfn-p (1 → 0). Reduced motion: no entrance, a static bar + the countdown. */
+.rfn-toastdemo{display:flex;flex-direction:column;align-items:center;gap:14px;width:100%;max-width:300px;padding-top:14px}
+.rfn-live{display:flex;align-items:flex-start;width:100%;min-height:100px}
+.rfn-toast{--rfn-c:var(--pos);--rfn-rgb:var(--pos-rgb);--rfn-p:1;position:relative;display:flex;align-items:flex-start;gap:11px;width:100%;
+  padding:13px 8px 15px 14px;border-radius:var(--r-lg,12px);overflow:hidden;color:var(--ink);
+  background:var(--rf-glass-strong,var(--panel));-webkit-backdrop-filter:blur(18px) saturate(140%);backdrop-filter:blur(18px) saturate(140%);
+  border:1px solid var(--rf-glass-line,var(--line));box-shadow:inset 0 1px 0 var(--rf-edge-hi,transparent),var(--rf-shadow-2,var(--elev-2));
+  animation:rfn-in var(--rf-dur-deliberate,.6s) var(--rf-ease-out-expo,ease-out) both}
+.rfn-toast.is-out{animation:rfn-out var(--rf-dur-base,.24s) var(--rf-ease-in,ease-in) both;pointer-events:none}
+.rfn-toast[hidden]{display:none}
+.rfn-idx{flex:none;width:3px;height:34px;margin-top:1px;border-radius:2px;background:var(--rfn-c);box-shadow:0 0 8px rgba(var(--rfn-rgb),.75)}
+.rfn-tbody{flex:1;min-width:0}
+.rfn-ttl{margin:0 0 4px;font:600 13px/1.3 var(--font);letter-spacing:-.005em;color:var(--ink)}
+.rfn-tdet{margin:0;font:400 11px/1.5 var(--rf-mono,ui-monospace,monospace);color:var(--muted)}
+.rfn-tleft{margin:7px 0 0;font:400 10px/1.2 var(--rf-mono,ui-monospace,monospace);letter-spacing:.04em;color:var(--dim);font-variant-numeric:tabular-nums}
+.rfn-toast.is-paused .rfn-tleft{color:var(--rfn-c)}
+.rfn-tx{flex:none;display:grid;place-items:center;width:28px;height:28px;margin:-6px 0 0;padding:0;border:0;border-radius:var(--r-sm,6px);
+  background:transparent;color:var(--dim);font:400 18px/1 var(--font);cursor:pointer;
+  transition:background-color var(--rf-dur-fast,.14s) var(--rf-ease-out-expo,ease),color var(--rf-dur-fast,.14s)}
+.rfn-tx:hover{background:var(--rf-hover,rgba(127,127,127,.08));color:var(--ink)}
+.rfn-tx:focus-visible{outline:2px solid var(--rf-focus,var(--accent));outline-offset:0}
+.rfn-beam{position:absolute;left:0;right:0;bottom:0;height:2px;background:rgba(var(--rfn-rgb),.1)}
+.rfn-beam>i{position:absolute;inset:0;transform-origin:left center;transform:scaleX(var(--rfn-p));
+  background:linear-gradient(90deg,rgba(var(--rfn-rgb),.15),rgba(var(--rfn-rgb),.95) 86%,#fff);
+  box-shadow:0 0 8px rgba(var(--rfn-rgb),.6);transition:transform .12s linear}
+.rfn-again{display:inline-flex;align-items:center;gap:7px;height:30px;padding:0 12px;border:1px solid var(--rf-line-strong,var(--line));
+  border-radius:var(--r-sm,6px);background:var(--panel);color:var(--muted);box-shadow:var(--elev-1);cursor:pointer;
+  font:600 10.5px/1 var(--rf-mono,ui-monospace,monospace);letter-spacing:.08em;text-transform:uppercase;
+  transition:color var(--rf-dur-fast,.14s),border-color var(--rf-dur-fast,.14s),background-color var(--rf-dur-fast,.14s)}
+.rfn-again::before{content:"\21BB";font:400 13px/1 var(--font);letter-spacing:0}
+.rfn-again:hover{color:var(--ink);border-color:var(--rf-accent-line,var(--accent));background:var(--rf-hover,var(--panel))}
+.rfn-again:focus-visible{outline:2px solid var(--rf-focus,var(--accent));outline-offset:2px}
+@keyframes rfn-in{0%{opacity:0;transform:translateY(8px) scale(.985);filter:blur(5px) drop-shadow(-3px 0 0 var(--rf-split-a,transparent)) drop-shadow(3px 0 0 var(--rf-split-b,transparent))}
+  60%{opacity:1;filter:blur(0) drop-shadow(-1px 0 0 var(--rf-split-a,transparent)) drop-shadow(1px 0 0 var(--rf-split-b,transparent))}
+  100%{opacity:1;transform:none;filter:none}}
+@keyframes rfn-out{to{opacity:0;transform:translateY(6px) scale(.985)}}
+
+/* Beam Loader — indeterminate activity drawn as light: a beam sweeps a hairline and
+   fans into a small spectrum at its head (white light in, every color out). */
+.rfn-loader{display:grid;gap:9px;width:100%;max-width:280px;padding-top:12px}
+.rfn-lrow{display:flex;align-items:center;gap:10px}
+.rfn-leye{display:inline-flex;align-items:center;gap:8px;font:600 10px/1.2 var(--rf-mono,ui-monospace,monospace);letter-spacing:.15em;
+  text-transform:uppercase;color:var(--rf-hue,var(--accent))}
+.rfn-leye::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--rf-hue-v,var(--accent));
+  box-shadow:0 0 8px rgba(var(--rf-hue-rgb,var(--accent-rgb)),.8);animation:rfn-breathe 1.8s var(--rf-ease-in-out,ease-in-out) infinite}
+.rfn-lmeta{margin-left:auto;font:400 11px/1 var(--rf-mono,ui-monospace,monospace);letter-spacing:.02em;color:var(--dim);font-variant-numeric:tabular-nums}
+.rfn-lbl{margin:0;font:400 13px/1.4 var(--font);color:var(--ink)}
+.rfn-lsub{display:flex;justify-content:space-between;gap:10px;margin-top:-2px;font:400 10px/1.2 var(--rf-mono,ui-monospace,monospace);letter-spacing:.04em;color:var(--dim)}
+.rfn-rail{position:relative;height:14px;overflow:hidden}
+.rfn-rail::before{content:"";position:absolute;left:0;right:0;top:50%;height:1px;background:var(--line)}
+.rfn-ray{position:absolute;left:0;top:50%;width:40%;height:1.5px;margin-top:-1px;border-radius:1px;
+  background:linear-gradient(90deg,transparent,var(--rf-beam-core,var(--ink)));box-shadow:var(--rf-beam-glow,none);
+  animation:rfn-sweep 1.9s var(--rf-ease-in-out,ease-in-out) infinite}
+.rfn-ray::before{content:"";position:absolute;right:-3px;top:50%;width:6px;height:6px;margin-top:-3px;border-radius:50%;
+  background:var(--rf-beam-core,var(--ink));filter:blur(2px);opacity:.85}
+.rfn-ray::after{content:"";position:absolute;left:100%;top:50%;width:24px;height:11px;margin-top:-5.5px;
+  background:var(--rf-spectrum-v,var(--accent));clip-path:polygon(0 44%,100% 0,100% 100%,0 56%);opacity:.9}
+@keyframes rfn-sweep{0%{transform:translateX(-110%);opacity:0}14%{opacity:1}86%{opacity:1}100%{transform:translateX(255%);opacity:0}}
+@keyframes rfn-breathe{0%,100%{opacity:.45}50%{opacity:1}}
+
+@media (prefers-reduced-motion:reduce){
+  .rfn-toast,.rfn-toast.is-out{animation:none}
+  .rfn-beam>i{transform:none;transition:none}
+  .rfn-ray{animation:none;transform:translateX(70%);opacity:1}
+  .rfn-leye::before{animation:none;opacity:1}
+}
+</style>
+<div class="gallery">
+
+  <div class="tile is-new" data-ctype="toast" data-interact="click"><div class="stage">
+    <div class="rfn-toastdemo">
+      <div class="rfn-live" role="status" aria-live="off">
+        <div class="rfn-toast" data-rfn-dur="8000">
+          <span class="rfn-idx" aria-hidden="true"></span>
+          <div class="rfn-tbody">
+            <p class="rfn-ttl">Copied to clipboard</p>
+            <p class="rfn-tdet">kpi-tile.html · 2.1 KB</p>
+            <p class="rfn-tleft" aria-hidden="true">Dismissing in 8 s</p>
+          </div>
+          <button class="rfn-tx" type="button" aria-label="Dismiss notification">×</button>
+          <span class="rfn-beam" aria-hidden="true"><i></i></span>
+        </div>
+      </div>
+      <button class="rfn-again" type="button">Show again</button>
+    </div>
+  </div><div class="meta"><div class="nm">Beam Progress Toast</div><span class="ref">.rfn-toast</span><div class="desc">Glass toast with a lit status index, mono detail and a beam timer that drains along its bottom edge. Hover or focus pauses it, × or Esc dismisses, Show again replays. Reduced motion keeps a static bar and the countdown.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  <div class="tile is-new" data-ctype="progress-bar" data-interact="auto-play"><div class="stage">
+    <div class="rfn-loader" aria-busy="true">
+      <div class="rfn-lrow"><span class="rfn-leye">Catalog index</span><span class="rfn-lmeta">λ 550</span></div>
+      <p class="rfn-lbl">Indexing 2,668 facets…</p>
+      <div class="rfn-rail" role="progressbar" aria-label="Indexing 2,668 facets"><i class="rfn-ray"></i></div>
+      <div class="rfn-lsub"><span>18 galleries</span><span>web · terminal · deck</span></div>
+    </div>
+  </div><div class="meta"><div class="nm">Spectral Beam Loader</div><span class="ref">.rfn-loader</span><div class="desc">Indeterminate activity drawn as light: a beam sweeps a hairline and fans into a small spectrum at its head. Mono status label and progressbar semantics; reduced motion holds the beam still mid-rail.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+</div>
+<script>
+/* Refraction signatures (rfn-*) — Beam Progress Toast timer. Delegated, idempotent. */
+(function(){
+  if(window.__rfnInit) return; window.__rfnInit=true;
+  var d=document, RM=window.matchMedia?window.matchMedia('(prefers-reduced-motion: reduce)'):null;
+  function reduced(){ return !!(RM&&RM.matches); }
+  function paused(t){ return t.matches(':hover')||t.contains(d.activeElement); }
+  function label(t,p){
+    var el=t.querySelector('.rfn-tleft'); if(!el) return;
+    var s=Math.ceil(t._left/1000);
+    el.textContent=p?('Paused · '+s+' s left'):('Dismissing in '+s+' s');
+  }
+  function tick(t){
+    var now=performance.now(), dt=now-(t._last||now); t._last=now;
+    if(t.hidden||t.classList.contains('is-out')) return;
+    var p=paused(t); t.classList.toggle('is-paused',p);
+    if(!p) t._left=Math.max(0,t._left-dt);
+    t.style.setProperty('--rfn-p',(t._left/t._dur).toFixed(4));
+    label(t,p);
+    if(t._left<=0) dismiss(t,false);
+  }
+  function start(t,manual){
+    var live=t.closest('.rfn-live'); if(live) live.setAttribute('aria-live',manual?'polite':'off');
+    clearTimeout(t._again); t._done=false; t._tok=(t._tok||0)+1;
+    t._dur=+t.getAttribute('data-rfn-dur')||8000; t._left=t._dur; t._last=performance.now();
+    t.classList.remove('is-out','is-paused'); t.hidden=false;
+    t.style.animation='none'; void t.offsetWidth; t.style.animation='';
+    t.style.setProperty('--rfn-p','1'); label(t,false);
+    if(!t._iv) t._iv=setInterval(function(){ tick(t); },100);
+  }
+  function dismiss(t,byUser){
+    if(t._done) return; t._done=true; var tok=t._tok;
+    var demo=t.closest('.rfn-toastdemo'), again=demo&&demo.querySelector('.rfn-again');
+    var hadFocus=t.contains(d.activeElement);
+    function done(){
+      if(t._tok!==tok||t.hidden) return;
+      t.hidden=true; t.classList.remove('is-out');
+      if(hadFocus&&again) again.focus();
+      // ambient demo: the toast returns on its own after a beat (announced only when replayed by hand)
+      t._again=setTimeout(function(){ start(t,false); },byUser?4200:2600);
+    }
+    if(reduced()){ done(); return; }
+    t.classList.add('is-out');
+    t.addEventListener('animationend',function h(){ t.removeEventListener('animationend',h); done(); });
+    setTimeout(done,420);
+  }
+  d.addEventListener('click',function(e){
+    var x=e.target.closest&&e.target.closest('.rfn-tx');
+    if(x){ var t=x.closest('.rfn-toast'); if(t) dismiss(t,true); return; }
+    var a=e.target.closest&&e.target.closest('.rfn-again');
+    if(a){ var demo=a.closest('.rfn-toastdemo'), t2=demo&&demo.querySelector('.rfn-toast'); if(t2) start(t2,true); }
+  });
+  d.addEventListener('keydown',function(e){
+    if(e.key!=='Escape') return;
+    var t=e.target.closest&&e.target.closest('.rfn-toast'); if(t) dismiss(t,true);
+  });
+  function init(){ d.querySelectorAll('.rfn-toast').forEach(function(t){ start(t,false); }); }
+  if(d.readyState==='loading') d.addEventListener('DOMContentLoaded',init); else init();
+})();
+</script>

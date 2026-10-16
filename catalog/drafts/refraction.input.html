@@ -1,0 +1,200 @@
+<h3 class="sec">Refraction Signatures</h3>
+<style id="rfi-styles">
+/* ===== REFRACTION SIGNATURES (rfi-*) — first-class Refraction controls ===== */
+/* Beam Focus Field — the field sits on a 3:1 baseline; on focus a beam of white light runs the
+   baseline and the lit top edge catches the gallery hue. */
+.rfi-field{width:100%;display:grid;gap:7px}
+.rfi-eyebrow{display:flex;align-items:center;gap:8px;margin:0;font:600 10px/1.2 var(--rf-mono,ui-monospace,monospace);letter-spacing:.15em;text-transform:uppercase;color:var(--muted)}
+.rfi-eyebrow .rfi-idx{color:var(--rf-hue,var(--accent))}
+.rfi-eyebrow .rfi-lambda{margin-left:auto;text-transform:none;letter-spacing:.04em;font-weight:400;color:var(--dim)}
+.rfi-beam-field{position:relative;border-radius:var(--r-md,8px)}
+.rfi-beam-field::before{content:"";position:absolute;left:12%;right:12%;top:0;height:1px;z-index:1;pointer-events:none;background:linear-gradient(90deg,rgba(var(--rf-hue-rgb,var(--accent-rgb)),0),rgba(var(--rf-hue-rgb,var(--accent-rgb)),.95) 50%,rgba(var(--rf-hue-rgb,var(--accent-rgb)),0));opacity:0;transition:opacity var(--rf-dur-base,.24s) var(--rf-ease-out-expo,ease)}
+.rfi-beam-field:hover::before{opacity:.45}
+.rfi-beam-field:focus-within::before{opacity:1}
+/* 1.4.11: field boundaries at >= 3:1 against the page (--rf-line-control; packs without it keep --line) */
+.rfi-input:not(:hover):not(:focus){border-color:var(--rf-line-control,var(--line))}
+.rfi-input{display:block;width:100%;height:40px;padding:0 12px;border:1px solid var(--line);border-radius:var(--r-md,8px);background:var(--panel2);color:var(--ink);font:400 13px/1 var(--font);outline:none;box-shadow:inset 0 -1px 0 var(--rf-line-control,var(--dim));transition:border-color var(--rf-dur-fast,.14s) var(--rf-ease-out-expo,ease),box-shadow var(--rf-dur-base,.24s) var(--rf-ease-out-expo,ease)}
+.rfi-input::placeholder{color:var(--dim)}
+.rfi-input:hover{border-color:var(--rf-line-strong,var(--line))}
+.rfi-input:focus{border-color:var(--rf-focus,var(--accent));box-shadow:inset 0 -1px 0 var(--rf-focus,var(--accent)),0 0 0 4px var(--rf-focus-halo,transparent)}
+.rfi-beam{position:absolute;left:6px;right:6px;bottom:1px;height:1px;overflow:hidden;pointer-events:none;opacity:0;transition:opacity var(--rf-dur-base,.24s) var(--rf-ease-out-expo,ease)}
+.rfi-beam::before{content:"";position:absolute;inset:0;background:var(--rf-beam,linear-gradient(90deg,transparent,var(--ink),transparent))}
+.rfi-beam::after{content:"";position:absolute;top:0;bottom:0;left:0;width:34%;background:linear-gradient(90deg,transparent,var(--rf-beam-core,#fff),transparent);transform:translateX(-110%)}
+.rfi-beam-field:focus-within .rfi-beam{opacity:1}
+.rfi-beam-field:focus-within .rfi-beam::after{animation:rfi-beam-run var(--rf-dur-sweep,.9s) var(--rf-ease-in-out,ease-in-out) both}
+@keyframes rfi-beam-run{0%{transform:translateX(-110%);opacity:0}20%{opacity:1}100%{transform:translateX(300%);opacity:0}}
+.rfi-beam-field.is-invalid .rfi-input{border-color:var(--neg);box-shadow:inset 0 -1px 0 var(--neg)}
+.rfi-beam-field.is-invalid .rfi-input:focus{box-shadow:inset 0 -1px 0 var(--neg),0 0 0 4px rgba(var(--neg-rgb),.18)}
+.rfi-beam-field.is-invalid::before{background:linear-gradient(90deg,rgba(var(--neg-rgb),0),rgba(var(--neg-rgb),.95) 50%,rgba(var(--neg-rgb),0))}
+.rfi-beam-field.is-invalid .rfi-beam::before{background:linear-gradient(90deg,rgba(var(--neg-rgb),0),rgba(var(--neg-rgb),.95),rgba(var(--neg-rgb),0))}
+.rfi-help{margin:-1px 0 6px;font:400 11px/1.45 var(--font);color:var(--dim)}
+.rfi-help.is-error{display:flex;align-items:center;gap:7px;color:var(--neg)}
+.rfi-help.is-error b{display:inline-grid;place-items:center;flex:none;width:14px;height:14px;border:1px solid currentColor;border-radius:50%;font:600 9px/1 var(--rf-mono,ui-monospace,monospace)}
+
+/* Spectral Segmented Control — one continuous spectrum runs under the track; the pressed item
+   lifts to --card and its underline reveals exactly the slice of spectrum beneath it. */
+.rfi-seg{position:relative;display:flex;width:100%;max-width:340px;padding:3px;gap:2px;border:1px solid var(--line);border-radius:var(--r-md,8px);background:var(--panel2)}
+.rfi-seg::after{content:"";position:absolute;left:10px;right:10px;bottom:-1px;height:1px;background:var(--rf-spectrum,var(--accent));opacity:.7;pointer-events:none}
+.rfi-seg-opt{position:relative;flex:1;min-width:0;height:30px;padding:0 8px;border:1px solid transparent;border-radius:var(--r-sm,6px);background:transparent;color:var(--muted);font:600 12px/1 var(--font);cursor:pointer;transition:color var(--rf-dur-fast,.14s),background-color var(--rf-dur-fast,.14s),box-shadow var(--rf-dur-base,.24s)}
+.rfi-seg-opt:hover{color:var(--ink)}
+.rfi-seg-opt::after{content:"";position:absolute;left:8px;right:8px;bottom:3px;height:2px;border-radius:2px;background:var(--rf-spectrum,var(--accent));background-size:calc(var(--n,4) * 100% + (var(--n,4) - 1) * 16px) 100%;background-position:calc(var(--i,0) / (var(--n,4) - 1) * 100%) 0;opacity:0;transform:scaleX(.3);transition:opacity var(--rf-dur-base,.24s) var(--rf-ease-out-expo,ease),transform var(--rf-dur-base,.24s) var(--rf-ease-out-expo,ease)}
+.rfi-seg-opt[aria-checked="true"]{background:var(--card);border-color:var(--rf-line-control,var(--line));color:var(--ink);box-shadow:var(--elev-1)}
+.rfi-seg-opt[aria-checked="true"]::after{opacity:1;transform:none}
+.rfi-seg-opt:focus-visible{outline:2px solid var(--rf-focus,var(--accent));outline-offset:2px}
+.rfi-seg-cap{display:flex;justify-content:space-between;width:100%;max-width:340px;padding:0 4px;font:400 10px/1 var(--rf-mono,ui-monospace,monospace);letter-spacing:.04em;color:var(--dim)}
+
+/* Prism Toggle — off: a white-light thumb on an ink track. On: the track refracts into the
+   spectrum and the thumb becomes the prism. The state is also spelled out (never color alone). */
+.rfi-prism-row{display:flex;align-items:center;gap:12px;font-size:13px;color:var(--ink)}
+.rfi-prism-row + .rfi-prism-row{margin-top:14px}
+.rfi-prism{position:relative;flex:none;width:46px;height:26px;padding:0;border:1px solid var(--rf-line-control,var(--dim));border-radius:999px;background:var(--rf-bg-deep,var(--panel2));cursor:pointer;overflow:hidden;transition:border-color var(--rf-dur-base,.24s) var(--rf-ease-out-expo,ease)}
+.rfi-prism::before{content:"";position:absolute;inset:0;border-radius:inherit;background:var(--rf-spectrum,var(--accent));opacity:0;transform:scaleX(.2);transform-origin:right center;transition:opacity var(--rf-dur-slow,.4s) var(--rf-ease-out-expo,ease),transform var(--rf-dur-slow,.4s) var(--rf-ease-out-expo,ease)}
+.rfi-prism::after{content:"";position:absolute;left:24px;right:6px;top:50%;height:1px;margin-top:-.5px;background:linear-gradient(90deg,var(--rf-beam-core,#fff),transparent);opacity:.55;transition:opacity var(--rf-dur-base,.24s)}
+.rfi-prism-thumb{position:absolute;z-index:1;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;box-shadow:0 0 0 1px var(--rf-line-control,var(--dim)),0 0 10px rgba(255,255,255,.45);transition:transform var(--rf-dur-slow,.4s) var(--rf-ease-out-expo,ease),background-color var(--rf-dur-base,.24s)}
+.rfi-prism-thumb::after{content:"";position:absolute;inset:4px 3.5px 4.5px;background:var(--ink);clip-path:polygon(50% 0,100% 100%,0 100%);opacity:0;transform:scale(.4);transition:opacity var(--rf-dur-base,.24s),transform var(--rf-dur-base,.24s) var(--rf-ease-out-expo,ease)}
+.rfi-prism[aria-checked="true"]{border-color:transparent}
+.rfi-prism[aria-checked="true"]::before{opacity:1;transform:none}
+.rfi-prism[aria-checked="true"]::after{opacity:0}
+.rfi-prism[aria-checked="true"] .rfi-prism-thumb{transform:translateX(20px);background:var(--bg);box-shadow:0 0 0 1px rgba(0,0,0,.18),0 2px 6px rgba(0,0,0,.35)}
+.rfi-prism[aria-checked="true"] .rfi-prism-thumb::after{opacity:1;transform:none}
+.rfi-prism:focus-visible{outline:2px solid var(--rf-focus,var(--accent));outline-offset:2px}
+.rfi-prism-state{margin-left:auto;font:600 10px/1 var(--rf-mono,ui-monospace,monospace);letter-spacing:.15em;text-transform:uppercase;color:var(--dim)}
+.rfi-prism[aria-checked="true"] ~ .rfi-prism-state{color:var(--ink)}
+
+/* Wavelength Slider — the track is the visible spectrum (Refraction stops placed at their real
+   dominant wavelengths); the thumb and the readout take the color under it. */
+.rfi-wl{width:100%;display:grid;gap:10px;--rfi-c:var(--rf-s-mint-v,#52cea0)}
+.rfi-wl-head{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+.rfi-wl-out{display:inline-flex;align-items:center;gap:8px;font:600 13px/1 var(--rf-mono,ui-monospace,monospace);font-variant-numeric:tabular-nums;color:var(--ink)}
+.rfi-wl-out::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--rfi-c);box-shadow:0 0 8px var(--rfi-c)}
+.rfi-wl-out small{font:400 11px/1 var(--rf-mono,ui-monospace,monospace);color:var(--muted)}
+.rfi-wl-range{width:100%;height:20px;margin:0;-webkit-appearance:none;appearance:none;background:transparent;border-radius:999px;cursor:pointer}
+.rfi-wl-range::-webkit-slider-runnable-track{height:8px;border-radius:999px;box-shadow:inset 0 0 0 1px var(--rf-glass-line,rgba(255,255,255,.08));background:linear-gradient(90deg,rgba(var(--rf-s-violet-rgb,171,145,235),.14) 0%,var(--rf-s-violet-v,#ab91eb) 17.5%,var(--rf-s-periwinkle-v,#839ef4) 28.8%,var(--rf-s-azure-v,#52acee) 30.9%,var(--rf-s-cerulean-v,#00b8db) 32.8%,var(--rf-s-cyan-v,#00c3be) 35%,var(--rf-s-mint-v,#52cea0) 40.6%,var(--rf-s-jade-v,#94d582) 54.4%,var(--rf-s-lime-v,#c9d168) 59.1%,var(--rf-s-citrine-v,#ebc059) 61.9%,var(--rf-s-amber-v,#f8a75f) 64.1%,var(--rf-s-coral-v,#f69077) 67.8%,var(--rf-s-coral-v,#f69077) 80%,rgba(var(--rf-s-coral-rgb,246,144,119),.18) 100%)}
+.rfi-wl-range::-moz-range-track{height:8px;border-radius:999px;background:linear-gradient(90deg,rgba(var(--rf-s-violet-rgb,171,145,235),.14) 0%,var(--rf-s-violet-v,#ab91eb) 17.5%,var(--rf-s-periwinkle-v,#839ef4) 28.8%,var(--rf-s-azure-v,#52acee) 30.9%,var(--rf-s-cerulean-v,#00b8db) 32.8%,var(--rf-s-cyan-v,#00c3be) 35%,var(--rf-s-mint-v,#52cea0) 40.6%,var(--rf-s-jade-v,#94d582) 54.4%,var(--rf-s-lime-v,#c9d168) 59.1%,var(--rf-s-citrine-v,#ebc059) 61.9%,var(--rf-s-amber-v,#f8a75f) 64.1%,var(--rf-s-coral-v,#f69077) 67.8%,var(--rf-s-coral-v,#f69077) 80%,rgba(var(--rf-s-coral-rgb,246,144,119),.18) 100%)}
+.rfi-wl-range::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;margin-top:-6px;border-radius:50%;background:var(--rfi-c);border:2px solid var(--rf-beam-core,#fff);box-shadow:0 0 0 1px rgba(0,0,0,.25),0 0 14px var(--rfi-c),0 2px 6px rgba(0,0,0,.35);transition:box-shadow var(--rf-dur-base,.24s)}
+.rfi-wl-range::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:var(--rfi-c);border:2px solid var(--rf-beam-core,#fff);box-shadow:0 0 14px var(--rfi-c)}
+.rfi-wl-range:focus-visible{outline:2px solid var(--rf-focus,var(--accent));outline-offset:3px}
+.rfi-wl-scale{position:relative;display:flex;justify-content:space-between;padding-top:7px;font:400 10px/1 var(--rf-mono,ui-monospace,monospace);font-variant-numeric:tabular-nums;color:var(--dim)}
+.rfi-wl-scale::before{content:"";position:absolute;left:0;right:0;top:0;height:4px;background:repeating-linear-gradient(90deg,var(--rf-line-strong,var(--line)) 0 1px,transparent 1px 12.5%);opacity:.9}
+
+/* in-gallery only (copyViz skips .tile rules): clear the shell's NEW badge in the stage corner */
+.tile .rfi-field,.tile .rfi-wl{padding-top:14px}
+</style>
+<style id="rfi-rm">
+@media(prefers-reduced-motion:reduce){
+  .rfi-beam-field:focus-within .rfi-beam::after{animation:none}
+  .rfi-prism::before,.rfi-prism-thumb,.rfi-prism-thumb::after,.rfi-seg-opt::after{transition-duration:.01s}
+}
+</style>
+  <div class="gallery">
+
+    <div class="tile is-new" data-ctype="input-text" data-interact="focus"><div class="stage">
+      <div class="rfi-field">
+        <label class="rfi-eyebrow" for="rfiBeam1"><span class="rfi-idx">01</span> / Collection name <span class="rfi-lambda">λ 487</span></label>
+        <div class="rfi-beam-field">
+          <input class="rfi-input" id="rfiBeam1" type="text" placeholder="e.g. Launch dashboard" aria-describedby="rfiBeam1h">
+          <i class="rfi-beam" aria-hidden="true"></i>
+        </div>
+        <div class="rfi-help" id="rfiBeam1h">Up to 50 characters.</div>
+        <label class="rfi-eyebrow" for="rfiBeam2"><span class="rfi-idx">02</span> / Endpoint</label>
+        <div class="rfi-beam-field is-invalid">
+          <input class="rfi-input" id="rfiBeam2" type="url" value="htps://api.example.com" aria-invalid="true" aria-describedby="rfiBeam2h">
+          <i class="rfi-beam" aria-hidden="true"></i>
+        </div>
+        <div class="rfi-help is-error" id="rfiBeam2h"><b aria-hidden="true">!</b>Use a full https:// address</div>
+      </div>
+    </div><div class="meta"><div class="nm">Beam Focus Field</div><span class="ref">.rfi-beam-field</span><div class="desc">The Refraction text field: it rests on a 3:1 instrument baseline under a mono eyebrow. On focus a beam of white light runs the baseline once and the lit top edge catches the gallery hue. Invalid swaps the beam to coral and spells out the fix.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+    <div class="tile is-new" data-ctype="segmented-control" data-interact="click"><div class="stage">
+      <div class="rfi-seg" role="radiogroup" aria-label="Time window">
+        <button type="button" class="rfi-seg-opt" role="radio" aria-checked="false" tabindex="-1" style="--i:0;--n:4">1h</button>
+        <button type="button" class="rfi-seg-opt" role="radio" aria-checked="true" tabindex="0" style="--i:1;--n:4">24h</button>
+        <button type="button" class="rfi-seg-opt" role="radio" aria-checked="false" tabindex="-1" style="--i:2;--n:4">7d</button>
+        <button type="button" class="rfi-seg-opt" role="radio" aria-checked="false" tabindex="-1" style="--i:3;--n:4">30d</button>
+      </div>
+      <div class="rfi-seg-cap" aria-hidden="true"><span>λ 436</span><span>λ 597</span></div>
+    </div><div class="meta"><div class="nm">Spectral Segmented Control</div><span class="ref">.rfi-seg</span><div class="desc">One continuous spectrum runs beneath the track; the pressed segment lifts to the card surface and its underline reveals exactly the slice of light under it. A real radio group — arrow keys, Home and End move the selection.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+    <div class="tile is-new" data-ctype="toggle" data-interact="click toggle"><div class="stage">
+      <div style="width:100%;max-width:280px">
+        <div class="rfi-prism-row">
+          <button type="button" class="rfi-prism" role="switch" aria-checked="true" aria-labelledby="rfiPt1"><span class="rfi-prism-thumb"></span></button>
+          <span id="rfiPt1">Refract previews</span>
+          <span class="rfi-prism-state" aria-hidden="true">On</span>
+        </div>
+        <div class="rfi-prism-row">
+          <button type="button" class="rfi-prism" role="switch" aria-checked="false" aria-labelledby="rfiPt2"><span class="rfi-prism-thumb"></span></button>
+          <span id="rfiPt2">Spectral index</span>
+          <span class="rfi-prism-state" aria-hidden="true">Off</span>
+        </div>
+      </div>
+    </div><div class="meta"><div class="nm">Prism Toggle</div><span class="ref">.rfi-prism</span><div class="desc">A switch made of light. Off is a disc of white light on an ink track; on, the track refracts into the full spectrum and the thumb becomes the prism. The state is also spelled out beside the label, so it never relies on color.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+    <div class="tile is-new" data-ctype="input-range" data-interact="drag"><div class="stage">
+      <div class="rfi-wl">
+        <div class="rfi-wl-head"><label class="rfi-eyebrow" for="rfiWl1">Wavelength</label><output class="rfi-wl-out" for="rfiWl1"><span class="rfi-wl-val">λ 532</span><small class="rfi-wl-name">green</small></output></div>
+        <input type="range" class="rfi-wl-range" id="rfiWl1" min="380" max="700" step="1" value="532" aria-valuetext="532 nanometers, green">
+        <div class="rfi-wl-scale" aria-hidden="true"><span>380</span><span>460</span><span>540</span><span>620</span><span>700 nm</span></div>
+      </div>
+    </div><div class="meta"><div class="nm">Wavelength Slider</div><span class="ref">.rfi-wl</span><div class="desc">A native range over the visible spectrum, 380–700 nm, with the Refraction stops placed at their real dominant wavelengths. The thumb and the λ readout take the color under them, and the band is named in words for screen readers.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+  </div>
+<script>
+/* Refraction signatures (rfi-*): delegated, idempotent */
+(function(){
+  if(window.__rfiInit) return; window.__rfiInit=true;
+  var d=document;
+  function closest(e,sel){ return e.target&&e.target.closest?e.target.closest(sel):null; }
+
+  /* Spectral Segmented Control — a radiogroup with a roving tabindex */
+  function segPick(btn,focus){
+    btn.closest('.rfi-seg').querySelectorAll('[role="radio"]').forEach(function(b){
+      var on=b===btn; b.setAttribute('aria-checked',on?'true':'false'); b.tabIndex=on?0:-1;
+    });
+    if(focus) btn.focus();
+  }
+  d.addEventListener('click',function(e){
+    var b=closest(e,'.rfi-seg [role="radio"]'); if(b){ segPick(b,false); return; }
+    var p=closest(e,'.rfi-prism');
+    if(p){
+      var on=p.getAttribute('aria-checked')!=='true'; p.setAttribute('aria-checked',on?'true':'false');
+      var st=p.parentNode.querySelector('.rfi-prism-state'); if(st) st.textContent=on?'On':'Off';
+    }
+  });
+  d.addEventListener('keydown',function(e){
+    var b=closest(e,'.rfi-seg [role="radio"]'); if(!b) return;
+    var all=[].slice.call(b.closest('.rfi-seg').querySelectorAll('[role="radio"]')),i=all.indexOf(b),n=all.length,j=-1;
+    if(e.key==='ArrowRight'||e.key==='ArrowDown') j=(i+1)%n;
+    else if(e.key==='ArrowLeft'||e.key==='ArrowUp') j=(i-1+n)%n;
+    else if(e.key==='Home') j=0; else if(e.key==='End') j=n-1;
+    if(j>=0){ e.preventDefault(); segPick(all[j],true); }
+  });
+
+  /* Wavelength Slider — Refraction vivid stops at their dominant wavelengths (theme-aware) */
+  var STOPS=[[436,'violet','#ab91eb'],[472,'periwinkle','#839ef4'],[479,'azure','#52acee'],[485,'cerulean','#00b8db'],[492,'cyan','#00c3be'],[510,'mint','#52cea0'],[554,'jade','#94d582'],[569,'lime','#c9d168'],[578,'citrine','#ebc059'],[585,'amber','#f8a75f'],[597,'coral','#f69077']];
+  function rgbOf(v){
+    v=(v||'').trim(); var m=v.match(/^#([0-9a-f]{6})$/i);
+    if(m){ var x=parseInt(m[1],16); return [x>>16&255,x>>8&255,x&255]; }
+    m=v.match(/rgba?\(([^)]+)\)/); if(m){ var q=m[1].split(','); return [+q[0],+q[1],+q[2]]; }
+    return null;
+  }
+  function band(l){ return l<450?'violet':l<485?'blue':l<500?'cyan':l<565?'green':l<590?'yellow':l<625?'orange':'red'; }
+  function wl(inp){
+    var l=+inp.value, cs=getComputedStyle(inp), c=null;
+    var pts=STOPS.map(function(s){ return [s[0], rgbOf(cs.getPropertyValue('--rf-s-'+s[1]+'-v'))||rgbOf(s[2])]; });
+    if(l<=pts[0][0]) c=pts[0][1];
+    else if(l>=pts[pts.length-1][0]) c=pts[pts.length-1][1];
+    else for(var k=0;k<pts.length-1;k++){
+      if(l<=pts[k+1][0]){ var t=(l-pts[k][0])/(pts[k+1][0]-pts[k][0]), a=pts[k][1], b=pts[k+1][1];
+        c=[0,1,2].map(function(q){ return Math.round(a[q]+(b[q]-a[q])*t); }); break; }
+    }
+    var box=inp.closest('.rfi-wl'), name=band(l); if(!box) return;
+    box.style.setProperty('--rfi-c','rgb('+c.join(',')+')');
+    var v=box.querySelector('.rfi-wl-val'), nm=box.querySelector('.rfi-wl-name');
+    if(v) v.textContent='λ '+l; if(nm) nm.textContent=name;
+    inp.setAttribute('aria-valuetext',l+' nanometers, '+name);
+  }
+  d.addEventListener('input',function(e){ var r=closest(e,'.rfi-wl-range'); if(r) wl(r); });
+  d.querySelectorAll('.rfi-wl-range').forEach(wl);
+})();
+</script>

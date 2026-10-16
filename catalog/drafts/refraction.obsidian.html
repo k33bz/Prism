@@ -1,0 +1,56 @@
+<h3 class="sec">REFRACTION SIGNATURES</h3>
+<style id="obs-rf-styles">
+/* ============================================================
+   REFRACTION SIGNATURE (rfo-) — Refraction Callout
+   Obsidian's own callout DOM. Opt in per callout with metadata:
+     > [!tip|refraction] Title
+   Inside Obsidian every color comes from the vault theme
+   (--callout-color, --background-*, --text-*); in Prism the
+   fallbacks are the Refraction tokens.
+   ============================================================ */
+.rfo-stack{display:grid;gap:8px;width:282px;max-width:100%;text-align:left}
+.callout[data-callout-metadata*="refraction"]{--rfo-type:var(--info-rgb,134,189,249);--rfo:var(--callout-color,var(--rfo-type));
+  position:relative;overflow:hidden;margin:0;padding:10px 14px 11px 15px;mix-blend-mode:normal;
+  border-radius:var(--callout-radius,var(--r-lg,12px));
+  background:linear-gradient(180deg,rgba(var(--rfo),.10),rgba(var(--rfo),.02) 70%),var(--background-primary-alt,var(--card,#12151f));
+  border:1px solid rgba(var(--rfo),.26);
+  box-shadow:inset 0 1px 0 var(--rf-edge-hi,rgba(255,255,255,.06)),var(--elev-1,0 1px 2px rgba(0,0,0,.3));
+  transition:border-color var(--rf-dur-base,.24s) var(--rf-ease-out-expo,ease)}
+.callout[data-callout-metadata*="refraction"][data-callout="tip"],.callout[data-callout-metadata*="refraction"][data-callout="success"]{--rfo-type:var(--pos-rgb,139,216,186)}
+.callout[data-callout-metadata*="refraction"][data-callout="warning"],.callout[data-callout-metadata*="refraction"][data-callout="question"]{--rfo-type:var(--warn-rgb,238,195,111)}
+.callout[data-callout-metadata*="refraction"][data-callout="danger"],.callout[data-callout-metadata*="refraction"][data-callout="error"],.callout[data-callout-metadata*="refraction"][data-callout="bug"]{--rfo-type:var(--neg-rgb,245,135,127)}
+.callout[data-callout-metadata*="refraction"][data-callout="example"],.callout[data-callout-metadata*="refraction"][data-callout="quote"]{--rfo-type:var(--accent-rgb,184,162,242)}
+/* the lit top edge: a beam of the callout's own color, core pushed toward the text color */
+.callout[data-callout-metadata*="refraction"]::before{content:"";position:absolute;left:12%;right:12%;top:0;height:1px;pointer-events:none;
+  background:linear-gradient(90deg,rgba(var(--rfo),0),rgb(var(--rfo)) 38%,color-mix(in srgb,rgb(var(--rfo)) 45%,var(--ink,var(--text-normal,#fff))) 50%,rgb(var(--rfo)) 62%,rgba(var(--rfo),0));
+  box-shadow:0 0 9px rgba(var(--rfo),.6);opacity:.85;
+  transition:left var(--rf-dur-slow,.4s) var(--rf-ease-out-expo,ease),right var(--rf-dur-slow,.4s) var(--rf-ease-out-expo,ease),opacity var(--rf-dur-base,.24s)}
+/* the lit status index on the left edge */
+.callout[data-callout-metadata*="refraction"]::after{content:"";position:absolute;left:0;top:12px;bottom:12px;width:2px;border-radius:2px;
+  background:rgb(var(--rfo));box-shadow:0 0 8px rgba(var(--rfo),.7)}
+.callout[data-callout-metadata*="refraction"]:hover{border-color:rgba(var(--rfo),.42)}
+.callout[data-callout-metadata*="refraction"]:hover::before{left:3%;right:3%;opacity:1}
+:is([data-rf-mode="day"],[data-theme="prism-light"],.theme-light) .callout[data-callout-metadata*="refraction"]:hover{border-color:transparent;
+  background:linear-gradient(180deg,rgba(var(--rfo),.10),rgba(var(--rfo),.02) 70%) padding-box,linear-gradient(var(--background-primary-alt,var(--card,#fdfcff)),var(--background-primary-alt,var(--card,#fdfcff))) padding-box,var(--rf-iris-edge,linear-gradient(115deg,#e7a6c8,#b49ff0 30%,#8fb8f2 55%,#86d7bb 78%,#e6c98a)) border-box}
+.callout[data-callout-metadata*="refraction"] .callout-title{display:flex;align-items:center;gap:8px;padding:0;color:rgb(var(--rfo));background:none}
+.callout[data-callout-metadata*="refraction"] .callout-icon{display:inline-grid;place-items:center;flex:none;width:16px;height:16px;color:rgb(var(--rfo))}
+.callout[data-callout-metadata*="refraction"] .callout-icon svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.callout[data-callout-metadata*="refraction"] .callout-title-inner{font:600 10px/1.2 var(--rf-mono,var(--font-monospace,ui-monospace,monospace));letter-spacing:.15em;text-transform:uppercase}
+.callout[data-callout-metadata*="refraction"] .callout-title-inner .rfo-l{margin-left:7px;color:var(--dim,var(--text-faint));font-weight:400;letter-spacing:.04em;text-transform:none}
+.callout[data-callout-metadata*="refraction"] .callout-content{margin-top:5px;padding:0;color:var(--text-normal,var(--muted,#a2a4b4));font-size:12.5px;line-height:1.5}
+.callout[data-callout-metadata*="refraction"] .callout-content p{margin:0}
+.callout[data-callout-metadata*="refraction"] .callout-content b{color:var(--text-normal,var(--ink,#f0f0f5));font-weight:600}
+@media (prefers-reduced-motion:reduce){.callout[data-callout-metadata*="refraction"],.callout[data-callout-metadata*="refraction"]::before{transition:none}}
+</style>
+<div class="gallery">
+
+  <div class="tile is-new" data-ctype="obsidian" data-interact="hover"><div class="stage">
+    <div class="rfo-stack">
+      <div class="callout" data-callout="note" data-callout-metadata="refraction" data-callout-fold=""><div class="callout-title"><div class="callout-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg></div><div class="callout-title-inner">Note<span class="rfo-l">λ 479</span></div></div><div class="callout-content"><p>Links resolve by <b>alias</b>, so renames never break the graph.</p></div></div>
+      <div class="callout" data-callout="tip" data-callout-metadata="refraction" data-callout-fold=""><div class="callout-title"><div class="callout-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/></svg></div><div class="callout-title-inner">Tip<span class="rfo-l">λ 510</span></div></div><div class="callout-content"><p>Pin one evergreen note per project as its <b>map</b>.</p></div></div>
+      <div class="callout" data-callout="warning" data-callout-metadata="refraction" data-callout-fold=""><div class="callout-title"><div class="callout-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4 2.8 19.5h18.4z"/><path d="M12 10v4M12 17h.01"/></svg></div><div class="callout-title-inner">Warning<span class="rfo-l">λ 578</span></div></div><div class="callout-content"><p>Sync is paused while the vault is <b>read-only</b>.</p></div></div>
+      <div class="callout" data-callout="danger" data-callout-metadata="refraction" data-callout-fold=""><div class="callout-title"><div class="callout-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.2 3h7.6L21 8.2v7.6L15.8 21H8.2L3 15.8V8.2z"/><path d="m9.5 9.5 5 5M14.5 9.5l-5 5"/></svg></div><div class="callout-title-inner">Danger<span class="rfo-l">λ 597</span></div></div><div class="callout-content"><p>Deleting this folder removes <b>412 notes</b>.</p></div></div>
+    </div>
+  </div><div class="meta"><div class="nm">Refraction Callout</div><span class="ref">.callout[data-callout-metadata*="refraction"]</span><div class="desc">Obsidian's own callout markup in Refraction: a beam of the callout color lands on the lit top edge, a lit index marks the side, the title becomes a mono instrument label with its wavelength, and hairline icons. In Obsidian, write <code>&gt; [!tip|refraction]</code> and paste the CSS as a snippet — it then reads your theme's callout colors.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
+
+</div>

@@ -1,0 +1,65 @@
+<h3 class="sec">Refraction — light, spectrum &amp; wavelength</h3>
+<style id="txrf-styles">
+/* ===== TX REFRACTION — light, spectrum & wavelength (signature facets) =====
+   White light in, every color out. Tokens carry contract fallbacks so every facet
+   copies cleanly into any theme. The static (reduced-motion) state is the finished look. */
+@keyframes txRfGlint{0%,50%{background-position:160% 0,0 0}88%,100%{background-position:-60% 0,0 0}}
+.tx-rf-spectral{display:inline-block;font-family:var(--font);font-size:44px;font-weight:700;letter-spacing:-.04em;line-height:1.06;padding:0 .05em;
+  background-image:linear-gradient(100deg,transparent 0 40%,rgba(255,255,255,.82) 50%,transparent 60%),var(--rf-spectrum-text,linear-gradient(100deg,var(--accent) 10%,var(--accent2) 55%,var(--pos)));
+  background-size:300% 100%,100% 100%;background-repeat:no-repeat;background-position:160% 0,0 0;
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;
+  animation:txRfGlint 6.5s var(--rf-ease-in-out,ease-in-out) infinite}
+
+@keyframes txRfGhostA{0%,34%{transform:translate(0,0);filter:blur(0);opacity:0;animation-timing-function:cubic-bezier(.65,0,.35,1)}50%,58%{transform:translate(-.13em,-.03em);filter:blur(1.6px);opacity:1;animation-timing-function:cubic-bezier(.16,1,.3,1)}86%,100%{transform:translate(0,0);filter:blur(0);opacity:0}}
+@keyframes txRfGhostB{0%,34%{transform:translate(0,0);filter:blur(0);opacity:0;animation-timing-function:cubic-bezier(.65,0,.35,1)}50%,58%{transform:translate(.17em,.03em);filter:blur(1.6px);opacity:1;animation-timing-function:cubic-bezier(.16,1,.3,1)}86%,100%{transform:translate(0,0);filter:blur(0);opacity:0}}
+@keyframes txRfCore{0%,34%{color:var(--ink);text-shadow:0 0 0 rgba(var(--rf-s-mint-rgb,var(--pos-rgb)),0);animation-timing-function:cubic-bezier(.65,0,.35,1)}50%,58%{color:color-mix(in srgb,var(--ink) var(--rx-disp-core,50%),transparent);text-shadow:.04em 0 2px rgba(var(--rf-s-mint-rgb,var(--pos-rgb)),.85);animation-timing-function:cubic-bezier(.16,1,.3,1)}86%,100%{color:var(--ink);text-shadow:0 0 0 rgba(var(--rf-s-mint-rgb,var(--pos-rgb)),0)}}
+.tx-rf-disperse{position:relative;display:inline-block;isolation:isolate;font-family:var(--font);font-size:42px;font-weight:700;letter-spacing:-.035em;line-height:1.06;color:var(--ink);animation:txRfCore 7s infinite}
+.tx-rf-disperse::before,.tx-rf-disperse::after{content:attr(data-text);position:absolute;left:0;top:0;width:100%;pointer-events:none;opacity:0;mix-blend-mode:var(--rx-blend,screen)}
+.tx-rf-disperse::before{color:var(--rf-split-a,rgba(255,92,130,.6));animation:txRfGhostA 7s infinite}
+.tx-rf-disperse::after{color:var(--rf-split-b,rgba(92,170,255,.6));animation:txRfGhostB 7s infinite}
+[data-rf-mode="day"] .tx-rf-disperse{--rx-disp-core:38%}
+[data-rf-mode="day"] .tx-rf-disperse::before,[data-rf-mode="day"] .tx-rf-disperse::after{mix-blend-mode:normal}
+[data-rf-mode="day"] .tx-rf-disperse::before{color:rgba(var(--rf-s-rose-rgb,214,52,104),.6)}
+[data-rf-mode="day"] .tx-rf-disperse::after{color:rgba(var(--rf-s-azure-rgb,36,104,222),.55)}
+
+@keyframes txRfSweep{0%{transform:translateX(-30%);opacity:0}12%{opacity:1}55%,100%{transform:translateX(360%);opacity:0}}
+.tx-rf-lambda{--lam:var(--rf-s-cyan,var(--info));--lam-v:var(--rf-s-cyan-v,var(--info));--lam-rgb:var(--rf-s-cyan-rgb,var(--info-rgb));display:inline-flex;flex-direction:column;align-items:flex-start;gap:7px;min-width:214px;margin:16px 0 4px;text-align:left}
+.tx-rf-eyebrow{display:inline-flex;align-items:center;gap:.75em;font:600 10px/1.2 var(--rf-mono,ui-monospace,monospace);letter-spacing:.15em;text-transform:uppercase;color:var(--lam)}
+.tx-rf-sep{color:var(--dim);font-weight:400}
+.tx-rf-meta{color:var(--dim)}
+.tx-rf-nc{text-transform:none;letter-spacing:.04em}
+.tx-rf-tick{display:inline-block;width:3px;height:12px;border-radius:2px;background:var(--lam-v);box-shadow:0 0 8px rgba(var(--lam-rgb),calc(.75*var(--rx-glow,1)))}
+.tx-rf-word{font-family:var(--font);font-size:33px;font-weight:700;letter-spacing:-.035em;line-height:1.04;color:var(--ink)}
+.tx-rf-ruler{position:relative;display:block;align-self:stretch;height:12px;
+  background:linear-gradient(var(--rf-line-control,var(--dim)),var(--rf-line-control,var(--dim))) 0 9px/100% 1px no-repeat,
+    repeating-linear-gradient(90deg,var(--rf-line-control,var(--dim)) 0 1px,transparent 1px 6px) 0 5px/100% 4px no-repeat,
+    repeating-linear-gradient(90deg,var(--muted) 0 1px,transparent 1px 30px) 0 1px/100% 8px no-repeat,
+    var(--rf-spectrum,linear-gradient(90deg,var(--accent),var(--info),var(--pos),var(--warn),var(--neg))) 0 10px/100% 2px no-repeat}
+.tx-rf-ruler::after{content:"";position:absolute;left:36.4%;bottom:-3px;width:2px;height:17px;border-radius:1px;background:var(--lam-v);box-shadow:0 0 10px rgba(var(--lam-rgb),calc(.9*var(--rx-glow,1)))}
+.tx-rf-ruler::before{content:"";position:absolute;left:0;top:8px;width:22%;height:3px;border-radius:2px;background:linear-gradient(90deg,rgba(var(--lam-rgb),0),var(--rf-beam-core,#fff) 50%,rgba(var(--lam-rgb),0));filter:blur(.5px);opacity:0;animation:txRfSweep 4.8s var(--rf-ease-in-out,ease-in-out) infinite}
+
+@keyframes txRfFilm{0%{background-position:150% 0,0% 50%}100%{background-position:-50% 0,100% 50%}}
+.tx-rf-iris{position:relative;display:inline-block;isolation:isolate;padding:12px 22px}
+.tx-rf-iris::before{content:"";position:absolute;inset:-2px -14px;z-index:-1;border-radius:50%;background:var(--rf-iris,transparent);-webkit-mask:radial-gradient(farthest-side,#000 45%,transparent);mask:radial-gradient(farthest-side,#000 45%,transparent)}
+.tx-rf-film{display:inline-block;font-family:var(--font);font-size:40px;font-weight:700;letter-spacing:-.035em;line-height:1.06;padding:0 .04em .04em;
+  background-image:linear-gradient(105deg,transparent 32%,rgba(255,255,255,.6) 46%,rgba(255,255,255,.12) 54%,transparent 64%),
+    linear-gradient(115deg,var(--rf-s-rose,var(--crit)) 0%,var(--rf-s-violet,var(--accent)) 20%,var(--rf-s-azure,var(--info)) 40%,var(--rf-s-mint,var(--pos)) 60%,var(--rf-s-citrine,var(--warn)) 80%,var(--rf-s-rose,var(--crit)) 100%);
+  background-size:260% 100%,150% 100%;
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;
+  filter:drop-shadow(0 0 12px rgba(var(--accent-rgb),calc(.28*var(--rx-glow,1))));
+  animation:txRfFilm 8s var(--rf-ease-in-out,ease-in-out) infinite alternate}
+[data-rf-mode="day"] .tx-rf-film{background-image:linear-gradient(105deg,transparent 32%,rgba(255,255,255,.55) 46%,rgba(255,255,255,.1) 54%,transparent 64%),linear-gradient(115deg,var(--rf-s-rose) 0%,var(--rf-s-violet) 20%,var(--rf-s-azure) 40%,var(--rf-s-cyan) 60%,var(--rf-s-mint) 80%,var(--rf-s-rose) 100%);filter:drop-shadow(0 1px 0 #fff) drop-shadow(0 10px 16px rgba(var(--rx-shade-rgb),.14))}
+</style>
+<div class="gallery" id="g0">
+  <div class="tile is-new" data-ctype="text-effect" data-interact="auto-play" data-c="accent"><div class="stage"><span class="tx-sample tx-rf-spectral">Refraction</span></div>
+    <div class="meta"><div class="nm">Spectral Headline</div><span class="ref">.tx-rf-spectral</span><div class="desc">The Prism signature: Inter 700 display type filled with the website's violet → periwinkle → mint gradient (<code>--rf-spectrum-text</code>, ink-tier violet → azure → mint by Day), tracked tight, with one slow glint of white light passing through. Hero titles and section openers.</div><div class="row"><button class="copy" data-snip='class="tx-sample tx-rf-spectral"'>Copy snippet</button></div></div></div>
+
+  <div class="tile is-new" data-ctype="text-effect" data-interact="auto-play" data-c="accent"><div class="stage"><span class="tx-sample tx-rf-disperse" data-text="Disperse">Disperse</span></div>
+    <div class="meta"><div class="nm">Dispersion Text</div><span class="ref">.tx-rf-disperse</span><div class="desc">White light splits into its colored ghosts — rose, mint and azure drift apart along the refraction fan, then converge back into one word on an exponential ease-out. Screen-blended light at Night, translucent ink ghosts by Day. Needs <code>data-text</code>; reduced motion shows the converged word.</div><div class="row"><button class="copy" data-snip='class="tx-sample tx-rf-disperse" data-text="Disperse"'>Copy snippet</button></div></div></div>
+
+  <div class="tile is-new" data-ctype="text-effect" data-interact="auto-play" data-c="info"><div class="stage"><span class="tx-rf-lambda"><span class="tx-rf-eyebrow"><i class="tx-rf-tick"></i><span class="tx-rf-nc">λ 492</span><span class="tx-rf-sep">·</span>Cyan<span class="tx-rf-sep">·</span><span class="tx-rf-meta">07 / Text</span></span><span class="tx-rf-word">Wavelength</span><span class="tx-rf-ruler" aria-hidden="true"></span></span></div>
+    <div class="meta"><div class="nm">Wavelength Label</div><span class="ref">.tx-rf-lambda</span><div class="desc">An instrument treatment for type: a mono caps eyebrow with the hue's real dominant wavelength (λ kept lowercase inside the caps), a tight display word, and a measurement ruler on the spectrum with a beam marker where the hue sits. Retune <code>--lam</code> / <code>--lam-v</code> / <code>--lam-rgb</code> and the marker <code>left</code> to move it along the ramp.</div><div class="row"><button class="copy" data-snip='class="tx-rf-lambda"'>Copy snippet</button></div></div></div>
+
+  <div class="tile is-new" data-ctype="text-effect" data-interact="auto-play" data-c="accent"><div class="stage"><span class="tx-rf-iris"><span class="tx-rf-film">Iridescent</span></span></div>
+    <div class="meta"><div class="nm">Iridescent Headline</div><span class="ref">.tx-rf-iris</span><div class="desc">Designed for Prism Day: ink-tier spectrum stops slide across the letters like thin-film interference while a pearl sheen drifts over them, set on the iridescent <code>--rf-iris</code> field. At Night the same layers become soft opalescent light. Legible in both modes.</div><div class="row"><button class="copy" data-snip='class="tx-rf-iris"'>Copy snippet</button></div></div></div>
+</div>

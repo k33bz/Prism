@@ -1,0 +1,108 @@
+<h3 class="sec">Refraction — light-native AI states</h3>
+  <style id="rfa-styles">
+  /* ===== Refraction signature states — namespaced rfa-*, read Prism tokens with contract fallbacks ===== */
+  /* 1. Prism Thinking — a beam of white light enters glass and leaves as the spectrum (red bends least, violet most) */
+  .rfa-think{position:relative;width:520px;max-width:100%;height:190px}
+  .rfa-think .rin{position:absolute;left:0;top:77px;width:232px;height:2px;border-radius:2px;background:linear-gradient(90deg,transparent,var(--rf-beam-core,var(--ink)) 72%);box-shadow:var(--rf-beam-glow,0 0 8px rgba(255,255,255,.6))}
+  .rfa-think .rin::after{content:"";position:absolute;top:-2px;left:0;width:22px;height:6px;border-radius:6px;background:var(--rf-beam-core,var(--ink));filter:blur(2px);opacity:0;animation:rfaPhoton 2.6s cubic-bezier(.65,0,.35,1) infinite}
+  .rfa-think .glint{position:absolute;left:222px;top:68px;width:20px;height:20px;border-radius:50%;background:radial-gradient(closest-side,var(--rf-beam-core,var(--ink)),rgba(255,255,255,0));opacity:.55;animation:rfaGlint 2.6s ease-out infinite}
+  .rfa-think .rp{position:absolute;left:200px;top:22px;width:128px;height:112px;clip-path:polygon(50% 0,100% 100%,0 100%);background:var(--rf-iris-edge,linear-gradient(115deg,var(--accent),var(--info),var(--pos)))}
+  .rfa-think .rp::before{content:"";position:absolute;inset:2.4px 2.8px 1.6px;clip-path:polygon(50% 0,100% 100%,0 100%);background:linear-gradient(170deg,color-mix(in srgb,var(--rf-beam-core,var(--ink)) 18%,transparent),color-mix(in srgb,var(--rf-beam-core,var(--ink)) 4%,transparent) 70%),var(--rf-iris,rgba(var(--accent-rgb),.08)),var(--card)}
+  .rfa-think .rp::after{content:"";position:absolute;left:31%;top:26%;width:11%;height:60%;background:linear-gradient(180deg,rgba(255,255,255,.8),rgba(255,255,255,0));transform:skewX(-29deg);opacity:.5}
+  .rfa-think .rmid{position:absolute;left:232px;top:77px;width:68px;height:2px;background:linear-gradient(90deg,var(--rf-beam-core,var(--ink)),rgba(var(--info-rgb),.5));opacity:.75;transform-origin:left center;transform:rotate(5deg)}
+  .rfa-think .fan{position:absolute;left:299px;top:84px;width:0;height:0}
+  .rfa-think .fan::before{content:"";position:absolute;left:0;top:0;width:200px;height:86px;clip-path:polygon(0 0,100% 11%,92% 100%);filter:blur(7px);opacity:calc(.34 + .1*(1 - var(--rx-glow,1)));
+    background:linear-gradient(180deg,var(--rf-s-rose-v,var(--crit)),var(--rf-s-coral-v,var(--neg)),var(--rf-s-citrine-v,var(--warn)),var(--rf-s-mint-v,var(--pos)),var(--rf-s-cyan-v,var(--info)),var(--rf-s-azure-v,var(--info)),var(--rf-s-violet-v,var(--accent)));
+    -webkit-mask-image:linear-gradient(90deg,#000 10%,transparent 96%);mask-image:linear-gradient(90deg,#000 10%,transparent 96%);animation:rfaSheet 2.6s ease-in-out infinite}
+  .rfa-think .fan i{--a:calc(3deg + var(--i)*3.6deg);position:absolute;left:0;top:-1px;width:196px;height:2px;border-radius:2px;transform-origin:0 50%;transform:rotate(var(--a));opacity:.92;
+    background:linear-gradient(90deg,var(--rc),rgba(0,0,0,0) 96%);box-shadow:0 0 calc(7px*var(--rx-glow,1)) var(--rc);animation:rfaRay 2.6s ease-in-out infinite;animation-delay:calc(var(--i)*.13s)}
+  .rfa-think .rfa-lbl{position:absolute;left:0;top:132px;display:flex;flex-direction:column;gap:5px}
+  .rfa-think .rfa-lbl b{font:600 15px/1.2 var(--font);letter-spacing:-.015em;color:var(--ink)}
+  .rfa-think .rfa-lbl b i{display:inline-block;width:3px;height:3px;margin-left:3px;border-radius:50%;background:var(--ink);opacity:.3;animation:rfaDot 1.4s ease-in-out infinite;vertical-align:middle}
+  .rfa-think .rfa-lbl b i:nth-child(2){animation-delay:.2s}.rfa-think .rfa-lbl b i:nth-child(3){animation-delay:.4s}
+  .rfa-think .rfa-lbl span{font:600 9.5px/1 var(--rf-mono);letter-spacing:.15em;text-transform:uppercase;color:var(--dim)}
+  .rfa-think .rfa-lbl span em{font-style:normal;text-transform:none;letter-spacing:.04em;color:var(--rf-hue,var(--accent))}
+  @keyframes rfaGlint{0%,62%{opacity:.25;transform:scale(.7)}72%{opacity:1;transform:scale(1.25)}100%{opacity:.25;transform:scale(.7)}}
+  @keyframes rfaSheet{0%,100%{opacity:calc(.22 + .1*(1 - var(--rx-glow,1)))}50%{opacity:calc(.42 + .1*(1 - var(--rx-glow,1)))}}
+  @keyframes rfaPhoton{0%{transform:translateX(0);opacity:0}15%{opacity:1}66%{opacity:1}72%{transform:translateX(214px);opacity:0}100%{transform:translateX(214px);opacity:0}}
+  @keyframes rfaRay{0%,100%{opacity:.28;transform:rotate(var(--a)) scaleX(.78)}45%{opacity:1;transform:rotate(var(--a)) scaleX(1)}}
+  @keyframes rfaDot{0%,100%{opacity:.25}50%{opacity:1}}
+  @keyframes rfaBlink{0%,100%{opacity:1}50%{opacity:0}}
+
+  /* 2. Spectral Token Stream — tokens arrive as white light, split, settle into their wavelength, recombine */
+  .rfa-ts{width:100%;max-width:520px;display:flex;flex-direction:column;gap:12px}
+  .rfa-ts .line{font:600 17px/1.55 var(--font);letter-spacing:-.012em;color:var(--ink)}
+  .rfa-ts .line span{display:inline-block;margin-right:.26em;color:var(--tc,var(--ink));animation:rfaTok 7.2s cubic-bezier(.16,1,.3,1) infinite both;animation-delay:calc(var(--i)*.16s)}
+  .rfa-ts .line .cur{display:inline-block;width:2px;height:1em;margin-left:1px;vertical-align:-.12em;background:var(--rf-beam-core,var(--ink));box-shadow:var(--rf-beam-glow,none);animation:rfaBlink .9s step-end infinite}
+  .rfa-ts .ts-m{display:flex;align-items:center;gap:10px;font:600 9.5px/1 var(--rf-mono);letter-spacing:.15em;text-transform:uppercase;color:var(--dim)}
+  .rfa-ts .ts-m .rule{flex:1;height:1px;background:var(--rf-spectrum,linear-gradient(90deg,var(--accent),var(--info),var(--pos),var(--warn),var(--crit)));opacity:.55}
+  .rfa-ts .ts-m em{font-style:normal;text-transform:none;letter-spacing:.04em}
+  @keyframes rfaTok{
+    0%{opacity:0;transform:translateY(5px);filter:blur(4px);color:var(--ink);text-shadow:-3px 0 var(--rf-split-a,rgba(255,92,130,.6)),3px 0 var(--rf-split-b,rgba(92,170,255,.6))}
+    7%{opacity:1;transform:none;filter:blur(0);color:var(--ink);text-shadow:-1px 0 var(--rf-split-a,rgba(255,92,130,.6)),1px 0 var(--rf-split-b,rgba(92,170,255,.6))}
+    16%,68%{opacity:1;color:var(--tc,var(--ink));text-shadow:0 0 0 transparent}
+    82%{opacity:1;color:var(--ink);text-shadow:0 0 0 transparent}
+    94%,100%{opacity:0;transform:translateY(-3px);color:var(--ink)}}
+
+  /* 3. Agent Beam — one hairline of light relays between agents; each lights in its own wavelength */
+  .rfa-ab{position:relative;width:460px;max-width:100%;height:112px;margin:0 auto}
+  .rfa-ab .trk{position:absolute;left:30px;right:30px;top:38px;height:1px;background:var(--rf-line-strong,var(--line))}
+  .rfa-ab .ph{position:absolute;left:30px;top:35px;width:28px;height:7px;margin-left:-14px;border-radius:7px;background:linear-gradient(90deg,transparent,var(--rf-beam-core,var(--ink)));box-shadow:var(--rf-beam-glow,0 0 8px rgba(255,255,255,.6));transform:translateX(200px);animation:rfaRelay 5s cubic-bezier(.65,0,.35,1) infinite}
+  .rfa-ab .ag{position:absolute;top:20px;width:60px;margin-left:-30px;display:flex;flex-direction:column;align-items:center;gap:7px}
+  .rfa-ab .ag .rfa-k{width:60px;height:36px;border-radius:var(--r-md,8px);display:flex;align-items:center;justify-content:center;font:600 9.5px/1 var(--rf-mono);letter-spacing:.12em;color:var(--muted);background:var(--card);border:1px solid var(--rf-line-strong,var(--line));box-shadow:var(--elev-1,none);animation:rfaAgent 5s ease-out infinite;animation-delay:calc(var(--i)*1s)}
+  .rfa-ab .ag .rfa-t{width:16px;height:3px;border-radius:2px;background:var(--hc);opacity:.35;animation:rfaTick 5s ease-out infinite;animation-delay:calc(var(--i)*1s)}
+  .rfa-ab .ag .rfa-l{font:400 10px/1 var(--rf-mono);letter-spacing:.04em;color:var(--dim);font-variant-numeric:tabular-nums}
+  .rfa-ab .ag.rfa-on .rfa-k{border-color:var(--hc);color:var(--ink);box-shadow:inset 0 0 0 1px var(--hc),0 0 18px rgba(var(--accent-rgb),calc(.25*var(--rx-glow,1)))}
+  .rfa-ab .ag.rfa-on .rfa-t{opacity:1}
+  @keyframes rfaRelay{0%{transform:translateX(0);opacity:0}4%{opacity:1}80%{transform:translateX(400px);opacity:1}86%,100%{transform:translateX(400px);opacity:0}}
+  @keyframes rfaAgent{0%{border-color:var(--hc);color:var(--ink);box-shadow:inset 0 0 0 1px var(--hc),0 0 calc(18px*var(--rx-glow,1)) var(--hc)}
+    30%{border-color:var(--hc);color:var(--ink);box-shadow:inset 0 0 0 1px var(--hc),0 0 0 transparent}
+    46%,100%{border-color:var(--rf-line-strong,var(--line));color:var(--muted);box-shadow:inset 0 0 0 0 transparent,0 0 0 transparent}}
+  @keyframes rfaTick{0%{opacity:1;transform:scaleX(1.25)}30%{opacity:1;transform:none}46%,100%{opacity:.35;transform:none}}
+  @media (prefers-reduced-motion:reduce){
+    .rfa-think .fan i,.rfa-think .fan::before,.rfa-think .glint,.rfa-think .rin::after,.rfa-think .rfa-lbl b i,.rfa-ts .line span,.rfa-ts .line .cur,.rfa-ab .ph,.rfa-ab .ag .rfa-k,.rfa-ab .ag .rfa-t{animation:none}
+  }
+  </style>
+  <div class="grid">
+
+    <div class="panel is-new w2" data-ctype="ai-state" data-interact="auto-play" style="--c:var(--accent)">
+      <div class="ptitle"><span class="tdot"></span>Prism Thinking</div>
+      <div class="pbody">
+        <div class="rfa-think" role="img" aria-label="Thinking: a beam of white light refracts through a prism into the spectrum">
+          <i class="rin"></i><i class="rmid"></i><i class="rp"></i><i class="glint"></i>
+          <div class="fan">
+            <i style="--i:0;--rc:var(--rf-s-rose-v,var(--crit))"></i><i style="--i:1;--rc:var(--rf-s-coral-v,var(--neg))"></i><i style="--i:2;--rc:var(--rf-s-citrine-v,var(--warn))"></i><i style="--i:3;--rc:var(--rf-s-mint-v,var(--pos))"></i><i style="--i:4;--rc:var(--rf-s-cyan-v,var(--info))"></i><i style="--i:5;--rc:var(--rf-s-azure-v,var(--info))"></i><i style="--i:6;--rc:var(--rf-s-violet-v,var(--accent))"></i>
+          </div>
+          <div class="rfa-lbl"><b>Thinking<i></i><i></i><i></i></b><span>Refracting 3 sources · <em>λ 436–597</em></span></div>
+        </div>
+      </div>
+      <div class="cap">The model's thinking state as light: one white beam enters the glass and fans out into the spectrum — every wavelength a line of reasoning, shimmering until the answer converges.</div>
+    </div>
+
+    <div class="panel is-new w2" data-ctype="ai-state" data-interact="auto-play" style="--c:var(--info)">
+      <div class="ptitle"><span class="tdot"></span>Spectral Token Stream</div>
+      <div class="pbody">
+        <div class="rfa-ts">
+          <div class="line" aria-label="Splitting the question into its facets and answering each one in its own light"><span style="--i:0;--tc:var(--rf-s-violet,var(--accent))">Splitting</span><span style="--i:1;--tc:var(--rf-s-periwinkle,var(--accent2))">the</span><span style="--i:2;--tc:var(--rf-s-azure,var(--info))">question</span><span style="--i:3;--tc:var(--rf-s-cerulean,var(--info))">into</span><span style="--i:4;--tc:var(--rf-s-cyan,var(--info))">its</span><span style="--i:5;--tc:var(--rf-s-mint,var(--pos))">facets</span><span style="--i:6;--tc:var(--rf-s-jade,var(--pos))">and</span><span style="--i:7;--tc:var(--rf-s-lime,var(--warn))">answering</span><span style="--i:8;--tc:var(--rf-s-citrine,var(--warn))">each</span><span style="--i:9;--tc:var(--rf-s-amber,var(--warn))">one</span><span style="--i:10;--tc:var(--rf-s-coral,var(--neg))">in</span><span style="--i:11;--tc:var(--rf-s-rose,var(--crit))">its</span><span style="--i:12;--tc:var(--rf-s-violet,var(--accent))">own</span><span style="--i:13;--tc:var(--rf-s-periwinkle,var(--accent2))">light</span><i class="cur"></i></div>
+          <div class="ts-m"><span>Decoding · 14 tokens</span><i class="rule"></i><em>λ 436 → 494c</em></div>
+        </div>
+      </div>
+      <div class="cap">Each token lands as white light with a faint chromatic split, settles into its own wavelength, then recombines to white as the stream rolls on.</div>
+    </div>
+
+    <div class="panel is-new w2" data-ctype="ai-state" data-interact="auto-play" style="--c:var(--pos)">
+      <div class="ptitle"><span class="tdot"></span>Agent Beam</div>
+      <div class="pbody">
+        <div class="rfa-ab" role="img" aria-label="Five agents relaying work along a beam of light">
+          <i class="trk"></i><i class="ph"></i>
+          <div class="ag" style="left:30px;--i:0;--hc:var(--rf-s-violet-v,var(--accent))"><span class="rfa-k">PLAN</span><i class="rfa-t"></i><span class="rfa-l">λ 436</span></div>
+          <div class="ag" style="left:130px;--i:1;--hc:var(--rf-s-azure-v,var(--info))"><span class="rfa-k">SEARCH</span><i class="rfa-t"></i><span class="rfa-l">λ 479</span></div>
+          <div class="ag rfa-on" style="left:230px;--i:2;--hc:var(--rf-s-cyan-v,var(--info))"><span class="rfa-k">CODE</span><i class="rfa-t"></i><span class="rfa-l">λ 492</span></div>
+          <div class="ag" style="left:330px;--i:3;--hc:var(--rf-s-mint-v,var(--pos))"><span class="rfa-k">TEST</span><i class="rfa-t"></i><span class="rfa-l">λ 510</span></div>
+          <div class="ag" style="left:430px;--i:4;--hc:var(--rf-s-citrine-v,var(--warn))"><span class="rfa-k">SHIP</span><i class="rfa-t"></i><span class="rfa-l">λ 578</span></div>
+        </div>
+      </div>
+      <div class="cap">Agent activity as a single hairline of light: the beam relays from agent to agent and each one lights up in its own wavelength as the work arrives.</div>
+    </div>
+
+  </div>

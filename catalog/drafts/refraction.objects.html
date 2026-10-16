@@ -1,0 +1,287 @@
+<h3 class="sec">Refraction objects</h3>
+<style id="rfo-styles">
+/* ==== Refraction objects — namespaced .rfo-* · light through glass (Prism signature facets) ====
+   Everything reads tokens with contract fallbacks, so the markup + CSS copy into any theme.
+   Night = white light inside ink glass. Day = the light's color made visible on pearl paper. */
+.rfo-scene{position:relative;width:220px;height:150px;flex:none;
+  --rfo-beam:var(--rf-beam-core,#fff);
+  --rfo-halo:rgba(var(--rf-hue-rgb,var(--accent-rgb)),.55);
+  --rfo-edge:rgba(255,255,255,.22);--rfo-hi:rgba(255,255,255,.55)}
+[data-rf-mode="day"] .rfo-scene{--rfo-edge:rgba(var(--rx-shade-rgb,44,32,96),.18);--rfo-hi:#fff}
+.rfo-scene>svg.rfo-ov{position:absolute;left:0;top:0;width:220px;height:150px;overflow:visible;pointer-events:none}
+.rfo-ov line{stroke-linecap:round;fill:none}
+.rfo-beam{stroke:var(--rfo-beam);stroke-width:1.6}
+.rfo-beam-glow{stroke:var(--rfo-halo);stroke-width:6;opacity:calc(.6*var(--rx-glow,1));filter:blur(2.5px)}
+.rfo-ray{stroke:var(--c);stroke-width:2;opacity:.82}
+.rfo-ray-glow{stroke:var(--c);stroke-width:7;opacity:calc(.34*var(--rx-glow,1))}
+.rfo-glowg{filter:blur(3px)}
+.rfo-ph{stroke:color-mix(in srgb,var(--c,var(--rfo-beam)) 45%,var(--rfo-beam));stroke-width:2.6}
+@keyframes rfoSway{from{transform:rotateX(-14deg) rotateY(-22deg)}to{transform:rotateX(-14deg) rotateY(12deg)}}
+@keyframes rfoSpin{to{transform:rotate(1turn)}}
+@keyframes rfoBreathe{0%,100%{opacity:.72}50%{opacity:1}}
+
+/* ---- 1 · Glass Prism — a real 3D triangular prism; a white beam in, the spectrum out ---- */
+.rfo-prism{perspective:560px;perspective-origin:104px 70px;
+  --rfo-glass:linear-gradient(160deg,rgba(255,255,255,.14),rgba(255,255,255,.025) 52%,rgba(var(--rf-hue-rgb,var(--accent-rgb)),.12));
+  --rfo-cap:linear-gradient(172deg,rgba(255,255,255,.17),rgba(255,255,255,.03) 58%,rgba(var(--accent-rgb),.10));
+  --rfo-rimc:rgba(255,255,255,.62)}
+[data-rf-mode="day"] .rfo-prism{
+  --rfo-glass:linear-gradient(160deg,rgba(255,255,255,.7),rgba(255,255,255,.2) 60%),var(--rf-iris,linear-gradient(115deg,#fff,#f0eff6));
+  --rfo-cap:linear-gradient(172deg,rgba(255,255,255,.78),rgba(255,255,255,.22) 60%),var(--rf-iris,linear-gradient(115deg,#fff,#f0eff6));
+  --rfo-rimc:color-mix(in srgb,var(--accent) 42%,#fff)}
+.rfo-prism-floor{position:absolute;left:52px;top:108px;width:104px;height:16px;border-radius:50%;
+  background:radial-gradient(closest-side,rgba(var(--rx-shade-rgb,0,0,0),.55),rgba(var(--rx-shade-rgb,0,0,0),.16) 62%,transparent)}
+.rfo-prism-floor::after{content:"";position:absolute;left:62%;top:30%;width:110%;height:70%;border-radius:50%;
+  background:var(--rf-spectrum,linear-gradient(90deg,var(--accent),var(--info),var(--pos),var(--warn),var(--neg)));
+  filter:blur(6px);opacity:.32;mix-blend-mode:var(--rx-blend,screen)}
+[data-rf-mode="day"] .rfo-prism-floor::after{mix-blend-mode:normal;opacity:.55}
+.rfo-prism-body{position:absolute;left:104px;top:80px;width:0;height:0;transform-style:preserve-3d;
+  transform:rotateX(-14deg) rotateY(-16deg);animation:rfoSway 9s var(--rf-ease-in-out,cubic-bezier(.65,0,.35,1)) infinite alternate}
+.rfo-prism-body>span{position:absolute;display:block;backface-visibility:visible}
+.rfo-pp{left:-42px;top:-28px;width:84px;height:56px;background:var(--rfo-glass)}
+.rfo-pp-l{transform:translate3d(-21px,-12.13px,0) rotateZ(-60deg) rotateX(90deg)}
+.rfo-pp-r{transform:translate3d(21px,-12.13px,0) rotateZ(60deg) rotateX(90deg)}
+.rfo-pp-b{transform:translate3d(0,24.25px,0) rotateX(90deg)}
+.rfo-pf{left:-42px;top:-48.5px;width:84px;height:72.75px}
+.rfo-pf-front{transform:translateZ(28px)}
+.rfo-pf-back{transform:translateZ(-28px);opacity:.55}
+.rfo-pf>i{position:absolute;inset:0;clip-path:polygon(50% 0,100% 100%,0 100%);background:var(--rfo-cap)}
+.rfo-pf>svg{position:absolute;inset:0;width:84px;height:72.75px;overflow:visible}
+.rfo-pf polygon{fill:none;stroke:var(--rfo-rimc);stroke-width:1.2;stroke-linejoin:round}
+.rfo-pe{left:-.75px;top:-28px;width:1.5px;height:56px;transform:translate3d(0,-48.5px,0) rotateX(90deg);
+  background:linear-gradient(180deg,transparent,var(--rfo-beam) 50%,transparent);box-shadow:0 0 7px var(--rfo-halo)}
+.rfo-inner{stroke:var(--rfo-beam);stroke-width:1.4;opacity:.55}
+.rfo-prism .rfo-fan{animation:rfoBreathe 4.8s ease-in-out infinite}
+.rfo-prism-in .rfo-ph{stroke-dasharray:16 216;stroke-dashoffset:248;animation:rfoPrIn 2.6s linear infinite}
+.rfo-prism-out .rfo-ph-in{stroke-dasharray:12 200;stroke-dashoffset:224;animation:rfoPrMid 2.6s linear infinite}
+.rfo-prism-out .rfo-fan-ph line{stroke-dasharray:20 240;stroke-dashoffset:280;animation:rfoPrOut 2.6s linear infinite}
+@keyframes rfoPrIn{0%{stroke-dashoffset:248}34%,100%{stroke-dashoffset:144}}
+@keyframes rfoPrMid{0%,34%{stroke-dashoffset:224}44%,100%{stroke-dashoffset:164}}
+@keyframes rfoPrOut{0%,44%{stroke-dashoffset:280}100%{stroke-dashoffset:150}}
+
+/* ---- 2 · Caustic Orb — a glass ball focusing light into a moving rainbow caustic ---- */
+.rfo-orb-ball{position:absolute;left:64px;top:14px;width:92px;height:92px;border-radius:50%;overflow:hidden;isolation:isolate;
+  background:
+    radial-gradient(circle at 50% 118%,rgba(var(--rf-hue-rgb,var(--accent-rgb)),.38),transparent 58%),
+    radial-gradient(circle at 50% 50%,transparent 60%,rgba(255,255,255,.08) 80%,rgba(255,255,255,.3) 100%),
+    radial-gradient(circle at 40% 34%,color-mix(in srgb,var(--panel2) 80%,var(--rf-hue-v,var(--accent))),var(--rf-bg-deep,var(--bg)) 80%);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.16),inset 0 -12px 24px rgba(var(--rf-hue-rgb,var(--accent-rgb)),.22),0 14px 28px -14px rgba(var(--rx-shade-rgb,0,0,0),.7)}
+[data-rf-mode="day"] .rfo-orb-ball{
+  background:
+    radial-gradient(circle at 50% 116%,rgba(var(--rf-hue-rgb,var(--accent-rgb)),.2),transparent 58%),
+    radial-gradient(circle at 50% 50%,transparent 58%,rgba(var(--rx-shade-rgb,44,32,96),.05) 80%,rgba(var(--rx-shade-rgb,44,32,96),.16) 100%),
+    radial-gradient(circle at 63% 68%,#fff 0 20%,color-mix(in srgb,var(--rf-hue-v,var(--accent)) 12%,var(--bg)) 68%,color-mix(in srgb,var(--rf-hue-v,var(--accent)) 26%,var(--bg)));
+  box-shadow:inset 0 0 0 1px rgba(var(--rx-shade-rgb,44,32,96),.14),inset 0 -12px 22px rgba(var(--rf-hue-rgb,var(--accent-rgb)),.16),0 14px 26px -14px rgba(var(--rx-shade-rgb,44,32,96),.42)}
+.rfo-orb-ball>i{position:absolute;display:block;border-radius:50%;pointer-events:none}
+.rfo-orb-cw{inset:0;-webkit-mask:radial-gradient(circle at 66% 70%,#000 0 22%,transparent 64%);mask:radial-gradient(circle at 66% 70%,#000 0 22%,transparent 64%)}
+.rfo-orb-ca{position:absolute;inset:-22%;border-radius:50%;background:conic-gradient(from 0deg,var(--rf-s-violet-v,var(--accent)),var(--rf-s-azure-v,var(--info)),var(--rf-s-mint-v,var(--pos)),var(--rf-s-citrine-v,var(--warn)),var(--rf-s-coral-v,var(--neg)),var(--rf-s-rose-v,var(--crit)),var(--rf-s-violet-v,var(--accent)));
+  filter:blur(12px);opacity:.55;animation:rfoSpin 16s linear infinite}
+.rfo-orb-cw{mix-blend-mode:var(--rx-blend,screen)}
+.rfo-orb-net{inset:0;filter:blur(.9px);mix-blend-mode:var(--rx-blend,screen);
+  background:
+    radial-gradient(ellipse 9% 7% at 70% 76%,#fff,transparent 72%),
+    radial-gradient(circle at 38% 33%,transparent 0 57%,rgba(255,255,255,.8) 61%,transparent 66%),
+    radial-gradient(circle at 38% 33%,transparent 0 66%,rgba(var(--rf-s-azure-rgb,var(--info-rgb)),.55) 68%,rgba(var(--rf-s-mint-rgb,var(--pos-rgb)),.45) 70%,rgba(var(--rf-s-citrine-rgb,var(--warn-rgb)),.45) 72%,rgba(var(--rf-s-rose-rgb,var(--crit-rgb)),.5) 74%,transparent 77%);
+  -webkit-mask:conic-gradient(from 60deg at 50% 50%,transparent 0 6%,#000 18% 40%,transparent 52%);mask:conic-gradient(from 60deg at 50% 50%,transparent 0 6%,#000 18% 40%,transparent 52%);
+  transform-origin:38% 33%;animation:rfoCaustic 5.6s ease-in-out infinite alternate}
+[data-rf-mode="day"] .rfo-orb-net{mix-blend-mode:normal}
+[data-rf-mode="day"] .rfo-orb-ca{opacity:.5}
+.rfo-orb-rim{inset:0;background:conic-gradient(from 200deg,transparent,rgba(var(--rf-s-rose-rgb,var(--crit-rgb)),.6),rgba(var(--rf-s-citrine-rgb,var(--warn-rgb)),.5),rgba(var(--rf-s-mint-rgb,var(--pos-rgb)),.5),rgba(var(--rf-s-azure-rgb,var(--info-rgb)),.6),transparent 52%);
+  -webkit-mask:radial-gradient(circle,transparent 64%,#000 71%,#000 95%,transparent 100%);mask:radial-gradient(circle,transparent 64%,#000 71%,#000 95%,transparent 100%);
+  mix-blend-mode:var(--rx-blend,screen);animation:rfoSpin 22s linear infinite reverse}
+.rfo-orb-hi{left:19%;top:12%;width:32%;height:20%;transform:rotate(-32deg);background:radial-gradient(closest-side,rgba(255,255,255,.95),rgba(255,255,255,0))}
+.rfo-orb-hi::after{content:"";position:absolute;left:60%;top:150%;width:22%;height:40%;border-radius:50%;background:rgba(255,255,255,.7);filter:blur(1px)}
+.rfo-orb-pool{position:absolute;left:38px;top:110px;width:144px;height:30px;border-radius:50%;
+  background:radial-gradient(closest-side,rgba(var(--rx-shade-rgb,0,0,0),.6),rgba(var(--rx-shade-rgb,0,0,0),.2) 62%,transparent)}
+.rfo-orb-pool>b{position:absolute;left:46%;top:6%;width:44%;height:74%;border-radius:50%;
+  background:radial-gradient(closest-side,rgba(255,255,255,.95),rgba(255,255,255,.3) 38%,transparent 62%),
+    conic-gradient(from 90deg,var(--rf-s-violet-v,var(--accent)),var(--rf-s-azure-v,var(--info)),var(--rf-s-mint-v,var(--pos)),var(--rf-s-citrine-v,var(--warn)),var(--rf-s-coral-v,var(--neg)),var(--rf-s-violet-v,var(--accent)));
+  -webkit-mask:radial-gradient(closest-side,#000 35%,transparent 100%);mask:radial-gradient(closest-side,#000 35%,transparent 100%);
+  filter:blur(2.5px);opacity:.85;mix-blend-mode:var(--rx-blend,screen);animation:rfoPool 5.6s ease-in-out infinite alternate}
+[data-rf-mode="day"] .rfo-orb-pool>b{mix-blend-mode:normal;opacity:.9}
+@keyframes rfoCaustic{0%{transform:rotate(-7deg) scale(.97);opacity:.8}100%{transform:rotate(8deg) scale(1.03);opacity:1}}
+@keyframes rfoPool{0%{transform:translateX(-4px) scale(.9,1.04);opacity:.72}100%{transform:translateX(5px) scale(1.1,.9);opacity:.95}}
+
+/* ---- 3 · Beam Splitter — white light strikes a glass cube and leaves as five wavelengths ---- */
+.rfo-sp-g1{stop-color:#fff;stop-opacity:.26}
+.rfo-sp-g2{stop-color:rgb(var(--rf-hue-rgb,var(--accent-rgb)));stop-opacity:.16}
+[data-rf-mode="day"] .rfo-sp-g1{stop-color:#fff;stop-opacity:.95}
+[data-rf-mode="day"] .rfo-sp-g2{stop-color:rgb(var(--rf-hue-rgb,var(--accent-rgb)));stop-opacity:.22}
+.rfo-sp-cube{stroke:var(--rfo-rimc,rgba(255,255,255,.6));stroke-width:1.2}
+.rfo-sp-facet{fill:none;stroke:var(--rfo-edge);stroke-width:1}
+[data-rf-mode="day"] .rfo-split{--rfo-rimc:color-mix(in srgb,var(--accent) 55%,#fff)}
+.rfo-sp-glint{fill:var(--rfo-beam);filter:blur(4px);opacity:0;animation:rfoSpGlint 2.4s ease-out infinite}
+.rfo-sp-dot{fill:var(--c);opacity:.45;animation:rfoSpDot 2.4s ease-out infinite}
+.rfo-sp-lbl{font:600 8.5px var(--rf-mono,ui-monospace,monospace);letter-spacing:.05em;fill:var(--t,var(--dim))}
+.rfo-sp-src{font:600 8px var(--rf-mono,ui-monospace,monospace);letter-spacing:.14em;fill:var(--dim)}
+.rfo-split .rfo-ph-in{stroke-dasharray:16 200;stroke-dashoffset:216;animation:rfoSpIn 2.4s linear infinite}
+.rfo-split .rfo-ray-ph{stroke-dasharray:18 220;stroke-dashoffset:238;animation:rfoSpOut 2.4s linear infinite}
+.rfo-split .rfo-fan{animation:rfoBreathe 2.4s ease-in-out infinite}
+@keyframes rfoSpIn{0%{stroke-dashoffset:216}36%,100%{stroke-dashoffset:108}}
+@keyframes rfoSpOut{0%,38%{stroke-dashoffset:238}86%,100%{stroke-dashoffset:120}}
+@keyframes rfoSpGlint{0%,32%{opacity:0}40%{opacity:.95}62%,100%{opacity:0}}
+@keyframes rfoSpDot{0%,80%{opacity:.45;r:2.6}88%{opacity:1;r:4}100%{opacity:.45;r:2.6}}
+
+/* reduced motion — a lit, still frame: beams and spectra stay, photons and sway stop */
+@media (prefers-reduced-motion:reduce){
+  .rfo-scene,.rfo-scene *{animation:none!important}
+  .rfo-scene .rfo-ph,.rfo-scene .rfo-fan-ph,.rfo-scene .rfo-ph-in,.rfo-scene .rfo-ray-ph{display:none}
+  .rfo-sp-dot{opacity:1}
+  .rfo-sp-glint{opacity:.7}
+}
+</style>
+<div class="gallery">
+
+  <!-- R1 GLASS PRISM -->
+  <div class="tile is-new" data-ctype="object-3d" data-interact="auto-play"><div class="stage">
+    <div class="rfo-scene rfo-prism" role="img" aria-label="A glass prism splitting a white beam into a spectrum">
+      <i class="rfo-prism-floor"></i>
+      <svg class="rfo-ov rfo-prism-in" viewBox="0 0 220 150" aria-hidden="true">
+        <line class="rfo-beam-glow" x1="-6" y1="97" x2="79" y2="75"/>
+        <line class="rfo-beam" x1="-6" y1="97" x2="79" y2="75"/>
+        <line class="rfo-ph" x1="-6" y1="97" x2="79" y2="75"/>
+      </svg>
+      <div class="rfo-prism-body">
+        <span class="rfo-pf rfo-pf-back"><i></i><svg viewBox="0 0 84 72.75" aria-hidden="true"><polygon points="42,.6 83.4,72.2 .6,72.2"/></svg></span>
+        <span class="rfo-pp rfo-pp-b"></span>
+        <span class="rfo-pp rfo-pp-l"></span>
+        <span class="rfo-pp rfo-pp-r"></span>
+        <span class="rfo-pf rfo-pf-front"><i></i><svg viewBox="0 0 84 72.75" aria-hidden="true"><polygon points="42,.6 83.4,72.2 .6,72.2"/></svg></span>
+        <span class="rfo-pe"></span>
+      </div>
+      <svg class="rfo-ov rfo-prism-out" viewBox="0 0 220 150" aria-hidden="true">
+        <defs>
+          <linearGradient id="rfoPrismFade" x1="127" y1="0" x2="226" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#fff"/><stop offset=".7" stop-color="#fff" stop-opacity=".7"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+          <mask id="rfoPrismMask" maskUnits="userSpaceOnUse" x="0" y="0" width="240" height="150"><rect x="0" y="0" width="240" height="150" fill="url(#rfoPrismFade)"/></mask>
+        </defs>
+        <line class="rfo-inner" x1="79" y1="75" x2="127" y2="71.5"/>
+        <line class="rfo-ph rfo-ph-in" x1="79" y1="75" x2="127" y2="71.5"/>
+        <g mask="url(#rfoPrismMask)">
+          <g class="rfo-glowg">
+            <line class="rfo-ray-glow" style="--c:var(--rf-s-rose-v,var(--crit))" x1="127" y1="71.5" x2="231" y2="86.1"/>
+            <line class="rfo-ray-glow" style="--c:var(--rf-s-coral-v,var(--neg))" x1="127" y1="71.5" x2="229.6" y2="93.9"/>
+            <line class="rfo-ray-glow" style="--c:var(--rf-s-amber-v,var(--warn))" x1="127" y1="71.5" x2="227.6" y2="101.5"/>
+            <line class="rfo-ray-glow" style="--c:var(--rf-s-citrine-v,var(--warn))" x1="127" y1="71.5" x2="225.1" y2="109"/>
+            <line class="rfo-ray-glow" style="--c:var(--rf-s-mint-v,var(--pos))" x1="127" y1="71.5" x2="222" y2="116.2"/>
+            <line class="rfo-ray-glow" style="--c:var(--rf-s-azure-v,var(--info))" x1="127" y1="71.5" x2="218.4" y2="123.2"/>
+            <line class="rfo-ray-glow" style="--c:var(--rf-s-violet-v,var(--accent))" x1="127" y1="71.5" x2="214.3" y2="129.9"/>
+          </g>
+          <g class="rfo-fan">
+            <line class="rfo-ray" style="--c:var(--rf-s-rose-v,var(--crit))" x1="127" y1="71.5" x2="231" y2="86.1"/>
+            <line class="rfo-ray" style="--c:var(--rf-s-coral-v,var(--neg))" x1="127" y1="71.5" x2="229.6" y2="93.9"/>
+            <line class="rfo-ray" style="--c:var(--rf-s-amber-v,var(--warn))" x1="127" y1="71.5" x2="227.6" y2="101.5"/>
+            <line class="rfo-ray" style="--c:var(--rf-s-citrine-v,var(--warn))" x1="127" y1="71.5" x2="225.1" y2="109"/>
+            <line class="rfo-ray" style="--c:var(--rf-s-mint-v,var(--pos))" x1="127" y1="71.5" x2="222" y2="116.2"/>
+            <line class="rfo-ray" style="--c:var(--rf-s-azure-v,var(--info))" x1="127" y1="71.5" x2="218.4" y2="123.2"/>
+            <line class="rfo-ray" style="--c:var(--rf-s-violet-v,var(--accent))" x1="127" y1="71.5" x2="214.3" y2="129.9"/>
+          </g>
+          <g class="rfo-fan-ph">
+            <line class="rfo-ph" style="--c:var(--rf-s-rose-v,var(--crit))" x1="127" y1="71.5" x2="231" y2="86.1"/>
+            <line class="rfo-ph" style="--c:var(--rf-s-coral-v,var(--neg))" x1="127" y1="71.5" x2="229.6" y2="93.9"/>
+            <line class="rfo-ph" style="--c:var(--rf-s-amber-v,var(--warn))" x1="127" y1="71.5" x2="227.6" y2="101.5"/>
+            <line class="rfo-ph" style="--c:var(--rf-s-citrine-v,var(--warn))" x1="127" y1="71.5" x2="225.1" y2="109"/>
+            <line class="rfo-ph" style="--c:var(--rf-s-mint-v,var(--pos))" x1="127" y1="71.5" x2="222" y2="116.2"/>
+            <line class="rfo-ph" style="--c:var(--rf-s-azure-v,var(--info))" x1="127" y1="71.5" x2="218.4" y2="123.2"/>
+            <line class="rfo-ph" style="--c:var(--rf-s-violet-v,var(--accent))" x1="127" y1="71.5" x2="214.3" y2="129.9"/>
+          </g>
+        </g>
+      </svg>
+    </div>
+  </div><div class="meta"><div class="nm">Glass Prism</div><span class="ref">.rfo-prism</span><div class="desc">A true 3D triangular prism of thin-film glass sways in perspective while a white beam enters one face and leaves the other as a seven-band spectrum, photons pulsing through. Night: light inside ink glass. Day: pearl glass casting a caustic.</div><button class="copy">Copy</button></div></div>
+
+  <!-- R2 CAUSTIC ORB -->
+  <div class="tile is-new" data-ctype="object-3d" data-interact="auto-play"><div class="stage">
+    <div class="rfo-scene rfo-orb" role="img" aria-label="A glass orb casting a moving rainbow caustic">
+      <i class="rfo-orb-pool"><b></b></i>
+      <div class="rfo-orb-ball"><i class="rfo-orb-cw"><i class="rfo-orb-ca"></i></i><i class="rfo-orb-net"></i><i class="rfo-orb-rim"></i><i class="rfo-orb-hi"></i></div>
+    </div>
+  </div><div class="meta"><div class="nm">Caustic Orb</div><span class="ref">.rfo-orb</span><div class="desc">A glass ball lit from the upper left: a slow spectral swirl turns inside, the focused caustic crescent shimmers on its far side, an iridescent rim catches the light and a rainbow caustic pool breathes on the floor below.</div><button class="copy">Copy</button></div></div>
+
+  <!-- R3 BEAM SPLITTER -->
+  <div class="tile is-new" data-ctype="fx-glow" data-interact="auto-play"><div class="stage">
+    <div class="rfo-scene rfo-split" role="img" aria-label="A white beam splitting through a glass cube into five wavelengths">
+      <svg class="rfo-ov" viewBox="0 0 220 150" aria-hidden="true">
+        <defs>
+          <linearGradient id="rfoSplitGlass" x1="0" y1="0" x2="1" y2="1"><stop offset="0" class="rfo-sp-g1"/><stop offset="1" class="rfo-sp-g2"/></linearGradient>
+          <linearGradient id="rfoSplitFade" x1="114" y1="0" x2="180" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity=".35"/></linearGradient>
+          <mask id="rfoSplitMask" maskUnits="userSpaceOnUse" x="0" y="0" width="220" height="150"><rect x="0" y="0" width="220" height="150" fill="url(#rfoSplitFade)"/></mask>
+        </defs>
+        <text class="rfo-sp-src" x="6" y="66">D65</text>
+        <line class="rfo-beam-glow" x1="0" y1="75" x2="92" y2="75"/>
+        <line class="rfo-beam" x1="0" y1="75" x2="92" y2="75"/>
+        <line class="rfo-ph rfo-ph-in" x1="0" y1="75" x2="92" y2="75"/>
+        <g mask="url(#rfoSplitMask)">
+          <g class="rfo-glowg">
+            <line class="rfo-ray-glow" style="--c:var(--rf-s-violet-v,var(--accent))" x1="114" y1="75" x2="176" y2="44.8"/>
+            <line class="rfo-ray-glow" style="--c:var(--rf-s-azure-v,var(--info))" x1="114" y1="75" x2="176" y2="60.7"/>
+            <line class="rfo-ray-glow" style="--c:var(--rf-s-mint-v,var(--pos))" x1="114" y1="75" x2="176" y2="75"/>
+            <line class="rfo-ray-glow" style="--c:var(--rf-s-citrine-v,var(--warn))" x1="114" y1="75" x2="176" y2="89.3"/>
+            <line class="rfo-ray-glow" style="--c:var(--rf-s-coral-v,var(--neg))" x1="114" y1="75" x2="176" y2="105.2"/>
+          </g>
+          <g class="rfo-fan">
+            <line class="rfo-ray" style="--c:var(--rf-s-violet-v,var(--accent))" x1="114" y1="75" x2="176" y2="44.8"/>
+            <line class="rfo-ray" style="--c:var(--rf-s-azure-v,var(--info))" x1="114" y1="75" x2="176" y2="60.7"/>
+            <line class="rfo-ray" style="--c:var(--rf-s-mint-v,var(--pos))" x1="114" y1="75" x2="176" y2="75"/>
+            <line class="rfo-ray" style="--c:var(--rf-s-citrine-v,var(--warn))" x1="114" y1="75" x2="176" y2="89.3"/>
+            <line class="rfo-ray" style="--c:var(--rf-s-coral-v,var(--neg))" x1="114" y1="75" x2="176" y2="105.2"/>
+          </g>
+          <g>
+            <line class="rfo-ph rfo-ray-ph" style="--c:var(--rf-s-violet-v,var(--accent))" x1="114" y1="75" x2="176" y2="44.8"/>
+            <line class="rfo-ph rfo-ray-ph" style="--c:var(--rf-s-azure-v,var(--info))" x1="114" y1="75" x2="176" y2="60.7"/>
+            <line class="rfo-ph rfo-ray-ph" style="--c:var(--rf-s-mint-v,var(--pos))" x1="114" y1="75" x2="176" y2="75"/>
+            <line class="rfo-ph rfo-ray-ph" style="--c:var(--rf-s-citrine-v,var(--warn))" x1="114" y1="75" x2="176" y2="89.3"/>
+            <line class="rfo-ph rfo-ray-ph" style="--c:var(--rf-s-coral-v,var(--neg))" x1="114" y1="75" x2="176" y2="105.2"/>
+          </g>
+        </g>
+        <circle class="rfo-sp-dot" style="--c:var(--rf-s-violet-v,var(--accent))" cx="178" cy="44.8" r="2.6"/>
+        <circle class="rfo-sp-dot" style="--c:var(--rf-s-azure-v,var(--info))" cx="178" cy="60.7" r="2.6"/>
+        <circle class="rfo-sp-dot" style="--c:var(--rf-s-mint-v,var(--pos))" cx="178" cy="75" r="2.6"/>
+        <circle class="rfo-sp-dot" style="--c:var(--rf-s-citrine-v,var(--warn))" cx="178" cy="89.3" r="2.6"/>
+        <circle class="rfo-sp-dot" style="--c:var(--rf-s-coral-v,var(--neg))" cx="178" cy="105.2" r="2.6"/>
+        <text class="rfo-sp-lbl" style="--t:var(--rf-s-violet,var(--accent))" x="185" y="47.8">λ 436</text>
+        <text class="rfo-sp-lbl" style="--t:var(--rf-s-azure,var(--info))" x="185" y="63.7">λ 479</text>
+        <text class="rfo-sp-lbl" style="--t:var(--rf-s-mint,var(--pos))" x="185" y="78">λ 510</text>
+        <text class="rfo-sp-lbl" style="--t:var(--rf-s-citrine,var(--warn))" x="185" y="92.3">λ 578</text>
+        <text class="rfo-sp-lbl" style="--t:var(--rf-s-coral,var(--neg))" x="185" y="108.2">λ 597</text>
+        <polygon class="rfo-sp-cube" points="104,59 120,75 104,91 88,75" fill="url(#rfoSplitGlass)"/>
+        <polygon class="rfo-sp-facet" points="104,65 114,75 104,85 94,75"/>
+        <line class="rfo-sp-facet" x1="88" y1="75" x2="120" y2="75"/>
+        <circle class="rfo-sp-glint" cx="106" cy="75" r="9"/>
+      </svg>
+    </div>
+  </div><div class="meta"><div class="nm">Beam Splitter</div><span class="ref">.rfo-split</span><div class="desc">A white D65 beam strikes a small glass cube, which flashes as it splits the light into five wavelengths; photons race out along each ray and light the detector at its end, labelled with its λ. Instrument-grade "fan-out" for pipelines, routing and AI dispatch.</div><button class="copy">Copy</button></div></div>
+
+</div>
+<script>
+/* Refraction objects: copy the stage markup + every CSS rule it uses (incl. Day and reduced-motion
+   variants and the keyframes it animates with). Global so it also works on harvested pages. */
+window.rfoCopy=window.rfoCopy||function(btn){
+  try{
+    var st=btn.closest('.tile').querySelector('.stage'), html=st.innerHTML.trim();
+    var names=[]; (html.match(/class="([^"]*)"/g)||[]).forEach(function(m){ m.slice(7,-1).split(/\s+/).forEach(function(c){ if(c.indexOf('rfo-')===0&&names.indexOf(c)<0) names.push(c); }); });
+    /* a rule belongs to this facet if one of its selectors uses only .rfo-* classes the facet has */
+    function hit(sel){ return !!sel && sel.split(',').some(function(p){ var t=p.match(/\.rfo-[\w-]+/g); return !!t && t.every(function(c){ return names.indexOf(c.slice(1))>=0; }); }); }
+    var out=[], kf={}, allKf=[];
+    for(var s0=0;s0<document.styleSheets.length;s0++){ var r0; try{ r0=document.styleSheets[s0].cssRules; }catch(e){ continue; } if(r0) for(var k0=0;k0<r0.length;k0++) if(r0[k0].type===7) allKf.push(r0[k0].name); }
+    /* shorthand animations that use var() leave animationName empty, so match keyframe names in the text */
+    function note(r){ var t=(r.cssText.match(/animation(-name)?:[^;}]+/g)||[]).join(' '); allKf.forEach(function(n){ if(new RegExp('[\\s:,]'+n+'(?![\\w-])').test(t)) kf[n]=1; }); }
+    for(var s=0;s<document.styleSheets.length;s++){
+      var rules; try{ rules=document.styleSheets[s].cssRules; }catch(e){ continue; }
+      if(!rules) continue;
+      for(var i=0;i<rules.length;i++){ var r=rules[i];
+        if(r.type===1 && hit(r.selectorText)){ out.push(r.cssText); note(r); }
+        else if(r.type===4){ var inner=[]; for(var j=0;j<r.cssRules.length;j++){ var q=r.cssRules[j]; if(q.type===1&&hit(q.selectorText)){ inner.push(q.cssText); note(q); } } if(inner.length) out.push('@media '+r.conditionText+'{'+inner.join('')+'}'); }
+      }
+    }
+    for(var s2=0;s2<document.styleSheets.length;s2++){
+      var rr; try{ rr=document.styleSheets[s2].cssRules; }catch(e){ continue; }
+      if(!rr) continue;
+      for(var k=0;k<rr.length;k++){ if(rr[k].type===7 && kf[rr[k].name]){ out.push(rr[k].cssText); delete kf[rr[k].name]; } }
+    }
+    var txt=html+'\n\n<style>\n'+out.join('\n')+'\n</style>';
+    var done=function(){ var o=btn.getAttribute('data-lbl')||btn.textContent; btn.setAttribute('data-lbl',o); btn.textContent='✓ Copied'; btn.classList.add('ok'); setTimeout(function(){ btn.textContent=o; btn.classList.remove('ok'); btn.removeAttribute('data-lbl'); },1300); };
+    var fallback=function(){ var ta=document.createElement('textarea'); ta.value=txt; ta.setAttribute('readonly',''); ta.style.cssText='position:fixed;top:0;left:0;width:1px;height:1px;opacity:0'; document.body.appendChild(ta); ta.select(); try{ document.execCommand('copy'); }catch(e){} document.body.removeChild(ta); done(); };
+    if(navigator.clipboard&&navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(done,fallback); else fallback();
+  }catch(e){}
+};
+</script>
