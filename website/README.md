@@ -18,7 +18,7 @@ The source for [prism.k33bz.com](https://prism.k33bz.com). Everything on the sit
 
 ## Design language
 
-The site wears Refraction, the same tokens Prism.html uses (`../design/tokens.json`). Design files are vendored, never edited here:
+The site wears Refraction, Prism's design language from upstream's `feat/prism-design-language` branch (its `design/tokens.json`). Design files are vendored, never edited here; with a `design/` folder beside `website/`, this refreshes them:
 
 ```sh
 node website/scripts/sync-refraction.mjs           # copy prism.css, the mark, First Light, Inter, icons, λ labels
