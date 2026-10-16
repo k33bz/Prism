@@ -4,12 +4,14 @@
 //
 // Produces site-dist/ (or out-dir) with:
 //   index.html, styles.css, app.js, assets/   the landing page
-//   Prism.html                                the web catalog, carrying the three JSON islands (end of <body>)
+//   Prism.html                                the web catalog, carrying the three JSON islands (web, terminal, deck)
 //   terminal/                                 the web terminal catalog (live in the browser)
 //     engine/                                 the browser-safe prism-term engine + terminal-catalog.json
 //     tty-preview/                            HTML previews of the curl pages
 //   deck/                                     the Stream Deck page, once website/deck/ exists
 //     engine/                                 prism-deck/src + package.json + deck-catalog.json
+//     dl/                                     the plugin, icon packs and profiles (prism-deck/plugin/dist, built
+//                                             here first when a clean checkout has none)
 //   tty, t/, f/                               the curl-able terminal site (ANSI; .txt and .24 variants)
 //   themes/<format>/<file>                    terminal color schemes (prism-term/themes/**; listed at /t/themes)
 //   dl/prism-term-<version>.tgz, SHA256SUMS   the live player for npx (+ prism-term.tgz, the latest-release alias)
@@ -18,8 +20,10 @@
 // The build is deterministic and fails loudly: a stale terminal catalog or
 // Prism.html island, a missing terminal page, a page that breaks the contract,
 // or a broken relative link on the landing/terminal/deck pages stops it. --allow-stale / --allow-incomplete relax that for local work.
+// The site makes no requests to any other origin (no monitoring, no CDN, no fonts): a page that would also stops it.
 import { readFile, writeFile, mkdir, cp, rm, readdir, stat } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
+import { spawnSync } from 'node:child_process';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import path from 'node:path';
 import { loadCatalogFile } from '../prism-mcp-server/utils/catalog.js';
@@ -30,7 +34,7 @@ import { writeTtySite } from '../prism-term/scripts/build-tty-site.mjs';
 import { pack } from '../prism-term/scripts/pack.mjs';
 import { writeBundle, rewireImports, sharedDeps, bundleable } from './scripts/esm-bundle.mjs';
 
-const SITE_URL = 'https://prism.jeremyfhall.com';
+const SITE_URL = 'https://prism.k33bz.com';
 const args = process.argv.slice(2);
 const flag = (f) => args.includes(f);
 const site = path.dirname(fileURLToPath(import.meta.url));
@@ -147,19 +151,9 @@ function withStats(html, name) {
 await rm(output, { recursive: true, force: true });
 await mkdir(output, { recursive: true });
 for (const file of ['index.html', 'styles.css', 'app.js', 'assets']) await cp(path.join(site, file), path.join(output, file), { recursive: true });
-// Site monitoring (Traceway + web-vitals, loaded by assets/telemetry.js) runs on every HTML page.
-// The landing and terminal pages carry the tags in source; the hosted Prism.html gets a loader
-// that only fires on the site's own host, so a downloaded copy stays offline and silent.
-const MONITORING = ['assets/vendor/traceway-1.2.1.js', 'assets/vendor/web-vitals-6.2.3.js', 'assets/telemetry.js'];
-const HOST = new URL(SITE_URL).hostname;
-const prismLoader = `<script>/* Site monitoring, hosted copy only: offline or on any other host this does nothing. */(function(){if(location.hostname!==${JSON.stringify(HOST)})return;${JSON.stringify(MONITORING)}.forEach(function(s){var e=document.createElement('script');e.src=s;e.async=false;document.head.appendChild(e);});})();</script>`;
-function withMonitoring(html) {
-  const charset = /<meta charset="[^"]*">(\r?\n)/i.exec(html);
-  if (!charset) throw new Error('Prism.html: no <meta charset> to anchor the monitoring loader after');
-  const at = charset.index + charset[0].length;
-  return html.slice(0, at) + prismLoader + charset[1] + html.slice(at);
-}
-const builtPrism = withMonitoring(embedIsland(prismHtml, terminal).html);
+// The hosted Prism.html is the repository's file, byte for byte apart from a freshly embedded terminal
+// island (identical when the committed island is current): the hosted copy and a download behave the same.
+const builtPrism = embedIsland(prismHtml, terminal).html;
 await writeFile(path.join(output, 'Prism.html'), builtPrism);
 stats['data-prism-size'] = `${(Buffer.byteLength(builtPrism) / 1048576).toFixed(1)} MB`;
 const landing = withStats(await readFile(path.join(output, 'index.html'), 'utf8'), 'index.html');
@@ -223,8 +217,16 @@ if (existsSync(deckSrc)) {
   if (!existsSync(path.join(deckSrc, 'index.html'))) fail('website/deck/ exists but has no index.html', flag('--allow-incomplete'));
   await cp(deckSrc, deckOut, { recursive: true });
   // Downloads linked from /deck/ (plugin, icon packs, profiles) are build outputs of prism-deck,
-  // not committed: build them first with `npm run plugin:build && npm run iconpacks:build`.
+  // not committed. A clean checkout (the Pages workflow) has none: build them here, with the same
+  // scripts as `npm run plugin:build && npm run iconpacks:build` (no npm needed; a few minutes).
   const deckDist = path.join(deckRepo, 'plugin', 'dist');
+  if (!existsSync(deckDist) && existsSync(path.join(deckRepo, 'scripts', 'build-plugin.mjs'))) {
+    for (const [script, ...rest] of [['build-plugin.mjs', '--no-docs'], ['build-iconpacks.mjs']]) {
+      console.log(`prism-deck/plugin/dist is missing: node prism-deck/scripts/${script} ${rest.join(' ')}`.trim());
+      const r = spawnSync(process.execPath, [path.join(deckRepo, 'scripts', script), ...rest], { cwd: deckRepo, stdio: 'inherit' });
+      if (r.status !== 0) fail(`prism-deck/scripts/${script} failed (exit ${r.status})`, flag('--allow-incomplete'));
+    }
+  }
   if (existsSync(deckDist)) await cp(deckDist, path.join(deckOut, 'dl'), { recursive: true });
   else fail('prism-deck/plugin/dist is missing — run `npm run plugin:build && npm run iconpacks:build` in prism-deck/ (the /deck/ page links to its files)', flag('--allow-incomplete'));
   const placeholder = deckIsland && new RegExp(`<script type="application/json" id="${deckIsland.ISLAND_ID}">\\s*</script>`);
@@ -285,15 +287,37 @@ for (const file of [path.join(output, 'index.html'), ...(await walk(termOut)).fi
 }
 if (broken.length) fail(`broken links:\n  ${[...new Set(broken)].join('\n  ')}`, flag('--allow-incomplete'));
 
-// Every HTML page ships with site monitoring, and its scripts are in the build. Not relaxable.
-const unmonitored = [];
-for (const s of MONITORING) if (!existsSync(path.join(output, s))) unmonitored.push(`missing ${s}`);
-for (const page of ['index.html', 'Prism.html', ...termPages.map((p) => `terminal/${p}`), ...deckPages.map((p) => `deck/${p}`)]) {
-  const html = await readFile(path.join(output, page), 'utf8');
-  const lacking = MONITORING.filter((s) => !html.includes(s));
-  if (lacking.length) unmonitored.push(`${page} doesn't load ${lacking.join(', ')}`);
+// Nothing on the site reaches another origin: no monitoring, analytics, CDN, web fonts or beacons. Every
+// built HTML, CSS and JS file is checked for resource tags (script, stylesheet / preload / icon links, img,
+// iframe, media, object, embed), CSS url() / @import, and fetch / sendBeacon / import() / WebSocket /
+// EventSource calls aimed at an absolute URL off this site. Loopback is not off-site: the engine copies carry the
+// Stream Deck plugin's code, whose property inspector talks to the Stream Deck app on 127.0.0.1 (never loaded by
+// the site, and never leaving the machine). Not relaxable.
+const OWN = new URL(SITE_URL).host;
+const LOOPBACK = /^(localhost|127\.\d+\.\d+\.\d+|\[::1\])$/i;
+const offsite = (u) => { try { const x = new URL(u.startsWith('//') ? 'https:' + u : u); return /^(https?|wss?):$/.test(x.protocol) && x.host !== OWN && !LOOPBACK.test(x.hostname); } catch { return /^(?:wss?:|https?:)?\/\/(?!localhost\b|127\.)/i.test(u); } };
+const RESOURCE_TAG = /<(script|img|iframe|source|video|audio|track|embed|object|link)\b[^>]*>/gi;
+const TAG_URL = /\s(?:src|href|data|poster|srcset)\s*=\s*["']?\s*((?:https?:)?\/\/[^"'\s>]+)/gi;
+const CSS_URL = /(?:url\(\s*["']?|@import\s+["'])((?:https?:)?\/\/[^"')\s]+)/gi;
+const JS_CALL = /\b(?:fetch|sendBeacon|import|WebSocket|EventSource)\s*\(\s*["'`]((?:https?:|wss?:)?\/\/[^"'`\s]+)/g;
+const leaks = [];
+for (const file of await walk(output)) {
+  const ext = path.extname(file).toLowerCase();
+  if (!['.html', '.css', '.js', '.mjs'].includes(ext)) continue;
+  const text = await readFile(file, 'utf8');
+  const rel = path.relative(output, file).split(path.sep).join('/');
+  const hits = new Set();
+  if (ext === '.html') {
+    for (const [tag, name] of text.matchAll(RESOURCE_TAG)) {
+      if (name.toLowerCase() === 'link' && !/\brel\s*=\s*["']?[^"'>]*\b(stylesheet|preload|modulepreload|prefetch|preconnect|dns-prefetch|icon|apple-touch-icon|manifest|import)\b/i.test(tag)) continue;
+      for (const [, u] of tag.matchAll(TAG_URL)) if (offsite(u)) hits.add(u);
+    }
+  }
+  if (ext === '.html' || ext === '.css') for (const [, u] of text.matchAll(CSS_URL)) if (offsite(u)) hits.add(u);
+  if (ext !== '.css') for (const [, u] of text.matchAll(JS_CALL)) if (offsite(u)) hits.add(u);
+  for (const u of hits) leaks.push(`${rel} → ${u}`);
 }
-if (unmonitored.length) throw new Error(`site monitoring incomplete:\n  ${unmonitored.join('\n  ')}`);
+if (leaks.length) throw new Error(`the site must not load anything from another origin:\n  ${leaks.slice(0, 40).join('\n  ')}`);
 
 console.log(`Built ${catalog.effects.length} facets, ${catalog.galleries.length} gallery links, and ${showcase.length} previews into ${output}`);
 console.log(`Terminal: ${terminal.facets.length} facets in ${terminal.galleries.length} galleries · web pages: ${termPages.length ? termPages.join(', ') : 'none'} · curl site: ${tty.pages.size} pages / ${tty.files} files (${(tty.bytes / 1048576).toFixed(1)} MB)${packed ? ` · dl/prism-term.tgz ${packed.version}` : ''}`);

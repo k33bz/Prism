@@ -1,5 +1,6 @@
-# Build the landing page (website/, with Prism.html beside it) and publish it to
-# GitHub Pages (prism.k33bz.com) on every push to main. Forgejo is the primary
+# Build the site (website/: the landing page, Prism.html, the terminal catalog and
+# curl site, the Stream Deck page and its downloads) and publish it to GitHub Pages
+# (prism.k33bz.com) on every push to main. Forgejo is the primary
 # repo and mirrors here; Forgejo's own runner also reads .github/workflows, so the
 # job only runs on github.com. Deploys a build artifact rather than a gh-pages
 # branch, which the mirror would delete on its next sync.
@@ -19,6 +20,7 @@ jobs:
   deploy:
     if: github.server_url == 'https://github.com'
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -27,7 +29,11 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      # fails if the landing page's gallery counts disagree with the catalog
+      # No npm install: everything is zero-dependency. A clean checkout has no
+      # prism-deck/plugin/dist, so the build makes the plugin, icon packs and
+      # profiles first (a few minutes). It fails if a catalog or island is stale,
+      # a count disagrees with the catalogs, a link is broken, or any page would
+      # load something from another origin.
       - run: node website/build.mjs site-dist
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3

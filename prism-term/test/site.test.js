@@ -474,22 +474,17 @@ test('build: full island in Prism.html, lean island on /terminal/, live numbers 
       assert.ok(!/\s(?:href|src)="\.\.\/\.\.\/prism-term\//.test(html), 'dev paths rewritten');
     }
 
-    // Site monitoring on every HTML page: static tags on the site pages, a host-gated loader in the hosted Prism.html
-    // (a downloaded copy must stay offline), and the repo's Prism.html itself untouched.
-    const MON = ['assets/vendor/traceway-1.2.1.js', 'assets/vendor/web-vitals-6.2.3.js', 'assets/telemetry.js'];
-    for (const s of MON) assert.ok(fs.existsSync(path.join(out, ...s.split('/'))), `built ${s}`);
-    for (const [page, prefix] of [['index.html', ''], ['terminal/index.html', '../'], ['terminal/tty.html', '../']]) {
+    // No monitoring anywhere (this fork's site makes no third-party requests): no monitoring scripts in the
+    // build, none loaded by any page, and the hosted Prism.html is the repository's file plus the island.
+    for (const s of ['assets/vendor', 'assets/telemetry.js']) assert.ok(!fs.existsSync(path.join(out, ...s.split('/'))), `no ${s} in the build`);
+    for (const page of ['index.html', 'terminal/index.html', 'terminal/tty.html', 'deck/index.html', 'Prism.html']) {
       const file = path.join(out, ...page.split('/'));
       if (!fs.existsSync(file)) continue;
-      const html = fs.readFileSync(file, 'utf8');
-      for (const s of MON) assert.ok(html.includes(`<script src="${prefix}${s}" defer></script>`), `${page} loads ${s}`);
+      const html = page === 'Prism.html' ? prism : fs.readFileSync(file, 'utf8');
+      assert.ok(!/traceway|web-vitals|telemetry\.js|Site monitoring/i.test(html), `${page} loads no monitoring`);
+      assert.ok(!/<script\b[^>]*\ssrc="(?:https?:)?\/\//i.test(html), `${page} loads no script from another origin`);
     }
-    const loader = prism.match(/<script>\/\* Site monitoring[^<]*<\/script>/)?.[0];
-    const at = prism.indexOf(loader);
-    assert.ok(loader && at > prism.indexOf('<head>') && at < prism.indexOf('<script type="application/json" id="prism-catalog">'), 'hosted Prism.html: loader in <head>, before the islands');
-    assert.match(loader, /if\(location\.hostname!=="prism\.k33bz\.com"\)return;/);
-    for (const s of MON) assert.ok(loader.includes(JSON.stringify(s)), `loader loads ${s}`);
-    if (fs.existsSync(PRISM_HTML)) assert.ok(!fs.readFileSync(PRISM_HTML, 'utf8').includes('traceway'), 'repo Prism.html stays monitoring-free');
+    if (fs.existsSync(PRISM_HTML)) assert.equal(prism, embedIsland(fs.readFileSync(PRISM_HTML, 'utf8'), full).html, 'hosted Prism.html = the repository file with the island');
 
     // The curl site lives at the site root — /terminal/tty.html fetches ../tty, ../t/<g>, ../f/plasma (+ .24/.txt).
     for (const rel of ['tty', 'f/plasma', ...full.galleries.filter((g) => full.facets.some((f) => f.gallery === g.id)).map((g) => `t/${g.id}`)]) {

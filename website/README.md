@@ -1,6 +1,6 @@
 # Prism website
 
-The source for [prism.jeremyfhall.com](https://prism.jeremyfhall.com). Everything on the site is built from this repository: static files only, no external assets, no package installation, no runtime dependencies.
+The source for [prism.k33bz.com](https://prism.k33bz.com). Everything on the site is built from this repository: static files only, no external assets, no package installation, no runtime dependencies.
 
 | Source | Becomes | What it is |
 |---|---|---|
@@ -11,7 +11,7 @@ The source for [prism.jeremyfhall.com](https://prism.jeremyfhall.com). Everythin
 | `terminal/terminal.css`, `terminal/site.js` | | shared by both terminal pages: styles, engine paths, the terminal theme that follows Night/Day |
 | `deck/index.html`, `deck/deck.css`, `deck/deck.js` | `/deck/` | the Stream Deck catalog: virtual devices (Galleon 100 SD, Stream Deck +, MK.2, XL, + XL, Neo, Mini) playing every deck facet live through prism-deck's browser runtime, a detail view, and the plugin / icon-pack / profile downloads |
 | `assets/site.css`, `assets/site.js` | | chrome shared by every page: Inter, the glass top bar with the Web · Terminal · Stream Deck switcher, Night/Day with the relight sweep, First Light, copy and toast |
-| `assets/rf/`, `assets/fonts/`, `assets/brand/`, favicons | | the Refraction design language, vendored from `../design/` by `scripts/sync-refraction.mjs` |
+| `assets/rf/`, `assets/fonts/`, `assets/brand/`, favicons | | the Refraction design language, vendored from upstream's `design/` by `scripts/sync-refraction.mjs` (this repository has no `design/` folder yet, so these copies are the source here) |
 | `assets/deck/` | | the deck adapter (`adapter.js`) plus a sketch runtime it falls back to if prism-deck can't load |
 | `../prism-term/src/site/tty.js` | `/tty`, `/t/…`, `/f/…` | the terminal site: ANSI pages for `curl`, each with `.txt` and `.24` variants |
 | `../prism-term/` | `/dl/prism-term.tgz` | the packed engine the live player runs through `npx` |
@@ -43,11 +43,14 @@ The build writes:
 | Output | Contents |
 |---|---|
 | `index.html`, `styles.css`, `app.js`, `assets/` | the landing page |
-| `Prism.html` | the web catalog, carrying both JSON islands: `#prism-catalog` and `#prism-terminal-catalog` |
+| `Prism.html` | the web catalog, carrying its three JSON islands: `#prism-catalog`, `#prism-terminal-catalog` and `#prism-deck-catalog` |
+| `deck/` | the Stream Deck page, with `engine/` (prism-deck's `src/` and `catalog/deck-catalog.json`) and `dl/` (the plugin, the icon packs and the profiles from `prism-deck/plugin/dist`) |
 | `terminal/` | the terminal catalog and directions pages, with `engine/` (the browser-safe prism-term engine and `catalog/terminal-catalog.json`) and `tty-preview/` (HTML previews of the curl pages) |
 | `tty`, `t/`, `f/` | the terminal site: home, `t/help`, `t/all`, one `t/<gallery>` page per gallery and one `f/<facet-id>` page per facet, each with `.txt` and `.24` variants |
-| `dl/prism-term.tgz` | the live player for `npx -y --package=https://prism.jeremyfhall.com/dl/prism-term.tgz prism-term` |
+| `dl/prism-term.tgz` | the live player for `npx -y --package=https://prism.k33bz.com/dl/prism-term.tgz prism-term` |
 | `sitemap.xml`, `robots.txt`, `CNAME`, `.nojekyll` | crawler and GitHub Pages files (the sitemap lists HTML pages only) |
+
+The `/deck/` downloads are build outputs of prism-deck, not committed. When `prism-deck/plugin/dist` is missing (a clean checkout), the build makes it first with `prism-deck/scripts/build-plugin.mjs --no-docs` and `prism-deck/scripts/build-iconpacks.mjs` (no npm; the icon packs take a few minutes).
 
 Along the way it:
 
@@ -59,6 +62,7 @@ Along the way it:
   | `data-web-stat="facets"`, `data-web-stat="galleries"` | web catalog effect and gallery counts |
   | `data-web-stat="gallery:<id>"` | one web gallery's count (ids as in `assets/galleries.json`) |
   | `data-terminal-stat="facets"`, `data-terminal-stat="galleries"` | terminal catalog facet and gallery counts |
+  | `data-deck-stat="facets"`, `data-deck-stat="galleries"` | Stream Deck catalog facet and gallery counts |
   | `data-mcp-tools` | MCP tool count |
   | `data-prism-size` | size of the built `Prism.html` |
 
@@ -76,6 +80,8 @@ The build is deterministic and stops on any of these:
 - the landing page doesn't list every web gallery, or its counts don't add up to the catalog
 - a live-number marker has an unknown key or holds markup
 - a preview facet isn't CSS-only
+- `prism-deck/catalog/deck-catalog.json` or the `#prism-deck-catalog` island in `Prism.html` is stale (run `npm run catalog` in `prism-deck/`, then `node scripts/embed-island.mjs --html ../Prism.html`)
+- any built page, stylesheet or script would load something from another origin: a script, stylesheet, font, image or frame, a CSS `url()`, or a `fetch` / `sendBeacon` / `import()` / WebSocket aimed off the site. The site has no monitoring or analytics and makes no third-party requests; this check is not relaxable
 
 For local work, `--allow-stale` turns the two staleness checks into warnings, and `--allow-incomplete` does the same for a missing terminal page and broken links. `--no-pack` skips the tarball.
 
@@ -88,10 +94,10 @@ python3 -m http.server 8080 --directory site-dist     # Windows: python -m http.
 curl -sL http://localhost:8080/tty
 ```
 
-Links between pages are relative, so the HTML pages work at a custom-domain root or under a GitHub Pages project path. The commands they show always point at `https://prism.jeremyfhall.com`.
+Links between pages are relative, so the HTML pages work at a custom-domain root or under a GitHub Pages project path. The commands they show always point at `https://prism.k33bz.com`.
 
 ## Deploy
 
-GitHub Pages serves the `gh-pages` branch: a built `site-dist/` at the branch root. `.nojekyll` turns off Jekyll processing, so every file is served exactly as built, and `CNAME` sets the custom domain `prism.jeremyfhall.com`. Cloudflare sits in front. Publishing means replacing the branch contents with a fresh build: run all three regenerate steps first (`npm run catalog`, `npm run island`, then `node website/build.mjs` without the `--allow-*` flags).
+`.github/workflows/pages.yml` publishes the site to GitHub Pages at `prism.k33bz.com` on every push to `main`: on a clean checkout with Node.js 22 and no `npm install` it runs `node website/build.mjs site-dist` and deploys `site-dist/` as a Pages artifact (Forgejo is the primary repository and mirrors to GitHub, so the job only runs on github.com). Before pushing, regenerate what changed (`npm run catalog` and `npm run island` in `prism-term/`, `npm run catalog` and the island in `prism-deck/`) and run the build without the `--allow-*` flags.
 
 The MCP server runs locally, not on the website; the agent workflow on the landing page is an illustration.

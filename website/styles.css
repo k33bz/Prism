@@ -170,7 +170,7 @@ main>section:not(.hero),.site-footer{content-visibility:auto;contain-intrinsic-s
 .spectral-ruler{display:flex;align-items:center;gap:14px;margin:-6px 0 6px}
 .ruler-label{font:400 10px/1 var(--rf-mono);color:var(--dim)}
 .ruler-line{position:relative;flex:1;height:22px}
-.ruler-line::before{content:"";position:absolute;left:0;right:0;top:10px;height:2px;border-radius:1px;background:linear-gradient(90deg,var(--rf-g-charts-v),var(--rf-g-fx-v),var(--rf-g-lab-v),var(--rf-g-ai-v),var(--rf-g-objects-v),var(--rf-g-input-v),var(--rf-g-text-v),var(--rf-g-shapes-v),var(--rf-g-maps-v),var(--rf-g-notify-v),var(--rf-g-arch-v),var(--rf-g-callouts-v),var(--rf-g-obsidian-v),var(--rf-g-menus-v),var(--rf-g-spectrums-v));opacity:.85}
+.ruler-line::before{content:"";position:absolute;left:0;right:0;top:10px;height:2px;border-radius:1px;background:linear-gradient(90deg,var(--rf-g-charts-v),var(--rf-g-fx-v),var(--rf-g-lab-v),var(--rf-g-ai-v),var(--rf-g-objects-v),var(--rf-g-input-v),var(--rf-g-text-v),var(--rf-g-shapes-v),var(--rf-g-maps-v),var(--rf-g-notify-v),var(--rf-g-arch-v),var(--rf-g-aws-v),var(--rf-g-callouts-v),var(--rf-g-obsidian-v),var(--rf-g-menus-v),var(--rf-g-tables-v),var(--rf-g-diagrams-v),var(--rf-g-spectrums-v));opacity:.85}
 .ruler-line i{position:absolute;top:3px;width:1px;height:5px;background:var(--rf-line-strong);transition:height var(--rf-dur-base) var(--rf-ease-out-expo),background var(--rf-dur-fast)}
 .ruler-line i.is-on{top:0;height:22px;width:2px;margin-left:-.5px;border-radius:1px;background:var(--rf-beam-core);box-shadow:0 0 10px 1px rgba(var(--rf-hue-rgb),.9)}
 .gallery-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 28px}
@@ -388,3 +388,19 @@ main>section:not(.hero),.site-footer{content-visibility:auto;contain-intrinsic-s
   .hero-art *{animation:none!important}
   .mini-tile:nth-child(3)::after,.caret{animation:none!important}
 }
+
+/* ── This fork's extra galleries ────────────────────────────────────────── */
+/* AWS Architecture sits between Architecture Diagrams and Callouts on the spectrum, Tables & Data Layouts and
+   Diagrams & Frameworks between Menus and Spectrums (catalog order): each hue is interpolated from its two
+   neighbours in assets/rf/prism.css, Night and Day, ink, vivid and rgb tiers. */
+:root,:root[data-theme="prism-dark"]{
+  --rf-g-aws:#c4d486;--rf-g-aws-v:#bed36d;--rf-g-aws-rgb:190,211,109;
+  --rf-g-tables:#f5be7c;--rf-g-tables-v:#f5b05b;--rf-g-tables-rgb:245,176,91;
+  --rf-g-diagrams:#f8ba7f;--rf-g-diagrams-v:#f6ab5e;--rf-g-diagrams-rgb:246,171,94}
+:root[data-theme="prism-light"]{
+  --rf-g-aws:#5f6e00;--rf-g-aws-v:#7e9200;--rf-g-aws-rgb:126,146,0;
+  --rf-g-tables:#925b00;--rf-g-tables-v:#c07900;--rf-g-tables-rgb:192,121,0;
+  --rf-g-diagrams:#985800;--rf-g-diagrams-v:#c87500;--rf-g-diagrams-rgb:200,117,0}
+[data-rf-gallery="aws"]{--rf-hue:var(--rf-g-aws);--rf-hue-v:var(--rf-g-aws-v);--rf-hue-rgb:var(--rf-g-aws-rgb)}
+[data-rf-gallery="tables"]{--rf-hue:var(--rf-g-tables);--rf-hue-v:var(--rf-g-tables-v);--rf-hue-rgb:var(--rf-g-tables-rgb)}
+[data-rf-gallery="diagrams"]{--rf-hue:var(--rf-g-diagrams);--rf-hue-v:var(--rf-g-diagrams-v);--rf-hue-rgb:var(--rf-g-diagrams-rgb)}

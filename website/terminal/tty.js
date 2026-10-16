@@ -8,7 +8,7 @@ import { TERMINAL as POSITIONS } from '../assets/rf/positions.mjs';
 
 const byId = (id) => document.getElementById(id);
 const siteRoot = new URL('../', location.href);
-const HOST = 'https://prism.jeremyfhall.com';
+const HOST = 'https://prism.k33bz.com';
 // The Prism terminal schemes (prism-term/src/themes.js › TERMINAL_SCHEMES): background + foreground.
 const THEMES = { dark: { id: 'prism-dark', bg: 0x0a0c12, ink: 0xe6e6ef }, light: { id: 'prism-light', bg: 0xf8f7fb, ink: 0x23222f } };
 
@@ -41,7 +41,7 @@ function draw() {
   const width = Math.max(240, screen.clientWidth - 32);
   web.renderToCanvas(buffer, canvas, { width, theme: THEMES[state.bg] });
   canvas.setAttribute('role', 'img');
-  canvas.setAttribute('aria-label', `Terminal output of curl -sL prism.jeremyfhall.com/${state.page}${state.variant}`);
+  canvas.setAttribute('aria-label', `Terminal output of curl -sL prism.k33bz.com/${state.page}${state.variant}`);
   screen.style.background = '#' + THEMES[state.bg].bg.toString(16).padStart(6, '0');
 }
 
@@ -49,7 +49,7 @@ async function show(page = state.page) {
   state.page = page;
   const t = ++token;
   byId('preview-page').value = page;
-  byId('preview-cmd').innerHTML = `$ <span data-curl>${window.PrismSite?.shell?.() === 'windows' ? 'curl.exe' : 'curl'}</span> -sL prism.jeremyfhall.com/<b>${esc(page)}${esc(state.variant)}</b>`;
+  byId('preview-cmd').innerHTML = `$ <span data-curl>${window.PrismSite?.shell?.() === 'windows' ? 'curl.exe' : 'curl'}</span> -sL prism.k33bz.com/<b>${esc(page)}${esc(state.variant)}</b>`;
   try {
     const text = await fetchPage(page + state.variant);
     if (t !== token) return;

@@ -45,7 +45,7 @@ try {
   [catalog, web, palettes] = await Promise.all([loadCatalog(), import(engineUrl('src/web/index.js')), import(engineUrl('src/palettes.js'))]);
 } catch (err) {
   console.error('[prism-terminal]', err);
-  byId('result-status').textContent = 'The terminal catalog could not be loaded. Browse it from your terminal instead: curl -sL https://prism.jeremyfhall.com/tty';
+  byId('result-status').textContent = 'The terminal catalog could not be loaded. Browse it from your terminal instead: curl -sL https://prism.k33bz.com/tty';
   throw err;
 }
 

@@ -129,13 +129,13 @@
   // ── quick starts ─────────────────────────────────────────────────────────
   const quickstarts = {
     'browser-tab': { label: 'GET THE LIBRARY', footer: 'Your browser is the only dependency.',
-      code: 'git clone https://github.com/crazy54/Prism.git\ncd Prism\n\n# Open Prism.html in your browser.\n# Or double-click the downloaded file.' },
+      code: 'git clone https://github.com/k33bz/Prism.git\ncd Prism\n\n# Open Prism.html in your browser.\n# Or double-click the downloaded file.' },
     'mcp-tab': { label: 'CONNECT THE CATALOG', footer: 'Node.js 18+. No npm install needed.',
-      code: 'git clone https://github.com/crazy54/Prism.git\ncd Prism/prism-mcp-server\n\n# Verify the catalogs (web + terminal)\nnode cli.js info --catalog ../Prism.html\n\n# Start the local MCP server\nnode cli.js start --catalog ../Prism.html' },
+      code: 'git clone https://github.com/k33bz/Prism.git\ncd Prism/prism-mcp-server\n\n# Verify the catalogs (web + terminal)\nnode cli.js info --catalog ../Prism.html\n\n# Start the local MCP server\nnode cli.js start --catalog ../Prism.html' },
     'terminal-tab': { label: 'BROWSE FROM YOUR TERMINAL', footer: () => (site?.shell() === 'windows' ? 'Windows: curl.exe works in PowerShell 5.1 and 7, Command Prompt and Git Bash.' : 'Windows PowerShell 5.1: turn on Windows above — plain curl is an alias there.'), shell: true,
-      code: '# Browse the terminal site. Nothing to install.\ncurl -sL https://prism.jeremyfhall.com/tty\n\n# Run the live player (Node.js 18+)\nnpx -y --package=https://prism.jeremyfhall.com/dl/prism-term.tgz prism-term' },
+      code: '# Browse the terminal site. Nothing to install.\ncurl -sL https://prism.k33bz.com/tty\n\n# Run the live player (Node.js 18+)\nnpx -y --package=https://prism.k33bz.com/dl/prism-term.tgz prism-term' },
     'deck-tab': { label: 'PUT PRISM ON YOUR STREAM DECK', footer: 'Stream Deck 7.6+ on Windows and macOS · OpenDeck on Linux.',
-      code: '# 1. The plugin: live, animated keys, dials and strips\n#    Double-click com.jeremyfhall.prism.streamDeckPlugin\n\n# 2. Or an icon pack, for any action (11 themes)\n#    Double-click com.jeremyfhall.prism.icons.<theme>.streamDeckIconPack\n\n# 3. Or a ready-made profile for your device\n#    Double-click "Prism - <device>.streamDeckProfile"' },
+      code: '# 1. The plugin: live, animated keys, dials and strips\n#    Double-click com.k33bz.prism.streamDeckPlugin\n\n# 2. Or an icon pack, for any action (11 themes)\n#    Double-click com.k33bz.prism.icons.<theme>.streamDeckIconPack\n\n# 3. Or a ready-made profile for your device\n#    Double-click "Prism - <device>.streamDeckProfile"' },
   };
   const tabs = [...document.querySelectorAll('[role="tab"]')];
   function selectTab(tab) {
