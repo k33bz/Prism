@@ -1,4 +1,4 @@
-// Settings for the Prism Display action (manifest UUID com.jeremyfhall.prism.facet; per instance, stored by the app and
+// Settings for the Prism Display action (manifest UUID com.k33bz.prism.facet; per instance, stored by the app and
 // exported with profiles) and the plugin (global settings). Everything coming
 // from the app, the property inspector, a profile or the live channel is
 // untrusted: normalize() clamps it to known shapes.

@@ -6,7 +6,7 @@
 //   node --test test/audio.test.js
 //   node --test --test-name-pattern="audio:" test/audio.test.js       (sources only)
 //   node --test --test-name-pattern="linux-export:" test/audio.test.js
-import { test } from 'node:test';
+import { test, after } from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -30,6 +30,12 @@ import { runLinuxExport, runAudioCommand, loadSetup } from '../src/export/linux-
 import { SAMPLE_LAYOUTS } from '../src/export/profile.js';
 import { readZip, writeZip } from '../src/export/plugin-zip.js';
 import { validateSvg } from '../src/scene/validate.js';
+
+// The sources unref every timer they own (a live source must never hold a process open), so a test
+// that waits only on those timers leaves an empty event loop; Node 22's runner then cancels it and
+// every test after it. One ref'd idle interval for the whole file keeps the loop alive.
+const keepAlive = setInterval(() => {}, 1 << 30);
+after(() => clearInterval(keepAlive));
 
 const tick = () => new Promise((r) => setImmediate(r));
 /** Drive a manual clock in small steps, letting promises/IO settle between steps. */
@@ -799,7 +805,7 @@ test('linux-export: OpenDeck profiles match the loader (simplified_profile.rs)',
       assert.match(p.path, /^profiles\/sd-TEST123\/.+\.json$/);
       const inst = p.json.keys.find(Boolean);
       assert.equal(inst.action.plugin, PLUGIN_DIR);
-      assert.equal(inst.action.uuid, 'com.jeremyfhall.prism.facet');
+      assert.equal(inst.action.uuid, 'com.k33bz.prism.facet');
       assert.match(inst.states[0].image, /^data:image\/svg\+xml;base64,/);
       assert.ok(inst.settings.facet);
     }
@@ -808,7 +814,7 @@ test('linux-export: OpenDeck profiles match the loader (simplified_profile.rs)',
   assert.equal(neo.json.keys.length, 10, '8 keys + 2 touch points');
   assert.equal(neo.json.infobars.length, 1);
   assert.equal(neo.json.infobars[0].context, 'Infobar.0.0');
-  assert.equal(neo.json.infobars[0].action.uuid, 'com.jeremyfhall.prism.infobar');
+  assert.equal(neo.json.infobars[0].action.uuid, 'com.k33bz.prism.infobar');
   const plus = buildOpenDeckProfile(setupFor('plus'));
   assert.equal(plus.json.sliders.length, 4);
   assert.equal(plus.json.sliders[2].context, 'Encoder.2.0');
@@ -816,12 +822,12 @@ test('linux-export: OpenDeck profiles match the loader (simplified_profile.rs)',
   assert.equal(spanKeys.length, 4);
   assert.deepEqual(spanKeys.map((k) => k.context), ['Keypad.4.0', 'Keypad.5.0', 'Keypad.6.0', 'Keypad.7.0']);
   const none = buildOpenDeckProfile(setupFor('mk2'), { images: 'none' });
-  assert.match(none.json.keys[0].states[0].image, /^plugins\/com\.jeremyfhall\.prism\.sdPlugin\/imgs\/actions\/facet\/key/);
+  assert.match(none.json.keys[0].states[0].image, /^plugins\/com\.k33bz\.prism\.sdPlugin\/imgs\/actions\/facet\/key/);
   assert.throws(() => buildOpenDeckProfile(setupFor('galleon')), /OpenDeck does not drive/);
 });
 
 test('linux-export: OpenDeck plugin overlay (manifest.linux.json) and paths', () => {
-  const manifest = { UUID: 'com.jeremyfhall.prism', CodePath: 'bin/plugin.js', OS: [{ Platform: 'windows' }, { Platform: 'mac' }], Actions: [{ UUID: 'com.jeremyfhall.prism.facet', Controllers: ['Keypad', 'Encoder'] }, { UUID: 'com.jeremyfhall.prism.infobar', Controllers: ['Neo'] }] };
+  const manifest = { UUID: 'com.k33bz.prism', CodePath: 'bin/plugin.js', OS: [{ Platform: 'windows' }, { Platform: 'mac' }], Actions: [{ UUID: 'com.k33bz.prism.facet', Controllers: ['Keypad', 'Encoder'] }, { UUID: 'com.k33bz.prism.infobar', Controllers: ['Neo'] }] };
   const o = linuxManifestOverlay(manifest);
   assert.deepEqual(o.OS, [{ Platform: 'linux', MinimumVersion: '0' }]);
   assert.deepEqual(o.Actions[1].Controllers, ['Neo', 'Infobar']);

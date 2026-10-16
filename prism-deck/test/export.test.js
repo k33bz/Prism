@@ -84,8 +84,8 @@ test('schema: the Prism manifest is valid for Software 7.6 (with the Neo action)
   const m71 = pluginManifest({ minSoftware: '7.1', profiles });
   assert.deepEqual(validate(SCHEMAS.manifest, m76), []);
   assert.deepEqual(validate(SCHEMAS.manifest, m71), []);
-  assert.deepEqual(m76.Actions.map((a) => a.UUID), ['com.jeremyfhall.prism.facet', 'com.jeremyfhall.prism.infobar']);
-  assert.deepEqual(m71.Actions.map((a) => a.UUID), ['com.jeremyfhall.prism.facet']);
+  assert.deepEqual(m76.Actions.map((a) => a.UUID), ['com.k33bz.prism.facet', 'com.k33bz.prism.infobar']);
+  assert.deepEqual(m71.Actions.map((a) => a.UUID), ['com.k33bz.prism.facet']);
   assert.equal(m76.Nodejs.Version, '20');
   assert.ok(m76.Actions.every((a) => a.UUID.startsWith(`${m76.UUID}.`)), 'action UUIDs are prefixed by the plugin UUID');
   assert.deepEqual(m76.Actions[0].Controllers, ['Keypad', 'Encoder']);
@@ -100,7 +100,7 @@ test('schema: the Prism manifest is valid for Software 7.6 (with the Neo action)
 test('plugin: the built folder passes the official schemas with file/image checks; the package unzips to one root', { timeout: 60000 }, () => {
   const dir = tmpdir();
   try {
-    const built = buildPluginFolder({ root: ROOT, outDir: path.join(dir, 'com.jeremyfhall.prism.sdPlugin') });
+    const built = buildPluginFolder({ root: ROOT, outDir: path.join(dir, 'com.k33bz.prism.sdPlugin') });
     const problems = validatePluginFolder(built.dir, SCHEMAS);
     assert.deepEqual(SCHEMAS ? problems : problems.slice(1), []);
     assert.deepEqual(imageSize(path.join(built.dir, 'imgs/plugin/icon.png')), { w: 256, h: 256 });
@@ -147,7 +147,7 @@ test('iconpack: a pack (GIF + PNG twins via src/raster, SVG otherwise) passes th
     const p = await buildIconPack({ theme: 'neon', glyphs, raster: R });
     assert.deepEqual(checkIconPack(p.zip), []);
     assert.deepEqual(p.stats.invalid, []);
-    assert.equal(p.folder, 'com.jeremyfhall.prism.icons.neon.sdIconPack');
+    assert.equal(p.folder, 'com.k33bz.prism.icons.neon.sdIconPack');
     assert.match(p.manifest.Version, /^\d+\.\d+\.\d+$/);
     const entries = readZip(p.zip);
     assert.ok(entries.some((e) => e.name.endsWith('/OFL.txt')), 'Inter OFL ships with the pack');
@@ -185,7 +185,7 @@ test('profile: sample profiles for Galleon 100 SD, Stream Deck +, MK.2, XL, Mini
     assert.deepEqual(checkProfile(p.zip), [], p.name);
     assert.deepEqual(p.dropped, [], `${p.name}: every key references a real facet or built-in that fits`);
     assert.equal(p.package.FormatVersion, 1);
-    assert.equal(p.package.RequiredPlugins[0], 'com.jeremyfhall.prism');
+    assert.equal(p.package.RequiredPlugins[0], 'com.k33bz.prism');
     assert.ok(p.package.RequiredPlugins.includes('com.elgato.streamdeck.system.multimedia') && p.package.RequiredPlugins.includes('com.elgato.streamdeck.page'), `${p.name}: lists the built-in plugins it uses, like the app's own exports`);
     assert.equal(p.manifest.Device.Model, getDevice(p.device).model);
     const d = getDevice(p.device);
@@ -193,14 +193,14 @@ test('profile: sample profiles for Galleon 100 SD, Stream Deck +, MK.2, XL, Mini
     const home = pageOf(p, 0);
     assert.equal(home.Name, 'Home');
     const keys = home.Controllers.find((c) => c.Type === 'Keypad').Actions;
-    const builtins = Object.values(keys).filter((a) => a.Plugin.UUID !== 'com.jeremyfhall.prism');
+    const builtins = Object.values(keys).filter((a) => a.Plugin.UUID !== 'com.k33bz.prism');
     assert.ok(builtins.length >= 6, `${p.name}: Home is built on built-in actions (${builtins.length})`);
     const play = builtins.find((a) => a.UUID === 'com.elgato.streamdeck.system.multimedia' && a.Settings.actionIdx === 1);
     assert.ok(play, `${p.name}: a real play / pause key`);
     assert.match(play.States[0].Image, /^Images\/[0-9A-Z]{26}Z\.png$/);
     const img = readZip(p.zip).find((e) => e.name.endsWith(`${p.pages[0].toUpperCase()}/${play.States[0].Image}`));
     assert.ok(img && img.data.readUInt32BE(16) === 144, 'the Prism art is a 144 px PNG in the page Images/');
-    for (const a of Object.values(keys)) if (a.Plugin.UUID === 'com.jeremyfhall.prism') { assert.deepEqual(a.States, [{}], 'Prism Display keys carry no state image'); assert.equal(a.Name, 'Prism Display'); }
+    for (const a of Object.values(keys)) if (a.Plugin.UUID === 'com.k33bz.prism') { assert.deepEqual(a.States, [{}], 'Prism Display keys carry no state image'); assert.equal(a.Name, 'Prism Display'); }
     for (const coord of Object.keys(keys)) { const [c, r] = coord.split(',').map(Number); assert.ok(c < d.cols && r < d.rows, coord); }
     assert.ok(!JSON.stringify(home).includes('weather'), 'no weather on Home (it has no source)');
     // pages 2…: the Prism showcases, each with a built-in Home key
@@ -211,7 +211,7 @@ test('profile: sample profiles for Galleon 100 SD, Stream Deck +, MK.2, XL, Mini
       const acts = Object.values(pg.Controllers.find((c) => c.Type === 'Keypad').Actions);
       const nav = acts.filter((a) => a.UUID === 'com.elgato.streamdeck.page.goto');
       assert.equal(nav.length, 1); assert.equal(nav[0].Settings.PageIndex, 1, 'Go to Page counts from 1: Home');
-      assert.ok(acts.filter((a) => a !== nav[0]).every((a) => a.UUID === 'com.jeremyfhall.prism.facet'));
+      assert.ok(acts.filter((a) => a !== nav[0]).every((a) => a.UUID === 'com.k33bz.prism.facet'));
     }
     const gotoPages = builtins.filter((a) => a.UUID === 'com.elgato.streamdeck.page.goto').map((a) => a.Settings.PageIndex).sort();
     assert.deepEqual(gotoPages, Array.from({ length: p.pages.length - 1 }, (_, i) => i + 2), `${p.name}: Home reaches every Showcase page`);
@@ -227,7 +227,7 @@ test('profile: sample profiles for Galleon 100 SD, Stream Deck +, MK.2, XL, Mini
   const plusEnc = JSON.parse(readZip(all[1].zip).find((e) => e.name.endsWith(`${all[1].pages[0].toUpperCase()}/manifest.json`)).data.toString('utf8')).Controllers.find((c) => c.Type === 'Encoder').Actions;
   assert.equal(plusEnc['1,0'].Settings.Hotkeys.length, 4, 'a hotkey dial: turn left / right / push / touch');
   const neo = JSON.parse(readZip(all[5].zip).find((e) => e.name.endsWith(`${all[5].pages[0].toUpperCase()}/manifest.json`)).data.toString('utf8'));
-  assert.equal(neo.Controllers.find((c) => c.Type === 'Neo').Actions['1,0'].UUID, 'com.jeremyfhall.prism.infobar');
+  assert.equal(neo.Controllers.find((c) => c.Type === 'Neo').Actions['1,0'].UUID, 'com.k33bz.prism.infobar');
   assert.deepEqual(sampleProfiles()[0].zip, all[0].zip, 'deterministic bytes');
   assert.match(detUuid('x'), /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/);
 });

@@ -240,10 +240,10 @@
 
 ## The curl-able terminal site
 
-- **Entry:** `curl -sL prism.jeremyfhall.com/tty`. One screen (≤ 24 lines, 80 columns) containing:
+- **Entry:** `curl -sL prism.k33bz.com/tty`. One screen (≤ 24 lines, 80 columns) containing:
   - a small banner;
   - one line saying what Prism Terminal is;
-  - the gallery list with counts and the exact command for each (`curl -sL prism.jeremyfhall.com/t/ops`);
+  - the gallery list with counts and the exact command for each (`curl -sL prism.k33bz.com/t/ops`);
   - how to go live (`npx … prism-term`);
   - the plain-text hint (`append .txt`);
   - the help page (`/t/help`).
@@ -266,7 +266,7 @@
 
 ## npx live player expectations
 
-- `npx -y --package=https://prism.jeremyfhall.com/dl/prism-term.tgz prism-term` opens the in-terminal gallery: arrows to browse, `/` to search, Enter to play, `q` to quit.
+- `npx -y --package=https://prism.k33bz.com/dl/prism-term.tgz prism-term` opens the in-terminal gallery: arrows to browse, `/` to search, Enter to play, `q` to quit.
 - `… prism-term play ops-htop` runs one facet; `--ascii`, `--depth 256`, `--size 80x24` all work.
 - It starts fast (< 1 s to first frame), restores the cursor and alt screen on `Ctrl-C`, never leaves the terminal in raw mode, and exits 0.
 - It works in tmux, over SSH, in Windows Terminal, and on Linux and macOS with Node ≥ 18. It needs no network after the tarball is fetched.

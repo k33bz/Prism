@@ -19,7 +19,7 @@ const NAMES = ['black', 'red', 'green', 'yellow', 'blue', 'magenta', 'cyan', 'wh
 const hx = (c) => toHex(c);
 const rgb = (h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16));
 const slugOf = (name) => name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
-const SITE = 'https://prism.jeremyfhall.com/terminal/';
+const SITE = 'https://prism.k33bz.com/terminal/';
 
 /** Shift an Oklab lightness (for derived brights). */
 function lighten(c, dL) {

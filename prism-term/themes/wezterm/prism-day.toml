@@ -18,5 +18,5 @@ brights = ["#55546a", "#cf354b", "#00823a", "#8d6c00", "#006fd8", "#a04ac2", "#0
 [metadata]
 name = "Prism Day"
 author = "Prism"
-origin_url = "https://prism.jeremyfhall.com/terminal/"
+origin_url = "https://prism.k33bz.com/terminal/"
 aliases = ["prism-day"]

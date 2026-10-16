@@ -26,8 +26,8 @@ const ROOT = path.resolve(HERE, '..');
 const SRC = path.join(ROOT, 'src');
 const OUT = path.join(ROOT, 'catalog', 'deck-catalog.json');
 const pkg = JSON.parse(fs.readFileSync(path.join(ROOT, 'package.json'), 'utf8'));
-export const SITE = 'https://prism.jeremyfhall.com';
-export const PLUGIN_UUID = 'com.jeremyfhall.prism';
+export const SITE = 'https://prism.k33bz.com';
+export const PLUGIN_UUID = 'com.k33bz.prism';
 
 const IMPORT_RE = /^\s*(?:import|export)\s(?:[^'"]*?\sfrom\s*)?['"]([^'"]+)['"]/gm;
 export const importsOf = (source) => [...source.matchAll(IMPORT_RE)].map((m) => m[1]);
@@ -130,7 +130,7 @@ export function buildCatalog() {
     },
     engine: {
       package: pkg.name, version: pkg.version, api: '1.0',
-      repo: 'https://github.com/crazy54/Prism/tree/main/prism-deck', web: `${SITE}/deck/`,
+      repo: 'https://github.com/k33bz/Prism/tree/main/prism-deck', web: `${SITE}/deck/`,
       plugin: { uuid: PLUGIN_UUID, action: `${PLUGIN_UUID}.facet` },
       entry: { render: `${MODULE_PREFIX}render.js`, registry: `${MODULE_PREFIX}facets/index.js`, web: `${MODULE_PREFIX}web/index.js`, island: `${MODULE_PREFIX}web/island.js` },
       tokens: TOKENS.source,

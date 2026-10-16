@@ -26,22 +26,22 @@ Prism Deck ships as three kinds of files. You install each one by double-clickin
 
 | File | What it is |
 |---|---|
-| `com.jeremyfhall.prism.streamDeckPlugin` | The plugin. It adds the **Prism Display** action (keys and dials) and **Prism Info Bar** (Stream Deck Neo). Prism Display is visual: it shows a facet. It can also open a web page or switch profile when pressed, and nothing else. |
-| `com.jeremyfhall.prism.icons.<theme>.streamDeckIconPack` | One icon pack per theme (<!--n:packs-->11<!--/n-->: `prism`, `aurora`, `blueprint`, `chrome`, `ember`, `mono`, `neon`, `paper`, `phosphor`, `pixel`, `porcelain`). Each covers <!--n:packStates-->240<!--/n--> glyph states (every glyph and its states, Night and Day). States that move are animated GIFs, each listed with its still PNG; the rest are static SVGs. Give them to any Stream Deck action. |
+| `com.k33bz.prism.streamDeckPlugin` | The plugin. It adds the **Prism Display** action (keys and dials) and **Prism Info Bar** (Stream Deck Neo). Prism Display is visual: it shows a facet. It can also open a web page or switch profile when pressed, and nothing else. |
+| `com.k33bz.prism.icons.<theme>.streamDeckIconPack` | One icon pack per theme (<!--n:packs-->11<!--/n-->: `prism`, `aurora`, `blueprint`, `chrome`, `ember`, `mono`, `neon`, `paper`, `phosphor`, `pixel`, `porcelain`). Each covers <!--n:packStates-->240<!--/n--> glyph states (every glyph and its states, Night and Day). States that move are animated GIFs, each listed with its still PNG; the rest are static SVGs. Give them to any Stream Deck action. |
 | `Prism - <Device>.streamDeckProfile` | <!--n:profiles-->7<!--/n--> ready-made profiles: `Prism - Galleon 100 SD`, `Prism - Stream Deck +`, `Prism - Stream Deck + XL`, `Prism - Stream Deck MK.2`, `Prism - Stream Deck XL`, `Prism - Stream Deck Mini` and `Prism - Stream Deck Neo`. Page 1, **Home**, is built from Stream Deck's own actions (media, volume, screen snip, desktop, files, clipboard, the Prism site) in Prism art, so every key does what it shows. The live Prism facets are on the **Showcase** pages. |
-| `com.jeremyfhall.prism.opendeck.streamDeckPlugin` | The same plugin for OpenDeck on Linux (adds `manifest.linux.json`). |
+| `com.k33bz.prism.opendeck.streamDeckPlugin` | The same plugin for OpenDeck on Linux (adds `manifest.linux.json`). |
 
-**Get the files** from [prism.jeremyfhall.com/deck/](https://prism.jeremyfhall.com/deck/), which links every one of them:
+**Get the files** from [prism.k33bz.com/deck/](https://prism.k33bz.com/deck/), which links every one of them:
 
-- the plugin: [`/deck/dl/com.jeremyfhall.prism.streamDeckPlugin`](https://prism.jeremyfhall.com/deck/dl/com.jeremyfhall.prism.streamDeckPlugin), and for OpenDeck [`/deck/dl/com.jeremyfhall.prism.opendeck.streamDeckPlugin`](https://prism.jeremyfhall.com/deck/dl/com.jeremyfhall.prism.opendeck.streamDeckPlugin)
-- icon packs: `/deck/dl/iconpacks/com.jeremyfhall.prism.icons.<theme>.streamDeckIconPack`, for example [the Prism pack](https://prism.jeremyfhall.com/deck/dl/iconpacks/com.jeremyfhall.prism.icons.prism.streamDeckIconPack)
-- profiles: `/deck/dl/profiles/Prism - <Device>.streamDeckProfile`, for example [Galleon 100 SD](https://prism.jeremyfhall.com/deck/dl/profiles/Prism%20-%20Galleon%20100%20SD.streamDeckProfile)
+- the plugin: [`/deck/dl/com.k33bz.prism.streamDeckPlugin`](https://prism.k33bz.com/deck/dl/com.k33bz.prism.streamDeckPlugin), and for OpenDeck [`/deck/dl/com.k33bz.prism.opendeck.streamDeckPlugin`](https://prism.k33bz.com/deck/dl/com.k33bz.prism.opendeck.streamDeckPlugin)
+- icon packs: `/deck/dl/iconpacks/com.k33bz.prism.icons.<theme>.streamDeckIconPack`, for example [the Prism pack](https://prism.k33bz.com/deck/dl/iconpacks/com.k33bz.prism.icons.prism.streamDeckIconPack)
+- profiles: `/deck/dl/profiles/Prism - <Device>.streamDeckProfile`, for example [Galleon 100 SD](https://prism.k33bz.com/deck/dl/profiles/Prism%20-%20Galleon%20100%20SD.streamDeckProfile)
 
 Or build them from a clone:
 
 ```bash
 cd prism-deck
-node scripts/build-plugin.mjs        # → plugin/dist/com.jeremyfhall.prism.streamDeckPlugin + …opendeck.streamDeckPlugin
+node scripts/build-plugin.mjs        # → plugin/dist/com.k33bz.prism.streamDeckPlugin + …opendeck.streamDeckPlugin
 node scripts/build-iconpacks.mjs     # → plugin/dist/iconpacks/ (one pack per theme) + plugin/dist/profiles/ (one profile per device)
 ```
 
@@ -51,10 +51,10 @@ node scripts/build-iconpacks.mjs     # → plugin/dist/iconpacks/ (one pack per 
 
 You need the Stream Deck app **7.6 or later** on Windows 10/11 or macOS 13 or later. The plugin runs on the app's bundled Node 20 and needs no other software.
 
-1. **Install the plugin.** Double-click `com.jeremyfhall.prism.streamDeckPlugin` and confirm in the Stream Deck app.
+1. **Install the plugin.** Double-click `com.k33bz.prism.streamDeckPlugin` and confirm in the Stream Deck app.
    - The action list gets a **Prism Deck** category with **Prism Display** and **Prism Info Bar**.
    - The app then offers the **Prism · <device>** sample profiles (a second question: click **Install Profile(s)**). It never switches you to one; pick it from the profile list when you want it.
-2. **Add icon packs (optional).** Double-click any `com.jeremyfhall.prism.icons.<theme>.streamDeckIconPack`. Its icons appear in a key's icon menu under **Icon Library**. Animated icons are GIFs and animate when you pick them; each also has a still PNG. This is how you give a working action (Multimedia, Hotkey, Website…) Prism art.
+2. **Add icon packs (optional).** Double-click any `com.k33bz.prism.icons.<theme>.streamDeckIconPack`. Its icons appear in a key's icon menu under **Icon Library**. Animated icons are GIFs and animate when you pick them; each also has a still PNG. This is how you give a working action (Multimedia, Hotkey, Website…) Prism art.
 3. **Import a profile (optional).** Double-click a `Prism - <Device>.streamDeckProfile`, or use **Preferences → Profiles → Import**. Profiles need the plugin; if it's missing, the app offers to install it.
 4. **Put a facet on a key.** Drag **Prism Display** onto a key or a dial. The property inspector shows a live preview. Pick a facet, a theme (Night or Day) and a motion level (*Full*, *Calm* or *Still*). Under **On press** you can make it open a web page or switch profile. Keys whose data is simulated (a demo calendar, an invented playlist) show a small **DEMO** tag on the device. Set your own calendar file under **Plugin settings → Data sources**.
 
@@ -70,7 +70,7 @@ The Stream Deck app doesn't run on Linux, but Prism Deck does. Details for every
 
 | Route | Install | Gets you |
 |---|---|---|
-| **OpenDeck** (recommended) | OpenDeck → **Plugins** → *Install from file* → `com.jeremyfhall.prism.streamDeckPlugin`, or the Linux build `com.jeremyfhall.prism.opendeck.streamDeckPlugin`. Needs Node ≥ 20 on the host, also for the Flatpak. | Everything live: animated keys, spans, dials, the touch strip, the Neo info bar and the audio apps. OpenDeck doesn't support the Galleon yet. |
+| **OpenDeck** (recommended) | OpenDeck → **Plugins** → *Install from file* → `com.k33bz.prism.streamDeckPlugin`, or the Linux build `com.k33bz.prism.opendeck.streamDeckPlugin`. Needs Node ≥ 20 on the host, also for the Flatpak. | Everything live: animated keys, spans, dials, the touch strip, the Neo info bar and the audio apps. OpenDeck doesn't support the Galleon yet. |
 | **StreamController** | Page menu → **Import** → a `.scpage` (one page) or `.zip` (several pages) from `prism-deck export streamcontroller`. Or rename an icon pack to `.zip` and import it as a custom icon pack. | Prism key art as native pages, static or as GIF loops. |
 | **Prism Deck Direct** | Install the udev rule, then run `prism-deck hid run`. Zero dependencies, no host app. | Every model, including the **Galleon 100 SD**: full-panel art, waveforms across keys and the strip. |
 
@@ -78,16 +78,16 @@ Where OpenDeck keeps things:
 
 | | Native | Flatpak (`me.amankhanna.opendeck`) |
 |---|---|---|
-| Plugin | `~/.config/opendeck/plugins/com.jeremyfhall.prism.sdPlugin/` | `~/.var/app/me.amankhanna.opendeck/config/opendeck/plugins/…` |
+| Plugin | `~/.config/opendeck/plugins/com.k33bz.prism.sdPlugin/` | `~/.var/app/me.amankhanna.opendeck/config/opendeck/plugins/…` |
 | Profiles | `~/.config/opendeck/profiles/<device-id>/` | `~/.var/app/me.amankhanna.opendeck/config/opendeck/profiles/…` |
-| Plugin log | `~/.local/share/opendeck/logs/plugins/com.jeremyfhall.prism.sdPlugin.log` | `~/.var/app/me.amankhanna.opendeck/data/opendeck/logs/…` |
+| Plugin log | `~/.local/share/opendeck/logs/plugins/com.k33bz.prism.sdPlugin.log` | `~/.var/app/me.amankhanna.opendeck/data/opendeck/logs/…` |
 
 StreamController keeps its data in `~/.var/app/com.core447.StreamController/data/`, even for native installs. `prism-deck export linux-paths --home /home/you` prints all of these for your machine.
 
 OpenDeck can't import `.streamDeckProfile` files, so Prism writes OpenDeck's own profile format, and StreamController gets page bundles:
 
 ```sh
-prism-deck export opendeck --sample plus --device-id sd-YOURSERIAL --plugin plugin/dist/com.jeremyfhall.prism.streamDeckPlugin
+prism-deck export opendeck --sample plus --device-id sd-YOURSERIAL --plugin plugin/dist/com.k33bz.prism.streamDeckPlugin
 prism-deck export streamcontroller --sample mk2 [--format png] [--animate]
 ```
 

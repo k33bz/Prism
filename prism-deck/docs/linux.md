@@ -217,7 +217,7 @@ where `settings` are the Prism Display action settings (`{ facet, theme, mode, p
 MCP layout documents (`prism-deck-layout/0.1`) work too. Exports are byte-reproducible.
 
 ```sh
-prism-deck export opendeck         --sample plus --device-id sd-YOURSERIAL --plugin plugin/dist/com.jeremyfhall.prism.streamDeckPlugin
+prism-deck export opendeck         --sample plus --device-id sd-YOURSERIAL --plugin plugin/dist/com.k33bz.prism.streamDeckPlugin
 prism-deck export streamcontroller --sample mk2  [--format png] [--animate]
 prism-deck export streamcontroller --layout my-setup.json
 prism-deck export linux-paths      [--home /home/you] [--json]
@@ -235,19 +235,19 @@ same grid fall back to these). From code: `src/export/linux-opendeck.js`, `src/e
 
 [OpenDeck](https://github.com/nekename/OpenDeck) runs stock Elgato Node plugins **unchanged**, on
 the system `node` (≥ 20), on the host — even from its Flatpak (`flatpak-spawn --host node`). So the
-Linux plugin *is* the Elgato plugin, `com.jeremyfhall.prism`.
+Linux plugin *is* the Elgato plugin, `com.k33bz.prism`.
 
 **Install OpenDeck**: Flathub `me.amankhanna.opendeck` · Arch `extra/opendeck` (AUR `opendeck-git`) · `.deb` / `.rpm` / AppImage from its GitHub releases. Install Node ≥ 20 on the host (`node --version`), also for the Flatpak.
 
 **Install the Prism plugin**: OpenDeck → **Plugins** → *Install from file* →
-`com.jeremyfhall.prism.opendeck.streamDeckPlugin` (from `prism-deck export opendeck --plugin …`) or the plain
-`com.jeremyfhall.prism.streamDeckPlugin`. Either way it unpacks to:
+`com.k33bz.prism.opendeck.streamDeckPlugin` (from `prism-deck export opendeck --plugin …`) or the plain
+`com.k33bz.prism.streamDeckPlugin`. Either way it unpacks to:
 
 | | native | Flatpak |
 |---|---|---|
-| plugin | `~/.config/opendeck/plugins/com.jeremyfhall.prism.sdPlugin/` | `~/.var/app/me.amankhanna.opendeck/config/opendeck/plugins/…` |
+| plugin | `~/.config/opendeck/plugins/com.k33bz.prism.sdPlugin/` | `~/.var/app/me.amankhanna.opendeck/config/opendeck/plugins/…` |
 | profiles | `~/.config/opendeck/profiles/<device-id>/<Profile>.json` | `~/.var/app/me.amankhanna.opendeck/config/opendeck/profiles/…` |
-| plugin log | `~/.local/share/opendeck/logs/plugins/com.jeremyfhall.prism.sdPlugin.log` | `~/.var/app/me.amankhanna.opendeck/data/opendeck/logs/…` |
+| plugin log | `~/.local/share/opendeck/logs/plugins/com.k33bz.prism.sdPlugin.log` | `~/.var/app/me.amankhanna.opendeck/data/opendeck/logs/…` |
 
 The `.opendeck` bundle adds `manifest.linux.json` (OpenDeck merges `manifest.<os>.json` over the
 manifest as a JSON merge patch; the Elgato app ignores it): `OS` → `linux`, so OpenDeck runs
@@ -257,7 +257,7 @@ manifest as a JSON merge patch; the Elgato app ignores it): `OS` → `linux`, so
 **Profiles.** OpenDeck can't import `.streamDeckProfile` files and ignores a plugin's bundled
 profiles, so `export opendeck` writes OpenDeck's own profile JSON (format verified against
 `store/simplified_profile.rs`): `{ keys: [instance|null] (rows × cols + touch points), sliders: [instance|null] (dials), infobars: [...] }`,
-one profile per page, each Prism slot an instance of the `com.jeremyfhall.prism.facet` action with
+one profile per page, each Prism slot an instance of the `com.k33bz.prism.facet` action with
 its settings, plus a still of its art (a `data:` SVG, shown until the plugin draws; `--images none|png`).
 To use it: quit OpenDeck, `ls ~/.config/opendeck/profiles/` to find your device id (`sd-<serial>`),
 copy the exported `profiles/<id>/*.json` into that folder, start OpenDeck, pick the profile.
@@ -306,7 +306,7 @@ representative instant), the Neo info bar, and the Galleon. For live apps use Op
 | Symptom | Fix |
 |---|---|
 | OpenDeck: "Node.js version 20.0.0 or higher is required" | install Node ≥ 20 on the host (`node --version`), restart OpenDeck |
-| OpenDeck: the Prism keys vanish from an imported profile | the plugin folder must be `plugins/com.jeremyfhall.prism.sdPlugin` — OpenDeck drops instances whose plugin folder is missing. Install the plugin first, then copy the profile |
+| OpenDeck: the Prism keys vanish from an imported profile | the plugin folder must be `plugins/com.k33bz.prism.sdPlugin` — OpenDeck drops instances whose plugin folder is missing. Install the plugin first, then copy the profile |
 | OpenDeck: profile doesn't show up | wrong device folder: copy into `profiles/<your sd-serial>/`, with OpenDeck closed |
 | OpenDeck: keys stay on the still image | the plugin isn't running: check the plugin log (table above) |
 | StreamController: GIF keys crawl | re-export (Prism caps GIFs at 16 fps); third-party GIFs under 20 ms/frame trip its centisecond heuristic |

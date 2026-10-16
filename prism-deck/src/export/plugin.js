@@ -1,6 +1,6 @@
 // The Prism Deck Stream Deck plugin package (formats.md §1):
 //
-//   com.jeremyfhall.prism.sdPlugin/
+//   com.k33bz.prism.sdPlugin/
 //     manifest.json               SDKVersion 3, Node 20, Software 7.6 (7.1 without the Neo action), SupportURL
 //     LICENSE.txt                 MIT, then the SIL OFL 1.1 of Inter (ui/fonts/OFL.txt too)
 //     bin/plugin.js               entry → bin/prism-deck/src/plugin/index.js (a copy of the engine; zero deps)
@@ -32,8 +32,8 @@ import { piCatalogScript } from '../plugin/catalog.js';
 
 export { PLUGIN_UUID, PLUGIN_NAME, PLUGIN_VERSION };
 export const AUTHOR = 'Jeremy F Hall';
-export const URL = 'https://prism.jeremyfhall.com/deck/';
-export const SUPPORT_URL = 'https://github.com/crazy54/Prism/issues';
+export const URL = 'https://prism.k33bz.com/deck/';
+export const SUPPORT_URL = 'https://github.com/k33bz/Prism/issues';
 export const ACTION_DISPLAY_NAME = 'Prism Display';
 
 /** What of prism-deck/ is copied into bin/prism-deck (the runtime needs the engine + src/audio + src/raster, not the tools). */
@@ -153,6 +153,14 @@ ${String(ofl).trim()}
 `;
 }
 
+// A design asset (the brand icon, the bundled Inter faces): from the repo's design/ folder, or, in a
+// checkout without one, the copy the website ships (website/assets/prism-icon-512.png, website/assets/fonts/).
+function designFile(root, design, rel) {
+  const site = path.resolve(root, '..', 'website', 'assets');
+  const candidates = [path.join(design, rel), path.join(site, path.basename(rel)), path.join(site, rel.split(path.sep)[0], path.basename(rel))];
+  return candidates.find((p) => fs.existsSync(p)) || null;
+}
+
 const walk = (dir, base = dir) => fs.readdirSync(dir, { withFileTypes: true }).flatMap((e) => { const p = path.join(dir, e.name); return e.isDirectory() ? walk(p, base) : [path.relative(base, p).split(path.sep).join('/')]; });
 
 /**
@@ -172,7 +180,7 @@ export function buildPluginFolder({ root, design = path.resolve(root, '..', 'des
   // property inspector
   for (const f of ['pi.html', 'pi.css', 'pi.js']) put(`ui/${f}`, fs.readFileSync(path.join(root, 'src', 'plugin', 'ui', f)));
   put('ui/catalog.js', piCatalogScript());
-  for (const w of [400, 600, 700]) { const src = path.join(design, 'fonts', `inter-${w}-latin.woff2`); if (fs.existsSync(src)) put(`ui/fonts/inter-${w}-latin.woff2`, fs.readFileSync(src)); }
+  for (const w of [400, 600, 700]) { const src = designFile(root, design, path.join('fonts', `inter-${w}-latin.woff2`)); if (src) put(`ui/fonts/inter-${w}-latin.woff2`, fs.readFileSync(src)); }
   // licenses: the plugin (MIT) and Inter (SIL OFL 1.1: the PI fonts and the outlines every key's text is drawn from)
   const ofl = fs.readFileSync(path.join(root, 'src', 'scene', 'fonts', 'OFL.txt'));
   put('ui/fonts/OFL.txt', ofl);
@@ -180,8 +188,8 @@ export function buildPluginFolder({ root, design = path.resolve(root, '..', 'des
   // layouts + images
   put(CANVAS_LAYOUT_PATH, `${JSON.stringify(CANVAS_LAYOUT, null, '\t')}\n`);
   put(INFOBAR_LAYOUT_PATH, `${JSON.stringify(INFOBAR_LAYOUT, null, '\t')}\n`);
-  const brand = path.join(design, 'brand', 'prism-icon-512.png');
-  for (const im of pluginImages({ brandPng: fs.existsSync(brand) ? fs.readFileSync(brand) : null })) put(im.path, im.data);
+  const brand = designFile(root, design, path.join('brand', 'prism-icon-512.png'));
+  for (const im of pluginImages({ brandPng: brand ? fs.readFileSync(brand) : null })) put(im.path, im.data);
   // profiles
   // bundled profile names come from settings.js BUNDLED_PROFILES (by DeviceType), the names switchToProfile uses
   const profiles = sampleProfiles({ pluginVersion: version }).filter((p) => minSoftware >= '7.6' || p.device !== 'neo').map((p) => ({ ...p, name: bundledProfileFor(p.deviceType) || `profiles/prism-${p.device.replace(/-2022$/, '')}` }));

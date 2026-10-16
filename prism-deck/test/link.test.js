@@ -47,7 +47,7 @@ test('plugin runtime: the studio screen, On Air and mic keys, and a mic dial sha
   const conn = { on() {}, setImage() { return true; }, setFeedback: () => true, setFeedbackLayout() {}, setTriggerDescription() {}, setSettings: (c, s) => settings.set(c, s), getGlobalSettings() {}, bufferedAmount: 0, info: {} };
   let t = 1000;
   const rt = new PrismRuntime({ conn, now: () => t, log: () => {} });
-  const appear = (device, context, controller, column, row, s) => rt.onWillAppear({ action: 'com.jeremyfhall.prism.facet', context, device, payload: { controller, coordinates: { column, row }, settings: s } });
+  const appear = (device, context, controller, column, row, s) => rt.onWillAppear({ action: 'com.k33bz.prism.facet', context, device, payload: { controller, coordinates: { column, row }, settings: s } });
   rt.upsertDevice('g', { name: 'Galleon 100 SD', type: 12, size: { columns: 3, rows: 4 } });
   appear('g', 'mic', 'Keypad', 0, 0, { facet: 'icon-mic' });
   appear('g', 'air', 'Keypad', 1, 0, { facet: 'icon-broadcast' });

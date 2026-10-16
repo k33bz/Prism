@@ -1,4 +1,4 @@
-/* Prism Display property inspector (the plugin's key / dial action; manifest UUID com.jeremyfhall.prism.facet). Classic script (no modules: the PI loads from the
+/* Prism Display property inspector (the plugin's key / dial action; manifest UUID com.k33bz.prism.facet). Classic script (no modules: the PI loads from the
  * plugin folder), offline, talks to the Stream Deck app over its PI WebSocket.
  * The facet list, params and themes come from catalog.js (generated at build time
  * from the bundled engine); the plugin sends this key's state (which facets fit,

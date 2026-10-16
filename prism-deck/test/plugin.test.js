@@ -326,8 +326,8 @@ test('runtime: render inputs — pressedFor while held, pressKey for spans, turn
   let t = 1000;
   const rt = new PrismRuntime({ conn, now: () => t, log: () => {} });
   rt.upsertDevice('g', { name: 'Galleon 100 SD', type: 12, size: { columns: 3, rows: 4 } });
-  rt.onWillAppear({ action: 'com.jeremyfhall.prism.facet', context: 'a', device: 'g', payload: { controller: 'Keypad', coordinates: { column: 1, row: 1 }, settings: { facet: 'span-waveform' } } });
-  rt.onWillAppear({ action: 'com.jeremyfhall.prism.facet', context: 'b', device: 'g', payload: { controller: 'Keypad', coordinates: { column: 2, row: 1 }, settings: { facet: 'span-waveform' } } });
+  rt.onWillAppear({ action: 'com.k33bz.prism.facet', context: 'a', device: 'g', payload: { controller: 'Keypad', coordinates: { column: 1, row: 1 }, settings: { facet: 'span-waveform' } } });
+  rt.onWillAppear({ action: 'com.k33bz.prism.facet', context: 'b', device: 'g', payload: { controller: 'Keypad', coordinates: { column: 2, row: 1 }, settings: { facet: 'span-waveform' } } });
   rt.onPress({ context: 'b' }, true);
   t += 500;
   const u = rt.unitOf(rt.instances.get('b'));
@@ -389,8 +389,8 @@ test('hardware: a stopwatch key keeps its own timer (a stopped watch keeps its t
   const conn = { on() {}, setImage() { return true; }, setFeedback() { return true; }, setFeedbackLayout() {}, setTriggerDescription() {}, setSettings() {}, getGlobalSettings() {}, bufferedAmount: 0, info: {} };
   const rt = new PrismRuntime({ conn, wallNow: () => wall, log: () => {} });
   rt.upsertDevice('g', { name: 'Galleon 100 SD', type: 12, size: { columns: 3, rows: 4 } });
-  rt.onWillAppear({ action: 'com.jeremyfhall.prism.facet', context: 'sw', device: 'g', payload: { controller: 'Keypad', coordinates: { column: 0, row: 0 }, settings: { facet: 'app-stopwatch' } } });
-  rt.onWillAppear({ action: 'com.jeremyfhall.prism.facet', context: 'cd', device: 'g', payload: { controller: 'Keypad', coordinates: { column: 1, row: 0 }, settings: { facet: 'app-countdown', params: { minutes: 2, seconds: 30 } } } });
+  rt.onWillAppear({ action: 'com.k33bz.prism.facet', context: 'sw', device: 'g', payload: { controller: 'Keypad', coordinates: { column: 0, row: 0 }, settings: { facet: 'app-stopwatch' } } });
+  rt.onWillAppear({ action: 'com.k33bz.prism.facet', context: 'cd', device: 'g', payload: { controller: 'Keypad', coordinates: { column: 1, row: 0 }, settings: { facet: 'app-countdown', params: { minutes: 2, seconds: 30 } } } });
   const timer = (ctx) => rt.frameOpts(rt.unitOf(rt.instances.get(ctx))).data.timer;
   assert.equal(timer('sw').elapsed, 0); assert.equal(timer('sw').running, false);
   rt.onPress({ context: 'sw' }, true); rt.onPress({ context: 'sw' }, false);     // ready → running
@@ -400,7 +400,7 @@ test('hardware: a stopwatch key keeps its own timer (a stopped watch keeps its t
   wall += 60_000;
   assert.ok(Math.abs(timer('sw').elapsed - 4.2) < 0.01 && !timer('sw').running, 'stopped watch keeps its time');
   rt.onWillDisappear({ context: 'sw' });                                         // page switch…
-  rt.onWillAppear({ action: 'com.jeremyfhall.prism.facet', context: 'sw', device: 'g', payload: { controller: 'Keypad', coordinates: { column: 0, row: 0 }, settings: { facet: 'app-stopwatch', state: 2 } } });
+  rt.onWillAppear({ action: 'com.k33bz.prism.facet', context: 'sw', device: 'g', payload: { controller: 'Keypad', coordinates: { column: 0, row: 0 }, settings: { facet: 'app-stopwatch', state: 2 } } });
   assert.ok(Math.abs(timer('sw').elapsed - 4.2) < 0.01, '…and back: still there');
   rt.onPress({ context: 'sw' }, true); rt.onPress({ context: 'sw' }, false);     // stopped → ready
   assert.equal(timer('sw').elapsed, 0, 'reset');
@@ -786,7 +786,7 @@ test('live: off by default; "Allow AI editing" starts a loopback channel with a 
     assert.equal(fs.existsSync(file), false, 'no channel, no file while AI editing is off');
     t.sd.piSetGlobals({ aiEditing: true });
     const c = await waitFile(file);
-    assert.equal(c.v, 1); assert.equal(c.plugin, 'com.jeremyfhall.prism'); assert.match(c.token, /^[0-9a-f]{64}$/); assert.ok(c.port > 0);
+    assert.equal(c.v, 1); assert.equal(c.plugin, 'com.k33bz.prism'); assert.match(c.token, /^[0-9a-f]{64}$/); assert.ok(c.port > 0);
     if (process.platform !== 'win32') assert.equal(fs.statSync(file).mode & 0o777, 0o600);
     const ok = await req(c.port, 'GET', '/v1/status', { token: c.token });
     assert.equal(ok.status, 200); assert.equal(ok.body.aiEditing, true); assert.equal(ok.body.paired, false);
@@ -999,7 +999,7 @@ test('plugin: the built .sdPlugin runs on node (and the Stream Deck app\'s Node 
   const { smokeTest, findNode20 } = await import('../scripts/build-plugin.mjs');
   const dir = tmpdir();
   try {
-    const built = buildPluginFolder({ root: ROOT, outDir: path.join(dir, 'com.jeremyfhall.prism.sdPlugin') });
+    const built = buildPluginFolder({ root: ROOT, outDir: path.join(dir, 'com.k33bz.prism.sdPlugin') });
     for (const node of [...new Set([process.execPath, findNode20()].filter(Boolean))]) {
       const r = await smokeTest(built.dir, { node });
       assert.ok(r.ok, `${node}: ${r.error}\n${r.stderr}`);

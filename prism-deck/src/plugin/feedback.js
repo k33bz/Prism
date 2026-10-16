@@ -20,14 +20,14 @@ export const INFOBAR_LAYOUT_PATH = 'layouts/prism-infobar.json';
 
 export const CANVAS_LAYOUT = Object.freeze({
   $schema: LAYOUT_SCHEMA_URL,
-  id: 'com.jeremyfhall.prism.canvas',
+  id: 'com.k33bz.prism.canvas',
   controller: 'Encoder',
   items: [{ key: CANVAS_KEY, type: 'pixmap', rect: [0, 0, 200, 100], zOrder: 0 }],
 });
 
 export const INFOBAR_LAYOUT = Object.freeze({
   $schema: LAYOUT_SCHEMA_URL,
-  id: 'com.jeremyfhall.prism.infobar',
+  id: 'com.k33bz.prism.infobar',
   controller: 'Neo',
   items: [{ key: CANVAS_KEY, type: 'pixmap', rect: [0, 0, 232, 50], zOrder: 0 }],
 });

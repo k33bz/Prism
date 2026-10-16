@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 // Build the Prism Deck Stream Deck plugin:
-//   plugin/com.jeremyfhall.prism.sdPlugin/        the plugin folder (linkable with `streamdeck link`)
-//   plugin/dist/com.jeremyfhall.prism.streamDeckPlugin   the double-click installer (a ZIP of that folder)
-//   plugin/dist/com.jeremyfhall.prism.opendeck.streamDeckPlugin   the same plugin for OpenDeck on Linux (+ manifest.linux.json)
+//   plugin/com.k33bz.prism.sdPlugin/        the plugin folder (linkable with `streamdeck link`)
+//   plugin/dist/com.k33bz.prism.streamDeckPlugin   the double-click installer (a ZIP of that folder)
+//   plugin/dist/com.k33bz.prism.opendeck.streamDeckPlugin   the same plugin for OpenDeck on Linux (+ manifest.linux.json)
 // and rewrites the counts / versions in README.md and docs/plugin.md (scripts/doc-counts.mjs),
 // then validate the manifest + layouts against Elgato's official schemas (research/schemas,
 // or PRISM_SD_SCHEMAS), every image, the bundled profiles, and smoke-test the entry:

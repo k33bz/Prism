@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // Build the Elgato exports of the Prism Deck catalog:
-//   plugin/dist/iconpacks/com.jeremyfhall.prism.icons.<theme>.streamDeckIconPack   one per deck theme
+//   plugin/dist/iconpacks/com.k33bz.prism.icons.<theme>.streamDeckIconPack   one per deck theme
 //   plugin/dist/profiles/Prism - <device>.streamDeckProfile                         Galleon 100 SD, Stream Deck +, MK.2, XL, Mini, Neo, + XL
 // Every pack and profile is checked after it is written (format rules from formats.md §4–5).
 //

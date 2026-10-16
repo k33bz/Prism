@@ -4,16 +4,16 @@ Prism Deck puts the whole Prism Deck catalog on real hardware: animated, themed 
 
 | File | What it is | Where it comes from |
 |---|---|---|
-| `com.jeremyfhall.prism.streamDeckPlugin` | The plugin (version <!--n:pluginVersion-->0.7.0.0<!--/n-->): the **Prism Display** action (keys and dials) and **Prism Info Bar** (Stream Deck Neo) | `plugin/dist/` (`node scripts/build-plugin.mjs`) |
-| `com.jeremyfhall.prism.opendeck.streamDeckPlugin` | The same plugin for OpenDeck on Linux (adds `manifest.linux.json`) | `plugin/dist/` (same script) |
-| `com.jeremyfhall.prism.icons.<theme>.streamDeckIconPack` | One icon pack per deck theme (<!--n:packs-->11<!--/n-->). Each covers <!--n:packStates-->240<!--/n--> glyph states (every glyph × its states × Night/Day). States that move are GIF loops (at least 2 frames), each listed with its still PNG; the others are static SVGs | `plugin/dist/iconpacks/` (`node scripts/build-iconpacks.mjs`) |
+| `com.k33bz.prism.streamDeckPlugin` | The plugin (version <!--n:pluginVersion-->0.7.0.0<!--/n-->): the **Prism Display** action (keys and dials) and **Prism Info Bar** (Stream Deck Neo) | `plugin/dist/` (`node scripts/build-plugin.mjs`) |
+| `com.k33bz.prism.opendeck.streamDeckPlugin` | The same plugin for OpenDeck on Linux (adds `manifest.linux.json`) | `plugin/dist/` (same script) |
+| `com.k33bz.prism.icons.<theme>.streamDeckIconPack` | One icon pack per deck theme (<!--n:packs-->11<!--/n-->). Each covers <!--n:packStates-->240<!--/n--> glyph states (every glyph × its states × Night/Day). States that move are GIF loops (at least 2 frames), each listed with its still PNG; the others are static SVGs | `plugin/dist/iconpacks/` (`node scripts/build-iconpacks.mjs`) |
 | `Prism - <device>.streamDeckProfile` | <!--n:profiles-->7<!--/n--> sample profiles: Galleon 100 SD, Stream Deck +, Stream Deck + XL, MK.2, XL, Mini and Neo. **Home** works on day one (Stream Deck's own actions in Prism art); the **Showcase** pages hold the live Prism facets | `plugin/dist/profiles/` (same script) |
 
 Requirements: Stream Deck app **7.6** or later on Windows 10/11 or macOS 13 or later. Build with `--min-software 7.1` for apps 7.1–7.5; that build drops the Neo info-bar action. The plugin runs on the app's bundled Node 20 and needs no other software.
 
 ## Install on Windows and macOS
 
-1. **Plugin.** Double-click `com.jeremyfhall.prism.streamDeckPlugin` and confirm in the Stream Deck app.
+1. **Plugin.** Double-click `com.k33bz.prism.streamDeckPlugin` and confirm in the Stream Deck app.
    - The action list gets a **Prism Deck** category with **Prism Display** (and **Prism Info Bar** on 7.6+).
    - The app then asks a second question: *The plugin "Prism Deck" contains a/some preconfigured profile(s). Would you like to install the profiles to your devices?* Click **Install Profile(s)** to get a **Prism · <device>** sample profile for each connected device Prism has one for, or **Cancel** to skip them. Nothing is installed without that click (confirmed on the owner's Galleon 100 SD and Stream Deck +).
    - Your devices stay on the profile you were using. The plugin never switches you to the sample profile (`DontAutoSwitchWhenInstalled`); pick it from the profile list when you want it.
@@ -102,7 +102,7 @@ The Games gallery holds stateful facets: *Lights Out* on any block of keys, *Dic
 ## Linux
 
 - **OpenDeck** (recommended) runs this same plugin unchanged on the system Node (≥ 20).
-  - Install `com.jeremyfhall.prism.opendeck.streamDeckPlugin` from OpenDeck's **Plugins** tab ("Install from file"). It is this plugin plus a `manifest.linux.json` that declares Linux and OpenDeck's info-bar slot (built by `src/export/linux-opendeck.js`, see docs/linux.md), and it installs to `plugins/com.jeremyfhall.prism.sdPlugin`, the folder name OpenDeck profiles reference.
+  - Install `com.k33bz.prism.opendeck.streamDeckPlugin` from OpenDeck's **Plugins** tab ("Install from file"). It is this plugin plus a `manifest.linux.json` that declares Linux and OpenDeck's info-bar slot (built by `src/export/linux-opendeck.js`, see docs/linux.md), and it installs to `plugins/com.k33bz.prism.sdPlugin`, the folder name OpenDeck profiles reference.
   - Keys, spans, dials, the strip and the Neo info bar all work. OpenDeck has no Galleon support yet.
   - OpenDeck can't import `.streamDeckProfile` files or icon packs. Unzip a pack and pick its `icons/*.png|gif|svg` per button instead.
   - OpenDeck reports itself as "windows". The plugin detects Linux from the OS itself and skips the commands OpenDeck doesn't support (trigger descriptions, profile switching).
@@ -157,13 +157,13 @@ AI edits live only while the plugin runs. They are not written into your profile
 
 ```bash
 cd prism-deck
-node scripts/build-plugin.mjs          # plugin/com.jeremyfhall.prism.sdPlugin + plugin/dist/*.streamDeckPlugin (+ the OpenDeck build); schema-validated; smoke-run on node (and the app's Node 20 if present); rewrites the doc counts
+node scripts/build-plugin.mjs          # plugin/com.k33bz.prism.sdPlugin + plugin/dist/*.streamDeckPlugin (+ the OpenDeck build); schema-validated; smoke-run on node (and the app's Node 20 if present); rewrites the doc counts
 node scripts/build-iconpacks.mjs       # plugin/dist/iconpacks/* (one per theme) + plugin/dist/profiles/* (one per device); --theme prism --svg-only --no-profiles
 node scripts/doc-counts.mjs --check    # are README.md / docs/plugin.md numbers and versions current?
 node --test test/plugin.test.js test/export.test.js
 ```
 
-- `streamdeck link plugin/com.jeremyfhall.prism.sdPlugin` (Elgato CLI) installs the dev build linked. Only do this on your own machine.
+- `streamdeck link plugin/com.k33bz.prism.sdPlugin` (Elgato CLI) installs the dev build linked. Only do this on your own machine.
 - `src/plugin/dev/fake-streamdeck.js` is a fake Stream Deck app (a real WebSocket server) for running the plugin without hardware.
 - Validation uses Elgato's official manifest and layout schemas from the research handoff (`PRISM_SD_SCHEMAS` points elsewhere).
 - Licenses: the plugin ships `LICENSE.txt` (MIT, then Inter's SIL OFL 1.1) and `ui/fonts/OFL.txt`; each icon pack ships `license.txt` (MIT + OFL) and `OFL.txt`. The manifest's `SupportURL` is the repository's issue tracker.

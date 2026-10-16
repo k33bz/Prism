@@ -10,7 +10,7 @@
 //     process.exitCode = await runAudioCommand(pos[0], opt, { log: out }); break; }
 //
 //   prism-deck export opendeck         [--sample plus | --layout setup.json] [--device plus] [--device-id sd-SERIAL] [--profile Prism]
-//                                      [--images svg|png|none] [--plugin plugin/dist/com.jeremyfhall.prism.streamDeckPlugin] [--out dir] [--force]
+//                                      [--images svg|png|none] [--plugin plugin/dist/com.k33bz.prism.streamDeckPlugin] [--out dir] [--force]
 //   prism-deck export streamcontroller [--sample plus | --layout setup.json] [--device plus] [--format svg|png] [--animate] [--fps 12] [--out dir] [--force]
 //   prism-deck export linux-paths      [--home /home/you] [--json]
 //   prism-deck audio detect            [--input monitor|mic] [--json]       probes only — never captures

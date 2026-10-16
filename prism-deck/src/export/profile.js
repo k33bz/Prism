@@ -9,7 +9,7 @@
 // "dial,layer" with Routers.
 //
 // Two kinds of action:
-//   - Prism Display (com.jeremyfhall.prism.facet / .infobar): States: [{}] — no images, a profile
+//   - Prism Display (com.k33bz.prism.facet / .infobar): States: [{}] — no images, a profile
 //     image would count as a user-set image and block the plugin's setImage.
 //   - Stream Deck's OWN actions (BUILTINS: Multimedia, Hotkey, Open, Website, Go to Page, Brightness),
 //     wearing Prism art: a 144 × 144 PNG (the icon-pack render, labeled) in the page's Images/.
@@ -30,7 +30,7 @@ import { facetMode } from '../plugin/settings.js';
 import { render, stillTime } from '../render.js';
 import { rasterize, encodePNG } from '../raster/index.js';
 
-export const PLUGIN_UUID = 'com.jeremyfhall.prism';
+export const PLUGIN_UUID = 'com.k33bz.prism';
 export const PLUGIN_NAME = 'Prism Deck';
 export const ACTION_FACET = `${PLUGIN_UUID}.facet`;
 export const ACTION_INFOBAR = `${PLUGIN_UUID}.infobar`;
@@ -96,7 +96,7 @@ const hotkey = (vk, qt, { win = false, ctrl = false, alt = false, shift = false 
 const HK_NONE = { ...HK_EMPTY, NativeCode: -1 };
 const hk1 = (vk, qt, mods) => hotkey(vk, qt, mods).Hotkeys[0];
 const dialKeys = (ccw, cw, a, what, title) => ({ uuid: PLUGINS.hotkey.UUID, name: 'Hotkey', plugin: PLUGINS.hotkey, settings: { Coalesce: true, Hotkeys: [ccw, cw, HK_NONE, HK_NONE] }, art: a, controllers: ['Encoder'], what, title });
-const SITE = 'https://prism.jeremyfhall.com/deck/';
+const SITE = 'https://prism.k33bz.com/deck/';
 const art = (facet, label, o = {}) => ({ facet, label, ...o });
 const media = (actionIdx, a) => ({ uuid: PLUGINS.multimedia.UUID, name: 'Multimedia', plugin: PLUGINS.multimedia, settings: { actionIdx }, art: a, controllers: ['Keypad', 'Encoder'] });
 const keyCmd = (settings, a, what) => ({ uuid: PLUGINS.hotkey.UUID, name: 'Hotkey', plugin: PLUGINS.hotkey, settings, art: a, controllers: ['Keypad'], what });

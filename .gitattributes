@@ -1,0 +1,4 @@
+# prism-term and prism-deck check generated files (manifests, catalogs, themes, font outlines,
+# udev rules) byte for byte against a fresh build: keep their text files LF on every platform.
+prism-term/** text=auto eol=lf
+prism-deck/** text=auto eol=lf

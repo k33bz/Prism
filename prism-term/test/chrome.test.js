@@ -263,7 +263,7 @@ test('player HUD: gallery wavelength, place, position and keys; d flips Day / Ni
 
 // ── the curl site ───────────────────────────────────────────────────────────
 
-const pages = buildTtyPages({ site: 'https://prism.jeremyfhall.com', version: '0.0.0-test', galleries: catalogTree(), facets: allFacets().filter((f) => ['plasma', 'charts-spark-bars'].includes(f.id) || f.gallery === 'charts') });
+const pages = buildTtyPages({ site: 'https://prism.k33bz.com', version: '0.0.0-test', galleries: catalogTree(), facets: allFacets().filter((f) => ['plasma', 'charts-spark-bars'].includes(f.id) || f.gallery === 'charts') });
 
 test('site: the beam strikes the prism on every page; .txt pages are 7-bit with an ASCII prism', () => {
   for (const [rel, page] of pages) {

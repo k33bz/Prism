@@ -1,6 +1,6 @@
 // Generate the curl-able terminal site into a directory.
 //
-//   node scripts/build-tty-site.mjs <out-dir> [--site https://prism.jeremyfhall.com] [--html]
+//   node scripts/build-tty-site.mjs <out-dir> [--site https://prism.k33bz.com] [--html]
 //
 // Writes  tty, tty.txt, tty.24, t/<page>{,.txt,.24}, f/<facet>{,.txt,.24}
 // and, with --html, terminal/tty-preview/<page>.html previews of the colored pages.
@@ -14,7 +14,7 @@ import { toHtml } from '../src/export.js';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const pkg = JSON.parse(fs.readFileSync(path.join(HERE, '..', 'package.json'), 'utf8'));
-export const DEFAULT_SITE = 'https://prism.jeremyfhall.com';
+export const DEFAULT_SITE = 'https://prism.k33bz.com';
 
 /** Write the site; returns { files, bytes, pages }. */
 export function writeTtySite(outDir, { site = DEFAULT_SITE, html = false } = {}) {

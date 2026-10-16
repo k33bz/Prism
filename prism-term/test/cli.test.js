@@ -83,8 +83,8 @@ test('facetRecord: plain data with usage commands', () => {
   assert.deepEqual(JSON.parse(JSON.stringify(r)), r);
   assert.equal(r.usage.cli, 'prism-term play plasma');
   assert.match(r.usage.snapshot, /^prism-term snapshot plasma --size \d+x\d+$/);
-  assert.match(r.usage.npx, /^npx -y --package=https:\/\/prism\.jeremyfhall\.com\/dl\/prism-term-\d+\.\d+\.\d+\.tgz prism-term play plasma$/, 'pinned to this release (SHA256SUMS)');
-  assert.equal(r.usage.curl, 'curl -sL https://prism.jeremyfhall.com/f/plasma');
+  assert.match(r.usage.npx, /^npx -y --package=https:\/\/prism\.k33bz\.com\/dl\/prism-term-\d+\.\d+\.\d+\.tgz prism-term play plasma$/, 'pinned to this release (SHA256SUMS)');
+  assert.equal(r.usage.curl, 'curl -sL https://prism.k33bz.com/f/plasma');
 });
 
 // ── non-interactive commands (stdout is a pipe) ───────────────────────────

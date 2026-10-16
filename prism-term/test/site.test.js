@@ -20,8 +20,8 @@ const PRISM_HTML = path.join(ROOT, '..', 'Prism.html');
 const MCP_CATALOG = path.join(ROOT, '..', 'prism-mcp-server', 'utils', 'catalog.js');
 const MCP_TOOLS = path.join(ROOT, '..', 'prism-mcp-server', 'tools', 'index.js');
 const SITE_BUILD = path.join(ROOT, '..', 'website', 'build.mjs');
-const SITE = 'https://prism.jeremyfhall.com';
-const HOST = 'prism.jeremyfhall.com';
+const SITE = 'https://prism.k33bz.com';
+const HOST = 'prism.k33bz.com';
 const WEB_END = '<!-- ===== /PRISM CATALOG ===== -->';
 
 const tmpDir = (tag) => fs.mkdtempSync(path.join(os.tmpdir(), `prism-term-${tag}-`));
@@ -329,11 +329,11 @@ test('tty: a long tag list wraps at commas, continuation under the first tag, no
 
 test('tty: every .txt line is ≤ 80 columns and every command is whole on its line', () => {
   const bad = [];
-  const url = String.raw`prism\.jeremyfhall\.com/(?:tty|Prism\.html|terminal/\S*|t/(?:<gallery>|[a-z0-9-]+)|f/(?:<facet>|<id>|[a-z0-9-]+)|themes/[a-z0-9-]+/[A-Za-z0-9.-]+|dl/SHA256SUMS)(?:\.txt|\.24)?`;
+  const url = String.raw`prism\.k33bz\.com/(?:tty|Prism\.html|terminal/\S*|t/(?:<gallery>|[a-z0-9-]+)|f/(?:<facet>|<id>|[a-z0-9-]+)|themes/[a-z0-9-]+/[A-Za-z0-9.-]+|dl/SHA256SUMS)(?:\.txt|\.24)?`;
   const curl = new RegExp(String.raw`^curl -sL ${url}(?: \| (?:less -R|grep -i \S+|sh|sha256sum -c --ignore-missing))?$`);
   // the latest-release alias, or this release's pinned tarball (remote or downloaded)
   const ver = String.raw`\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?`;
-  const tgz = String.raw`(?:https://prism\.jeremyfhall\.com/dl/prism-term(?:-${ver})?|\./prism-term-${ver})\.tgz`;
+  const tgz = String.raw`(?:https://prism\.k33bz\.com/dl/prism-term(?:-${ver})?|\./prism-term-${ver})\.tgz`;
   for (const [rel, page] of pages) {
     const ls = lines(page.txt);
     ls.forEach((l, i) => {
@@ -487,7 +487,7 @@ test('build: full island in Prism.html, lean island on /terminal/, live numbers 
     const loader = prism.match(/<script>\/\* Site monitoring[^<]*<\/script>/)?.[0];
     const at = prism.indexOf(loader);
     assert.ok(loader && at > prism.indexOf('<head>') && at < prism.indexOf('<script type="application/json" id="prism-catalog">'), 'hosted Prism.html: loader in <head>, before the islands');
-    assert.match(loader, /if\(location\.hostname!=="prism\.jeremyfhall\.com"\)return;/);
+    assert.match(loader, /if\(location\.hostname!=="prism\.k33bz\.com"\)return;/);
     for (const s of MON) assert.ok(loader.includes(JSON.stringify(s)), `loader loads ${s}`);
     if (fs.existsSync(PRISM_HTML)) assert.ok(!fs.readFileSync(PRISM_HTML, 'utf8').includes('traceway'), 'repo Prism.html stays monitoring-free');
 

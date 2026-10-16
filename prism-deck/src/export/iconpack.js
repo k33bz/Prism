@@ -27,7 +27,7 @@ import { surface } from '../scene/surface.js';
 import { svgInner, suffixIds, n } from '../scene/svg.js';
 import { validateSvg } from '../scene/validate.js';
 
-export const PACK_PREFIX = 'com.jeremyfhall.prism.icons';
+export const PACK_PREFIX = 'com.k33bz.prism.icons';
 export const ICON_PX = 144;
 export const GIF_FPS = 12;
 export const GIF_MAX_FRAMES = 60;
@@ -108,7 +108,7 @@ export function previewSheet(svgs, bg) {
  * opts: { theme, version ('0.3.0'), author, url, raster (module | null | undefined = load), glyphs (subset), year }
  * → { id, folder, zip, entries, icons (icons.json), manifest, stats }
  */
-export async function buildIconPack({ theme: themeId, version = '0.3.0', author = 'Jeremy F Hall', url = 'https://prism.jeremyfhall.com', raster, glyphs, year = 2026 } = {}) {
+export async function buildIconPack({ theme: themeId, version = '0.3.0', author = 'Jeremy F Hall', url = 'https://prism.k33bz.com', raster, glyphs, year = 2026 } = {}) {
   const R = raster === undefined ? await loadRaster() : raster;
   const { theme, list } = packPlan(themeId, { glyphs });
   const id = `${PACK_PREFIX}.${themeId}`;

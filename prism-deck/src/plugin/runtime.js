@@ -34,7 +34,7 @@ import { SYSTEM_FACETS, PAIR_HOLD_S } from './system-facets.js';
 import { DEMO_KEYS, withDemoBadge, badgeTarget } from './demo-badge.js';
 import { createDataHub } from './data.js';
 
-export const PLUGIN_UUID = 'com.jeremyfhall.prism';
+export const PLUGIN_UUID = 'com.k33bz.prism';
 export const BURST_FPS = 15;          // frames/s while press feedback / a state transition plays
 export const BURST_S = 0.8;           // how long a burst lasts after an interaction (Refraction motion is 240–600 ms)
 export const IDLE_PROBE_FPS = 2;      // a unit whose frames stopped changing is checked this often

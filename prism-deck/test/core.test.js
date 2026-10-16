@@ -22,11 +22,17 @@ import { defineGlyph, Pen } from '../src/glyphs/_glyph.js';
 import { defineTheme } from '../src/themes/_theme.js';
 import { useTheme } from '../src/themes/_registry.js';
 import { islandJson, extractIsland, catalogProblems, islandPart, islandCatalog } from '../scripts/embed-island.mjs';
+import { findInterFaces } from '../scripts/extract-fonts.mjs';
+import { FACES } from '../src/scene/fonts/index.js';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const script = (name, ...args) => execFileSync(process.execPath, [path.join(ROOT, 'scripts', name), ...args], { stdio: 'pipe', encoding: 'utf8' });
 const RESEARCH = [path.resolve(ROOT, '..', '..', 'aaa-prism-deck-team', 'research', 'devices.json'), path.resolve(ROOT, '..', '..', 'aaa-prism-ds', 'handoff-from-prism-e0', 'research', 'devices.json')].find((p) => fs.existsSync(p));
 const FONT_SRC = [path.resolve(ROOT, '..', '..', 'aaa-prism-ds', 'parts', 'shell-style.html'), path.resolve(ROOT, '..', 'Prism.html')].find((p) => fs.existsSync(p));
+// The outlines in src/scene/fonts/ come from a Prism.html that bundles every face they list (Inter 400, 600
+// and 700). This fork's Prism.html embeds only the faces its theme packs use, so the check runs only where
+// the source carries all of them.
+const FONT_SRC_MISSING = FONT_SRC ? Object.keys(FACES).filter((w) => !findInterFaces(fs.readFileSync(FONT_SRC, 'utf8'))[w]) : [];
 
 // ── devices ──────────────────────────────────────────────────────────────────
 test('devices.js and docs/devices.md are generated from the research', { skip: !RESEARCH && 'research/devices.json not on this machine' }, () => { script('gen-devices.mjs', '--check'); });
@@ -77,7 +83,7 @@ test('span / deck / layout geometry includes the physical gaps', () => {
 });
 
 // ── text → paths ─────────────────────────────────────────────────────────────
-test('font outlines are extracted from Prism.html', { skip: !FONT_SRC && 'Prism.html parts not on this machine' }, () => { script('extract-fonts.mjs', '--check'); });
+test('font outlines are extracted from Prism.html', { skip: (!FONT_SRC && 'Prism.html parts not on this machine') || (FONT_SRC_MISSING.length > 0 && `Prism.html has no Inter ${FONT_SRC_MISSING.join(', ')} face`) }, () => { script('extract-fonts.mjs', '--check'); });
 
 test('text: real metrics, kerning, tabular figures, fitting, wrapping', () => {
   const o = { size: 40, weight: 600 };

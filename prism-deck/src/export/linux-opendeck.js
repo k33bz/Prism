@@ -2,7 +2,7 @@
 // me.amankhanna.opendeck, Arch extra/opendeck, .deb/.rpm/AppImage).
 //
 // OpenDeck runs stock Elgato Node plugins unchanged with the system `node` ≥ 20 (on the
-// host, even from its Flatpak), so the Prism plugin `com.jeremyfhall.prism` is the same
+// host, even from its Flatpak), so the Prism plugin `com.k33bz.prism` is the same
 // artifact as on Windows/macOS. OpenDeck reports platform "windows" in -info: detect Linux
 // with process.platform (src/plugin/connection.js does). What OpenDeck does NOT do: import
 // .streamDeckProfile files or honour the manifest's bundled Profiles — so this module
@@ -12,7 +12,7 @@
 //                                                  sliders: [instance|null] (dials), infobars: [instance|null] }
 //   instance = { action: <manifest action, snake_case>, context: "<Keypad|Encoder|Infobar>.<position>.<index>",
 //                states: [ActionState], current_state, settings, children: null }
-//   action.plugin MUST be the plugin folder name ("com.jeremyfhall.prism.sdPlugin") — instances whose
+//   action.plugin MUST be the plugin folder name ("com.k33bz.prism.sdPlugin") — instances whose
 //   plugin folder doesn't exist are dropped on load; state images may be data: URLs (shown until setImage).
 //   An optional manifest.<os>.json beside manifest.json is merged in as a JSON merge patch.
 //
@@ -91,7 +91,7 @@ function storedAction(m, files) {
   };
 }
 
-/** Fallback action definitions when no built manifest is given (mirror plugin/com.jeremyfhall.prism.sdPlugin/manifest.json). */
+/** Fallback action definitions when no built manifest is given (mirror plugin/com.k33bz.prism.sdPlugin/manifest.json). */
 const DEFAULT_ACTIONS = [
   { UUID: ACTION_FACET, Name: 'Prism Display', Icon: 'imgs/actions/facet/icon', Controllers: ['Keypad', 'Encoder'], DisableAutomaticStates: true, SupportedInMultiActions: false, PropertyInspectorPath: 'ui/pi.html', States: [{ Name: 'Prism', Image: 'imgs/actions/facet/key', ShowTitle: false }] },
   { UUID: ACTION_INFOBAR, Name: 'Prism Info Bar', Icon: 'imgs/actions/infobar/icon', Controllers: ['Neo', 'Infobar'], SupportedInMultiActions: false, PropertyInspectorPath: 'ui/pi.html', States: [{ Name: 'Prism', Image: 'imgs/actions/infobar/key', ShowTitle: false }] },

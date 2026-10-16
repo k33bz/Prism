@@ -2,7 +2,7 @@
 
 *White light in, every color out* — Prism's design language, in cells. This is the grammar the
 catalog browser (`prism-term`), the live player (`prism-term play`) and the curl site
-(`curl -sL prism.jeremyfhall.com/tty`) are drawn in. The parts live in `src/refraction.js`; colors
+(`curl -sL prism.k33bz.com/tty`) are drawn in. The parts live in `src/refraction.js`; colors
 are data (`TOKENS`, synced from `design/tokens.json` — `test/chrome.test.js` fails if they drift).
 
 ![The catalog browser, Prism Night](refraction/browser-night.png)

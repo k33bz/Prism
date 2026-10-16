@@ -26,26 +26,26 @@ The chrome speaks **Refraction**, Prism's design language, in cells: a hairline 
 **Browse with curl** — nothing to install:
 
 ```bash
-curl -sL https://prism.jeremyfhall.com/tty              # home: every gallery with its facet count
-curl -sL https://prism.jeremyfhall.com/f/ops-htop       # one facet: a still frame and how to run it
+curl -sL https://prism.k33bz.com/tty              # home: every gallery with its facet count
+curl -sL https://prism.k33bz.com/f/ops-htop       # one facet: a still frame and how to run it
 ```
 
 **Play it live** — Node.js 18+, no global install:
 
 ```bash
-npx -y --package=https://prism.jeremyfhall.com/dl/prism-term-0.2.0.tgz prism-term                 # the catalog browser
-npx -y --package=https://prism.jeremyfhall.com/dl/prism-term-0.2.0.tgz prism-term play ops-htop   # one facet, fullscreen
+npx -y --package=https://prism.k33bz.com/dl/prism-term-0.2.0.tgz prism-term                 # the catalog browser
+npx -y --package=https://prism.k33bz.com/dl/prism-term-0.2.0.tgz prism-term play ops-htop   # one facet, fullscreen
 ```
 
 Each release is published as `/dl/prism-term-<version>.tgz`, with `/dl/SHA256SUMS` beside it; `/dl/prism-term.tgz` is an alias for the latest release (same bytes). To pin and verify one before running it:
 
 ```bash
-curl -sLO https://prism.jeremyfhall.com/dl/prism-term-0.2.0.tgz
-curl -sL https://prism.jeremyfhall.com/dl/SHA256SUMS | sha256sum -c --ignore-missing   # macOS: shasum -a 256 -c
+curl -sLO https://prism.k33bz.com/dl/prism-term-0.2.0.tgz
+curl -sL https://prism.k33bz.com/dl/SHA256SUMS | sha256sum -c --ignore-missing   # macOS: shasum -a 256 -c
 npx -y --package=./prism-term-0.2.0.tgz prism-term
 ```
 
-For a permanent `prism-term` command, run `npm i -g https://prism.jeremyfhall.com/dl/prism-term-0.2.0.tgz` once. The package ships a man page (`man prism-term` after a global install) and bash / zsh / fish completions in `completions/`.
+For a permanent `prism-term` command, run `npm i -g https://prism.k33bz.com/dl/prism-term-0.2.0.tgz` once. The package ships a man page (`man prism-term` after a global install) and bash / zsh / fish completions in `completions/`.
 
 **From a clone** — there is nothing to `npm install`:
 
@@ -59,7 +59,7 @@ node cli.js snapshot plasma    # a still frame to stdout
 
 To get a global `prism-term` command from a clone, run `npm link` here (or `npm install -g .`).
 
-**In the browser:** [prism.jeremyfhall.com/terminal/](https://prism.jeremyfhall.com/terminal/) — every tile runs the real facet code. Step-by-step terminal directions: [prism.jeremyfhall.com/terminal/tty.html](https://prism.jeremyfhall.com/terminal/tty.html).
+**In the browser:** [prism.k33bz.com/terminal/](https://prism.k33bz.com/terminal/) — every tile runs the real facet code. Step-by-step terminal directions: [prism.k33bz.com/terminal/tty.html](https://prism.k33bz.com/terminal/tty.html).
 
 ## The galleries
 
@@ -136,8 +136,8 @@ A mechanical counter: each drum rolls to its next digit only while the drum to i
 
   play      prism-term play progress-odometer
   snapshot  prism-term snapshot progress-odometer --size 48x7
-  npx       npx -y --package=https://prism.jeremyfhall.com/dl/prism-term-0.2.0.tgz prism-term play progress-odometer
-  curl      curl -sL https://prism.jeremyfhall.com/f/progress-odometer
+  npx       npx -y --package=https://prism.k33bz.com/dl/prism-term-0.2.0.tgz prism-term play progress-odometer
+  curl      curl -sL https://prism.k33bz.com/f/progress-odometer
 ```
 
 ### Playing
@@ -270,12 +270,12 @@ Very large full-color scenes are bandwidth-bound: a 338×83 plasma is ~0.65 MB p
 The terminal site is generated from the registry by [`src/site/tty.js`](./src/site/tty.js): a home page (`tty`), `t/help`, `t/all`, one `t/<gallery>` page per gallery and one `f/<facet-id>` page per facet. Every page is a still that fits 80 columns and uses only SGR color and text — no cursor movement, so `less -R` and CI logs are happy — and comes in three variants: the default 256-color page, `.24` for truecolor, and `.txt`, 7-bit ASCII with no escape codes.
 
 ```bash
-curl -sL https://prism.jeremyfhall.com/t/ops | less -R                # page through a gallery
-curl -sL https://prism.jeremyfhall.com/t/all.txt | grep -i spinner    # search every facet
-curl -sL https://prism.jeremyfhall.com/f/plasma.24                    # truecolor
+curl -sL https://prism.k33bz.com/t/ops | less -R                # page through a gallery
+curl -sL https://prism.k33bz.com/t/all.txt | grep -i spinner    # search every facet
+curl -sL https://prism.k33bz.com/f/plasma.24                    # truecolor
 ```
 
-The terminal catalog page at [`/terminal/`](https://prism.jeremyfhall.com/terminal/) uses the browser renderer in [`src/web/`](./src/web) to run the same facet modules in the page — themes, canvas modes, color depths and parameters included.
+The terminal catalog page at [`/terminal/`](https://prism.k33bz.com/terminal/) uses the browser renderer in [`src/web/`](./src/web) to run the same facet modules in the page — themes, canvas modes, color depths and parameters included.
 
 ### The terminal JSON island
 
@@ -407,7 +407,7 @@ prism-term theme kitty --day -o prism-day.conf         # Prism Day for kitty, wr
 prism-term theme alacritty --theme primer              # a scheme derived from any other theme
 ```
 
-The same files are checked in under [`themes/`](./themes) and published on the site at `/themes/<format>/<file>` (`curl -sL prism.jeremyfhall.com/themes/osc/prism-night.sh | sh`), with install notes in each: Windows Terminal, iTerm2, Alacritty, kitty, WezTerm, Ghostty, foot, GNOME Terminal (a script that only prints its dconf commands for your default profile, and stops if it can't find one), Konsole, Xresources, the VS Code terminal, Ptyxis, macOS Terminal.app, xfce4-terminal, and `osc`: one `printf` of OSC 4 / 10 / 11 / 12 / 17 codes that recolors any xterm-compatible terminal for the session, also on a remote host over SSH. In Prism Day, ANSI 7 and 15 (white, bright white) are light, as in Solarized and Tango light, so TUIs that put white text on colored status bars (htop, tmux, mc) stay readable; Prism's own 16-color output never puts them on the default background. They are generated by `node scripts/export-themes.mjs` from `exportTheme(format, themeId)` in [`src/theme-export.js`](./src/theme-export.js).
+The same files are checked in under [`themes/`](./themes) and published on the site at `/themes/<format>/<file>` (`curl -sL prism.k33bz.com/themes/osc/prism-night.sh | sh`), with install notes in each: Windows Terminal, iTerm2, Alacritty, kitty, WezTerm, Ghostty, foot, GNOME Terminal (a script that only prints its dconf commands for your default profile, and stops if it can't find one), Konsole, Xresources, the VS Code terminal, Ptyxis, macOS Terminal.app, xfce4-terminal, and `osc`: one `printf` of OSC 4 / 10 / 11 / 12 / 17 codes that recolors any xterm-compatible terminal for the session, also on a remote host over SSH. In Prism Day, ANSI 7 and 15 (white, bright white) are light, as in Solarized and Tango light, so TUIs that put white text on colored status bars (htop, tmux, mc) stay readable; Prism's own 16-color output never puts them on the default background. They are generated by `node scripts/export-themes.mjs` from `exportTheme(format, themeId)` in [`src/theme-export.js`](./src/theme-export.js).
 
 Palettes: `prism` (Refraction's 12-stop OKLCH spectrum, violet → rose, in the tier made for the theme's mode), `prism-ink` (its text-safe tier), `neon` (the classic saturated rainbow), `fire`, `ocean`, `aurora`, `synthwave`, `matrix`, `ice`, `sunset`, `toxic`, `magma`, `viridis`, `candy`, `gold`, `mono`, plus `theme` and `theme-heat`, which are derived from the active theme.
 

@@ -25,7 +25,7 @@ const ROOT = path.resolve(HERE, '..');
 const FACETS = path.join(ROOT, 'src', 'facets');
 const OUT = path.join(ROOT, 'catalog', 'terminal-catalog.json');
 const pkg = JSON.parse(fs.readFileSync(path.join(ROOT, 'package.json'), 'utf8'));
-export const SITE = 'https://prism.jeremyfhall.com';
+export const SITE = 'https://prism.k33bz.com';
 const MODULE_PREFIX = 'prism-term/src/facets/';
 
 // Normalize line endings: a Windows checkout (core.autocrlf=true) has CRLF facet
@@ -171,7 +171,7 @@ export function buildCatalog() {
     engine: {
       package: pkg.name,
       version: pkg.version,
-      repo: 'https://github.com/crazy54/Prism/tree/main/prism-term',
+      repo: 'https://github.com/k33bz/Prism/tree/main/prism-term',
       npx: `npx -y --package=${SITE}/dl/prism-term.tgz prism-term`,
       curl: `curl -sL ${SITE}/tty`,
       web: `${SITE}/terminal/`,

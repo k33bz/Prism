@@ -22,7 +22,7 @@ export const OWNER_DEVICES = Object.freeze([
   { id: 'dev-mcpdeck-01', name: 'MCP Deck 2', size: { columns: 8, rows: 4 }, type: 14 },
 ]);
 
-export function registrationInfo({ devices = OWNER_DEVICES, platform = 'windows', version = '7.6.0.23012', uuid = 'com.jeremyfhall.prism', pluginVersion = '0.3.0.0' } = {}) {
+export function registrationInfo({ devices = OWNER_DEVICES, platform = 'windows', version = '7.6.0.23012', uuid = 'com.k33bz.prism', pluginVersion = '0.3.0.0' } = {}) {
   return {
     application: { font: 'Segoe UI', language: 'en', platform, platformVersion: '10.0.26300', version },
     colors: { buttonMouseOverBackgroundColor: '#464646FF', buttonPressedBackgroundColor: '#303030FF', buttonPressedBorderColor: '#646464FF', buttonPressedTextColor: '#969696FF', highlightColor: '#0078FFFF' },
@@ -30,7 +30,7 @@ export function registrationInfo({ devices = OWNER_DEVICES, platform = 'windows'
   };
 }
 
-export async function startFakeStreamDeck({ devices = OWNER_DEVICES, uuid = 'com.jeremyfhall.prism', registrationTimeoutMs = 10000, globals = {}, info: infoOpts = {} } = {}) {
+export async function startFakeStreamDeck({ devices = OWNER_DEVICES, uuid = 'com.k33bz.prism', registrationTimeoutMs = 10000, globals = {}, info: infoOpts = {} } = {}) {
   const ee = new EventEmitter();
   const pluginUUID = crypto.randomBytes(16).toString('hex');
   const info = registrationInfo({ devices, uuid, ...infoOpts });

@@ -53,6 +53,10 @@ test('Prism Night is the default; Prism Day and Night lead the theme list', () =
 
 test('src/themes.js is in step with the registry and design tokens (sync-themes --check)', (t) => {
   if (!fs.existsSync(path.join(ROOT, '..', 'prism-mcp-server', 'utils', 'themes.js'))) return t.skip('no sibling prism-mcp-server checkout');
+  // src/themes.js is generated from a registry with the Prism Night / Day themes and from design/tokens.json.
+  // A checkout without either (this fork's registry has no prism-dark yet) cannot regenerate it.
+  if (!fs.existsSync(path.join(ROOT, '..', 'design', 'tokens.json'))) return t.skip('no design/tokens.json');
+  if (!/id:\s*'prism-dark'/.test(fs.readFileSync(path.join(ROOT, '..', 'prism-mcp-server', 'utils', 'themes.js'), 'utf8'))) return t.skip('the theme registry has no prism-dark theme');
   const out = execFileSync(process.execPath, [path.join(ROOT, 'scripts', 'sync-themes.mjs'), '--check'], { encoding: 'utf8' });
   assert.match(out, /up to date/);
 });

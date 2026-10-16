@@ -282,7 +282,7 @@ function runOpts(args) {
 
 const clean = (o) => Object.fromEntries(Object.entries(o).filter(([, v]) => v !== undefined));
 
-export const SITE = 'https://prism.jeremyfhall.com';
+export const SITE = 'https://prism.k33bz.com';
 
 /** "1 facet", "6 facets", "1 gallery", "2 galleries". */
 export const countOf = (n, word) => `${n} ${n === 1 ? word : word.endsWith('y') ? `${word.slice(0, -1)}ies` : `${word}s`}`;
