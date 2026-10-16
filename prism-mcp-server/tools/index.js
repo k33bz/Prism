@@ -15,6 +15,7 @@ import { readIntent } from '../utils/recommend.js';
 import { loadEngine } from '../utils/theme-engine.js';
 import { CollectionError, toExportSchema } from '../utils/collections.js';
 import { ICON_KINDS, RESOLVE_FROM, RESOLVE_PREFER, searchIcons, suggestIcons, resolveIcon, colorwayPair, iconSvg, iconSymbol, iconResolver } from '../utils/icons.js';
+import { terminalTools } from './terminal.js';
 
 export class ToolError extends Error {
   constructor(message, { code = 'tool_error', data = null } = {}) {
@@ -1774,6 +1775,9 @@ export function buildTools() {
         }
       },
     },
+
+    // ============================== TERMINAL CATALOG (5) ==============================
+    ...terminalTools({ ToolError, paginate }),
   ];
 }
 

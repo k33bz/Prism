@@ -2,57 +2,57 @@
   {
     "id": "charts",
     "title": "Charts & Metrics",
-    "count": 266
+    "count": 271
   },
   {
     "id": "fx",
     "title": "FX Store",
-    "count": 329
+    "count": 335
   },
   {
     "id": "lab",
     "title": "Animation Lab",
-    "count": 261
+    "count": 267
   },
   {
     "id": "ai",
     "title": "AI Working",
-    "count": 118
+    "count": 121
   },
   {
     "id": "objects",
     "title": "Animated Objects",
-    "count": 185
+    "count": 188
   },
   {
     "id": "input",
     "title": "Input Methods",
-    "count": 136
+    "count": 140
   },
   {
     "id": "text",
     "title": "Text Effects",
-    "count": 102
+    "count": 106
   },
   {
     "id": "shapes",
     "title": "Text Shapes",
-    "count": 53
+    "count": 55
   },
   {
     "id": "maps",
     "title": "Maps & Geo",
-    "count": 50
+    "count": 53
   },
   {
     "id": "notify",
     "title": "Notifications & Status",
-    "count": 55
+    "count": 57
   },
   {
     "id": "arch",
     "title": "Architecture Diagrams",
-    "count": 76
+    "count": 78
   },
   {
     "id": "aws",
@@ -62,17 +62,17 @@
   {
     "id": "callouts",
     "title": "Callouts & Annotations",
-    "count": 50
+    "count": 52
   },
   {
     "id": "obsidian",
     "title": "Obsidian Facets",
-    "count": 130
+    "count": 131
   },
   {
     "id": "menus",
     "title": "Menus & Actions",
-    "count": 62
+    "count": 65
   },
   {
     "id": "tables",

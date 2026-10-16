@@ -36,10 +36,15 @@ const ISLAND =
   '<script type="application/json" id="prism-catalog">\n' + json + '\n</script>\n' +
   '<!-- ===== /PRISM CATALOG ===== -->\n';
 
+// It also names the two islands embedded right after this one (prism-term/scripts/embed-island.mjs and
+// prism-deck/scripts/embed-island.mjs --html), so a re-run keeps them findable. No tag text in it: a
+// "<script" inside the comment would cut it in a tokenizer that does not know comments.
 const BREADCRUMB =
-  '<!-- ✦ AI-READABLE: a machine catalog of all effects (full html+css) is in ' +
-  '<script id="prism-catalog"> at the top of <head>. Jump to id="prism-catalog"; ' +
-  'JSON.parse its text; read the "_ai" key first. -->';
+  '<!-- ✦ AI-READABLE: a machine catalog of all effects (full html+css) is in the ' +
+  'JSON island id="prism-catalog" at the top of <head>. Jump to id="prism-catalog"; ' +
+  'JSON.parse its text; read the "_ai" key first. Terminal facets (prism-term) are in the ' +
+  'JSON island id="prism-terminal-catalog" right after it, and Stream Deck facets (prism-deck) ' +
+  'in id="prism-deck-catalog" after that: same "_ai" convention. -->';
 
 let html = readFileSync(HTML, 'utf8');
 

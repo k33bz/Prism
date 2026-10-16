@@ -1,6 +1,6 @@
 # Prism MCP Server
 
-A [Model Context Protocol](https://modelcontextprotocol.io) server that exposes the **Prism component catalog** (3,687 self-contained CSS/SVG facets in 18 galleries, themed by 17 design systems in dark and light) and the **AWS architecture diagram kit** (87 animated gallery diagrams) as tools for agents.
+A [Model Context Protocol](https://modelcontextprotocol.io) server that exposes the **Prism component catalog** (3,687 self-contained CSS/SVG facets in 18 galleries, themed by 17 design systems in dark and light) the **AWS architecture diagram kit** (87 animated gallery diagrams) and the **terminal catalog** (435 prism-term facets for the command line) as tools for agents.
 
 An agent can ask for *"a KPI dashboard with revenue over time and the plan mix, in Duolingo Light"* and get the right components, themed and composed into **production-ready HTML/CSS**, or for *"a three-tier VPC with its security group rules"* and get an animated AWS diagram, a PNG or a draw.io file.
 
@@ -9,6 +9,7 @@ An agent can ask for *"a KPI dashboard with revenue over time and the plan mix, 
 - **Hot reload**: edits to the catalog file are picked up without a restart.
 - **Picks by intent**: every facet carries derived selection metadata (role, layer, dataShape, motion), and `recommend_effects` maps a plain request onto it.
 - **Applies like the app**: `compose` prepends the theme token block, returns the attributes the app stamps on `<html>`, the JS initializers with their source, and a standalone page on request.
+- **Terminal catalog too**: the same server exposes Prism's **terminal facets** (the [`prism-term`](../prism-term) spinners, progress bars and counters, charts, TUI controls, ops views and animated scenes) from the `#prism-terminal-catalog` island, so an agent can find *"an ASCII-safe spinner for a serial console"* and get the command that runs it.
 
 ---
 
@@ -40,7 +41,11 @@ prism-mcp help                Show help
 Options:
   --catalog <path>   Path to Prism.html or catalog/manifest.json
                      (default: ../Prism.html, else ../catalog/manifest.json)
-  --no-watch         Disable catalog hot reload
+  --terminal-catalog <path>
+                     Terminal catalog: a .html with a #prism-terminal-catalog island or a
+                     terminal-catalog.json (default: the catalog's Prism.html island, else
+                     ../prism-term/catalog/terminal-catalog.json)
+  --no-watch         Disable catalog hot reload (both catalogs)
   --log-level <lvl>  debug | info | warn | error | silent   (default: info)
 ```
 
@@ -68,7 +73,7 @@ Add the server to your `claude_desktop_config.json` (see `examples/claude_deskto
 }
 ```
 
-Restart Claude Desktop; the 40 Prism tools appear in the tools menu.
+Restart Claude Desktop; the 45 Prism tools appear in the tools menu.
 
 ## Use with the Anthropic API
 
@@ -117,7 +122,7 @@ A theme is a `:root` token swap over identical HTML and CSS. `get_theme_palette 
 
 ---
 
-## Tools (40)
+## Tools (45)
 
 ### Discovery & search (12)
 | Tool | Purpose |
@@ -210,6 +215,23 @@ Diagrams as data. A diagram is a JSON spec (schema: `catalog/aws-kit/spec.schema
 | `import_diagram` | Import a design: draw.io (`.drawio` XML plain or compressed, `.drawio.svg`; `.drawio.png` as `contentBase64`), Mermaid `architecture-beta` or `flowchart`, PlantUML-AWS, D2, CloudFormation (JSON or YAML, CDK synth output, SAM after transform) or Terraform (`terraform show -json` of a plan or a state; raw HCL is refused with what to run) (`from`: auto detects). Icons resolve to the official AWS icons (unmapped shapes become boxes and are listed), groups to AWS frames, the layout fits a kit tile and passes the kit lint, and the source's order (numbered badges or edges, `%% prism: flow`, or for IaC the `flows` sidecar: actors, request flows, stories) becomes the animation. CloudFormation and Terraform infer subnets (public, private or isolated from the route tables), AZ positions, placement and edges, and `report.ledger` lists every fact as derived, assumed (with a question for the customer) or dropped; `params` overrides CloudFormation parameter defaults; without a sidecar IaC has no animation unless `story` is `guess`. `rules` (`true`, a list of security groups, or `{ groups, outbound }`; the sidecar may carry it too) draws security group rules as tables beside the drawing, with console columns (Type, Protocol, Port range, Source), IPv4 and IPv6 sources on their own rows, prefix lists and group references by name, the default all-outbound and the implicit deny muted, and the row that admits each story packet lit while it crosses; every row is a ledger fact and groups left out for room are listed in `report.rules`. Dual-stack subnets show both CIDRs as a two-line frame note, an egress-only internet gateway is drawn, and a sidecar flow with `v6` sends IPv6 diamonds. Returns `{ spec, svg, report: { from, issues, unmapped, tile, lint, ledger?, rules? } }`. |
 | `export_diagram` | Export a gallery diagram (`id`) or a spec to `drawio` (opens in diagrams.net with the official AWS shapes; the Prism spec, tables included, rides on a hidden layer so a re-import restores the animation), `mermaid` (flowchart with AWS icon shapes, or `dialect: architecture-beta` for a consistent grid), a standalone `svg` (`still` for the static diagram, `at: 0.5` or `at: 'poster'` to freeze the animation at a moment, failed frames red, packets in place and table rows lit), a `png` of such a moment (headless Chrome or Edge on the server; `scale`, default 2; `at` defaults to the poster), or a `storyboard`: one still per numbered step. Returns `{ to, text }`, `{ to, at, width, height, base64 }` for a PNG, or `{ to, frames: [{ n, at, text, svg }] }`. An unknown `to` is `invalid_argument`. |
 
+### Terminal catalog (5)
+Prism's terminal facets: everything [`prism-term`](../prism-term) draws in a terminal (scenes, spinners, progress bars and counters, charts, text art, TUI controls, diagrams and Linux/ops views), sorted into galleries and categories like the web catalog.
+
+| Tool | Purpose |
+|------|---------|
+| `list_terminal_galleries` | Galleries with their categories and declared vs. live facet counts. Start here. |
+| `list_terminal_facets` | Filter by `gallery`, `category`, `kind`, `tag`/`tags` (AND), exact `glyphs`/`color` requirement, **what the target terminal supports** (`maxGlyphs`: ascii < unicode < braille < sextant; `maxColor`: mono < 16 < 256 < truecolor), `animated`, and a size budget (`maxWidth`/`maxHeight` against each facet's minimum size) + pagination. Light records with run commands. |
+| `search_terminal_facets` | Ranked text search over title, id, tags, category/gallery and description (*"braille spinner"*, *"download progress eta"*), combinable with every filter above; each hit carries its `score`. |
+| `get_terminal_facet` | Full record: metadata, tunable `params` (`--set key=value`), run commands (`usage.cli` / `usage.npx` / `usage.snapshot` / `usage.curl` / `usage.code`), the facet's ES-module `source` with its `imports` (relative to `module`), the `"_"` gallery helper modules it needs as `helpers: [{ path, source }]`, and a plain-text `preview` frame. Engine modules (`prism-term/src/*.js`) are never included: they ship in the package. `includeSource` (source + helpers) / `includeHelpers` / `includePreview` trim it. |
+| `get_terminal_catalog_stats` | Totals per gallery, kind, glyph and colour requirement, animated vs. still, top tags, the engine package, the catalog `schema` and number of `sourceModules`, and which source was loaded. |
+
+**Using a facet an agent found:** run its `usage.cli` (`prism-term play <id>`, with the package installed) or `usage.npx` (no install: `npx -y --package=https://prism.k33bz.com/dl/prism-term.tgz prism-term play <id>`, Node 18 or later), or in code `import { play, findFacet } from 'prism-term'; await play(findFacet('<id>'))`. `usage.curl` prints a still frame in any terminal (`curl -sL https://prism.k33bz.com/f/<id>`).
+
+**Where it comes from.** The terminal catalog is derived from `prism-term/src/facets/**` by `prism-term/scripts/build-catalog.mjs` (`npm run catalog` writes `prism-term/catalog/terminal-catalog.json`) and embedded into `Prism.html` as `<script type="application/json" id="prism-terminal-catalog">` (`npm run island` in `prism-term/`). The server reads the **island first**, falls back to the **JSON file** when the island is absent (or malformed), and hot-reloads either. If neither exists the five tools return a structured `unavailable` error naming the paths they searched; the rest of the server is unaffected.
+
+**Record shape (schema 2).** Module code lives once, in the catalog's top-level `sources` map (`{ "prism-term/src/facets/…/x.js": "<ES module source>" }`), together with the `"_"` gallery helpers those modules import; a facet record points at its code through `module`, and several facets can share one module (for example the spinners in `loaders/originals.js`). The server resolves each facet's `source` as `sources[module]`, falling back to the per-facet `source` of a schema-1 catalog so older islands still load, and keeps the strings shared rather than copied per facet. `get_terminal_facet` returns that `source` plus `helpers`: each `"_"` helper in the facet's `imports` (resolved relative to `module`) that is present in `sources`, followed by any helpers those re-export. List and search results never carry code.
+
 Full parameter schemas are returned by `tools/list`. Per-tool example calls live in [`examples/`](./examples).
 
 ---
@@ -221,7 +243,7 @@ Full parameter schemas are returned by `tools/list`. Per-tool example calls live
 3. On success `create_facet` registers the facet into the **live** catalog: it is immediately returned by `list_effects` / `search_effects` / `get_effect` with **no restart** (`persisted:false`).
 4. To persist to disk, run the repository's catalog pipeline (`extract-from-prism.mjs`, then `catalog/_embed-catalog.mjs`) to embed the facet into `Prism.html`. With hot reload on, the server re-reads the file and the facet becomes permanent (`persisted` on the next load).
 
-> **Source-of-truth note:** the `#prism-catalog` island in `Prism.html` is authoritative; `catalog/manifest.json` is rebuilt from it by the extractor. Point `--catalog` at `Prism.html` for the complete catalog and the AWS icon sprite. The island's own `tokens.css` is the legacy Prism palette; the tools theme with the registry in `utils/themes.js`, which mirrors the app's themes.
+> **Source-of-truth note:** the `#prism-catalog` island in `Prism.html` is authoritative; `catalog/manifest.json` is rebuilt from it by the extractor. Point `--catalog` at `Prism.html` for the complete catalog and the AWS icon sprite. The terminal catalog follows the same rule: the `#prism-terminal-catalog` island wins over `prism-term/catalog/terminal-catalog.json`. The island's own `tokens.css` is the legacy Prism palette; the tools theme with the registry in `utils/themes.js`, which mirrors the app's themes.
 
 ---
 
@@ -232,9 +254,11 @@ prism-mcp-server/
 ├── index.js          # PrismMCPServer (JSON-RPC dispatch, server instructions) + StdioTransport
 ├── cli.js            # prism-mcp CLI (start / info / tools / help)
 ├── tools/
-│   └── index.js      # the 40 tool definitions (name, description, schema, handler)
+│   ├── index.js      # the tool definitions (name, description, schema, handler): 45 with the terminal tools
+│   └── terminal.js   # the 5 terminal-catalog tools (spread into buildTools())
 ├── utils/
 │   ├── catalog.js    # CatalogStore: load island/manifest, index, hot reload, runtime facets, initializers
+│   ├── terminal-catalog.js # TerminalCatalogStore: #prism-terminal-catalog island, else the JSON, hot reload, shared `sources` + helpers
 │   ├── collections.js# CollectionStore: disk-backed named sets + prism-collection-1.0 export
 │   ├── css.js        # split/dedupe/merge/validate CSS; token extraction
 │   ├── compose.js    # composition engine + layout templates (stack, row, grid, card, backdrop)
@@ -247,10 +271,10 @@ prism-mcp-server/
 │   ├── theme-engine.js # theme engine beside the catalog (catalog/theme-engine): derive_theme, check_theme_contrast
 │   └── logger.js     # stderr logger (never pollutes the stdio JSON-RPC channel)
 ├── examples/         # one example request/response per tool + integration configs
-└── test/             # node:test integration + unit tests (206 tests)
+└── test/             # node:test integration + unit tests (240 tests)
 ```
 
-**Server model.** `new PrismMCPServer(catalogPath, opts)` builds the tool registry and a `CatalogStore`. `await server.load()` reads + indexes the catalog. `server.connect(transport)` wires a transport; `StdioTransport` implements newline-delimited JSON-RPC on stdin/stdout. The transport is pluggable: implement `onMessage(cb)` / `send(obj)` to add HTTP/SSE.
+**Server model.** `new PrismMCPServer(catalogPath, opts)` builds the tool registry, a `CatalogStore` and a `TerminalCatalogStore` (found next to `catalogPath`, or `opts.terminalCatalogPath`). `await server.load()` reads + indexes both catalogs (a missing terminal catalog is not an error). `server.connect(transport)` wires a transport; `StdioTransport` implements newline-delimited JSON-RPC on stdin/stdout. The transport is pluggable: implement `onMessage(cb)` / `send(obj)` to add HTTP/SSE.
 
 **Error handling.** Protocol errors (bad method / unknown tool) return JSON-RPC errors. Tool-level failures (unknown id, an unknown filter value, validation failure) return an MCP tool result with `isError: true` and a structured `{error, code, data}` payload with actionable messages, valid values and suggestions.
 
@@ -264,7 +288,7 @@ prism-mcp-server/
 node --test          # or: npm test
 ```
 
-206 tests cover every tool (incl. the advanced-search & variant-matrix tools, `recommend_effects` and intent reading, the `themeSensitive` facet, the closed vocabularies, `compose` with fixed, Auto and custom palettes, standalone documents and the backdrop template, the `apply` guide, the 6 Collections tools + `export_collection` formats, the 3 AWS icon tools against a fixture sprite and the real one, the AWS diagram tools against the real kit and gallery specs (the security and IPv6 families, tables, flows, IPv6 packets, two-line notes, the gallery index), and the 2 theme tools against the real engine, top bar pairs included), the CSS/compose/validate utilities, the canonical theme token maps, the `CollectionStore`, the JSON-RPC protocol layer and the server instructions, and loading the real `Prism.html` island. The PNG export test skips when no Chrome or Edge can draw.
+240 tests cover every tool (incl. the advanced-search & variant-matrix tools, the 5 terminal-catalog tools, `recommend_effects` and intent reading, the `themeSensitive` facet, the closed vocabularies, `compose` with fixed, Auto and custom palettes, standalone documents and the backdrop template, the `apply` guide, the 6 Collections tools + `export_collection` formats, the 3 AWS icon tools against a fixture sprite and the real one, the AWS diagram tools against the real kit and gallery specs (the security and IPv6 families, tables, flows, IPv6 packets, two-line notes, the gallery index), and the 2 theme tools against the real engine, top bar pairs included), the CSS/compose/validate utilities, the canonical theme token maps, the `CollectionStore`, the `TerminalCatalogStore` (island vs. JSON fallback, malformed or missing sources, hot reload, schema 1 per-facet source vs. schema 2 shared `sources` with helper resolution), the JSON-RPC protocol layer and the server instructions, and loading the real `Prism.html` islands and the real `prism-term` catalog (run commands for this site). The PNG export test skips when no Chrome or Edge can draw.
 
 ---
 

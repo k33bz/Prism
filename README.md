@@ -6,7 +6,7 @@
 
 **[prism.k33bz.com](https://prism.k33bz.com)** · [open the gallery](https://prism.k33bz.com/Prism.html)
 
-A single-file gallery of **3,687** offline, self-contained CSS/SVG animations, components, and backdrops, built to be browsed by humans *and* driven by AI agents. Ships with a **zero-dependency MCP server** so Claude (Desktop, Code, or the API) can search the catalog and compose production-ready HTML/CSS on demand.
+A single-file gallery of **3,687** offline, self-contained CSS/SVG animations, components, and backdrops, built to be browsed by humans *and* driven by AI agents, with two sibling catalogs: **435 terminal facets** ([prism-term](./prism-term)) and **224 Stream Deck facets** ([Prism Deck](./prism-deck)). Ships with a **zero-dependency MCP server** so Claude (Desktop, Code, or the API) can search the catalogs and compose production-ready HTML/CSS on demand.
 
 ![Effects](https://img.shields.io/badge/effects-3687-ff9900) ![Galleries](https://img.shields.io/badge/galleries-18-4493f8) ![Dependencies](https://img.shields.io/badge/dependencies-0-3fb950) ![Offline](https://img.shields.io/badge/offline-100%25-3fb950) ![MCP](https://img.shields.io/badge/MCP-server%20included-c879ff) ![Single file](https://img.shields.io/badge/single%20file-HTML-e0a52b)
 
@@ -24,6 +24,7 @@ This is [k33bz/Prism](https://github.com/k33bz/Prism), a fork of [crazy54/Prism]
 - **Three more theme packs** (Cloudflare Orange, Google Cloud Console, Fluent for Azure) through the same profile, scaffolder, generator and 100-facet gate as upstream's packs, plus two skins (Frutiger Aero, Liquid Glass).
 - **Upstream's Refraction design language** (from its `feat/prism-design-language` branch): the Prism theme (Night and Day, with the `--rf-*` token layer) as a skin, its 46 Refraction signature facets in 14 galleries, and its accessibility labels on existing tiles. A per-gallery token layer resolves every `--rf-*` those facets read under every other theme too.
 - **Git-derived metadata:** every catalog record carries `addedOn`, `updatedOn` and `author` mined from history, the New Facets page is built from those dates with an adjustable window, and Search filters and sorts by author.
+- **From upstream's `feat/prism-design-language` branch:** [prism-term](./prism-term) (the terminal engine and its catalog), [Prism Deck](./prism-deck) (the Stream Deck engine, catalog and plugin), the Terminal and Stream Deck pages in `Prism.html`, the five terminal tools in the MCP server and the redesigned [website](./website), all by Jeremy Hall. The fork points them at [prism.k33bz.com](https://prism.k33bz.com), keeps the site free of monitoring and third-party requests, and adds an **AI console** to Prism Deck: keys, spans, whole-deck moments and two profiles after the owner's own Stream Deck console for coding agents ([`prism-deck/docs/ai-console.md`](./prism-deck/docs/ai-console.md)).
 
 Every facet records who introduced it (`author`: `crazy54` upstream, `k33bz` fork), so attribution travels with the catalog rather than living in this paragraph.
 
@@ -40,9 +41,36 @@ It serves two audiences from the same source of truth:
 
 ---
 
+## Prism for the terminal
+
+The second catalog is drawn in text: **435 terminal facets** in **17 galleries** (spinners, progress bars and counters, charts, Linux and ops views, TUI controls, diagrams, text art and demoscene effects), sorted into galleries and categories like the web catalog. Every facet is drawn by [`prism-term`](./prism-term), a zero-dependency Node engine that adapts to the terminal it lands in: truecolor down to mono, braille and block glyphs down to 7-bit ASCII, 80 by 24 and up.
+
+| Where | What you get | Start with |
+|---|---|---|
+| **Your terminal, with curl** | every gallery and facet as an 80-column ANSI page (`.txt` for plain ASCII, `.24` for truecolor) | `curl -sL https://prism.k33bz.com/tty` |
+| **Your terminal, live** | the live player and catalog browser (Node.js 18+) | `npx -y --package=https://prism.k33bz.com/dl/prism-term.tgz prism-term` |
+| **Your browser** | the **Terminal** page in `Prism.html` (offline, from the island) and [prism.k33bz.com/terminal/](https://prism.k33bz.com/terminal/), where every tile runs the real facet code | open `Prism.html#terminal` |
+| **Your agent** | the `#prism-terminal-catalog` JSON island and five MCP tools | [The JSON islands](#-the-json-island) |
+
+In Windows PowerShell 5, type `curl.exe` instead of `curl`. From a clone, `cd prism-term && node cli.js` opens the catalog browser; [`prism-term/README.md`](./prism-term/README.md) has every command, the library API and how to author facets.
+
+## Prism Deck, for Stream Deck
+
+The third catalog lives on hardware: **224 Stream Deck facets** in 8 galleries (Themes, Icons, Motion, Spans, Dials & Strips, Screens, Apps, Games) for **30 devices**, from the Stream Deck Mini to the Stream Deck + and + XL and the Corsair Galleon 100 SD. Keys animate, art spans neighboring keys (the gaps behind the bezel are hidden pixels), dials and touch strips get their own segments, and the Galleon's screen gets live dashboards. Every frame is deterministic SVG, drawn by the zero-dependency [`prism-deck`](./prism-deck) engine.
+
+- **The Stream Deck app:** the Prism Deck plugin (`com.k33bz.prism.streamDeckPlugin`), one icon pack per theme, and ready-made profiles, including the two **AI console** profiles (MK.2 and XL). Downloads at [prism.k33bz.com/deck/](https://prism.k33bz.com/deck/); see [Getting started](./prism-deck/README.md#getting-started).
+- **Linux:** the plugin runs in OpenDeck, StreamController gets page bundles, and Prism Deck Direct is a zero-dependency hidraw driver ([`prism-deck/docs/linux.md`](./prism-deck/docs/linux.md)).
+- **The browser:** the **Stream Deck** page in `Prism.html` (offline, from the island) and [prism.k33bz.com/deck/](https://prism.k33bz.com/deck/) play the real engine on virtual devices.
+- **Code:** `import { render, findFacet } from 'prism-deck'`.
+- **The AI console** (Apps › AI Console, plus three whole-deck moments in Spans): the thinking orb, one key per agent session, the permission prompt with Deny, Screen and hold-to-Allow keys, prompt routing, agent and job status tiles, a page key, an agent's question flowed across a row with its answers below, a work stream, confetti, an attention ripple and an outrun screensaver ([`prism-deck/docs/ai-console.md`](./prism-deck/docs/ai-console.md)).
+
+Upstream's MCP server also has deck tools (design, layouts, exports, live edits); they are not in this fork's server yet.
+
+---
+
 ## Install the MCP server
 
-The [Model Context Protocol](https://modelcontextprotocol.io) lets an AI agent call tools over a well-defined resource. The bundled server exposes Prism's catalog as **40 tools** (discovery and intent-based recommendations, themed composition, facet creation, saved collections, AWS icons and diagrams, and theme derivation), so an agent can go from *"give me a pulsing KPI card with a wind background"* to **discovered, composed, deduplicated, validated HTML/CSS** in one turn.
+The [Model Context Protocol](https://modelcontextprotocol.io) lets an AI agent call tools over a well-defined resource. The bundled server exposes Prism's catalogs as **45 tools** (discovery and intent-based recommendations, themed composition, facet creation, saved collections, AWS icons and diagrams, theme derivation, and the terminal catalog), so an agent can go from *"give me a pulsing KPI card with a wind background"* to **discovered, composed, deduplicated, validated HTML/CSS** in one turn.
 
 It has **zero runtime dependencies** (pure Node.js ≥ 18) and speaks MCP JSON-RPC 2.0 over **stdio** — the transport Claude Desktop, Claude Code, and the Anthropic API use to launch a local MCP server as a subprocess.
 
@@ -63,7 +91,7 @@ There is **nothing to `npm install`** — the server has no dependencies. It run
 # Print catalog stats and exit (no server) — confirms it can read Prism.html
 node cli.js info --catalog ../Prism.html
 
-# List the 39 tools it exposes
+# List the 45 tools it exposes
 node cli.js tools
 
 # Run the server over stdio (Ctrl-C to stop). This is what a client launches.
@@ -92,13 +120,13 @@ Use **absolute paths** everywhere below — clients launch the server from their
 claude mcp add prism -- node /ABS/PATH/prism/prism-mcp-server/cli.js start --catalog /ABS/PATH/prism/Prism.html
 ```
 
-Then `claude mcp list` should show `prism`, and the 40 tools become available in your session. Remove it with `claude mcp remove prism`.
+Then `claude mcp list` should show `prism`, and the 45 tools become available in your session. Remove it with `claude mcp remove prism`.
 </details>
 
 <details>
 <summary><b>Claude Desktop</b></summary>
 
-Add the block below to your `claude_desktop_config.json`, then **restart Claude Desktop**. The 39 Prism tools appear in the tools menu.
+Add the block below to your `claude_desktop_config.json`, then **restart Claude Desktop**. The 45 Prism tools appear in the tools menu.
 
 - **macOS:** `~/Library/Application Support/Claude/claude_desktop_config.json`
 - **Windows:** `%APPDATA%\Claude\claude_desktop_config.json`
@@ -171,7 +199,7 @@ Options:
 
 Logs go to **stderr** (stdout is reserved for the JSON-RPC channel), so they never corrupt the MCP protocol stream. Verbosity is also settable via `PRISM_MCP_LOG_LEVEL`. A `--port` flag is accepted but ignored — this build is stdio-only; add an HTTP/SSE transport by implementing one against `PrismMCPServer`.
 
-### The 40 tools
+### The 45 tools
 
 | Group | Tools |
 |---|---|
@@ -183,6 +211,7 @@ Logs go to **stderr** (stdout is reserved for the JSON-RPC channel), so they nev
 | **Catalog management (3)** | `get_catalog_metadata` · `export_collection` (`bundle`/`document`/`schema`) · `get_token_reference` |
 | **AWS icons (3)** | `search_aws_icons` · `get_aws_icon` (the official AWS Architecture Icons, as standalone SVG or sprite symbols) · `resolve_aws_icon` (draw.io, Mermaid, PlantUML, Python diagrams, CloudFormation or Terraform names to an icon id) |
 | **Collections & favorites (6)** | `list_collections` · `get_collection` · `create_collection` · `add_to_collection` · `remove_from_collection` · `delete_collection` |
+| **Terminal catalog (5)** | `list_terminal_galleries` · `list_terminal_facets` · `search_terminal_facets` (filter by what the target terminal can draw: `maxGlyphs`, `maxColor`, a size budget) · `get_terminal_facet` (params, run commands, module source and helpers, a plain-text preview) · `get_terminal_catalog_stats`. They read the `#prism-terminal-catalog` island, else `prism-term/catalog/terminal-catalog.json`, and report `unavailable` when neither exists |
 | **AWS diagrams (5)** | `import_diagram` (draw.io, Mermaid, PlantUML, D2, CloudFormation or Terraform into a kit spec and svg; `rules` draws security group tables) · `export_diagram` (a kit diagram to draw.io, Mermaid, svg, a still or PNG at any moment, or a storyboard of its steps) · `build_diagram` (a JSON diagram spec with flows, rules and routes tables, IPv6 packets and two-line notes to a standalone SVG and the gallery svg, with the kit's checks, layout lint and the compiled story) · `lint_diagram` (layout findings for a spec or a gallery diagram) · `get_diagram_spec` (any gallery diagram's JSON spec, or the gallery listed by the primitives each uses) |
 
 `compose` prepends the theme token block (every token of the theme, the on-fill inks and `--control-line` included; default Cloudscape in Auto, dark or light by the system), merges HTML, deduplicates CSS rules, collapses `:root` token blocks, validates the output, reports size savings, and says how to apply the bundle: the `data-mode` / `data-theme` / `data-ds` attributes for `<html>` and the initializer scripts. **Collections** are named, disk-backed sets of effects that persist across sessions (stored in `prism-mcp-server/collections.json`, which is git-ignored); export one with `export_collection { collectionId, format: "schema" }` to hand it to the Prism.html UI. Full parameter schemas come back from `tools/list`, and one example call per tool lives in [`prism-mcp-server/examples/`](./prism-mcp-server/examples).
@@ -250,7 +279,7 @@ cd prism-mcp-server
 # Drive search -> get -> compose end to end against the real catalog
 node examples/quickstart.mjs ../Prism.html
 
-# Run the bundled Node-native test suite (206 tests, zero deps)
+# Run the bundled Node-native test suite (240 tests, zero deps)
 node --test test/*.test.js
 ```
 
@@ -317,7 +346,7 @@ At the very top of `Prism.html`'s `<head>` sits a single tag:
 <script type="application/json" id="prism-catalog"> … </script>
 ```
 
-This is the **JSON island**: a complete, machine-readable catalog of every effect, embedded right alongside the human UI. It's what the MCP server reads, and an agent can read it directly too — no DOM scraping required:
+This is the **JSON island**: a complete, machine-readable catalog of every effect, embedded right alongside the human UI. Right after it sit two more with the same `_ai` convention: `#prism-terminal-catalog` (the terminal facets, with every module's source in a top-level `sources` map, so the Terminal page runs offline) and `#prism-deck-catalog` (the Stream Deck facets, likewise). They are derived: `npm run catalog` then `npm run island` in `prism-term/`, `npm run catalog` then `node scripts/embed-island.mjs --html ../Prism.html` in `prism-deck/`. It's what the MCP server reads, and an agent can read it directly too — no DOM scraping required:
 
 ```js
 const catalog = JSON.parse(document.getElementById('prism-catalog').textContent);
@@ -372,15 +401,18 @@ The MCP server's `compose` / `compose_with_template` tools do all of this for yo
 
 ```
 .
-├── Prism.html              ← the whole tool: UI + all galleries + the JSON island
+├── Prism.html              ← the whole tool: UI + all galleries + the JSON islands (web, terminal, deck)
 ├── README.md               ← you are here
-├── prism-mcp-server/       ← the MCP server (zero-dependency Node, 40 tools)
+├── prism-term/             ← the terminal engine, its 435-facet catalog, CLI, curl-site builder, terminal color schemes
+├── prism-deck/             ← the Stream Deck engine, its 224-facet catalog, plugin and profile builders, Linux driver
+├── website/                ← prism.k33bz.com: landing page, /terminal/, /deck/; `node website/build.mjs site-dist`
+├── prism-mcp-server/       ← the MCP server (zero-dependency Node, 45 tools)
 │   ├── cli.js                 prism-mcp CLI (start / info / tools / help)
 │   ├── index.js               PrismMCPServer (JSON-RPC dispatch) + StdioTransport
-│   ├── tools/index.js         the 39 tool definitions
+│   ├── tools/index.js         the tool definitions (tools/terminal.js: the 5 terminal tools)
 │   ├── utils/                 catalog store, collections, themes mirror, theme application, intent reading, AWS icons and diagrams, css/compose/validate, logger
 │   ├── examples/              per-tool example calls + Claude Desktop / Anthropic API configs
-│   ├── test/                  Node-native test suite (181 tests)
+│   ├── test/                  Node-native test suite (240 tests)
 │   └── README.md              server internals & architecture
 ├── catalog/                ← the catalog + the maintenance pipeline
 │   ├── manifest.json          full catalog (mirror of the island)
@@ -428,6 +460,12 @@ node catalog/_check_facets.mjs        # per-facet render / animation / reduced-m
 ```
 
 > Requires Node 18+ and Google Chrome or Edge for the extractor and the per-facet gate (headless, over the DevTools Protocol, no packages). With MCP hot reload on, a running server re-reads `Prism.html` automatically.
+
+---
+
+## The website
+
+[prism.k33bz.com](https://prism.k33bz.com) is built from [`website/`](./website) by `node website/build.mjs site-dist` (Node.js 18+, no `npm install`) and published by `.github/workflows/pages.yml` on every push to `main`. It serves the landing page, `Prism.html`, the terminal catalog (`/terminal/`) and its curl site (`/tty`, `/t/<gallery>`, `/f/<facet>`), the Stream Deck page (`/deck/`) with the plugin, icon pack and profile downloads, and the `prism-term` tarball for `npx`. Every count on it is filled from the catalogs at build time. The site has no analytics or monitoring and loads nothing from another origin; the build fails if a page would. Details: [`website/README.md`](./website/README.md).
 
 ---
 

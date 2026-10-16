@@ -12,6 +12,7 @@
 //     handleMessage() directly.
 
 import { CatalogStore } from './utils/catalog.js';
+import { TerminalCatalogStore, resolveTerminalPaths } from './utils/terminal-catalog.js';
 import { CollectionStore } from './utils/collections.js';
 import { buildTools, ToolError } from './tools/index.js';
 import { createLogger } from './utils/logger.js';
@@ -24,7 +25,12 @@ export const SERVER_VERSION = '1.0.0';
 export class PrismMCPServer {
   /**
    * @param {string} catalogPath  path to Prism.html (island) or catalog/manifest.json
-   * @param {object} opts { watch, logger }
+   * @param {object} opts { watch, logger, terminal, terminalCatalogPath }
+   *   terminal              inject a TerminalCatalogStore (tests)
+   *   terminalCatalogPath   explicit .html/.json for the terminal catalog; by default it
+   *                         is found next to catalogPath (Prism.html's
+   *                         #prism-terminal-catalog island, else
+   *                         prism-term/catalog/terminal-catalog.json)
    */
   constructor(catalogPath, opts = {}) {
     if (!catalogPath) throw new Error('PrismMCPServer requires a catalogPath');
@@ -37,15 +43,25 @@ export class PrismMCPServer {
       inMemory: opts.collectionsInMemory === true,
       logger: this.logger,
     });
+    // Terminal catalog (prism-term facets): optional — tools report `unavailable`
+    // when neither the island nor the JSON fallback exists.
+    this.terminal = opts.terminal || new TerminalCatalogStore({
+      ...resolveTerminalPaths(catalogPath, opts.terminalCatalogPath),
+      watch: opts.watch !== false,
+      logger: this.logger,
+    });
     this.tools = buildTools();
     this.toolMap = new Map(this.tools.map((t) => [t.name, t]));
     this.initialized = false;
     this.requestCount = 0;
     this.store.on('reload', (stats) => this.logger.info(`Catalog reloaded: ${stats.effects} effects`));
+    this.terminal.on('reload', (stats) => this.logger.info(`Terminal catalog reloaded: ${stats.facets} facets`));
+    this.terminal.on('error', () => { /* logged by the store; keep serving the last good copy */ });
   }
 
   async load() {
     await this.store.load();
+    await this.terminal.load(); // never throws: an absent terminal catalog is fine
     return this;
   }
 
@@ -94,7 +110,7 @@ export class PrismMCPServer {
       protocolVersion: PROTOCOL_VERSION,
       capabilities: { tools: { listChanged: false } },
       serverInfo: { name: SERVER_NAME, version: SERVER_VERSION },
-      instructions: serverInstructions(this.store),
+      instructions: serverInstructions(this.store, this.terminal),
     };
   }
 
@@ -123,7 +139,7 @@ export class PrismMCPServer {
     this.requestCount++;
     this.logger.debug(`tools/call ${params.name} args=${safeJson(args)}`);
     try {
-      const out = await tool.handler(args, { store: this.store, collections: this.collections, logger: this.logger });
+      const out = await tool.handler(args, { store: this.store, collections: this.collections, terminal: this.terminal, logger: this.logger });
       const ms = Date.now() - started;
       this.logger.info(`tool ${params.name} ok (${ms}ms)`);
       return {
@@ -171,6 +187,7 @@ export class PrismMCPServer {
 
   close() {
     this.store.close();
+    this.terminal.close();
     this.transport && this.transport.stop && this.transport.stop();
   }
 }
@@ -179,17 +196,19 @@ export class PrismMCPServer {
  * What a fresh agent needs to pick and apply components with this server alone. Counts come from the
  * loaded catalog and the theme registry, so they never go stale.
  */
-export function serverInstructions(store) {
+export function serverInstructions(store, terminal) {
   const all = store && store.catalog ? store.all() : [];
   const galleries = store && store.catalog ? store.galleries().length : 0;
   const aws = all.filter((e) => e.gallery === 'aws').length;
   const ds = designSystems();
+  const term = terminal && terminal.available ? terminal.meta() : null;
   return [
     `Prism: ${all.length} offline CSS/SVG components ("effects" or facets) in ${galleries} galleries, themed by ${ds.length} design systems in dark and light (${THEMES.length} themes), plus an AWS architecture diagram kit (${aws} gallery diagrams).`,
     'PICK: recommend_effects turns a plain request into selection filters and ranked picks (one group per need). Or search_effects with filters: roles (loading for spinners and skeletons, feedback for toasts, alerts and badges, action, input, navigation, data-display, media), dataShapes for charts (time-series for a trend, part-to-whole for shares of a total, comparison, distribution, correlation, flow, geo, single-value for a KPI), usableAsBackground:true for a backdrop behind content, layers (overlay floats above), reducedMotionSafe:true (static, or stops under prefers-reduced-motion) and selfAnimates:false for no motion, needsJs:false for CSS only. get_available_filters lists the values.',
     'APPLY: get_effect returns html, css and apply (the theme tokens it reads, its JS initializer source, motion, backdrop placement). compose { ids, theme } bundles several: css starts with the theme token block (theme: a theme id such as duolingo-light for one mode, a design system id such as duolingo for Auto, dark with light under prefers-color-scheme; tokens: a custom palette), then rootAttributes to set on <html> (data-mode="light" switches the light rules of the facets), scripts (initializers to run once after the markup), apply (the steps); document: true returns a complete page. compose_with_template lays effects out as stack, row, grid or card.',
     'THEMES: a theme is a :root token swap over identical html and css. get_theme_palette { theme } gives the :root css, rootAttributes and autoCss; get_component_variants and get_variants_for_theme show components across themes; derive_theme turns one brand color into a contrast-safe dark and light palette (pass its { dark, light } to compose as tokens); check_theme_contrast audits any token map or shipped theme (on-fill inks, --control-line, the top bar included).',
     'AWS DIAGRAMS: get_diagram_spec with no id lists the gallery by feature (tables, flows, v6, two-line notes, poster); get_diagram_spec { id } returns an editable JSON spec. resolve_aws_icon maps any name (text, CloudFormation, Terraform, draw.io, Mermaid, PlantUML) to an icon id; containers such as a security group are frames (groups kind sg). build_diagram compiles a spec (flows for the request path, tables for security group, network ACL and route rules whose rows light per packet, v6 for IPv6 packets, two-line notes for dual-stack CIDRs) and returns lint; lint_diagram checks layout; export_diagram writes svg (animated, still or a moment), png, storyboard, drawio or mermaid; import_diagram reads draw.io, Mermaid, PlantUML, D2, CloudFormation and Terraform (rules: true draws security group tables).',
+    `TERMINAL: the prism-term catalog of command-line facets${term ? ` (${term.facetCount} facets in ${term.galleryCount} galleries)` : ''}: spinners, progress bars and counters, charts, TUI controls, ops views and scenes. list_terminal_galleries to start, search_terminal_facets or list_terminal_facets (maxGlyphs and maxColor keep to what the target terminal can draw, maxWidth / maxHeight to its size), get_terminal_facet for the module source and the run commands (usage.cli, usage.npx, usage.curl).`,
     'OTHER: saved searches (create_saved_search), collections (create_collection, export_collection), and facet authoring (validate_facet, create_facet).',
   ].join('\n');
 }
