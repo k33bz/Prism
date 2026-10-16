@@ -29,7 +29,8 @@ function island(obj) {
   return `${TERMINAL_ISLAND_OPEN}${JSON.stringify(obj).split('</script').join('<\\/script')}</script>`;
 }
 const page = (...islands) => `<!doctype html><html><head>${islands.join('\n')}</head><body></body></html>`;
-const mainIsland = (obj) => `<script type="application/json" id="prism-catalog">${JSON.stringify(obj)}</script>`;
+// neutralized like island() (this fork's FIXTURE carries a "</script>" inside an initializer)
+const mainIsland = (obj) => `<script type="application/json" id="prism-catalog">${JSON.stringify(obj).split('</script').join('<\\/script')}</script>`;
 
 function tmpdir() { return fs.mkdtempSync(path.join(os.tmpdir(), 'prism-mcp-term-')); }
 
