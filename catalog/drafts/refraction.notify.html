@@ -73,7 +73,7 @@
 </style>
 <div class="gallery">
 
-  <div class="tile is-new" data-ctype="toast" data-interact="click"><div class="stage">
+  <div class="tile is-new" data-ctype="toast" data-interact="click" data-needs-js="rfn-toast"><div class="stage">
     <div class="rfn-toastdemo">
       <div class="rfn-live" role="status" aria-live="off">
         <div class="rfn-toast" data-rfn-dur="8000">
@@ -101,7 +101,7 @@
   </div><div class="meta"><div class="nm">Spectral Beam Loader</div><span class="ref">.rfn-loader</span><div class="desc">Indeterminate activity drawn as light: a beam sweeps a hairline and fans into a small spectrum at its head. Mono status label and progressbar semantics; reduced motion holds the beam still mid-rail.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
 </div>
-<script>
+<script data-prism-init="rfn-toast">
 /* Refraction signatures (rfn-*) — Beam Progress Toast timer. Delegated, idempotent. */
 (function(){
   if(window.__rfnInit) return; window.__rfnInit=true;

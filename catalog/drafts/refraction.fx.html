@@ -22,7 +22,7 @@
 .fx-rf-lit:hover,.fx-rf-lit:focus-visible,.fx-rf-lit.is-lit,.tile:hover .fx-rf-lit{border-color:var(--rf-line-strong,var(--line))!important;box-shadow:var(--elev-2,0 18px 40px -18px rgba(0,0,0,.75));transform:translateY(-1px)}
 .fx-rf-lit:hover::before,.fx-rf-lit:focus-visible::before,.fx-rf-lit.is-lit::before,.tile:hover .fx-rf-lit::before{opacity:1;transform:none}
 .fx-rf-lit:hover::after,.fx-rf-lit.is-lit::after,.tile:hover .fx-rf-lit::after{transform:translateX(330%) skewX(-16deg);opacity:1;transition:transform var(--rf-dur-deliberate,.6s) var(--rf-ease-out,ease),opacity var(--rf-dur-fast,.14s)}
-[data-rf-mode="day"] .fx-rf-lit:hover,[data-rf-mode="day"] .fx-rf-lit.is-lit,[data-rf-mode="day"] .tile:hover .fx-rf-lit{border-color:transparent!important;background:linear-gradient(var(--card),var(--card)) padding-box,var(--rf-iris-edge,linear-gradient(115deg,#e7a6c8,#b49ff0 30%,#8fb8f2 55%,#86d7bb 78%,#e6c98a)) border-box!important}
+[data-mode="light"] .fx-rf-lit:hover,[data-mode="light"] .fx-rf-lit.is-lit,[data-mode="light"] .tile:hover .fx-rf-lit{border-color:transparent!important;background:linear-gradient(var(--card),var(--card)) padding-box,var(--rf-iris-edge,linear-gradient(115deg,#e7a6c8,#b49ff0 30%,#8fb8f2 55%,#86d7bb 78%,#e6c98a)) border-box!important}
 @media (prefers-reduced-motion:reduce){.fx-rf-lit,.fx-rf-lit::before{transition:opacity 120ms linear}.fx-rf-lit::before{transform:none}.fx-rf-lit::after{display:none}.fx-rf-lit:hover,.fx-rf-lit.is-lit,.tile:hover .fx-rf-lit{transform:none}}
 
 /* 3 · Spectral Rim — a white-headed glint laps the hairline border, its tail dispersed into the
@@ -46,8 +46,8 @@
 .fx-rf-caustic::after{-webkit-mask-size:126px 126px;mask-size:126px 126px;opacity:.22;animation:fxRfCausticB 12s linear infinite}
 @keyframes fxRfCausticA{from{transform:translate(0,0)}to{transform:translate(180px,180px)}}
 @keyframes fxRfCausticB{from{transform:translate(0,0)}to{transform:translate(-126px,126px)}}
-[data-rf-mode="day"] .fx-rf-caustic::before,[data-rf-mode="day"] .fx-rf-caustic::after{background:var(--rf-spectrum,linear-gradient(90deg,#b299f3,#5ab3f7,#00c8c3,#53cea0,#e5ba53,#fb947c,#f48a9f));opacity:.5}
-[data-rf-mode="day"] .fx-rf-caustic::after{opacity:.3}
+[data-mode="light"] .fx-rf-caustic::before,[data-mode="light"] .fx-rf-caustic::after{background:var(--rf-spectrum,linear-gradient(90deg,#b299f3,#5ab3f7,#00c8c3,#53cea0,#e5ba53,#fb947c,#f48a9f));opacity:.32}
+[data-mode="light"] .fx-rf-caustic::after{opacity:.2}
 @media (prefers-reduced-motion:reduce){.fx-rf-caustic::before,.fx-rf-caustic::after{animation:none}}
 
 /* 6 · Thin-Film Sheen — a pearl surface with an iridescent edge; a soap-film band of color
@@ -55,8 +55,8 @@
 .fx-rf-film{position:relative;overflow:hidden;border:1px solid transparent!important;background:linear-gradient(var(--card),var(--card)) padding-box,var(--rf-iris-edge,linear-gradient(115deg,rgba(203,185,247,.75),rgba(134,189,249,.55) 35%,rgba(139,216,186,.5) 65%,rgba(238,195,111,.45))) border-box!important}
 .fx-rf-film::after{content:"";position:absolute;top:-30%;bottom:-30%;left:0;width:72%;pointer-events:none;background:linear-gradient(100deg,transparent 16%,rgba(var(--rf-s-rose-rgb,var(--crit-rgb)),.15) 31%,rgba(var(--rf-s-violet-rgb,var(--accent-rgb)),.2) 41%,rgba(var(--fx-glint,255,255,255),calc(.24*var(--fx-glint-k,1))) 50%,rgba(var(--rf-s-azure-rgb,var(--info-rgb)),.2) 59%,rgba(var(--rf-s-mint-rgb,var(--pos-rgb)),.15) 69%,transparent 84%);transform:translateX(-112%) skewX(-14deg);animation:fxRfFilm 5.6s var(--rf-ease-in-out,cubic-bezier(.65,0,.35,1)) infinite}
 @keyframes fxRfFilm{0%{transform:translateX(-112%) skewX(-14deg)}58%,100%{transform:translateX(170%) skewX(-14deg)}}
-[data-rf-mode="day"] .fx-rf-film{background:linear-gradient(118deg,rgba(255,255,255,.8),rgba(255,255,255,.42)) padding-box,var(--rf-iris,linear-gradient(115deg,#ffe1e5 0%,#ebe5ff 26%,#cbf1fc 52%,#d1f3e3 76%,#f6e8ca 100%)) padding-box,var(--rf-iris-edge,linear-gradient(115deg,#e7a6c8,#b49ff0 30%,#8fb8f2 55%,#86d7bb 78%,#e6c98a)) border-box!important;box-shadow:inset 0 1px 0 #fff,0 1px 2px rgba(32,24,72,.05),0 14px 32px -18px rgba(64,40,150,.3)}
-[data-rf-mode="day"] .fx-rf-film::after{background:linear-gradient(100deg,transparent 16%,rgba(var(--rf-s-rose-rgb,var(--crit-rgb)),.2) 31%,rgba(var(--rf-s-violet-rgb,var(--accent-rgb)),.22) 41%,rgba(255,255,255,.85) 50%,rgba(var(--rf-s-azure-rgb,var(--info-rgb)),.22) 59%,rgba(var(--rf-s-mint-rgb,var(--pos-rgb)),.2) 69%,transparent 84%)}
+[data-mode="light"] .fx-rf-film{background:linear-gradient(118deg,rgba(255,255,255,.8),rgba(255,255,255,.42)) padding-box,var(--rf-iris,linear-gradient(115deg,#ffe1e5 0%,#ebe5ff 26%,#cbf1fc 52%,#d1f3e3 76%,#f6e8ca 100%)) padding-box,var(--rf-iris-edge,linear-gradient(115deg,#e7a6c8,#b49ff0 30%,#8fb8f2 55%,#86d7bb 78%,#e6c98a)) border-box!important;box-shadow:inset 0 1px 0 #fff,0 1px 2px rgba(32,24,72,.05),0 14px 32px -18px rgba(64,40,150,.3)}
+[data-mode="light"] .fx-rf-film::after{background:linear-gradient(100deg,transparent 16%,rgba(var(--rf-s-rose-rgb,var(--crit-rgb)),.2) 31%,rgba(var(--rf-s-violet-rgb,var(--accent-rgb)),.22) 41%,rgba(255,255,255,.85) 50%,rgba(var(--rf-s-azure-rgb,var(--info-rgb)),.22) 59%,rgba(var(--rf-s-mint-rgb,var(--pos-rgb)),.2) 69%,transparent 84%)}
 @media (prefers-reduced-motion:reduce){.fx-rf-film::after{animation:none;opacity:0}}
 </style>
 <div class="gallery" id="fxrfG">

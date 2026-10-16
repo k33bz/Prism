@@ -314,6 +314,15 @@ export default {
       '--rf-tile-min': '296px',
       '--rf-gutter': '16px',
       '--rf-grid-cell': '34px',
+      // control boundary of inputs, checkboxes, radios, switches (WCAG 1.4.11): Refraction's own --rf-line-control
+      '--control-line': '#8a879d',
+      // on-fill inks: Refraction's --rf-accent-ink (#fff) on every role fill
+      '--accent-ink': '#ffffff',
+      '--info-ink': '#ffffff',
+      '--pos-ink': '#ffffff',
+      '--warn-ink': '#ffffff',
+      '--neg-ink': '#ffffff',
+      '--crit-ink': '#ffffff',
     },
     dark: {
       '--bg': '#0a0c12',
@@ -614,6 +623,15 @@ export default {
       '--rf-tile-min': '296px',
       '--rf-gutter': '16px',
       '--rf-grid-cell': '34px',
+      // control boundary of inputs, checkboxes, radios, switches (WCAG 1.4.11): Refraction's own --rf-line-control
+      '--control-line': '#6b6f84',
+      // on-fill inks: Refraction's --rf-accent-ink (deep violet ink) on every role fill; the pastel Night roles cannot carry #fff
+      '--accent-ink': '#151021',
+      '--info-ink': '#151021',
+      '--pos-ink': '#151021',
+      '--warn-ink': '#151021',
+      '--neg-ink': '#151021',
+      '--crit-ink': '#151021',
     },
   },
   tokenProfile: {

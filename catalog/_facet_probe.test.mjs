@@ -17,8 +17,8 @@ const HTML = readFileSync(resolve(HERE, '../Prism.html'), 'utf8');
 
 test('token reader: every registry theme, Cloudscape Light as the shell applies it', () => {
   const all = registryThemes(HTML);
-  assert.equal(all.length, 32);
-  assert.equal(all.filter(t => t.mode === 'light').length, 16);
+  assert.equal(all.length, 34);
+  assert.equal(all.filter(t => t.mode === 'light').length, 17);
   const cl = themeById(HTML, 'cloudscape-light');
   assert.equal(cl.mode, 'light'); assert.equal(cl.ds, 'cloudscape');
   const k = tokenMap(cl.css);

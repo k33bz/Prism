@@ -122,6 +122,16 @@ test('rgb/hex disagreement, drift and coverage gaps are reported', () => {
   assert.deepEqual(gaps.map((g) => g.token), ['--crit-ink']);
 });
 
+test('a Refraction triplet pairs with its vivid tier (--rf-x-rgb = rgb of --rf-x-v)', () => {
+  const ok = checkRgb({ id: 't', tokens: { '--rf-s-coral': '#ffaa96', '--rf-s-coral-v': '#f69077', '--rf-s-coral-rgb': '246,144,119' } });
+  assert.deepEqual(ok, []);
+  const bad = checkRgb({ id: 't', tokens: { '--rf-s-coral': '#ffaa96', '--rf-s-coral-v': '#f69077', '--rf-s-coral-rgb': '255,170,150' } });
+  assert.equal(bad.length, 1);
+  // only --rf-* tokens use the vivid pairing: a contract token still pairs with itself
+  const plain = checkRgb({ id: 't', tokens: { '--accent': '#ffaa96', '--accent-v': '#f69077', '--accent-rgb': '246,144,119' } });
+  assert.equal(plain.length, 1);
+});
+
 test('the CLI exits 1 with --json naming theme, pair, ratio and floor', () => {
   const dir = mkdtempSync(join(tmpdir(), 'check-themes-'));
   try {

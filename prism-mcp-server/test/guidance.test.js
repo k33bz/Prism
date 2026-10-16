@@ -252,7 +252,7 @@ test('resolvePalette, tokenBlockCss, rootAttributes and buildDocument', () => {
 test('the server instructions carry live counts and the pick / apply / AWS guidance', async () => {
   const store = fixtureStore();
   const text = serverInstructions(store);
-  assert.match(text, /^Prism: 3 offline CSS\/SVG components .* in 2 galleries, themed by 16 design systems in dark and light \(32 themes\)/);
+  assert.match(text, /^Prism: 3 offline CSS\/SVG components .* in 2 galleries, themed by 17 design systems in dark and light \(34 themes\)/);
   for (const w of ['recommend_effects', 'usableAsBackground:true', 'reducedMotionSafe:true', 'compose { ids, theme }', 'rootAttributes', 'derive_theme', 'get_diagram_spec with no id', 'tables', 'export_diagram']) assert.ok(text.includes(w), w);
   const server = new PrismMCPServer('(fixture)', { watch: false, logLevel: 'silent', collectionsInMemory: true });
   server.store = store;

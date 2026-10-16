@@ -16,7 +16,7 @@
   transition:left var(--rf-dur-slow,.4s) var(--rf-ease-out-expo,ease),right var(--rf-dur-slow,.4s) var(--rf-ease-out-expo,ease),opacity var(--rf-dur-base,.24s)}
 .rfc-lit:hover,.rfc-lit:focus-within{border-color:rgba(var(--rfc-rgb),.4);box-shadow:var(--elev-2,var(--elev-1))}
 .rfc-lit:hover::before,.rfc-lit:focus-within::before{left:3%;right:3%;opacity:1}
-:is([data-rf-mode="day"],[data-theme="prism-light"]) .rfc-lit:hover{border-color:transparent;
+[data-mode="light"] .rfc-lit:hover{border-color:transparent;
   background:linear-gradient(180deg,rgba(var(--rfc-rgb),.08),rgba(var(--rfc-rgb),0) 62%) padding-box,linear-gradient(var(--card),var(--card)) padding-box,var(--rf-iris-edge,var(--line)) border-box}
 .rfc-lit.is-info{--rfc:var(--info,#86bdf9);--rfc-rgb:var(--info-rgb,134,189,249)}
 .rfc-lit.is-pos{--rfc:var(--pos,#8bd8ba);--rfc-rgb:var(--pos-rgb,139,216,186)}
@@ -68,6 +68,8 @@
   .rfc-lit,.rfc-lit::before,.rfc-lead,.rfc-note{transition:none}
   .rfc-pin::after{animation:none;opacity:0}
 }
+/* fork: light-mode text contrast (4.5:1 for text, 3:1 for the dim labels) */
+[data-mode="light"] .rfc-eye{color:color-mix(in srgb,var(--rfc) 72%,var(--ink))}
 </style>
 <div class="gallery">
 
@@ -80,7 +82,7 @@
     </div>
   </div><div class="meta"><div class="nm">Lit-Edge Status Callout</div><span class="ref">.rfc-lit.is-info / .is-pos / .is-warn / .is-neg</span><div class="desc">Refraction admonition: a beam in the status hue lands on the top edge, a lit status index and a mono eyebrow carry the word, the wavelength sits beside it. Hover or focus widens the beam; Day swaps to a thin-film edge.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new" data-ctype="callout" data-interact="click"><div class="stage">
+  <div class="tile is-new" data-ctype="callout" data-interact="click" data-needs-js="rfc-marker"><div class="stage">
     <div class="rfc-fig">
       <svg class="rfc-plot" viewBox="0 0 256 140" aria-hidden="true"><path class="rfc-area" d="M0 108 L20 102 L40 104 L56 88 L72 41 L88 84 L108 96 L128 90 L148 100 L168 82 L188 92 L208 74 L228 80 L256 66 L256 140 L0 140 Z"/><polyline class="rfc-line" points="0,108 20,102 40,104 56,88 72,41 88,84 108,96 128,90 148,100 168,82 188,92 208,74 228,80 256,66"/></svg>
       <span class="rfc-axis">P95 LATENCY · 24 H</span>
@@ -91,7 +93,7 @@
   </div><div class="meta"><div class="nm">Spectral Annotation Marker</div><span class="ref">.rfc-fig .rfc-pin .rfc-note</span><div class="desc">Annotate a point on a chart: a ring of white light on the datum, a one-pixel beam leader and a glass label with mono coordinates. The marker is a real button — click, Enter or Space toggles the note, Esc closes it.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
 </div>
-<script>
+<script data-prism-init="rfc-marker">
 /* Refraction signatures (rfc-) — Spectral Annotation Marker toggle. Delegated, idempotent. */
 (function(){
   if(window.__rfcInit) return; window.__rfcInit=true;

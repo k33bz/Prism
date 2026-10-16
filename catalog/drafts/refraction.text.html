@@ -17,10 +17,10 @@
 .tx-rf-disperse::before,.tx-rf-disperse::after{content:attr(data-text);position:absolute;left:0;top:0;width:100%;pointer-events:none;opacity:0;mix-blend-mode:var(--rx-blend,screen)}
 .tx-rf-disperse::before{color:var(--rf-split-a,rgba(255,92,130,.6));animation:txRfGhostA 7s infinite}
 .tx-rf-disperse::after{color:var(--rf-split-b,rgba(92,170,255,.6));animation:txRfGhostB 7s infinite}
-[data-rf-mode="day"] .tx-rf-disperse{--rx-disp-core:38%}
-[data-rf-mode="day"] .tx-rf-disperse::before,[data-rf-mode="day"] .tx-rf-disperse::after{mix-blend-mode:normal}
-[data-rf-mode="day"] .tx-rf-disperse::before{color:rgba(var(--rf-s-rose-rgb,214,52,104),.6)}
-[data-rf-mode="day"] .tx-rf-disperse::after{color:rgba(var(--rf-s-azure-rgb,36,104,222),.55)}
+[data-mode="light"] .tx-rf-disperse{--rx-disp-core:38%}
+[data-mode="light"] .tx-rf-disperse::before,[data-mode="light"] .tx-rf-disperse::after{mix-blend-mode:normal}
+[data-mode="light"] .tx-rf-disperse::before{color:rgba(var(--rf-s-rose-rgb,214,52,104),.6)}
+[data-mode="light"] .tx-rf-disperse::after{color:rgba(var(--rf-s-azure-rgb,36,104,222),.55)}
 
 @keyframes txRfSweep{0%{transform:translateX(-30%);opacity:0}12%{opacity:1}55%,100%{transform:translateX(360%);opacity:0}}
 .tx-rf-lambda{--lam:var(--rf-s-cyan,var(--info));--lam-v:var(--rf-s-cyan-v,var(--info));--lam-rgb:var(--rf-s-cyan-rgb,var(--info-rgb));display:inline-flex;flex-direction:column;align-items:flex-start;gap:7px;min-width:214px;margin:16px 0 4px;text-align:left}
@@ -48,7 +48,7 @@
   -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;
   filter:drop-shadow(0 0 12px rgba(var(--accent-rgb),calc(.28*var(--rx-glow,1))));
   animation:txRfFilm 8s var(--rf-ease-in-out,ease-in-out) infinite alternate}
-[data-rf-mode="day"] .tx-rf-film{background-image:linear-gradient(105deg,transparent 32%,rgba(255,255,255,.55) 46%,rgba(255,255,255,.1) 54%,transparent 64%),linear-gradient(115deg,var(--rf-s-rose) 0%,var(--rf-s-violet) 20%,var(--rf-s-azure) 40%,var(--rf-s-cyan) 60%,var(--rf-s-mint) 80%,var(--rf-s-rose) 100%);filter:drop-shadow(0 1px 0 #fff) drop-shadow(0 10px 16px rgba(var(--rx-shade-rgb),.14))}
+[data-mode="light"] .tx-rf-film{background-image:linear-gradient(105deg,transparent 32%,rgba(255,255,255,.55) 46%,rgba(255,255,255,.1) 54%,transparent 64%),linear-gradient(115deg,var(--rf-s-rose) 0%,var(--rf-s-violet) 20%,var(--rf-s-azure) 40%,var(--rf-s-cyan) 60%,var(--rf-s-mint) 80%,var(--rf-s-rose) 100%);filter:drop-shadow(0 1px 0 #fff) drop-shadow(0 10px 16px rgba(var(--rx-shade-rgb),.14))}
 </style>
 <div class="gallery" id="g0">
   <div class="tile is-new" data-ctype="text-effect" data-interact="auto-play" data-c="accent"><div class="stage"><span class="tx-sample tx-rf-spectral">Refraction</span></div>

@@ -74,7 +74,7 @@
 .rfm-nav-it[aria-current="page"] .rfm-ix{height:20px;opacity:1;background:var(--rf-beam-v,var(--h,var(--accent)));box-shadow:0 0 10px 1px rgba(var(--hr,var(--accent-rgb)),.85)}
 .rfm-nav-it[aria-current="page"] .rfm-ix.is-white{background:var(--rf-white,var(--ink))}
 /* Day: the beam becomes the hue made visible on paper — hue tick with a soft glow */
-:is([data-rf-mode="day"],[data-theme="prism-light"]) .rfm-nav-it[aria-current="page"] .rfm-ix{background:var(--h,var(--accent));box-shadow:0 0 8px rgba(var(--hr,var(--accent-rgb)),.45)}
+[data-mode="light"] .rfm-nav-it[aria-current="page"] .rfm-ix{background:var(--h,var(--accent));box-shadow:0 0 8px rgba(var(--hr,var(--accent-rgb)),.45)}
 @container style(--rf-mode: day){.rfm-nav-it[aria-current="page"] .rfm-ix{background:var(--h,var(--accent));box-shadow:0 0 8px rgba(var(--hr,var(--accent-rgb)),.45)}}
 
 /* ---- Radial Prism Menu: white light in, a fan of spectral rays out ---- */
@@ -120,7 +120,7 @@
 </style>
 <div class="gallery">
 
-  <div class="tile is-new" data-ctype="command-palette" data-interact="focus click"><div class="stage">
+  <div class="tile is-new" data-ctype="command-palette" data-interact="focus click" data-needs-js="rfm-menus"><div class="stage">
     <div class="rfm-pal" role="dialog" aria-label="Command palette">
       <div class="rfm-pal-in">
         <input class="rfm-pal-q" type="text" value="glo" placeholder="Search facets, galleries, commands" role="combobox" aria-expanded="true" aria-controls="rfm-pal-list1" aria-activedescendant="rfm-pal-o1" aria-autocomplete="list" aria-label="Search facets, galleries and commands" autocomplete="off" spellcheck="false">
@@ -146,7 +146,7 @@
     </div>
   </div><div class="meta"><div class="nm">Spectral Command Palette</div><span class="ref">.rfm-pal</span><div class="desc">Glass command palette: lens field with an accent caret, a full-spectrum beam under the input, grouped results with hue index ticks and λ labels, and the matched run lit in spectral ink. Type to filter, ↑ ↓ to move, ↵ to open.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new" data-ctype="nav-menu" data-interact="hover click"><div class="stage">
+  <div class="tile is-new" data-ctype="nav-menu" data-interact="hover click" data-needs-js="rfm-menus"><div class="stage">
     <nav class="rfm-nav" aria-label="Galleries">
       <div class="rfm-nav-grp">Library</div>
       <a class="rfm-nav-it" href="#"><i class="rfm-ix is-white"></i><span class="rfm-nav-lb">New Facets</span><span class="rfm-nav-l">D65</span><span class="rfm-nav-n">128</span></a>
@@ -162,7 +162,7 @@
     </nav>
   </div><div class="meta"><div class="nm">Spectral Index Nav</div><span class="ref">.rfm-nav</span><div class="desc">The Refraction sidebar: mono group eyebrows over fading hairlines, a hue index tick per gallery, λ revealed on hover and a mono count. The active page (aria-current) gets a hue wash and a white beam tick haloed in its hue; ↑ ↓ move between items.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-  <div class="tile is-new" data-ctype="menu" data-interact="toggle click"><div class="stage">
+  <div class="tile is-new" data-ctype="menu" data-interact="toggle click" data-needs-js="rfm-menus"><div class="stage">
     <div class="rfm-rad" data-open="true">
       <i class="rfm-rad-in" aria-hidden="true"></i>
       <button class="rfm-rad-prism" type="button" aria-haspopup="menu" aria-expanded="true" aria-controls="rfm-rad-m1" aria-label="Close actions"><i class="rfm-rad-glass" aria-hidden="true"></i></button>
@@ -179,7 +179,7 @@
   </div><div class="meta"><div class="nm">Radial Prism Menu</div><span class="ref">.rfm-rad</span><div class="desc">White light enters a glass prism trigger and fans out as six spectral rays, each an action at its own wavelength. Enter / Space opens, arrow keys walk the rays, Esc closes; reduced motion drops the fan animation.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
 </div>
-<script>
+<script data-prism-init="rfm-menus">
 /* Refraction signatures (rfm-*) — delegated, idempotent, keyboard-first */
 (function(){
   if(window.__rfmInit) return; window.__rfmInit=true;

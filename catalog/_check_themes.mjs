@@ -241,12 +241,15 @@ export function auditTheme(theme, fallback = {}, pairs = PAIRS) {
   return rows;
 }
 
-// Every --x-rgb must equal the rgb of --x.
+// Every --x-rgb must equal the rgb of --x. The Refraction layer (--rf-*, the Prism theme) pairs the
+// triplet with the vivid tier instead: where --rf-x-v exists, --rf-x is the text-safe tier and
+// --rf-x-rgb is the rgb of --rf-x-v (the stop its tints, glows and gradients use).
 export function checkRgb(theme) {
   const out = [];
   for (const [k, v] of Object.entries(theme.tokens)) {
     if (!k.endsWith('-rgb')) continue;
-    const base = k.slice(0, -4);
+    const stem = k.slice(0, -4);
+    const base = stem.startsWith('--rf-') && (stem + '-v') in theme.tokens ? stem + '-v' : stem;
     const hex = parseColor(theme.tokens[base]);
     const trip = parseColor(v);
     if (!hex) { out.push({ theme: theme.id, token: k, problem: `${base} is missing or not a color` }); continue; }

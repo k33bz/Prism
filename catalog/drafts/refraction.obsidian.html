@@ -30,17 +30,20 @@
   background:rgb(var(--rfo));box-shadow:0 0 8px rgba(var(--rfo),.7)}
 .callout[data-callout-metadata*="refraction"]:hover{border-color:rgba(var(--rfo),.42)}
 .callout[data-callout-metadata*="refraction"]:hover::before{left:3%;right:3%;opacity:1}
-:is([data-rf-mode="day"],[data-theme="prism-light"],.theme-light) .callout[data-callout-metadata*="refraction"]:hover{border-color:transparent;
+[data-mode="light"] .callout[data-callout-metadata*="refraction"]:hover,.theme-light .callout[data-callout-metadata*="refraction"]:hover{border-color:transparent;
   background:linear-gradient(180deg,rgba(var(--rfo),.10),rgba(var(--rfo),.02) 70%) padding-box,linear-gradient(var(--background-primary-alt,var(--card,#fdfcff)),var(--background-primary-alt,var(--card,#fdfcff))) padding-box,var(--rf-iris-edge,linear-gradient(115deg,#e7a6c8,#b49ff0 30%,#8fb8f2 55%,#86d7bb 78%,#e6c98a)) border-box}
 .callout[data-callout-metadata*="refraction"] .callout-title{display:flex;align-items:center;gap:8px;padding:0;color:rgb(var(--rfo));background:none}
 .callout[data-callout-metadata*="refraction"] .callout-icon{display:inline-grid;place-items:center;flex:none;width:16px;height:16px;color:rgb(var(--rfo))}
 .callout[data-callout-metadata*="refraction"] .callout-icon svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
 .callout[data-callout-metadata*="refraction"] .callout-title-inner{font:600 10px/1.2 var(--rf-mono,var(--font-monospace,ui-monospace,monospace));letter-spacing:.15em;text-transform:uppercase}
-.callout[data-callout-metadata*="refraction"] .callout-title-inner .rfo-l{margin-left:7px;color:var(--dim,var(--text-faint));font-weight:400;letter-spacing:.04em;text-transform:none}
+.callout[data-callout-metadata*="refraction"] .callout-title-inner .rfo-l{margin-left:7px;color:var(--dim,var(--text-faint,#8a8c9d));font-weight:400;letter-spacing:.04em;text-transform:none}
 .callout[data-callout-metadata*="refraction"] .callout-content{margin-top:5px;padding:0;color:var(--text-normal,var(--muted,#a2a4b4));font-size:12.5px;line-height:1.5}
 .callout[data-callout-metadata*="refraction"] .callout-content p{margin:0}
 .callout[data-callout-metadata*="refraction"] .callout-content b{color:var(--text-normal,var(--ink,#f0f0f5));font-weight:600}
 @media (prefers-reduced-motion:reduce){.callout[data-callout-metadata*="refraction"],.callout[data-callout-metadata*="refraction"]::before{transition:none}}
+/* fork: light-mode text contrast (4.5:1 for text, 3:1 for the dim labels) */
+[data-mode="light"] .callout[data-callout-metadata*="refraction"] .callout-title-inner{color:color-mix(in srgb,rgb(var(--rfo)) 72%,var(--ink))}
+[data-mode="light"] .callout[data-callout-metadata*="refraction"] .callout-title-inner .rfo-l{color:var(--muted)}
 </style>
 <div class="gallery">
 

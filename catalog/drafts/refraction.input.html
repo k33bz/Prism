@@ -63,7 +63,7 @@
 
 /* Wavelength Slider — the track is the visible spectrum (Refraction stops placed at their real
    dominant wavelengths); the thumb and the readout take the color under it. */
-.rfi-wl{width:100%;display:grid;gap:10px;--rfi-c:var(--rf-s-mint-v,#52cea0)}
+.rfi-wl{width:100%;max-width:300px;display:grid;gap:10px;--rfi-c:var(--rf-s-mint-v,#52cea0)}
 .rfi-wl-head{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
 .rfi-wl-out{display:inline-flex;align-items:center;gap:8px;font:600 13px/1 var(--rf-mono,ui-monospace,monospace);font-variant-numeric:tabular-nums;color:var(--ink)}
 .rfi-wl-out::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--rfi-c);box-shadow:0 0 8px var(--rfi-c)}
@@ -105,7 +105,7 @@
       </div>
     </div><div class="meta"><div class="nm">Beam Focus Field</div><span class="ref">.rfi-beam-field</span><div class="desc">The Refraction text field: it rests on a 3:1 instrument baseline under a mono eyebrow. On focus a beam of white light runs the baseline once and the lit top edge catches the gallery hue. Invalid swaps the beam to coral and spells out the fix.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-    <div class="tile is-new" data-ctype="segmented-control" data-interact="click"><div class="stage">
+    <div class="tile is-new" data-ctype="segmented-control" data-interact="click" data-needs-js="rfi-controls"><div class="stage">
       <div class="rfi-seg" role="radiogroup" aria-label="Time window">
         <button type="button" class="rfi-seg-opt" role="radio" aria-checked="false" tabindex="-1" style="--i:0;--n:4">1h</button>
         <button type="button" class="rfi-seg-opt" role="radio" aria-checked="true" tabindex="0" style="--i:1;--n:4">24h</button>
@@ -115,7 +115,7 @@
       <div class="rfi-seg-cap" aria-hidden="true"><span>λ 436</span><span>λ 597</span></div>
     </div><div class="meta"><div class="nm">Spectral Segmented Control</div><span class="ref">.rfi-seg</span><div class="desc">One continuous spectrum runs beneath the track; the pressed segment lifts to the card surface and its underline reveals exactly the slice of light under it. A real radio group — arrow keys, Home and End move the selection.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-    <div class="tile is-new" data-ctype="toggle" data-interact="click toggle"><div class="stage">
+    <div class="tile is-new" data-ctype="toggle" data-interact="click toggle" data-needs-js="rfi-controls"><div class="stage">
       <div style="width:100%;max-width:280px">
         <div class="rfi-prism-row">
           <button type="button" class="rfi-prism" role="switch" aria-checked="true" aria-labelledby="rfiPt1"><span class="rfi-prism-thumb"></span></button>
@@ -130,7 +130,7 @@
       </div>
     </div><div class="meta"><div class="nm">Prism Toggle</div><span class="ref">.rfi-prism</span><div class="desc">A switch made of light. Off is a disc of white light on an ink track; on, the track refracts into the full spectrum and the thumb becomes the prism. The state is also spelled out beside the label, so it never relies on color.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
-    <div class="tile is-new" data-ctype="input-range" data-interact="drag"><div class="stage">
+    <div class="tile is-new" data-ctype="input-range" data-interact="drag" data-needs-js="rfi-controls"><div class="stage">
       <div class="rfi-wl">
         <div class="rfi-wl-head"><label class="rfi-eyebrow" for="rfiWl1">Wavelength</label><output class="rfi-wl-out" for="rfiWl1"><span class="rfi-wl-val">λ 532</span><small class="rfi-wl-name">green</small></output></div>
         <input type="range" class="rfi-wl-range" id="rfiWl1" min="380" max="700" step="1" value="532" aria-valuetext="532 nanometers, green">
@@ -139,7 +139,7 @@
     </div><div class="meta"><div class="nm">Wavelength Slider</div><span class="ref">.rfi-wl</span><div class="desc">A native range over the visible spectrum, 380–700 nm, with the Refraction stops placed at their real dominant wavelengths. The thumb and the λ readout take the color under them, and the band is named in words for screen readers.</div><button class="copy" onclick="copyViz(this)">Copy</button></div></div>
 
   </div>
-<script>
+<script data-prism-init="rfi-controls">
 /* Refraction signatures (rfi-*): delegated, idempotent */
 (function(){
   if(window.__rfiInit) return; window.__rfiInit=true;

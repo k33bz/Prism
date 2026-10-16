@@ -7,7 +7,7 @@
   --rfo-beam:var(--rf-beam-core,#fff);
   --rfo-halo:rgba(var(--rf-hue-rgb,var(--accent-rgb)),.55);
   --rfo-edge:rgba(255,255,255,.22);--rfo-hi:rgba(255,255,255,.55)}
-[data-rf-mode="day"] .rfo-scene{--rfo-edge:rgba(var(--rx-shade-rgb,44,32,96),.18);--rfo-hi:#fff}
+[data-mode="light"] .rfo-scene{--rfo-edge:rgba(var(--rx-shade-rgb,44,32,96),.18);--rfo-hi:#fff}
 .rfo-scene>svg.rfo-ov{position:absolute;left:0;top:0;width:220px;height:150px;overflow:visible;pointer-events:none}
 .rfo-ov line{stroke-linecap:round;fill:none}
 .rfo-beam{stroke:var(--rfo-beam);stroke-width:1.6}
@@ -25,7 +25,7 @@
   --rfo-glass:linear-gradient(160deg,rgba(255,255,255,.14),rgba(255,255,255,.025) 52%,rgba(var(--rf-hue-rgb,var(--accent-rgb)),.12));
   --rfo-cap:linear-gradient(172deg,rgba(255,255,255,.17),rgba(255,255,255,.03) 58%,rgba(var(--accent-rgb),.10));
   --rfo-rimc:rgba(255,255,255,.62)}
-[data-rf-mode="day"] .rfo-prism{
+[data-mode="light"] .rfo-prism{
   --rfo-glass:linear-gradient(160deg,rgba(255,255,255,.7),rgba(255,255,255,.2) 60%),var(--rf-iris,linear-gradient(115deg,#fff,#f0eff6));
   --rfo-cap:linear-gradient(172deg,rgba(255,255,255,.78),rgba(255,255,255,.22) 60%),var(--rf-iris,linear-gradient(115deg,#fff,#f0eff6));
   --rfo-rimc:color-mix(in srgb,var(--accent) 42%,#fff)}
@@ -34,7 +34,7 @@
 .rfo-prism-floor::after{content:"";position:absolute;left:62%;top:30%;width:110%;height:70%;border-radius:50%;
   background:var(--rf-spectrum,linear-gradient(90deg,var(--accent),var(--info),var(--pos),var(--warn),var(--neg)));
   filter:blur(6px);opacity:.32;mix-blend-mode:var(--rx-blend,screen)}
-[data-rf-mode="day"] .rfo-prism-floor::after{mix-blend-mode:normal;opacity:.55}
+[data-mode="light"] .rfo-prism-floor::after{mix-blend-mode:normal;opacity:.55}
 .rfo-prism-body{position:absolute;left:104px;top:80px;width:0;height:0;transform-style:preserve-3d;
   transform:rotateX(-14deg) rotateY(-16deg);animation:rfoSway 9s var(--rf-ease-in-out,cubic-bezier(.65,0,.35,1)) infinite alternate}
 .rfo-prism-body>span{position:absolute;display:block;backface-visibility:visible}
@@ -66,7 +66,7 @@
     radial-gradient(circle at 50% 50%,transparent 60%,rgba(255,255,255,.08) 80%,rgba(255,255,255,.3) 100%),
     radial-gradient(circle at 40% 34%,color-mix(in srgb,var(--panel2) 80%,var(--rf-hue-v,var(--accent))),var(--rf-bg-deep,var(--bg)) 80%);
   box-shadow:inset 0 0 0 1px rgba(255,255,255,.16),inset 0 -12px 24px rgba(var(--rf-hue-rgb,var(--accent-rgb)),.22),0 14px 28px -14px rgba(var(--rx-shade-rgb,0,0,0),.7)}
-[data-rf-mode="day"] .rfo-orb-ball{
+[data-mode="light"] .rfo-orb-ball{
   background:
     radial-gradient(circle at 50% 116%,rgba(var(--rf-hue-rgb,var(--accent-rgb)),.2),transparent 58%),
     radial-gradient(circle at 50% 50%,transparent 58%,rgba(var(--rx-shade-rgb,44,32,96),.05) 80%,rgba(var(--rx-shade-rgb,44,32,96),.16) 100%),
@@ -84,8 +84,8 @@
     radial-gradient(circle at 38% 33%,transparent 0 66%,rgba(var(--rf-s-azure-rgb,var(--info-rgb)),.55) 68%,rgba(var(--rf-s-mint-rgb,var(--pos-rgb)),.45) 70%,rgba(var(--rf-s-citrine-rgb,var(--warn-rgb)),.45) 72%,rgba(var(--rf-s-rose-rgb,var(--crit-rgb)),.5) 74%,transparent 77%);
   -webkit-mask:conic-gradient(from 60deg at 50% 50%,transparent 0 6%,#000 18% 40%,transparent 52%);mask:conic-gradient(from 60deg at 50% 50%,transparent 0 6%,#000 18% 40%,transparent 52%);
   transform-origin:38% 33%;animation:rfoCaustic 5.6s ease-in-out infinite alternate}
-[data-rf-mode="day"] .rfo-orb-net{mix-blend-mode:normal}
-[data-rf-mode="day"] .rfo-orb-ca{opacity:.5}
+[data-mode="light"] .rfo-orb-net{mix-blend-mode:normal}
+[data-mode="light"] .rfo-orb-ca{opacity:.5}
 .rfo-orb-rim{inset:0;background:conic-gradient(from 200deg,transparent,rgba(var(--rf-s-rose-rgb,var(--crit-rgb)),.6),rgba(var(--rf-s-citrine-rgb,var(--warn-rgb)),.5),rgba(var(--rf-s-mint-rgb,var(--pos-rgb)),.5),rgba(var(--rf-s-azure-rgb,var(--info-rgb)),.6),transparent 52%);
   -webkit-mask:radial-gradient(circle,transparent 64%,#000 71%,#000 95%,transparent 100%);mask:radial-gradient(circle,transparent 64%,#000 71%,#000 95%,transparent 100%);
   mix-blend-mode:var(--rx-blend,screen);animation:rfoSpin 22s linear infinite reverse}
@@ -98,18 +98,18 @@
     conic-gradient(from 90deg,var(--rf-s-violet-v,var(--accent)),var(--rf-s-azure-v,var(--info)),var(--rf-s-mint-v,var(--pos)),var(--rf-s-citrine-v,var(--warn)),var(--rf-s-coral-v,var(--neg)),var(--rf-s-violet-v,var(--accent)));
   -webkit-mask:radial-gradient(closest-side,#000 35%,transparent 100%);mask:radial-gradient(closest-side,#000 35%,transparent 100%);
   filter:blur(2.5px);opacity:.85;mix-blend-mode:var(--rx-blend,screen);animation:rfoPool 5.6s ease-in-out infinite alternate}
-[data-rf-mode="day"] .rfo-orb-pool>b{mix-blend-mode:normal;opacity:.9}
+[data-mode="light"] .rfo-orb-pool>b{mix-blend-mode:normal;opacity:.9}
 @keyframes rfoCaustic{0%{transform:rotate(-7deg) scale(.97);opacity:.8}100%{transform:rotate(8deg) scale(1.03);opacity:1}}
 @keyframes rfoPool{0%{transform:translateX(-4px) scale(.9,1.04);opacity:.72}100%{transform:translateX(5px) scale(1.1,.9);opacity:.95}}
 
 /* ---- 3 · Beam Splitter — white light strikes a glass cube and leaves as five wavelengths ---- */
 .rfo-sp-g1{stop-color:#fff;stop-opacity:.26}
 .rfo-sp-g2{stop-color:rgb(var(--rf-hue-rgb,var(--accent-rgb)));stop-opacity:.16}
-[data-rf-mode="day"] .rfo-sp-g1{stop-color:#fff;stop-opacity:.95}
-[data-rf-mode="day"] .rfo-sp-g2{stop-color:rgb(var(--rf-hue-rgb,var(--accent-rgb)));stop-opacity:.22}
+[data-mode="light"] .rfo-sp-g1{stop-color:#fff;stop-opacity:.95}
+[data-mode="light"] .rfo-sp-g2{stop-color:rgb(var(--rf-hue-rgb,var(--accent-rgb)));stop-opacity:.22}
 .rfo-sp-cube{stroke:var(--rfo-rimc,rgba(255,255,255,.6));stroke-width:1.2}
 .rfo-sp-facet{fill:none;stroke:var(--rfo-edge);stroke-width:1}
-[data-rf-mode="day"] .rfo-split{--rfo-rimc:color-mix(in srgb,var(--accent) 55%,#fff)}
+[data-mode="light"] .rfo-split{--rfo-rimc:color-mix(in srgb,var(--accent) 55%,#fff)}
 .rfo-sp-glint{fill:var(--rfo-beam);filter:blur(4px);opacity:0;animation:rfoSpGlint 2.4s ease-out infinite}
 .rfo-sp-dot{fill:var(--c);opacity:.45;animation:rfoSpDot 2.4s ease-out infinite}
 .rfo-sp-lbl{font:600 8.5px var(--rf-mono,ui-monospace,monospace);letter-spacing:.05em;fill:var(--t,var(--dim))}
@@ -252,36 +252,3 @@
   </div><div class="meta"><div class="nm">Beam Splitter</div><span class="ref">.rfo-split</span><div class="desc">A white D65 beam strikes a small glass cube, which flashes as it splits the light into five wavelengths; photons race out along each ray and light the detector at its end, labelled with its λ. Instrument-grade "fan-out" for pipelines, routing and AI dispatch.</div><button class="copy">Copy</button></div></div>
 
 </div>
-<script>
-/* Refraction objects: copy the stage markup + every CSS rule it uses (incl. Day and reduced-motion
-   variants and the keyframes it animates with). Global so it also works on harvested pages. */
-window.rfoCopy=window.rfoCopy||function(btn){
-  try{
-    var st=btn.closest('.tile').querySelector('.stage'), html=st.innerHTML.trim();
-    var names=[]; (html.match(/class="([^"]*)"/g)||[]).forEach(function(m){ m.slice(7,-1).split(/\s+/).forEach(function(c){ if(c.indexOf('rfo-')===0&&names.indexOf(c)<0) names.push(c); }); });
-    /* a rule belongs to this facet if one of its selectors uses only .rfo-* classes the facet has */
-    function hit(sel){ return !!sel && sel.split(',').some(function(p){ var t=p.match(/\.rfo-[\w-]+/g); return !!t && t.every(function(c){ return names.indexOf(c.slice(1))>=0; }); }); }
-    var out=[], kf={}, allKf=[];
-    for(var s0=0;s0<document.styleSheets.length;s0++){ var r0; try{ r0=document.styleSheets[s0].cssRules; }catch(e){ continue; } if(r0) for(var k0=0;k0<r0.length;k0++) if(r0[k0].type===7) allKf.push(r0[k0].name); }
-    /* shorthand animations that use var() leave animationName empty, so match keyframe names in the text */
-    function note(r){ var t=(r.cssText.match(/animation(-name)?:[^;}]+/g)||[]).join(' '); allKf.forEach(function(n){ if(new RegExp('[\\s:,]'+n+'(?![\\w-])').test(t)) kf[n]=1; }); }
-    for(var s=0;s<document.styleSheets.length;s++){
-      var rules; try{ rules=document.styleSheets[s].cssRules; }catch(e){ continue; }
-      if(!rules) continue;
-      for(var i=0;i<rules.length;i++){ var r=rules[i];
-        if(r.type===1 && hit(r.selectorText)){ out.push(r.cssText); note(r); }
-        else if(r.type===4){ var inner=[]; for(var j=0;j<r.cssRules.length;j++){ var q=r.cssRules[j]; if(q.type===1&&hit(q.selectorText)){ inner.push(q.cssText); note(q); } } if(inner.length) out.push('@media '+r.conditionText+'{'+inner.join('')+'}'); }
-      }
-    }
-    for(var s2=0;s2<document.styleSheets.length;s2++){
-      var rr; try{ rr=document.styleSheets[s2].cssRules; }catch(e){ continue; }
-      if(!rr) continue;
-      for(var k=0;k<rr.length;k++){ if(rr[k].type===7 && kf[rr[k].name]){ out.push(rr[k].cssText); delete kf[rr[k].name]; } }
-    }
-    var txt=html+'\n\n<style>\n'+out.join('\n')+'\n</style>';
-    var done=function(){ var o=btn.getAttribute('data-lbl')||btn.textContent; btn.setAttribute('data-lbl',o); btn.textContent='✓ Copied'; btn.classList.add('ok'); setTimeout(function(){ btn.textContent=o; btn.classList.remove('ok'); btn.removeAttribute('data-lbl'); },1300); };
-    var fallback=function(){ var ta=document.createElement('textarea'); ta.value=txt; ta.setAttribute('readonly',''); ta.style.cssText='position:fixed;top:0;left:0;width:1px;height:1px;opacity:0'; document.body.appendChild(ta); ta.select(); try{ document.execCommand('copy'); }catch(e){} document.body.removeChild(ta); done(); };
-    if(navigator.clipboard&&navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(done,fallback); else fallback();
-  }catch(e){}
-};
-</script>
