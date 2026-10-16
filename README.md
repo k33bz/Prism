@@ -4,6 +4,8 @@
 
 **One prism. Every facet of your report.**
 
+**[prism.k33bz.com](https://prism.k33bz.com)** · [open the gallery](https://prism.k33bz.com/Prism.html)
+
 A single-file gallery of **3,641** offline, self-contained CSS/SVG animations, components, and backdrops, built to be browsed by humans *and* driven by AI agents. Ships with a **zero-dependency MCP server** so Claude (Desktop, Code, or the API) can search the catalog and compose production-ready HTML/CSS on demand.
 
 ![Effects](https://img.shields.io/badge/effects-3641-ff9900) ![Galleries](https://img.shields.io/badge/galleries-18-4493f8) ![Dependencies](https://img.shields.io/badge/dependencies-0-3fb950) ![Offline](https://img.shields.io/badge/offline-100%25-3fb950) ![MCP](https://img.shields.io/badge/MCP-server%20included-c879ff) ![Single file](https://img.shields.io/badge/single%20file-HTML-e0a52b)

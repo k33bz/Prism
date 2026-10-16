@@ -25,5 +25,7 @@ catalog and checks that the displayed gallery counts match it. Values shown in
 those previews are original sample data. The agent workflow is an illustration;
 the MCP server runs locally, not in the website.
 
-GitHub Pages deployment and custom-domain configuration are deferred until the
-demo has been reviewed. This change does not modify the application or MCP server.
+In this fork, `.github/workflows/pages.yml` builds the site and publishes it to
+GitHub Pages at [prism.k33bz.com](https://prism.k33bz.com) on every push to main.
+The gallery counts in `index.html` must match the catalog, or the build (and the
+deploy) fails: update them whenever facets are added.

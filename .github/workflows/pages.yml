@@ -1,0 +1,37 @@
+# Build the landing page (website/, with Prism.html beside it) and publish it to
+# GitHub Pages (prism.k33bz.com) on every push to main. Forgejo is the primary
+# repo and mirrors here; Forgejo's own runner also reads .github/workflows, so the
+# job only runs on github.com. Deploys a build artifact rather than a gh-pages
+# branch, which the mirror would delete on its next sync.
+name: Pages
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: pages
+  cancel-in-progress: true
+jobs:
+  deploy:
+    if: github.server_url == 'https://github.com'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      # fails if the landing page's gallery counts disagree with the catalog
+      - run: node website/build.mjs site-dist
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site-dist
+      - id: deployment
+        uses: actions/deploy-pages@v4
