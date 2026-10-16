@@ -4,7 +4,7 @@
 
 Version <!--n:version-->0.7.0<!--/n--> (plugin <!--n:pluginVersion-->0.7.0.0<!--/n-->). The numbers below are rewritten from the package on every plugin build (`scripts/doc-counts.mjs`).
 
-- **<!--n:facets-->210<!--/n--> facets** in <!--n:galleries-->8<!--/n--> galleries: Themes, Icons, Motion, Spans, Dials & Strips, Screens, Apps and Games.
+- **<!--n:facets-->224<!--/n--> facets** in <!--n:galleries-->8<!--/n--> galleries: Themes, Icons, Motion, Spans, Dials & Strips, Screens, Apps and Games.
 - **<!--n:themes-->11<!--/n--> themes**, each in Night and Day: Prism, Aurora, Blueprint, Chrome, Ember, Mono, Neon, Paper, Phosphor, Pixel and Porcelain.
 - **<!--n:glyphs-->56<!--/n--> glyphs**. Every glyph renders in every theme.
 - **<!--n:devices-->30<!--/n--> devices**, from the hardware research ([`docs/devices.md`](./docs/devices.md)).
@@ -107,6 +107,8 @@ The Galleon 100 SD also needs `python3` (standard library only) for its keep-ali
 
 ### AI live editing (off by default)
 
+> **In this repository:** the plugin's live channel is here, but the MCP server's deck tools (`deck_*`, `deck_live_*`) are not yet: they live in upstream's `prism-mcp-server` (crazy54/Prism, branch `feat/prism-design-language`). Leave **Allow AI editing** off until they arrive; nothing in this repository connects to the channel.
+
 With **Allow AI editing** switched on in the plugin settings, an assistant connected through Prism's MCP server ([`prism-mcp-server`](../prism-mcp-server)) can change how **Prism's own keys and dials look**: glyphs, facets, themes, titles, dial feedback or a whole layout page. It can't run programs, press hotkeys, type, open URLs, switch profiles or touch other plugins' keys.
 
 1. **Switch it on.** Open any Prism key's property inspector and turn on **Allow AI editing** under *Plugin settings*. While it's off, nothing listens and no file is written.
@@ -121,6 +123,16 @@ With **Allow AI editing** switched on in the plugin settings, an assistant conne
 Every change can be undone (50 steps) and is logged, without tokens or image data, to `audit.jsonl` next to `control.json`. AI edits live only while the plugin runs; they are never written into your profiles. The full security model is in [`docs/plugin.md`](./docs/plugin.md#ai-live-editing-prism-deck-live).
 
 **What the assistant uses.** The MCP server has 24 deck tools. The design-time tools need no plugin and no pairing: `deck_list_*`, `deck_search_facets` and `deck_get_facet` browse the catalog, `deck_render` previews a facet or a layout page as PNG or SVG, `deck_layout_*` edits stored layouts (keys, spans, dials, screens), and `deck_export_profile` / `deck_export_iconpack` write files for you to double-click. The live tools (`deck_live_status`, `deck_live_pair`, `deck_live_set_key`, `deck_live_set_dial`, `deck_live_batch`, `deck_live_apply_layout`, `deck_live_snapshot`, `deck_live_undo`) need the steps above. Details: [`prism-mcp-server/README.md`](../prism-mcp-server/README.md).
+
+## AI console
+
+Keys for a Stream Deck that watches over AI coding agents, after this fork owner's own MK.2 console: the
+thinking orb, one key per agent session (the project, the tool in use, what it is doing), the permission prompt
+with Deny, Screen and hold-to-Allow keys, prompt routing, agent and job status tiles and a page key (Apps › AI
+Console), an agent's question flowed across a row with the answers below it, a work stream across a row, and three
+whole-deck moments (Spans: confetti, an attention ripple, an outrun screensaver). Two profiles, **Prism AI Console ·
+Stream Deck MK.2** and **· Stream Deck XL**, lay them out (`plugin/dist/profiles/`). Like every facet they are
+visual: a runtime sets their states. Details: [`docs/ai-console.md`](./docs/ai-console.md).
 
 ## In code
 
@@ -156,11 +168,12 @@ Run `npm link` in this folder for a global `prism-deck` command. `shoot.mjs` tak
 | [`docs/authoring.md`](./docs/authoring.md) | the contract: glyphs, themes, facets, surfaces, the scene API, the SVG subset |
 | [`docs/devices.md`](./docs/devices.md) | every device, its surfaces and gotchas (generated) |
 | [`docs/plugin.md`](./docs/plugin.md) | the plugin, icon packs and profiles: install, use, settings, AI live editing, troubleshooting |
+| [`docs/ai-console.md`](./docs/ai-console.md) | the AI console keys, spans, moments and profiles |
 | [`docs/linux.md`](./docs/linux.md) | OpenDeck, StreamController, Prism Deck Direct (hidraw) and audio |
 | [`src/web/README.md`](./src/web/README.md) | the browser runtime (virtual devices, offline island loader) |
 | [`docs/ASSIGNMENTS.md`](./docs/ASSIGNMENTS.md) | who built which themes, glyphs, galleries and apps |
 
-The key grammar (safe area, type sizes at 72 and 144 px, the state language) comes from Refraction, Prism's design language: see [`design/README.md`](../design/README.md#stream-deck-prism-deck).
+The key grammar (safe area, type sizes at 72 and 144 px, the state language) comes from Refraction, Prism's design language (`design/README.md` in upstream's `feat/prism-design-language` branch; this repository has no `design/` folder yet).
 
 ## Generated files
 

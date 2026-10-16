@@ -2,6 +2,7 @@
 // Build the Elgato exports of the Prism Deck catalog:
 //   plugin/dist/iconpacks/com.k33bz.prism.icons.<theme>.streamDeckIconPack   one per deck theme
 //   plugin/dist/profiles/Prism - <device>.streamDeckProfile                         Galleon 100 SD, Stream Deck +, MK.2, XL, Mini, Neo, + XL
+//   plugin/dist/profiles/Prism AI Console - <device>.streamDeckProfile              MK.2, XL (the AI console layouts)
 // Every pack and profile is checked after it is written (format rules from formats.md §4–5).
 //
 //   node scripts/build-iconpacks.mjs [--theme prism,neon] [--svg-only] [--no-profiles] [--out <dir>]
@@ -13,7 +14,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { buildIconPack, checkIconPack, loadRaster } from '../src/export/iconpack.js';
-import { sampleProfiles, checkProfile } from '../src/export/profile.js';
+import { sampleProfiles, aiConsoleProfiles, checkProfile } from '../src/export/profile.js';
 import { THEME_IDS } from '../src/themes/_registry.js';
 import { PLUGIN_VERSION } from '../src/plugin/index.js';
 
@@ -42,7 +43,7 @@ async function main() {
   }
   if (!has('--no-profiles')) {
     fs.mkdirSync(path.join(out, 'profiles'), { recursive: true });
-    for (const p of sampleProfiles({ pluginVersion: PLUGIN_VERSION })) {
+    for (const p of [...sampleProfiles({ pluginVersion: PLUGIN_VERSION }), ...aiConsoleProfiles({ pluginVersion: PLUGIN_VERSION })]) {
       const file = path.join(out, 'profiles', `${p.file}.streamDeckProfile`);
       fs.writeFileSync(file, p.zip);
       const problems = checkProfile(p.zip);

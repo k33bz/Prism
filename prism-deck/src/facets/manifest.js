@@ -112,75 +112,78 @@ import * as m109 from './spans/hearth.js';
 import * as m110 from './spans/lava.js';
 import * as m111 from './spans/life.js';
 import * as m112 from './spans/marquee.js';
-import * as m113 from './spans/power-on.js';
-import * as m114 from './spans/progress.js';
-import * as m115 from './spans/rain-glass.js';
-import * as m116 from './spans/rain.js';
-import * as m117 from './spans/ripple.js';
-import * as m118 from './spans/scoreboard.js';
-import * as m119 from './spans/snowfall.js';
-import * as m120 from './spans/spectrum.js';
-import * as m121 from './spans/swell.js';
-import * as m122 from './spans/warp.js';
-import * as m123 from './spans/waveform.js';
-import * as m124 from './dials/color-wheel.js';
-import * as m125 from './dials/eq.js';
-import * as m126 from './dials/gauge.js';
-import * as m127 from './dials/light.js';
-import * as m128 from './dials/refraction.js';
-import * as m129 from './dials/rundown.js';
-import * as m130 from './dials/score.js';
-import * as m131 from './dials/scrubber.js';
-import * as m132 from './dials/selector.js';
-import * as m133 from './dials/timeline.js';
-import * as m134 from './dials/value-bars.js';
-import * as m135 from './dials/volume-arc.js';
-import * as m136 from './dials/volume.js';
-import * as m137 from './dials/zoom.js';
-import * as m138 from './screens/galleon-dashboard.js';
-import * as m139 from './screens/galleon-game.js';
-import * as m140 from './screens/galleon-media.js';
-import * as m141 from './screens/galleon-meeting.js';
-import * as m142 from './screens/galleon-studio.js';
-import * as m143 from './screens/galleon-system.js';
-import * as m144 from './screens/galleon-weather.js';
-import * as m145 from './screens/neo-agenda.js';
-import * as m146 from './screens/neo-clock.js';
-import * as m147 from './screens/neo-now-playing.js';
-import * as m148 from './screens/neo-system.js';
-import * as m149 from './screens/strip-media.js';
-import * as m150 from './screens/strip-system.js';
-import * as m151 from './apps/clock-span.js';
-import * as m152 from './apps/clocks.js';
-import * as m153 from './apps/counter.js';
-import * as m154 from './apps/cpu-ring.js';
-import * as m155 from './apps/date-page.js';
-import * as m156 from './apps/focus-timer.js';
-import * as m157 from './apps/galleon-mix.js';
-import * as m158 from './apps/galleon-widgets.js';
-import * as m159 from './apps/meeting.js';
-import * as m160 from './apps/mic-meter.js';
-import * as m161 from './apps/neo-info.js';
-import * as m162 from './apps/pomodoro-set.js';
-import * as m163 from './apps/scene-countdown.js';
-import * as m164 from './apps/scenes.js';
-import * as m165 from './apps/spectrum.js';
-import * as m166 from './apps/system.js';
-import * as m167 from './apps/time-zones.js';
-import * as m168 from './apps/waveform-strip.js';
-import * as m169 from './apps/waveform.js';
-import * as m170 from './games/catch.js';
-import * as m171 from './games/coin.js';
-import * as m172 from './games/dice.js';
-import * as m173 from './games/echo.js';
-import * as m174 from './games/lights-out.js';
-import * as m175 from './games/memory.js';
-import * as m176 from './games/merge.js';
-import * as m177 from './games/oracle.js';
-import * as m178 from './games/reaction.js';
-import * as m179 from './games/slots.js';
-import * as m180 from './games/spectrum.js';
-import * as m181 from './games/tictactoe.js';
+import * as m113 from './spans/moments.js';
+import * as m114 from './spans/power-on.js';
+import * as m115 from './spans/progress.js';
+import * as m116 from './spans/rain-glass.js';
+import * as m117 from './spans/rain.js';
+import * as m118 from './spans/ripple.js';
+import * as m119 from './spans/scoreboard.js';
+import * as m120 from './spans/snowfall.js';
+import * as m121 from './spans/spectrum.js';
+import * as m122 from './spans/swell.js';
+import * as m123 from './spans/warp.js';
+import * as m124 from './spans/waveform.js';
+import * as m125 from './dials/color-wheel.js';
+import * as m126 from './dials/eq.js';
+import * as m127 from './dials/gauge.js';
+import * as m128 from './dials/light.js';
+import * as m129 from './dials/refraction.js';
+import * as m130 from './dials/rundown.js';
+import * as m131 from './dials/score.js';
+import * as m132 from './dials/scrubber.js';
+import * as m133 from './dials/selector.js';
+import * as m134 from './dials/timeline.js';
+import * as m135 from './dials/value-bars.js';
+import * as m136 from './dials/volume-arc.js';
+import * as m137 from './dials/volume.js';
+import * as m138 from './dials/zoom.js';
+import * as m139 from './screens/galleon-dashboard.js';
+import * as m140 from './screens/galleon-game.js';
+import * as m141 from './screens/galleon-media.js';
+import * as m142 from './screens/galleon-meeting.js';
+import * as m143 from './screens/galleon-studio.js';
+import * as m144 from './screens/galleon-system.js';
+import * as m145 from './screens/galleon-weather.js';
+import * as m146 from './screens/neo-agenda.js';
+import * as m147 from './screens/neo-clock.js';
+import * as m148 from './screens/neo-now-playing.js';
+import * as m149 from './screens/neo-system.js';
+import * as m150 from './screens/strip-media.js';
+import * as m151 from './screens/strip-system.js';
+import * as m152 from './apps/ai-console.js';
+import * as m153 from './apps/ai-spans.js';
+import * as m154 from './apps/clock-span.js';
+import * as m155 from './apps/clocks.js';
+import * as m156 from './apps/counter.js';
+import * as m157 from './apps/cpu-ring.js';
+import * as m158 from './apps/date-page.js';
+import * as m159 from './apps/focus-timer.js';
+import * as m160 from './apps/galleon-mix.js';
+import * as m161 from './apps/galleon-widgets.js';
+import * as m162 from './apps/meeting.js';
+import * as m163 from './apps/mic-meter.js';
+import * as m164 from './apps/neo-info.js';
+import * as m165 from './apps/pomodoro-set.js';
+import * as m166 from './apps/scene-countdown.js';
+import * as m167 from './apps/scenes.js';
+import * as m168 from './apps/spectrum.js';
+import * as m169 from './apps/system.js';
+import * as m170 from './apps/time-zones.js';
+import * as m171 from './apps/waveform-strip.js';
+import * as m172 from './apps/waveform.js';
+import * as m173 from './games/catch.js';
+import * as m174 from './games/coin.js';
+import * as m175 from './games/dice.js';
+import * as m176 from './games/echo.js';
+import * as m177 from './games/lights-out.js';
+import * as m178 from './games/memory.js';
+import * as m179 from './games/merge.js';
+import * as m180 from './games/oracle.js';
+import * as m181 from './games/reaction.js';
+import * as m182 from './games/slots.js';
+import * as m183 from './games/spectrum.js';
+import * as m184 from './games/tictactoe.js';
 
 export const FACET_MODULES = [
   ['themes/aurora.js', m0],
@@ -296,73 +299,76 @@ export const FACET_MODULES = [
   ['spans/lava.js', m110],
   ['spans/life.js', m111],
   ['spans/marquee.js', m112],
-  ['spans/power-on.js', m113],
-  ['spans/progress.js', m114],
-  ['spans/rain-glass.js', m115],
-  ['spans/rain.js', m116],
-  ['spans/ripple.js', m117],
-  ['spans/scoreboard.js', m118],
-  ['spans/snowfall.js', m119],
-  ['spans/spectrum.js', m120],
-  ['spans/swell.js', m121],
-  ['spans/warp.js', m122],
-  ['spans/waveform.js', m123],
-  ['dials/color-wheel.js', m124],
-  ['dials/eq.js', m125],
-  ['dials/gauge.js', m126],
-  ['dials/light.js', m127],
-  ['dials/refraction.js', m128],
-  ['dials/rundown.js', m129],
-  ['dials/score.js', m130],
-  ['dials/scrubber.js', m131],
-  ['dials/selector.js', m132],
-  ['dials/timeline.js', m133],
-  ['dials/value-bars.js', m134],
-  ['dials/volume-arc.js', m135],
-  ['dials/volume.js', m136],
-  ['dials/zoom.js', m137],
-  ['screens/galleon-dashboard.js', m138],
-  ['screens/galleon-game.js', m139],
-  ['screens/galleon-media.js', m140],
-  ['screens/galleon-meeting.js', m141],
-  ['screens/galleon-studio.js', m142],
-  ['screens/galleon-system.js', m143],
-  ['screens/galleon-weather.js', m144],
-  ['screens/neo-agenda.js', m145],
-  ['screens/neo-clock.js', m146],
-  ['screens/neo-now-playing.js', m147],
-  ['screens/neo-system.js', m148],
-  ['screens/strip-media.js', m149],
-  ['screens/strip-system.js', m150],
-  ['apps/clock-span.js', m151],
-  ['apps/clocks.js', m152],
-  ['apps/counter.js', m153],
-  ['apps/cpu-ring.js', m154],
-  ['apps/date-page.js', m155],
-  ['apps/focus-timer.js', m156],
-  ['apps/galleon-mix.js', m157],
-  ['apps/galleon-widgets.js', m158],
-  ['apps/meeting.js', m159],
-  ['apps/mic-meter.js', m160],
-  ['apps/neo-info.js', m161],
-  ['apps/pomodoro-set.js', m162],
-  ['apps/scene-countdown.js', m163],
-  ['apps/scenes.js', m164],
-  ['apps/spectrum.js', m165],
-  ['apps/system.js', m166],
-  ['apps/time-zones.js', m167],
-  ['apps/waveform-strip.js', m168],
-  ['apps/waveform.js', m169],
-  ['games/catch.js', m170],
-  ['games/coin.js', m171],
-  ['games/dice.js', m172],
-  ['games/echo.js', m173],
-  ['games/lights-out.js', m174],
-  ['games/memory.js', m175],
-  ['games/merge.js', m176],
-  ['games/oracle.js', m177],
-  ['games/reaction.js', m178],
-  ['games/slots.js', m179],
-  ['games/spectrum.js', m180],
-  ['games/tictactoe.js', m181],
+  ['spans/moments.js', m113],
+  ['spans/power-on.js', m114],
+  ['spans/progress.js', m115],
+  ['spans/rain-glass.js', m116],
+  ['spans/rain.js', m117],
+  ['spans/ripple.js', m118],
+  ['spans/scoreboard.js', m119],
+  ['spans/snowfall.js', m120],
+  ['spans/spectrum.js', m121],
+  ['spans/swell.js', m122],
+  ['spans/warp.js', m123],
+  ['spans/waveform.js', m124],
+  ['dials/color-wheel.js', m125],
+  ['dials/eq.js', m126],
+  ['dials/gauge.js', m127],
+  ['dials/light.js', m128],
+  ['dials/refraction.js', m129],
+  ['dials/rundown.js', m130],
+  ['dials/score.js', m131],
+  ['dials/scrubber.js', m132],
+  ['dials/selector.js', m133],
+  ['dials/timeline.js', m134],
+  ['dials/value-bars.js', m135],
+  ['dials/volume-arc.js', m136],
+  ['dials/volume.js', m137],
+  ['dials/zoom.js', m138],
+  ['screens/galleon-dashboard.js', m139],
+  ['screens/galleon-game.js', m140],
+  ['screens/galleon-media.js', m141],
+  ['screens/galleon-meeting.js', m142],
+  ['screens/galleon-studio.js', m143],
+  ['screens/galleon-system.js', m144],
+  ['screens/galleon-weather.js', m145],
+  ['screens/neo-agenda.js', m146],
+  ['screens/neo-clock.js', m147],
+  ['screens/neo-now-playing.js', m148],
+  ['screens/neo-system.js', m149],
+  ['screens/strip-media.js', m150],
+  ['screens/strip-system.js', m151],
+  ['apps/ai-console.js', m152],
+  ['apps/ai-spans.js', m153],
+  ['apps/clock-span.js', m154],
+  ['apps/clocks.js', m155],
+  ['apps/counter.js', m156],
+  ['apps/cpu-ring.js', m157],
+  ['apps/date-page.js', m158],
+  ['apps/focus-timer.js', m159],
+  ['apps/galleon-mix.js', m160],
+  ['apps/galleon-widgets.js', m161],
+  ['apps/meeting.js', m162],
+  ['apps/mic-meter.js', m163],
+  ['apps/neo-info.js', m164],
+  ['apps/pomodoro-set.js', m165],
+  ['apps/scene-countdown.js', m166],
+  ['apps/scenes.js', m167],
+  ['apps/spectrum.js', m168],
+  ['apps/system.js', m169],
+  ['apps/time-zones.js', m170],
+  ['apps/waveform-strip.js', m171],
+  ['apps/waveform.js', m172],
+  ['games/catch.js', m173],
+  ['games/coin.js', m174],
+  ['games/dice.js', m175],
+  ['games/echo.js', m176],
+  ['games/lights-out.js', m177],
+  ['games/memory.js', m178],
+  ['games/merge.js', m179],
+  ['games/oracle.js', m180],
+  ['games/reaction.js', m181],
+  ['games/slots.js', m182],
+  ['games/spectrum.js', m183],
+  ['games/tictactoe.js', m184],
 ];

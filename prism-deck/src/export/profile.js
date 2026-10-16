@@ -397,6 +397,53 @@ export function sampleProfiles({ pluginVersion = '0.3.0.0' } = {}) {
   return Object.entries(SAMPLE_LAYOUTS).map(([device, l]) => ({ device, deviceType: l.deviceType, name: l.name, file: l.file, ...buildProfile({ device, name: l.name, pages: samplePages(device), pluginVersion, seed: `sample:${device}` }) }));
 }
 
+// ── the AI console profiles ────────────────────────────────────────────────────────────────────
+// A Stream Deck as the desk console for AI coding agents, after the fork owner's own MK.2 console:
+// session keys and the thinking orb on top, prompt routing, agents and jobs, the permission prompt with its
+// Deny / Screen / Allow keys, and a second page where an agent's question waits for an answer. The keys are
+// Prism Display (visual: a runtime or MCP sets their states, a press cycles them by hand); page keys are
+// Stream Deck's own Go to Page in Prism art. Downloadable next to the sample profiles, not bundled in the plugin.
+const s = (col, row, facet, params, state) => k(col, row, facet, { ...(params ? { params } : {}), ...(state !== undefined ? { state } : {}) });
+const pageKey = (page, label) => ({ uuid: 'com.elgato.streamdeck.page.goto', name: 'Go to Page', plugin: PLUGINS.pages, settings: { PageIndex: page }, art: art('icon-pages', label), controllers: ['Keypad'] });
+const sessions = (row, list, c0 = 0) => list.map(([project, tool, state], i) => s(c0 + i, row, 'app-ai-session', { project, tool, hue: [268, 205, 150, 24][i % 4] }, state));
+const agents = (row, list, c0 = 0) => list.map(([name, glyph, state, lastRun], i) => s(c0 + i, row, 'app-ai-agent', { name, glyph, lastRun }, state));
+const answers = (row, c0 = 0) => [s(c0, row, 'app-ai-deny'), s(c0 + 1, row, 'app-ai-screen'), s(c0 + 2, row, 'app-ai-allow')];
+export const AI_CONSOLE_LAYOUTS = Object.freeze({
+  mk2: {
+    name: 'Prism · AI Console · Stream Deck MK.2', file: 'Prism AI Console - Stream Deck MK.2', deviceType: 0,
+    pages: [
+      { name: 'Console', keys: [
+        // sessions: app-ai-session states tool 0, thinking 1, waiting 2, idle 3, done 4
+        ...sessions(0, [['api', 'shell', 0], ['web', 'edit', 1], ['docs', 'read', 3]]), s(3, 0, 'app-ai-thinking'), s(4, 0, 'app-ai-prompts'),
+        { col: 0, row: 1, builtin: pageKey(2, 'Ask') },
+        // agent states: ok 0, running 1, recovered 2, failed 3, off 4
+        ...agents(1, [['Build', 'rocket', 0, 12], ['Tests', 'bug', 1, 3], ['Deploy', 'cloud', 2, 40], ['Review', 'git-branch', 0, 95]], 1),
+        s(0, 2, 'app-ai-permission'), s(1, 2, 'app-ai-deny'), s(2, 2, 'app-ai-screen'), s(3, 2, 'app-ai-agent', { name: 'Alerts', glyph: 'alert', lastRun: 7 }, 3), s(4, 2, 'app-ai-allow'),
+      ] },
+      { name: 'Ask', keys: [...block(0, 0, 5, 2, 'app-ai-question', 'B'), ...span(2, 4, 'app-ai-stream', 'C'), b(4, 2, 'page.home')] },
+    ],
+  },
+  'xl-2022': {
+    name: 'Prism · AI Console · Stream Deck XL', file: 'Prism AI Console - Stream Deck XL', deviceType: 2,
+    pages: [
+      { name: 'Console', keys: [
+        ...sessions(0, [['api', 'shell', 0], ['web', 'edit', 1], ['docs', 'read', 3], ['infra', 'search', 2]]), ...span(0, 3, 'app-ai-stream', 'B', 4), s(7, 0, 'app-ai-thinking'),
+        ...agents(1, [['Build', 'rocket', 0, 12], ['Tests', 'bug', 1, 3], ['Deploy', 'cloud', 2, 40], ['Review', 'git-branch', 0, 95], ['Backups', 'disk', 0, 300], ['Alerts', 'alert', 3, 7]]),
+        s(6, 1, 'app-ai-prompts'), s(7, 1, 'app-ai-page', { pages: 'Console, Ask', status: 'all quiet' }),
+        ...block(0, 2, 5, 2, 'app-ai-question', 'C'),
+        s(5, 2, 'app-ai-permission'), s(6, 2, 'app-ai-thinking', undefined, 1), { col: 7, row: 2, builtin: pageKey(2, 'Moments') },
+        ...answers(3, 5),
+      ] },
+      { name: 'Moments', keys: [...block(0, 0, 8, 4, 'span-confetti', 'B').filter((x) => !(x.col === 7 && x.row === 3)), b(7, 3, 'page.home')] },
+    ],
+  },
+});
+
+/** The AI console profiles (MK.2 and XL), built like the samples; written by scripts/build-iconpacks.mjs. */
+export function aiConsoleProfiles({ pluginVersion = '0.3.0.0' } = {}) {
+  return Object.entries(AI_CONSOLE_LAYOUTS).map(([device, l]) => ({ device, deviceType: l.deviceType, name: l.name, file: l.file, ...buildProfile({ device, name: l.name, pages: l.pages, pluginVersion, seed: `ai-console:${device}` }) }));
+}
+
 const UUIDU = /^[0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{12}$/;
 const UUIDL = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 /** Built-in action UUIDs a Prism profile may use (all from the app's own plugins, schemas/reference/builtin-actions.json). */

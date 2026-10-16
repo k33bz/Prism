@@ -40,8 +40,8 @@ export const GALLERIES = [
   },
   {
     id: 'apps', title: 'Apps', icon: 'cpu', hue: 60.4, prefix: ['app'], surfaces: ['key', 'span', 'strip', 'screen', 'deck'],
-    blurb: 'Live apps composed from the above plus data sources: audio, system, clocks and timers, controls (meeting, scene and media keys), dashboards.',
-    categories: ['Audio', 'System', 'Clocks & Timers', 'Controls', 'Dashboards'],
+    blurb: 'Live apps composed from the above plus data sources: audio, system, clocks and timers, controls (meeting, scene and media keys), dashboards, and an AI console for coding agents.',
+    categories: ['Audio', 'System', 'Clocks & Timers', 'Controls', 'Dashboards', 'AI Console'],
   },
   {
     id: 'games', title: 'Games', icon: 'target', hue: 34.2, prefix: ['game'], surfaces: ['key', 'span', 'deck'],

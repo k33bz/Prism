@@ -42,7 +42,7 @@ Each profile has a **Home** page that works on day one, then one or more **Showc
 
 Drag **Prism Display** onto a key or a dial. It is visual: it draws a Prism facet. It doesn't play music, change the volume or send keys. For those, use a Stream Deck action and give it a Prism icon. The property inspector (the panel under the canvas) shows a live preview and lets you choose:
 
-- **Facet.** Search, or pick a gallery: Icons, Motion, Spans, Dials & Strips, Screens, Apps, Games, Themes (<!--n:facets-->210<!--/n--> facets in <!--n:galleries-->8<!--/n--> galleries). You only see facets that fit this slot. Keys get key, span and whole-deck facets. Dials get dial segments, strip panoramas and Galleon screens. The Neo info bar gets info-bar facets.
+- **Facet.** Search, or pick a gallery: Icons, Motion, Spans, Dials & Strips, Screens, Apps, Games, Themes (<!--n:facets-->224<!--/n--> facets in <!--n:galleries-->8<!--/n--> galleries). You only see facets that fit this slot. Keys get key, span and whole-deck facets. Dials get dial segments, strip panoramas and Galleon screens. The Neo info bar gets info-bar facets.
 - **Theme and mode.** Pick any deck theme in Night or Day, or leave it on the plugin default (set under *Plugin settings*).
 - **Motion.** *Full* plays the facet's own animation. *Calm* idles at about 4 fps. *Still* shows a static frame. Presses and dial turns always animate their feedback.
 - **Parameters.** The controls come straight from the facet: labels, hues, speeds, toggles.
@@ -109,6 +109,8 @@ The Games gallery holds stateful facets: *Lights Out* on any block of keys, *Dic
 - **StreamController** doesn't run Elgato plugins. Rename an icon pack's `.streamDeckIconPack` to `.zip` and import it as a custom icon pack (GIFs animate natively). Prism's native StreamController exports are built separately (`src/export/linux*.js`).
 
 ## AI live editing (Prism Deck Live)
+
+> **In this repository:** the plugin's live channel is here, but the MCP server's deck tools (`deck_*`, `deck_live_*`) are not yet: they live in upstream's `prism-mcp-server` (crazy54/Prism, branch `feat/prism-design-language`). Leave **Allow AI editing** off until they arrive; nothing in this repository connects to the channel.
 
 With **Allow AI editing** switched on, an AI assistant connected through Prism's MCP server (`prism-mcp-server`, `deck_live_*` tools) can change how **Prism's own keys and dials look**: glyphs, facets, themes, titles, dial feedback, or a whole layout page.
 
