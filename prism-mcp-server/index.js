@@ -12,6 +12,7 @@
 //     handleMessage() directly.
 
 import { CatalogStore } from './utils/catalog.js';
+import { TerminalCatalogStore, resolveTerminalPaths } from './utils/terminal-catalog.js';
 import { CollectionStore } from './utils/collections.js';
 import { buildTools, ToolError } from './tools/index.js';
 import { createLogger } from './utils/logger.js';
@@ -24,7 +25,12 @@ export const SERVER_VERSION = '1.0.0';
 export class PrismMCPServer {
   /**
    * @param {string} catalogPath  path to Prism.html (island) or catalog/manifest.json
-   * @param {object} opts { watch, logger }
+   * @param {object} opts { watch, logger, terminal, terminalCatalogPath }
+   *   terminal              inject a TerminalCatalogStore (tests)
+   *   terminalCatalogPath   explicit .html/.json for the terminal catalog; by default it
+   *                         is found next to catalogPath (Prism.html's
+   *                         #prism-terminal-catalog island, else
+   *                         prism-term/catalog/terminal-catalog.json)
    */
   constructor(catalogPath, opts = {}) {
     if (!catalogPath) throw new Error('PrismMCPServer requires a catalogPath');
@@ -37,15 +43,25 @@ export class PrismMCPServer {
       inMemory: opts.collectionsInMemory === true,
       logger: this.logger,
     });
+    // Terminal catalog (prism-term facets): optional — tools report `unavailable`
+    // when neither the island nor the JSON fallback exists.
+    this.terminal = opts.terminal || new TerminalCatalogStore({
+      ...resolveTerminalPaths(catalogPath, opts.terminalCatalogPath),
+      watch: opts.watch !== false,
+      logger: this.logger,
+    });
     this.tools = buildTools();
     this.toolMap = new Map(this.tools.map((t) => [t.name, t]));
     this.initialized = false;
     this.requestCount = 0;
     this.store.on('reload', (stats) => this.logger.info(`Catalog reloaded: ${stats.effects} effects`));
+    this.terminal.on('reload', (stats) => this.logger.info(`Terminal catalog reloaded: ${stats.facets} facets`));
+    this.terminal.on('error', () => { /* logged by the store; keep serving the last good copy */ });
   }
 
   async load() {
     await this.store.load();
+    await this.terminal.load(); // never throws: an absent terminal catalog is fine
     return this;
   }
 
@@ -123,7 +139,7 @@ export class PrismMCPServer {
     this.requestCount++;
     this.logger.debug(`tools/call ${params.name} args=${safeJson(args)}`);
     try {
-      const out = await tool.handler(args, { store: this.store, collections: this.collections, logger: this.logger });
+      const out = await tool.handler(args, { store: this.store, collections: this.collections, terminal: this.terminal, logger: this.logger });
       const ms = Date.now() - started;
       this.logger.info(`tool ${params.name} ok (${ms}ms)`);
       return {
@@ -171,6 +187,7 @@ export class PrismMCPServer {
 
   close() {
     this.store.close();
+    this.terminal.close();
     this.transport && this.transport.stop && this.transport.stop();
   }
 }
