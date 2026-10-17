@@ -15,7 +15,7 @@
 //   tty, t/, f/                               the curl-able terminal site (ANSI; .txt and .24 variants)
 //   themes/<format>/<file>                    terminal color schemes (prism-term/themes/**; listed at /t/themes)
 //   dl/prism-term-<version>.tgz, SHA256SUMS   the live player for npx (+ prism-term.tgz, the latest-release alias)
-//   sitemap.xml, robots.txt, CNAME, .nojekyll
+//   sitemap.xml, robots.txt, CNAME, .nojekyll, LICENSE.txt, NOTICE.txt
 //
 // The build is deterministic and fails loudly: a stale terminal catalog or
 // Prism.html island, a missing terminal page, a page that breaks the contract,
@@ -271,6 +271,8 @@ await writeFile(path.join(output, 'sitemap.xml'), sitemap);
 await writeFile(path.join(output, 'robots.txt'), `User-agent: *\nAllow: /\nSitemap: ${SITE_URL}/sitemap.xml\n`);
 await writeFile(path.join(output, 'CNAME'), SITE_URL.replace(/^https?:\/\//, '') + '\n');
 await writeFile(path.join(output, '.nojekyll'), '');
+// Apache 2.0 §4: every copy of the site carries the license and the NOTICE (upstream's credits plus this copy's).
+for (const f of ['LICENSE', 'NOTICE']) await cp(path.join(repo, f), path.join(output, f + '.txt'));
 
 // Every relative href/src on the landing, terminal and deck pages must resolve to a built file.
 const broken = [];

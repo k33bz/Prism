@@ -1,0 +1,22 @@
+Prism
+Copyright 2026 JFH Inc. All rights reserved where not granted by the License.
+
+Created and authored by Jeremy Francis Hall
+  https://jeremyfhall.com
+  https://prism.jeremyfhall.com
+
+Licensed under the Apache License, Version 2.0 (see the LICENSE file).
+
+Under Section 4(d) of the Apache License, every redistribution of Prism, in source
+or binary form, and every derivative work must include a readable copy of this
+NOTICE file, crediting JFH Inc. and Jeremy Francis Hall.
+
+This copy
+---------
+Made by crazy54 (Jeremy Francis Hall); modified by k33bz.
+https://github.com/k33bz/Prism, published at https://prism.k33bz.com
+
+This repository is a modified version of Prism. k33bz has changed some of its
+files and added new ones; every change is recorded in this repository's git
+history, and README.md ("About this fork") lists what the fork adds. The
+modifications are licensed under the Apache License, Version 2.0, like Prism.

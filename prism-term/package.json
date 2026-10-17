@@ -24,7 +24,9 @@
     "examples/",
     "man/",
     "completions/",
-    "README.md"
+    "README.md",
+    "LICENSE",
+    "NOTICE"
   ],
   "scripts": {
     "start": "node cli.js",

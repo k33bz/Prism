@@ -4,6 +4,8 @@
 
 **One prism. Every facet of your report.**
 
+Made by [crazy54](https://github.com/crazy54) (Jeremy Francis Hall) · modified by [k33bz](https://github.com/k33bz)
+
 **[prism.k33bz.com](https://prism.k33bz.com)** · [open the gallery](https://prism.k33bz.com/Prism.html)
 
 A single-file gallery of **3,687** offline, self-contained CSS/SVG animations, components, and backdrops, built to be browsed by humans *and* driven by AI agents, with two sibling catalogs: **435 terminal facets** ([prism-term](./prism-term)) and **224 Stream Deck facets** ([Prism Deck](./prism-deck)). Ships with a **zero-dependency MCP server** so Claude (Desktop, Code, or the API) can search the catalogs and compose production-ready HTML/CSS on demand.
@@ -487,6 +489,8 @@ Prism is licensed under the [Apache License 2.0](LICENSE).
 Copyright 2026 JFH Inc. Created and authored by **Jeremy Francis Hall** ([jeremyfhall.com](https://jeremyfhall.com), [prism.jeremyfhall.com](https://prism.jeremyfhall.com)).
 
 If you redistribute Prism or build on it, keep the [NOTICE](NOTICE) file, which credits JFH Inc. and Jeremy Francis Hall (Apache License 2.0, Section 4(d)).
+
+**This copy** is made by crazy54 and modified by k33bz: [k33bz/Prism](https://github.com/k33bz/Prism), published at [prism.k33bz.com](https://prism.k33bz.com). The fork's changes are released under the same Apache License 2.0; its NOTICE keeps the credits above and adds this line.
 
 ---
 
